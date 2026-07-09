@@ -1,0 +1,5 @@
+"""Catalog generator type: a2_quadratic_functions_and_inequalities_solving_equations_with_the_quadratic_formula."""
+
+from question_engine.types._from_generator import register_from_catalog
+
+register_from_catalog("a2_quadratic_functions_and_inequalities_solving_equations_with_the_quadratic_formula")

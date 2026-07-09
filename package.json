@@ -1,0 +1,27 @@
+{
+  "name": "polynomial-worksheet-generator",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "dev:api": "python -m question_engine.dev_server",
+    "setup:stripe": "powershell -ExecutionPolicy Bypass -File scripts/setup-stripe.ps1",
+    "stripe:listen": "powershell -ExecutionPolicy Bypass -File scripts/stripe-listen.ps1"
+  },
+  "dependencies": {
+    "katex": "^0.16.22",
+    "next": "^15.3.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "stripe": "^22.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.6",
+    "typescript": "^5.8.3"
+  }
+}

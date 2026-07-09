@@ -1,0 +1,433 @@
+COURSE_ID = "calculus"
+
+CATEGORY_ORDER: tuple[str, ...] = (
+    'Calculus — Limits',
+    'Calculus — Continuity',
+    'Calculus — Differentiation',
+    'Calculus — Applications of Differentiation',
+    'Calculus — Indefinite Integration',
+    'Calculus — Definite Integration',
+    'Calculus — Applications of Integration',
+    'Calculus — Differential Equations',
+)
+
+from .base import TypeCatalogEntry
+
+
+
+def _calc(
+    chapter: str,
+    id: str,
+    name: str,
+    *,
+    instruction_latex: str = "",
+    instruction_text: str = "",
+    count_default: int = 10,
+    generator: str = "scaffold",
+) -> TypeCatalogEntry:
+    return TypeCatalogEntry(
+        id=id,
+        name=name,
+        category=f"Calculus — {chapter}",
+        generator=generator,
+        description=f"Practice {name.lower()}.",
+        instruction_latex=instruction_latex or "\\text{Solve.}",
+        instruction_text=instruction_text or "Solve.",
+        count_default=count_default,
+    )
+
+
+CATALOG: tuple[TypeCatalogEntry, ...] = (
+    # Limits
+    _calc(
+        "Limits",
+        "calc_limits_by_direct_evaluation",
+        "By direct evaluation",
+        instruction_text="Find the limit.",
+    ),
+    _calc(
+        "Limits",
+        "calc_limits_at_jump_discontinuities_and_kinks",
+        "At jump discontinuities and kinks",
+        instruction_text="Find the limit.",
+    ),
+    _calc(
+        "Limits",
+        "calc_limits_at_removable_discontinuities",
+        "At removable discontinuities",
+        instruction_text="Find the limit.",
+    ),
+    _calc(
+        "Limits",
+        "calc_limits_at_essential_discontinuities",
+        "At essential discontinuities",
+        instruction_text="Find the limit.",
+    ),
+    _calc(
+        "Limits",
+        "calc_limits_at_infinity",
+        "At infinity",
+        instruction_text="Find the limit.",
+    ),
+    # Continuity
+    _calc(
+        "Continuity",
+        "calc_continuity_determining_and_classifying",
+        "Determining and classifying",
+        instruction_text="Determine and classify continuity.",
+    ),
+    # Differentiation
+    _calc(
+        "Differentiation",
+        "calc_diff_average_rates_of_change",
+        "Average rates of change",
+        instruction_text="Find the average rate of change.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_definition_of_the_derivative",
+        "Definition of the derivative",
+        instruction_text="Use the definition of the derivative.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_instantaneous_rates_of_change",
+        "Instantaneous rates of change",
+        instruction_text="Find the instantaneous rate of change.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_power_rule",
+        "Power Rule",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_higher_order_derivatives",
+        "Higher order derivatives",
+        instruction_text="Find the derivative.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_product_rule",
+        "Product Rule",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_quotient_rule",
+        "Quotient Rule",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_chain_rule",
+        "Chain Rule",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_rules_using_tables",
+        "Rules, using tables",
+        instruction_text="Use the table.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_trigonometric",
+        "Trigonometric",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_inverse_trigonometric",
+        "Inverse trigonometric",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_natural_logarithms_and_exponentials",
+        "Natural logarithms and exponentials",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_other_base_logarithms_and_exponentials",
+        "Other base logarithms and exponentials",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_logarithmic",
+        "Logarithmic",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_implicit",
+        "Implicit",
+        instruction_text="Differentiate implicitly.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_inverse_functions",
+        "Inverse functions",
+        instruction_text="Differentiate.",
+    ),
+    # Applications of Differentiation
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_slope_tangent_and_normal_lines",
+        "Slope, tangent, and normal lines",
+        instruction_text="Find the slope, tangent line, or normal line.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_rolles_theorem",
+        "Rolle's Theorem",
+        instruction_text="Apply Rolle's Theorem.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_mean_value_theorem",
+        "Mean Value Theorem",
+        instruction_text="Apply the Mean Value Theorem.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_intervals_of_increase_and_decrease",
+        "Intervals of increase and decrease",
+        instruction_text="Find intervals of increase and decrease.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_intervals_of_concavity",
+        "Intervals of concavity",
+        instruction_text="Find intervals of concavity.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_relative_extrema",
+        "Relative extrema",
+        instruction_text="Find the relative extrema.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_absolute_extrema",
+        "Absolute extrema",
+        instruction_text="Find the absolute extrema.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_optimization",
+        "Optimization",
+        instruction_text="Solve the optimization problem.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_curve_sketching",
+        "Curve sketching",
+        instruction_text="Sketch the curve.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime",
+        "Graphical comparison of f, f', and f''",
+        instruction_text="Compare the graphs.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_motion_along_a_line",
+        "Motion along a line",
+        instruction_text="Solve the motion problem.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_related_rates",
+        "Related rates",
+        instruction_text="Solve the related rates problem.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_differentials",
+        "Differentials",
+        instruction_text="Find the differential.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_newtons_method",
+        "Newton's Method",
+        instruction_text="Use Newton's Method.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_limits_in_form_of_definition_of_derivative",
+        "Limits in form of definition of derivative",
+        instruction_text="Find the limit.",
+    ),
+    _calc(
+        "Applications of Differentiation",
+        "calc_app_diff_lhopitals_rule",
+        "L'Hôpital's Rule",
+        instruction_text="Evaluate the limit.",
+    ),
+    # Indefinite Integration
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_power_rule",
+        "Power Rule",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_logarithmic_rule_and_exponentials",
+        "Logarithmic Rule and Exponentials",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_trigonometric",
+        "Trigonometric",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_inverse_trigonometric",
+        "Inverse trigonometric",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_power_rule_with_substitution",
+        "Power rule with substitution",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+        "Logarithmic rule and exponentials with subs.",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_trigonometric_with_substitution",
+        "Trigonometric with substitution",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_inverse_trigonometric_with_substitution",
+        "Inverse trigonometric with substitution",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_integration_by_parts",
+        "Integration by parts",
+        instruction_text="Integrate.",
+    ),
+    # Definite Integration
+    _calc(
+        "Definite Integration",
+        "calc_def_int_approximating_area_under_a_curve",
+        "Approximating area under a curve",
+        instruction_text="Approximate the area.",
+    ),
+    _calc(
+        "Definite Integration",
+        "calc_def_int_area_under_a_curve_by_limit_of_sums",
+        "Area under a curve by limit of sums",
+        instruction_text="Find the area.",
+    ),
+    _calc(
+        "Definite Integration",
+        "calc_def_int_riemann_sum_tables",
+        "Riemann sum tables",
+        instruction_text="Use the Riemann sum table.",
+    ),
+    _calc(
+        "Definite Integration",
+        "calc_def_int_first_fundamental_theorem_of_calculus",
+        "First Fundamental Theorem of Calculus",
+        instruction_text="Evaluate.",
+    ),
+    _calc(
+        "Definite Integration",
+        "calc_def_int_substitution_with_change_of_variables",
+        "Substitution with change of variables",
+        instruction_text="Evaluate.",
+    ),
+    _calc(
+        "Definite Integration",
+        "calc_def_int_mean_value_theorem",
+        "Mean Value Theorem",
+        instruction_text="Apply the Mean Value Theorem.",
+    ),
+    _calc(
+        "Definite Integration",
+        "calc_def_int_second_fundamental_theorem_of_calculus",
+        "Second Fundamental Theorem of Calculus",
+        instruction_text="Evaluate.",
+    ),
+    # Applications of Integration
+    _calc(
+        "Applications of Integration",
+        "calc_app_int_area_under_a_curve",
+        "Area under a curve",
+        instruction_text="Find the area.",
+    ),
+    _calc(
+        "Applications of Integration",
+        "calc_app_int_area_between_curves",
+        "Area between curves",
+        instruction_text="Find the area.",
+    ),
+    _calc(
+        "Applications of Integration",
+        "calc_app_int_volume_by_slicing_disks_and_washers",
+        "Volume by slicing, disks and washers",
+        instruction_text="Find the volume.",
+    ),
+    _calc(
+        "Applications of Integration",
+        "calc_app_int_volume_by_cylinders",
+        "Volume by cylinders",
+        instruction_text="Find the volume.",
+    ),
+    _calc(
+        "Applications of Integration",
+        "calc_app_int_volume_of_solids_with_known_cross_sections",
+        "Volume of solids with known cross sections",
+        instruction_text="Find the volume.",
+    ),
+    _calc(
+        "Applications of Integration",
+        "calc_app_int_motion_along_a_line_revisited",
+        "Motion along a line revisited",
+        instruction_text="Solve the motion problem.",
+    ),
+    # Differential Equations
+    _calc(
+        "Differential Equations",
+        "calc_diff_eq_slope_fields",
+        "Slope fields",
+        instruction_text="Sketch or interpret the slope field.",
+    ),
+    _calc(
+        "Differential Equations",
+        "calc_diff_eq_introduction",
+        "Introduction",
+        instruction_text="Solve.",
+    ),
+    _calc(
+        "Differential Equations",
+        "calc_diff_eq_separable",
+        "Separable",
+        instruction_text="Solve the differential equation.",
+    ),
+    _calc(
+        "Differential Equations",
+        "calc_diff_eq_exponential_growth_and_decay",
+        "Exponential growth and decay",
+        instruction_text="Solve the problem.",
+    ),
+)

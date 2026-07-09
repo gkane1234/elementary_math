@@ -1,0 +1,455 @@
+COURSE_ID = "grade_6"
+
+CATEGORY_ORDER: tuple[str, ...] = (
+    'Grade 6 — Ratios',
+    'Grade 6 — Rates',
+    'Grade 6 — Percents',
+    'Grade 6 — Dividing Fractions',
+    'Grade 6 — Decimal Arithmetic',
+    'Grade 6 — Common Factors and Common Multiples',
+    'Grade 6 — Negative Numbers and Absolute Value',
+    'Grade 6 — Coordinate Plane',
+    'Grade 6 — Numeric Expressions, Exponents, and the Order of Operations',
+    'Grade 6 — Variables and Algebraic Expressions',
+    'Grade 6 — Equivalent Expressions',
+    'Grade 6 — Equations',
+    'Grade 6 — Inequalities',
+    'Grade 6 — Equations as Relationships between Two Variables',
+    'Grade 6 — Polygons',
+    'Grade 6 — Polyhedra',
+    'Grade 6 — Area and Volume with Fractions',
+    'Grade 6 — Data Sets and Distributions',
+)
+
+from .base import TypeCatalogEntry
+
+
+
+def _g6(
+    chapter: str,
+    id: str,
+    name: str,
+    *,
+    instruction_latex: str = "",
+    instruction_text: str = "",
+    count_default: int = 10,
+    generator: str = "scaffold",
+) -> TypeCatalogEntry:
+    return TypeCatalogEntry(
+        id=id,
+        name=name,
+        category=f"Grade 6 — {chapter}",
+        generator=generator,
+        description=f"Practice {name.lower()}.",
+        instruction_latex=instruction_latex or "\\text{Solve.}",
+        instruction_text=instruction_text or "Solve.",
+        count_default=count_default,
+    )
+
+
+CATALOG: tuple[TypeCatalogEntry, ...] = (
+    # Ratios
+    _g6("Ratios", "g6_introduction_to_ratios", "Introduction to ratios", instruction_text="Write the ratio."),
+    _g6("Ratios", "g6_equivalent_ratios", "Equivalent ratios", instruction_text="Find an equivalent ratio."),
+    _g6("Ratios", "g6_part_part_whole_ratios", "Part-part-whole ratios", instruction_text="Write the ratio."),
+    _g6("Ratios", "g6_comparing_ratios", "Comparing ratios", instruction_text="Compare the ratios."),
+    # Rates
+    _g6("Rates", "g6_unit_rates_and_equivalent_rates", "Unit rates and equivalent rates", instruction_text="Find the unit rate."),
+    _g6("Rates", "g6_comparing_rates", "Comparing rates", instruction_text="Compare the rates."),
+    _g6("Rates", "g6_converting_units", "Converting units", instruction_text="Convert the units."),
+    # Percents
+    _g6("Percents", "g6_introduction_to_percents", "Introduction to percents", instruction_text="Find the percent."),
+    _g6(
+        "Percents",
+        "g6_relating_percents_fractions_and_decimals",
+        "Relating percents, fractions, and decimals",
+        instruction_text="Write the equivalent value.",
+    ),
+    _g6(
+        "Percents",
+        "g6_finding_percents_with_equivalent_fractions",
+        "Finding percents with equivalent fractions",
+        instruction_text="Find the percent.",
+    ),
+    _g6(
+        "Percents",
+        "g6_solving_percent_problems_with_diagrams",
+        "Solving percent problems with diagrams",
+        instruction_text="Solve the problem.",
+        count_default=5,
+    ),
+    _g6(
+        "Percents",
+        "g6_solving_percent_problems_with_formulas",
+        "Solving percent problems with formulas",
+        instruction_text="Solve the problem.",
+    ),
+    # Dividing Fractions
+    _g6(
+        "Dividing Fractions",
+        "g6_how_many_groups_times",
+        "How many groups/times?",
+        instruction_text="Solve the problem.",
+    ),
+    _g6(
+        "Dividing Fractions",
+        "g6_what_fraction_of_a_whole",
+        "What fraction of a whole?",
+        instruction_text="Solve the problem.",
+    ),
+    _g6(
+        "Dividing Fractions",
+        "g6_how_much_in_each_group_time",
+        "How much in each group/time?",
+        instruction_text="Solve the problem.",
+    ),
+    _g6("Dividing Fractions", "g6_dividing_fractions", "Dividing fractions", instruction_text="Divide."),
+    # Decimal Arithmetic
+    _g6(
+        "Decimal Arithmetic",
+        "g6_decimal_addition_with_diagrams",
+        "Decimal addition with diagrams",
+        instruction_text="Add.",
+    ),
+    _g6("Decimal Arithmetic", "g6_decimal_addition", "Decimal addition", instruction_text="Add."),
+    _g6(
+        "Decimal Arithmetic",
+        "g6_decimal_subtraction_with_diagrams",
+        "Decimal subtraction with diagrams",
+        instruction_text="Subtract.",
+    ),
+    _g6("Decimal Arithmetic", "g6_decimal_subtraction", "Decimal subtraction", instruction_text="Subtract."),
+    _g6(
+        "Decimal Arithmetic",
+        "g6_decimal_multiplication_with_equivalent_fractions",
+        "Decimal multiplication with equivalent fractions",
+        instruction_text="Multiply.",
+    ),
+    _g6(
+        "Decimal Arithmetic",
+        "g6_decimal_multiplication_with_area_diagrams",
+        "Decimal multiplication with area diagrams",
+        instruction_text="Multiply.",
+    ),
+    _g6("Decimal Arithmetic", "g6_decimal_multiplication", "Decimal multiplication", instruction_text="Multiply."),
+    _g6(
+        "Decimal Arithmetic",
+        "g6_long_division_with_remainders",
+        "Long division with remainders",
+        instruction_text="Divide.",
+    ),
+    _g6(
+        "Decimal Arithmetic",
+        "g6_dividing_whole_numbers_that_result_in_decimals",
+        "Dividing whole numbers that result in decimals",
+        instruction_text="Divide.",
+    ),
+    _g6(
+        "Decimal Arithmetic",
+        "g6_dividing_decimals_by_whole_numbers",
+        "Dividing decimals by whole numbers",
+        instruction_text="Divide.",
+    ),
+    _g6(
+        "Decimal Arithmetic",
+        "g6_dividing_whole_numbers_by_decimals",
+        "Dividing whole numbers by decimals",
+        instruction_text="Divide.",
+    ),
+    _g6(
+        "Decimal Arithmetic",
+        "g6_dividing_decimals_by_decimals",
+        "Dividing decimals by decimals",
+        instruction_text="Divide.",
+    ),
+    # Common Factors and Common Multiples
+    _g6("Common Factors and Common Multiples", "g6_factoring", "Factoring", instruction_text="Factor."),
+    _g6(
+        "Common Factors and Common Multiples",
+        "g6_greatest_common_factor",
+        "Greatest common factor",
+        instruction_text="Find the GCF.",
+    ),
+    _g6(
+        "Common Factors and Common Multiples",
+        "g6_least_common_multiple",
+        "Least common multiple",
+        instruction_text="Find the LCM.",
+    ),
+    _g6(
+        "Common Factors and Common Multiples",
+        "g6_gcf_and_lcm_word_problems",
+        "GCF and LCM word problems",
+        instruction_text="Solve the problem.",
+        count_default=5,
+    ),
+    # Negative Numbers and Absolute Value
+    _g6(
+        "Negative Numbers and Absolute Value",
+        "g6_numbers_on_a_number_line",
+        "Numbers on a number line",
+        instruction_text="Plot the number.",
+    ),
+    _g6(
+        "Negative Numbers and Absolute Value",
+        "g6_number_line_word_problems",
+        "Number line word problems",
+        instruction_text="Solve the problem.",
+        count_default=5,
+    ),
+    _g6(
+        "Negative Numbers and Absolute Value",
+        "g6_opposites_of_numbers",
+        "Opposites of numbers",
+        instruction_text="Find the opposite.",
+    ),
+    _g6(
+        "Negative Numbers and Absolute Value",
+        "g6_comparing_numbers",
+        "Comparing numbers",
+        instruction_text="Compare the numbers.",
+    ),
+    _g6(
+        "Negative Numbers and Absolute Value",
+        "g6_ordering_numbers",
+        "Ordering numbers",
+        instruction_text="Order the numbers.",
+    ),
+    _g6(
+        "Negative Numbers and Absolute Value",
+        "g6_absolute_values",
+        "Absolute values",
+        instruction_text="Find the absolute value.",
+    ),
+    _g6(
+        "Negative Numbers and Absolute Value",
+        "g6_comparing_with_absolute_values",
+        "Comparing with absolute values",
+        instruction_text="Compare the values.",
+    ),
+    _g6(
+        "Negative Numbers and Absolute Value",
+        "g6_ordering_with_absolute_values",
+        "Ordering with absolute values",
+        instruction_text="Order the values.",
+    ),
+    # Coordinate Plane
+    _g6(
+        "Coordinate Plane",
+        "g6_points_on_the_coordinate_plane",
+        "Points on the coordinate plane",
+        instruction_text="Identify the point.",
+    ),
+    _g6(
+        "Coordinate Plane",
+        "g6_distances_on_the_coordinate_plane",
+        "Distances on the coordinate plane",
+        instruction_text="Find the distance.",
+    ),
+    _g6(
+        "Coordinate Plane",
+        "g6_shapes_and_perimeter_on_the_coordinate_plane",
+        "Shapes and perimeter on the coordinate plane",
+        instruction_text="Find the perimeter.",
+    ),
+    _g6(
+        "Coordinate Plane",
+        "g6_coordinate_plane_distances_word_problems",
+        "Distances, word problems",
+        instruction_text="Solve the problem.",
+        count_default=5,
+    ),
+    # Numeric Expressions, Exponents, and the Order of Operations
+    _g6(
+        "Numeric Expressions, Exponents, and the Order of Operations",
+        "g6_writing_numeric_expressions",
+        "Writing numeric expressions",
+        instruction_text="Write the expression.",
+    ),
+    _g6(
+        "Numeric Expressions, Exponents, and the Order of Operations",
+        "g6_numeric_expressions_with_exponents",
+        "Numeric expressions with exponents",
+        instruction_text="Evaluate.",
+    ),
+    _g6(
+        "Numeric Expressions, Exponents, and the Order of Operations",
+        "g6_properties_of_addition_and_multiplication",
+        "Properties of addition and multiplication",
+        instruction_text="Identify the property.",
+    ),
+    _g6(
+        "Numeric Expressions, Exponents, and the Order of Operations",
+        "g6_numeric_expressions_and_order_of_operations",
+        "Numeric expressions and the order of operations",
+        instruction_text="Evaluate.",
+    ),
+    _g6(
+        "Numeric Expressions, Exponents, and the Order of Operations",
+        "g6_distributive_property_area_diagrams_numeric",
+        "Distributive property with area diagrams, numeric",
+        instruction_text="Evaluate.",
+    ),
+    _g6(
+        "Numeric Expressions, Exponents, and the Order of Operations",
+        "g6_distributive_property_numeric",
+        "Distributive property, numeric", generator="distributive_property", instruction_text="Evaluate.",
+    ),
+    # Variables and Algebraic Expressions
+    _g6(
+        "Variables and Algebraic Expressions",
+        "g6_writing_algebraic_expressions",
+        "Writing algebraic expressions",
+        instruction_text="Write the expression.",
+    ),
+    _g6(
+        "Variables and Algebraic Expressions",
+        "g6_evaluating_algebraic_expressions",
+        "Evaluating algebraic expressions",
+        instruction_text="Evaluate.",
+    ),
+    # Equivalent Expressions
+    _g6("Equivalent Expressions", "g6_combining_like_terms", "Combining like terms", instruction_text="Simplify."),
+    _g6(
+        "Equivalent Expressions",
+        "g6_distributive_property_area_diagrams_algebraic",
+        "Distributive property with area diagrams, algebraic",
+        instruction_text="Simplify.",
+    ),
+    _g6(
+        "Equivalent Expressions",
+        "g6_distributive_property_algebraic",
+        "Distributive property, algebraic", generator="distributive_property", instruction_text="Simplify.",
+    ),
+    # Equations
+    _g6("Equations", "g6_solutions_to_equations", "Solutions to equations", instruction_text="Determine if the value is a solution."),
+    _g6("Equations", "g6_equations_tape_diagrams", "Tape diagrams", instruction_text="Solve the problem."),
+    _g6("Equations", "g6_equations_hanger_diagrams", "Hanger diagrams", instruction_text="Solve the problem."),
+    _g6(
+        "Equations",
+        "g6_equations_word_problems",
+        "Equations word problems",
+        instruction_text="Solve the problem.",
+        count_default=5,
+    ),
+    # Inequalities
+    _g6(
+        "Inequalities",
+        "g6_solutions_to_inequalities",
+        "Solutions to inequalities",
+        instruction_text="Determine if the value is a solution.",
+    ),
+    _g6(
+        "Inequalities",
+        "g6_writing_and_graphing_inequalities",
+        "Writing and graphing inequalities",
+        instruction_text="Write and graph the inequality.",
+    ),
+    _g6(
+        "Inequalities",
+        "g6_inequalities_word_problems",
+        "Inequalities word problems",
+        instruction_text="Solve the problem.",
+        count_default=5,
+    ),
+    _g6(
+        "Inequalities",
+        "g6_solving_and_graphing_one_step_inequalities",
+        "Solving and graphing one-step inequalities", generator="one_step_inequalities", instruction_text="Solve and graph.",
+    ),
+    _g6("Inequalities", "g6_inequalities_hanger_diagrams", "Hanger diagrams", instruction_text="Solve the problem."),
+    # Equations as Relationships between Two Variables
+    _g6(
+        "Equations as Relationships between Two Variables",
+        "g6_equivalent_ratio_equations",
+        "Equivalent ratio equations",
+        instruction_text="Write the equation.",
+    ),
+    _g6(
+        "Equations as Relationships between Two Variables",
+        "g6_constant_rate_equations",
+        "Constant rate equations",
+        instruction_text="Write the equation.",
+    ),
+    _g6(
+        "Equations as Relationships between Two Variables",
+        "g6_equations_for_other_relationships",
+        "Equations for other relationships",
+        instruction_text="Write the equation.",
+    ),
+    # Polygons
+    _g6(
+        "Polygons",
+        "g6_parallelograms_understanding_area_formula",
+        "Parallelograms, understanding area formula",
+        instruction_text="Find the area.",
+    ),
+    _g6("Polygons", "g6_parallelograms", "Parallelograms", instruction_text="Find the area."),
+    _g6(
+        "Polygons",
+        "g6_triangles_understanding_area_formula",
+        "Triangles, understanding area formula",
+        instruction_text="Find the area.",
+    ),
+    _g6("Polygons", "g6_triangles", "Triangles", instruction_text="Find the area."),
+    _g6("Polygons", "g6_trapezoids", "Trapezoids", instruction_text="Find the area."),
+    _g6("Polygons", "g6_kites", "Kites", instruction_text="Find the area."),
+    _g6(
+        "Polygons",
+        "g6_polygons_on_a_grid_or_coordinate_plane",
+        "Polygons on a grid or coordinate plane",
+        instruction_text="Find the area.",
+    ),
+    _g6("Polygons", "g6_polygons_and_shaded_regions", "Polygons and shaded regions", instruction_text="Find the area."),
+    # Polyhedra
+    _g6("Polyhedra", "g6_classifying_and_naming", "Classifying and naming", instruction_text="Classify the polyhedron."),
+    _g6("Polyhedra", "g6_nets", "Nets", instruction_text="Identify the net."),
+    _g6("Polyhedra", "g6_nets_and_surface_area", "Nets and surface area", instruction_text="Find the surface area."),
+    _g6(
+        "Polyhedra",
+        "g6_nets_and_surface_area_on_a_grid",
+        "Nets and surface area on a grid",
+        instruction_text="Find the surface area.",
+    ),
+    _g6("Polyhedra", "g6_identifying_invalid_nets", "Identifying invalid nets", instruction_text="Determine if the net is valid."),
+    _g6(
+        "Polyhedra",
+        "g6_volume_and_surface_area_using_isometric_drawings",
+        "Volume and surface area using isometric drawings",
+        instruction_text="Find the volume or surface area.",
+    ),
+    _g6(
+        "Polyhedra",
+        "g6_formulas_for_volume_and_surface_area_of_a_cube",
+        "Formulas for volume and surface area of a cube",
+        instruction_text="Find the volume or surface area.",
+    ),
+    _g6("Polyhedra", "g6_isometric_sketching", "Isometric sketching", instruction_text="Sketch the solid."),
+    # Area and Volume with Fractions
+    _g6(
+        "Area and Volume with Fractions",
+        "g6_rectangles_with_fraction_side_lengths",
+        "Rectangles with fraction side lengths",
+        instruction_text="Find the area.",
+    ),
+    _g6(
+        "Area and Volume with Fractions",
+        "g6_triangles_with_fraction_side_lengths",
+        "Triangles with fraction side lengths",
+        instruction_text="Find the area.",
+    ),
+    _g6(
+        "Area and Volume with Fractions",
+        "g6_right_rectangular_prisms_with_fraction_side_lengths",
+        "Right rectangular prisms with fraction side lengths",
+        instruction_text="Find the volume.",
+    ),
+    # Data Sets and Distributions
+    _g6("Data Sets and Distributions", "g6_interpreting_dot_plots", "Interpreting dot plots", instruction_text="Interpret the dot plot."),
+    _g6("Data Sets and Distributions", "g6_drawing_dot_plots", "Drawing dot plots", instruction_text="Draw the dot plot."),
+    _g6("Data Sets and Distributions", "g6_interpreting_histograms", "Interpreting histograms", instruction_text="Interpret the histogram."),
+    _g6("Data Sets and Distributions", "g6_drawing_histograms", "Drawing histograms", instruction_text="Draw the histogram."),
+    _g6("Data Sets and Distributions", "g6_data_center_and_spread", "Center and spread", instruction_text="Find the measure."),
+    _g6("Data Sets and Distributions", "g6_interpreting_box_plots", "Interpreting box plots", instruction_text="Interpret the box plot."),
+    _g6("Data Sets and Distributions", "g6_drawing_box_plots", "Drawing box plots", instruction_text="Draw the box plot."),
+)

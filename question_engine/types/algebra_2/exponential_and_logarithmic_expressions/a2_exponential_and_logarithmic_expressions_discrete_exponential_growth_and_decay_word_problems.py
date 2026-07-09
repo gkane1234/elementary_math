@@ -1,0 +1,5 @@
+"""Catalog generator type: a2_exponential_and_logarithmic_expressions_discrete_exponential_growth_and_decay_word_problems."""
+
+from question_engine.types._from_generator import register_from_catalog
+
+register_from_catalog("a2_exponential_and_logarithmic_expressions_discrete_exponential_growth_and_decay_word_problems")

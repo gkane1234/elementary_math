@@ -1,0 +1,5 @@
+"""Graphing catalog type: a2_exponential_and_logarithmic_expressions_graphing_exponential_functions."""
+
+from question_engine.types._from_generator import register_from_catalog
+
+register_from_catalog("a2_exponential_and_logarithmic_expressions_graphing_exponential_functions")

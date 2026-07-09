@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type DragEvent, type MouseEvent } from "react";
 import katex from "katex";
+import { repairInstructionLatex } from "@/lib/latex";
+import { QuestionGraphFromMetadata } from "@/components/QuestionGraph";
 import { QuestionContextMenu } from "@/components/QuestionContextMenu";
 import { QuestionSettingsModal } from "@/components/QuestionSettingsModal";
 import { columnStartNumber, distributeToColumns, insertAtIndex } from "@/lib/columns";
@@ -30,12 +32,12 @@ type ContextMenuState = {
   questionId: string;
 };
 
-function Latex({ content }: { content: string }) {
+function Latex({ content, repair = false }: { content: string; repair?: boolean }) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!ref.current) return;
-    katex.render(content, ref.current, {
+    katex.render(repair ? repairInstructionLatex(content) : content, ref.current, {
       throwOnError: false,
       displayMode: false,
     });
@@ -99,11 +101,12 @@ function QuestionItem({
         <div className="question-content">
           {showInstruction && question.instruction_latex && (
             <p className="question-instruction">
-              <Latex content={question.instruction_latex} />
+              <Latex content={question.instruction_latex} repair />
             </p>
           )}
           <span className="question-number">{number}.</span>
           <Latex content={question.prompt_latex} />
+          <QuestionGraphFromMetadata metadata={question.metadata} />
         </div>
       </div>
     </div>
@@ -211,7 +214,7 @@ export function InteractiveWorksheet({
         <p className="worksheet-meta">Name: ________________________________ Date: ____________</p>
         {headerInstruction && (
           <p className="worksheet-instruction">
-            <Latex content={headerInstruction} />
+            <Latex content={headerInstruction} repair />
           </p>
         )}
       </header>
@@ -287,10 +290,11 @@ export function InteractiveWorksheet({
                 >
                   {shouldShowInstruction(question, previous, headerInstruction) && question.instruction_latex && (
                     <p className="question-instruction">
-                      <Latex content={question.instruction_latex} />
+                      <Latex content={question.instruction_latex} repair />
                     </p>
                   )}
                   <Latex content={question.prompt_latex} />
+                  <QuestionGraphFromMetadata metadata={question.metadata} />
                 </li>
               );
             })}

@@ -7,9 +7,11 @@ from packages.polynomial_core import (
 )
 
 from question_engine.base import QuestionType, register
-from question_engine.factoring_settings import build_factorable_options, shared_factoring_settings
+from question_engine.factoring_settings import build_factorable_options
 from question_engine.latex_helpers import polynomial_fraction_latex
-from question_engine.models import Question, SettingField
+from question_engine.models import Question
+from question_engine.settings.enrichment import merge_enrichment_metadata, random_term_count
+from question_engine.settings.generator_profiles import schema_for_generator
 
 
 @register
@@ -24,83 +26,24 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
     instruction_latex = "\\text{Combine and simplify.}"
     instruction_text = "Combine and simplify."
 
-    def settings_schema(self) -> list[SettingField]:
-        return [
-            SettingField("count", "Number of questions", "int", 5, min=1, max=50),
-            SettingField(
-                "max_columns",
-                "Columns (auto-fit up to 3)",
-                "select",
-                "auto",
-                options=["auto", "1", "2", "3"],
-            ),
-            SettingField("term_count", "Number of rational terms", "int", 3, min=2, max=5),
-            SettingField("denominator_degree_min", "LCD factor degree min", "int", 2, min=1, max=6),
-            SettingField("denominator_degree_max", "LCD factor degree max", "int", 3, min=1, max=6),
-            SettingField("coef_min", "Coefficient min", "int", -6, min=-20, max=20),
-            SettingField("coef_max", "Coefficient max", "int", 6, min=-20, max=20),
-            SettingField("positive_leading_coefficient", "Positive leading coefficients", "bool", True),
-            SettingField(
-                "use_random_partial_solution",
-                "Use random partial-fraction numerators",
-                "bool",
-                True,
-            ),
-            SettingField(
-                "allow_polynomial_terms",
-                "Allow terms with no denominator",
-                "bool",
-                True,
-            ),
-            SettingField(
-                "allow_full_lcd_terms",
-                "Allow terms over the full LCD",
-                "bool",
-                True,
-            ),
-            SettingField(
-                "inflation_chance",
-                "Degree inflation chance (%)",
-                "range",
-                15,
-                min=0,
-                max=100,
-            ),
-            SettingField(
-                "max_inflation_degree",
-                "Max inflation factor degree",
-                "int",
-                2,
-                min=1,
-                max=4,
-            ),
-            SettingField(
-                "cancel_factor_count",
-                "LCD factors to cancel in final answer",
-                "select",
-                "random",
-                options=["random", "0", "1", "2", "3", "4"],
-            ),
-            *shared_factoring_settings(),
-            SettingField("include_answer_key", "Include answer key", "bool", False),
-            SettingField(
-                "include_solution_details",
-                "Include complete solution details in metadata",
-                "bool",
-                True,
-            ),
-        ]
+    def settings_schema(self):
+        return schema_for_generator(self.id)
 
     def generate(self, settings: dict) -> list[Question]:
         count = int(settings.get("count", 5))
-        term_count = int(settings.get("term_count", 3))
+        term_count = int(settings.get("term_count", random_term_count(settings, default=3)))
+        term_count = min(term_count, int(settings.get("max_rational_terms", 5)))
         denominator_degree_min = int(settings.get("denominator_degree_min", 2))
         denominator_degree_max = int(settings.get("denominator_degree_max", 3))
         include_answer_key = bool(settings.get("include_answer_key", False))
         include_solution_details = bool(settings.get("include_solution_details", True))
         use_random_partial_solution = bool(settings.get("use_random_partial_solution", True))
         allow_polynomial_terms = bool(settings.get("allow_polynomial_terms", True))
-        allow_full_lcd_terms = bool(settings.get("allow_full_lcd_terms", True))
+        force_lcd = bool(settings.get("force_lcd", False))
+        allow_full_lcd_terms = bool(settings.get("allow_full_lcd_terms", True)) or force_lcd
+        if force_lcd:
+            allow_polynomial_terms = False
+        allow_unlike_denominators = bool(settings.get("allow_unlike_denominators", True))
         inflation_chance = max(0.0, min(1.0, int(settings.get("inflation_chance", 15)) / 100.0))
         max_inflation_degree = int(settings.get("max_inflation_degree", 2))
         cancel_factor_count = settings.get("cancel_factor_count", "random")
@@ -110,19 +53,37 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
             denominator_degree_min,
             denominator_degree_max,
         )
+        if not allow_unlike_denominators:
+            base_options = build_factorable_options(
+                {**settings, "factor_rrt": False},
+                denominator_degree_min,
+                denominator_degree_max,
+            )
 
         questions: list[Question] = []
         for _ in range(count):
-            solution = build_rational_expression_problem(
-                base_options,
-                term_count=term_count,
-                use_random_partial_solution=use_random_partial_solution,
-                allow_polynomial_terms=allow_polynomial_terms,
-                allow_full_lcd_terms=allow_full_lcd_terms,
-                inflation_chance=inflation_chance,
-                max_inflation_degree=max_inflation_degree,
-                cancel_factor_count=cancel_factor_count,
-            )
+            for _attempt in range(80):
+                solution = build_rational_expression_problem(
+                    base_options,
+                    term_count=term_count,
+                    use_random_partial_solution=use_random_partial_solution,
+                    allow_polynomial_terms=allow_polynomial_terms,
+                    allow_full_lcd_terms=allow_full_lcd_terms,
+                    inflation_chance=inflation_chance,
+                    max_inflation_degree=max_inflation_degree,
+                    cancel_factor_count=cancel_factor_count,
+                )
+                if force_lcd and solution.full_lcd_numerator is None:
+                    continue
+                if not allow_unlike_denominators:
+                    denominators = [
+                        term.denominator
+                        for term in solution.display_terms
+                        if term.denominator is not None
+                    ]
+                    if denominators and len({str(d) for d in denominators}) > 1:
+                        continue
+                break
 
             answer_latex = None
             if include_answer_key:
@@ -133,19 +94,25 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                     answer_denominator,
                 )
 
-            metadata = {
-                "term_count": len(solution.display_terms),
-                "numerator_degree": solution.simplified_numerator.deg(),
-                "denominator_degree": solution.simplified_denominator.deg(),
-                "combined_numerator_degree": solution.combined_numerator.deg(),
-                "combined_denominator_degree": solution.combined_denominator.deg(),
-                "has_polynomial_term": solution.polynomial_term is not None,
-                "has_full_lcd_term": solution.full_lcd_numerator is not None,
-                "has_degree_inflation": solution.inflation_factor.deg() > 0,
-                "cancelled_lcd_factor_count": len(solution.cancelled_lcd_factors),
-                "inflation_chance": inflation_chance,
-                "max_inflation_degree": max_inflation_degree,
-            }
+            metadata = merge_enrichment_metadata(
+                settings,
+                {
+                    "term_count": len(solution.display_terms),
+                    "numerator_degree": solution.simplified_numerator.deg(),
+                    "denominator_degree": solution.simplified_denominator.deg(),
+                    "combined_numerator_degree": solution.combined_numerator.deg(),
+                    "combined_denominator_degree": solution.combined_denominator.deg(),
+                    "has_polynomial_term": solution.polynomial_term is not None,
+                    "has_full_lcd_term": solution.full_lcd_numerator is not None,
+                    "has_degree_inflation": solution.inflation_factor.deg() > 0,
+                    "cancelled_lcd_factor_count": len(solution.cancelled_lcd_factors),
+                    "inflation_chance": inflation_chance,
+                    "max_inflation_degree": max_inflation_degree,
+                    "force_lcd": force_lcd,
+                    "allow_unlike_denominators": allow_unlike_denominators,
+                },
+                answer=answer_latex,
+            )
             if include_solution_details:
                 metadata["solution"] = solution.to_dict()
 

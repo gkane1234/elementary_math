@@ -3,8 +3,10 @@ import uuid
 from packages.polynomial_core import create_factorable_polynomial
 
 from question_engine.base import QuestionType, register
-from question_engine.factoring_settings import build_factorable_options, shared_factoring_settings
-from question_engine.models import Question, SettingField
+from question_engine.factoring_settings import build_factorable_options
+from question_engine.models import Question
+from question_engine.settings.enrichment import merge_enrichment_metadata
+from question_engine.settings.generator_profiles import schema_for_generator
 
 
 def _format_factors_latex(factors: list) -> str:
@@ -21,22 +23,8 @@ class QuadraticFactoringQuestionType(QuestionType):
     instruction_latex = "\\text{Factor completely.}"
     instruction_text = "Factor completely."
 
-    def settings_schema(self) -> list[SettingField]:
-        return [
-            SettingField("count", "Number of questions", "int", 10, min=1, max=50),
-            SettingField(
-                "max_columns",
-                "Columns (auto-fit up to 3)",
-                "select",
-                "auto",
-                options=["auto", "1", "2", "3"],
-            ),
-            SettingField("coef_min", "Coefficient min", "int", -10, min=-20, max=20),
-            SettingField("coef_max", "Coefficient max", "int", 10, min=-20, max=20),
-            SettingField("positive_leading_coefficient", "Positive leading coefficient", "bool", True),
-            *shared_factoring_settings(),
-            SettingField("include_answer_key", "Include answer key", "bool", False),
-        ]
+    def settings_schema(self):
+        return schema_for_generator(self.id)
 
     def generate(self, settings: dict) -> list[Question]:
         count = int(settings.get("count", 10))
@@ -60,7 +48,11 @@ class QuadraticFactoringQuestionType(QuestionType):
                     prompt_latex=quadratic.to_latex(),
                     prompt_text=str(quadratic),
                     answer_latex=answer_latex,
-                    metadata={"degree": quadratic.deg(), "factoring_method": result.method},
+                    metadata=merge_enrichment_metadata(
+                        settings,
+                        {"degree": quadratic.deg(), "factoring_method": result.method},
+                        answer=answer_latex,
+                    ),
                 )
             )
 

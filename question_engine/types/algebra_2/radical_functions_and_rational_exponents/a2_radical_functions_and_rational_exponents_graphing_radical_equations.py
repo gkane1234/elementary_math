@@ -1,0 +1,5 @@
+"""Graphing catalog type: a2_radical_functions_and_rational_exponents_graphing_radical_equations."""
+
+from question_engine.types._from_generator import register_from_catalog
+
+register_from_catalog("a2_radical_functions_and_rational_exponents_graphing_radical_equations")

@@ -2,6 +2,7 @@ import json
 from typing import Any
 
 from ..core.base import QUESTION_TYPES, list_question_types
+from ..utils.instruction_latex import repair_instruction_latex
 from ..utils.layout import resolve_column_count
 from ..core.models import Question, QuestionSet
 
@@ -24,7 +25,7 @@ def _annotate_questions(
         question.metadata = {
             **question.metadata,
             "generation_settings": generation_settings,
-            "instruction_latex": question_type.instruction_latex,
+            "instruction_latex": repair_instruction_latex(question_type.instruction_latex),
         }
     return questions
 
@@ -85,7 +86,7 @@ def handle_generate(body: dict[str, Any]) -> tuple[int, dict[str, str], str]:
         title=title,
         questions=questions,
         settings_snapshot=settings,
-        instruction_latex=question_type.instruction_latex,
+        instruction_latex=repair_instruction_latex(question_type.instruction_latex),
         instruction_text=question_type.instruction_text,
         columns=columns,
     )

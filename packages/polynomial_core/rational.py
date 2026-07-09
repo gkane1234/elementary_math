@@ -420,7 +420,7 @@ def _random_numerator_for_denominator(
     partial_degree = _random_numerator_degree(denominator)
     if partial_degree == 0:
         return Polynomial([Polynomial.randomCoefficient(coef_min, coef_max, nonZero=True)])
-    return Polynomial.randomPolynomial(
+    return Polynomial.random_polynomial(
         partial_degree,
         coef_min,
         coef_max,
@@ -512,7 +512,7 @@ def _random_polynomial_term(
     degree = random.randint(0, max(0, max_degree))
     if degree == 0:
         return Polynomial([Polynomial.randomCoefficient(coef_min, coef_max, nonZero=True)])
-    return Polynomial.randomPolynomial(degree, coef_min, coef_max, positive_leading=positive_leading)
+    return Polynomial.random_polynomial(degree, coef_min, coef_max, positive_leading=positive_leading)
 
 
 def _build_fraction_display_term(
@@ -629,7 +629,7 @@ def build_rational_expression_problem(
                     partial_num * cancel_product for partial_num in partial_numerators
                 ]
         else:
-            seed_numerator = Polynomial.randomPolynomial(
+            seed_numerator = Polynomial.random_polynomial(
                 random.randint(1, max(1, lcd.deg() - 1)),
                 coef_min,
                 coef_max,

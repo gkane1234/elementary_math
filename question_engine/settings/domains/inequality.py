@@ -24,3 +24,25 @@ def inequality_settings() -> list[SettingField]:
             group="inequality",
         ),
     ]
+
+
+def inequality_direction_settings() -> list[SettingField]:
+    return [
+        SettingField("allow_lt", "Allow <", "bool", True, group="inequality"),
+        SettingField("allow_gt", "Allow >", "bool", True, group="inequality"),
+        SettingField("allow_lte", "Allow ≤", "bool", True, group="inequality"),
+        SettingField("allow_gte", "Allow ≥", "bool", True, group="inequality"),
+    ]
+
+
+def compound_inequality_settings() -> list[SettingField]:
+    return [
+        SettingField(
+            "compound_style",
+            "Compound style",
+            "select",
+            "and",
+            options=["and", "or"],
+            group="inequality",
+        ),
+    ]

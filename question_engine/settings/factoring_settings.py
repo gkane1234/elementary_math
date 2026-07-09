@@ -89,8 +89,56 @@ def shared_factoring_settings() -> list[SettingField]:
             False,
             group="factoring",
         ),
+        SettingField(
+            "monic_only",
+            "Monic polynomials only (leading coeff 1)",
+            "bool",
+            False,
+            group="factoring",
+        ),
+        SettingField(
+            "require_gcf",
+            "Require GCF factoring step",
+            "bool",
+            False,
+            group="factoring",
+        ),
+        SettingField(
+            "difference_of_squares_only",
+            "Difference of squares only",
+            "bool",
+            False,
+            group="factoring",
+        ),
         *factoring_method_settings(),
     ]
+
+
+def factoring_method_overrides(settings: dict[str, Any]) -> dict[str, bool]:
+    """Map UI factoring toggles to enabled_methods for polynomial_core."""
+    if bool(settings.get("difference_of_squares_only", False)):
+        return {
+            "factor_normal": False,
+            "factor_grouping": False,
+            "factor_substitution": False,
+            "factor_difference_of_squares": True,
+            "factor_difference_of_cubes": False,
+            "factor_sum_of_cubes": False,
+            "factor_rrt": False,
+        }
+
+    if bool(settings.get("require_gcf", False)):
+        return {
+            "factor_normal": True,
+            "factor_grouping": False,
+            "factor_substitution": False,
+            "factor_difference_of_squares": False,
+            "factor_difference_of_cubes": False,
+            "factor_sum_of_cubes": False,
+            "factor_rrt": False,
+        }
+
+    return {}
 
 
 def parse_factoring_settings(settings: dict[str, Any]) -> ParsedFactoringSettings:
@@ -103,18 +151,37 @@ def parse_factoring_settings(settings: dict[str, Any]) -> ParsedFactoringSetting
         legacy_rrt = str(settings.get("rrt_mode", "exclude"))
         rrt_mode = "exclude" if legacy_rrt == "exclude" else "allow"
 
+    overrides = factoring_method_overrides(settings)
     enabled_methods = {
-        "normal": bool(settings.get("factor_normal", True)),
-        "grouping": bool(settings.get("factor_grouping", True)),
-        "substitution": bool(settings.get("factor_substitution", True)),
-        "difference_of_squares": bool(settings.get("factor_difference_of_squares", True)),
-        "difference_of_cubes": bool(settings.get("factor_difference_of_cubes", True)),
-        "sum_of_cubes": bool(settings.get("factor_sum_of_cubes", True)),
-        "rrt": rrt_mode != "exclude",
+        "normal": bool(overrides.get("factor_normal", settings.get("factor_normal", True))),
+        "grouping": bool(overrides.get("factor_grouping", settings.get("factor_grouping", True))),
+        "substitution": bool(
+            overrides.get("factor_substitution", settings.get("factor_substitution", True))
+        ),
+        "difference_of_squares": bool(
+            overrides.get(
+                "factor_difference_of_squares",
+                settings.get("factor_difference_of_squares", True),
+            )
+        ),
+        "difference_of_cubes": bool(
+            overrides.get(
+                "factor_difference_of_cubes",
+                settings.get("factor_difference_of_cubes", True),
+            )
+        ),
+        "sum_of_cubes": bool(
+            overrides.get("factor_sum_of_cubes", settings.get("factor_sum_of_cubes", True))
+        ),
+        "rrt": rrt_mode != "exclude" and bool(overrides.get("factor_rrt", True)),
     }
 
+    leading_one = bool(settings.get("leading_coefficient_one", False)) or bool(
+        settings.get("monic_only", False)
+    )
+
     return ParsedFactoringSettings(
-        leading_coefficient_one=bool(settings.get("leading_coefficient_one", False)),
+        leading_coefficient_one=leading_one,
         rrt_mode=rrt_mode,
         enabled_methods=enabled_methods,
         coef_min=coef_min,

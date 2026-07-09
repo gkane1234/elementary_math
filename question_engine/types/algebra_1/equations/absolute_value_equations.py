@@ -1,5 +1,16 @@
-"""Catalog generator type: absolute_value_equations."""
+"""Absolute value equations — framework-backed type."""
 
-from question_engine.types._from_generator import register_from_catalog
+from question_engine.frameworks.equation import AbsoluteValueEquationsFramework
+from question_engine.types._framework_type import register_framework_type
 
-register_from_catalog("absolute_value_equations")
+register_framework_type(
+    "absolute_value_equations",
+    AbsoluteValueEquationsFramework(),
+    setting_profile="equation",
+    exclude_settings=(
+        "allow_add",
+        "allow_subtract",
+        "allow_multiply",
+        "allow_divide",
+    ),
+)

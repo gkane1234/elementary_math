@@ -1,0 +1,5 @@
+"""Graphing catalog type: graphing_quadratic_functions."""
+
+from question_engine.types._from_generator import register_from_catalog
+
+register_from_catalog("graphing_quadratic_functions")

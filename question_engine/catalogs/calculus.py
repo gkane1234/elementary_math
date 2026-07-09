@@ -43,18 +43,21 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Limits",
         "calc_limits_by_direct_evaluation",
         "By direct evaluation",
+        generator="limit_direct_evaluation",
         instruction_text="Find the limit.",
     ),
     _calc(
         "Limits",
         "calc_limits_at_jump_discontinuities_and_kinks",
         "At jump discontinuities and kinks",
+        generator="limit_direct_evaluation",
         instruction_text="Find the limit.",
     ),
     _calc(
         "Limits",
         "calc_limits_at_removable_discontinuities",
         "At removable discontinuities",
+        generator="limit_direct_evaluation",
         instruction_text="Find the limit.",
     ),
     _calc(
@@ -67,6 +70,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Limits",
         "calc_limits_at_infinity",
         "At infinity",
+        generator="limit_at_infinity",
         instruction_text="Find the limit.",
     ),
     # Continuity
@@ -74,6 +78,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Continuity",
         "calc_continuity_determining_and_classifying",
         "Determining and classifying",
+        generator="limit_direct_evaluation",
         instruction_text="Determine and classify continuity.",
     ),
     # Differentiation
@@ -81,12 +86,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differentiation",
         "calc_diff_average_rates_of_change",
         "Average rates of change",
+        generator="derivative_power_rule",
         instruction_text="Find the average rate of change.",
     ),
     _calc(
         "Differentiation",
         "calc_diff_definition_of_the_derivative",
         "Definition of the derivative",
+        generator="derivative_power_rule",
         instruction_text="Use the definition of the derivative.",
     ),
     _calc(
@@ -99,30 +106,35 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differentiation",
         "calc_diff_power_rule",
         "Power Rule",
+        generator="derivative_power_rule",
         instruction_text="Differentiate.",
     ),
     _calc(
         "Differentiation",
         "calc_diff_higher_order_derivatives",
         "Higher order derivatives",
+        generator="derivative_power_rule",
         instruction_text="Find the derivative.",
     ),
     _calc(
         "Differentiation",
         "calc_diff_product_rule",
         "Product Rule",
+        generator="derivative_power_rule",
         instruction_text="Differentiate.",
     ),
     _calc(
         "Differentiation",
         "calc_diff_quotient_rule",
         "Quotient Rule",
+        generator="derivative_power_rule",
         instruction_text="Differentiate.",
     ),
     _calc(
         "Differentiation",
         "calc_diff_chain_rule",
         "Chain Rule",
+        generator="derivative_power_rule",
         instruction_text="Differentiate.",
     ),
     _calc(
@@ -135,6 +147,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differentiation",
         "calc_diff_trigonometric",
         "Trigonometric",
+        generator="derivative_power_rule",
         instruction_text="Differentiate.",
     ),
     _calc(
@@ -165,6 +178,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differentiation",
         "calc_diff_implicit",
         "Implicit",
+        generator="derivative_power_rule",
         instruction_text="Differentiate implicitly.",
     ),
     _calc(
@@ -275,6 +289,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Indefinite Integration",
         "calc_indef_int_power_rule",
         "Power Rule",
+        generator="integral_power_rule",
         instruction_text="Integrate.",
     ),
     _calc(
@@ -287,6 +302,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Indefinite Integration",
         "calc_indef_int_trigonometric",
         "Trigonometric",
+        generator="integral_power_rule",
         instruction_text="Integrate.",
     ),
     _calc(
@@ -299,6 +315,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Indefinite Integration",
         "calc_indef_int_power_rule_with_substitution",
         "Power rule with substitution",
+        generator="integral_power_rule",
         instruction_text="Integrate.",
     ),
     _calc(
@@ -330,6 +347,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Definite Integration",
         "calc_def_int_approximating_area_under_a_curve",
         "Approximating area under a curve",
+        generator="integral_power_rule",
         instruction_text="Approximate the area.",
     ),
     _calc(
@@ -348,6 +366,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Definite Integration",
         "calc_def_int_first_fundamental_theorem_of_calculus",
         "First Fundamental Theorem of Calculus",
+        generator="integral_power_rule",
         instruction_text="Evaluate.",
     ),
     _calc(
@@ -373,6 +392,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Applications of Integration",
         "calc_app_int_area_under_a_curve",
         "Area under a curve",
+        generator="integral_power_rule",
         instruction_text="Find the area.",
     ),
     _calc(
@@ -428,6 +448,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differential Equations",
         "calc_diff_eq_exponential_growth_and_decay",
         "Exponential growth and decay",
+        generator="exponential_growth_decay",
         instruction_text="Solve the problem.",
     ),
 )

@@ -5,7 +5,8 @@ from packages.polynomial_core import Polynomial
 
 from question_engine.base import QuestionType, register
 from question_engine.latex_helpers import long_division_answer_latex, polynomial_fraction_latex
-from question_engine.models import Question, SettingField
+from question_engine.models import Question
+from question_engine.settings.generator_profiles import schema_for_generator
 
 
 def _normalize_range(min_value: int, max_value: int) -> tuple[int, int]:
@@ -104,26 +105,8 @@ class PolynomialLongDivisionQuestionType(QuestionType):
     instruction_latex = "\\text{Divide using polynomial long division.}"
     instruction_text = "Divide using polynomial long division."
 
-    def settings_schema(self) -> list[SettingField]:
-        return [
-            SettingField("count", "Number of questions", "int", 10, min=1, max=50),
-            SettingField(
-                "max_columns",
-                "Columns (auto-fit up to 3)",
-                "select",
-                "auto",
-                options=["auto", "1", "2", "3"],
-            ),
-            SettingField("numerator_degree_min", "Numerator degree min", "int", 2, min=1, max=8),
-            SettingField("numerator_degree_max", "Numerator degree max", "int", 4, min=1, max=8),
-            SettingField("denominator_degree_min", "Denominator degree min", "int", 1, min=1, max=6),
-            SettingField("denominator_degree_max", "Denominator degree max", "int", 2, min=1, max=6),
-            SettingField("coef_min", "Coefficient min", "int", -6, min=-20, max=20),
-            SettingField("coef_max", "Coefficient max", "int", 6, min=-20, max=20),
-            SettingField("divide_cleanly", "Divide evenly (no remainder)", "bool", True),
-            SettingField("positive_leading_coefficient", "Positive leading coefficients", "bool", True),
-            SettingField("include_answer_key", "Include answer key", "bool", False),
-        ]
+    def settings_schema(self):
+        return schema_for_generator(self.id)
 
     def generate(self, settings: dict) -> list[Question]:
         count = int(settings.get("count", 10))

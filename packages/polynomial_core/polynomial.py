@@ -700,7 +700,7 @@ class Polynomial:
         return ret
 
     @staticmethod
-    def randomPolynomial(degree, coef_min, coef_max, positive_leading=True):
+    def random_polynomial(degree, coef_min, coef_max, positive_leading=True):
         if degree < 0:
             return Polynomial(((0, 0),))
 
@@ -711,11 +711,6 @@ class Polynomial:
         if positive_leading and coeffs[0] < 0:
             coeffs[0] *= -1
         return Polynomial(coeffs)
-
-    @staticmethod
-    def random_polynomial(degree, coef_min, coef_max, positive_leading=True):
-        """Snake-case alias for :meth:`randomPolynomial`."""
-        return Polynomial.randomPolynomial(degree, coef_min, coef_max, positive_leading)
 
     @staticmethod
     def from_coefficients(coefficients, variable='x', sort=True, simplify=True):

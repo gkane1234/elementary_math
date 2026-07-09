@@ -7,6 +7,7 @@ from typing import Any
 
 from ..core.models import Question, SettingField
 from ..generators.utils import make_questions
+from ..settings.enrichment import merge_enrichment_metadata
 from ..settings.standard import merge_settings, standard_question_settings
 
 
@@ -23,20 +24,45 @@ class QuestionFramework(ABC):
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}
 
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        """Optional per-question metadata (e.g. graph specs tied to the answer)."""
+        return {}
+
     def generate_batch(self, topic_id: str, settings: dict) -> list[Question]:
         count = int(settings.get("count", 10))
         include_answer_key = bool(settings.get("include_answer_key", False))
-        metadata = self.build_metadata(settings)
+        base_metadata = self.build_metadata(settings)
 
         def builder() -> tuple[str, str, str | None]:
             return self.build_prompt(settings)
+
+        def metadata_builder(
+            prompt_latex: str,
+            prompt_text: str,
+            answer: str | None,
+        ) -> dict[str, Any]:
+            per_question = self.build_question_metadata(
+                settings,
+                prompt_latex=prompt_latex,
+                prompt_text=prompt_text,
+                answer=answer,
+            )
+            return merge_enrichment_metadata(settings, per_question, answer=answer)
 
         return make_questions(
             topic_id,
             count,
             include_answer_key,
             builder,
-            metadata=metadata,
+            metadata=base_metadata,
+            metadata_builder=metadata_builder,
         )
 
     @staticmethod

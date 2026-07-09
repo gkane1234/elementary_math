@@ -24,11 +24,16 @@ def random_fraction(
     num_max: int = 10,
     denom_min: int = 2,
     denom_max: int = 12,
+    allow_negative: bool = True,
 ) -> Fraction:
+    lo, hi = num_min, num_max
+    if not allow_negative:
+        lo = max(1, lo)
+        hi = max(lo, hi)
     denominator = random.randint(denom_min, denom_max)
-    numerator = random.randint(num_min, num_max)
+    numerator = random.randint(lo, hi)
     while numerator == 0:
-        numerator = random.randint(num_min, num_max)
+        numerator = random.randint(lo, hi)
     return Fraction(numerator, denominator)
 
 
@@ -39,11 +44,25 @@ def make_questions(
     builder: Callable[[], tuple[str, str, str | None]],
     *,
     metadata: dict[str, Any] | None = None,
+    metadata_builder: Callable[[str, str, str | None], dict[str, Any]] | None = None,
+    settings: dict[str, Any] | None = None,
 ) -> list[Question]:
+    from ..settings.enrichment import merge_enrichment_metadata
+
     questions: list[Question] = []
     base_metadata = dict(metadata or {})
+    generation_settings = settings or {}
     for _ in range(count):
         prompt_latex, prompt_text, answer = builder()
+        question_metadata = dict(base_metadata)
+        if metadata_builder is not None:
+            question_metadata.update(metadata_builder(prompt_latex, prompt_text, answer))
+        elif generation_settings:
+            question_metadata = merge_enrichment_metadata(
+                generation_settings,
+                question_metadata,
+                answer=answer,
+            )
         questions.append(
             Question(
                 id=str(uuid.uuid4()),
@@ -51,7 +70,7 @@ def make_questions(
                 prompt_latex=prompt_latex,
                 prompt_text=prompt_text,
                 answer_latex=answer if include_answer_key else None,
-                metadata=dict(base_metadata),
+                metadata=question_metadata,
             )
         )
     return questions

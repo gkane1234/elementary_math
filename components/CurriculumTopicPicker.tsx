@@ -3,14 +3,14 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   buildCurriculumPicker,
+  filterTopics,
   findFirstTopicByTypeId,
   findTopicSelection,
-  flattenTopicsForSearch,
   getDefaultSelection,
   getUnmappedTypes,
   topicStatusLabel,
   type CurriculumSelection,
-  type PickerTopic,
+  type FlatTopicSearchResult,
 } from "@/lib/curriculum-picker";
 import { formatQuestionTypeLabel, groupQuestionTypes } from "@/lib/question-type-groups";
 import type { QuestionTypeInfo } from "@/lib/types";
@@ -21,47 +21,63 @@ type CurriculumTopicPickerProps = {
   onTypeIdChange: (typeId: string) => void;
 };
 
-function topicOptionLabel(topic: PickerTopic): string {
-  if (topic.status === "ready") return topic.name;
-  return `${topic.name} (${topicStatusLabel(topic.status)})`;
-}
-
 export function CurriculumTopicPicker({
   types,
   selectedTypeId,
   onTypeIdChange,
 }: CurriculumTopicPickerProps) {
   const courses = useMemo(() => buildCurriculumPicker(undefined, types), [types]);
-  const searchIndex = useMemo(() => flattenTopicsForSearch(courses), [courses]);
   const unmappedTypes = useMemo(() => getUnmappedTypes(types, courses), [types, courses]);
   const unmappedGroups = useMemo(() => groupQuestionTypes(unmappedTypes), [unmappedTypes]);
 
   const [selection, setSelection] = useState<CurriculumSelection | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterCourseId, setFilterCourseId] = useState("");
+  const [filterChapterId, setFilterChapterId] = useState("");
+  const [readyOnly, setReadyOnly] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
 
-  const selectedCourse = courses.find((course) => course.id === selection?.courseId) ?? null;
-  const selectedChapter =
-    selectedCourse?.chapters.find((chapter) => chapter.id === selection?.chapterId) ?? null;
   const selectedTopic = selection ? findTopicSelection(courses, selection) : null;
 
-  const searchResults = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-    if (!query) return [];
-    return searchIndex
-      .filter((entry) => entry.topic.name.toLowerCase().includes(query))
-      .slice(0, 12);
-  }, [searchIndex, searchQuery]);
+  const filterCourse = courses.find((course) => course.id === filterCourseId) ?? null;
+  const chapterFilterOptions = useMemo(() => {
+    if (filterCourse) return filterCourse.chapters;
+    const chapters: { id: string; name: string; courseName: string }[] = [];
+    for (const course of courses) {
+      for (const chapter of course.chapters) {
+        chapters.push({ id: chapter.id, name: chapter.name, courseName: course.name });
+      }
+    }
+    return chapters;
+  }, [courses, filterCourse]);
+
+  const filteredTopics = useMemo(
+    () =>
+      filterTopics(courses, searchQuery, {
+        courseId: filterCourseId || undefined,
+        chapterId: filterChapterId || undefined,
+        readyOnly,
+      }),
+    [courses, searchQuery, filterCourseId, filterChapterId, readyOnly],
+  );
 
   useEffect(() => {
     if (types.length === 0) return;
 
     const mapped = findFirstTopicByTypeId(courses, selectedTypeId);
     if (mapped) {
-      setSelection({
-        courseId: mapped.courseId,
-        chapterId: mapped.chapterId,
-        topicId: mapped.topicId,
+      setSelection((current) => {
+        if (current) {
+          const currentTopic = findTopicSelection(courses, current);
+          if (currentTopic?.typeId === selectedTypeId) {
+            return current;
+          }
+        }
+        return {
+          courseId: mapped.courseId,
+          chapterId: mapped.chapterId,
+          topicId: mapped.topicId,
+        };
       });
       setUseFallback(false);
       return;
@@ -87,40 +103,24 @@ export function CurriculumTopicPicker({
     onTypeIdChange("");
   };
 
-  const handleCourseChange = (courseId: string) => {
-    const course = courses.find((entry) => entry.id === courseId);
-    const chapter = course?.chapters[0];
-    const topic = chapter?.topics[0];
-    if (!course || !chapter || !topic) return;
-    applySelection({ courseId, chapterId: chapter.id, topicId: topic.id });
-    setSearchQuery("");
-  };
-
-  const handleChapterChange = (chapterId: string) => {
-    if (!selection) return;
-    const chapter = selectedCourse?.chapters.find((entry) => entry.id === chapterId);
-    const topic = chapter?.topics[0];
-    if (!chapter || !topic) return;
-    applySelection({ ...selection, chapterId, topicId: topic.id });
-    setSearchQuery("");
-  };
-
-  const handleTopicChange = (topicId: string) => {
-    if (!selection) return;
-    applySelection({ ...selection, topicId });
-    setSearchQuery("");
-  };
-
-  const handleSearchPick = (entry: (typeof searchResults)[number]) => {
-    setSearchQuery("");
-    setSelection({
+  const handleListPick = (entry: FlatTopicSearchResult) => {
+    if (!entry.topic.hasGenerator) return;
+    applySelection({
       courseId: entry.courseId,
       chapterId: entry.chapterId,
       topicId: entry.topicId,
     });
-    if (entry.topic.typeId && entry.topic.hasGenerator) {
-      onTypeIdChange(entry.topic.typeId);
-      setUseFallback(false);
+  };
+
+  const handleFilterCourseChange = (courseId: string) => {
+    setFilterCourseId(courseId);
+    if (!courseId) {
+      setFilterChapterId("");
+      return;
+    }
+    const course = courses.find((entry) => entry.id === courseId);
+    if (filterChapterId && !course?.chapters.some((chapter) => chapter.id === filterChapterId)) {
+      setFilterChapterId("");
     }
   };
 
@@ -130,50 +130,33 @@ export function CurriculumTopicPicker({
 
   return (
     <div className="curriculum-picker">
-      <label className="field">
-        <span>Search topics</span>
-        <input
-          type="search"
-          placeholder="Filter by topic name…"
-          value={searchQuery}
-          onChange={(event) => setSearchQuery(event.target.value)}
-        />
-      </label>
+      <div className="curriculum-picker-toolbar">
+        <label className="field curriculum-picker-search">
+          <span className="sr-only">Search topics</span>
+          <input
+            type="search"
+            placeholder="Search topics…"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            aria-label="Search topics"
+          />
+        </label>
 
-      {searchQuery.trim() && (
-        <ul className="curriculum-search-results">
-          {searchResults.length === 0 ? (
-            <li className="curriculum-search-empty">No topics match your search.</li>
-          ) : (
-            searchResults.map((entry) => (
-              <li key={`${entry.courseId}-${entry.chapterId}-${entry.topicId}`}>
-                <button
-                  type="button"
-                  className={`curriculum-search-option${entry.topic.hasGenerator ? "" : " is-disabled"}`}
-                  disabled={!entry.topic.hasGenerator}
-                  onClick={() => handleSearchPick(entry)}
-                >
-                  <span className="curriculum-search-topic">{entry.topic.name}</span>
-                  <span className="curriculum-search-path">
-                    {entry.courseName} › {entry.chapterName}
-                  </span>
-                  {!entry.topic.hasGenerator && (
-                    <span className="topic-status-badge">{topicStatusLabel(entry.topic.status)}</span>
-                  )}
-                </button>
-              </li>
-            ))
-          )}
-        </ul>
-      )}
+        <label className="field field-inline curriculum-picker-ready-only">
+          <input
+            type="checkbox"
+            checked={readyOnly}
+            onChange={(event) => setReadyOnly(event.target.checked)}
+          />
+          <span>Ready only</span>
+        </label>
+      </div>
 
-      <div className="curriculum-picker-cascade">
+      <div className="curriculum-picker-filters">
         <label className="field">
           <span>Course</span>
-          <select
-            value={selection?.courseId ?? ""}
-            onChange={(event) => handleCourseChange(event.target.value)}
-          >
+          <select value={filterCourseId} onChange={(event) => handleFilterCourseChange(event.target.value)}>
+            <option value="">All courses</option>
             {courses.map((course) => (
               <option key={course.id} value={course.id}>
                 {course.name}
@@ -185,32 +168,67 @@ export function CurriculumTopicPicker({
         <label className="field">
           <span>Chapter</span>
           <select
-            value={selection?.chapterId ?? ""}
-            onChange={(event) => handleChapterChange(event.target.value)}
-            disabled={!selectedCourse}
+            value={filterChapterId}
+            onChange={(event) => setFilterChapterId(event.target.value)}
           >
-            {(selectedCourse?.chapters ?? []).map((chapter) => (
-              <option key={chapter.id} value={chapter.id}>
-                {chapter.name}
-              </option>
-            ))}
+            <option value="">All chapters</option>
+            {filterCourse
+              ? filterCourse.chapters.map((chapter) => (
+                  <option key={chapter.id} value={chapter.id}>
+                    {chapter.name}
+                  </option>
+                ))
+              : chapterFilterOptions.map((chapter) => (
+                  <option key={chapter.id} value={chapter.id}>
+                    {"courseName" in chapter ? `${chapter.courseName} › ${chapter.name}` : chapter.name}
+                  </option>
+                ))}
           </select>
         </label>
+      </div>
 
-        <label className="field">
-          <span>Topic</span>
-          <select
-            value={selection?.topicId ?? ""}
-            onChange={(event) => handleTopicChange(event.target.value)}
-            disabled={!selectedChapter}
-          >
-            {(selectedChapter?.topics ?? []).map((topic) => (
-              <option key={topic.id} value={topic.id} disabled={!topic.hasGenerator}>
-                {topicOptionLabel(topic)}
-              </option>
-            ))}
-          </select>
-        </label>
+      <div className="curriculum-topic-list" role="listbox" aria-label="Topics">
+        {filteredTopics.length === 0 ? (
+          <p className="curriculum-topic-list-empty">No topics match your search or filters.</p>
+        ) : (
+          filteredTopics.map((entry) => {
+            const isSelected =
+              selection?.courseId === entry.courseId &&
+              selection.chapterId === entry.chapterId &&
+              selection.topicId === entry.topicId;
+
+            return (
+              <button
+                key={`${entry.courseId}-${entry.chapterId}-${entry.topicId}`}
+                type="button"
+                role="option"
+                aria-selected={isSelected}
+                className={`curriculum-topic-row${isSelected ? " is-selected" : ""}${
+                  entry.topic.hasGenerator ? "" : " is-disabled"
+                }`}
+                disabled={!entry.topic.hasGenerator}
+                onClick={() => handleListPick(entry)}
+              >
+                <span className="curriculum-topic-row-check" aria-hidden="true">
+                  {isSelected ? "✓" : ""}
+                </span>
+                <span className="curriculum-topic-row-main">
+                  <span className="curriculum-topic-row-name">{entry.topic.name}</span>
+                  <span className="curriculum-topic-row-path">
+                    {entry.courseName} › {entry.chapterName}
+                  </span>
+                </span>
+                <span
+                  className={`topic-status-badge${
+                    entry.topic.status === "ready" ? " is-ready" : ""
+                  }`}
+                >
+                  {topicStatusLabel(entry.topic.status)}
+                </span>
+              </button>
+            );
+          })
+        )}
       </div>
 
       {selectedTopic && !selectedTopic.hasGenerator && (

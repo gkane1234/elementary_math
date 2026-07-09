@@ -1,0 +1,5 @@
+"""Catalog generator type: a2_radical_functions_and_rational_exponents_simplifying_radicals."""
+
+from question_engine.types._from_generator import register_from_catalog
+
+register_from_catalog("a2_radical_functions_and_rational_exponents_simplifying_radicals")

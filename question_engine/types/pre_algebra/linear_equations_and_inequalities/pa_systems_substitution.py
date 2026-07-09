@@ -1,5 +1,10 @@
-"""Catalog generator type: pa_systems_substitution."""
+"""PA systems substitution — framework-backed with systems settings profile."""
 
-from question_engine.types._from_generator import register_from_catalog
+from question_engine.frameworks.linear import SystemsSubstitutionFramework
+from question_engine.types._linear_type import register_linear_type
 
-register_from_catalog("pa_systems_substitution")
+register_linear_type(
+    "pa_systems_substitution",
+    SystemsSubstitutionFramework(),
+    profile="systems",
+)

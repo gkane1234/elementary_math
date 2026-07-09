@@ -1,1 +1,4 @@
-from .api.dev_server import *  # noqa: F403
+from .api.dev_server import main
+
+if __name__ == "__main__":
+    main()

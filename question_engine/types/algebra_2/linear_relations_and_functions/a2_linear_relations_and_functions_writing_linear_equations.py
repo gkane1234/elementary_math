@@ -1,5 +1,9 @@
-"""Catalog generator type: a2_linear_relations_and_functions_writing_linear_equations."""
+"""A2 writing linear equations — framework-backed with linear settings profile."""
 
-from question_engine.types._from_generator import register_from_catalog
+from question_engine.frameworks.linear import WritingLinearEquationsFramework
+from question_engine.types._linear_type import register_linear_type
 
-register_from_catalog("a2_linear_relations_and_functions_writing_linear_equations")
+register_linear_type(
+    "a2_linear_relations_and_functions_writing_linear_equations",
+    WritingLinearEquationsFramework(),
+)

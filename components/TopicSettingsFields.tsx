@@ -3,7 +3,27 @@ import type { SettingField } from "@/lib/types";
 const WORKSHEET_LEVEL_KEYS = new Set(["count", "max_columns"]);
 
 const GROUP_LABELS: Record<string, string> = {
+  polynomial: "Polynomial",
+  equation: "Equation",
+  inequality: "Inequality",
+  number: "Numbers",
+  linear: "Linear",
+  radical: "Radicals",
+  rational: "Rational expressions",
   factoring: "Factoring",
+  exponential: "Exponential",
+  trigonometry: "Trigonometry",
+  logarithm: "Logarithms",
+  sequence: "Sequences",
+  limits: "Limits",
+  derivatives: "Derivatives",
+  integrals: "Integrals",
+  expression: "Expressions",
+  systems: "Systems",
+  variation: "Variation",
+  relations: "Relations",
+  word_problem: "Word problem",
+  geometry: "Geometry",
 };
 
 const CANCEL_FACTOR_COUNT_LABELS: Record<string, string> = {

@@ -11,7 +11,7 @@ from ..core.scaffold import register_catalog_types
 def _import_descendants() -> None:
     package_dir = Path(__file__).parent
     for path in sorted(package_dir.rglob("*.py")):
-        if path.name in ("__init__.py", "_from_generator.py"):
+        if path.name in ("__init__.py", "_from_generator.py", "_framework_type.py", "_linear_type.py", "_geometry_type.py"):
             continue
         rel = path.relative_to(package_dir).with_suffix("")
         module_name = f"{__name__}." + ".".join(rel.parts)

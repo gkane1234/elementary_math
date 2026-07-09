@@ -17,7 +17,7 @@ CATEGORY_ORDER: tuple[str, ...] = (
     'Geometry — Constructions',
 )
 
-from .base import TypeCatalogEntry
+from .base import TypeCatalogEntry, resolve_instruction_latex, resolve_instruction_text
 
 
 
@@ -37,8 +37,8 @@ def _geo(
         category=f"Geometry — {chapter}",
         generator=generator,
         description=f"Practice {name.lower()}.",
-        instruction_latex=instruction_latex or "\\text{Solve.}",
-        instruction_text=instruction_text or "Solve.",
+        instruction_latex=resolve_instruction_latex(instruction_latex, instruction_text),
+        instruction_text=resolve_instruction_text(instruction_text),
         count_default=count_default,
     )
 
@@ -53,32 +53,29 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _geo(
         "Review of Algebra",
         "geo_review_simplifying_square_roots",
-        "Simplifying square roots",
-        instruction_text="Simplify.",
+        "Simplifying square roots", generator="radical_simplification", instruction_text="Simplify.",
     ),
     _geo(
         "Review of Algebra",
         "geo_review_adding_and_subtracting_square_roots",
-        "Adding and subtracting square roots",
-        instruction_text="Simplify.",
+        "Adding and subtracting square roots", generator="radical_add_subtract", instruction_text="Simplify.",
     ),
     _geo(
         "Review of Algebra",
         "geo_review_multiplying_square_roots",
-        "Multiplying square roots",
-        instruction_text="Simplify.",
+        "Multiplying square roots", generator="radical_multiply", instruction_text="Simplify.",
     ),
     _geo(
         "Review of Algebra",
         "geo_review_dividing_square_roots",
-        "Dividing square roots",
-        instruction_text="Simplify.",
+        "Dividing square roots", generator="radical_divide", instruction_text="Simplify.",
     ),
     # Basics of Geometry
     _geo(
         "Basics of Geometry",
         "geo_basics_line_segments_and_their_measures",
         "Line segments and their measures",
+        generator="geo_segment_length",
         instruction_text="Find the measure.",
     ),
     _geo(
@@ -91,12 +88,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Basics of Geometry",
         "geo_basics_angles_and_their_measures",
         "Angles and their measures",
+        generator="geo_angles",
         instruction_text="Find the measure.",
     ),
     _geo(
         "Basics of Geometry",
         "geo_basics_classifying_angles",
         "Classifying angles",
+        generator="geo_classifying_angles",
         instruction_text="Classify the angle.",
     ),
     _geo(
@@ -134,18 +133,28 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Parallel Lines and the Coordinate Plane",
         "geo_parallel_points_of_the_coordinate_plane",
         "Points of the coordinate plane",
+        generator="plotting_points",
         instruction_text="Identify the point.",
     ),
     _geo(
         "Parallel Lines and the Coordinate Plane",
         "geo_parallel_slope_and_lines",
         "Slope and lines",
+        generator="slope",
         instruction_text="Find the slope.",
+    ),
+    _geo(
+        "Parallel Lines and the Coordinate Plane",
+        "geo_parallel_distance_formula",
+        "The distance formula",
+        generator="geo_coordinate_distance",
+        instruction_text="Find the distance.",
     ),
     _geo(
         "Parallel Lines and the Coordinate Plane",
         "geo_parallel_graphing_linear_equations",
         "Graphing linear equations",
+        generator="graph_linear_equation",
         instruction_text="Graph the equation.",
     ),
     _geo(
@@ -164,7 +173,15 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Congruent Triangles",
         "geo_congruent_triangle_angle_sum",
         "Triangle angle sum",
+        generator="geo_triangle_angle_sum",
         instruction_text="Find the measure.",
+    ),
+    _geo(
+        "Congruent Triangles",
+        "geo_congruent_triangle_perimeter",
+        "Triangle perimeter",
+        generator="geo_triangle_perimeter",
+        instruction_text="Find the perimeter.",
     ),
     _geo(
         "Congruent Triangles",
@@ -268,6 +285,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Quadrilaterals and Polygons",
         "geo_quadrilaterals_area_of_triangles_and_quadrilaterals",
         "Area of triangles and quadrilaterals",
+        generator="geo_triangle_area",
         instruction_text="Find the area.",
     ),
     _geo(
@@ -293,13 +311,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Similarity",
         "geo_similarity_similar_triangles",
         "Similar triangles",
+        generator="geo_similar_triangles",
         instruction_text="Determine if the triangles are similar.",
     ),
     _geo(
         "Similarity",
         "geo_similarity_similar_right_triangles",
-        "Similar right triangles",
-        instruction_text="Find the measure.",
+        "Similar right triangles", generator="geo_similar_triangles", instruction_text="Find the measure.",
     ),
     _geo(
         "Similarity",
@@ -310,16 +328,24 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     # Right Triangles
     _geo(
         "Right Triangles",
+        "geo_right_pythagorean_theorem",
+        "The Pythagorean Theorem",
+        generator="geo_pythagorean_theorem",
+        instruction_latex="\\text{Find the missing side.}",
+        instruction_text="Find the missing side.",
+    ),
+    _geo(
+        "Right Triangles",
         "geo_right_multi_step_pythagorean_theorem_problems",
         "Multi-step Pythagorean Theorem problems",
+        generator="geo_pythagorean_theorem",
         instruction_text="Solve the problem.",
         count_default=5,
     ),
     _geo(
         "Right Triangles",
         "geo_right_special_right_triangles",
-        "Special right triangles",
-        instruction_text="Find the measure.",
+        "Special right triangles", generator="geo_pythagorean_theorem", instruction_text="Find the measure.",
     ),
     _geo(
         "Right Triangles",
@@ -332,39 +358,33 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _geo(
         "Trigonometry",
         "geo_trig_finding_trig_ratios",
-        "Finding trig. ratios",
-        instruction_text="Find the ratio.",
+        "Finding trig. ratios", generator="trig_evaluate", instruction_text="Find the ratio.",
     ),
     _geo(
         "Trigonometry",
         "geo_trig_finding_angle_measures",
-        "Finding angle measures",
-        instruction_text="Find the angle measure.",
+        "Finding angle measures", generator="trig_evaluate", instruction_text="Find the angle measure.",
     ),
     _geo(
         "Trigonometry",
         "geo_trig_solving_right_triangles",
-        "Solving right triangles",
-        instruction_text="Solve the triangle.",
+        "Solving right triangles", generator="geo_pythagorean_theorem", instruction_text="Solve the triangle.",
     ),
     _geo(
         "Trigonometry",
         "geo_trig_multi_step_trig_problems",
-        "Multi-step trig. problems",
-        instruction_text="Solve the problem.",
+        "Multi-step trig. problems", generator="trig_evaluate", instruction_text="Solve the problem.",
         count_default=5,
     ),
     _geo(
         "Trigonometry",
         "geo_trig_rhombuses_and_kites_with_right_triangles",
-        "Rhombuses and kites with right triangles",
-        instruction_text="Find the measure.",
+        "Rhombuses and kites with right triangles", generator="geo_pythagorean_theorem", instruction_text="Find the measure.",
     ),
     _geo(
         "Trigonometry",
         "geo_trig_trigonometry_and_area",
-        "Trigonometry and area",
-        instruction_text="Find the area.",
+        "Trigonometry and area", generator="geo_triangle_area", instruction_text="Find the area.",
     ),
     # Surface Area and Volume
     _geo(
@@ -408,6 +428,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Circles",
         "geo_circles_circumference_and_area",
         "Circumference and area",
+        generator="geo_circle_measure",
         instruction_text="Find the circumference or area.",
     ),
     _geo(
@@ -464,12 +485,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Probability and Statistics",
         "geo_probability_sample_spaces_and_fundamental_counting_principle",
         "Sample spaces and the Fundamental Counting Principle",
+        generator="stats_counting_principle",
         instruction_text="Find the number of outcomes.",
     ),
     _geo(
         "Probability and Statistics",
         "geo_probability_independent_and_dependent_events_word_problems",
         "Probability of independent and dependent events, word problems",
+        generator="stats_probability_compound_independent",
         instruction_text="Solve the problem.",
         count_default=5,
     ),
@@ -477,12 +500,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Probability and Statistics",
         "geo_probability_independent_and_dependent_events",
         "Probability of independent and dependent events",
+        generator="stats_probability_compound_independent",
         instruction_text="Find the probability.",
     ),
     _geo(
         "Probability and Statistics",
         "geo_probability_mutually_exclusive_events_word_problems",
         "Probability of mutually exclusive events, word problems",
+        generator="stats_probability_mutually_exclusive",
         instruction_text="Solve the problem.",
         count_default=5,
     ),
@@ -490,31 +515,28 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Probability and Statistics",
         "geo_probability_mutually_exclusive_events",
         "Probability of mutually exclusive events",
+        generator="stats_probability_mutually_exclusive",
         instruction_text="Find the probability.",
     ),
     _geo(
         "Probability and Statistics",
         "geo_probability_permutations",
-        "Permutations",
-        instruction_text="Find the number of permutations.",
+        "Permutations", generator="stats_counting_principle", instruction_text="Find the number of permutations.",
     ),
     _geo(
         "Probability and Statistics",
         "geo_probability_combinations",
-        "Combinations",
-        instruction_text="Find the number of combinations.",
+        "Combinations", generator="stats_counting_principle", instruction_text="Find the number of combinations.",
     ),
     _geo(
         "Probability and Statistics",
         "geo_probability_permutations_vs_combinations",
-        "Permutations vs combinations",
-        instruction_text="Determine whether to use permutations or combinations.",
+        "Permutations vs combinations", generator="stats_counting_principle", instruction_text="Determine whether to use permutations or combinations.",
     ),
     _geo(
         "Probability and Statistics",
         "geo_probability_with_permutations_and_combinations",
-        "Probability with permutations and combinations",
-        instruction_text="Find the probability.",
+        "Probability with permutations and combinations", generator="stats_counting_principle", instruction_text="Find the probability.",
     ),
     # Constructions
     _geo(

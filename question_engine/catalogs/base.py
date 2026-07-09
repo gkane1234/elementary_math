@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from ..utils.instruction_latex import resolve_instruction_latex, resolve_instruction_text
+
 
 @dataclass(frozen=True)
 class TypeCatalogEntry:
@@ -33,7 +35,7 @@ def entry(
         subcategory=subcategory,
         generator=generator,
         description=description or f"Practice {name.lower()}.",
-        instruction_latex=instruction_latex or "\\text{Solve.}",
-        instruction_text=instruction_text or "Solve.",
+        instruction_latex=resolve_instruction_latex(instruction_latex, instruction_text),
+        instruction_text=resolve_instruction_text(instruction_text),
         count_default=count_default,
     )

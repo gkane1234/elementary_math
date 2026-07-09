@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from ..utils.instruction_latex import repair_instruction_latex
 from .models import Question, SettingField
 
 QUESTION_TYPES: dict[str, "QuestionType"] = {}
@@ -29,7 +30,7 @@ class QuestionType(ABC):
             "description": self.description,
             "category": self.category,
             "subcategory": self.subcategory,
-            "instruction_latex": self.instruction_latex,
+            "instruction_latex": repair_instruction_latex(self.instruction_latex),
             "instruction_text": self.instruction_text,
             "settings": [field.to_dict() for field in self.settings_schema()],
         }

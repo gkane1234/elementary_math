@@ -53,6 +53,44 @@ Hand-written types in `question_engine/types/` bypass the catalog factory and re
 
 Domain-specific settings (e.g. `factoring_settings.py`) compose with shared fields.
 
+### Settings inheritance and profiles
+
+Reusable **domain profiles** live in `settings/profiles.py` and compose atomic builders from `settings/domains/`:
+
+| Profile | Typical settings |
+|---------|------------------|
+| `polynomial` | degree range, coefficient bounds, variable, integer-only |
+| `polynomial_factoring` | polynomial + factoring method toggles |
+| `polynomial_division` | degree bounds for numerator/denominator, divide cleanly |
+| `equation` | coefficients, variable, solution type, allowed operations |
+| `inequality` | equation bounds + steps + graph metadata + symbol family |
+| `number` | numerator/denominator bounds, allow negative |
+| `linear` | slope/intercept/coordinate bounds, integer coordinates |
+| `radical` | radicand range, root index, require simplifiable |
+| `quadratic` | fixed degree-2 coefficients + factoring methods |
+
+**Resolution** (`settings/resolve.py`):
+
+```python
+from question_engine.settings.resolve import TypeSettingConfig, resolve_type_settings
+
+config = TypeSettingConfig(
+    setting_profile="polynomial",
+    inherits=("equation",),          # optional extra profiles
+    exclude_settings=("max_degree",), # opt-out by key
+    setting_defaults={"coef_min": -6},
+)
+schema = resolve_type_settings(config)
+```
+
+**Registration patterns:**
+
+- `register_framework_type("one_step_equations", framework, setting_profile="equation")`
+- `register_from_catalog("polynomial_multiply")` — looks up `settings/generator_profiles.py` by catalog `generator` key
+- Hand-written types: `schema_for_generator("quadratic_factoring")`
+
+`standard_question_settings()` (`count`, `max_columns`, `include_answer_key`) are always prepended. Scaffold catalog types keep standard settings only.
+
 ### Question model
 
 ```python
@@ -182,11 +220,19 @@ question_engine/
     trigonometry.py  # TrigFramework, RightTriangleSpec (skeleton)
   settings/
     standard.py      # standard_question_settings(), merge_settings()
+    profiles.py      # polynomial_settings(), equation_settings(), …
+    resolve.py       # TypeSettingConfig, resolve_type_settings()
+    generator_profiles.py  # per-generator default inheritance
+    params.py        # polynomial_params_from_settings(), linear_params_from_settings()
     domains/
-      equation.py    # equation_coef_settings()
-      polynomial.py  # polynomial_coef_settings(), polynomial_factoring_settings()
+      equation.py    # equation_coef_settings(), operation/solution toggles
+      polynomial.py  # degree, coef, division, factoring settings
+      number.py      # rational, percent, decimal, ratio settings
+      linear.py      # slope, intercept, systems, variation settings
       radical.py     # radical_settings()
-      inequality.py  # inequality_settings() — steps, include_graph_metadata
+      inequality.py  # inequality_settings() — steps, graph metadata
+      rational.py    # rational-expression extra controls
+      misc.py        # expression / verbal phrase settings
       word_problem.py # word_problem_settings() — difficulty, units
       geometry.py    # geometry_settings() — include_diagram
   core/

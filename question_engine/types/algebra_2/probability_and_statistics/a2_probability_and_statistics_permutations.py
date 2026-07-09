@@ -1,0 +1,5 @@
+"""Catalog generator type: a2_probability_and_statistics_permutations."""
+
+from question_engine.types._from_generator import register_from_catalog
+
+register_from_catalog("a2_probability_and_statistics_permutations")

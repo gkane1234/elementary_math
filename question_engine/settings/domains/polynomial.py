@@ -6,6 +6,102 @@ from ...core.models import SettingField
 from ..factoring_settings import shared_factoring_settings
 
 
+def polynomial_degree_settings(
+    *,
+    min_degree_default: int = 1,
+    max_degree_default: int = 3,
+    degree_bound: int = 8,
+) -> list[SettingField]:
+    return [
+        SettingField(
+            "min_degree",
+            "Degree min",
+            "int",
+            min_degree_default,
+            min=0,
+            max=degree_bound,
+            group="polynomial",
+        ),
+        SettingField(
+            "max_degree",
+            "Degree max",
+            "int",
+            max_degree_default,
+            min=0,
+            max=degree_bound,
+            group="polynomial",
+        ),
+    ]
+
+
+def polynomial_variable_settings() -> list[SettingField]:
+    return [
+        SettingField(
+            "variable",
+            "Variable",
+            "select",
+            "x",
+            options=["x", "y", "t", "n"],
+            group="polynomial",
+        ),
+        SettingField(
+            "integer_coefficients_only",
+            "Integer coefficients only",
+            "bool",
+            True,
+            group="polynomial",
+        ),
+    ]
+
+
+def polynomial_division_settings() -> list[SettingField]:
+    return [
+        SettingField(
+            "numerator_degree_min",
+            "Numerator degree min",
+            "int",
+            2,
+            min=1,
+            max=8,
+            group="polynomial",
+        ),
+        SettingField(
+            "numerator_degree_max",
+            "Numerator degree max",
+            "int",
+            4,
+            min=1,
+            max=8,
+            group="polynomial",
+        ),
+        SettingField(
+            "denominator_degree_min",
+            "Denominator degree min",
+            "int",
+            1,
+            min=1,
+            max=6,
+            group="polynomial",
+        ),
+        SettingField(
+            "denominator_degree_max",
+            "Denominator degree max",
+            "int",
+            2,
+            min=1,
+            max=6,
+            group="polynomial",
+        ),
+        SettingField(
+            "divide_cleanly",
+            "Divide evenly (no remainder)",
+            "bool",
+            True,
+            group="polynomial",
+        ),
+    ]
+
+
 def polynomial_coef_settings(
     *,
     coef_min_default: int = -10,

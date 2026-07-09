@@ -48,7 +48,27 @@ WIRING = [
     ("a2_exponential_and_logarithmic_expressions_discrete_exponential_growth_and_decay_word_problems", "exponential_growth_decay", "algebra_2", "exponential_and_logarithmic_expressions"),
     # Geometry
     ("geo_review_multi_step_equations", "multi_step_equations", "geometry", "review_of_algebra"),
+    ("geo_review_simplifying_square_roots", "radical_simplification", "geometry", "review_of_algebra"),
+    ("geo_review_adding_and_subtracting_square_roots", "radical_add_subtract", "geometry", "review_of_algebra"),
+    ("geo_review_multiplying_square_roots", "radical_multiply", "geometry", "review_of_algebra"),
+    ("geo_review_dividing_square_roots", "radical_divide", "geometry", "review_of_algebra"),
+    ("geo_parallel_points_of_the_coordinate_plane", "plotting_points", "geometry", "parallel_lines_and_the_coordinate_plane"),
     ("geo_parallel_writing_linear_equations", "writing_linear_equations", "geometry", "parallel_lines_and_the_coordinate_plane"),
+    # Algebra 2 — hand-written + misc + remaining scaffold matches
+    ("a2_beginning_algebra_simplifying_algebraic_expressions", "combining_like_terms", "algebra_2", "beginning_algebra"),
+    ("a2_quadratic_functions_and_inequalities_factoring_quadratic_expressions", "quadratic_factoring", "algebra_2", "quadratic_functions_and_inequalities"),
+    ("a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions", "polynomial_factoring_special_cases", "algebra_2", "quadratic_functions_and_inequalities"),
+    ("a2_quadratic_functions_and_inequalities_completing_the_square", "quadratic_completing_square_constant", "algebra_2", "quadratic_functions_and_inequalities"),
+    ("a2_quadratic_functions_and_inequalities_the_discriminant", "quadratic_discriminant", "algebra_2", "quadratic_functions_and_inequalities"),
+    ("a2_polynomial_functions_dividing", "polynomial_long_division", "algebra_2", "polynomial_functions"),
+    ("a2_polynomial_functions_factoring_sum_difference_of_cubes", "polynomial_factoring_special_cases", "algebra_2", "polynomial_functions"),
+    ("a2_radical_functions_and_rational_exponents_simplifying_radicals", "radical_simplification", "algebra_2", "radical_functions_and_rational_exponents"),
+    ("a2_radical_functions_and_rational_exponents_the_properties_of_exponents", "properties_of_exponents", "algebra_2", "radical_functions_and_rational_exponents"),
+    ("a2_rational_expressions_simplifying", "rational_simplification", "algebra_2", "rational_expressions"),
+    ("a2_rational_expressions_adding_and_subtracting", "rational_expression_simplification", "algebra_2", "rational_expressions"),
+    ("a2_exponential_and_logarithmic_expressions_continuous_exponential_growth_and_decay_word_problems", "exponential_growth_decay", "algebra_2", "exponential_and_logarithmic_expressions"),
+    # Precalculus
+    ("pc_dividing_polynomial_functions", "polynomial_long_division", "precalculus", "power_polynomial_and_rational_functions"),
 ]
 
 CATALOG_FILES = {
@@ -56,6 +76,7 @@ CATALOG_FILES = {
     "pre_algebra": ROOT / "question_engine" / "catalogs" / "pre_algebra.py",
     "algebra_2": ROOT / "question_engine" / "catalogs" / "algebra_2.py",
     "geometry": ROOT / "question_engine" / "catalogs" / "geometry.py",
+    "precalculus": ROOT / "question_engine" / "catalogs" / "precalculus.py",
 }
 
 STUB_TEMPLATE = '''"""Catalog generator type: {type_id}."""

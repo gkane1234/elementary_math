@@ -1,7 +1,6 @@
 """Verify curriculum type_id links against the question type registry."""
 from __future__ import annotations
 
-import json
 import re
 import sys
 from pathlib import Path
@@ -13,6 +12,8 @@ from question_engine.base import QUESTION_TYPES
 from question_engine.catalog import TYPE_CATALOG
 import question_engine.types  # noqa: F401
 
+from scripts.map_curriculum_types import CURRICULUM_ID_OVERRIDES
+
 HAND_WRITTEN = {
     "quadratic_factoring",
     "polynomial_long_division",
@@ -22,11 +23,28 @@ HAND_WRITTEN = {
 }
 
 
-def has_real_generator(type_id: str) -> bool:
-    if type_id in HAND_WRITTEN:
-        return True
+def canonical_type_id(type_id: str) -> str:
+    if type_id in CURRICULUM_ID_OVERRIDES:
+        return CURRICULUM_ID_OVERRIDES[type_id]
     entry = next((e for e in TYPE_CATALOG if e.id == type_id), None)
-    return entry is not None and entry.generator != "scaffold"
+    if entry is not None and entry.generator != "scaffold":
+        generator = entry.generator
+        if generator in HAND_WRITTEN:
+            return generator
+        if generator in QUESTION_TYPES:
+            return generator
+    return type_id
+
+
+def has_real_generator(type_id: str) -> bool:
+    canonical = canonical_type_id(type_id)
+    if canonical in HAND_WRITTEN:
+        return True
+    for candidate in (type_id, canonical):
+        entry = next((e for e in TYPE_CATALOG if e.id == candidate), None)
+        if entry is not None and entry.generator != "scaffold":
+            return True
+    return False
 
 
 def parse_curriculum_type_ids(src: str) -> list[tuple[str, str]]:
@@ -43,13 +61,13 @@ def parse_curriculum_type_ids(src: str) -> list[tuple[str, str]]:
 def main() -> None:
     src = (ROOT / "lib" / "curriculum.ts").read_text(encoding="utf-8")
     linked = parse_curriculum_type_ids(src)
-    real_types = {tid for tid in QUESTION_TYPES if has_real_generator(tid)}
+    real_types = {canonical_type_id(tid) for tid in QUESTION_TYPES if has_real_generator(tid)}
 
     invalid = [(topic_id, type_id) for topic_id, type_id in linked if type_id not in QUESTION_TYPES]
     scaffold_linked = [
         (topic_id, type_id) for topic_id, type_id in linked if not has_real_generator(type_id)
     ]
-    covered = {type_id for _, type_id in linked}
+    covered = {canonical_type_id(type_id) for _, type_id in linked}
     missing = sorted(real_types - covered)
 
     print(f"Curriculum topics with type_id: {len(linked)}")

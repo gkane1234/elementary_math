@@ -1,5 +1,11 @@
-"""Catalog generator type: compound_inequalities."""
+"""Compound inequalities — framework-backed type."""
 
-from question_engine.types._from_generator import register_from_catalog
+from question_engine.frameworks.equation import CompoundInequalitiesFramework
+from question_engine.types._framework_type import register_framework_type
 
-register_from_catalog("compound_inequalities")
+register_framework_type(
+    "compound_inequalities",
+    CompoundInequalitiesFramework(),
+    setting_profile="compound_inequality",
+    exclude_settings=("steps",),
+)

@@ -16,7 +16,7 @@ class GenerationSettingsMetadata(TypedDict, total=False):
 
 
 class GraphSpec(TypedDict, total=False):
-    """Minimal coordinate-plane spec for future graphing renderers."""
+    """Minimal coordinate-plane spec for client-side graph renderers."""
 
     x_min: float
     x_max: float
@@ -24,6 +24,20 @@ class GraphSpec(TypedDict, total=False):
     y_max: float
     functions: list[str]
     points: list[tuple[float, float]]
+    show_grid: bool
+    show_points: bool
+
+
+class NumberLineSpecDict(TypedDict, total=False):
+    """Number-line shading metadata for inequality solutions."""
+
+    min_value: float
+    max_value: float
+    boundary: float
+    boundary_high: float
+    direction: str
+    inclusive: bool
+    tick_interval: float
 
 
 class DiagramSpec(TypedDict, total=False):

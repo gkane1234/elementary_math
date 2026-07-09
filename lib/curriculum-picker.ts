@@ -174,6 +174,27 @@ export function flattenTopicsForSearch(courses: PickerCourse[]): FlatTopicSearch
   return results;
 }
 
+export type TopicFilterOptions = {
+  courseId?: string;
+  chapterId?: string;
+  readyOnly?: boolean;
+};
+
+export function filterTopics(
+  courses: PickerCourse[],
+  query: string,
+  filters: TopicFilterOptions = {},
+): FlatTopicSearchResult[] {
+  const normalizedQuery = query.trim().toLowerCase();
+  return flattenTopicsForSearch(courses).filter((entry) => {
+    if (filters.readyOnly && !entry.topic.hasGenerator) return false;
+    if (filters.courseId && entry.courseId !== filters.courseId) return false;
+    if (filters.chapterId && entry.chapterId !== filters.chapterId) return false;
+    if (normalizedQuery && !entry.topic.name.toLowerCase().includes(normalizedQuery)) return false;
+    return true;
+  });
+}
+
 export function getUnmappedTypes(types: QuestionTypeInfo[], courses: PickerCourse[]): QuestionTypeInfo[] {
   const mapped = new Set<string>();
   for (const course of courses) {

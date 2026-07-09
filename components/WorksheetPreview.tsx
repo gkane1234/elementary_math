@@ -2,19 +2,21 @@
 
 import { useEffect, useRef } from "react";
 import katex from "katex";
+import { repairInstructionLatex } from "@/lib/latex";
 import { columnStartNumber, distributeToColumns } from "@/lib/columns";
+import { QuestionGraphFromMetadata } from "@/components/QuestionGraph";
 import type { Question, QuestionSet } from "@/lib/types";
 
 type WorksheetPreviewProps = {
   worksheet: QuestionSet | null;
 };
 
-function Latex({ content }: { content: string }) {
+function Latex({ content, repair = false }: { content: string; repair?: boolean }) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!ref.current) return;
-    katex.render(content, ref.current, {
+    katex.render(repair ? repairInstructionLatex(content) : content, ref.current, {
       throwOnError: false,
       displayMode: false,
     });
@@ -48,6 +50,7 @@ function QuestionColumns({
             return (
               <li key={question.id} value={index + 1}>
                 <Latex content={question.prompt_latex} />
+                <QuestionGraphFromMetadata metadata={question.metadata} />
               </li>
             );
           })}
@@ -77,7 +80,7 @@ export function WorksheetPreview({ worksheet }: WorksheetPreviewProps) {
         <p className="worksheet-meta">Name: ________________________________ Date: ____________</p>
         {worksheet.instruction_latex && (
           <p className="worksheet-instruction">
-            <Latex content={worksheet.instruction_latex} />
+            <Latex content={worksheet.instruction_latex} repair />
           </p>
         )}
       </header>

@@ -155,12 +155,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "geo_parallel_graphing_linear_equations",
         "Graphing linear equations",
         generator="graph_linear_equation",
-        instruction_text="Graph the equation.",
+        instruction_text="Graph the following equations.",
     ),
     _geo(
         "Parallel Lines and the Coordinate Plane",
         "geo_parallel_writing_linear_equations",
-        "Writing linear equations", generator="writing_linear_equations", instruction_text="Write the equation.",
+        "Writing linear equations", generator="read_equation_from_graph",
+        instruction_latex=r"\text{Write the equation of the line shown.}",
+        instruction_text="Write the equation of the line shown.",
     ),
     # Congruent Triangles
     _geo(

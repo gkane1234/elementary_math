@@ -170,9 +170,9 @@ def _weighted_choice(settings: dict, positive_key: str, negative_key: str) -> bo
 def _plane_spec(
     settings: dict,
     *,
-    points: list[tuple[int, int]] | None = None,
-    slope: int | None = None,
-    y_intercept: int | None = None,
+    points: list[tuple[float, float]] | None = None,
+    slope: float | None = None,
+    y_intercept: float | None = None,
     functions: list[str] | None = None,
 ) -> "CoordinatePlaneSpec":
     from .graphing import CoordinatePlaneSpec
@@ -262,13 +262,17 @@ class SlopeFramework(QuestionFramework):
             f"({x1}, {y1}) \\text{{ and }} ({x2}, {y2})."
         )
         answer = _frac_latex(slope) if slope.denominator != 1 else str(slope.numerator)
-        m_int = slope.numerator // slope.denominator if slope.denominator != 0 else 0
-        b_int = y1 - m_int * x1
+        # Keep fractional slopes (e.g. -1/2); integer truncation drew the wrong line.
+        m = float(slope)
+        b = float(y1) - m * float(x1)
+        from .graphing import _linear_function_expr
+
         self._last_plane_spec = _plane_spec(
             settings,
             points=[(x1, y1), (x2, y2)],
-            slope=m_int,
-            y_intercept=b_int,
+            slope=m,
+            y_intercept=b,
+            functions=[_linear_function_expr(m, b)],
         )
         return prompt, "Slope from points", answer
 
@@ -293,8 +297,8 @@ class SlopeFramework(QuestionFramework):
 class PlottingPointsFramework(QuestionFramework):
     """Identify or plot a point on the coordinate plane."""
 
-    instruction_latex = r"\text{Plot the point.}"
-    instruction_text = "Plot the point."
+    instruction_latex = r"\text{Plot the following points on the coordinate plane.}"
+    instruction_text = "Plot the following points on the coordinate plane."
 
     def __init__(self) -> None:
         self._last_point: tuple[float, float] | None = None
@@ -302,9 +306,9 @@ class PlottingPointsFramework(QuestionFramework):
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         x, y = _system_solution(settings)
         self._last_point = (float(x), float(y))
-        prompt = f"\\text{{Plot the point }} ({x}, {y}) \\text{{ on the coordinate plane.}}"
+        prompt = f"({x}, {y})"
         answer = f"({x}, {y})"
-        return prompt, f"Plot ({x}, {y})", answer
+        return prompt, f"({x}, {y})", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}
@@ -321,7 +325,7 @@ class PlottingPointsFramework(QuestionFramework):
             return {}
         from .graphing import graph_spec_from_points
 
-        return graph_spec_from_points([self._last_point], settings)
+        return graph_spec_from_points([self._last_point], settings, prompt="blank")
 
 
 class SystemsEliminationFramework(QuestionFramework):

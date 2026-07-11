@@ -5,7 +5,13 @@ import { Modal } from "@/components/Modal";
 import { TopicSettingsFields, topicSettingsFields } from "@/components/TopicSettingsFields";
 import { TopicSectionList, WorksheetPlanOutline } from "@/components/TopicSectionList";
 import { CurriculumTopicPicker } from "@/components/CurriculumTopicPicker";
-import { buildCurriculumPicker, findTopicSelection, getDefaultSelection } from "@/lib/curriculum-picker";
+import {
+  buildCurriculumPicker,
+  findFirstTopicByTypeId,
+  findTopicSelection,
+  getDefaultSelection,
+} from "@/lib/curriculum-picker";
+import { typeIsNotReady } from "@/lib/diagram-readiness";
 import type { QuestionTypeInfo, TopicSection } from "@/lib/types";
 
 function defaultTopicValues(type: QuestionTypeInfo | null): Record<string, string | number | boolean> {
@@ -17,6 +23,15 @@ function defaultTopicValues(type: QuestionTypeInfo | null): Record<string, strin
 
 function createSectionId(): string {
   return `section-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function firstReadyTypeId(types: QuestionTypeInfo[]): string {
+  const courses = buildCurriculumPicker(undefined, types);
+  const defaultSelection = getDefaultSelection(courses);
+  const fromCurriculum =
+    defaultSelection && findTopicSelection(courses, defaultSelection)?.typeId;
+  if (fromCurriculum) return fromCurriculum;
+  return types.find((type) => !typeIsNotReady(type))?.id ?? "";
 }
 
 type AddTopicModalProps = {
@@ -38,17 +53,24 @@ export function AddTopicModal({
   onSectionsChange,
   onEditingSectionIdChange,
 }: AddTopicModalProps) {
-  const [selectedTypeId, setSelectedTypeId] = useState(types[0]?.id ?? "");
+  const [selectedTypeId, setSelectedTypeId] = useState("");
   const [count, setCount] = useState(5);
   const [values, setValues] = useState<Record<string, string | number | boolean>>({});
   const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
 
   const activeEditingId = editingSectionIdProp ?? editingSectionId;
 
+  const courses = useMemo(() => buildCurriculumPicker(undefined, types), [types]);
   const selectedType = useMemo(
     () => types.find((type) => type.id === selectedTypeId) ?? null,
     [types, selectedTypeId],
   );
+  const selectedIsReady = useMemo(() => {
+    if (!selectedType || typeIsNotReady(selectedType)) return false;
+    const mapped = findFirstTopicByTypeId(courses, selectedType.id);
+    if (mapped) return mapped.topic.hasGenerator;
+    return true;
+  }, [courses, selectedType]);
 
   const fields = useMemo(
     () => topicSettingsFields(selectedType?.settings ?? []),
@@ -64,14 +86,15 @@ export function AddTopicModal({
 
   useEffect(() => {
     if (!open) return;
-    if (types.length > 0 && !selectedTypeId) {
-      const courses = buildCurriculumPicker(undefined, types);
-      const defaultSelection = getDefaultSelection(courses);
-      const defaultTypeId =
-        (defaultSelection && findTopicSelection(courses, defaultSelection)?.typeId) ?? types[0]?.id ?? "";
-      if (defaultTypeId) setSelectedTypeId(defaultTypeId);
+    if (types.length === 0) return;
+    if (activeEditingId) return;
+    if (!selectedTypeId || !selectedIsReady) {
+      const defaultTypeId = firstReadyTypeId(types);
+      if (defaultTypeId && defaultTypeId !== selectedTypeId) {
+        setSelectedTypeId(defaultTypeId);
+      }
     }
-  }, [open, types, selectedTypeId]);
+  }, [open, types, selectedTypeId, selectedIsReady, activeEditingId]);
 
   useEffect(() => {
     if (!open || !editingSectionIdProp) return;
@@ -96,7 +119,7 @@ export function AddTopicModal({
   };
 
   const applySectionChange = () => {
-    if (!selectedType) return false;
+    if (!selectedType || !selectedIsReady) return false;
 
     if (activeEditingId) {
       onSectionsChange(
@@ -158,11 +181,21 @@ export function AddTopicModal({
       footer={
         <>
           {!activeEditingId && (
-            <button className="secondary" type="button" onClick={handleAddAndContinue} disabled={!selectedType}>
+            <button
+              className="secondary"
+              type="button"
+              onClick={handleAddAndContinue}
+              disabled={!selectedType || !selectedIsReady}
+            >
               Add and continue
             </button>
           )}
-          <button className="primary" type="button" onClick={handleAddAndClose} disabled={!selectedType}>
+          <button
+            className="primary"
+            type="button"
+            onClick={handleAddAndClose}
+            disabled={!selectedType || !selectedIsReady}
+          >
             {activeEditingId ? "Save changes" : "Add to worksheet plan"}
           </button>
         </>
@@ -206,7 +239,10 @@ export function AddTopicModal({
           <TopicSettingsFields
             fields={fields}
             values={values}
+            typeId={selectedType.id}
+            settingProfile={selectedType.setting_profile}
             onChange={(key, value) => setValues((current) => ({ ...current, [key]: value }))}
+            onValuesChange={setValues}
           />
         </>
       )}

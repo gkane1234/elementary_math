@@ -32,7 +32,7 @@ def answer_format_settings(
             "Answer format",
             "select",
             answer_format_default,
-            options=["auto", "integer", "fraction", "decimal"],
+            options=["auto", "integer", "fraction", "decimal", "multiple_choice"],
             group="answer",
         ),
         SettingField(
@@ -108,11 +108,19 @@ def multiple_choice_settings(
     *,
     ratio_default: int = 0,
     show_work_default: int = 0,
+    multiple_choice_default: bool = False,
 ) -> list[SettingField]:
     return [
         SettingField(
+            "multiple_choice",
+            "Multiple choice",
+            "bool",
+            multiple_choice_default,
+            group="presentation",
+        ),
+        SettingField(
             "multiple_choice_ratio",
-            "Multiple choice ratio (%)",
+            "Multiple choice ratio",
             "range",
             ratio_default,
             min=0,

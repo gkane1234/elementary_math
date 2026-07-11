@@ -232,6 +232,14 @@ def coordinate_plane_settings() -> list[SettingField]:
     )
 
 
+def number_line_profile() -> list[SettingField]:
+    """1D number-line types: range, optional zero mark, and graph metadata."""
+    return merge_settings(
+        number_line_range_settings(),
+        graphing_metadata_settings(),
+    )
+
+
 def graphing_profile() -> list[SettingField]:
     """Graphing generators: bounds, grid, number line, and table options."""
     return merge_settings(
@@ -464,6 +472,7 @@ PROFILE_BUILDERS: dict[str, callable] = {
     "distributive": distributive_profile,
     "linear": linear_settings,
     "coordinate_plane": coordinate_plane_settings,
+    "number_line": number_line_profile,
     "graphing": graphing_profile,
     "systems": systems_profile,
     "variation": variation_profile,

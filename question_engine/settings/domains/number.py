@@ -259,6 +259,22 @@ def factor_bounds_settings(
     ]
 
 
+def gcf_constraint_settings(
+    *,
+    require_gcf_greater_than_one_default: bool = True,
+) -> list[SettingField]:
+    """GCF-only: require a non-trivial greatest common factor."""
+    return [
+        SettingField(
+            "require_gcf_greater_than_one",
+            "Require GCF > 1",
+            "bool",
+            require_gcf_greater_than_one_default,
+            group="number",
+        ),
+    ]
+
+
 def pemdas_settings() -> list[SettingField]:
     return [
         SettingField(

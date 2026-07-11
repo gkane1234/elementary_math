@@ -61,8 +61,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _pc(
         "Functions",
         "pc_transformations_of_graphs",
-        "Transformations of graphs", generator="graph_quadratic", instruction_latex="\\text{Graph the function.}",
-        instruction_text="Graph the function.",
+        "Transformations of graphs", generator="graph_quadratic", instruction_latex="\\text{Graph the following functions.}",
+        instruction_text="Graph the following functions.",
     ),
     _pc("Functions", "pc_piecewise_functions", "Piecewise functions", instruction_text="Evaluate or graph."),
     _pc("Functions", "pc_functions_operations", "Operations", generator="function_operations", instruction_text="Evaluate."),
@@ -104,8 +104,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "pc_graphs_of_rational_functions",
         "Graphs of rational functions",
         generator="graph_quadratic",
-        instruction_latex="\\text{Graph the function.}",
-        instruction_text="Graph the function.",
+        instruction_latex="\\text{Graph the following functions.}",
+        instruction_text="Graph the following functions.",
     ),
     _pc(
         "Power, Polynomial, and Rational Functions",
@@ -132,8 +132,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _pc(
         "Exponential and Logarithmic Expressions",
         "pc_graphing_exponential_functions",
-        "Graphing exponential functions", generator="graph_exponential", instruction_latex="\\text{Graph the function.}",
-        instruction_text="Graph the function.",
+        "Graphing exponential functions", generator="graph_exponential", instruction_latex="\\text{Graph the following functions.}",
+        instruction_text="Graph the following functions.",
     ),
     _pc(
         "Exponential and Logarithmic Expressions",
@@ -203,8 +203,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Exponential and Logarithmic Expressions",
         "pc_graphing_logarithmic_functions",
         "Graphing logarithmic functions",
-        instruction_latex="\\text{Graph the function.}",
-        instruction_text="Graph the function.",
+        instruction_latex="\\text{Graph the following functions.}",
+        instruction_text="Graph the following functions.",
     ),
     _pc(
         "Exponential and Logarithmic Expressions",
@@ -251,8 +251,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_graphing_trig_functions",
         "Graphing trig functions",
-        instruction_latex="\\text{Graph the function.}",
-        instruction_text="Graph the function.",
+        instruction_latex="\\text{Graph the following functions.}",
+        instruction_text="Graph the following functions.",
     ),
     _pc(
         "Trigonometry",
@@ -353,8 +353,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Polar Coordinates",
         "pc_graphs_of_polar_equations",
         "Graphs of polar equations",
-        instruction_latex="\\text{Graph the equation.}",
-        instruction_text="Graph the equation.",
+        instruction_latex="\\text{Graph the following equations.}",
+        instruction_text="Graph the following equations.",
     ),
     _pc(
         "Polar Coordinates",

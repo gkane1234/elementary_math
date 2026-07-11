@@ -5,6 +5,7 @@ from ..core.base import QUESTION_TYPES, list_question_types
 from ..utils.instruction_latex import repair_instruction_latex
 from ..utils.layout import resolve_column_count
 from ..core.models import Question, QuestionSet
+from ..settings.presets import apply_difficulty_presets, resolve_setting_profile_for_type
 
 
 def _json_response(status: int, body: dict[str, Any]) -> tuple[int, dict[str, str], str]:
@@ -13,6 +14,18 @@ def _json_response(status: int, body: dict[str, Any]) -> tuple[int, dict[str, st
 
 def _settings_for_regeneration(settings: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in settings.items() if key not in {"count", "max_columns"}}
+
+
+def _resolve_generation_settings(type_id: str, settings: dict[str, Any]) -> dict[str, Any]:
+    profile = resolve_setting_profile_for_type(type_id)
+    question_type = QUESTION_TYPES.get(type_id)
+    if profile is None and question_type is not None:
+        profile = getattr(question_type, "setting_profile", None)
+        if profile is None:
+            config = getattr(question_type, "_setting_config", None)
+            if config is not None:
+                profile = getattr(config, "setting_profile", None)
+    return apply_difficulty_presets(settings, type_id=type_id, setting_profile=profile)
 
 
 def _annotate_questions(
@@ -35,8 +48,9 @@ def _generate_for_type(type_id: str, settings: dict[str, Any]) -> list[Question]
     if question_type is None:
         raise ValueError(f"Unknown question type: {type_id}")
 
-    questions = question_type.generate(settings)
-    return _annotate_questions(questions, question_type, settings)
+    resolved = _resolve_generation_settings(type_id, settings)
+    questions = question_type.generate(resolved)
+    return _annotate_questions(questions, question_type, resolved)
 
 
 def handle_generate(body: dict[str, Any]) -> tuple[int, dict[str, str], str]:

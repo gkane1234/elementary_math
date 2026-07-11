@@ -1,9 +1,9 @@
-"""Geo parallel writing linear equations — linear settings profile."""
+"""Geo parallel writing linear equations — write y=mx+b from a shown graph."""
 
-from question_engine.frameworks.linear import WritingLinearEquationsFramework
-from question_engine.types._linear_type import register_linear_type
+from question_engine.frameworks.graphing import ReadEquationFromGraphFramework
+from question_engine.types._graphing_type import register_graphing_type
 
-register_linear_type(
+register_graphing_type(
     "geo_parallel_writing_linear_equations",
-    WritingLinearEquationsFramework(),
+    ReadEquationFromGraphFramework(),
 )

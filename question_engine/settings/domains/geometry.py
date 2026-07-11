@@ -11,7 +11,7 @@ def geometry_metadata_settings() -> list[SettingField]:
             "include_diagram",
             "Include diagram metadata",
             "bool",
-            False,
+            True,
             group="geometry",
         ),
     ]

@@ -7,6 +7,10 @@ type CheckoutBody = {
 };
 
 export async function POST(request: Request) {
+  if (process.env.STRIPE_PAYMENTS_DISABLED === "true") {
+    return NextResponse.json({ error: "Payments are temporarily disabled" }, { status: 503 });
+  }
+
   const keyError = stripeKeyError(process.env.STRIPE_SECRET_KEY);
   if (keyError) {
     return NextResponse.json({ error: keyError }, { status: 503 });

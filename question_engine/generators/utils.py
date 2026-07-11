@@ -18,6 +18,17 @@ def frac_latex(value: Fraction) -> str:
     return f"\\frac{{{value.numerator}}}{{{value.denominator}}}"
 
 
+def format_fraction_division_latex(left: Fraction, right: Fraction, notation: str) -> str:
+    """Render ``left ÷ right`` in the chosen division notation."""
+    a = frac_latex(left)
+    b = frac_latex(right)
+    if notation == "complex_fraction":
+        return f"\\frac{{{a}}}{{{b}}}"
+    if notation == "slash":
+        return f"\\left({a}\\right) / \\left({b}\\right)"
+    return f"{a} \\div {b}"
+
+
 def random_fraction(
     *,
     num_min: int = -10,

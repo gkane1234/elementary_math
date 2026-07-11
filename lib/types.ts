@@ -17,6 +17,23 @@ export type QuestionTypeInfo = {
   subcategory?: string | null;
   instruction_latex?: string | null;
   instruction_text?: string | null;
+  /** Primary settings profile used for difficulty presets (e.g. equation, polynomial). */
+  setting_profile?: string | null;
+  /**
+   * True when the type needs a figure/diagram/chart the UI does not render yet.
+   * Curriculum picker must not treat these as Ready.
+   */
+  requires_diagram?: boolean;
+  /**
+   * True when a generator is wired but implements the wrong skill for the topic.
+   * Curriculum picker must not treat these as Ready.
+   */
+  incorrect_implementation?: boolean;
+  /**
+   * Umbrella demotion flag (diagram gap, incorrect implementation, etc.).
+   * Curriculum picker must not treat these as Ready (shows Coming soon).
+   */
+  not_ready?: boolean;
   settings: SettingField[];
 };
 

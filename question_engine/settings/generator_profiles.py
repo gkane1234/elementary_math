@@ -2,10 +2,49 @@
 
 from __future__ import annotations
 
-from .domains.rational import rational_expression_extra_settings, rational_operation_settings
+from .domains.number import gcf_constraint_settings
+from .domains.rational import (
+    division_notation_settings,
+    rational_expression_extra_settings,
+    rational_operation_settings,
+)
 from .resolve import TypeSettingConfig
 
 _ENRICHMENT = "common_enrichment"
+
+# Inherited enrichment knobs that only apply to expression / term-count generators.
+_TERM_SETTINGS = ("min_terms", "max_terms")
+# Phrase / verbal-expression knobs that equations and inequalities should not show.
+_PHRASE_SETTINGS = ("phrase_complexity", "max_phrase_operations")
+# Coordinate-plane knobs irrelevant to pure number-line types.
+_COORD_PLANE_SETTINGS = (
+    "slope_min",
+    "slope_max",
+    "intercept_min",
+    "intercept_max",
+    "coord_min",
+    "coord_max",
+    "integer_coordinates",
+    "quadrant",
+    "show_grid",
+    "show_points",
+    "table_row_count",
+)
+# Number-line knobs irrelevant to pure coordinate-plane types.
+_NUMBER_LINE_SETTINGS = (
+    "number_line_min",
+    "number_line_max",
+    "number_line_tick_interval",
+    "number_line_show_zero",
+)
+
+
+def _excludes(*groups: tuple[str, ...], extra: tuple[str, ...] = ()) -> tuple[str, ...]:
+    keys: list[str] = []
+    for group in groups:
+        keys.extend(group)
+    keys.extend(extra)
+    return tuple(dict.fromkeys(keys))
 
 
 def _with_common_enrichment(config: TypeSettingConfig) -> TypeSettingConfig:
@@ -25,35 +64,62 @@ def _with_common_enrichment(config: TypeSettingConfig) -> TypeSettingConfig:
 
 
 _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
-    "one_step_equations": TypeSettingConfig(setting_profile="equation"),
+    "one_step_equations": TypeSettingConfig(
+        setting_profile="equation",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
     "two_step_equations": TypeSettingConfig(
         setting_profile="equation",
-        exclude_settings=("allow_multiply", "allow_divide"),
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            _PHRASE_SETTINGS,
+            extra=("allow_multiply", "allow_divide"),
+        ),
     ),
     "multi_step_equations": TypeSettingConfig(
         setting_profile="equation",
-        exclude_settings=("allow_multiply", "allow_divide", "allow_add", "allow_subtract"),
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            _PHRASE_SETTINGS,
+            extra=("allow_multiply", "allow_divide", "allow_add", "allow_subtract"),
+        ),
     ),
     "absolute_value_equations": TypeSettingConfig(
         setting_profile="equation",
-        exclude_settings=("allow_multiply", "allow_divide", "allow_add", "allow_subtract"),
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            _PHRASE_SETTINGS,
+            extra=("allow_multiply", "allow_divide", "allow_add", "allow_subtract"),
+        ),
     ),
     # Inequalities
-    "one_step_inequalities": TypeSettingConfig(setting_profile="inequality"),
-    "two_step_inequalities": TypeSettingConfig(setting_profile="inequality"),
-    "multi_step_inequalities": TypeSettingConfig(setting_profile="inequality"),
+    "one_step_inequalities": TypeSettingConfig(
+        setting_profile="inequality",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
+    "two_step_inequalities": TypeSettingConfig(
+        setting_profile="inequality",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
+    "multi_step_inequalities": TypeSettingConfig(
+        setting_profile="inequality",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
     "compound_inequalities": TypeSettingConfig(
         setting_profile="inequality",
-        exclude_settings=("steps",),
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("steps",)),
     ),
     "absolute_value_inequalities": TypeSettingConfig(
         setting_profile="inequality",
-        exclude_settings=("steps",),
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("steps",)),
     ),
     # Numbers
     "rational_add_subtract": TypeSettingConfig(setting_profile="rational"),
     "rational_multiply": TypeSettingConfig(setting_profile="rational"),
-    "rational_divide": TypeSettingConfig(setting_profile="rational"),
+    "rational_divide": TypeSettingConfig(
+        setting_profile="rational",
+        extra_settings=(division_notation_settings,),
+    ),
     "percents": TypeSettingConfig(setting_profile="percent"),
     "percent_of_change": TypeSettingConfig(setting_profile="percent"),
     "solving_proportions": TypeSettingConfig(setting_profile="proportion"),
@@ -71,7 +137,10 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "g6_fraction_add_unlike": TypeSettingConfig(setting_profile="rational"),
     "g6_fraction_subtract_unlike": TypeSettingConfig(setting_profile="rational"),
     "g6_fraction_multiply": TypeSettingConfig(setting_profile="rational"),
-    "g6_fraction_divide": TypeSettingConfig(setting_profile="rational"),
+    "g6_fraction_divide": TypeSettingConfig(
+        setting_profile="rational",
+        extra_settings=(division_notation_settings,),
+    ),
     "g6_fraction_divide_groups": TypeSettingConfig(setting_profile="rational"),
     "g6_fraction_divide_each": TypeSettingConfig(setting_profile="rational"),
     "g6_fraction_of_whole": TypeSettingConfig(setting_profile="rational"),
@@ -82,10 +151,16 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         setting_profile="integer",
         setting_defaults={"allow_negative": True},
     ),
-    "g6_greatest_common_factor": TypeSettingConfig(setting_profile="factor"),
+    "g6_greatest_common_factor": TypeSettingConfig(
+        setting_profile="factor",
+        extra_settings=(gcf_constraint_settings,),
+        setting_defaults={"require_gcf_greater_than_one": True},
+    ),
     "g6_least_common_multiple": TypeSettingConfig(setting_profile="factor"),
     "g6_gcf_and_lcm_word_problems": TypeSettingConfig(
         setting_profile="factor",
+        extra_settings=(gcf_constraint_settings,),
+        setting_defaults={"require_gcf_greater_than_one": True},
         count_default=5,
     ),
     "g6_factoring": TypeSettingConfig(setting_profile="factor"),
@@ -118,123 +193,193 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "g6_distributive_property_numeric": TypeSettingConfig(setting_profile="distributive"),
     "g6_distributive_property_algebraic": TypeSettingConfig(setting_profile="distributive"),
     # Linear
-    "writing_linear_equations": TypeSettingConfig(setting_profile="linear"),
+    "writing_linear_equations": TypeSettingConfig(
+        setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
+        setting_defaults={"include_graph_metadata": True},
+    ),
     "slope": TypeSettingConfig(
         setting_profile="linear",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
     "more_on_slope": TypeSettingConfig(
         setting_profile="linear",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
     "plotting_points": TypeSettingConfig(
         setting_profile="coordinate_plane",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
-    "systems_elimination": TypeSettingConfig(setting_profile="systems"),
-    "systems_substitution": TypeSettingConfig(setting_profile="systems"),
-    "direct_inverse_variation": TypeSettingConfig(setting_profile="variation"),
+    "systems_elimination": TypeSettingConfig(
+        setting_profile="systems",
+        exclude_settings=_excludes(_TERM_SETTINGS),
+    ),
+    "systems_substitution": TypeSettingConfig(
+        setting_profile="systems",
+        exclude_settings=_excludes(_TERM_SETTINGS),
+    ),
+    "direct_inverse_variation": TypeSettingConfig(
+        setting_profile="variation",
+        exclude_settings=_excludes(_TERM_SETTINGS),
+    ),
     "discrete_relations": TypeSettingConfig(
         setting_profile="relations",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
     "continuous_relations": TypeSettingConfig(
         setting_profile="relations",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
     "evaluating_graphing_functions": TypeSettingConfig(
         setting_profile="relations",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
     # Graphing (coordinate plane / number line)
     "graph_linear_equation": TypeSettingConfig(
         setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_inequality": TypeSettingConfig(
         setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS),
         setting_defaults={"include_graph_metadata": True, "graph_dimension": "coordinate"},
     ),
     "graph_linear_inequality": TypeSettingConfig(
         setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True, "graph_dimension": "coordinate"},
     ),
     "graph_inequality_number_line": TypeSettingConfig(
-        setting_profile="graphing",
+        setting_profile="number_line",
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            _PHRASE_SETTINGS,
+            _COORD_PLANE_SETTINGS,
+            extra=("graph_dimension", "number_line_tick_interval"),
+        ),
         setting_defaults={"include_graph_metadata": True, "graph_dimension": "number_line"},
     ),
     "graph_absolute_value": TypeSettingConfig(
         setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_system": TypeSettingConfig(
         setting_profile="graphing",
         inherits=("systems",),
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_system_inequalities": TypeSettingConfig(
         setting_profile="graphing",
         inherits=("systems",),
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True},
     ),
     "read_slope_from_graph": TypeSettingConfig(
         setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True},
     ),
     "read_intercept_from_graph": TypeSettingConfig(
         setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
+        setting_defaults={"include_graph_metadata": True},
+    ),
+    "read_equation_from_graph": TypeSettingConfig(
+        setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_point_table": TypeSettingConfig(
         setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_transformations": TypeSettingConfig(
         setting_profile="graphing",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_exponential": TypeSettingConfig(
         setting_profile="exponential",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_quadratic": TypeSettingConfig(
         setting_profile="quadratic",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_quadratic_inequality": TypeSettingConfig(
         setting_profile="quadratic",
+        exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={"include_graph_metadata": True},
     ),
     "number_line_plot": TypeSettingConfig(
-        setting_profile="coordinate_plane",
+        setting_profile="number_line",
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            _PHRASE_SETTINGS,
+            _COORD_PLANE_SETTINGS,
+            extra=("number_line_tick_interval",),
+        ),
         setting_defaults={"include_graph_metadata": True},
     ),
     "graph_single_variable_inequality": TypeSettingConfig(
-        setting_profile="graphing",
+        setting_profile="number_line",
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            _PHRASE_SETTINGS,
+            _COORD_PLANE_SETTINGS,
+            extra=("graph_dimension", "number_line_tick_interval"),
+        ),
         setting_defaults={"include_graph_metadata": True, "graph_dimension": "number_line"},
     ),
     # Polynomials
     "polynomial_naming": TypeSettingConfig(
         setting_profile="polynomial",
-        exclude_settings=("integer_coefficients_only",),
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("integer_coefficients_only",)),
     ),
     "polynomial_add_subtract": TypeSettingConfig(
         setting_profile="polynomial",
         extra_settings=(rational_operation_settings,),
-        exclude_settings=("allow_multiply", "allow_divide"),
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("allow_multiply", "allow_divide")),
     ),
-    "polynomial_multiply": TypeSettingConfig(setting_profile="polynomial"),
+    "polynomial_multiply": TypeSettingConfig(
+        setting_profile="polynomial",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
     "polynomial_multiply_special": TypeSettingConfig(
         setting_profile="polynomial",
-        exclude_settings=("min_degree", "max_degree"),
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("min_degree", "max_degree")),
     ),
-    "polynomial_factoring_common_factor": TypeSettingConfig(setting_profile="polynomial_factoring"),
-    "polynomial_factoring_special_cases": TypeSettingConfig(setting_profile="polynomial_factoring"),
-    "polynomial_factoring_grouping": TypeSettingConfig(setting_profile="polynomial_factoring"),
-    "polynomial_long_division": TypeSettingConfig(setting_profile="polynomial_division"),
+    "polynomial_factoring_common_factor": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
+    "polynomial_factoring_special_cases": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
+    "polynomial_factoring_grouping": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
+    "polynomial_long_division": TypeSettingConfig(
+        setting_profile="polynomial_division",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
     "quadratic_factoring": TypeSettingConfig(
         setting_profile="polynomial_factoring",
-        exclude_settings=("min_degree", "max_degree"),
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("min_degree", "max_degree")),
         setting_defaults={"min_degree": 2, "max_degree": 2},
     ),
     # Quadratics
@@ -315,27 +460,30 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "exponential_growth_decay": TypeSettingConfig(setting_profile="exponential"),
     "properties_of_exponents": TypeSettingConfig(
         setting_profile="algebra_expression",
-        exclude_settings=("term_count", "phrase_complexity", "constant_min", "constant_max"),
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            extra=("term_count", "phrase_complexity", "constant_min", "constant_max"),
+        ),
     ),
     "combining_like_terms": TypeSettingConfig(
         setting_profile="algebra_expression",
-        exclude_settings=("phrase_complexity", "exponent_min", "exponent_max"),
+        exclude_settings=_excludes(_TERM_SETTINGS, extra=("phrase_complexity", "exponent_min", "exponent_max")),
     ),
     "g6_combining_like_terms": TypeSettingConfig(
         setting_profile="algebra_expression",
-        exclude_settings=("phrase_complexity", "exponent_min", "exponent_max"),
+        exclude_settings=_excludes(_TERM_SETTINGS, extra=("phrase_complexity", "exponent_min", "exponent_max")),
     ),
     "verbal_expressions": TypeSettingConfig(
         setting_profile="algebra_expression",
-        exclude_settings=("term_count", "exponent_min", "exponent_max"),
+        exclude_settings=_excludes(_TERM_SETTINGS, extra=("term_count", "exponent_min", "exponent_max")),
     ),
     "pa_verbal_expressions": TypeSettingConfig(
         setting_profile="algebra_expression",
-        exclude_settings=("term_count", "exponent_min", "exponent_max"),
+        exclude_settings=_excludes(_TERM_SETTINGS, extra=("term_count", "exponent_min", "exponent_max")),
     ),
     "g6_writing_algebraic_expressions": TypeSettingConfig(
         setting_profile="algebra_expression",
-        exclude_settings=("term_count", "exponent_min", "exponent_max"),
+        exclude_settings=_excludes(_TERM_SETTINGS, extra=("term_count", "exponent_min", "exponent_max")),
     ),
     # Trigonometry
     "trig_evaluate": TypeSettingConfig(
@@ -550,7 +698,11 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "wp_two_step_equation": TypeSettingConfig(setting_profile="word_problem"),
     "wp_systems": TypeSettingConfig(setting_profile="word_problem"),
     "wp_inequality": TypeSettingConfig(setting_profile="word_problem"),
-    "wp_gcf_lcm": TypeSettingConfig(setting_profile="word_problem"),
+    "wp_gcf_lcm": TypeSettingConfig(
+        setting_profile="word_problem",
+        extra_settings=(gcf_constraint_settings,),
+        setting_defaults={"require_gcf_greater_than_one": True},
+    ),
     "wp_number_line": TypeSettingConfig(setting_profile="word_problem"),
     "wp_coordinate_distance": TypeSettingConfig(setting_profile="word_problem"),
     "wp_similar_figures": TypeSettingConfig(setting_profile="word_problem"),

@@ -1,19 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState, type DragEvent, type MouseEvent } from "react";
-import katex from "katex";
-import { repairInstructionLatex } from "@/lib/latex";
+import { useState, type DragEvent, type MouseEvent } from "react";
+import { QuestionDiagramFromMetadata } from "@/components/QuestionDiagram";
 import { QuestionGraphFromMetadata } from "@/components/QuestionGraph";
+import { MultipleChoiceOptions } from "@/components/MultipleChoiceOptions";
+import {
+  InlineLatex,
+  InstructionLatex,
+  QuestionPrompt,
+} from "@/components/QuestionPrompt";
 import { QuestionContextMenu } from "@/components/QuestionContextMenu";
 import { QuestionSettingsModal } from "@/components/QuestionSettingsModal";
 import { columnStartNumber, distributeToColumns, insertAtIndex } from "@/lib/columns";
 import { regenerateQuestion } from "@/lib/api";
+import {
+  correctChoiceLabel,
+  getMultipleChoiceChoices,
+} from "@/lib/multiple-choice";
 import type { QuestionTypeInfo, WorksheetDraft, WorksheetQuestion } from "@/lib/types";
 import {
   clampSpacing,
+  groupQuestionsByInstruction,
   removeQuestion,
   sharedHeaderInstruction,
-  shouldShowInstruction,
+  shouldShowSectionHeader,
   toWorksheetQuestion,
   updateQuestion,
 } from "@/lib/worksheet";
@@ -32,20 +42,6 @@ type ContextMenuState = {
   questionId: string;
 };
 
-function Latex({ content, repair = false }: { content: string; repair?: boolean }) {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    katex.render(repair ? repairInstructionLatex(content) : content, ref.current, {
-      throwOnError: false,
-      displayMode: false,
-    });
-  }, [content]);
-
-  return <span ref={ref} />;
-}
-
 function allowDrop(event: DragEvent) {
   event.preventDefault();
   event.dataTransfer.dropEffect = "move";
@@ -55,7 +51,6 @@ type QuestionItemProps = {
   question: WorksheetQuestion;
   number: number;
   selected: boolean;
-  showInstruction: boolean;
   dropBefore: boolean;
   dropAfter: boolean;
   dragging: boolean;
@@ -71,7 +66,6 @@ function QuestionItem({
   question,
   number,
   selected,
-  showInstruction,
   dropBefore,
   dropAfter,
   dragging,
@@ -82,6 +76,8 @@ function QuestionItem({
   onDragOver,
   onDrop,
 }: QuestionItemProps) {
+  const choices = getMultipleChoiceChoices(question.metadata);
+
   return (
     <div
       className={`question-item interactive-only${selected ? " selected" : ""}${dragging ? " dragging" : ""}${dropBefore ? " drop-before" : ""}${dropAfter ? " drop-after" : ""}`}
@@ -99,17 +95,30 @@ function QuestionItem({
           ⋮⋮
         </span>
         <div className="question-content">
-          {showInstruction && question.instruction_latex && (
-            <p className="question-instruction">
-              <Latex content={question.instruction_latex} repair />
-            </p>
-          )}
-          <span className="question-number">{number}.</span>
-          <Latex content={question.prompt_latex} />
+          <div className="question-prompt-row">
+            <span className="question-number">{number}.</span>
+            <QuestionPrompt content={question.prompt_latex} />
+          </div>
           <QuestionGraphFromMetadata metadata={question.metadata} />
+          <QuestionDiagramFromMetadata metadata={question.metadata} />
+          {choices ? (
+            <MultipleChoiceOptions
+              choices={choices}
+              questionId={question.id}
+              interactive
+            />
+          ) : null}
         </div>
       </div>
     </div>
+  );
+}
+
+function SectionInstruction({ content }: { content: string }) {
+  return (
+    <p className="worksheet-section-instruction">
+      <InstructionLatex content={content} />
+    </p>
   );
 }
 
@@ -137,8 +146,8 @@ export function InteractiveWorksheet({
   }
 
   const columnCount = worksheet.columns;
-  const columns = distributeToColumns(worksheet.questions, columnCount);
   const headerInstruction = sharedHeaderInstruction(worksheet.questions);
+  const instructionGroups = groupQuestionsByInstruction(worksheet.questions);
   const answerColumns = distributeToColumns(worksheet.questions, columnCount);
   const showAnswers = !previewMode && worksheet.questions.some((question) => question.answer_latex);
   const selectedQuestion = worksheet.questions.find((question) => question.id === selectedId) ?? null;
@@ -214,7 +223,7 @@ export function InteractiveWorksheet({
         <p className="worksheet-meta">Name: ________________________________ Date: ____________</p>
         {headerInstruction && (
           <p className="worksheet-instruction">
-            <Latex content={headerInstruction} repair />
+            <InstructionLatex content={headerInstruction} />
           </p>
         )}
       </header>
@@ -225,81 +234,110 @@ export function InteractiveWorksheet({
 
       <div
         className="question-grid interactive-only"
+        data-columns={columnCount}
         style={{
           gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
         }}
         onDragOver={allowDrop}
         onDrop={handleDrop}
       >
-        {worksheet.questions.map((question, index) => {
-          const previous = index > 0 ? worksheet.questions[index - 1] : null;
-          return (
-            <QuestionItem
-              key={question.id}
-              question={question}
-              number={index + 1}
-              selected={selectedId === question.id}
-              showInstruction={shouldShowInstruction(question, previous, headerInstruction)}
-              dropBefore={dropIndex === index}
-              dropAfter={dropIndex === index + 1}
-              dragging={dragIndex === index}
-              onSelect={() => setSelectedId(question.id)}
-              onContextMenu={(event) => {
-                event.preventDefault();
-                setSelectedId(question.id);
-                setContextMenu({
-                  x: event.clientX,
-                  y: event.clientY,
-                  questionId: question.id,
-                });
-              }}
-              onDragStart={(event) => {
-                event.dataTransfer.effectAllowed = "move";
-                event.dataTransfer.setData("text/plain", question.id);
-                setDragIndex(index);
-              }}
-              onDragEnd={() => {
-                setDragIndex(null);
-                setDropIndex(null);
-              }}
-              onDragOver={(event) => handleDragOver(event, index)}
-              onDrop={handleDrop}
-            />
-          );
+        {instructionGroups.flatMap((group) => {
+          const header =
+            shouldShowSectionHeader(group.instruction, headerInstruction) && group.instruction ? (
+              <div
+                key={`section-${group.startIndex}`}
+                className="worksheet-section-header"
+              >
+                <SectionInstruction content={group.instruction} />
+              </div>
+            ) : null;
+
+          const items = group.questions.map((question, groupIndex) => {
+            const index = group.startIndex + groupIndex;
+            return (
+              <QuestionItem
+                key={question.id}
+                question={question}
+                number={index + 1}
+                selected={selectedId === question.id}
+                dropBefore={dropIndex === index}
+                dropAfter={dropIndex === index + 1}
+                dragging={dragIndex === index}
+                onSelect={() => setSelectedId(question.id)}
+                onContextMenu={(event) => {
+                  event.preventDefault();
+                  setSelectedId(question.id);
+                  setContextMenu({
+                    x: event.clientX,
+                    y: event.clientY,
+                    questionId: question.id,
+                  });
+                }}
+                onDragStart={(event) => {
+                  event.dataTransfer.effectAllowed = "move";
+                  event.dataTransfer.setData("text/plain", question.id);
+                  setDragIndex(index);
+                }}
+                onDragEnd={() => {
+                  setDragIndex(null);
+                  setDropIndex(null);
+                }}
+                onDragOver={(event) => handleDragOver(event, index)}
+                onDrop={handleDrop}
+              />
+            );
+          });
+
+          return header ? [header, ...items] : items;
         })}
       </div>
 
-      <div
-        className="question-columns print-only"
-        style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
-      >
-        {columns.map((columnQuestions, columnIndex) => (
-          <ol
-            key={`print-column-${columnIndex}`}
-            className="question-list"
-            start={columnStartNumber(columns, columnIndex)}
-          >
-            {columnQuestions.map((question) => {
-              const index = worksheet.questions.findIndex((entry) => entry.id === question.id);
-              const previous = index > 0 ? worksheet.questions[index - 1] : null;
-              return (
-                <li
-                  key={`print-${question.id}`}
-                  value={index + 1}
-                  style={{ marginBottom: `${question.spacing * 2.25}rem` }}
-                >
-                  {shouldShowInstruction(question, previous, headerInstruction) && question.instruction_latex && (
-                    <p className="question-instruction">
-                      <Latex content={question.instruction_latex} repair />
-                    </p>
-                  )}
-                  <Latex content={question.prompt_latex} />
-                  <QuestionGraphFromMetadata metadata={question.metadata} />
-                </li>
-              );
-            })}
-          </ol>
-        ))}
+      <div className="print-only instruction-groups">
+        {instructionGroups.map((group) => {
+          const columns = distributeToColumns(group.questions, columnCount);
+          return (
+            <div key={`print-group-${group.startIndex}`} className="instruction-group">
+              {shouldShowSectionHeader(group.instruction, headerInstruction) && group.instruction && (
+                <SectionInstruction content={group.instruction} />
+              )}
+              <div
+                className="question-columns"
+                data-columns={columns.length}
+                style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
+              >
+                {columns.map((columnQuestions, columnIndex) => (
+                  <ol
+                    key={`print-column-${group.startIndex}-${columnIndex}`}
+                    className="question-list"
+                    start={group.startIndex + columnStartNumber(columns, columnIndex)}
+                  >
+                    {columnQuestions.map((question) => {
+                      const index = worksheet.questions.findIndex((entry) => entry.id === question.id);
+                      const choices = getMultipleChoiceChoices(question.metadata);
+                      return (
+                        <li
+                          key={`print-${question.id}`}
+                          value={index + 1}
+                          style={{ marginBottom: `${question.spacing * 2.25}rem` }}
+                        >
+                          <QuestionPrompt content={question.prompt_latex} />
+                          <QuestionGraphFromMetadata metadata={question.metadata} />
+                          <QuestionDiagramFromMetadata metadata={question.metadata} />
+                          {choices ? (
+                            <MultipleChoiceOptions
+                              choices={choices}
+                              questionId={question.id}
+                            />
+                          ) : null}
+                        </li>
+                      );
+                    })}
+                  </ol>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {selectedQuestion && (
@@ -328,6 +366,7 @@ export function InteractiveWorksheet({
           <h3>Answer Key</h3>
           <div
             className="question-columns"
+            data-columns={answerColumns.length}
             style={{ gridTemplateColumns: `repeat(${answerColumns.length}, minmax(0, 1fr))` }}
           >
             {answerColumns.map((columnQuestions, columnIndex) => (
@@ -338,9 +377,27 @@ export function InteractiveWorksheet({
               >
                 {columnQuestions.map((question) => {
                   const index = worksheet.questions.findIndex((entry) => entry.id === question.id);
+                  const choices = getMultipleChoiceChoices(question.metadata);
+                  const letter = choices ? correctChoiceLabel(choices) : null;
                   return (
                     <li key={`${question.id}-answer`} value={index + 1}>
-                      {question.answer_latex ? <Latex content={question.answer_latex} /> : "—"}
+                      {letter ? (
+                        <span>
+                          {letter}
+                          {question.answer_latex ? (
+                            <>
+                              {") "}
+                              <InlineLatex content={question.answer_latex} />
+                            </>
+                          ) : null}
+                        </span>
+                      ) : question.answer_latex ? (
+                        <InlineLatex content={question.answer_latex} />
+                      ) : (
+                        "—"
+                      )}
+                      <QuestionGraphFromMetadata metadata={question.metadata} variant="answer" />
+                      <QuestionDiagramFromMetadata metadata={question.metadata} />
                     </li>
                   );
                 })}

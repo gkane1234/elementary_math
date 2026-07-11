@@ -270,7 +270,7 @@ export const CURRICULUM: CurriculumLevel[] = [
           { id: "pa_integers_multiplying", name: "Multiplying", type_id: "rational_multiply" },
           { id: "pa_integers_dividing", name: "Dividing", type_id: "rational_divide" },
           { id: "pa_factoring", name: "Factoring" },
-          { id: "pa_greatest_common_factor", name: "Greatest common factor", type_id: "polynomial_factoring_common_factor" },
+          { id: "pa_greatest_common_factor", name: "Greatest common factor", type_id: "pa_greatest_common_factor" },
           { id: "pa_least_common_multiple", name: "Least common multiple", type_id: "pa_least_common_multiple" },
           { id: "pa_simplifying_fractions", name: "Simplifying fractions", type_id: "pa_simplifying_fractions" },
           {
@@ -562,12 +562,12 @@ export const CURRICULUM: CurriculumLevel[] = [
           { id: "graphing_quadratic_inequalities", name: "Graphing quadratic inequalities", type_id: "graphing_quadratic_inequalities" },
           { id: "solving_equations_by_taking_square_roots", name: "Solving equations by taking square roots", type_id: "quadratic_square_roots" },
           { id: "solving_equations_by_factoring", name: "Solving equations by factoring", type_id: "quadratic_factoring_equations" },
-          {
-            id: "solving_equations_with_the_quadratic_formula",
+      {
+        id: "solving_equations_with_the_quadratic_formula",
             name: "Solving equations with the Quadratic Formula", type_id: "quadratic_formula" },
           { id: "understanding_the_discriminant", name: "Understanding the discriminant", type_id: "quadratic_discriminant" },
-          {
-            id: "completing_the_square_by_finding_the_constant",
+      {
+        id: "completing_the_square_by_finding_the_constant",
             name: "Completing the square by finding the constant", type_id: "quadratic_completing_square_constant" },
           { id: "solving_equations_by_completing_the_square", name: "Solving equations by completing the square", type_id: "quadratic_completing_square_solve" },
         ],

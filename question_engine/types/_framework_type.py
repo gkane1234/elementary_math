@@ -8,7 +8,17 @@ from ..core.base import QuestionType, register
 from ..core.models import SettingField
 from ..core.registry import get_catalog_entry
 from ..frameworks.base import QuestionFramework
+from ..settings.generator_profiles import config_for_generator
 from ..settings.resolve import TypeSettingConfig, resolve_type_settings
+
+_ENRICHMENT = "common_enrichment"
+
+
+def _merge_excludes(*groups: tuple[str, ...]) -> tuple[str, ...]:
+    keys: list[str] = []
+    for group in groups:
+        keys.extend(group)
+    return tuple(dict.fromkeys(keys))
 
 
 def register_framework_type(
@@ -22,14 +32,35 @@ def register_framework_type(
     setting_defaults: dict[str, Any] | None = None,
 ) -> type[QuestionType]:
     entry = get_catalog_entry(type_id)
+    gen_config = config_for_generator(entry.generator) or config_for_generator(type_id)
+
+    profile = setting_profile
+    inherit_profiles = inherits
+    excludes = exclude_settings
+    extras = extra_settings
+    defaults = dict(setting_defaults or {})
+
+    if gen_config is not None:
+        profile = profile or gen_config.setting_profile
+        if not inherit_profiles:
+            inherit_profiles = gen_config.inherits
+        excludes = _merge_excludes(gen_config.exclude_settings, exclude_settings)
+        if not extras:
+            extras = gen_config.extra_settings
+        defaults = {**gen_config.setting_defaults, **defaults}
+
+    if _ENRICHMENT not in inherit_profiles:
+        inherit_profiles = (_ENRICHMENT, *inherit_profiles)
+
     config = TypeSettingConfig(
-        setting_profile=setting_profile,
-        inherits=inherits,
-        exclude_settings=exclude_settings,
-        extra_settings=extra_settings,
-        setting_defaults=setting_defaults or {},
+        setting_profile=profile,
+        inherits=inherit_profiles,
+        exclude_settings=excludes,
+        extra_settings=extras,
+        setting_defaults=defaults,
         count_default=entry.count_default or 10,
     )
+    resolved_profile = profile
 
     @register
     class FrameworkQuestionType(QuestionType):
@@ -40,6 +71,8 @@ def register_framework_type(
         description = entry.description
         instruction_latex = entry.instruction_latex
         instruction_text = entry.instruction_text
+        setting_profile = resolved_profile
+        _setting_config = config
 
         def settings_schema(self) -> list[SettingField]:
             return resolve_type_settings(config, *setting_schemas)

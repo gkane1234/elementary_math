@@ -7,5 +7,5 @@ register_framework_type(
     "compound_inequalities",
     CompoundInequalitiesFramework(),
     setting_profile="compound_inequality",
-    exclude_settings=("steps",),
+    exclude_settings=("steps", "min_terms", "max_terms", "phrase_complexity", "max_phrase_operations"),
 )

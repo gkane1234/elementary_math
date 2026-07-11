@@ -38,20 +38,38 @@ class NumberLineSpecDict(TypedDict, total=False):
     direction: str
     inclusive: bool
     tick_interval: float
+    show_zero: bool
+    blank: bool
 
 
 class DiagramSpec(TypedDict, total=False):
-    """Minimal figure spec for future diagram renderers."""
+    """Geometry figure summary; pair with ``diagram_svg`` / ``diagram_latex``.
+
+    Generators should prefer ``GeometryFigure.to_metadata()`` from
+    ``question_engine.diagrams``, which fills ``diagram_spec``,
+    ``diagram_svg`` (web), and ``diagram_latex`` (TikZ export).
+    """
 
     kind: str
     labels: list[str]
     segments: list[tuple[str, str]]
-    angles: list[float]
+    angles: list[str | float]
+    points: dict[str, dict[str, float | str | None]]
+
+
+class MultipleChoiceChoice(TypedDict):
+    """One shuffled multiple-choice option."""
+
+    id: str
+    latex: str
+    correct: bool
 
 
 class MultipleChoiceMetadata(TypedDict, total=False):
-    choices: list[str]
-    correct_index: int
+    """Multiple-choice presentation attached by enrichment or frameworks."""
+
+    choices: list[MultipleChoiceChoice]
+    answer_mode: str
 
 
 @dataclass
@@ -62,9 +80,15 @@ class QuestionMetadata:
     generation_settings: dict[str, Any] = field(default_factory=dict)
     instruction_latex: str | None = None
     graph_spec: GraphSpec | None = None
+    answer_graph_spec: GraphSpec | None = None
+    number_line_spec: NumberLineSpecDict | None = None
+    answer_number_line_spec: NumberLineSpecDict | None = None
+    graph_role: str | None = None
     diagram_spec: DiagramSpec | None = None
-    choices: list[str] | None = None
-    correct_index: int | None = None
+    diagram_svg: str | None = None
+    diagram_latex: str | None = None
+    choices: list[MultipleChoiceChoice] | None = None
+    answer_mode: str | None = None
     extra: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -77,12 +101,24 @@ class QuestionMetadata:
             data["instruction_latex"] = self.instruction_latex
         if self.graph_spec is not None:
             data["graph_spec"] = self.graph_spec
+        if self.answer_graph_spec is not None:
+            data["answer_graph_spec"] = self.answer_graph_spec
+        if self.number_line_spec is not None:
+            data["number_line_spec"] = self.number_line_spec
+        if self.answer_number_line_spec is not None:
+            data["answer_number_line_spec"] = self.answer_number_line_spec
+        if self.graph_role is not None:
+            data["graph_role"] = self.graph_role
         if self.diagram_spec is not None:
             data["diagram_spec"] = self.diagram_spec
+        if self.diagram_svg is not None:
+            data["diagram_svg"] = self.diagram_svg
+        if self.diagram_latex is not None:
+            data["diagram_latex"] = self.diagram_latex
         if self.choices is not None:
             data["choices"] = self.choices
-        if self.correct_index is not None:
-            data["correct_index"] = self.correct_index
+        if self.answer_mode is not None:
+            data["answer_mode"] = self.answer_mode
         data.update(self.extra)
         return data
 

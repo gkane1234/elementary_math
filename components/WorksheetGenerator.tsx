@@ -229,53 +229,57 @@ export function WorksheetGenerator() {
 
         <aside className="right-rail">
           <section className="panel action-rail">
-            <h2>Actions</h2>
-            <p className="plan-summary">
-              Planned questions: <strong>{totalPlanned}</strong>
-            </p>
+            <div className="action-rail-scroll">
+              <h2>Actions</h2>
+              <p className="plan-summary">
+                Planned questions: <strong>{totalPlanned}</strong>
+              </p>
 
-            <TopicSectionList
-              sections={sections}
-              types={types}
-              onSectionsChange={setSections}
-              onEditSection={openTopicEditor}
-              compact
-            />
+              <TopicSectionList
+                sections={sections}
+                types={types}
+                onSectionsChange={setSections}
+                onEditSection={openTopicEditor}
+                compact
+              />
 
-            <button className="secondary" type="button" onClick={() => openTopicEditor()}>
-              Edit topics
-            </button>
+              <button className="secondary" type="button" onClick={() => openTopicEditor()}>
+                Edit topics
+              </button>
+            </div>
 
-            {paymentsRequired ? (
-              paid ? (
-                <ExportPdfButton disabled={!exportEnabled} />
+            <div className="action-rail-actions">
+              {paymentsRequired ? (
+                paid ? (
+                  <ExportPdfButton disabled={!exportEnabled} />
+                ) : (
+                  <>
+                    <PayForPdfButton
+                      disabled={!canExport || !stripeConfigured}
+                      title={title}
+                      worksheet={worksheet!}
+                      priceCents={pdfPriceCents}
+                      onCheckoutStart={setWorksheetId}
+                      onError={setError}
+                    />
+                    {!stripeConfigured && (
+                      <p className="error">
+                        {stripeKeyError ??
+                          "Stripe is not configured. Add sk_test_... to STRIPE_SECRET_KEY in .env.local and restart the dev server."}
+                      </p>
+                    )}
+                  </>
+                )
               ) : (
-                <>
-                  <PayForPdfButton
-                    disabled={!canExport || !stripeConfigured}
-                    title={title}
-                    worksheet={worksheet!}
-                    priceCents={pdfPriceCents}
-                    onCheckoutStart={setWorksheetId}
-                    onError={setError}
-                  />
-                  {!stripeConfigured && (
-                    <p className="error">
-                      {stripeKeyError ??
-                        "Stripe is not configured. Add sk_test_... to STRIPE_SECRET_KEY in .env.local and restart the dev server."}
-                    </p>
-                  )}
-                </>
-              )
-            ) : (
-              <ExportPdfButton disabled={!exportEnabled} />
-            )}
+                <ExportPdfButton disabled={!exportEnabled} />
+              )}
 
-            {paymentsRequired && paid && worksheetId && (
-              <p className="plan-summary">Worksheet unlocked for export.</p>
-            )}
+              {paymentsRequired && paid && worksheetId && (
+                <p className="plan-summary">Worksheet unlocked for export.</p>
+              )}
 
-            {error && <p className="error">{error}</p>}
+              {error && <p className="error">{error}</p>}
+            </div>
           </section>
         </aside>
       </div>

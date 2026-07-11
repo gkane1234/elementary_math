@@ -1,6 +1,6 @@
-"""Writing linear equations — framework-backed with linear settings profile."""
+"""Writing linear equations — write y=mx+b from a shown graph."""
 
-from question_engine.frameworks.linear import WritingLinearEquationsFramework
-from question_engine.types._linear_type import register_linear_type
+from question_engine.frameworks.graphing import ReadEquationFromGraphFramework
+from question_engine.types._graphing_type import register_graphing_type
 
-register_linear_type("writing_linear_equations", WritingLinearEquationsFramework())
+register_graphing_type("writing_linear_equations", ReadEquationFromGraphFramework())

@@ -309,7 +309,8 @@ settings live in `settings/domains/` and compose via `QuestionFramework.framewor
 |------|----------------------------------|---------|
 | `NumberLineSpec` | `number_line_spec` | Inequality shading on a number line |
 | `GraphSpec` | `graph_spec` | Coordinate plane bounds, points, functions |
-| `GeometryFigureSpec` | `figure_spec`, `diagram_spec` | Labeled polygons / solids for measurement |
+| `GeometryFigureSpec` | `figure_spec`, `diagram_spec` | Legacy labeled figure summary |
+| `GeometryFigure` (diagrams DSL) | `diagram_svg`, `diagram_latex`, `diagram_spec` | TikZ + SVG geometry drawings |
 | `CoordinatePlaneSpec` | `coordinate_plane`, `graph_spec` | Slope, intercept, sampled points |
 | `DataSetSpec` + `ChartSpec` | `data_set`, `chart_spec` | Synthetic data + chart renderer hints |
 | `RightTriangleSpec` | `right_triangle_spec`, `diagram_spec` | Legs, angle, trig ratio target |

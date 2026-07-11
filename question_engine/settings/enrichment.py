@@ -120,40 +120,18 @@ def format_answer_value(settings: dict, value: int | float | Fraction | Decimal)
     return text
 
 
-def _distractor_values(correct: str) -> list[str]:
-    pool: list[str] = []
-    try:
-        base = float(correct.replace("\\%", "").replace("%", ""))
-        deltas = [-3, -2, -1, 1, 2, 3, 5]
-        for delta in deltas:
-            candidate = base + delta
-            if candidate == base:
-                continue
-            text = str(int(candidate)) if candidate.is_integer() else f"{candidate:.3g}"
-            if "%" in correct:
-                text = f"{text}\\%"
-            pool.append(text)
-    except ValueError:
-        pool = [f"{correct} + 1", f"{correct} - 1", f"2({correct})"]
-    random.shuffle(pool)
-    return pool[:3]
-
-
 def enrichment_metadata(settings: dict, *, answer: str | None) -> dict[str, Any]:
+    from .multiple_choice import build_multiple_choice_metadata, multiple_choice_enabled
+
     meta: dict[str, Any] = {}
     work_lines = int(settings.get("show_work_lines", 0))
     if work_lines > 0:
         meta["work_lines"] = work_lines
 
-    ratio = max(0, min(100, int(settings.get("multiple_choice_ratio", 0))))
-    if ratio > 0 and answer is not None and random.randint(1, 100) <= ratio:
-        distractors = _distractor_values(answer)
-        choices = distractors[:3]
-        correct_index = random.randint(0, len(choices))
-        choices.insert(correct_index, answer)
-        meta["choices"] = choices
-        meta["correct_index"] = correct_index
-        meta["answer_mode"] = "multiple_choice"
+    if answer is not None and multiple_choice_enabled(settings):
+        provided = settings.get("mc_distractors")
+        distractors = [str(d) for d in provided] if isinstance(provided, list) else None
+        meta.update(build_multiple_choice_metadata(answer, distractors=distractors))
 
     tier = settings.get("difficulty_tier")
     if tier:
@@ -163,5 +141,15 @@ def enrichment_metadata(settings: dict, *, answer: str | None) -> dict[str, Any]
 
 def merge_enrichment_metadata(settings: dict, metadata: dict[str, Any], *, answer: str | None) -> dict[str, Any]:
     merged = dict(metadata)
-    merged.update(enrichment_metadata(settings, answer=answer))
+    framework_distractors = merged.pop("mc_distractors", None)
+    settings_for_enrichment = settings
+    if isinstance(framework_distractors, list):
+        settings_for_enrichment = {**settings, "mc_distractors": framework_distractors}
+
+    enrichment = enrichment_metadata(settings_for_enrichment, answer=answer)
+    # Preserve choices a framework already attached.
+    if "choices" in merged:
+        enrichment.pop("choices", None)
+        enrichment.pop("answer_mode", None)
+    merged.update(enrichment)
     return merged

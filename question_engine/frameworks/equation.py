@@ -255,7 +255,7 @@ class SolvingInequalityFramework(EquationFramework):
                 settings,
                 boundary_high=boundary_high,
             )
-            return metadata_from_number_line_spec(spec)
+            return metadata_from_number_line_spec(spec, prompt="blank")
         return number_line_metadata(answer, settings)
 
 

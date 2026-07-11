@@ -20,53 +20,57 @@ export function SettingsForm({
   loading,
 }: SettingsFormProps) {
   return (
-    <section className="panel">
-      <h2>Worksheet settings</h2>
+    <section className="panel settings-form-panel">
+      <div className="settings-form-scroll">
+        <h2>Worksheet settings</h2>
 
-      <label className="field">
-        <span>Worksheet title</span>
-        <input
-          type="text"
-          value={title}
-          onChange={(event) => onTitleChange(event.target.value)}
-        />
-      </label>
-
-      {fields.map((field) => (
-        <label className="field" key={field.key}>
-          <span>{field.label}</span>
-          {field.type === "bool" ? (
-            <input
-              type="checkbox"
-              checked={Boolean(values[field.key])}
-              onChange={(event) => onChange(field.key, event.target.checked)}
-            />
-          ) : field.type === "select" ? (
-            <select
-              value={String(values[field.key])}
-              onChange={(event) => onChange(field.key, event.target.value)}
-            >
-              {(field.options ?? []).map((option) => (
-                <option key={option} value={option}>
-                  {option === "auto" ? "Auto (up to 3)" : option}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type="number"
-              value={Number(values[field.key])}
-              min={field.min}
-              max={field.max}
-              onChange={(event) => onChange(field.key, Number(event.target.value))}
-            />
-          )}
+        <label className="field">
+          <span>Worksheet title</span>
+          <input
+            type="text"
+            value={title}
+            onChange={(event) => onTitleChange(event.target.value)}
+          />
         </label>
-      ))}
 
-      <button className="primary" onClick={onSubmit} disabled={loading}>
-        {loading ? "Generating..." : "Generate worksheet"}
-      </button>
+        {fields.map((field) => (
+          <label className="field" key={field.key}>
+            <span>{field.label}</span>
+            {field.type === "bool" ? (
+              <input
+                type="checkbox"
+                checked={Boolean(values[field.key])}
+                onChange={(event) => onChange(field.key, event.target.checked)}
+              />
+            ) : field.type === "select" ? (
+              <select
+                value={String(values[field.key])}
+                onChange={(event) => onChange(field.key, event.target.value)}
+              >
+                {(field.options ?? []).map((option) => (
+                  <option key={option} value={option}>
+                    {option === "auto" ? "Auto (up to 3)" : option}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type="number"
+                value={Number(values[field.key])}
+                min={field.min}
+                max={field.max}
+                onChange={(event) => onChange(field.key, Number(event.target.value))}
+              />
+            )}
+          </label>
+        ))}
+      </div>
+
+      <div className="settings-form-actions">
+        <button className="primary" onClick={onSubmit} disabled={loading}>
+          {loading ? "Generating..." : "Generate worksheet"}
+        </button>
+      </div>
     </section>
   );
 }

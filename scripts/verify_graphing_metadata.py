@@ -1,4 +1,4 @@
-"""Verify graphing types emit graph_spec or number_line_spec."""
+"""Verify graphing types emit prompt vs answer graph metadata."""
 from __future__ import annotations
 
 import json
@@ -11,36 +11,69 @@ sys.path.insert(0, str(ROOT))
 import question_engine.types  # noqa: F401
 from question_engine.api.handler import handle_generate
 
-SAMPLES = [
+BLANK_SAMPLES = [
     "graphing_linear_equations",
-    "graphing_single_variable_inequalities",
-    "slope",
-    "pa_plotting_points",
-    "g6_numbers_on_a_number_line",
+    "graphing_linear_inequalities",
     "systems_graphing",
     "graphing_quadratic_functions",
+    "graphing_absolute_value_equations",
+    "graphing_exponential_functions",
+    "a2_linear_relations_and_functions_graphing_absolute_value_equations",
     "a2_linear_relations_and_functions_graphing_linear_equations",
     "geo_parallel_graphing_linear_equations",
-    "g6_writing_and_graphing_inequalities",
 ]
 
-settings = {"count": 1, "include_graph_metadata": True}
+STIMULUS_SAMPLES = [
+    "more_on_slope",
+    "writing_linear_equations",
+    "continuous_relations",
+]
+
+settings = {"count": 1, "include_graph_metadata": True, "include_answer_key": True}
 ok = 0
-for tid in SAMPLES:
+total = 0
+
+for tid in BLANK_SAMPLES:
+    total += 1
     status, _, body = handle_generate({"type_id": tid, "settings": settings})
     data = json.loads(body)
     if status != 200:
         print(f"{tid}: FAIL {data.get('error')}")
         continue
     meta = data["questions"][0].get("metadata", {})
-    if meta.get("number_line_spec"):
-        print(f"{tid}: number_line_spec boundary={meta['number_line_spec'].get('boundary')}")
-        ok += 1
-    elif meta.get("graph_spec"):
-        gs = meta["graph_spec"]
-        print(f"{tid}: graph_spec functions={len(gs.get('functions', []))} points={len(gs.get('points', []))}")
+    gs = meta.get("graph_spec") or {}
+    nls = meta.get("number_line_spec") or {}
+    role = meta.get("graph_role")
+    prompt_empty = (
+        (gs and len(gs.get("functions", [])) == 0 and len(gs.get("points", [])) == 0)
+        or nls.get("blank") is True
+    )
+    has_answer = bool(meta.get("answer_graph_spec") or meta.get("answer_number_line_spec"))
+    if role == "blank" and prompt_empty and has_answer:
+        print(f"{tid}: OK blank prompt + answer graph")
         ok += 1
     else:
-        print(f"{tid}: NO_META scaffold={meta.get('scaffolded')}")
+        print(
+            f"{tid}: BAD role={role} prompt_empty={prompt_empty} "
+            f"answer={has_answer} fn={len(gs.get('functions', []))} pts={len(gs.get('points', []))}"
+        )
 
-print(f"\n{ok}/{len(SAMPLES)} with graph metadata")
+for tid in STIMULUS_SAMPLES:
+    total += 1
+    status, _, body = handle_generate({"type_id": tid, "settings": settings})
+    data = json.loads(body)
+    if status != 200:
+        print(f"{tid}: FAIL {data.get('error')}")
+        continue
+    meta = data["questions"][0].get("metadata", {})
+    gs = meta.get("graph_spec") or {}
+    role = meta.get("graph_role")
+    has_line = len(gs.get("functions", [])) > 0 or len(gs.get("points", [])) > 0
+    if role == "stimulus" and has_line:
+        print(f"{tid}: OK stimulus line on prompt answer={data['questions'][0].get('answer_latex')}")
+        ok += 1
+    else:
+        print(f"{tid}: BAD role={role} has_line={has_line} gs={gs}")
+
+print(f"\n{ok}/{total} checks passed")
+sys.exit(0 if ok == total else 1)

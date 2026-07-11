@@ -9,7 +9,8 @@ from decimal import Decimal, ROUND_HALF_UP
 from fractions import Fraction
 
 from .base import QuestionFramework
-from ..generators.utils import frac_latex, random_fraction, random_int_range
+from ..generators.utils import format_fraction_division_latex, frac_latex, random_fraction, random_int_range
+from ..settings.params import allowed_division_notations
 
 
 @dataclass(frozen=True)
@@ -145,8 +146,12 @@ class RationalFramework(NumberFramework):
             "/": lambda x, y: x / y,
         }
         result = ops[op](a, b)
-        latex_op = {"+": "+", "-": "-", "*": "\\cdot", "/": "\\div"}[op]
-        prompt_latex = f"{frac_latex(a)} {latex_op} {frac_latex(b)}"
+        if op == "/":
+            notation = random.choice(allowed_division_notations(settings))
+            prompt_latex = format_fraction_division_latex(a, b, notation)
+        else:
+            latex_op = {"+": "+", "-": "-", "*": "\\cdot"}[op]
+            prompt_latex = f"{frac_latex(a)} {latex_op} {frac_latex(b)}"
         return prompt_latex, f"{a} {op} {b}", frac_latex(result)
 
 
@@ -491,6 +496,68 @@ def _factor_bounds(settings: dict) -> tuple[int, int]:
     return _int_range(settings, "factor_min", "factor_max", lo_default=4, hi_default=60)
 
 
+def _require_gcf_greater_than_one(settings: dict) -> bool:
+    return bool(settings.get("require_gcf_greater_than_one", True))
+
+
+def _sample_values_for_gcf(lo: int, hi: int, count: int, *, require_gt_one: bool) -> list[int]:
+    """Sample ``count`` integers in [lo, hi]; optionally force GCF ≥ 2."""
+    lo = max(2, lo)
+    hi = max(lo, hi)
+    if not require_gt_one:
+        values: list[int] = []
+        while len(values) < count:
+            candidate = random.randint(lo, hi)
+            if candidate > 1:
+                values.append(candidate)
+        return values
+
+    max_g = max(2, min(hi // 2, 12))
+    for _ in range(40):
+        g = random.randint(2, max_g)
+        mult_hi = hi // g
+        mult_lo = max(1, (lo + g - 1) // g)
+        if mult_lo > mult_hi:
+            continue
+        values = [g * random.randint(mult_lo, mult_hi) for _ in range(count)]
+        if math.gcd(*values) >= 2:
+            return values
+
+    g = 2
+    mult_hi = max(2, hi // g)
+    mult_lo = max(1, (lo + g - 1) // g)
+    if mult_lo > mult_hi:
+        mult_lo = 1
+    return [g * random.randint(mult_lo, mult_hi) for _ in range(count)]
+
+
+def _sample_gcf_pair(lo: int, hi: int, *, require_gt_one: bool) -> tuple[int, int, int]:
+    """Return (a, b, gcf) with optional GCF ≥ 2 constraint."""
+    lo = max(2, lo)
+    hi = max(lo, hi)
+    g_lo = 2 if require_gt_one else 1
+    max_g = max(g_lo, min(hi // 2, 12))
+    for _ in range(40):
+        g = random.randint(g_lo, max_g)
+        mult_hi = hi // g
+        mult_lo = max(1, (lo + g - 1) // g)
+        if mult_lo > mult_hi:
+            continue
+        m1 = random.randint(mult_lo, mult_hi)
+        m2 = random.randint(mult_lo, mult_hi)
+        # Keep multipliers coprime so the GCF of the pair is exactly g.
+        if math.gcd(m1, m2) != 1:
+            continue
+        a, b = g * m1, g * m2
+        if a == b:
+            continue
+        return a, b, g
+    # Fallback pair that always shares factor 2 when required.
+    if require_gt_one:
+        return 12, 18, 6
+    return 8, 15, 1
+
+
 class IntegerArithmeticFramework(NumberFramework):
     """Integer addition, subtraction, multiplication, and division."""
 
@@ -666,15 +733,21 @@ class GcfLcmFramework(NumberFramework):
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         lo, hi = _factor_bounds(settings)
         count = random.choice([2, 2, 3])
-        values = []
-        while len(values) < count:
-            candidate = random.randint(lo, hi)
-            if candidate > 1:
-                values.append(candidate)
         if self.mode == "gcf":
+            values = _sample_values_for_gcf(
+                lo,
+                hi,
+                count,
+                require_gt_one=_require_gcf_greater_than_one(settings),
+            )
             result = math.gcd(*values)
             label = "GCF"
         else:
+            values = []
+            while len(values) < count:
+                candidate = random.randint(lo, hi)
+                if candidate > 1:
+                    values.append(candidate)
             result = math.lcm(*values)
             label = "LCM"
         numbers = ", ".join(str(v) for v in values)
@@ -689,12 +762,11 @@ class GcfLcmWordFramework(NumberFramework):
         lo, hi = _factor_bounds(settings)
         use_gcf = random.choice([True, False])
         if use_gcf:
-            g = random.randint(2, 6)
-            a = g * random.randint(lo // g or 2, hi // g or 8)
-            b = g * random.randint(lo // g or 2, hi // g or 8)
-            while math.gcd(a, b) != g:
-                a = g * random.randint(lo // g or 2, hi // g or 8)
-                b = g * random.randint(lo // g or 2, hi // g or 8)
+            a, b, g = _sample_gcf_pair(
+                lo,
+                hi,
+                require_gt_one=_require_gcf_greater_than_one(settings),
+            )
             items = random.choice(["apples", "cookies", "stickers"])
             prompt = (
                 f"\\text{{You have {a} {items} and {b} {items}. "

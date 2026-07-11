@@ -555,9 +555,10 @@ class GcfLcmWordFramework(WordProblemFramework):
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         variant = random.choice(["lcm", "gcf"])
-        a = random.choice([6, 8, 9, 10, 12])
-        b = random.choice([8, 10, 12, 15, 18])
+        require_gt_one = bool(settings.get("require_gcf_greater_than_one", True))
         if variant == "lcm":
+            a = random.choice([6, 8, 9, 10, 12])
+            b = random.choice([8, 10, 12, 15, 18])
             value = math.lcm(a, b)
             answer = _format_answer(value, settings)
             latex = (
@@ -569,14 +570,19 @@ class GcfLcmWordFramework(WordProblemFramework):
                 f"What is the least number of each needed so there are no leftovers?"
             )
         else:
-            value = math.gcd(a, b)
-            answer = _format_answer(value, settings)
+            g_lo = 2 if require_gt_one else 1
+            g = random.randint(g_lo, 6)
+            multipliers = [2, 3, 4, 5, 6, 7, 8, 9]
+            m1 = random.choice(multipliers)
+            m2 = random.choice([m for m in multipliers if m != m1 and math.gcd(m1, m) == 1])
+            roses, tulips = m1 * g, m2 * g
+            answer = _format_answer(g, settings)
             latex = (
-                rf"\text{{A florist has {a * value} roses and {b * value} tulips to make identical "
+                rf"\text{{A florist has {roses} roses and {tulips} tulips to make identical "
                 rf"arrangements. What is the greatest number of arrangements that can be made?}}"
             )
             text = (
-                f"A florist has {a * value} roses and {b * value} tulips to make identical "
+                f"A florist has {roses} roses and {tulips} tulips to make identical "
                 f"arrangements. What is the greatest number of arrangements that can be made?"
             )
         return latex, text, answer

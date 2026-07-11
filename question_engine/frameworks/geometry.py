@@ -9,6 +9,12 @@ from typing import Any, Literal
 
 from .base import QuestionFramework
 from ..core.metadata import DiagramSpec, question_metadata
+from ..diagrams import (
+    GeometryFigure,
+    angle_figure,
+    circle_figure,
+    triangle_figure,
+)
 from ..generators.utils import random_int_range
 
 FigureType = Literal[
@@ -159,6 +165,7 @@ def _figure_metadata(
     figure_type: FigureType,
     labels: list[str],
     dimensions: dict[str, float],
+    diagram: GeometryFigure | None = None,
 ) -> dict[str, Any]:
     figure = GeometryFigureSpec(
         figure_type=figure_type,
@@ -174,9 +181,16 @@ def _figure_metadata(
             "unit": figure.unit,
         },
     }
-    if bool(settings.get("include_diagram", False)):
+    include = bool(settings.get("include_diagram", True))
+    if include and diagram is not None:
+        meta.update(diagram.to_metadata())
+    elif include:
         meta["diagram_spec"] = figure.to_diagram_spec()
     return question_metadata(**meta)
+
+
+def _diagram_enabled(settings: dict) -> bool:
+    return bool(settings.get("include_diagram", True))
 
 
 class GeometryFramework(QuestionFramework):
@@ -206,25 +220,57 @@ class GeometryFramework(QuestionFramework):
 class AnglesFramework(GeometryFramework):
     """Find the measure of a given angle."""
 
+    def __init__(self, *, figure_type: FigureType = "composite", quantity: str = "area"):
+        super().__init__(figure_type=figure_type, quantity=quantity)
+        self._last: dict[str, Any] = {}
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         angle = _random_angle(settings)
         vertex, p1, p2 = random.sample(_ANGLE_LABELS, 3)
         symbol = _angle_symbol(settings)
-        prompt = f"m\\angle {p1}{vertex}{p2} = {angle}{symbol}"
+        prompt = (
+            f"\\text{{Find }} m\\angle {p1}{vertex}{p2}"
+            f"\\text{{ using the diagram.}}"
+        )
         answer = f"{_format_angle(angle, settings)}{symbol}"
+        self._last = {
+            "angle": angle,
+            "vertex": vertex,
+            "p1": p1,
+            "p2": p2,
+            "figure": angle_figure(p1, vertex, p2, float(angle), show_measure=True),
+        }
         return prompt, f"angle {p1}{vertex}{p2} = {angle}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
         return _figure_metadata(
             settings,
             figure_type="composite",
-            labels=["A", "B", "C"],
-            dimensions={"angle_deg": float(_random_angle(settings))},
+            labels=[last["p1"], last["vertex"], last["p2"]],
+            dimensions={"angle_deg": float(last["angle"])},
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
 
 class ClassifyingAnglesFramework(GeometryFramework):
     """Classify an angle as acute, right, obtuse, or straight."""
+
+    def __init__(self, *, figure_type: FigureType = "composite", quantity: str = "area"):
+        super().__init__(figure_type=figure_type, quantity=quantity)
+        self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         angle_min, angle_max = _bounds(settings, "angle_min", "angle_max", 10, 170)
@@ -235,11 +281,44 @@ class ClassifyingAnglesFramework(GeometryFramework):
         vertex, p1, p2 = random.sample(_ANGLE_LABELS, 3)
         symbol = _angle_symbol(settings)
         prompt = (
-            f"\\text{{Classify }} m\\angle {p1}{vertex}{p2} = {angle}{symbol}"
+            f"\\text{{Classify }} \\angle {p1}{vertex}{p2}"
             f"\\text{{ as acute, right, obtuse, or straight.}}"
         )
         answer = _classify_angle(angle)
+        self._last = {
+            "angle": angle,
+            "vertex": vertex,
+            "p1": p1,
+            "p2": p2,
+            "figure": angle_figure(
+                p1, vertex, p2, float(angle), show_measure=True, kind="classifying_angle"
+            ),
+        }
+        # Keep measure in prompt_text for answer-key context; diagram shows degrees.
+        _ = symbol
         return prompt, f"classify angle {angle}", answer
+
+    def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
+        return _figure_metadata(
+            settings,
+            figure_type="composite",
+            labels=[last["p1"], last["vertex"], last["p2"]],
+            dimensions={"angle_deg": float(last["angle"])},
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
+        )
 
 
 class SegmentLengthFramework(GeometryFramework):
@@ -266,6 +345,10 @@ class SegmentLengthFramework(GeometryFramework):
 class TriangleAngleSumFramework(GeometryFramework):
     """Use the triangle angle sum to find a missing angle."""
 
+    def __init__(self, *, figure_type: FigureType = "triangle", quantity: str = "area"):
+        super().__init__(figure_type=figure_type, quantity=quantity)
+        self._last: dict[str, Any] = {}
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         symbol = _angle_symbol(settings)
         a = _random_angle(settings)
@@ -273,9 +356,11 @@ class TriangleAngleSumFramework(GeometryFramework):
         while a + b >= 170:
             b = _random_angle(settings)
         missing = 180 - a - b
-        labels = _TRIANGLE_LABELS
+        labels = list(_TRIANGLE_LABELS)
         known = random.sample(labels, 2)
         unknown = next(label for label in labels if label not in known)
+        angle_map = {known[0]: a, known[1]: b, unknown: missing}
+        angles = (angle_map["A"], angle_map["B"], angle_map["C"])
         prompt = (
             f"\\text{{In }} \\triangle {''.join(labels)},\\ "
             f"m\\angle {known[0]} = {a}{symbol}\\text{{ and }} "
@@ -283,14 +368,39 @@ class TriangleAngleSumFramework(GeometryFramework):
             f"\\text{{Find }} m\\angle {unknown}."
         )
         answer = f"{missing}{symbol}"
+        self._last = {
+            "angles": angle_map,
+            "unknown": unknown,
+            "labels": labels,
+            "figure": triangle_figure(labels, angles, missing=unknown),
+        }
         return prompt, f"triangle angle sum; find {unknown}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
+        angles = last["angles"]
         return _figure_metadata(
             settings,
             figure_type="triangle",
-            labels=_TRIANGLE_LABELS,
-            dimensions={"angle_a": 60.0, "angle_b": 70.0, "angle_c": 50.0},
+            labels=last["labels"],
+            dimensions={
+                "angle_a": float(angles["A"]),
+                "angle_b": float(angles["B"]),
+                "angle_c": float(angles["C"]),
+            },
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
 
@@ -449,6 +559,7 @@ class CircleMeasureFramework(GeometryFramework):
     def __init__(self, *, quantity: Literal["circumference", "area", "either"] = "either"):
         super().__init__(figure_type="circle")
         self.circle_quantity = quantity
+        self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         unit = _measurement_unit(settings)
@@ -468,15 +579,34 @@ class CircleMeasureFramework(GeometryFramework):
                 f"{radius}\\text{{ {unit}}}."
             )
             answer = f"{radius * radius}\\pi\\text{{ {unit}}}^2"
+        self._last = {
+            "radius": radius,
+            "unit": unit,
+            "quantity": quantity,
+            "figure": circle_figure(float(radius), unit=unit),
+        }
         return prompt, f"circle {quantity} r={radius}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
-        radius = float(_random_radius(settings))
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
         return _figure_metadata(
             settings,
             figure_type="circle",
-            labels=["O"],
-            dimensions={"radius": radius},
+            labels=["O", "A"],
+            dimensions={"radius": float(last["radius"])},
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
 

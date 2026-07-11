@@ -8,7 +8,7 @@ from typing import Any, Callable
 
 from ..core.metadata import question_metadata
 from ..core.models import Question
-from ..frameworks.graphing import include_graph_metadata
+from ..frameworks.graphing import include_graph_metadata, origin_centered_bounds
 from .utils import _make_questions, random_int_range
 
 Matrix2 = tuple[tuple[int, int], tuple[int, int]]
@@ -39,37 +39,40 @@ def _parabola_graph_metadata(
     settings: dict,
     *,
     extra_points: list[tuple[float, float]] | None = None,
+    prompt: str = "blank",
 ) -> dict[str, Any]:
     if not include_graph_metadata(settings):
         return {}
     h, k = _vertex_from_standard(a, b, c)
-    coord_min = float(settings.get("coord_min", -8))
-    coord_max = float(settings.get("coord_max", 8))
     xs = [h - 3, h, h + 3, 0, 1]
-    ys = [a * x * x + b * x + c for x in xs]
-    if extra_points:
-        xs.extend(p[0] for p in extra_points)
-        ys.extend(p[1] for p in extra_points)
-    padding = 2.0
-    x_min = min(min(xs), coord_min) - padding
-    x_max = max(max(xs), coord_max) + padding
-    y_min = min(min(ys), coord_min) - padding
-    y_max = max(max(ys), coord_max) + padding
+    features: list[tuple[float, float]] = [(x, a * x * x + b * x + c) for x in xs]
     points: list[tuple[float, float]] = [(h, k)]
     if extra_points:
+        features.extend(extra_points)
         points.extend(extra_points)
-    return question_metadata(
-        graph_spec={
-            "x_min": x_min,
-            "x_max": x_max,
-            "y_min": y_min,
-            "y_max": y_max,
-            "functions": [_graph_quad_fn(a, b, c)],
-            "points": points,
-            "show_grid": bool(settings.get("show_grid", True)),
-            "show_points": bool(settings.get("show_points", True)),
-        }
-    )
+    x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+    answer_gs = {
+        "x_min": x_min,
+        "x_max": x_max,
+        "y_min": y_min,
+        "y_max": y_max,
+        "functions": [_graph_quad_fn(a, b, c)],
+        "points": points,
+        "show_grid": bool(settings.get("show_grid", True)),
+        "show_points": bool(settings.get("show_points", True)),
+    }
+    if prompt == "blank":
+        return question_metadata(
+            graph_spec={
+                **answer_gs,
+                "functions": [],
+                "points": [],
+                "show_points": False,
+            },
+            answer_graph_spec=answer_gs,
+            graph_role="blank",
+        )
+    return question_metadata(graph_spec=answer_gs, graph_role="stimulus")
 
 
 def _vertex_form_latex(a: int, h: int, k: int) -> str:
@@ -256,19 +259,27 @@ def _complex_graph(topic: str, settings: dict) -> list[Question]:
         answer = f"({real}, {imag})" if include_answer_key else None
         metadata: dict[str, Any] = {}
         if include_graph_metadata(settings):
-            coord_min = float(settings.get("coord_min", -8))
-            coord_max = float(settings.get("coord_max", 8))
+            x_min, x_max, y_min, y_max = origin_centered_bounds(
+                [(float(real), float(imag))], settings=settings,
+            )
+            answer_gs = {
+                "x_min": x_min,
+                "x_max": x_max,
+                "y_min": y_min,
+                "y_max": y_max,
+                "functions": [],
+                "points": [(real, imag)],
+                "show_grid": bool(settings.get("show_grid", True)),
+                "show_points": bool(settings.get("show_points", True)),
+            }
             metadata = question_metadata(
                 graph_spec={
-                    "x_min": coord_min,
-                    "x_max": coord_max,
-                    "y_min": coord_min,
-                    "y_max": coord_max,
-                    "functions": [],
-                    "points": [(real, imag)],
-                    "show_grid": bool(settings.get("show_grid", True)),
-                    "show_points": bool(settings.get("show_points", True)),
-                }
+                    **answer_gs,
+                    "points": [],
+                    "show_points": False,
+                },
+                answer_graph_spec=answer_gs,
+                graph_role="blank",
             )
         questions.append(
             Question(

@@ -14,6 +14,36 @@ def rational_operation_settings() -> list[SettingField]:
     ]
 
 
+def division_notation_settings() -> list[SettingField]:
+    """Multi-select forms for fraction / rational division prompts.
+
+    At least one must stay enabled; generation falls back to obelus (÷) if none are.
+    """
+    return [
+        SettingField(
+            "allow_obelus",
+            "Allow ÷ symbol",
+            "bool",
+            True,
+            group="division",
+        ),
+        SettingField(
+            "allow_complex_fraction",
+            "Allow complex fraction (stacked)",
+            "bool",
+            True,
+            group="division",
+        ),
+        SettingField(
+            "allow_slash",
+            "Allow slash form (a/b) / (c/d)",
+            "bool",
+            True,
+            group="division",
+        ),
+    ]
+
+
 def rational_expression_extra_settings() -> list[SettingField]:
     """Type-specific controls for combining rational terms."""
     return [

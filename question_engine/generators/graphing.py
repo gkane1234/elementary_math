@@ -17,6 +17,7 @@ from ..frameworks.graphing import (
     GraphSystemInequalitiesFramework,
     GraphTransformationsFramework,
     NumberLinePlotFramework,
+    ReadEquationFromGraphFramework,
     ReadInterceptFromGraphFramework,
     ReadSlopeFromGraphFramework,
 )
@@ -34,6 +35,7 @@ _GRAPH_QUADRATIC_INEQUALITY = GraphQuadraticInequalityFramework()
 _NUMBER_LINE_PLOT = NumberLinePlotFramework()
 _READ_SLOPE = ReadSlopeFromGraphFramework()
 _READ_INTERCEPT = ReadInterceptFromGraphFramework()
+_READ_EQUATION = ReadEquationFromGraphFramework()
 _GRAPH_POINT_TABLE = GraphPointTableFramework()
 _GRAPH_TRANSFORMATIONS = GraphTransformationsFramework()
 _GRAPH_SINGLE_VARIABLE = GraphInequalityFramework(default_dimension="number_line")
@@ -63,6 +65,7 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "number_line_plot": lambda topic, settings: _batch(_NUMBER_LINE_PLOT, topic, settings),
     "read_slope_from_graph": lambda topic, settings: _batch(_READ_SLOPE, topic, settings),
     "read_intercept_from_graph": lambda topic, settings: _batch(_READ_INTERCEPT, topic, settings),
+    "read_equation_from_graph": lambda topic, settings: _batch(_READ_EQUATION, topic, settings),
     "graph_point_table": lambda topic, settings: _batch(_GRAPH_POINT_TABLE, topic, settings),
     "graph_transformations": lambda topic, settings: _batch(_GRAPH_TRANSFORMATIONS, topic, settings),
     "graph_single_variable_inequality": lambda topic, settings: _batch(

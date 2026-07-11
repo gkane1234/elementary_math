@@ -1,4 +1,5 @@
 import { CURRICULUM } from "@/lib/curriculum";
+import { REQUIRES_DIAGRAM_TYPE_IDS, typeIsNotReady } from "@/lib/diagram-readiness";
 import type { CurriculumLevel, CurriculumTopic, QuestionTypeInfo } from "@/lib/types";
 
 export type TopicPickerStatus = "ready" | "preview" | "coming_soon";
@@ -35,15 +36,25 @@ export type FlatTopicSearchResult = CurriculumSelection & {
   topic: PickerTopic;
 };
 
-function topicStatus(typeId: string | null | undefined, availableTypeIds: Set<string>): TopicPickerStatus {
+function topicStatus(
+  typeId: string | null | undefined,
+  availableTypeIds: Set<string>,
+  notReadyIds: Set<string>,
+): TopicPickerStatus {
   if (!typeId) return "coming_soon";
+  // Diagram / incorrect-implementation demotions are Coming soon (not selectable).
+  if (notReadyIds.has(typeId)) return "coming_soon";
   if (!availableTypeIds.has(typeId)) return "preview";
   return "ready";
 }
 
-function makePickerTopic(topic: CurriculumTopic, availableTypeIds: Set<string>): PickerTopic {
+function makePickerTopic(
+  topic: CurriculumTopic,
+  availableTypeIds: Set<string>,
+  notReadyIds: Set<string>,
+): PickerTopic {
   const typeId = topic.type_id ?? null;
-  const status = topicStatus(typeId, availableTypeIds);
+  const status = topicStatus(typeId, availableTypeIds, notReadyIds);
   return {
     id: topic.id,
     name: topic.name,
@@ -53,23 +64,31 @@ function makePickerTopic(topic: CurriculumTopic, availableTypeIds: Set<string>):
   };
 }
 
-function collectLeaves(topics: CurriculumTopic[], availableTypeIds: Set<string>): PickerTopic[] {
+function collectLeaves(
+  topics: CurriculumTopic[],
+  availableTypeIds: Set<string>,
+  notReadyIds: Set<string>,
+): PickerTopic[] {
   const leaves: PickerTopic[] = [];
   for (const topic of topics) {
     if (topic.topics?.length) {
-      leaves.push(...collectLeaves(topic.topics, availableTypeIds));
+      leaves.push(...collectLeaves(topic.topics, availableTypeIds, notReadyIds));
       continue;
     }
-    leaves.push(makePickerTopic(topic, availableTypeIds));
+    leaves.push(makePickerTopic(topic, availableTypeIds, notReadyIds));
   }
   return leaves;
 }
 
-function buildChapters(courseTopics: CurriculumTopic[], availableTypeIds: Set<string>): PickerChapter[] {
+function buildChapters(
+  courseTopics: CurriculumTopic[],
+  availableTypeIds: Set<string>,
+  notReadyIds: Set<string>,
+): PickerChapter[] {
   return courseTopics.map((chapter) => ({
     id: chapter.id,
     name: chapter.name,
-    topics: collectLeaves(chapter.topics ?? [], availableTypeIds),
+    topics: collectLeaves(chapter.topics ?? [], availableTypeIds, notReadyIds),
   }));
 }
 
@@ -77,11 +96,21 @@ export function buildCurriculumPicker(
   curriculum: CurriculumLevel[] = CURRICULUM,
   types: QuestionTypeInfo[] = [],
 ): PickerCourse[] {
-  const availableTypeIds = new Set(types.map((type) => type.id));
+  // Ready = wired generator that is not demoted (diagram gap, wrong implementation, etc.).
+  // Block via API flags and/or the frontend diagram denylist (defense in depth).
+  const notReadyIds = new Set<string>(REQUIRES_DIAGRAM_TYPE_IDS);
+  for (const type of types) {
+    if (typeIsNotReady(type)) notReadyIds.add(type.id);
+  }
+
+  const availableTypeIds = new Set(
+    types.filter((type) => !typeIsNotReady(type)).map((type) => type.id),
+  );
+
   return curriculum.map((course) => ({
     id: course.id,
     name: course.name,
-    chapters: buildChapters(course.topics, availableTypeIds),
+    chapters: buildChapters(course.topics, availableTypeIds, notReadyIds),
   }));
 }
 
@@ -189,7 +218,16 @@ export function filterTopics(
   return flattenTopicsForSearch(courses).filter((entry) => {
     if (filters.readyOnly && !entry.topic.hasGenerator) return false;
     if (filters.courseId && entry.courseId !== filters.courseId) return false;
-    if (filters.chapterId && entry.chapterId !== filters.chapterId) return false;
+    if (filters.chapterId) {
+      const separator = filters.chapterId.indexOf(":");
+      if (separator !== -1) {
+        const courseId = filters.chapterId.slice(0, separator);
+        const chapterId = filters.chapterId.slice(separator + 1);
+        if (entry.courseId !== courseId || entry.chapterId !== chapterId) return false;
+      } else if (entry.chapterId !== filters.chapterId) {
+        return false;
+      }
+    }
     if (normalizedQuery && !entry.topic.name.toLowerCase().includes(normalizedQuery)) return false;
     return true;
   });
@@ -204,7 +242,8 @@ export function getUnmappedTypes(types: QuestionTypeInfo[], courses: PickerCours
       }
     }
   }
-  return types.filter((type) => !mapped.has(type.id));
+  // Hide demoted types from the fallback selector too.
+  return types.filter((type) => !mapped.has(type.id) && !typeIsNotReady(type));
 }
 
 export function topicStatusLabel(status: TopicPickerStatus): string {

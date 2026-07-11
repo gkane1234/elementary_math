@@ -21,7 +21,7 @@ CATEGORY_ORDER: tuple[str, ...] = (
     'Grade 6 — Data Sets and Distributions',
 )
 
-from .base import TypeCatalogEntry
+from .base import TypeCatalogEntry, resolve_instruction_latex, resolve_instruction_text
 
 
 
@@ -41,8 +41,8 @@ def _g6(
         category=f"Grade 6 — {chapter}",
         generator=generator,
         description=f"Practice {name.lower()}.",
-        instruction_latex=instruction_latex or "\\text{Solve.}",
-        instruction_text=instruction_text or "Solve.",
+        instruction_latex=resolve_instruction_latex(instruction_latex, instruction_text),
+        instruction_text=resolve_instruction_text(instruction_text),
         count_default=count_default,
     )
 
@@ -205,7 +205,10 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _g6(
         "Negative Numbers and Absolute Value",
         "g6_numbers_on_a_number_line",
-        "Numbers on a number line", generator="number_line_plot", instruction_text="Plot the number.",
+        "Numbers on a number line",
+        generator="number_line_plot",
+        instruction_latex=r"\text{Plot the following numbers on the number line.}",
+        instruction_text="Plot the following numbers on the number line.",
     ),
     _g6(
         "Negative Numbers and Absolute Value",
@@ -372,12 +375,16 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "g6_solutions_to_inequalities",
         "Solutions to inequalities",
         generator="graph_single_variable_inequality",
-        instruction_text="Determine if the value is a solution.",
+        instruction_latex=r"\text{Graph the following on the number line.}",
+        instruction_text="Graph the following on the number line.",
     ),
     _g6(
         "Inequalities",
         "g6_writing_and_graphing_inequalities",
-        "Writing and graphing inequalities", generator="graph_single_variable_inequality", instruction_text="Write and graph the inequality.",
+        "Writing and graphing inequalities",
+        generator="graph_single_variable_inequality",
+        instruction_latex=r"\text{Write and graph on the number line.}",
+        instruction_text="Write and graph on the number line.",
     ),
     _g6(
         "Inequalities",
@@ -390,7 +397,10 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _g6(
         "Inequalities",
         "g6_solving_and_graphing_one_step_inequalities",
-        "Solving and graphing one-step inequalities", generator="one_step_inequalities", instruction_text="Solve and graph.",
+        "Solving and graphing one-step inequalities",
+        generator="one_step_inequalities",
+        instruction_latex=r"\text{Solve and graph on the number line.}",
+        instruction_text="Solve and graph on the number line.",
     ),
     _g6("Inequalities", "g6_inequalities_hanger_diagrams", "Hanger diagrams", instruction_text="Solve the problem."),
     # Equations as Relationships between Two Variables

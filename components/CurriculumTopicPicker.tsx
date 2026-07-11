@@ -34,18 +34,24 @@ export function CurriculumTopicPicker({
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCourseId, setFilterCourseId] = useState("");
   const [filterChapterId, setFilterChapterId] = useState("");
-  const [readyOnly, setReadyOnly] = useState(false);
+  // Default to Ready-only so diagram / unfinished topics are not listed as usable.
+  const [readyOnly, setReadyOnly] = useState(true);
   const [useFallback, setUseFallback] = useState(false);
 
   const selectedTopic = selection ? findTopicSelection(courses, selection) : null;
 
   const filterCourse = courses.find((course) => course.id === filterCourseId) ?? null;
   const chapterFilterOptions = useMemo(() => {
-    if (filterCourse) return filterCourse.chapters;
-    const chapters: { id: string; name: string; courseName: string }[] = [];
-    for (const course of courses) {
+    const chapters: { id: string; name: string; courseId: string; courseName: string }[] = [];
+    const sourceCourses = filterCourse ? [filterCourse] : courses;
+    for (const course of sourceCourses) {
       for (const chapter of course.chapters) {
-        chapters.push({ id: chapter.id, name: chapter.name, courseName: course.name });
+        chapters.push({
+          id: chapter.id,
+          name: chapter.name,
+          courseId: course.id,
+          courseName: course.name,
+        });
       }
     }
     return chapters;
@@ -118,10 +124,21 @@ export function CurriculumTopicPicker({
       setFilterChapterId("");
       return;
     }
+
     const course = courses.find((entry) => entry.id === courseId);
-    if (filterChapterId && !course?.chapters.some((chapter) => chapter.id === filterChapterId)) {
+    const separator = filterChapterId.indexOf(":");
+    const chapterId =
+      separator === -1
+        ? filterChapterId
+        : filterChapterId.slice(0, separator) === courseId
+          ? filterChapterId.slice(separator + 1)
+          : "";
+
+    if (!chapterId || !course?.chapters.some((chapter) => chapter.id === chapterId)) {
       setFilterChapterId("");
+      return;
     }
+    setFilterChapterId(chapterId);
   };
 
   if (courses.length === 0) {
@@ -172,17 +189,14 @@ export function CurriculumTopicPicker({
             onChange={(event) => setFilterChapterId(event.target.value)}
           >
             <option value="">All chapters</option>
-            {filterCourse
-              ? filterCourse.chapters.map((chapter) => (
-                  <option key={chapter.id} value={chapter.id}>
-                    {chapter.name}
-                  </option>
-                ))
-              : chapterFilterOptions.map((chapter) => (
-                  <option key={chapter.id} value={chapter.id}>
-                    {"courseName" in chapter ? `${chapter.courseName} › ${chapter.name}` : chapter.name}
-                  </option>
-                ))}
+            {chapterFilterOptions.map((chapter) => {
+              const value = filterCourse ? chapter.id : `${chapter.courseId}:${chapter.id}`;
+              return (
+                <option key={`${chapter.courseId}:${chapter.id}`} value={value}>
+                  {filterCourse ? chapter.name : `${chapter.courseName} › ${chapter.name}`}
+                </option>
+              );
+            })}
           </select>
         </label>
       </div>
@@ -233,7 +247,7 @@ export function CurriculumTopicPicker({
 
       {selectedTopic && !selectedTopic.hasGenerator && (
         <p className="curriculum-topic-hint">
-          This topic is not available for worksheet generation yet.
+          This topic is Coming soon — diagrams or a matching generator are not available yet.
         </p>
       )}
 

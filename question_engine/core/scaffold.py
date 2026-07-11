@@ -48,6 +48,7 @@ def make_catalog_type(
         _generator = staticmethod(generator)
         _uses_scaffold = uses_scaffold
         _setting_config = resolved_config
+        setting_profile = resolved_config.setting_profile if resolved_config else None
 
         def settings_schema(self) -> list[SettingField]:
             return resolve_type_settings(self._setting_config)

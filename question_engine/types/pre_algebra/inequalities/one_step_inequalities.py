@@ -7,5 +7,5 @@ register_framework_type(
     "one_step_inequalities",
     OneStepInequalitiesFramework(),
     setting_profile="inequality",
-    exclude_settings=("steps",),
+    exclude_settings=("steps", "min_terms", "max_terms", "phrase_complexity", "max_phrase_operations"),
 )

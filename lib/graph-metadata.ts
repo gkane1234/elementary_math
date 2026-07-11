@@ -6,6 +6,10 @@ export type NumberLineSpec = {
   direction: "left" | "right" | "both";
   inclusive: boolean;
   tick_interval: number;
+  /** When true (default), mark and label 0. Unit ticks are never drawn. */
+  show_zero?: boolean;
+  /** When true, render axes/ticks only (no shading or boundary markers). */
+  blank?: boolean;
 };
 
 export type GraphSpec = {
@@ -19,19 +23,62 @@ export type GraphSpec = {
   show_points?: boolean;
 };
 
+export type GraphRole = "blank" | "stimulus";
+
 export type QuestionGraphMetadata = {
+  /** Prompt graph: blank plane/line or stimulus with solution drawn. */
   number_line_spec?: NumberLineSpec;
   graph_spec?: GraphSpec;
+  /** Solution graph for answer key (when prompt is blank). */
+  answer_number_line_spec?: NumberLineSpec;
+  answer_graph_spec?: GraphSpec;
+  graph_role?: GraphRole;
 };
+
+/** Axes/grid/bounds only — strip curves and markers that would reveal the solution. */
+export function blankCoordinatePlane(spec: GraphSpec): GraphSpec {
+  return {
+    ...spec,
+    functions: [],
+    points: [],
+    show_points: false,
+  };
+}
 
 export function extractGraphMetadata(
   metadata: Record<string, unknown> | undefined,
+  variant: "prompt" | "answer" = "prompt",
 ): QuestionGraphMetadata | null {
   if (!metadata) return null;
+
+  if (variant === "answer") {
+    const answerNumberLine = metadata.answer_number_line_spec as NumberLineSpec | undefined;
+    const answerGraph = metadata.answer_graph_spec as GraphSpec | undefined;
+    if (!answerNumberLine && !answerGraph) return null;
+    return {
+      number_line_spec: answerNumberLine,
+      graph_spec: answerGraph,
+      graph_role: "stimulus",
+    };
+  }
+
   const numberLine = metadata.number_line_spec as NumberLineSpec | undefined;
-  const graphSpec = metadata.graph_spec as GraphSpec | undefined;
+  let graphSpec = metadata.graph_spec as GraphSpec | undefined;
+  const graphRole = metadata.graph_role as GraphRole | undefined;
   if (!numberLine && !graphSpec) return null;
-  return { number_line_spec: numberLine, graph_spec: graphSpec };
+
+  // Defense in depth: blank student-work prompts never draw solution paths.
+  if (graphRole === "blank" && graphSpec) {
+    graphSpec = blankCoordinatePlane(graphSpec);
+  }
+
+  return {
+    number_line_spec: numberLine,
+    graph_spec: graphSpec,
+    answer_number_line_spec: metadata.answer_number_line_spec as NumberLineSpec | undefined,
+    answer_graph_spec: metadata.answer_graph_spec as GraphSpec | undefined,
+    graph_role: graphRole,
+  };
 }
 
 export function isNumberLineGraph(metadata: QuestionGraphMetadata): boolean {
@@ -51,9 +98,15 @@ export function isCoordinatePlaneGraph(metadata: QuestionGraphMetadata): boolean
 
 export function evaluateLinearFunction(expression: string, x: number): number | null {
   const normalized = expression.replace(/\s+/g, "");
-  const linear = normalized.match(/^(-?\d+(?:\.\d+)?)\*x\+(-?\d+(?:\.\d+)?)$/);
+  // m*x+b — allow "+-b" from string formatting (e.g. "-0.5*x+1" or "2*x+-3")
+  const linear = normalized.match(/^(-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\*x\+(-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)$/i);
   if (linear) {
     return Number(linear[1]) * x + Number(linear[2]);
+  }
+  // m*x-b
+  const linearMinus = normalized.match(/^(-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\*x-(-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)$/i);
+  if (linearMinus) {
+    return Number(linearMinus[1]) * x - Number(linearMinus[2]);
   }
   const absMatch = normalized.match(/^(-?\d+(?:\.\d+)?)?\*?abs\(x([+-]\d+(?:\.\d+)?)?\)([+-]\d+(?:\.\d+)?)?$/);
   if (absMatch) {

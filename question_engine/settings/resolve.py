@@ -32,10 +32,19 @@ def _profile_fields(profile_name: str) -> list[SettingField]:
 
 
 def _collect_profile_fields(config: TypeSettingConfig) -> list[SettingField]:
-    profile_names: list[str] = []
+    # Put common_enrichment first so difficulty appears early in the schema UI.
+    enrichment: list[str] = []
+    other_inherits: list[str] = []
+    for name in config.inherits:
+        if name == "common_enrichment":
+            enrichment.append(name)
+        else:
+            other_inherits.append(name)
+
+    profile_names: list[str] = [*enrichment]
     if config.setting_profile:
         profile_names.append(config.setting_profile)
-    profile_names.extend(config.inherits)
+    profile_names.extend(other_inherits)
 
     fields: list[SettingField] = []
     for name in profile_names:

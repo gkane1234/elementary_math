@@ -83,7 +83,10 @@ export function QuestionSettingsModal({
       <TopicSettingsFields
         fields={fields}
         values={values}
+        typeId={questionType?.id}
+        settingProfile={questionType?.setting_profile}
         onChange={(key, value) => setValues((current) => ({ ...current, [key]: value }))}
+        onValuesChange={setValues}
       />
       {error && <p className="error">{error}</p>}
     </Modal>

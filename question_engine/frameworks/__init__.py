@@ -39,9 +39,11 @@ from .graphing import (
     GraphSystemInequalitiesFramework,
     GraphTransformationsFramework,
     ReadInterceptFromGraphFramework,
+    ReadEquationFromGraphFramework,
     ReadSlopeFromGraphFramework,
 )
 from .inequality import InequalityFramework, NumberLineSpec
+from .mc import make_multiple_choice_choices
 from .linear import (
     ContinuousRelationsFramework,
     DirectVariationFramework,
@@ -103,6 +105,7 @@ __all__ = [
     "MultiStepInequalitiesFramework",
     "CompoundInequalitiesFramework",
     "AbsoluteValueInequalitiesFramework",
+    "make_multiple_choice_choices",
     "NumberFramework",
     "NumberParams",
     "PercentFramework",
@@ -156,6 +159,7 @@ __all__ = [
     "GraphSystemInequalitiesFramework",
     "ReadSlopeFromGraphFramework",
     "ReadInterceptFromGraphFramework",
+    "ReadEquationFromGraphFramework",
     "GraphPointTableFramework",
     "GraphTransformationsFramework",
     "WritingLinearEquationsFramework",

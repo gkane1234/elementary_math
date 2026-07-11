@@ -24,7 +24,13 @@ class QuestionType(ABC):
         pass
 
     def to_dict(self) -> dict:
-        return {
+        from ..type_readiness import (
+            type_incorrect_implementation,
+            type_not_ready,
+            type_requires_diagram,
+        )
+
+        payload = {
             "id": self.id,
             "name": self.name,
             "description": self.description,
@@ -33,7 +39,18 @@ class QuestionType(ABC):
             "instruction_latex": repair_instruction_latex(self.instruction_latex),
             "instruction_text": self.instruction_text,
             "settings": [field.to_dict() for field in self.settings_schema()],
+            "requires_diagram": type_requires_diagram(self.id),
+            "incorrect_implementation": type_incorrect_implementation(self.id),
+            "not_ready": type_not_ready(self.id),
         }
+        profile = getattr(self, "setting_profile", None)
+        if profile is None:
+            config = getattr(self, "_setting_config", None)
+            if config is not None:
+                profile = getattr(config, "setting_profile", None)
+        if profile:
+            payload["setting_profile"] = profile
+        return payload
 
 
 def register(question_type_cls: type[QuestionType]) -> type[QuestionType]:

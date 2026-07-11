@@ -7,5 +7,5 @@ register_framework_type(
     "a2_equations_and_inequalities_absolute_value_inequalities",
     AbsoluteValueInequalitiesFramework(),
     setting_profile="inequality",
-    exclude_settings=("steps",),
+    exclude_settings=("steps", "min_terms", "max_terms", "phrase_complexity", "max_phrase_operations"),
 )

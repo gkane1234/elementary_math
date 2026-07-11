@@ -3,7 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { TopicSettingsFields, topicSettingsFields } from "@/components/TopicSettingsFields";
 import { CurriculumTopicPicker } from "@/components/CurriculumTopicPicker";
-import { buildCurriculumPicker, findTopicSelection, getDefaultSelection } from "@/lib/curriculum-picker";
+import {
+  buildCurriculumPicker,
+  findFirstTopicByTypeId,
+  findTopicSelection,
+  getDefaultSelection,
+} from "@/lib/curriculum-picker";
+import { typeIsNotReady } from "@/lib/diagram-readiness";
 import type { QuestionTypeInfo, TopicSection } from "@/lib/types";
 
 function defaultTopicValues(type: QuestionTypeInfo | null): Record<string, string | number | boolean> {
@@ -17,6 +23,15 @@ function createSectionId(): string {
   return `section-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
+function firstReadyTypeId(types: QuestionTypeInfo[]): string {
+  const courses = buildCurriculumPicker(undefined, types);
+  const defaultSelection = getDefaultSelection(courses);
+  const fromCurriculum =
+    defaultSelection && findTopicSelection(courses, defaultSelection)?.typeId;
+  if (fromCurriculum) return fromCurriculum;
+  return types.find((type) => !typeIsNotReady(type))?.id ?? "";
+}
+
 type AddTopicPanelProps = {
   types: QuestionTypeInfo[];
   sections: TopicSection[];
@@ -24,14 +39,21 @@ type AddTopicPanelProps = {
 };
 
 export function AddTopicPanel({ types, sections, onSectionsChange }: AddTopicPanelProps) {
-  const [selectedTypeId, setSelectedTypeId] = useState(types[0]?.id ?? "");
+  const [selectedTypeId, setSelectedTypeId] = useState("");
   const [count, setCount] = useState(5);
   const [values, setValues] = useState<Record<string, string | number | boolean>>({});
 
+  const courses = useMemo(() => buildCurriculumPicker(undefined, types), [types]);
   const selectedType = useMemo(
     () => types.find((type) => type.id === selectedTypeId) ?? null,
     [types, selectedTypeId],
   );
+  const selectedIsReady = useMemo(() => {
+    if (!selectedType || typeIsNotReady(selectedType)) return false;
+    const mapped = findFirstTopicByTypeId(courses, selectedType.id);
+    if (mapped) return mapped.topic.hasGenerator;
+    return true;
+  }, [courses, selectedType]);
 
   const fields = useMemo(
     () => topicSettingsFields(selectedType?.settings ?? []),
@@ -39,14 +61,14 @@ export function AddTopicPanel({ types, sections, onSectionsChange }: AddTopicPan
   );
 
   useEffect(() => {
-    if (types.length > 0 && !selectedTypeId) {
-      const courses = buildCurriculumPicker(undefined, types);
-      const defaultSelection = getDefaultSelection(courses);
-      const defaultTypeId =
-        (defaultSelection && findTopicSelection(courses, defaultSelection)?.typeId) ?? types[0]?.id ?? "";
-      if (defaultTypeId) setSelectedTypeId(defaultTypeId);
+    if (types.length === 0) return;
+    if (!selectedTypeId || !selectedIsReady) {
+      const defaultTypeId = firstReadyTypeId(types);
+      if (defaultTypeId && defaultTypeId !== selectedTypeId) {
+        setSelectedTypeId(defaultTypeId);
+      }
     }
-  }, [types, selectedTypeId]);
+  }, [types, selectedTypeId, selectedIsReady]);
 
   useEffect(() => {
     setValues(defaultTopicValues(selectedType));
@@ -57,7 +79,7 @@ export function AddTopicPanel({ types, sections, onSectionsChange }: AddTopicPan
   }
 
   const handleAdd = () => {
-    if (!selectedType) return;
+    if (!selectedType || !selectedIsReady) return;
     onSectionsChange([
       ...sections,
       {
@@ -106,7 +128,12 @@ export function AddTopicPanel({ types, sections, onSectionsChange }: AddTopicPan
         </>
       )}
 
-      <button className="secondary" type="button" onClick={handleAdd} disabled={!selectedType}>
+      <button
+        className="secondary"
+        type="button"
+        onClick={handleAdd}
+        disabled={!selectedType || !selectedIsReady}
+      >
         Add to worksheet plan
       </button>
 

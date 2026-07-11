@@ -48,6 +48,7 @@ def number_line_range_settings(
     *,
     min_default: int = -12,
     max_default: int = 12,
+    show_zero_default: bool = True,
 ) -> list[SettingField]:
     return [
         SettingField(
@@ -66,6 +67,13 @@ def number_line_range_settings(
             max_default,
             min=0,
             max=50,
+            group="graphing",
+        ),
+        SettingField(
+            "number_line_show_zero",
+            "Show 0 on number line",
+            "bool",
+            show_zero_default,
             group="graphing",
         ),
         SettingField(

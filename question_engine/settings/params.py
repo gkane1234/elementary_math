@@ -105,6 +105,18 @@ def allowed_rational_operations(settings: dict) -> list[str]:
     return ops or ["+", "-"]
 
 
+def allowed_division_notations(settings: dict) -> list[str]:
+    """Enabled fraction-division prompt forms; falls back to obelus if none selected."""
+    forms: list[str] = []
+    if bool(settings.get("allow_obelus", True)):
+        forms.append("obelus")
+    if bool(settings.get("allow_complex_fraction", True)):
+        forms.append("complex_fraction")
+    if bool(settings.get("allow_slash", True)):
+        forms.append("slash")
+    return forms or ["obelus"]
+
+
 @dataclass(frozen=True)
 class RadicalParams:
     radicand_min: int = 12

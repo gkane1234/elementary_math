@@ -79,7 +79,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _pa(
         "Integers, Decimals, and Fractions",
         "pa_greatest_common_factor",
-        "Greatest common factor", generator="polynomial_factoring_common_factor", instruction_text="Find the GCF.",
+        "Greatest common factor", generator="g6_greatest_common_factor", instruction_text="Find the GCF.",
     ),
     _pa(
         "Integers, Decimals, and Fractions",
@@ -202,7 +202,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "pa_plotting_points",
         "Plotting points",
         generator="plotting_points",
-        instruction_text="Plot the point.",
+        instruction_text="Plot the following points on the coordinate plane.",
     ),
     _pa(
         "Linear Equations and Inequalities",
@@ -216,9 +216,9 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Linear Equations and Inequalities",
         "pa_writing_linear_equations",
         "Writing linear equations",
-        generator="writing_linear_equations",
-        instruction_latex="\\text{Write an equation of the line.}",
-        instruction_text="Write an equation of the line.",
+        generator="read_equation_from_graph",
+        instruction_latex=r"\text{Write the equation of the line shown.}",
+        instruction_text="Write the equation of the line shown.",
     ),
     _pa(
         "Linear Equations and Inequalities",

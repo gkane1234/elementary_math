@@ -1,7 +1,27 @@
 {
-  "functions": {
-    "api/**/*.py": {
-      "maxDuration": 30
+  "services": {
+    "web": {
+      "framework": "nextjs",
+      "root": "."
+    },
+    "pyapi": {
+      "framework": "fastapi",
+      "root": ".",
+      "entrypoint": "backend.main:app"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/generate",
+      "destination": { "service": "pyapi" }
+    },
+    {
+      "source": "/api/question-types",
+      "destination": { "service": "pyapi" }
+    },
+    {
+      "source": "/(.*)",
+      "destination": { "service": "web" }
+    }
+  ]
 }

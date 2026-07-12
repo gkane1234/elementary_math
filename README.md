@@ -43,12 +43,15 @@ echo '{"type_id":"quadratic_factoring","settings":{"count":3,"include_answer_key
 
 ## Deploy to Vercel
 
+This app uses **Vercel Services** (Next.js frontend + FastAPI Python API).
+
 1. Push this repo to GitHub
 2. Import the project in Vercel
-3. Framework preset: Next.js
+3. In **Project Settings → General → Framework Preset**, choose **Services**
 4. Deploy
 
-Python API routes live in [`api/`](api/) and are configured in [`vercel.json`](vercel.json).
+Python API entrypoint: [`backend/main.py`](backend/main.py)  
+Routing is configured in [`vercel.json`](vercel.json) (`/api/generate` and `/api/question-types` → Python).
 
 ## Project layout
 

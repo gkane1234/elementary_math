@@ -2,17 +2,25 @@
 
 from __future__ import annotations
 
+import math
 import random
 import re
 from dataclasses import dataclass, field
+from fractions import Fraction
 from typing import Any, Literal
 
 from .base import QuestionFramework
 from ..core.metadata import GraphSpec, question_metadata
-from ..generators.utils import random_int_range
+from ..settings.params import allowed_inequality_symbols
+from ..generators.utils import (
+    format_monomial_latex,
+    format_polynomial_latex,
+    format_slope_intercept_latex,
+    random_int_range,
+)
 
 Quadrant = Literal["I", "II", "III", "IV", "all"]
-NumberLineDirection = Literal["left", "right", "both"]
+NumberLineDirection = Literal["left", "right", "both", "outside"]
 
 
 GraphPromptRole = Literal["blank", "stimulus"]
@@ -27,6 +35,7 @@ class NumberLineSpec:
     inclusive: bool = False
     tick_interval: float = 1.0
     boundary_high: float | None = None
+    inclusive_high: bool | None = None
     show_zero: bool = True
     blank: bool = False
 
@@ -45,7 +54,8 @@ class CoordinatePlaneSpec:
     x_max: float | None = None
     y_min: float | None = None
     y_max: float | None = None
-
+    # Inequality half-planes: {"kind":"half_plane","m":…,"b":…,"op":">="}
+    regions: list[dict[str, Any]] = field(default_factory=list)
 
 def include_graph_metadata(settings: dict) -> bool:
     return bool(settings.get("include_graph_metadata", False))
@@ -127,7 +137,9 @@ def _bounds_with_padding(
 
 
 _SIMPLE_INEQUALITY = re.compile(r"^(\w+)\s*(<=|>=|<|>)\s*(-?\d+(?:\.\d+)?)$")
-_COMPOUND_INEQUALITY = re.compile(r"^(-?\d+(?:\.\d+)?)\s*<\s*(\w+)\s*<\s*(-?\d+(?:\.\d+)?)$")
+_COMPOUND_INEQUALITY = re.compile(
+    r"^(-?\d+(?:\.\d+)?)\s*(\\leq|<=|<)\s*(\w+)\s*(\\leq|<=|<)\s*(-?\d+(?:\.\d+)?)$"
+)
 _LATEX_FRAC = re.compile(r"\\frac\{(-?\d+)\}\{(\d+)\}")
 
 
@@ -152,28 +164,37 @@ def number_line_spec_from_symbol_and_value(
     settings: dict,
     *,
     boundary_high: float | None = None,
+    outside: bool = False,
+    inclusive: bool | None = None,
+    inclusive_high: bool | None = None,
 ) -> NumberLineSpec:
     extras = (boundary,) if boundary_high is None else (boundary, boundary_high)
     lo, hi, tick = _number_line_bounds(settings, *extras)
     show_zero = _number_line_show_zero(settings)
+    symbol_inclusive = symbol in {r"\leq", r"\geq", "<=", ">="}
     if boundary_high is not None:
+        low_inclusive = bool(inclusive) if inclusive is not None else symbol_inclusive
+        high_inclusive = (
+            bool(inclusive_high) if inclusive_high is not None else low_inclusive
+        )
         return NumberLineSpec(
             min_value=lo,
             max_value=hi,
             boundary=boundary,
             boundary_high=boundary_high,
-            direction="both",
-            inclusive=False,
+            direction="outside" if outside else "both",
+            inclusive=low_inclusive,
+            inclusive_high=high_inclusive,
             tick_interval=tick,
             show_zero=show_zero,
         )
-    direction, inclusive = symbol_to_direction(symbol)
+    direction, detected = symbol_to_direction(symbol)
     return NumberLineSpec(
         min_value=lo,
         max_value=hi,
         boundary=boundary,
         direction=direction,
-        inclusive=inclusive,
+        inclusive=bool(inclusive) if inclusive is not None else detected,
         tick_interval=tick,
         show_zero=show_zero,
     )
@@ -192,6 +213,8 @@ def number_line_spec_to_dict(spec: NumberLineSpec) -> dict[str, Any]:
     }
     if spec.boundary_high is not None:
         data["boundary_high"] = spec.boundary_high
+    if spec.inclusive_high is not None:
+        data["inclusive_high"] = spec.inclusive_high
     return data
 
 
@@ -223,7 +246,7 @@ def blank_number_line_spec(settings: dict) -> NumberLineSpec:
 
 
 def blank_graph_spec(graph: GraphSpec) -> GraphSpec:
-    """Axes/grid/bounds only — no solution curves or points."""
+    """Axes/grid/bounds only — no solution curves, points, or shaded regions."""
     return {
         "x_min": graph["x_min"],
         "x_max": graph["x_max"],
@@ -233,6 +256,7 @@ def blank_graph_spec(graph: GraphSpec) -> GraphSpec:
         "points": [],
         "show_grid": graph.get("show_grid", True),
         "show_points": False,
+        "regions": [],
     }
 
 
@@ -251,6 +275,7 @@ def metadata_from_number_line_spec(
             inclusive=spec.inclusive,
             tick_interval=spec.tick_interval,
             boundary_high=spec.boundary_high,
+            inclusive_high=spec.inclusive_high,
             show_zero=spec.show_zero,
             blank=False,
         )
@@ -300,8 +325,17 @@ def number_line_spec_from_answer(answer: str | None, settings: dict) -> NumberLi
     compound = _COMPOUND_INEQUALITY.match(text)
     if compound:
         low = _parse_numeric(compound.group(1))
-        high = _parse_numeric(compound.group(3))
-        return number_line_spec_from_symbol_and_value("<", low, settings, boundary_high=high)
+        low_sym = compound.group(2)
+        high_sym = compound.group(4)
+        high = _parse_numeric(compound.group(5))
+        return number_line_spec_from_symbol_and_value(
+            "<",
+            low,
+            settings,
+            boundary_high=high,
+            inclusive=low_sym in {"<=", r"\leq"},
+            inclusive_high=high_sym in {"<=", r"\leq"},
+        )
 
     simple = _SIMPLE_INEQUALITY.match(text)
     if simple:
@@ -347,7 +381,7 @@ def coordinate_plane_spec_to_graph_spec(spec: CoordinatePlaneSpec, settings: dic
     if not functions and spec.slope is not None and spec.y_intercept is not None:
         functions.append(_linear_function_expr(spec.slope, spec.y_intercept))
 
-    return {
+    result: GraphSpec = {
         "x_min": x_min,
         "x_max": x_max,
         "y_min": y_min,
@@ -357,6 +391,9 @@ def coordinate_plane_spec_to_graph_spec(spec: CoordinatePlaneSpec, settings: dic
         "show_grid": spec.show_grid,
         "show_points": spec.show_points,
     }
+    if spec.regions:
+        result["regions"] = list(spec.regions)
+    return result
 
 
 def coordinate_plane_metadata(
@@ -464,25 +501,14 @@ def _random_point(settings: dict) -> tuple[int, int]:
 
 
 def _format_signed(value: int, *, variable: str = "") -> str:
-    if value == 0 and variable:
+    term = format_monomial_latex(value, variable=variable or "", degree=1 if variable else 0)
+    if term is None:
         return "0"
-    if variable:
-        if value == 1:
-            return variable
-        if value == -1:
-            return f"-{variable}"
-        return f"{value}{variable}"
-    return str(value)
+    return term
 
 
 def _slope_intercept_latex(m: int, b: int) -> str:
-    if m == 0:
-        return f"y = {b}"
-    slope_part = _format_signed(m, variable="x")
-    if b == 0:
-        return f"y = {slope_part}"
-    sign = "+" if b > 0 else "-"
-    return f"y = {slope_part} {sign} {abs(b)}"
+    return format_slope_intercept_latex(m, b)
 
 
 def _system_latex(eq1: str, eq2: str) -> str:
@@ -497,10 +523,11 @@ def _slope_from_points(x1: int, y1: int, x2: int, y2: int):
 def _plane_spec(
     settings: dict,
     *,
-    points: list[tuple[int, int]] | None = None,
+    points: list[tuple[float, float]] | None = None,
     slope: int | None = None,
     y_intercept: int | None = None,
     functions: list[str] | None = None,
+    regions: list[dict[str, Any]] | None = None,
 ) -> CoordinatePlaneSpec:
     return CoordinatePlaneSpec(
         points=[(float(x), float(y)) for x, y in (points or [])],
@@ -510,7 +537,28 @@ def _plane_spec(
         show_grid=bool(settings.get("show_grid", True)),
         show_points=bool(settings.get("show_points", True)),
         quadrant=settings.get("quadrant", "all"),  # type: ignore[arg-type]
+        regions=list(regions or []),
     )
+
+
+def _inequality_op(symbol: str) -> str:
+    """Normalize LaTeX/ASCII inequality symbols to a GraphRegion op."""
+    if symbol in {r"\geq", ">=", "≥"}:
+        return ">="
+    if symbol in {r"\leq", "<=", "≤"}:
+        return "<="
+    if symbol == ">":
+        return ">"
+    return "<"
+
+
+def _half_plane_region(m: float, b: float, symbol: str) -> dict[str, Any]:
+    return {
+        "kind": "half_plane",
+        "m": float(m),
+        "b": float(b),
+        "op": _inequality_op(symbol),
+    }
 
 
 def _pick_inequality_symbol() -> str:
@@ -560,7 +608,13 @@ class GraphInequalityFramework(QuestionFramework):
         symbol = _pick_inequality_symbol()
 
         if dimension == "number_line":
-            boundary = random.randint(-8, 8)
+            lo_bound, hi_bound = _bounds(settings, "number_line_min", "number_line_max", -8, 8)
+            # Keep the marked value strictly inside the visible window.
+            inner_lo = lo_bound + 1 if hi_bound - lo_bound > 2 else lo_bound
+            inner_hi = hi_bound - 1 if hi_bound - lo_bound > 2 else hi_bound
+            if inner_lo > inner_hi:
+                inner_lo, inner_hi = lo_bound, hi_bound
+            boundary = random.randint(inner_lo, inner_hi)
             prompt = f"x {symbol} {boundary}"
             answer = f"x {symbol} {boundary}"
             direction, inclusive = symbol_to_direction(symbol)
@@ -583,7 +637,11 @@ class GraphInequalityFramework(QuestionFramework):
         prompt = f"y {symbol} {rhs}"
         answer = f"y {symbol} {rhs}"
         self._last_plane = _plane_spec(
-            settings, slope=m, y_intercept=b, functions=[_linear_function_expr(m, b)],
+            settings,
+            slope=m,
+            y_intercept=b,
+            functions=[_linear_function_expr(m, b)],
+            regions=[_half_plane_region(float(m), float(b), symbol)],
         )
         self._last_number_line = None
         return prompt, "Graph inequality (plane)", answer
@@ -608,12 +666,94 @@ class GraphAbsoluteValueFramework(QuestionFramework):
         self._last_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        h = _random_coord(settings)
-        k = _random_intercept(settings)
-        inner = f"x - {h}" if h > 0 else (f"x + {abs(h)}" if h < 0 else "x")
-        eq = f"y = |{inner}| + {k}" if k >= 0 else f"y = |{inner}| - {abs(k)}"
-        points = [(float(h + d), float(abs(d) + k)) for d in range(-5, 6)]
-        self._last_spec = _plane_spec(settings, points=[(int(x), int(y)) for x, y in points])
+        allow_h = bool(settings.get("allow_shift_h", True))
+        allow_k = bool(settings.get("allow_shift_k", False))
+        allow_stretch = bool(settings.get("allow_stretch", False))
+        allow_reflection = bool(settings.get("allow_reflection", False))
+        integer_only = bool(settings.get("integer_only", True))
+
+        # Hard unlocks full vertex form when all transform families are on and
+        # fractional coefficients are allowed. Medium keeps translate XOR stretch.
+        full_form = (
+            allow_h
+            and allow_k
+            and (allow_stretch or allow_reflection)
+            and not integer_only
+        )
+        if full_form:
+            mode = "full"
+        elif allow_k and (allow_stretch or allow_reflection):
+            mode = random.choice(["translate", "stretch"])
+        elif allow_k:
+            mode = "translate"
+        elif allow_stretch or allow_reflection:
+            mode = "stretch"
+        else:
+            mode = "basic"
+
+        a: int | Fraction = 1
+        h = 0
+        k = 0
+
+        if mode == "basic":
+            if allow_h and random.random() < 0.65:
+                h = _nonzero_coord(settings)
+        elif mode == "translate":
+            a = 1
+            if allow_h:
+                h = _nonzero_coord(settings) if random.random() < 0.8 else 0
+            k = _nonzero_intercept(settings)
+        elif mode == "stretch":
+            a = _pick_abs_coef(
+                settings,
+                allow_stretch=allow_stretch,
+                allow_reflection=allow_reflection,
+                integer_only=integer_only,
+                prefer_nonunit=True,
+            )
+            h = 0
+            k = 0
+        else:  # full
+            a = _pick_abs_coef(
+                settings,
+                allow_stretch=allow_stretch,
+                allow_reflection=allow_reflection,
+                integer_only=integer_only,
+                prefer_nonunit=True,
+            )
+            h = _nonzero_coord(settings) if allow_h else 0
+            k = _nonzero_intercept(settings) if allow_k else 0
+            # Bias away from the parent shape so hard stays distinct from easy.
+            if a == 1 and (allow_stretch or allow_reflection):
+                a = _pick_abs_coef(
+                    settings,
+                    allow_stretch=allow_stretch,
+                    allow_reflection=allow_reflection,
+                    integer_only=integer_only,
+                    prefer_nonunit=True,
+                )
+
+        eq = _format_abs_latex(a=a, h=h, k=k)
+        a_float = float(a)
+        expr = _abs_function_expr(a_float, h, k)
+        wing = 3.0
+        features = [
+            (float(h), float(k)),
+            (float(h) + wing, a_float * wing + float(k)),
+            (float(h) - wing, a_float * wing + float(k)),
+        ]
+        x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+        self._last_spec = CoordinatePlaneSpec(
+            points=[],
+            functions=[expr],
+            show_grid=bool(settings.get("show_grid", True)),
+            show_points=False,
+            quadrant=settings.get("quadrant", "all"),  # type: ignore[arg-type]
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
         return eq, "Graph absolute value", eq
 
     def build_question_metadata(
@@ -622,6 +762,581 @@ class GraphAbsoluteValueFramework(QuestionFramework):
         if self._last_spec is None:
             return {}
         return coordinate_plane_metadata(self._last_spec, settings, prompt="blank")
+
+
+def _nonzero_coord(settings: dict) -> int:
+    value = _random_coord(settings)
+    if value != 0:
+        return value
+    lo, hi = _bounds(settings, "coord_min", "coord_max", -5, 5)
+    candidates = [n for n in range(lo, hi + 1) if n != 0]
+    return random.choice(candidates) if candidates else 1
+
+
+def _nonzero_intercept(settings: dict) -> int:
+    value = _random_intercept(settings)
+    if value != 0:
+        return value
+    lo, hi = _bounds(settings, "intercept_min", "intercept_max", -5, 5)
+    candidates = [n for n in range(lo, hi + 1) if n != 0]
+    return random.choice(candidates) if candidates else 1
+
+
+def _pick_abs_coef(
+    settings: dict,
+    *,
+    allow_stretch: bool,
+    allow_reflection: bool,
+    integer_only: bool,
+    prefer_nonunit: bool = False,
+) -> int | Fraction:
+    lo, hi = _bounds(settings, "coef_min", "coef_max", 1, 2)
+    choices: list[int | Fraction] = []
+
+    if integer_only:
+        max_mag = max(abs(lo), abs(hi), 1)
+        for n in range(1, max_mag + 1):
+            if not allow_stretch and n != 1:
+                continue
+            if n <= hi:
+                choices.append(n)
+            if allow_reflection and -n >= lo:
+                choices.append(-n)
+    else:
+        pool = [
+            Fraction(1, 2),
+            Fraction(3, 2),
+            Fraction(1),
+            Fraction(2),
+            Fraction(3),
+        ]
+        for f in pool:
+            if not allow_stretch and f != 1:
+                continue
+            if float(f) <= hi + 1e-12:
+                choices.append(f)
+            if allow_reflection and float(-f) >= lo - 1e-12:
+                choices.append(-f)
+
+    if not allow_reflection:
+        choices = [c for c in choices if c > 0]
+    if not choices:
+        choices = [1]
+
+    if prefer_nonunit:
+        interesting = [c for c in choices if c != 1]
+        if interesting:
+            choices = interesting
+
+    return random.choice(choices)
+
+
+def _format_abs_coef_latex(a: int | Fraction) -> str:
+    if isinstance(a, Fraction):
+        if a.denominator == 1:
+            a = a.numerator
+        else:
+            sign = "-" if a < 0 else ""
+            return f"{sign}\\frac{{{abs(a.numerator)}}}{{{a.denominator}}}"
+    if a == 1:
+        return ""
+    if a == -1:
+        return "-"
+    return str(a)
+
+
+def _format_abs_inner(h: int) -> str:
+    if h == 0:
+        return "x"
+    if h > 0:
+        return f"x - {h}"
+    return f"x + {abs(h)}"
+
+
+def _format_abs_latex(*, a: int | Fraction, h: int, k: int) -> str:
+    coef = _format_abs_coef_latex(a)
+    body = f"{coef}|{_format_abs_inner(h)}|"
+    if k == 0:
+        return f"y = {body}"
+    sign = "+" if k > 0 else "-"
+    return f"y = {body} {sign} {abs(k)}"
+
+
+def _abs_function_expr(a: float, h: int, k: int) -> str:
+    """Emit a*abs(x-h)+k for the frontend / SVG abs sampler."""
+    shift = -h
+    if abs(a - 1.0) < 1e-12:
+        head = "abs(x"
+    else:
+        head = f"{a:g}*abs(x"
+    mid = f"{shift:+g}" if shift != 0 else ""
+    body = f"{head}{mid})"
+    if k == 0:
+        return body
+    return f"{body}{k:+d}"
+
+
+def _pick_quad_coef(
+    settings: dict,
+    *,
+    allow_stretch: bool,
+    allow_reflection: bool,
+    integer_only: bool,
+    prefer_nonunit: bool = False,
+) -> int | Fraction:
+    """Pick leading coefficient a for y = a(x−h)² + k."""
+    if bool(settings.get("leading_coefficient_one", False)) or bool(
+        settings.get("monic_only", False)
+    ):
+        return 1
+
+    lo, hi = _bounds(settings, "coef_min", "coef_max", 1, 2)
+    choices: list[int | Fraction] = []
+
+    if integer_only:
+        max_mag = max(abs(lo), abs(hi), 1)
+        for n in range(1, max_mag + 1):
+            if not allow_stretch and n != 1:
+                continue
+            if n <= hi:
+                choices.append(n)
+            if allow_reflection and -n >= lo:
+                choices.append(-n)
+    else:
+        pool = [
+            Fraction(1, 2),
+            Fraction(3, 2),
+            Fraction(1),
+            Fraction(2),
+            Fraction(3),
+        ]
+        for f in pool:
+            if not allow_stretch and f != 1:
+                continue
+            if float(f) <= hi + 1e-12:
+                choices.append(f)
+            if allow_reflection and float(-f) >= lo - 1e-12:
+                choices.append(-f)
+
+    if not allow_reflection:
+        choices = [c for c in choices if c > 0]
+    if not choices:
+        choices = [1]
+
+    if prefer_nonunit:
+        interesting = [c for c in choices if c != 1]
+        if interesting:
+            choices = interesting
+
+    return random.choice(choices)
+
+
+def _format_quad_coef_latex(a: int | Fraction) -> str:
+    if isinstance(a, Fraction):
+        if a.denominator == 1:
+            a = a.numerator
+        else:
+            sign = "-" if a < 0 else ""
+            return f"{sign}\\frac{{{abs(a.numerator)}}}{{{a.denominator}}}"
+    if a == 1:
+        return ""
+    if a == -1:
+        return "-"
+    return str(a)
+
+
+def _format_quad_vertex_latex(*, a: int | Fraction, h: int, k: int) -> str:
+    coef = _format_quad_coef_latex(a)
+    if h == 0:
+        body = f"{coef}x^2"
+    elif h > 0:
+        body = f"{coef}(x - {h})^2"
+    else:
+        body = f"{coef}(x + {abs(h)})^2"
+    if k == 0:
+        return f"y = {body}"
+    sign = "+" if k > 0 else "-"
+    return f"y = {body} {sign} {abs(k)}"
+
+
+def _format_quad_standard_term(coef: int | Fraction, *, variable: str) -> str | None:
+    if coef == 0:
+        return None
+    if isinstance(coef, Fraction) and coef.denominator != 1:
+        sign = "-" if coef < 0 else ""
+        latex = f"{sign}\\frac{{{abs(coef.numerator)}}}{{{coef.denominator}}}{variable}"
+        return latex
+    n = int(coef) if isinstance(coef, Fraction) else int(coef)
+    if variable == "":
+        return str(n)
+    if n == 1:
+        return variable
+    if n == -1:
+        return f"-{variable}"
+    return f"{n}{variable}"
+
+
+def _format_quad_standard_latex(*, a: int | Fraction, b: int | Fraction, c: int | Fraction) -> str:
+    return f"y = {format_polynomial_latex([a, b, c])}"
+
+
+def _format_quad_factor(root: int) -> str:
+    if root == 0:
+        return "x"
+    if root > 0:
+        return f"(x - {root})"
+    return f"(x + {abs(root)})"
+
+
+def _format_quad_factored_latex(*, a: int | Fraction, r: int, s: int) -> str:
+    coef = _format_quad_coef_latex(a)
+    return f"y = {coef}{_format_quad_factor(r)}{_format_quad_factor(s)}"
+
+
+def _format_signed_const(value: int | Fraction) -> str:
+    if isinstance(value, Fraction) and value.denominator != 1:
+        sign = "-" if value < 0 else ""
+        return f"{sign}\\frac{{{abs(value.numerator)}}}{{{value.denominator}}}"
+    n = int(value)
+    return str(n)
+
+
+def _as_int_if_whole(value: int | Fraction) -> int | Fraction:
+    if isinstance(value, Fraction) and value.denominator == 1:
+        return int(value.numerator)
+    if isinstance(value, Fraction):
+        return value
+    return int(value)
+
+
+def _quad_abc(a: int | Fraction, h: int | float, k: int | float) -> tuple[int | Fraction, int | Fraction, int | Fraction]:
+    b = -2 * a * h
+    c = a * h * h + k
+    return _as_int_if_whole(a), _as_int_if_whole(b), _as_int_if_whole(c)
+
+
+def _quad_function_expr(a: float, h: float, k: float) -> str:
+    """Emit expanded ax^2+bx+c for the frontend sampler."""
+    aa = a
+    bb = -2.0 * a * h
+    cc = a * h * h + k
+    return f"{aa:g}*x^2+{bb:g}*x+{cc:g}"
+
+
+def _format_messy_quadratic_latex(
+    *,
+    a: int | Fraction,
+    h: int,
+    k: int,
+    light: bool,
+) -> str:
+    """Present a parabola so the student must rearrange before graphing."""
+    aa, bb, cc = _quad_abc(a, h, k)
+
+    light_styles = ["point_vertex", "partial_expand"]
+    heavy_styles = ["point_vertex", "partial_expand", "isolate_y", "distribute_binom"]
+    style = random.choice(light_styles if light else heavy_styles)
+
+    if style == "point_vertex":
+        # y - k = a(x - h)^2
+        left = "y" if k == 0 else (f"y - {k}" if k > 0 else f"y + {abs(k)}")
+        right = _format_quad_vertex_latex(a=a, h=h, k=0).replace("y = ", "")
+        return f"{left} = {right}"
+
+    if style == "partial_expand":
+        # y = a(x^2 - 2hx) + (ah^2 + k)
+        two_h = 2 * h
+        const = _as_int_if_whole(a * h * h + k)
+        if two_h == 0:
+            inner = "x^2"
+        elif two_h > 0:
+            inner = f"x^2 - {two_h}x"
+        else:
+            inner = f"x^2 + {abs(two_h)}x"
+        if a == 1:
+            body = f"({inner})"
+        elif a == -1:
+            body = f"-({inner})"
+        else:
+            body = f"{_format_quad_coef_latex(a)}({inner})"
+        const_f = float(const)
+        if abs(const_f) < 1e-12:
+            return f"y = {body}"
+        sign = "+" if const_f > 0 else "-"
+        mag = abs(const) if isinstance(const, Fraction) else abs(int(const))
+        return f"y = {body} {sign} {_format_signed_const(mag)}"
+
+    if style == "isolate_y":
+        # From y = aa x^2 + bb x + cc  =>  (-aa)x^2 + (-bb)x + y = cc
+        neg_a = _as_int_if_whole(-aa)
+        neg_b = _as_int_if_whole(-bb)
+        poly = _format_quad_standard_latex(a=neg_a, b=neg_b, c=0).replace("y = ", "")
+        rhs = _format_signed_const(cc)
+        if not poly:
+            return f"y = {rhs}"
+        return f"{poly} + y = {rhs}".replace("+ -", "- ")
+
+    # distribute_binom: y = a(x-r)(x-s) + m
+    d = random.randint(1, 3)
+    r = h - d
+    s = h + d
+    m = _as_int_if_whole(k + a * d * d)
+    factored = _format_quad_factored_latex(a=a, r=r, s=s).replace("y = ", "")
+    m_f = float(m)
+    if abs(m_f) < 1e-12:
+        return f"y = {factored}"
+    sign = "+" if m_f > 0 else "-"
+    mag = abs(m) if isinstance(m, Fraction) else abs(int(m))
+    return f"y = {factored} {sign} {_format_signed_const(mag)}"
+
+
+def _pick_quadratic_form(settings: dict, *, complexity: str) -> str:
+    """Choose presentation form from enabled toggles and difficulty."""
+    allow_vertex = bool(settings.get("allow_vertex_form", True))
+    allow_standard = bool(settings.get("allow_standard_form", False))
+    allow_factored = bool(settings.get("allow_factored_form", False))
+    allow_messy = bool(settings.get("allow_messy_form", False))
+
+    weighted: list[tuple[str, float]] = []
+    if complexity == "easy":
+        if allow_vertex:
+            weighted.append(("vertex", 1.0))
+    elif complexity == "medium":
+        if allow_vertex:
+            weighted.append(("vertex", 0.30))
+        if allow_standard:
+            weighted.append(("standard", 0.25))
+        if allow_factored:
+            weighted.append(("factored", 0.30))
+        if allow_messy:
+            weighted.append(("messy", 0.15))
+    else:
+        if allow_messy:
+            weighted.append(("messy", 0.45))
+        if allow_standard:
+            weighted.append(("standard", 0.20))
+        if allow_factored:
+            weighted.append(("factored", 0.20))
+        if allow_vertex:
+            weighted.append(("vertex", 0.15))
+
+    if not weighted:
+        # Fallbacks if toggles are all off
+        if allow_messy:
+            weighted.append(("messy", 1.0))
+        elif allow_standard:
+            weighted.append(("standard", 1.0))
+        elif allow_factored:
+            weighted.append(("factored", 1.0))
+        else:
+            weighted.append(("vertex", 1.0))
+
+    forms = [f for f, _ in weighted]
+    weights = [w for _, w in weighted]
+    return random.choices(forms, weights=weights, k=1)[0]
+
+
+def _sample_quadratic_params(
+    settings: dict,
+    *,
+    complexity: str,
+) -> tuple[int | Fraction, int, int]:
+    """Pick (a, h, k) for the underlying parabola."""
+    allow_h = bool(settings.get("allow_shift_h", True))
+    allow_k = bool(settings.get("allow_shift_k", True))
+    allow_stretch = bool(settings.get("allow_stretch", False))
+    allow_reflection = bool(settings.get("allow_reflection", False))
+    integer_only = bool(settings.get("integer_only", True))
+
+    if complexity == "easy":
+        a: int | Fraction = 1
+        modes: list[str] = ["parent"]
+        if allow_h:
+            modes.append("shift_h")
+        if allow_k:
+            modes.append("shift_k")
+        mode = random.choice(modes)
+        h = _nonzero_coord(settings) if mode == "shift_h" else 0
+        k = _nonzero_intercept(settings) if mode == "shift_k" else 0
+        return a, h, k
+
+    prefer_nonunit = complexity != "easy"
+    a = _pick_quad_coef(
+        settings,
+        allow_stretch=allow_stretch or complexity == "hard",
+        allow_reflection=allow_reflection,
+        integer_only=integer_only if complexity != "hard" else integer_only,
+        prefer_nonunit=prefer_nonunit,
+    )
+    if complexity == "hard" and a == 1:
+        a = _pick_quad_coef(
+            settings,
+            allow_stretch=True,
+            allow_reflection=allow_reflection,
+            integer_only=integer_only,
+            prefer_nonunit=True,
+        )
+
+    h = _nonzero_coord(settings) if allow_h else 0
+    k = _nonzero_intercept(settings) if allow_k else 0
+    # Medium/hard: both shifts when allowed
+    if complexity in {"medium", "hard"} and allow_h and allow_k:
+        if h == 0:
+            h = _nonzero_coord(settings)
+        if k == 0:
+            k = _nonzero_intercept(settings)
+    return a, h, k
+
+
+def _sample_factored_roots(settings: dict, h: int) -> tuple[int, int]:
+    """Distinct integer roots straddling h when possible (even sum → integer vertex)."""
+    lo, hi = _bounds(settings, "coord_min", "coord_max", -5, 5)
+    d = random.randint(1, 3)
+    r, s = h - d, h + d
+    if r == s:
+        s = r + 2
+    if r < lo - 2 or s > hi + 2:
+        candidates = [n for n in range(lo, hi + 1)]
+        if len(candidates) < 2:
+            candidates = [-3, -1, 1, 3]
+        r = random.choice(candidates)
+        options = [n for n in candidates if n != r and (r + n) % 2 == 0]
+        s = random.choice(options) if options else r + 2
+    if r > s:
+        r, s = s, r
+    return r, s
+
+
+def _sample_quadratic_graph(settings: dict) -> tuple[str, float, float, float, str]:
+    """Return (prompt_latex, a, h, k, function_expr) for a graphing quadratic.
+
+    Difficulty is inferred from settings flags:
+      easy   — clean vertex; a = 1; one-axis shift; no rewrite
+      medium — mix vertex / standard / factored; light messy sometimes
+      hard   — often messy (needs algebra); fractional a; wider ranges
+    """
+    tier = str(settings.get("difficulty_tier", "")).strip().lower()
+    if tier in {"easy", "medium", "hard"}:
+        complexity = tier
+    else:
+        allow_messy = bool(settings.get("allow_messy_form", False))
+        allow_standard = bool(settings.get("allow_standard_form", False))
+        allow_factored = bool(settings.get("allow_factored_form", False))
+        integer_only = bool(settings.get("integer_only", True))
+        allow_stretch = bool(settings.get("allow_stretch", False))
+        allow_reflection = bool(settings.get("allow_reflection", False))
+
+        if not integer_only:
+            complexity = "hard"
+        elif allow_messy or allow_standard or allow_factored or allow_stretch or allow_reflection:
+            complexity = "medium"
+        else:
+            complexity = "easy"
+
+    form = _pick_quadratic_form(settings, complexity=complexity)
+    a, h, k = _sample_quadratic_params(settings, complexity=complexity)
+
+    # Factored form: rebuild from integer roots so intercepts are clean
+    if form == "factored":
+        r, s = _sample_factored_roots(settings, h)
+        # Recompute vertex from roots
+        h = (r + s) // 2 if (r + s) % 2 == 0 else (r + s) / 2  # type: ignore[assignment]
+        if isinstance(h, float) and h == int(h):
+            h = int(h)
+        # Keep integer h for medium when possible
+        if complexity == "medium" and isinstance(h, float):
+            # Nudge s so r+s is even
+            s = s + 1 if (r + s) % 2 else s
+            h = (r + s) // 2
+        k_val = a * (float(h) - r) * (float(h) - s)
+        k = int(k_val) if float(k_val) == int(k_val) else k  # prefer exact
+        if float(k_val) == int(k_val):
+            k = int(k_val)
+        else:
+            # Fall back: keep a,r,s and accept float k via expr
+            k = int(round(float(k_val)))
+        latex = _format_quad_factored_latex(a=a, r=r, s=s)
+        h_f = float(h)
+        k_f = float(a) * (h_f - r) * (h_f - s)
+        a_float = float(a)
+        return latex, a_float, h_f, k_f, _quad_function_expr(a_float, h_f, k_f)
+
+    a_float = float(a)
+    h_f = float(h)
+    k_f = float(k)
+    expr = _quad_function_expr(a_float, h_f, k_f)
+
+    if form == "standard":
+        aa, bb, cc = _quad_abc(a, h, k)
+        latex = _format_quad_standard_latex(a=aa, b=bb, c=cc)
+    elif form == "messy":
+        latex = _format_messy_quadratic_latex(
+            a=a, h=int(h), k=int(k), light=(complexity != "hard"),
+        )
+    else:
+        latex = _format_quad_vertex_latex(a=a, h=int(h), k=int(k))
+
+    return latex, a_float, h_f, k_f, expr
+
+
+def _flip_inequality_symbol(symbol: str) -> str:
+    return {
+        ">": "<",
+        "<": ">",
+        r"\geq": r"\leq",
+        r"\leq": r"\geq",
+    }.get(symbol, symbol)
+
+
+def _pick_quad_inequality_symbol(settings: dict) -> str:
+    return random.choice(allowed_inequality_symbols(settings))
+
+
+def _equation_to_inequality_latex(eq_latex: str, symbol: str) -> str:
+    """Turn ``y = …`` / ``lhs = rhs`` equation latex into an inequality."""
+    if " = " not in eq_latex:
+        return eq_latex
+    left, right = eq_latex.split(" = ", 1)
+    if right.strip() == "y":
+        return f"{left} {_flip_inequality_symbol(symbol)} y"
+    return f"{left} {symbol} {right}"
+
+
+def _scale_y_inequality(eq_latex: str, symbol: str) -> str | None:
+    """Optionally rewrite ``y = rhs`` as ``m y ⋈ rhs`` (divide both sides)."""
+    if not eq_latex.startswith("y = "):
+        return None
+    m = random.choice([2, 3])
+    return f"{m}y {symbol} {eq_latex[4:]}"
+
+
+def _sample_quadratic_inequality(
+    settings: dict,
+) -> tuple[str, float, float, float, str, str]:
+    """Return (prompt_latex, a, h, k, function_expr, symbol).
+
+    Easy: clean vertex or standard; little rewrite.
+    Medium: expand / move terms; factored or a≠1 vertex.
+    Hard: messy rewrite, completing-the-square (standard), factored, scale sides.
+    """
+    symbol = _pick_quad_inequality_symbol(settings)
+    latex, a, h, k, expr = _sample_quadratic_graph(settings)
+    tier = str(settings.get("difficulty_tier", "")).strip().lower()
+    allow_messy = bool(settings.get("allow_messy_form", False))
+
+    # Hard: sometimes force a multiply-both-sides presentation on a clean RHS.
+    if (
+        tier == "hard"
+        and allow_messy
+        and latex.startswith("y = ")
+        and random.random() < 0.4
+    ):
+        scaled = _scale_y_inequality(latex, symbol)
+        if scaled is not None:
+            return scaled, a, h, k, expr, symbol
+
+    prompt = _equation_to_inequality_latex(latex, symbol)
+    return prompt, a, h, k, expr, symbol
 
 
 class GraphSystemFramework(QuestionFramework):
@@ -683,6 +1398,10 @@ class GraphSystemInequalitiesFramework(QuestionFramework):
         self._last_spec = _plane_spec(
             settings,
             functions=[_linear_function_expr(m1, b1), _linear_function_expr(m2, b2)],
+            regions=[
+                _half_plane_region(float(m1), float(b1), sym1),
+                _half_plane_region(float(m2), float(b2), sym2),
+            ],
         )
         return prompt, "Graph system of inequalities", answer
 
@@ -694,6 +1413,84 @@ class GraphSystemInequalitiesFramework(QuestionFramework):
         return coordinate_plane_metadata(self._last_spec, settings, prompt="blank")
 
 
+def _exp_bool(settings: dict, key: str, default: bool = False) -> bool:
+    return bool(settings.get(key, default))
+
+
+def _exp_integer_bases(settings: dict) -> list[int]:
+    lo, hi = _bounds(settings, "exp_base_min", "exp_base_max", 2, 5)
+    lo = max(2, lo)
+    hi = max(lo, hi)
+    return list(range(lo, hi + 1))
+
+
+def _format_exp_base_latex(base: float, integer_base: int, *, decay: bool) -> str:
+    if decay:
+        return rf"\left(\frac{{1}}{{{integer_base}}}\right)"
+    if float(base).is_integer():
+        return str(int(base))
+    return f"{base:g}"
+
+
+def _format_exp_latex(*, a: int, base_latex: str, h: int, k: int) -> str:
+    """Build y = a · b^(x−h) + k with tidy signs."""
+    if h == 0:
+        exponent = "x"
+    elif h > 0:
+        exponent = f"x - {h}"
+    else:
+        exponent = f"x + {abs(h)}"
+
+    power = f"{base_latex}^{{{exponent}}}"
+    if a == 1:
+        body = power
+    elif a == -1:
+        body = f"-{power}"
+    else:
+        body = f"{a} \\cdot {power}"
+
+    if k == 0:
+        return f"y = {body}"
+    sign = "+" if k > 0 else "-"
+    return f"y = {body} {sign} {abs(k)}"
+
+
+def _format_exp_function_expr(
+    *, a: int, base: float, integer_base: int, decay: bool, h: int, k: int
+) -> str:
+    """Canonical form for the frontend sampler: a*b^(x-h)+k."""
+    base_s = f"(1/{integer_base})" if decay else f"{int(base)}"
+    if h == 0:
+        power = f"{base_s}^x"
+    else:
+        inner = f"x{-h:+d}"
+        power = f"{base_s}^({inner})"
+    if a == 1:
+        body = power
+    else:
+        body = f"{a}*{power}"
+    if k == 0:
+        return body
+    return f"{body}{k:+d}"
+
+
+def _sample_exp_points(
+    *, a: int, base: float, h: int, k: int, x_values: range
+) -> list[tuple[float, float]]:
+    points: list[tuple[float, float]] = []
+    for x in x_values:
+        try:
+            y = a * (base ** (x - h)) + k
+        except OverflowError:
+            continue
+        if not isinstance(y, (int, float)):
+            continue
+        if y != y or abs(y) > 1e6:  # NaN / huge
+            continue
+        points.append((float(x), float(y)))
+    return points
+
+
 class GraphExponentialFramework(QuestionFramework):
     instruction_latex = r"\text{Graph the following functions.}"
     instruction_text = "Graph the following functions."
@@ -702,11 +1499,59 @@ class GraphExponentialFramework(QuestionFramework):
         self._last_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        base = random.choice([2, 3])
-        coeff = random.choice([1, 2])
-        fn = f"y = {coeff} \\cdot {base}^x" if coeff != 1 else f"y = {base}^x"
-        points = [(x, coeff * (base**x)) for x in range(-3, 4)]
-        self._last_spec = _plane_spec(settings, points=points)
+        integer_bases = _exp_integer_bases(settings)
+        integer_base = random.choice(integer_bases)
+
+        allow_decay = _exp_bool(settings, "allow_decay")
+        allow_stretch = _exp_bool(settings, "allow_stretch")
+        allow_vertical = _exp_bool(settings, "allow_vertical_shift")
+        allow_horizontal = _exp_bool(settings, "allow_horizontal_shift")
+        allow_reflection = _exp_bool(settings, "allow_reflection")
+
+        decay = bool(allow_decay and random.choice([True, False]))
+        base = 1.0 / integer_base if decay else float(integer_base)
+
+        a = 1
+        if allow_stretch and allow_reflection:
+            a = random.choice([-3, -2, -1, 1, 2, 3])
+        elif allow_stretch:
+            a = random.choice([1, 2, 3])
+        elif allow_reflection:
+            a = random.choice([-1, 1])
+
+        h = 0
+        if allow_horizontal:
+            # Prefer a real shift on medium/hard so forms differ from easy.
+            h = random.choice([-2, -1, 1, 2]) if random.random() < 0.75 else 0
+
+        k = 0
+        if allow_vertical:
+            k = random.choice([-3, -2, -1, 1, 2, 3]) if random.random() < 0.75 else 0
+
+        # Hard: when all transforms are allowed, bias toward a fuller form.
+        if allow_reflection and allow_horizontal and allow_vertical and allow_stretch:
+            if a == 1 and random.random() < 0.5:
+                a = random.choice([-2, -1, 2, 3])
+            if h == 0:
+                h = random.choice([-2, -1, 1, 2])
+            if k == 0:
+                k = random.choice([-3, -2, -1, 1, 2, 3])
+
+        base_latex = _format_exp_base_latex(base, integer_base, decay=decay)
+        fn = _format_exp_latex(a=a, base_latex=base_latex, h=h, k=k)
+        expr = _format_exp_function_expr(
+            a=a, base=base, integer_base=integer_base, decay=decay, h=h, k=k,
+        )
+
+        points = _sample_exp_points(
+            a=a, base=base, h=h, k=k, x_values=range(h - 3, h + 4),
+        )
+        nice_points = [
+            (x, y) for x, y in points if abs(y - round(y)) < 1e-9
+        ]
+        marker_points = nice_points if nice_points else points[:5]
+
+        self._last_spec = _plane_spec(settings, points=marker_points, functions=[expr])
         return fn, "Graph exponential", fn
 
     def build_question_metadata(
@@ -725,13 +1570,26 @@ class GraphQuadraticFramework(QuestionFramework):
         self._last_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        h = _random_coord(settings)
-        k = _random_intercept(settings)
-        a = random.choice([1, 2])
-        fn = f"y = {a}(x - {h})^2 + {k}" if k >= 0 else f"y = {a}(x - {h})^2 - {abs(k)}"
-        points = [(h + dx, a * dx * dx + k) for dx in range(-4, 5)]
-        self._last_spec = _plane_spec(settings, points=points)
-        return fn, "Graph quadratic", fn
+        latex, a, h, k, expr = _sample_quadratic_graph(settings)
+        wing = 3.0
+        features = [
+            (h, k),
+            (h + wing, a * wing * wing + k),
+            (h - wing, a * wing * wing + k),
+        ]
+        x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+        self._last_spec = CoordinatePlaneSpec(
+            points=[],
+            functions=[expr],
+            show_grid=bool(settings.get("show_grid", True)),
+            show_points=False,
+            quadrant=settings.get("quadrant", "all"),  # type: ignore[arg-type]
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
+        return latex, "Graph quadratic", latex
 
     def build_question_metadata(
         self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,
@@ -749,13 +1607,32 @@ class GraphQuadraticInequalityFramework(QuestionFramework):
         self._last_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        h = _random_coord(settings)
-        k = _random_intercept(settings)
-        symbol = _pick_inequality_symbol()
-        fn = f"y {symbol} (x - {h})^2 + {k}"
-        points = [(h + dx, dx * dx + k) for dx in range(-4, 5)]
-        self._last_spec = _plane_spec(settings, points=points)
-        return fn, "Graph quadratic inequality", fn
+        prompt, a, h, k, expr, symbol = _sample_quadratic_inequality(settings)
+        wing = 3.0
+        features = [
+            (h, k),
+            (h + wing, a * wing * wing + k),
+            (h - wing, a * wing * wing + k),
+        ]
+        x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+        self._last_spec = CoordinatePlaneSpec(
+            points=[],
+            functions=[expr],
+            show_grid=bool(settings.get("show_grid", True)),
+            show_points=False,
+            quadrant=settings.get("quadrant", "all"),  # type: ignore[arg-type]
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
+        inclusive = symbol in {r"\geq", r"\leq"}
+        answer = (
+            f"{prompt} \\text{{ (solid boundary)}}"
+            if inclusive
+            else f"{prompt} \\text{{ (dashed boundary)}}"
+        )
+        return prompt, "Graph quadratic inequality", answer
 
     def build_question_metadata(
         self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,
@@ -805,33 +1682,28 @@ class ReadSlopeFromGraphFramework(QuestionFramework):
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         m = _random_slope(settings)
-        x1, y1 = _random_point(settings)
-        dx = random_int_range(1, 4, exclude=set())
-        x2, y2 = x1 + dx, y1 + m * dx
-        # Intercept must match the plotted points (same line), not a random b.
-        b = y1 - m * x1
-        slope = _slope_from_points(x1, y1, x2, y2)
-        answer = (
-            str(slope.numerator)
-            if slope.denominator == 1
-            else f"\\frac{{{slope.numerator}}}{{{slope.denominator}}}"
-        )
+        b = _random_intercept(settings)
         prompt = "\\text{The line is shown on the coordinate plane. Find the slope.}"
+        # Line only — marked points would reveal rise/run.
         self._last_spec = _plane_spec(
             settings,
-            points=[(x1, y1), (x2, y2)],
+            points=[],
             slope=m,
             y_intercept=b,
             functions=[_linear_function_expr(m, b)],
         )
-        return prompt, "Read slope from graph", answer
+        self._last_spec.show_points = False
+        return prompt, "Read slope from graph", str(m)
 
     def build_question_metadata(
         self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,
     ) -> dict[str, Any]:
         if self._last_spec is None:
             return {}
-        return coordinate_plane_metadata(self._last_spec, settings, prompt="stimulus")
+        self._last_spec.points = []
+        self._last_spec.show_points = False
+        forced = {**settings, "show_points": False}
+        return coordinate_plane_metadata(self._last_spec, forced, prompt="stimulus")
 
 
 class GraphPointTableFramework(QuestionFramework):
@@ -854,7 +1726,7 @@ class GraphPointTableFramework(QuestionFramework):
         missing_y = m * missing_x + b
         table_rows = [f"{x} & {'?' if x == missing_x else y} \\\\" for x, y in rows]
         table = "\\begin{array}{|c|c|} \\hline x & y \\\\ \\hline " + " ".join(table_rows) + " \\hline \\end{array}"
-        prompt = f"y = {m}x + {b} \\\\ {table}"
+        prompt = f"{_slope_intercept_latex(m, b)} \\\\ {table}"
         self._last_spec = _plane_spec(settings, points=rows, slope=m, y_intercept=b)
         return prompt, f"Table value when x={missing_x}", str(missing_y)
 
@@ -944,6 +1816,390 @@ class GraphTransformationsFramework(QuestionFramework):
         points = [(h + dx, dx * dx + k) for dx in range(-4, 5)]
         self._last_spec = _plane_spec(settings, points=points)
         return prompt, "Graph transformation", fn
+
+    def build_question_metadata(
+        self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,
+    ) -> dict[str, Any]:
+        if self._last_spec is None:
+            return {}
+        return coordinate_plane_metadata(self._last_spec, settings, prompt="blank")
+
+
+def _sample_solve_poly_roots(settings: dict) -> tuple[int, ...]:
+    """Distinct integer roots sized by root_min / root_max (fallback: coord bounds)."""
+    lo, hi = _bounds(settings, "root_min", "root_max", -3, 3)
+    if lo == hi:
+        lo, hi = lo - 1, hi + 1
+    pool = list(range(lo, hi + 1))
+    degree = max(2, min(3, int(settings.get("max_degree", 2))))
+    min_degree = max(2, min(degree, int(settings.get("min_degree", 2))))
+    n_roots = random.randint(min_degree, degree)
+    n_roots = min(n_roots, len(pool))
+    n_roots = max(2, n_roots)
+    if len(pool) < n_roots:
+        pool = list(range(-n_roots, n_roots + 1))
+    return tuple(sorted(random.sample(pool, n_roots)))
+
+
+def _poly_from_roots(a: int | Fraction, roots: tuple[int, ...]) -> list[int | Fraction]:
+    """Expand a(x−r1)(x−r2)… into descending coefficients."""
+    coeffs: list[int | Fraction] = [a]
+    for root in roots:
+        next_coeffs: list[int | Fraction] = [0] * (len(coeffs) + 1)
+        for i, coef in enumerate(coeffs):
+            next_coeffs[i] += coef
+            next_coeffs[i + 1] += coef * (-root)
+        coeffs = next_coeffs
+    return [_as_int_if_whole(c) for c in coeffs]
+
+
+def _poly_function_expr(coeffs: list[int | Fraction]) -> str:
+    """Frontend sampler expression: a*x^n+… (quadratic / cubic)."""
+    degree = len(coeffs) - 1
+    parts: list[str] = []
+    for i, coef in enumerate(coeffs):
+        power = degree - i
+        value = float(coef)
+        if power == 0:
+            parts.append(f"{value:g}")
+        elif power == 1:
+            parts.append(f"{value:g}*x")
+        else:
+            parts.append(f"{value:g}*x^{power}")
+    return "+".join(parts)
+
+
+def _format_factored_eq_latex(a: int | Fraction, roots: tuple[int, ...]) -> str:
+    coef = _format_quad_coef_latex(a)
+    body = "".join(_format_quad_factor(r) for r in roots)
+    return f"{coef}{body} = 0"
+
+
+def _sample_solve_by_graphing(settings: dict) -> tuple[str, str, list[int | Fraction], tuple[int, ...], str]:
+    """Return (prompt_latex, answer_latex, coeffs, roots, function_expr)."""
+    roots = _sample_solve_poly_roots(settings)
+    leading_one = bool(settings.get("leading_coefficient_one", False)) or bool(
+        settings.get("monic_only", False)
+    )
+    allow_stretch = bool(settings.get("allow_stretch", not leading_one))
+    allow_reflection = bool(settings.get("allow_reflection", False))
+    integer_only = bool(settings.get("integer_only", True))
+    if leading_one:
+        a: int | Fraction = 1
+    else:
+        a = _pick_quad_coef(
+            settings,
+            allow_stretch=allow_stretch or True,
+            allow_reflection=allow_reflection,
+            integer_only=integer_only,
+            prefer_nonunit=True,
+        )
+        if a == 1 and allow_stretch:
+            # Force a non-unit leading coefficient when presets allow stretch.
+            candidates = [2, 3, -2, -3] if allow_reflection else [2, 3]
+            a = random.choice(candidates)
+
+    coeffs = _poly_from_roots(a, roots)
+    allow_factored = bool(settings.get("allow_factored_form", False))
+    if allow_factored and random.random() < 0.45:
+        prompt = _format_factored_eq_latex(a, roots)
+    else:
+        prompt = f"{format_polynomial_latex(coeffs)} = 0"
+
+    unique_roots = tuple(sorted(set(roots)))
+    answer = ", ".join(f"x = {r}" for r in unique_roots)
+    expr = _poly_function_expr(coeffs)
+    return prompt, answer, coeffs, unique_roots, expr
+
+
+class SolvePolynomialByGraphingFramework(QuestionFramework):
+    """Solve polynomial equations by graphing (blank plane; answer key shows curve + roots)."""
+
+    instruction_latex = r"\text{Solve by graphing.}"
+    instruction_text = "Solve by graphing."
+
+    def __init__(self) -> None:
+        self._last_spec: CoordinatePlaneSpec | None = None
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        prompt, answer, coeffs, roots, expr = _sample_solve_by_graphing(settings)
+        # Feature points: roots on the x-axis and a couple of curve samples for bounds.
+        features: list[tuple[float, float]] = [(float(r), 0.0) for r in roots]
+        a = float(coeffs[0])
+        if len(coeffs) == 3:
+            # Quadratic vertex from roots midpoint.
+            h = sum(roots) / len(roots)
+            b = float(coeffs[1])
+            c = float(coeffs[2])
+            k = a * h * h + b * h + c
+            features.append((h, k))
+            wing = max(2.0, max(abs(r) for r in roots) * 0.5 + 1.0)
+            features.append((h + wing, a * (h + wing) ** 2 + b * (h + wing) + c))
+            features.append((h - wing, a * (h - wing) ** 2 + b * (h - wing) + c))
+        else:
+            for x in range(min(roots) - 1, max(roots) + 2):
+                y = 0.0
+                for i, coef in enumerate(coeffs):
+                    power = len(coeffs) - 1 - i
+                    y += float(coef) * (x**power)
+                features.append((float(x), y))
+
+        x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+        self._last_spec = CoordinatePlaneSpec(
+            points=[(float(r), 0.0) for r in roots],
+            functions=[expr],
+            show_grid=bool(settings.get("show_grid", True)),
+            show_points=True,
+            quadrant=settings.get("quadrant", "all"),  # type: ignore[arg-type]
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
+        return prompt, "Solve by graphing", answer
+
+    def build_question_metadata(
+        self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,
+    ) -> dict[str, Any]:
+        if self._last_spec is None:
+            return {}
+        return coordinate_plane_metadata(self._last_spec, settings, prompt="blank")
+
+
+def _format_radical_inner(h: int) -> str:
+    if h == 0:
+        return "x"
+    if h > 0:
+        return f"x - {h}"
+    return f"x + {abs(h)}"
+
+
+def _format_radical_latex(*, a: int, h: int, k: int) -> str:
+    coef = "" if a == 1 else ("-" if a == -1 else str(a))
+    body = f"{coef}\\sqrt{{{_format_radical_inner(h)}}}"
+    if k == 0:
+        return f"y = {body}"
+    sign = "+" if k > 0 else "-"
+    return f"y = {body} {sign} {abs(k)}"
+
+
+def _radical_function_expr(a: float, h: int, k: int) -> str:
+    """Emit a*sqrt(x-h)+k for the frontend sampler."""
+    shift = -h
+    if abs(a - 1.0) < 1e-12:
+        head = "sqrt(x"
+    else:
+        head = f"{a:g}*sqrt(x"
+    mid = f"{shift:+g}" if shift != 0 else ""
+    body = f"{head}{mid})"
+    if k == 0:
+        return body
+    return f"{body}{k:+d}"
+
+
+class GraphRadicalFramework(QuestionFramework):
+    instruction_latex = r"\text{Graph the following equations.}"
+    instruction_text = "Graph the following equations."
+
+    def __init__(self) -> None:
+        self._last_spec: CoordinatePlaneSpec | None = None
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        allow_h = bool(settings.get("allow_shift_h", True))
+        allow_k = bool(settings.get("allow_shift_k", False))
+        allow_stretch = bool(settings.get("allow_stretch", False))
+        allow_reflection = bool(settings.get("allow_reflection", False))
+
+        a = 1
+        if allow_stretch and allow_reflection:
+            a = random.choice([-2, -1, 1, 2])
+        elif allow_stretch:
+            a = random.choice([1, 2])
+        elif allow_reflection:
+            a = random.choice([-1, 1])
+
+        h = _nonzero_coord(settings) if allow_h and random.random() < 0.7 else 0
+        k = _nonzero_intercept(settings) if allow_k and random.random() < 0.7 else 0
+
+        eq = _format_radical_latex(a=a, h=h, k=k)
+        expr = _radical_function_expr(float(a), h, k)
+        # Sample a few domain points for viewport sizing.
+        features = [(float(h), float(k))]
+        for t in (1.0, 4.0, 9.0):
+            features.append((float(h) + t, a * (t**0.5) + float(k)))
+        x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+        self._last_spec = CoordinatePlaneSpec(
+            points=[],
+            functions=[expr],
+            show_grid=bool(settings.get("show_grid", True)),
+            show_points=False,
+            quadrant=settings.get("quadrant", "all"),  # type: ignore[arg-type]
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
+        return eq, "Graph radical", eq
+
+    def build_question_metadata(
+        self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,
+    ) -> dict[str, Any]:
+        if self._last_spec is None:
+            return {}
+        return coordinate_plane_metadata(self._last_spec, settings, prompt="blank")
+
+
+def _format_log_latex(*, a: int, base: int, h: int, k: int) -> str:
+    arg = _format_radical_inner(h)
+    if base == 10:
+        core = rf"\log\left({arg}\right)"
+    elif base == 2:
+        core = rf"\log_{{2}}\left({arg}\right)"
+    else:
+        core = rf"\log_{{{base}}}\left({arg}\right)"
+    if a == 1:
+        body = core
+    elif a == -1:
+        body = f"-{core}"
+    else:
+        body = f"{a}{core}"
+    if k == 0:
+        return f"y = {body}"
+    sign = "+" if k > 0 else "-"
+    return f"y = {body} {sign} {abs(k)}"
+
+
+def _log_function_expr(*, a: int, base: int, h: int, k: int) -> str:
+    """Emit a*log(base,x-h)+k for the frontend sampler."""
+    shift = -h
+    mid = f"{shift:+g}" if shift != 0 else ""
+    if abs(a - 1) < 1e-12:
+        head = f"log({base},x"
+    else:
+        head = f"{a:g}*log({base},x"
+    body = f"{head}{mid})"
+    if k == 0:
+        return body
+    return f"{body}{k:+d}"
+
+
+class GraphLogarithmicFramework(QuestionFramework):
+    instruction_latex = r"\text{Graph the following functions.}"
+    instruction_text = "Graph the following functions."
+
+    def __init__(self) -> None:
+        self._last_spec: CoordinatePlaneSpec | None = None
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        allow_h = bool(settings.get("allow_horizontal_shift", False))
+        allow_k = bool(settings.get("allow_vertical_shift", False))
+        allow_stretch = bool(settings.get("allow_stretch", False))
+        allow_reflection = bool(settings.get("allow_reflection", False))
+        bases = [b for b in (2, 10) if b >= int(settings.get("base_min", 2))]
+        base = random.choice(bases or [2, 10])
+
+        a = 1
+        if allow_stretch and allow_reflection:
+            a = random.choice([-2, -1, 1, 2])
+        elif allow_stretch:
+            a = random.choice([1, 2])
+        elif allow_reflection:
+            a = random.choice([-1, 1])
+
+        h = random.choice([-2, -1, 1, 2]) if allow_h and random.random() < 0.7 else 0
+        k = random.choice([-3, -2, -1, 1, 2, 3]) if allow_k and random.random() < 0.7 else 0
+
+        fn = _format_log_latex(a=a, base=base, h=h, k=k)
+        expr = _log_function_expr(a=a, base=base, h=h, k=k)
+        features = [(float(h) + 1.0, float(k))]
+        for t in (base, base**2):
+            features.append((float(h) + float(t), a * math.log(t, base) + float(k)))
+        x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+        self._last_spec = CoordinatePlaneSpec(
+            points=[],
+            functions=[expr],
+            show_grid=bool(settings.get("show_grid", True)),
+            show_points=False,
+            quadrant=settings.get("quadrant", "all"),  # type: ignore[arg-type]
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
+        return fn, "Graph logarithmic", fn
+
+    def build_question_metadata(
+        self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,
+    ) -> dict[str, Any]:
+        if self._last_spec is None:
+            return {}
+        return coordinate_plane_metadata(self._last_spec, settings, prompt="blank")
+
+
+def _format_rational_latex(*, a: int, h: int, k: int) -> str:
+    denom = _format_radical_inner(h)
+    if a == 1:
+        body = f"\\frac{{1}}{{{denom}}}"
+    elif a == -1:
+        body = f"-\\frac{{1}}{{{denom}}}"
+    else:
+        body = f"\\frac{{{a}}}{{{denom}}}"
+    if k == 0:
+        return f"y = {body}"
+    sign = "+" if k > 0 else "-"
+    return f"y = {body} {sign} {abs(k)}"
+
+
+def _rational_function_expr(*, a: int, h: int, k: int) -> str:
+    """Emit a/(x-h)+k for the frontend sampler."""
+    shift = -h
+    mid = f"{shift:+g}" if shift != 0 else ""
+    body = f"{a:g}/(x{mid})" if mid else f"{a:g}/x"
+    if k == 0:
+        return body
+    return f"{body}{k:+d}"
+
+
+class GraphRationalFramework(QuestionFramework):
+    instruction_latex = r"\text{Graph the following functions.}"
+    instruction_text = "Graph the following functions."
+
+    def __init__(self) -> None:
+        self._last_spec: CoordinatePlaneSpec | None = None
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        allow_h = bool(settings.get("allow_shift_h", True))
+        allow_k = bool(settings.get("allow_shift_k", False))
+        allow_stretch = bool(settings.get("allow_stretch", False))
+        allow_reflection = bool(settings.get("allow_reflection", False))
+
+        a = 1
+        if allow_stretch and allow_reflection:
+            a = random.choice([-3, -2, -1, 1, 2, 3])
+        elif allow_stretch:
+            a = random.choice([1, 2, 3])
+        elif allow_reflection:
+            a = random.choice([-1, 1])
+
+        h = _nonzero_coord(settings) if allow_h and random.random() < 0.65 else 0
+        k = _nonzero_intercept(settings) if allow_k and random.random() < 0.65 else 0
+
+        fn = _format_rational_latex(a=a, h=h, k=k)
+        expr = _rational_function_expr(a=a, h=h, k=k)
+        features = [(float(h) + 1.0, a + float(k)), (float(h) - 1.0, -a + float(k)), (float(h), float(k))]
+        x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+        self._last_spec = CoordinatePlaneSpec(
+            points=[],
+            functions=[expr],
+            show_grid=bool(settings.get("show_grid", True)),
+            show_points=False,
+            quadrant=settings.get("quadrant", "all"),  # type: ignore[arg-type]
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
+        return fn, "Graph rational", fn
 
     def build_question_metadata(
         self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,

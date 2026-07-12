@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import katex from "katex";
-import { repairInstructionLatex } from "@/lib/latex";
+import { enableKatexSoftWrap, repairInstructionLatex } from "@/lib/latex";
 
 export function InlineLatex({ content, repair = false }: { content: string; repair?: boolean }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -13,6 +13,7 @@ export function InlineLatex({ content, repair = false }: { content: string; repa
       throwOnError: false,
       displayMode: false,
     });
+    enableKatexSoftWrap(ref.current);
   }, [content, repair]);
 
   return <span ref={ref} />;

@@ -22,7 +22,15 @@ from .domains.geometry import (
     similarity_ratio_settings,
     triangle_type_settings,
 )
-from .domains.graphing import graph_dimension_settings, graphing_metadata_settings, number_line_range_settings
+from .domains.graphing import (
+    absolute_value_graph_settings,
+    exponential_graph_settings,
+    graph_dimension_settings,
+    graphing_metadata_settings,
+    number_line_range_settings,
+    polynomial_solve_graph_settings,
+    quadratic_graph_settings,
+)
 from .domains.inequality import (
     compound_inequality_settings,
     inequality_direction_settings,
@@ -32,6 +40,7 @@ from .domains.linear import (
     coordinate_bounds_settings,
     linear_intercept_settings,
     linear_slope_settings,
+    more_on_slope_settings,
     quadrant_settings,
     relations_settings,
     systems_settings,
@@ -45,8 +54,10 @@ from .domains.number import (
     number_coef_settings,
     pemdas_settings,
     percent_settings,
+    prime_factorization_settings,
     ratio_settings,
     scientific_notation_settings,
+    sets_of_numbers_settings,
     unit_rate_settings,
 )
 from .domains.common import (
@@ -65,6 +76,7 @@ from .domains.polynomial import (
     polynomial_variable_settings,
 )
 from .domains.radical import radical_settings
+from .domains.rational import fraction_form_settings
 from .domains.calculus import derivative_settings, integral_settings, limit_settings
 from .domains.logarithm import exponential_equation_settings, logarithm_settings
 from .domains.sequence import sequence_settings
@@ -144,6 +156,7 @@ def rational_settings() -> list[SettingField]:
     """Rational arithmetic and expression types."""
     return merge_settings(
         number_settings(),
+        fraction_form_settings(),
         polynomial_coef_settings(coef_min_default=-10, coef_max_default=10),
     )
 
@@ -199,9 +212,15 @@ def integer_profile() -> list[SettingField]:
     )
 
 
+def number_sets_profile() -> list[SettingField]:
+    """Classify numbers into natural, whole, integer, rational, irrational, real."""
+    return sets_of_numbers_settings()
+
+
 def factor_profile() -> list[SettingField]:
     return merge_settings(
         factor_bounds_settings(),
+        prime_factorization_settings(),
     )
 
 
@@ -220,6 +239,14 @@ def linear_settings() -> list[SettingField]:
         coordinate_bounds_settings(),
         quadrant_settings(),
         graphing_metadata_settings(),
+    )
+
+
+def more_on_slope_profile() -> list[SettingField]:
+    """More on slope: linear bounds plus multi-mode ask toggles."""
+    return merge_settings(
+        linear_settings(),
+        more_on_slope_settings(),
     )
 
 
@@ -345,9 +372,27 @@ def quadratic_profile() -> list[SettingField]:
 
 
 def quadratic_graph_profile() -> list[SettingField]:
-    """Quadratic graphing with coordinate-plane bounds."""
+    """Graphing quadratic functions: form toggles, transforms, and plane metadata."""
     return merge_settings(
-        quadratic_profile(),
+        quadratic_graph_settings(),
+        linear_intercept_settings(),
+        coordinate_bounds_settings(),
+        graphing_metadata_settings(),
+    )
+
+
+def quadratic_inequality_graph_profile() -> list[SettingField]:
+    """Graphing quadratic inequalities: forms, symbols, and plane metadata."""
+    return merge_settings(
+        quadratic_graph_profile(),
+        inequality_direction_settings(),
+    )
+
+
+def polynomial_solve_graph_profile() -> list[SettingField]:
+    """Solve polynomial equations by graphing: monic/stretch, roots, degree, plane."""
+    return merge_settings(
+        polynomial_solve_graph_settings(),
         coordinate_bounds_settings(),
         graphing_metadata_settings(),
     )
@@ -356,8 +401,36 @@ def quadratic_graph_profile() -> list[SettingField]:
 def exponential_growth_decay_settings() -> list[SettingField]:
     return [
         SettingField(
-            "growth_rate_min",
-            "Growth rate min (%)",
+            "ask_mode",
+            "Question style",
+            "select",
+            "find_final",
+            options=[
+                "find_final",
+                "find_rate",
+                "find_periods",
+                "find_initial",
+                "mixed",
+            ],
+            group="exponential",
+        ),
+        SettingField(
+            "allow_growth",
+            "Allow growth problems",
+            "bool",
+            True,
+            group="exponential",
+        ),
+        SettingField(
+            "allow_decay",
+            "Allow decay problems",
+            "bool",
+            True,
+            group="exponential",
+        ),
+        SettingField(
+            "rate_min",
+            "Rate min (%)",
             "int",
             5,
             min=1,
@@ -365,8 +438,8 @@ def exponential_growth_decay_settings() -> list[SettingField]:
             group="exponential",
         ),
         SettingField(
-            "growth_rate_max",
-            "Growth rate max (%)",
+            "rate_max",
+            "Rate max (%)",
             "int",
             20,
             min=1,
@@ -374,8 +447,8 @@ def exponential_growth_decay_settings() -> list[SettingField]:
             group="exponential",
         ),
         SettingField(
-            "years_min",
-            "Years min",
+            "periods_min",
+            "Periods min",
             "int",
             2,
             min=1,
@@ -383,12 +456,54 @@ def exponential_growth_decay_settings() -> list[SettingField]:
             group="exponential",
         ),
         SettingField(
-            "years_max",
-            "Years max",
+            "periods_max",
+            "Periods max",
             "int",
             6,
             min=1,
             max=20,
+            group="exponential",
+        ),
+        SettingField(
+            "discrete_only",
+            "Discrete (compound) model only",
+            "bool",
+            True,
+            group="exponential",
+        ),
+        SettingField(
+            "allow_how_much_more",
+            "Allow “how much more” questions",
+            "bool",
+            False,
+            group="exponential",
+        ),
+        SettingField(
+            "allow_compare",
+            "Allow compare-two-investments questions",
+            "bool",
+            False,
+            group="exponential",
+        ),
+        SettingField(
+            "allow_threshold",
+            "Allow “when exceeds threshold” questions",
+            "bool",
+            False,
+            group="exponential",
+        ),
+        SettingField(
+            "allow_half_life",
+            "Allow discrete half-life questions",
+            "bool",
+            False,
+            group="exponential",
+        ),
+        SettingField(
+            "allow_fractional_periods",
+            "Allow fractional periods",
+            "bool",
+            False,
             group="exponential",
         ),
     ]
@@ -399,6 +514,25 @@ def exponential_profile() -> list[SettingField]:
     return merge_settings(
         exponential_growth_decay_settings(),
         exponential_equation_settings(),
+    )
+
+
+def exponential_graph_profile() -> list[SettingField]:
+    """Graphing exponential functions: form toggles, bounds, and plane metadata."""
+    return merge_settings(
+        exponential_graph_settings(),
+        coordinate_bounds_settings(),
+        graphing_metadata_settings(),
+    )
+
+
+def absolute_value_graph_profile() -> list[SettingField]:
+    """Graphing absolute-value equations: transform toggles, coefs, and plane metadata."""
+    return merge_settings(
+        absolute_value_graph_settings(),
+        linear_intercept_settings(),
+        coordinate_bounds_settings(),
+        graphing_metadata_settings(),
     )
 
 
@@ -468,19 +602,25 @@ PROFILE_BUILDERS: dict[str, callable] = {
     "proportion": proportion_profile,
     "order_of_operations": order_of_operations_profile,
     "integer": integer_profile,
+    "number_sets": number_sets_profile,
     "factor": factor_profile,
     "distributive": distributive_profile,
     "linear": linear_settings,
+    "more_on_slope": more_on_slope_profile,
     "coordinate_plane": coordinate_plane_settings,
     "number_line": number_line_profile,
     "graphing": graphing_profile,
+    "absolute_value_graph": absolute_value_graph_profile,
     "systems": systems_profile,
     "variation": variation_profile,
     "relations": relations_profile,
     "radical": radical_profile,
     "quadratic": quadratic_profile,
     "quadratic_graph": quadratic_graph_profile,
+    "quadratic_inequality_graph": quadratic_inequality_graph_profile,
+    "polynomial_solve_graph": polynomial_solve_graph_profile,
     "exponential": exponential_profile,
+    "exponential_graph": exponential_graph_profile,
     "trigonometry": trigonometry_profile,
     "logarithm": logarithm_profile,
     "sequence": sequence_profile,

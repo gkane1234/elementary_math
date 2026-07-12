@@ -3,13 +3,21 @@ export type NumberLineSpec = {
   max_value: number;
   boundary: number;
   boundary_high?: number;
-  direction: "left" | "right" | "both";
+  direction: "left" | "right" | "both" | "outside";
   inclusive: boolean;
+  inclusive_high?: boolean;
   tick_interval: number;
   /** When true (default), mark and label 0. Unit ticks are never drawn. */
   show_zero?: boolean;
   /** When true, render axes/ticks only (no shading or boundary markers). */
   blank?: boolean;
+};
+
+export type GraphRegion = {
+  kind: "half_plane";
+  m: number;
+  b: number;
+  op: ">" | ">=" | "<" | "<=";
 };
 
 export type GraphSpec = {
@@ -21,6 +29,8 @@ export type GraphSpec = {
   points: [number, number][];
   show_grid?: boolean;
   show_points?: boolean;
+  /** Half-plane shades for linear inequality answer keys. */
+  regions?: GraphRegion[];
 };
 
 export type GraphRole = "blank" | "stimulus";
@@ -42,6 +52,7 @@ export function blankCoordinatePlane(spec: GraphSpec): GraphSpec {
     functions: [],
     points: [],
     show_points: false,
+    regions: [],
   };
 }
 
@@ -122,12 +133,89 @@ export function evaluateGraphFunction(expression: string, x: number): number | n
   const normalized = expression.replace(/\s+/g, "");
   const linear = evaluateLinearFunction(normalized, x);
   if (linear !== null) return linear;
+  const cubicMatch = normalized.match(
+    /^(-?\d+(?:\.\d+)?)\*x\^3\+(-?\d+(?:\.\d+)?)\*x\^2\+(-?\d+(?:\.\d+)?)\*x\+(-?\d+(?:\.\d+)?)$/,
+  );
+  if (cubicMatch) {
+    const a = Number(cubicMatch[1]);
+    const b = Number(cubicMatch[2]);
+    const c = Number(cubicMatch[3]);
+    const d = Number(cubicMatch[4]);
+    return ((a * x + b) * x + c) * x + d;
+  }
   const quadMatch = normalized.match(
     /^(-?\d+(?:\.\d+)?)\*x\^2\+(-?\d+(?:\.\d+)?)\*x\+(-?\d+(?:\.\d+)?)$/,
   );
-  if (!quadMatch) return null;
-  const a = Number(quadMatch[1]);
-  const b = Number(quadMatch[2]);
-  const c = Number(quadMatch[3]);
-  return a * x * x + b * x + c;
+  if (quadMatch) {
+    const a = Number(quadMatch[1]);
+    const b = Number(quadMatch[2]);
+    const c = Number(quadMatch[3]);
+    return a * x * x + b * x + c;
+  }
+
+  // a*b^(x-h)+k — base may be decimal or (p/q); optional a*, (x±h), ±k
+  const expMatch = normalized.match(
+    /^(-?\d+(?:\.\d+)?)?\*?(?:\((\d+)\/(\d+)\)|(\d+(?:\.\d+)?))\^(?:\((x([+-]\d+(?:\.\d+)?)?)\)|(x))([+-]\d+(?:\.\d+)?)?$/,
+  );
+  if (expMatch) {
+    const scale = expMatch[1] !== undefined ? Number(expMatch[1]) : 1;
+    const fracNum = expMatch[2];
+    const fracDen = expMatch[3];
+    const decimalBase = expMatch[4];
+    const base =
+      fracNum !== undefined && fracDen !== undefined
+        ? Number(fracNum) / Number(fracDen)
+        : Number(decimalBase);
+    const shiftRaw = expMatch[6];
+    const shift = shiftRaw !== undefined ? Number(shiftRaw) : 0;
+    const tail = expMatch[8] !== undefined ? Number(expMatch[8]) : 0;
+    if (!(base > 0) || !Number.isFinite(scale) || !Number.isFinite(tail)) return null;
+    const value = scale * base ** (x + shift) + tail;
+    return Number.isFinite(value) ? value : null;
+  }
+
+  // a*sqrt(x±h)+k
+  const sqrtMatch = normalized.match(
+    /^(-?\d+(?:\.\d+)?)?\*?sqrt\(x([+-]\d+(?:\.\d+)?)?\)([+-]\d+(?:\.\d+)?)?$/,
+  );
+  if (sqrtMatch) {
+    const scale = sqrtMatch[1] !== undefined ? Number(sqrtMatch[1]) : 1;
+    const shift = sqrtMatch[2] !== undefined ? Number(sqrtMatch[2]) : 0;
+    const tail = sqrtMatch[3] !== undefined ? Number(sqrtMatch[3]) : 0;
+    const inside = x + shift;
+    if (inside < 0) return null;
+    const value = scale * Math.sqrt(inside) + tail;
+    return Number.isFinite(value) ? value : null;
+  }
+
+  // a*log(base,x±h)+k
+  const logMatch = normalized.match(
+    /^(-?\d+(?:\.\d+)?)?\*?log\((\d+(?:\.\d+)?),x([+-]\d+(?:\.\d+)?)?\)([+-]\d+(?:\.\d+)?)?$/,
+  );
+  if (logMatch) {
+    const scale = logMatch[1] !== undefined ? Number(logMatch[1]) : 1;
+    const base = Number(logMatch[2]);
+    const shift = logMatch[3] !== undefined ? Number(logMatch[3]) : 0;
+    const tail = logMatch[4] !== undefined ? Number(logMatch[4]) : 0;
+    const arg = x + shift;
+    if (!(base > 0) || base === 1 || arg <= 0) return null;
+    const value = scale * (Math.log(arg) / Math.log(base)) + tail;
+    return Number.isFinite(value) ? value : null;
+  }
+
+  // a/(x±h)+k  or  a/x+k
+  const rationalMatch = normalized.match(
+    /^(-?\d+(?:\.\d+)?)\/(?:\(x([+-]\d+(?:\.\d+)?)?\)|x)([+-]\d+(?:\.\d+)?)?$/,
+  );
+  if (rationalMatch) {
+    const scale = Number(rationalMatch[1]);
+    const shift = rationalMatch[2] !== undefined ? Number(rationalMatch[2]) : 0;
+    const tail = rationalMatch[3] !== undefined ? Number(rationalMatch[3]) : 0;
+    const denom = x + shift;
+    if (Math.abs(denom) < 1e-12) return null;
+    const value = scale / denom + tail;
+    return Number.isFinite(value) ? value : null;
+  }
+
+  return null;
 }

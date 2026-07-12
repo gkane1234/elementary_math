@@ -450,11 +450,18 @@ button:disabled {
    browsers insert mid-word dashes that look like worksheet continuation cues. */
 .question-content .katex .text,
 .question-list li .katex .text,
-.question-instruction .katex .text {
+.question-instruction .katex .text,
+.mc-choice-latex .katex .text,
+.question-content .katex .text > .mord,
+.question-list li .katex .text > .mord,
+.question-instruction .katex .text > .mord,
+.mc-choice-latex .katex .text > .mord {
   hyphens: none;
   -webkit-hyphens: none;
   -ms-hyphens: none;
+  white-space: normal;
   overflow-wrap: break-word;
+  word-wrap: break-word;
   word-break: normal;
 }
 
@@ -467,11 +474,14 @@ button:disabled {
   word-break: break-word;
 }
 
-/* KaTeX defaults to nowrap; allow long prompts/MC text to wrap in column cells. */
+/* KaTeX defaults to nowrap + width:min-content on .base, which forces long
+   \text{...} prompts to spill across column gutters instead of wrapping. */
 .question-content .katex,
 .question-list li .katex,
 .mc-choice-latex .katex,
-.question-instruction .katex {
+.question-instruction .katex,
+.worksheet-section-instruction .katex,
+.worksheet-instruction .katex {
   white-space: normal;
   max-width: 100%;
 }
@@ -479,16 +489,21 @@ button:disabled {
 .question-content .katex .base,
 .question-list li .katex .base,
 .mc-choice-latex .katex .base,
-.question-instruction .katex .base {
+.question-instruction .katex .base,
+.worksheet-section-instruction .katex .base,
+.worksheet-instruction .katex .base {
   display: inline;
   white-space: normal;
+  width: auto;
   max-width: 100%;
 }
 
 .question-content .katex-html,
 .question-list li .katex-html,
 .mc-choice-latex .katex-html,
-.question-instruction .katex-html {
+.question-instruction .katex-html,
+.worksheet-section-instruction .katex-html,
+.worksheet-instruction .katex-html {
   max-width: 100%;
   white-space: normal;
 }
@@ -1205,10 +1220,24 @@ button:disabled {
     word-break: break-word;
   }
 
-  .question-list li .katex .text {
+  .question-list li .katex,
+  .question-list li .katex .base,
+  .question-list li .katex-html {
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .question-list li .katex .base {
+    display: inline;
+    width: auto;
+  }
+
+  .question-list li .katex .text,
+  .question-list li .katex .text > .mord {
     hyphens: none;
     -webkit-hyphens: none;
     -ms-hyphens: none;
+    white-space: normal;
     overflow-wrap: break-word;
   }
 

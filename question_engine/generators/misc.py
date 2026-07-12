@@ -5,19 +5,24 @@ from __future__ import annotations
 import random
 from typing import Callable
 
-from packages.polynomial_core import Polynomial
+from packages.polynomial_core import Polynomial, format_monomial_latex
 
 from ..core.models import Question
 from ..settings.enrichment import random_term_count
+from ..settings.params import (
+    allowed_rational_operations,
+    misc_expression_params_from_settings,
+    polynomial_params_from_settings,
+)
 from .utils import _make_questions
 
 _VERBAL_TEMPLATES: list[tuple[str, str, str]] = [
     ("\\text{{the sum of }} {a} \\text{{ and a number}}", "the sum of {a} and a number", "{a} + x"),
     ("\\text{{}} {a} \\text{{ more than a number}}", "{a} more than a number", "x + {a}"),
     ("\\text{{}} {a} \\text{{ less than a number}}", "{a} less than a number", "x - {a}"),
-    ("\\text{{the product of }} {a} \\text{{ and a number}}", "the product of {a} and a number", "{a}x"),
+    ("\\text{{the product of }} {a} \\text{{ and a number}}", "the product of {a} and a number", "{ax}"),
     ("\\text{{a number divided by }} {a}", "a number divided by {a}", "\\frac{{x}}{{{a}}}"),
-    ("\\text{{}} {a} \\text{{ times a number}}", "{a} times a number", "{a}x"),
+    ("\\text{{}} {a} \\text{{ times a number}}", "{a} times a number", "{ax}"),
     ("\\text{{a number increased by }} {a}", "a number increased by {a}", "x + {a}"),
     ("\\text{{a number decreased by }} {a}", "a number decreased by {a}", "x - {a}"),
     ("\\text{{the quotient of a number and }} {a}", "the quotient of a number and {a}", "\\frac{{x}}{{{a}}}"),
@@ -55,20 +60,23 @@ def _verbal_expressions(topic: str, settings: dict) -> list[Question]:
     )
 
     def build() -> tuple[str, str, str | None]:
+        a_val: int | None = None
         if params.allow_fraction_constants:
             a_num = random.randint(params.constant_min, params.constant_max)
             a_den = random.randint(2, max(2, params.constant_max // 2))
             a = f"\\frac{{{a_num}}}{{{a_den}}}"
             a_text = f"{a_num}/{a_den}"
+            ax = f"{a}x"
         else:
             a_val = random.randint(params.constant_min, params.constant_max)
             a = str(a_val)
             a_text = str(a_val)
+            ax = format_monomial_latex(a_val) or "0"
         latex_tpl, text_tpl, answer_tpl = random.choice(templates)
         b = random.randint(2, max(2, params.constant_min))
         prompt_latex = latex_tpl.format(a=a, b=b)
         prompt_text = text_tpl.format(a=a_text, b=b)
-        answer = answer_tpl.format(a=a, b=b) if include_answer_key else None
+        answer = answer_tpl.format(a=a, b=b, ax=ax) if include_answer_key else None
         return prompt_latex, prompt_text, answer
 
     return _make_questions(topic, count, include_answer_key, build, settings=settings)
@@ -87,8 +95,14 @@ def _polynomial_naming(topic: str, settings: dict) -> list[Question]:
             params.coef_max,
             positive_leading=params.positive_leading,
         )
-        names = {0: "constant", 1: "linear", 2: "quadratic", 3: "cubic", 4: "quartic"}
-        answer = names.get(degree, f"degree-{degree}") if include_answer_key else None
+        names = {
+            0: r"\text{constant}",
+            1: r"\text{linear}",
+            2: r"\text{quadratic}",
+            3: r"\text{cubic}",
+            4: r"\text{quartic}",
+        }
+        answer = names.get(degree, rf"\text{{degree-{degree}}}") if include_answer_key else None
         return poly.to_latex(), str(poly), answer
 
     return _make_questions(topic, count, include_answer_key, build, settings=settings)

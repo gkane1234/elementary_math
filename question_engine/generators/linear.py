@@ -19,7 +19,7 @@ from ..frameworks.linear import (
 
 _WRITING_LINEAR = WritingLinearEquationsFramework()
 _SLOPE = SlopeFramework()
-_MORE_ON_SLOPE = SlopeFramework(from_equation=True)
+_MORE_ON_SLOPE = SlopeFramework(multi_mode=True)
 _PLOTTING_POINTS = PlottingPointsFramework()
 _SYSTEMS_ELIMINATION = SystemsEliminationFramework()
 _SYSTEMS_SUBSTITUTION = SystemsSubstitutionFramework()

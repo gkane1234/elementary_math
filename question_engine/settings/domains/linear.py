@@ -90,6 +90,13 @@ def coordinate_bounds_settings(
             True,
             group="linear",
         ),
+        SettingField(
+            "axis_aligned_only",
+            "Axis-aligned segments only",
+            "bool",
+            False,
+            group="linear",
+        ),
     ]
 
 
@@ -226,5 +233,69 @@ def relations_settings(
             min=3,
             max=8,
             group="relations",
+        ),
+    ]
+
+
+def more_on_slope_settings() -> list[SettingField]:
+    """Ask-mode toggles for More on slope (mix of slope skills)."""
+    return [
+        SettingField(
+            "ask_mode",
+            "Question style",
+            "select",
+            "mixed",
+            options=[
+                "from_points",
+                "from_equation",
+                "from_graph",
+                "find_equation",
+                "classify",
+                "parallel_perpendicular",
+                "mixed",
+            ],
+            group="slope",
+        ),
+        SettingField(
+            "allow_from_points",
+            "Allow find slope from two points",
+            "bool",
+            True,
+            group="slope",
+        ),
+        SettingField(
+            "allow_from_equation",
+            "Allow find slope from y = mx + b",
+            "bool",
+            True,
+            group="slope",
+        ),
+        SettingField(
+            "allow_from_graph",
+            "Allow find slope from a graph",
+            "bool",
+            True,
+            group="slope",
+        ),
+        SettingField(
+            "allow_find_equation",
+            "Allow write equation / find y-intercept",
+            "bool",
+            True,
+            group="slope",
+        ),
+        SettingField(
+            "allow_classify",
+            "Allow classify positive/negative/zero/undefined",
+            "bool",
+            True,
+            group="slope",
+        ),
+        SettingField(
+            "allow_parallel_perpendicular",
+            "Allow parallel / perpendicular slope",
+            "bool",
+            False,
+            group="slope",
         ),
     ]

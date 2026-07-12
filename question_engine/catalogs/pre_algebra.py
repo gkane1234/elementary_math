@@ -8,6 +8,7 @@ CATEGORY_ORDER: tuple[str, ...] = (
     'Pre-Algebra — Proportions and Similarity',
     'Pre-Algebra — Percents',
     'Pre-Algebra — Linear Equations and Inequalities',
+    'Pre-Algebra — Statistics',
     'Pre-Algebra — Plane Figures',
     'Pre-Algebra — Solid Figures',
     'Pre-Algebra — Right Triangles',
@@ -45,29 +46,29 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _pa(
         "Integers, Decimals, and Fractions",
         "pa_naming_decimal_places_and_rounding",
-        "Naming decimal places and rounding", generator="polynomial_naming", instruction_text="Name the place value or round.",
+        "Naming decimal places and rounding", generator="place_value_and_rounding", instruction_text="Name the place value or round.",
     ),
     _pa(
         "Integers, Decimals, and Fractions",
         "pa_writing_numbers_with_words",
         "Writing numbers with words",
-        generator="verbal_expressions",
+        generator="writing_numbers_with_words",
         instruction_text="Write the number in words.",
     ),
     _pa(
         "Integers, Decimals, and Fractions",
         "pa_integers_adding_and_subtracting",
-        "Adding and subtracting", generator="rational_add_subtract", instruction_text="Evaluate.",
+        "Adding and subtracting", generator="g6_integer_add_subtract", instruction_text="Evaluate.",
     ),
     _pa(
         "Integers, Decimals, and Fractions",
         "pa_integers_multiplying",
-        "Multiplying", generator="rational_multiply", instruction_text="Multiply.",
+        "Multiplying", generator="g6_integer_multiply", instruction_text="Multiply.",
     ),
     _pa(
         "Integers, Decimals, and Fractions",
         "pa_integers_dividing",
-        "Dividing", generator="rational_divide", instruction_text="Divide.",
+        "Dividing", generator="g6_integer_divide", instruction_text="Divide.",
     ),
     _pa(
         "Integers, Decimals, and Fractions",
@@ -89,7 +90,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _pa(
         "Integers, Decimals, and Fractions",
         "pa_simplifying_fractions",
-        "Simplifying fractions", generator="rational_simplification", instruction_text="Simplify.",
+        "Simplifying fractions", generator="simplifying_numeric_fractions", instruction_text="Simplify.",
     ),
     _pa(
         "Integers, Decimals, and Fractions",
@@ -243,30 +244,39 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         instruction_text="Solve the problem.",
         count_default=5,
     ),
+    # Statistics
+    _pa(
+        "Statistics",
+        "using_statistical_models",
+        "Using statistical models",
+        generator="stats_statistical_model",
+        instruction_latex=r"\text{Use the linear model to make a prediction.}",
+        instruction_text="Use the linear model to make a prediction.",
+    ),
     # Plane Figures
     _pa(
         "Plane Figures",
         "pa_drawing_and_measuring_angles",
         "Drawing and measuring angles",
-        instruction_text="Measure or draw the angle.",
+        generator="geo_angles", instruction_text="Measure or draw the angle.",
     ),
     _pa(
         "Plane Figures",
         "pa_angle_relationships",
         "Angle relationships",
-        instruction_text="Find the angle measure.",
+        generator="geo_angle_relationships", instruction_text="Find the angle measure.",
     ),
     _pa(
         "Plane Figures",
         "pa_plane_figures_triangles",
         "Triangles",
-        instruction_text="Find the measure.",
+        generator="geo_triangle_area", instruction_text="Find the measure.",
     ),
     _pa(
         "Plane Figures",
         "pa_quadrilaterals",
         "Quadrilaterals",
-        instruction_text="Find the measure.",
+        generator="geo_parallelogram_area", instruction_text="Find the measure.",
     ),
     _pa(
         "Plane Figures",
@@ -277,7 +287,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Plane Figures",
         "pa_circles",
         "Circles",
-        instruction_text="Find the measure.",
+        generator="geo_circle_measure", instruction_text="Find the measure.",
     ),
     _pa(
         "Plane Figures",
@@ -292,7 +302,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Solid Figures",
         "pa_classifying_volume_and_surface_area",
         "Classifying, volume, and surface area",
-        instruction_text="Find the volume or surface area.",
+        generator="geo_solid_volume_surface", instruction_text="Find the volume or surface area.",
     ),
     # Right Triangles
     _pa(

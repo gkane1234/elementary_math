@@ -381,7 +381,8 @@ class GeometryFigure:
             return [
                 f'<text x="{sx(el.x):.1f}" y="{sy(el.y):.1f}" class="diagram-label" '
                 f'fill="{self.label_color}" font-size="13" text-anchor="middle" '
-                f'dominant-baseline="middle">{escape(el.text)}</text>'
+                f'dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" '
+                f'paint-order="stroke fill">{escape(el.text)}</text>'
             ]
         if isinstance(el, ShadedRegion):
             if el.coords:

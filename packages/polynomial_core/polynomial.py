@@ -72,6 +72,10 @@ class Polynomial:
             if type(c)==complex:
                 cC=c.imag
                 c=c.real
+
+            # Omit zero terms; the zero polynomial still renders as "0".
+            if type(c) != complex and abs(c) < 1e-12 and not cC:
+                continue
                 
             if (c>=0):
                 sign='+'
@@ -96,8 +100,8 @@ class Polynomial:
                     x=variable+self.sup(e)
             if cC:
                 coef+=str(cC)+'j'
-            strin+=sign+coef+x          
-        return strin.lstrip('+')
+            strin+=sign+coef+x
+        return strin.lstrip('+') or '0'
     def __str__(self,rounding=5):
         a=round(self,rounding)
         return a.__repr__()
@@ -323,7 +327,7 @@ class Polynomial:
         l=self.exists(deg)
         if l==-1:
             return 0
-        return self.terms[self.exists(deg,start)]
+        return self.terms[self.exists(deg,start)][0]
     
     def coef_list(self, reverse: bool = False) -> list:
         coeffs = [0] * (self.degree + 1)
@@ -676,14 +680,14 @@ class Polynomial:
         
         a = Polynomial((Polynomial.randomCoefficient(-3,3,degree)))
         
-        string = "\\begin{table}[]\n\\begin{tabular}{|l|l|}\n\cline{1-2}"
+        string = "\\begin{table}[]\n\\begin{tabular}{|l|l|}\n\\cline{1-2}"
 
 
         for i in range(start,values+start*step,step) :
             #print(str(i)+"    "+str(a@i))
-            string+=str(i)+"&"+str(a@i)+"\\\\\cline{1-2}"
+            string+=str(i)+"&"+str(a@i)+"\\\\\\cline{1-2}"
         
-        string+="\n\end{tabular}\n\end{table}"
+        string+="\n\\end{tabular}\n\\end{table}"
         
     @staticmethod
     def randomCoefficient(minV,maxV,values=1,nonZero=True) :

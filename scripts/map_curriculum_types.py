@@ -122,7 +122,7 @@ CURRICULUM_ID_OVERRIDES: dict[str, str] = {
     "a2_beginning_algebra_order_of_operations": "order_of_operations",
     "a2_trigonometry_radians_and_degrees": "trig_unit_circle",
     "finding_sine_cosine_tangent": "trig_evaluate",
-    "finding_angles": "trig_evaluate",
+    "finding_angles": "finding_angles",
     "find_missing_sides_of_triangles": "geo_pythagorean_theorem",
 }
 

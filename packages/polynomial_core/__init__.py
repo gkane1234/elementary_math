@@ -6,9 +6,19 @@ from .factoring import (
     create_factorable_polynomial,
     create_factorable_polynomial_with_exact_degree,
 )
+from .special_products import (
+    SpecialProductResult,
+    create_special_product_problem,
+    enabled_special_patterns,
+)
 from .latex import (
     format_factor_product_latex,
+    format_linear_latex,
+    format_monomial_latex,
+    format_polynomial_latex,
+    format_slope_intercept_latex,
     fraction_latex,
+    join_algebra_terms,
     polynomial_fraction_latex,
     polynomial_to_latex,
     square_root_latex,
@@ -43,6 +53,9 @@ __all__ = [
     "FactorablePolynomialResult",
     "create_factorable_polynomial",
     "create_factorable_polynomial_with_exact_degree",
+    "SpecialProductResult",
+    "create_special_product_problem",
+    "enabled_special_patterns",
     # Rational expressions
     "PartialFractionTerm",
     "RationalExpressionTerm",
@@ -60,6 +73,11 @@ __all__ = [
     "polynomial_to_latex",
     "polynomial_fraction_latex",
     "format_factor_product_latex",
+    "format_monomial_latex",
+    "format_polynomial_latex",
+    "format_linear_latex",
+    "format_slope_intercept_latex",
+    "join_algebra_terms",
     # Operations
     "polynomial_gcd",
     "polynomial_lcm",

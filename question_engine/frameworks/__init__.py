@@ -6,6 +6,7 @@ from .equation import (
     AbsoluteValueInequalitiesFramework,
     CompoundInequalitiesFramework,
     EquationFramework,
+    LiteralEquationsFramework,
     MultiStepEquationsFramework,
     MultiStepInequalitiesFramework,
     OneStepEquationsFramework,
@@ -19,6 +20,7 @@ from .geometry import (
     CircleMeasureFramework,
     ClassifyingAnglesFramework,
     CoordinateDistanceFramework,
+    CoordinatePerimeterFramework,
     GeometryFigureSpec,
     GeometryFramework,
     PythagoreanTheoremFramework,
@@ -67,6 +69,7 @@ from .number import (
     RatioFramework,
     ScientificNotationFramework,
     UnitRateFramework,
+    WholeDivideToDecimalFramework,
 )
 from .statistics import ChartSpec, DataSetSpec, StatisticsFramework
 from .trigonometry import RightTriangleSpec, TrigFramework
@@ -98,6 +101,7 @@ __all__ = [
     "OneStepEquationsFramework",
     "TwoStepEquationsFramework",
     "MultiStepEquationsFramework",
+    "LiteralEquationsFramework",
     "AbsoluteValueEquationsFramework",
     "SolvingInequalityFramework",
     "OneStepInequalitiesFramework",
@@ -113,6 +117,7 @@ __all__ = [
     "RatioFramework",
     "UnitRateFramework",
     "DecimalArithmeticFramework",
+    "WholeDivideToDecimalFramework",
     "DistributiveFramework",
     "OrderOfOperationsFramework",
     "ProportionFramework",
@@ -150,6 +155,7 @@ __all__ = [
     "SimilarTrianglesFramework",
     "CircleMeasureFramework",
     "CoordinateDistanceFramework",
+    "CoordinatePerimeterFramework",
     "CoordinatePlaneSpec",
     "GraphingFramework",
     "GraphLinearEquationFramework",

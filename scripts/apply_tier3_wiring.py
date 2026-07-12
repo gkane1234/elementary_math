@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TIER3_WIRING: list[tuple[str, str, str, str]] = [
     # Algebra 1 — trigonometry dedup
     ("finding_sine_cosine_tangent", "trig_evaluate", "algebra_1", "beginning_trigonometry"),
-    ("finding_angles", "trig_evaluate", "algebra_1", "beginning_trigonometry"),
+    ("finding_angles", "finding_angles", "algebra_1", "beginning_trigonometry"),
     ("find_missing_sides_of_triangles", "geo_pythagorean_theorem", "algebra_1", "beginning_trigonometry"),
     # Algebra 2 — polynomials, radicals, rationals, logs, trig, sequences
     ("a2_beginning_algebra_order_of_operations", "order_of_operations", "algebra_2", "beginning_algebra"),

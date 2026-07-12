@@ -16,7 +16,7 @@ CATEGORY_ORDER: tuple[str, ...] = (
     'Precalculus — Introduction to Calculus',
 )
 
-from .base import TypeCatalogEntry
+from .base import TypeCatalogEntry, resolve_instruction_latex, resolve_instruction_text
 
 
 
@@ -28,7 +28,7 @@ def _pc(
     instruction_latex: str = "",
     instruction_text: str = "",
     count_default: int = 10,
-    generator: str = "scaffold",
+    generator: str = "precalc_foundations",
 ) -> TypeCatalogEntry:
     return TypeCatalogEntry(
         id=id,
@@ -36,15 +36,20 @@ def _pc(
         category=f"Precalculus — {chapter}",
         generator=generator,
         description=f"Practice {name.lower()}.",
-        instruction_latex=instruction_latex or "\\text{Solve.}",
-        instruction_text=instruction_text or "Solve.",
+        instruction_latex=resolve_instruction_latex(instruction_latex, instruction_text),
+        instruction_text=resolve_instruction_text(instruction_text),
         count_default=count_default,
     )
 
 
 CATALOG: tuple[TypeCatalogEntry, ...] = (
     # Functions
-    _pc("Functions", "pc_continuity", "Continuity"),
+    _pc(
+        "Functions",
+        "pc_continuity",
+        "Continuity",
+        instruction_text="Determine if the function is continuous.",
+    ),
     _pc(
         "Functions",
         "pc_extrema_intervals_of_increase_and_decrease",
@@ -61,7 +66,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _pc(
         "Functions",
         "pc_transformations_of_graphs",
-        "Transformations of graphs", generator="graph_quadratic", instruction_latex="\\text{Graph the following functions.}",
+        "Transformations of graphs", generator="graph_transformations", instruction_latex="\\text{Graph the following functions.}",
         instruction_text="Graph the following functions.",
     ),
     _pc("Functions", "pc_piecewise_functions", "Piecewise functions", instruction_text="Evaluate or graph."),
@@ -72,7 +77,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Power, Polynomial, and Rational Functions",
         "pc_polynomial_graphs_real_zeros_and_end_behavior",
         "Graphs, real zeros, and end behavior of polynomial functions",
-        generator="graph_quadratic",
+        generator="polynomial_end_behavior",
         instruction_text="Analyze the polynomial.",
     ),
     _pc(
@@ -85,7 +90,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Power, Polynomial, and Rational Functions",
         "pc_remainder_theorem_and_bounds_of_real_zeros",
         "The Remainder Theorem and bounds of real zeros",
-        instruction_text="Apply the Remainder Theorem.",
+        generator="remainder_theorem", instruction_text="Apply the Remainder Theorem.",
     ),
     _pc(
         "Power, Polynomial, and Rational Functions",
@@ -103,7 +108,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Power, Polynomial, and Rational Functions",
         "pc_graphs_of_rational_functions",
         "Graphs of rational functions",
-        generator="graph_quadratic",
+        generator="graph_rational",
         instruction_latex="\\text{Graph the following functions.}",
         instruction_text="Graph the following functions.",
     ),
@@ -111,6 +116,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Power, Polynomial, and Rational Functions",
         "pc_rational_equations",
         "Rational equations",
+        generator="rational_equations",
         instruction_latex="\\text{Solve for } x.",
         instruction_text="Solve for x.",
     ),
@@ -203,6 +209,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Exponential and Logarithmic Expressions",
         "pc_graphing_logarithmic_functions",
         "Graphing logarithmic functions",
+        generator="graph_logarithmic",
         instruction_latex="\\text{Graph the following functions.}",
         instruction_text="Graph the following functions.",
     ),
@@ -210,7 +217,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Exponential and Logarithmic Expressions",
         "pc_compound_interest",
         "Compound interest",
-        instruction_latex="\\text{Solve the problem.}",
+        generator="compound_interest", instruction_latex="\\text{Solve the problem.}",
         instruction_text="Solve the problem.",
         count_default=5,
     ),
@@ -231,13 +238,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _pc(
         "Trigonometry",
         "pc_right_triangle_trig_finding_ratios",
-        "Right triangle trig, finding ratios", generator="trig_evaluate", instruction_text="Find the trigonometric ratio.",
+        "Right triangle trig, finding ratios", generator="geo_right_triangle_trig_ratio", instruction_text="Find the trigonometric ratio.",
     ),
     _pc(
         "Trigonometry",
         "pc_right_triangle_trig_finding_angles_and_sides",
         "Right triangle trig, finding angles and sides",
-        generator="trig_evaluate",
+        generator="geo_right_triangle_trig",
         instruction_text="Find the missing measure.",
     ),
     _pc(
@@ -251,20 +258,21 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_graphing_trig_functions",
         "Graphing trig functions",
+        generator="graphing_trig_functions",
         instruction_latex="\\text{Graph the following functions.}",
         instruction_text="Graph the following functions.",
     ),
     _pc(
         "Trigonometry",
         "pc_simple_trig_equations",
-        "Simple trig equations", generator="trig_evaluate", instruction_latex="\\text{Solve for } x.",
+        "Simple trig equations", generator="simple_trig_equations", instruction_latex="\\text{Solve for } x.",
         instruction_text="Solve for x.",
     ),
     _pc(
         "Trigonometry",
         "pc_inverse_trig_functions",
         "Inverse trig functions",
-        instruction_text="Evaluate the inverse trigonometric function.",
+        generator="inverse_trig_functions", instruction_text="Evaluate the inverse trigonometric function.",
     ),
     _pc(
         "Trigonometry",
@@ -278,6 +286,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_equations_with_factoring_and_fundamental_identities",
         "Equations with factoring and fundamental identities",
+        generator="trig_factoring_equations",
         instruction_latex="\\text{Solve for } x.",
         instruction_text="Solve for x.",
     ),
@@ -285,6 +294,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_sum_and_difference_identities",
         "Sum and Difference Identities",
+        generator="trig_sum_difference",
         instruction_latex="\\text{Simplify.}",
         instruction_text="Simplify.",
     ),
@@ -292,6 +302,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_multiple_angle_identities",
         "Multiple-Angle Identities",
+        generator="trig_multiple_angle",
         instruction_latex="\\text{Simplify.}",
         instruction_text="Simplify.",
     ),
@@ -299,6 +310,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_product_to_sum_identities",
         "Product-to-Sum Identities",
+        generator="trig_product_to_sum",
         instruction_latex="\\text{Simplify.}",
         instruction_text="Simplify.",
     ),
@@ -306,6 +318,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_equations_and_multiple_angle_identities",
         "Equations and Multiple-Angle Identities",
+        generator="trig_factoring_equations",
         instruction_latex="\\text{Solve for } x.",
         instruction_text="Solve for x.",
     ),
@@ -313,19 +326,19 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_law_of_sines",
         "The Law of Sines",
-        instruction_text="Find the missing measure.",
+        generator="law_of_sines", instruction_text="Find the missing measure.",
     ),
     _pc(
         "Trigonometry",
         "pc_law_of_cosines",
         "The Law of Cosines",
-        instruction_text="Find the missing measure.",
+        generator="law_of_cosines", instruction_text="Find the missing measure.",
     ),
     _pc(
         "Trigonometry",
         "pc_area_and_laws_of_sines_and_cosines",
         "Area and Laws of Sines and Cosines",
-        instruction_text="Find the area or missing measure.",
+        generator="law_of_sines", instruction_text="Find the area or missing measure.",
     ),
     # Parametric Equations
     _pc(
@@ -347,12 +360,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Polar Coordinates",
         "pc_polar_coordinates",
         "Polar coordinates",
-        instruction_text="Convert or plot.",
+        generator="polar_coordinates", instruction_text="Convert or plot.",
     ),
     _pc(
         "Polar Coordinates",
         "pc_graphs_of_polar_equations",
         "Graphs of polar equations",
+        generator="polar_graphs",
         instruction_latex="\\text{Graph the following equations.}",
         instruction_text="Graph the following equations.",
     ),
@@ -360,25 +374,34 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Polar Coordinates",
         "pc_polar_and_rectangular_forms_of_equations",
         "Polar and rectangular forms of equations",
+        generator="polar_rectangular_forms",
         instruction_text="Convert the equation.",
     ),
     _pc(
         "Polar Coordinates",
         "pc_polar_forms_of_conic_sections",
         "Polar forms of conic sections",
+        generator="polar_conic_forms",
         instruction_text="Identify or write the equation.",
     ),
     _pc(
         "Polar Coordinates",
         "pc_complex_numbers_in_polar_form",
         "Complex numbers in polar form",
+        generator="complex_polar_form",
         instruction_text="Convert or evaluate.",
     ),
     # Vectors
-    _pc("Vectors", "pc_vectors_basics", "Basics", instruction_text="Evaluate."),
-    _pc("Vectors", "pc_vectors_diagrams", "Diagrams", instruction_text="Draw or interpret the diagram."),
-    _pc("Vectors", "pc_vectors_operations", "Operations", generator="function_operations", instruction_text="Evaluate."),
-    _pc("Vectors", "pc_dot_products", "Dot products", instruction_text="Find the dot product."),
+    _pc("Vectors", "pc_vectors_basics", "Basics", generator="vector_basics", instruction_text="Evaluate."),
+    _pc(
+        "Vectors",
+        "pc_vectors_diagrams",
+        "Diagrams",
+        generator="scaffold",
+        instruction_text="Draw or interpret the diagram.",
+    ),
+    _pc("Vectors", "pc_vectors_operations", "Operations", generator="vector_basics", instruction_text="Evaluate."),
+    _pc("Vectors", "pc_dot_products", "Dot products", generator="dot_product", instruction_text="Find the dot product."),
     # Three-Dimensional Vectors
     _pc(
         "Three-Dimensional Vectors",
@@ -386,8 +409,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Points in three dimensions",
         instruction_text="Find the distance or coordinates.",
     ),
-    _pc("Three-Dimensional Vectors", "pc_3d_vectors_basics", "Basics", instruction_text="Evaluate."),
-    _pc("Three-Dimensional Vectors", "pc_3d_vectors_operations", "Operations", generator="function_operations", instruction_text="Evaluate."),
+    _pc("Three-Dimensional Vectors", "pc_3d_vectors_basics", "Basics", generator="vector_3d_basics", instruction_text="Evaluate."),
+    _pc("Three-Dimensional Vectors", "pc_3d_vectors_operations", "Operations", generator="precalc_foundations", instruction_text="Evaluate."),
     _pc(
         "Three-Dimensional Vectors",
         "pc_cross_products",
@@ -418,12 +441,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Conic Sections",
         "pc_parabolas_writing_equations",
         "Parabolas, writing equations",
+        generator="conic_sections",
         instruction_text="Write the equation of the parabola.",
     ),
     _pc(
         "Conic Sections",
         "pc_circles_graphing_and_properties",
         "Circles, graphing and properties",
+        generator="conic_sections",
         instruction_latex="\\text{Graph the circle.}",
         instruction_text="Graph the circle.",
     ),
@@ -431,12 +456,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Conic Sections",
         "pc_circles_writing_equations",
         "Circles, writing equations",
+        generator="conic_sections",
         instruction_text="Write the equation of the circle.",
     ),
     _pc(
         "Conic Sections",
         "pc_ellipses_graphing_and_properties",
         "Ellipses, graphing and properties",
+        generator="conic_sections",
         instruction_latex="\\text{Graph the ellipse.}",
         instruction_text="Graph the ellipse.",
     ),
@@ -444,12 +471,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Conic Sections",
         "pc_ellipses_writing_equations",
         "Ellipses, writing equations",
+        generator="conic_sections",
         instruction_text="Write the equation of the ellipse.",
     ),
     _pc(
         "Conic Sections",
         "pc_hyperbolas_graphing_and_properties",
         "Hyperbolas, graphing and properties",
+        generator="conic_sections",
         instruction_latex="\\text{Graph the hyperbola.}",
         instruction_text="Graph the hyperbola.",
     ),
@@ -457,12 +486,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Conic Sections",
         "pc_hyperbolas_writing_equations",
         "Hyperbolas, writing equations",
+        generator="conic_sections",
         instruction_text="Write the equation of the hyperbola.",
     ),
     _pc(
         "Conic Sections",
         "pc_rotations_of_conic_sections",
         "Rotations of conic sections",
+        generator="conic_rotation_identify",
         instruction_text="Identify or write the equation.",
     ),
     # Discrete Mathematics
@@ -483,7 +514,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Discrete Mathematics",
         "pc_binomial_theorem",
         "The Binomial Theorem",
-        instruction_text="Expand using the Binomial Theorem.",
+        generator="binomial_theorem", instruction_text="Expand using the Binomial Theorem.",
     ),
     _pc(
         "Discrete Mathematics",
@@ -548,7 +579,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Introduction to Calculus",
         "pc_limits_at_removable_discontinuities",
         "Limits at removable discontinuities",
-        instruction_text="Evaluate the limit.",
+        generator="limit_removable", instruction_text="Evaluate the limit.",
     ),
     _pc(
         "Introduction to Calculus",
@@ -560,12 +591,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Introduction to Calculus",
         "pc_limits_at_infinity",
         "Limits at infinity",
-        instruction_text="Evaluate the limit.",
+        generator="limit_at_infinity", instruction_text="Evaluate the limit.",
     ),
     _pc(
         "Introduction to Calculus",
         "pc_definition_of_the_derivative",
         "Definition of the derivative",
+        generator="definition_of_derivative",
         instruction_text="Find the derivative using the definition.",
     ),
     _pc(
@@ -593,12 +625,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Introduction to Calculus",
         "pc_approximating_area_under_a_curve",
         "Approximating area under a curve",
+        generator="riemann_approximate_area",
         instruction_text="Approximate the area.",
     ),
     _pc(
         "Introduction to Calculus",
         "pc_area_under_a_curve_by_limit_of_sums",
         "Area under a curve by limit of sums",
+        generator="area_under_curve",
         instruction_text="Find the area.",
     ),
     _pc(

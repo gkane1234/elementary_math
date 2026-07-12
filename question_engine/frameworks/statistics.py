@@ -154,9 +154,9 @@ def _compute_measure(values: list[float], measure: MeasureType) -> float:
 
 
 def _format_numeric_answer(value: float, *, integer_only: bool) -> str:
-    if integer_only or value == int(value):
+    if value == int(value):
         return str(int(round(value)))
-    return f"{value:.1f}"
+    return f"{value:.2f}".rstrip("0").rstrip(".")
 
 
 def _format_probability(probability: Fraction, settings: dict) -> str:
@@ -180,6 +180,8 @@ def _data_metadata(
     values: list[float],
     chart: ChartSpec | None = None,
 ) -> dict[str, Any]:
+    from ..diagrams.charts import box_plot_svg, dot_plot_svg, histogram_svg
+
     data = DataSetSpec(
         values=values,
         frequencies=_frequency_table(values),
@@ -202,7 +204,20 @@ def _data_metadata(
             "bins": [{"low": low, "high": high} for low, high in chart.bins],
             "five_number_summary": chart.five_number_summary,
         }
+        if chart.chart_type == "dot_plot":
+            meta["diagram_svg"] = dot_plot_svg(values, title=chart.title or "Dot plot")
+        elif chart.chart_type == "histogram":
+            bins = chart.bins or _histogram_bins(values, int(chart.bin_width or 2))
+            meta["diagram_svg"] = histogram_svg(
+                values, bins, title=chart.title or "Histogram"
+            )
+        elif chart.chart_type == "box_plot":
+            summary = chart.five_number_summary or _five_number_summary(values)
+            meta["diagram_svg"] = box_plot_svg(
+                summary, title=chart.title or "Box plot"
+            )
     return question_metadata(**meta)
+
 
 
 def _histogram_bins(values: list[float], bin_width: int) -> list[tuple[float, float]]:
@@ -226,13 +241,14 @@ def _count_in_bin(values: list[float], low: float, high: float) -> int:
 def _five_number_summary(values: list[float]) -> dict[str, float]:
     ordered = sorted(values)
     n = len(ordered)
-    q1_index = n // 4
-    q3_index = (3 * n) // 4
+    midpoint = n // 2
+    lower_half = ordered[:midpoint]
+    upper_half = ordered[midpoint + (n % 2) :]
     return {
         "min": ordered[0],
-        "q1": ordered[q1_index],
-        "median": ordered[n // 2],
-        "q3": ordered[q3_index],
+        "q1": _compute_median(lower_half),
+        "median": _compute_median(ordered),
+        "q3": _compute_median(upper_half),
         "max": ordered[-1],
     }
 
@@ -282,6 +298,10 @@ class CenterSpreadFramework(StatisticsFramework):
         params = statistics_params_from_settings(settings)
         values = _generate_data_set(settings, params=params)
         measure = _resolve_measure(settings, self.measure)
+        if measure == "mode":
+            # A strict majority guarantees that the requested mode exists and is unique.
+            mode_value = values[0]
+            values[: len(values) // 2 + 1] = [mode_value] * (len(values) // 2 + 1)
         result = _compute_measure(values, measure)
         self._last_values = values
         self._last_chart = ChartSpec(chart_type="dot_plot", title="Data set")
@@ -324,6 +344,40 @@ class ModeFramework(CenterSpreadFramework):
 class RangeFramework(CenterSpreadFramework):
     def __init__(self) -> None:
         super().__init__(measure="range")
+
+
+class StatisticalModelFramework(StatisticsFramework):
+    """Predict from a small linear data table with a constant rate of change."""
+
+    def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {}
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        include_answer = bool(settings.get("include_answer_key", False))
+        context, x_label, y_label = random.choice(
+            [
+                ("A plant's height", "Weeks", "Height (cm)"),
+                ("A taxi fare", "Miles traveled", "Cost (dollars)"),
+                ("A savings account balance", "Weeks", "Balance (dollars)"),
+            ]
+        )
+        slope = random.randint(2, 8)
+        intercept = random.randint(4, 20)
+        input_values = list(range(1, 5))
+        output_values = [slope * x + intercept for x in input_values]
+        target_input = 5
+        rows = r" \\ ".join(
+            f"{x} & {y}" for x, y in zip(input_values, output_values)
+        )
+        prompt = (
+            f"\\text{{{context} follows a linear pattern.}}\\\\"
+            f"\\begin{{array}}{{c|c}}{x_label} & {y_label}\\\\\\hline "
+            f"{rows}\\end{{array}}\\\\"
+            f"\\text{{Use the model to predict the {y_label.lower()} at "
+            f"{x_label.lower()} = {target_input}.}}"
+        )
+        answer = str(slope * target_input + intercept) if include_answer else None
+        return prompt, f"linear model prediction at {target_input}", answer
 
 
 class DotPlotReadFramework(StatisticsFramework):
@@ -384,7 +438,12 @@ class HistogramReadFramework(StatisticsFramework):
         values = _generate_data_set(settings, params=params)
         bin_width = max(2, (params.value_max - params.value_min) // 4)
         bins = _histogram_bins(values, bin_width)
-        target = random.choice(bins)
+        populated_bins = [
+            bin_range
+            for bin_range in bins
+            if _count_in_bin(values, bin_range[0], bin_range[1]) > 0
+        ]
+        target = random.choice(populated_bins)
         count = _count_in_bin(values, target[0], target[1])
         self._last_values = values
         self._last_chart = ChartSpec(

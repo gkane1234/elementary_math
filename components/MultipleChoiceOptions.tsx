@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef } from "react";
 import katex from "katex";
+import { enableKatexSoftWrap } from "@/lib/latex";
 import {
   choiceLetter,
   type MultipleChoiceOption,
@@ -23,6 +24,7 @@ function ChoiceLatex({ content }: { content: string }) {
       throwOnError: false,
       displayMode: false,
     });
+    enableKatexSoftWrap(ref.current);
   }, [content]);
 
   return <span ref={ref} />;

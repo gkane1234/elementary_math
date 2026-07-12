@@ -24,9 +24,9 @@ BLANK_SAMPLES = [
 ]
 
 STIMULUS_SAMPLES = [
-    "more_on_slope",
-    "writing_linear_equations",
-    "continuous_relations",
+    ("more_on_slope", {"ask_mode": "from_graph", "allow_from_graph": True}),
+    ("writing_linear_equations", {}),
+    ("continuous_relations", {}),
 ]
 
 settings = {"count": 1, "include_graph_metadata": True, "include_answer_key": True}
@@ -58,9 +58,9 @@ for tid in BLANK_SAMPLES:
             f"answer={has_answer} fn={len(gs.get('functions', []))} pts={len(gs.get('points', []))}"
         )
 
-for tid in STIMULUS_SAMPLES:
+for tid, extra in STIMULUS_SAMPLES:
     total += 1
-    status, _, body = handle_generate({"type_id": tid, "settings": settings})
+    status, _, body = handle_generate({"type_id": tid, "settings": {**settings, **extra}})
     data = json.loads(body)
     if status != 200:
         print(f"{tid}: FAIL {data.get('error')}")
@@ -68,8 +68,18 @@ for tid in STIMULUS_SAMPLES:
     meta = data["questions"][0].get("metadata", {})
     gs = meta.get("graph_spec") or {}
     role = meta.get("graph_role")
-    has_line = len(gs.get("functions", [])) > 0 or len(gs.get("points", [])) > 0
-    if role == "stimulus" and has_line:
+    has_line = len(gs.get("functions", [])) > 0
+    no_points = len(gs.get("points", [])) == 0 or gs.get("show_points") is False
+    if tid == "more_on_slope":
+        if role == "stimulus" and has_line and no_points and len(gs.get("points", [])) == 0:
+            print(f"{tid}: OK stimulus line, no points answer={data['questions'][0].get('answer_latex')}")
+            ok += 1
+        else:
+            print(
+                f"{tid}: BAD role={role} has_line={has_line} "
+                f"pts={gs.get('points')} show_points={gs.get('show_points')} gs={gs}"
+            )
+    elif role == "stimulus" and (has_line or len(gs.get("points", [])) > 0):
         print(f"{tid}: OK stimulus line on prompt answer={data['questions'][0].get('answer_latex')}")
         ok += 1
     else:

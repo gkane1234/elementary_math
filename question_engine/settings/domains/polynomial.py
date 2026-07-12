@@ -137,6 +137,49 @@ def polynomial_coef_settings(
     ]
 
 
+def polynomial_multiply_settings() -> list[SettingField]:
+    """Factor-shape toggles for polynomial multiplication."""
+    return [
+        SettingField(
+            "allow_monomial_binomial",
+            "Allow monomial × binomial",
+            "bool",
+            True,
+            group="polynomial_multiply",
+        ),
+        SettingField(
+            "allow_binomial_binomial",
+            "Allow binomial × binomial",
+            "bool",
+            True,
+            group="polynomial_multiply",
+        ),
+        SettingField(
+            "allow_trinomial",
+            "Allow a trinomial factor",
+            "bool",
+            False,
+            group="polynomial_multiply",
+        ),
+        SettingField(
+            "leading_coefficient_one",
+            "Leading coefficient = 1 only",
+            "bool",
+            True,
+            group="polynomial_multiply",
+        ),
+        SettingField(
+            "max_factor_terms",
+            "Max terms per factor",
+            "int",
+            2,
+            min=1,
+            max=8,
+            group="polynomial_multiply",
+        ),
+    ]
+
+
 def polynomial_factoring_settings() -> list[SettingField]:
     """Re-export factoring method toggles for polynomial types."""
     return shared_factoring_settings()

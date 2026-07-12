@@ -65,7 +65,11 @@ def make_catalog_type(
 
 
 def register_catalog_types() -> None:
+    """Register every catalog entry.
+
+    Wired entries get real generators; scaffold / missing keys fall back to the
+    placeholder generator. Explicit type modules may re-register the same id
+    afterward with setting overrides.
+    """
     for entry in TYPE_CATALOG:
-        if entry.generator != "scaffold":
-            continue
         register(make_catalog_type(entry))

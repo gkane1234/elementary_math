@@ -104,7 +104,25 @@ result = create_factorable_polynomial(options)
 # result.polynomial, result.factors, result.method
 ```
 
-Supported `method` values: `normal`, `grouping`, `substitution`, `difference_of_squares`, `difference_of_cubes`, `sum_of_cubes`, `rrt`.
+Supported `method` values: `normal`, `grouping`, `substitution`, `difference_of_squares`, `perfect_square_trinomial`, `difference_of_cubes`, `sum_of_cubes`, `rrt`.
+
+## Special products (factoring practice)
+
+```python
+from packages.polynomial_core import create_special_product_problem
+
+result = create_special_product_problem({
+    "factor_difference_of_squares": True,
+    "factor_perfect_square_trinomial": True,
+    "factor_sum_of_cubes": True,
+    "factor_difference_of_cubes": True,
+    "allow_higher_even_powers": True,  # Hard: x^4-1, x^8-1, ...
+    "max_even_power": 8,
+})
+print(result.polynomial.to_latex())  # expanded prompt, e.g. x^{8}-1
+print(result.answer_latex())         # (x-1)(x+1)(x^{2}+1)(x^{4}+1)
+print(result.pattern)
+```
 
 ## Rational expressions
 

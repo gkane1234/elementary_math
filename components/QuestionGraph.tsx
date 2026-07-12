@@ -1,6 +1,7 @@
 import {
   evaluateGraphFunction,
   extractGraphMetadata,
+  type GraphRegion,
   type GraphSpec,
   type NumberLineSpec,
   type QuestionGraphMetadata,
@@ -63,8 +64,146 @@ function clipSegmentToView(
   ];
 }
 
+/** Parametric / implicit conic markers emitted by conic_sections / polar_graphs. */
+function sampleConicPath(fn: string, spec: GraphSpec, width: number, height: number): string[][] | null {
+  const normalized = fn.replace(/\s+/g, "");
+  const circle = normalized.match(/^circle\((-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)\)$/);
+  if (circle) {
+    const h = Number(circle[1]);
+    const k = Number(circle[2]);
+    const r = Number(circle[3]);
+    const pts: string[] = [];
+    for (let i = 0; i <= 96; i += 1) {
+      const t = (2 * Math.PI * i) / 96;
+      const x = h + r * Math.cos(t);
+      const y = k + r * Math.sin(t);
+      if (x < spec.x_min || x > spec.x_max || y < spec.y_min || y > spec.y_max) continue;
+      pts.push(`${mapX(x, spec, width)},${mapY(y, spec, height)}`);
+    }
+    return pts.length > 1 ? [pts] : [];
+  }
+
+  const ellipse = normalized.match(
+    /^ellipse\((-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)\)$/,
+  );
+  if (ellipse) {
+    const h = Number(ellipse[1]);
+    const k = Number(ellipse[2]);
+    const a = Number(ellipse[3]);
+    const b = Number(ellipse[4]);
+    const pts: string[] = [];
+    for (let i = 0; i <= 96; i += 1) {
+      const t = (2 * Math.PI * i) / 96;
+      const x = h + a * Math.cos(t);
+      const y = k + b * Math.sin(t);
+      if (x < spec.x_min || x > spec.x_max || y < spec.y_min || y > spec.y_max) continue;
+      pts.push(`${mapX(x, spec, width)},${mapY(y, spec, height)}`);
+    }
+    return pts.length > 1 ? [pts] : [];
+  }
+
+  const hypH = normalized.match(
+    /^hyperbola_h\((-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)\)$/,
+  );
+  if (hypH) {
+    const h = Number(hypH[1]);
+    const k = Number(hypH[2]);
+    const a = Number(hypH[3]);
+    const b = Number(hypH[4]);
+    const branches: string[][] = [];
+    for (const sign of [-1, 1] as const) {
+      const pts: string[] = [];
+      for (let i = 0; i <= 48; i += 1) {
+        const t = -2 + (4 * i) / 48;
+        const x = h + sign * a * Math.cosh(t);
+        const y = k + b * Math.sinh(t);
+        if (x < spec.x_min || x > spec.x_max || y < spec.y_min || y > spec.y_max) {
+          if (pts.length > 1) branches.push(pts.splice(0, pts.length));
+          continue;
+        }
+        pts.push(`${mapX(x, spec, width)},${mapY(y, spec, height)}`);
+      }
+      if (pts.length > 1) branches.push(pts);
+    }
+    return branches;
+  }
+
+  const hypV = normalized.match(
+    /^hyperbola_v\((-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)\)$/,
+  );
+  if (hypV) {
+    const h = Number(hypV[1]);
+    const k = Number(hypV[2]);
+    const a = Number(hypV[3]);
+    const b = Number(hypV[4]);
+    const branches: string[][] = [];
+    for (const sign of [-1, 1] as const) {
+      const pts: string[] = [];
+      for (let i = 0; i <= 48; i += 1) {
+        const t = -2 + (4 * i) / 48;
+        const y = k + sign * a * Math.cosh(t);
+        const x = h + b * Math.sinh(t);
+        if (x < spec.x_min || x > spec.x_max || y < spec.y_min || y > spec.y_max) {
+          if (pts.length > 1) branches.push(pts.splice(0, pts.length));
+          continue;
+        }
+        pts.push(`${mapX(x, spec, width)},${mapY(y, spec, height)}`);
+      }
+      if (pts.length > 1) branches.push(pts);
+    }
+    return branches;
+  }
+
+  const parV = normalized.match(
+    /^parabola_v\((-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)\)$/,
+  );
+  if (parV) {
+    const h = Number(parV[1]);
+    const k = Number(parV[2]);
+    const p = Number(parV[3]);
+    // x^2 = 4p(y - k) with vertex (h, k) → y = (x - h)^2 / (4p) + k
+    const segments: string[][] = [];
+    let current: string[] = [];
+    const steps = 120;
+    for (let index = 0; index <= steps; index += 1) {
+      const x = spec.x_min + ((spec.x_max - spec.x_min) * index) / steps;
+      const y = ((x - h) * (x - h)) / (4 * p) + k;
+      if (y < spec.y_min || y > spec.y_max) {
+        if (current.length > 1) segments.push(current);
+        current = [];
+        continue;
+      }
+      current.push(`${mapX(x, spec, width)},${mapY(y, spec, height)}`);
+    }
+    if (current.length > 1) segments.push(current);
+    return segments;
+  }
+
+  const parH = normalized.match(
+    /^parabola_h\((-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)\)$/,
+  );
+  if (parH) {
+    const h = Number(parH[1]);
+    const k = Number(parH[2]);
+    const p = Number(parH[3]);
+    const pts: string[] = [];
+    for (let i = 0; i <= 80; i += 1) {
+      const y = spec.y_min + ((spec.y_max - spec.y_min) * i) / 80;
+      const x = h + ((y - k) * (y - k)) / (4 * p);
+      if (x < spec.x_min || x > spec.x_max) continue;
+      pts.push(`${mapX(x, spec, width)},${mapY(y, spec, height)}`);
+    }
+    return pts.length > 1 ? [pts] : [];
+  }
+
+  return null;
+}
+
 /** Build polyline samples for a function, clipped to the visible plane. */
-function sampleFunctionPath(fn: string, spec: GraphSpec, width: number, height: number): string[] {
+function sampleFunctionPath(fn: string, spec: GraphSpec, width: number, height: number): string[][] {
+  const conic = sampleConicPath(fn, spec, width, height);
+  if (conic !== null) return conic;
+
   // Prefer exact endpoint clipping for linear mx+b so the segment spans the view
   // and passes through plotted points without sampling gaps at the y bounds.
   const midX = (spec.x_min + spec.x_max) / 2;
@@ -82,20 +221,28 @@ function sampleFunctionPath(fn: string, spec: GraphSpec, width: number, height: 
     if (!clipped) return [];
     const [[cx0, cy0], [cx1, cy1]] = clipped;
     return [
-      `${mapX(cx0, spec, width)},${mapY(cy0, spec, height)}`,
-      `${mapX(cx1, spec, width)},${mapY(cy1, spec, height)}`,
+      [
+        `${mapX(cx0, spec, width)},${mapY(cy0, spec, height)}`,
+        `${mapX(cx1, spec, width)},${mapY(cy1, spec, height)}`,
+      ],
     ];
   }
 
-  const linePoints: string[] = [];
-  const steps = 80;
+  const segments: string[][] = [];
+  let current: string[] = [];
+  const steps = 120;
   for (let index = 0; index <= steps; index += 1) {
     const x = spec.x_min + ((spec.x_max - spec.x_min) * index) / steps;
     const y = evaluateGraphFunction(fn, x);
-    if (y === null || y < spec.y_min || y > spec.y_max) continue;
-    linePoints.push(`${mapX(x, spec, width)},${mapY(y, spec, height)}`);
+    if (y === null || y < spec.y_min || y > spec.y_max) {
+      if (current.length > 1) segments.push(current);
+      current = [];
+      continue;
+    }
+    current.push(`${mapX(x, spec, width)},${mapY(y, spec, height)}`);
   }
-  return linePoints;
+  if (current.length > 1) segments.push(current);
+  return segments;
 }
 
 function numberLineAsGraph(spec: NumberLineSpec): GraphSpec {
@@ -134,6 +281,8 @@ function NumberLineGraph({ spec }: { spec: NumberLineSpec }) {
       : spec.direction === "left"
         ? boundaryX
         : (boundaryHighX ?? boundaryX);
+  const outside =
+    spec.direction === "outside" && boundaryHighX !== null;
 
   return (
     <svg
@@ -143,11 +292,23 @@ function NumberLineGraph({ spec }: { spec: NumberLineSpec }) {
       aria-label={blank ? "Blank number line" : "Number line"}
     >
       <line x1={startX} y1={y} x2={endX} y2={y} className="graph-axis" />
-      {!blank && (
+      {!blank && !outside && (
         <polygon
           points={`${shadeStart},${y - 8} ${shadeEnd},${y - 8} ${shadeEnd},${y + 8} ${shadeStart},${y + 8}`}
           className="graph-shade"
         />
+      )}
+      {!blank && outside && boundaryHighX !== null && (
+        <>
+          <polygon
+            points={`${startX},${y - 8} ${boundaryX},${y - 8} ${boundaryX},${y + 8} ${startX},${y + 8}`}
+            className="graph-shade"
+          />
+          <polygon
+            points={`${boundaryHighX},${y - 8} ${endX},${y - 8} ${endX},${y + 8} ${boundaryHighX},${y + 8}`}
+            className="graph-shade"
+          />
+        </>
       )}
       {showZero && zeroInRange && (
         <g>
@@ -172,10 +333,82 @@ function NumberLineGraph({ spec }: { spec: NumberLineSpec }) {
         />
       )}
       {!blank && boundaryHighX !== null && (
-        <circle cx={boundaryHighX} cy={y} r={5} className="graph-boundary-open" />
+        <circle
+          cx={boundaryHighX}
+          cy={y}
+          r={5}
+          className={
+            (spec.inclusive_high ?? spec.inclusive)
+              ? "graph-boundary-filled"
+              : "graph-boundary-open"
+          }
+        />
       )}
     </svg>
   );
+}
+
+/** Build a polygon for the half-plane y ≷ m x + b clipped to the view box. */
+function halfPlanePolygonPoints(
+  region: GraphRegion,
+  spec: GraphSpec,
+  width: number,
+  height: number,
+): string | null {
+  const { m, b, op } = region;
+  const xmin = spec.x_min;
+  const xmax = spec.x_max;
+  const ymin = spec.y_min;
+  const ymax = spec.y_max;
+  const above = op === ">" || op === ">=";
+  const eps = 1e-9;
+  const onSide = (x: number, y: number) => {
+    const lineY = m * x + b;
+    return above ? y >= lineY - eps : y <= lineY + eps;
+  };
+
+  const corners: Array<[number, number]> = [
+    [xmin, ymin],
+    [xmax, ymin],
+    [xmax, ymax],
+    [xmin, ymax],
+  ];
+  const edges: Array<[[number, number], [number, number]]> = [
+    [corners[0], corners[1]],
+    [corners[1], corners[2]],
+    [corners[2], corners[3]],
+    [corners[3], corners[0]],
+  ];
+
+  const hits: Array<[number, number]> = [];
+  for (const [[x0, y0], [x1, y1]] of edges) {
+    // Segment ∩ line y = mx+b
+    const f0 = y0 - (m * x0 + b);
+    const f1 = y1 - (m * x1 + b);
+    if (Math.abs(f0) < eps) hits.push([x0, y0]);
+    if (Math.abs(f1) < eps) hits.push([x1, y1]);
+    if (f0 * f1 < 0) {
+      const t = f0 / (f0 - f1);
+      hits.push([x0 + t * (x1 - x0), y0 + t * (y1 - y0)]);
+    }
+  }
+
+  const uniq: Array<[number, number]> = [];
+  const key = (p: [number, number]) => `${p[0].toFixed(6)},${p[1].toFixed(6)}`;
+  const seen = new Set<string>();
+  for (const p of [...corners.filter(([x, y]) => onSide(x, y)), ...hits]) {
+    const k = key(p);
+    if (seen.has(k)) continue;
+    seen.add(k);
+    uniq.push(p);
+  }
+  if (uniq.length < 3) return null;
+
+  const cx = uniq.reduce((s, p) => s + p[0], 0) / uniq.length;
+  const cy = uniq.reduce((s, p) => s + p[1], 0) / uniq.length;
+  uniq.sort((a, b) => Math.atan2(a[1] - cy, a[0] - cx) - Math.atan2(b[1] - cy, b[0] - cx));
+
+  return uniq.map(([x, y]) => `${mapX(x, spec, width)},${mapY(y, spec, height)}`).join(" ");
 }
 
 function CoordinatePlaneGraph({
@@ -193,9 +426,13 @@ function CoordinatePlaneGraph({
   const showGrid = spec.show_grid !== false;
   const functions = blankRole ? [] : (spec.functions ?? []);
   const points = blankRole ? [] : (spec.points ?? []);
+  const regions = blankRole ? [] : (spec.regions ?? []);
   const showPoints = !blankRole && spec.show_points !== false && points.length > 0;
   const blank =
-    blankRole || ((functions.length ?? 0) === 0 && (points.length ?? 0) === 0);
+    blankRole ||
+    ((functions.length ?? 0) === 0 &&
+      (points.length ?? 0) === 0 &&
+      (regions.length ?? 0) === 0);
 
   const xTicks: number[] = [];
   for (let x = Math.ceil(spec.x_min); x <= Math.floor(spec.x_max); x += 1) {
@@ -206,13 +443,26 @@ function CoordinatePlaneGraph({
     yTicks.push(y);
   }
 
-  const linePaths: string[][] = [];
-  for (const fn of functions) {
-    const linePoints = sampleFunctionPath(fn, spec, width, height);
-    if (linePoints.length > 1) {
-      linePaths.push(linePoints);
+  const linePaths: { points: string[]; dashed: boolean }[] = [];
+  for (let i = 0; i < functions.length; i += 1) {
+    const fn = functions[i];
+    const region = regions.find(
+      (r) =>
+        r.kind === "half_plane" &&
+        Math.abs(r.m - Number(fn.match(/^(-?\d+(?:\.\d+)?)\*x/)?.[1] ?? NaN)) < 1e-9,
+    );
+    // Prefer matching by index when regions align with functions.
+    const matched = regions[i] ?? region;
+    const dashed = matched?.kind === "half_plane" && (matched.op === ">" || matched.op === "<");
+    for (const segment of sampleFunctionPath(fn, spec, width, height)) {
+      linePaths.push({ points: segment, dashed });
     }
   }
+
+  const shadePolygons = regions
+    .filter((r) => r.kind === "half_plane")
+    .map((r) => halfPlanePolygonPoints(r, spec, width, height))
+    .filter((p): p is string => Boolean(p));
 
   return (
     <svg
@@ -263,12 +513,16 @@ function CoordinatePlaneGraph({
         y2={height - PADDING}
         className="graph-axis"
       />
-      {linePaths.map((linePoints, lineIndex) => (
+      {shadePolygons.map((poly, index) => (
+        <polygon key={`shade-${index}`} points={poly} className="graph-shade" />
+      ))}
+      {linePaths.map((line, lineIndex) => (
         <polyline
           key={`graph-line-${lineIndex}`}
-          points={linePoints.join(" ")}
+          points={line.points.join(" ")}
           className="graph-line"
           fill="none"
+          strokeDasharray={line.dashed ? "6 4" : undefined}
         />
       ))}
       {showPoints &&

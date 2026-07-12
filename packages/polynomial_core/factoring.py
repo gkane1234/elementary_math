@@ -11,6 +11,7 @@ FactorMethod = Literal[
     "grouping",
     "substitution",
     "difference_of_squares",
+    "perfect_square_trinomial",
     "difference_of_cubes",
     "sum_of_cubes",
     "rrt",
@@ -20,6 +21,7 @@ RrtMode = Literal["exclude", "allow", "only"]
 
 METHOD_DEGREE_RANGE: dict[FactorMethod, tuple[int, int]] = {
     "difference_of_squares": (2, 2),
+    "perfect_square_trinomial": (2, 2),
     "difference_of_cubes": (3, 3),
     "sum_of_cubes": (3, 3),
     "grouping": (3, 3),
@@ -58,6 +60,7 @@ class FactorablePolynomialOptions:
             "grouping": True,
             "substitution": True,
             "difference_of_squares": True,
+            "perfect_square_trinomial": True,
             "difference_of_cubes": True,
             "sum_of_cubes": True,
             "rrt": False,
@@ -89,10 +92,16 @@ def _leading_coefficient(options: FactorablePolynomialOptions) -> int:
     coef_min, coef_max = options.normalized_coef_range()
     if options.leading_coefficient_one:
         return 1
-    value = _random_nonzero(coef_min, coef_max)
-    if options.positive_leading and value < 0:
-        value *= -1
-    return value
+    # Prefer small a ≠ 1 so expanded special-case polynomials stay readable.
+    bound = max(2, min(4, abs(coef_min), abs(coef_max) or 4))
+    for _ in range(24):
+        value = _random_nonzero(-bound, bound)
+        if abs(value) == 1:
+            continue
+        if options.positive_leading and value < 0:
+            value *= -1
+        return value
+    return 2 if options.positive_leading else -2
 
 
 def _method_fits_degree(method: FactorMethod, degree_min: int, degree_max: int) -> bool:
@@ -176,6 +185,17 @@ def _generate_difference_of_squares(options: FactorablePolynomialOptions) -> Fac
     return FactorablePolynomialResult(polynomial, (factor_a, factor_b), "difference_of_squares")
 
 
+def _generate_perfect_square_trinomial(
+    options: FactorablePolynomialOptions,
+) -> FactorablePolynomialResult:
+    coef_min, coef_max = options.normalized_coef_range()
+    leading = _leading_coefficient(options)
+    constant = _random_nonzero(coef_min, coef_max)
+    factor = Polynomial([leading, constant])
+    polynomial = factor * factor
+    return FactorablePolynomialResult(polynomial, (factor, factor), "perfect_square_trinomial")
+
+
 def _generate_difference_of_cubes(options: FactorablePolynomialOptions) -> FactorablePolynomialResult:
     coef_min, coef_max = options.normalized_coef_range()
     leading = _leading_coefficient(options)
@@ -197,11 +217,19 @@ def _generate_sum_of_cubes(options: FactorablePolynomialOptions) -> FactorablePo
 
 
 def _generate_grouping(options: FactorablePolynomialOptions) -> FactorablePolynomialResult:
+    """Four-term cubic that factors by grouping: (a x^2 + b)(x + r).
+
+    When ``leading_coefficient_one`` is False, leading ``a`` is chosen ≠ 1 so
+    medium/hard monic_only=False presets actually produce non-monic cubics.
+    """
     coef_min, coef_max = options.normalized_coef_range()
+    leading = _leading_coefficient(options)
     root = _random_nonzero(coef_min, coef_max)
-    quadratic_constant = _random_nonzero(coef_min, coef_max)
+    # Keep the constant factor readable relative to coefficient width.
+    quad_const_bound = max(1, min(abs(coef_max), abs(coef_min) or abs(coef_max), 8))
+    quadratic_constant = _random_nonzero(-quad_const_bound, quad_const_bound)
     linear = Polynomial([1, root])
-    quadratic = Polynomial([1, 0, quadratic_constant])
+    quadratic = Polynomial([leading, 0, quadratic_constant])
     polynomial = linear * quadratic
     return FactorablePolynomialResult(polynomial, (linear, quadratic), "grouping")
 
@@ -269,13 +297,30 @@ def _generate_normal(options: FactorablePolynomialOptions) -> FactorablePolynomi
         degree_max = max(degree_min, options.target_degree_max)
         factor_count = random.randint(2, min(4, degree_max))
 
-    if options.leading_coefficient_one:
-        leading_range = (1, 1)
-    else:
-        leading_range = (max(1, coef_min), max(1, coef_max))
+    # Always build monic linear factors; scale one factor when non-monic is required.
+    leading_range = (1, 1)
 
     degree_min = max(0, options.target_degree_min)
     degree_max = max(degree_min, options.target_degree_max)
+
+    def _scale_non_monic(
+        polynomial: Polynomial, factors: list[Polynomial]
+    ) -> tuple[Polynomial, list[Polynomial]]:
+        if options.leading_coefficient_one:
+            return polynomial, factors
+        scale_hi = max(2, min(6, abs(coef_max), abs(coef_min) or 6))
+        scale = random.randint(2, scale_hi)
+        if not options.positive_leading and random.random() < 0.5:
+            scale = -scale
+        scaled_factors = list(factors)
+        first = scaled_factors[0]
+        # Polynomial list ctor expects high-degree-first coefficients.
+        first_coeffs = [int(c) * scale for c in first.coef_list()]
+        scaled_factors[0] = Polynomial(first_coeffs)
+        scaled_poly = scaled_factors[0]
+        for other in scaled_factors[1:]:
+            scaled_poly = scaled_poly * other
+        return scaled_poly, scaled_factors
 
     for _ in range(50):
         polynomial, factors = Polynomial.createPolynomialWithIntegerFactorsRanges(
@@ -285,11 +330,13 @@ def _generate_normal(options: FactorablePolynomialOptions) -> FactorablePolynomi
             returnFactors=True,
             positiveLeadingCoefficient=options.positive_leading,
         )
+        factors_list = list(factors)
+        polynomial, factors_list = _scale_non_monic(polynomial, factors_list)
         if exact_degree is not None:
             if polynomial.deg() == exact_degree:
-                return FactorablePolynomialResult(polynomial, tuple(factors), "normal")
+                return FactorablePolynomialResult(polynomial, tuple(factors_list), "normal")
         elif degree_min <= polynomial.deg() <= degree_max:
-            return FactorablePolynomialResult(polynomial, tuple(factors), "normal")
+            return FactorablePolynomialResult(polynomial, tuple(factors_list), "normal")
 
     polynomial, factors = Polynomial.createPolynomialWithIntegerFactorsRanges(
         leading_range,
@@ -298,7 +345,9 @@ def _generate_normal(options: FactorablePolynomialOptions) -> FactorablePolynomi
         returnFactors=True,
         positiveLeadingCoefficient=options.positive_leading,
     )
-    return FactorablePolynomialResult(polynomial, tuple(factors), "normal")
+    factors_list = list(factors)
+    polynomial, factors_list = _scale_non_monic(polynomial, factors_list)
+    return FactorablePolynomialResult(polynomial, tuple(factors_list), "normal")
 
 
 def _generate_rrt(options: FactorablePolynomialOptions) -> FactorablePolynomialResult:
@@ -338,6 +387,7 @@ def _integer_roots(polynomial: Polynomial, coef_min: int, coef_max: int) -> list
 def _generate_by_method(method: FactorMethod, options: FactorablePolynomialOptions) -> FactorablePolynomialResult:
     generators = {
         "difference_of_squares": _generate_difference_of_squares,
+        "perfect_square_trinomial": _generate_perfect_square_trinomial,
         "difference_of_cubes": _generate_difference_of_cubes,
         "sum_of_cubes": _generate_sum_of_cubes,
         "grouping": _generate_grouping,
@@ -377,6 +427,7 @@ def create_factorable_polynomial(
             "grouping": True,
             "substitution": options.target_degree_max >= 4,
             "difference_of_squares": options.target_degree_max >= 2,
+            "perfect_square_trinomial": options.target_degree_max >= 2,
             "difference_of_cubes": options.target_degree_max >= 3,
             "sum_of_cubes": options.target_degree_max >= 3,
         }

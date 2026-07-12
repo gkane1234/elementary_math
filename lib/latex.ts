@@ -16,3 +16,22 @@ export function repairInstructionLatex(latex: string | null | undefined): string
 
   return latex;
 }
+
+/**
+ * KaTeX `\text{...}` joins words with U+00A0 (nbsp), so long prompts never wrap
+ * in multi-column worksheets. Replace those with normal spaces after render.
+ */
+export function enableKatexSoftWrap(root: HTMLElement): void {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes: Text[] = [];
+  let node: Node | null = walker.nextNode();
+  while (node) {
+    if (node.nodeValue?.includes("\u00a0")) {
+      nodes.push(node as Text);
+    }
+    node = walker.nextNode();
+  }
+  for (const textNode of nodes) {
+    textNode.nodeValue = textNode.nodeValue!.replace(/\u00a0/g, " ");
+  }
+}

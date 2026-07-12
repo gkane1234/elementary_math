@@ -19,13 +19,19 @@ def _settings_for_regeneration(settings: dict[str, Any]) -> dict[str, Any]:
 def _resolve_generation_settings(type_id: str, settings: dict[str, Any]) -> dict[str, Any]:
     profile = resolve_setting_profile_for_type(type_id)
     question_type = QUESTION_TYPES.get(type_id)
-    if profile is None and question_type is not None:
-        profile = getattr(question_type, "setting_profile", None)
+    merged = dict(settings)
+    if question_type is not None:
+        config = getattr(question_type, "_setting_config", None)
         if profile is None:
-            config = getattr(question_type, "_setting_config", None)
-            if config is not None:
+            profile = getattr(question_type, "setting_profile", None)
+            if profile is None and config is not None:
                 profile = getattr(config, "setting_profile", None)
-    return apply_difficulty_presets(settings, type_id=type_id, setting_profile=profile)
+        # Schema defaults (e.g. include_graph_metadata) apply when the client
+        # omits them — explicit request settings still win.
+        defaults = getattr(config, "setting_defaults", None) if config is not None else None
+        if defaults:
+            merged = {**defaults, **merged}
+    return apply_difficulty_presets(merged, type_id=type_id, setting_profile=profile)
 
 
 def _annotate_questions(

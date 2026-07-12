@@ -1,4 +1,4 @@
-"""More on slope — read slope from a displayed coordinate-plane graph."""
+"""More on slope — multi-mode slope questions (points, equation, graph, classify, …)."""
 
 from question_engine.types._from_generator import register_from_catalog
 

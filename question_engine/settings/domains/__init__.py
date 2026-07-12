@@ -12,9 +12,25 @@ from .geometry import geometry_settings
 from .inequality import inequality_settings
 from .misc import misc_expression_settings
 from .polynomial import polynomial_coef_settings, polynomial_factoring_settings
-from .radical import radical_settings
-from .rational import rational_expression_extra_settings, rational_operation_settings
-from .word_problem import word_problem_settings
+from .radical import (
+    radical_add_subtract_form_settings,
+    radical_divide_form_settings,
+    radical_equation_form_settings,
+    radical_settings,
+)
+from .rational import (
+    fraction_form_settings,
+    rational_equation_form_settings,
+    rational_expression_extra_settings,
+    rational_multiply_divide_settings,
+    rational_operation_settings,
+)
+from .word_problem import (
+    consecutive_integers_settings,
+    distance_rate_time_settings,
+    word_problem_settings,
+    work_problem_settings,
+)
 
 from .calculus import derivative_settings, integral_settings, limit_settings
 from .logarithm import exponential_equation_settings, logarithm_settings
@@ -27,10 +43,19 @@ __all__ = [
     "polynomial_coef_settings",
     "polynomial_factoring_settings",
     "radical_settings",
+    "radical_add_subtract_form_settings",
+    "radical_equation_form_settings",
+    "radical_divide_form_settings",
     "rational_expression_extra_settings",
+    "rational_equation_form_settings",
+    "rational_multiply_divide_settings",
     "rational_operation_settings",
+    "fraction_form_settings",
     "inequality_settings",
+    "consecutive_integers_settings",
+    "distance_rate_time_settings",
     "word_problem_settings",
+    "work_problem_settings",
     "geometry_settings",
     "trigonometry_settings",
     "logarithm_settings",

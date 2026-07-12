@@ -13,6 +13,10 @@ from ..diagrams import (
     GeometryFigure,
     angle_figure,
     circle_figure,
+    parallelogram_figure,
+    right_triangle_figure,
+    segment_figure,
+    trapezoid_figure,
     triangle_figure,
 )
 from ..generators.utils import random_int_range
@@ -324,21 +328,50 @@ class ClassifyingAnglesFramework(GeometryFramework):
 class SegmentLengthFramework(GeometryFramework):
     """Find the length of a line segment."""
 
+    def __init__(self, *, figure_type: FigureType = "composite", quantity: str = "area"):
+        super().__init__(figure_type=figure_type, quantity=quantity)
+        self._last: dict[str, Any] = {}
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         unit = _measurement_unit(settings)
         length = _random_side(settings)
         a, b = random.sample(_ANGLE_LABELS, 2)
-        prompt = f"\\overline{{{a}{b}}} = {length}\\text{{ {unit}}}"
+        prompt = (
+            f"\\text{{Find the length of }} \\overline{{{a}{b}}} "
+            f"\\text{{ using the diagram.}}"
+        )
         answer = f"{length}\\text{{ {unit}}}"
+        self._last = {
+            "length": length,
+            "a": a,
+            "b": b,
+            "unit": unit,
+            "figure": segment_figure(
+                float(length), labels=(a, b), unit=unit, show_length=True
+            ),
+        }
         return prompt, f"segment {a}{b} = {length} {unit}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
-        length = float(_random_side(settings))
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
         return _figure_metadata(
             settings,
             figure_type="composite",
-            labels=["A", "B"],
-            dimensions={"length": length},
+            labels=[last["a"], last["b"]],
+            dimensions={"length": float(last["length"])},
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
 
@@ -407,33 +440,69 @@ class TriangleAngleSumFramework(GeometryFramework):
 class TriangleAreaFramework(GeometryFramework):
     """Find the area of a triangle from base and height."""
 
+    def __init__(self, *, figure_type: FigureType = "triangle", quantity: str = "area"):
+        super().__init__(figure_type=figure_type, quantity=quantity)
+        self._last: dict[str, Any] = {}
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         unit = _measurement_unit(settings)
         base = _random_side(settings)
         height = _random_side(settings)
         area = base * height / 2
-        labels = _TRIANGLE_LABELS
+        labels = list(_TRIANGLE_LABELS)
         prompt = (
-            f"\\text{{Find the area of }} \\triangle {''.join(labels)} "
-            f"\\text{{ with base }} {base}\\text{{ {unit}}} "
-            f"\\text{{ and height }} {height}\\text{{ {unit}}}."
+            f"\\text{{Find the area of }} \\triangle {''.join(labels)}."
         )
         answer = f"{area:g}\\text{{ {unit}}}^2"
+        # Right triangle with base/height labeled
+        fig = right_triangle_figure(
+            float(base),
+            float(height),
+            labels=(labels[0], labels[1], labels[2]),
+            right_angle_at=labels[2],
+            side_labels={
+                f"{labels[1]}{labels[2]}": f"{base} {unit}",
+                f"{labels[0]}{labels[2]}": f"{height} {unit}",
+            },
+            kind="triangle_area",
+        )
+        self._last = {
+            "base": base,
+            "height": height,
+            "labels": labels,
+            "figure": fig,
+        }
         return prompt, f"triangle area b={base} h={height}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
-        base = float(_random_side(settings))
-        height = float(_random_side(settings))
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
         return _figure_metadata(
             settings,
             figure_type="triangle",
-            labels=_TRIANGLE_LABELS,
-            dimensions={"base": base, "height": height},
+            labels=last["labels"],
+            dimensions={"base": float(last["base"]), "height": float(last["height"])},
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
 
 class TrianglePerimeterFramework(GeometryFramework):
     """Find the perimeter of a triangle with three given sides."""
+
+    def __init__(self, *, figure_type: FigureType = "triangle", quantity: str = "area"):
+        super().__init__(figure_type=figure_type, quantity=quantity)
+        self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         unit = _measurement_unit(settings)
@@ -443,78 +512,155 @@ class TrianglePerimeterFramework(GeometryFramework):
         while a + b <= c or a + c <= b or b + c <= a:
             c = _random_side(settings)
         perimeter = a + b + c
-        labels = _TRIANGLE_LABELS
-        prompt = (
-            f"\\text{{Find the perimeter of }} \\triangle {''.join(labels)} "
-            f"\\text{{ with sides }} {a}\\text{{ {unit}}}, "
-            f"{b}\\text{{ {unit}}}, \\text{{ and }} {c}\\text{{ {unit}}}."
-        )
+        labels = list(_TRIANGLE_LABELS)
+        # Approximate angles via law of cosines for a drawable triangle
+        ang_a = math.degrees(math.acos(max(-1, min(1, (b * b + c * c - a * a) / (2 * b * c)))))
+        ang_b = math.degrees(math.acos(max(-1, min(1, (a * a + c * c - b * b) / (2 * a * c)))))
+        ang_c = 180 - ang_a - ang_b
+        prompt = f"\\text{{Find the perimeter of }} \\triangle {''.join(labels)}."
         answer = f"{perimeter}\\text{{ {unit}}}"
+        fig = triangle_figure(
+            labels,
+            (ang_a, ang_b, ang_c),
+            side_labels={
+                f"{labels[1]}{labels[2]}": f"{a} {unit}",
+                f"{labels[0]}{labels[2]}": f"{b} {unit}",
+                f"{labels[0]}{labels[1]}": f"{c} {unit}",
+            },
+            kind="triangle_perimeter",
+        )
+        self._last = {
+            "a": a,
+            "b": b,
+            "c": c,
+            "labels": labels,
+            "figure": fig,
+        }
         return prompt, f"triangle perimeter {a}+{b}+{c}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
-        a = float(_random_side(settings))
-        b = float(_random_side(settings))
-        c = float(_random_side(settings))
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
         return _figure_metadata(
             settings,
             figure_type="triangle",
-            labels=_TRIANGLE_LABELS,
-            dimensions={"side_a": a, "side_b": b, "side_c": c},
+            labels=last["labels"],
+            dimensions={
+                "side_a": float(last["a"]),
+                "side_b": float(last["b"]),
+                "side_c": float(last["c"]),
+            },
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
 
 class PythagoreanTheoremFramework(GeometryFramework):
     """Find a missing side of a right triangle."""
 
+    def __init__(self, *, figure_type: FigureType = "triangle", quantity: str = "area"):
+        super().__init__(figure_type=figure_type, quantity=quantity)
+        self._last: dict[str, Any] = {}
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         unit = _measurement_unit(settings)
         _, side_max = _bounds(settings, "side_min", "side_max", 3, 20)
         a, b, c = _pythagorean_triple(side_max)
-        labels = _TRIANGLE_LABELS
+        labels = list(_TRIANGLE_LABELS)
         missing = random.choice(["leg_a", "leg_b", "hypotenuse"])
         if missing == "leg_a":
             prompt = (
                 f"\\text{{In right }} \\triangle {''.join(labels)},\\ "
-                f"{labels[2]} \\text{{ is the right angle, }} "
-                f"{labels[1]}{labels[2]} = {b}\\text{{ {unit}}}, "
-                f"\\text{{ and }} {labels[0]}{labels[2]} = {c}\\text{{ {unit}}}.\\ "
-                f"\\text{{Find }} {labels[0]}{labels[1]}."
+                f"\\text{{find }} {labels[0]}{labels[1]}."
             )
             answer = f"{a}\\text{{ {unit}}}"
+            side_labels = {
+                f"{labels[1]}{labels[2]}": f"{b} {unit}",
+                f"{labels[0]}{labels[2]}": f"{c} {unit}",
+                f"{labels[0]}{labels[1]}": "?",
+            }
         elif missing == "leg_b":
             prompt = (
                 f"\\text{{In right }} \\triangle {''.join(labels)},\\ "
-                f"{labels[2]} \\text{{ is the right angle, }} "
-                f"{labels[0]}{labels[1]} = {a}\\text{{ {unit}}}, "
-                f"\\text{{ and }} {labels[0]}{labels[2]} = {c}\\text{{ {unit}}}.\\ "
-                f"\\text{{Find }} {labels[1]}{labels[2]}."
+                f"\\text{{find }} {labels[1]}{labels[2]}."
             )
             answer = f"{b}\\text{{ {unit}}}"
+            side_labels = {
+                f"{labels[0]}{labels[1]}": f"{a} {unit}",
+                f"{labels[0]}{labels[2]}": f"{c} {unit}",
+                f"{labels[1]}{labels[2]}": "?",
+            }
         else:
             prompt = (
                 f"\\text{{In right }} \\triangle {''.join(labels)},\\ "
-                f"{labels[2]} \\text{{ is the right angle, }} "
-                f"{labels[0]}{labels[1]} = {a}\\text{{ {unit}}}, "
-                f"\\text{{ and }} {labels[1]}{labels[2]} = {b}\\text{{ {unit}}}.\\ "
-                f"\\text{{Find }} {labels[0]}{labels[2]}."
+                f"\\text{{find }} {labels[0]}{labels[2]}."
             )
             answer = f"{c}\\text{{ {unit}}}"
+            side_labels = {
+                f"{labels[0]}{labels[1]}": f"{a} {unit}",
+                f"{labels[1]}{labels[2]}": f"{b} {unit}",
+                f"{labels[0]}{labels[2]}": "?",
+            }
+        fig = right_triangle_figure(
+            float(a),
+            float(b),
+            labels=(labels[0], labels[1], labels[2]),
+            right_angle_at=labels[2],
+            side_labels=side_labels,
+            kind="pythagorean",
+        )
+        self._last = {
+            "a": a,
+            "b": b,
+            "c": c,
+            "labels": labels,
+            "figure": fig,
+        }
         return prompt, "pythagorean theorem", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
-        _, side_max = _bounds(settings, "side_min", "side_max", 3, 20)
-        a, b, c = _pythagorean_triple(side_max)
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
         return _figure_metadata(
             settings,
             figure_type="triangle",
-            labels=_TRIANGLE_LABELS,
-            dimensions={"leg_a": float(a), "leg_b": float(b), "hypotenuse": float(c)},
+            labels=last["labels"],
+            dimensions={
+                "leg_a": float(last["a"]),
+                "leg_b": float(last["b"]),
+                "hypotenuse": float(last["c"]),
+            },
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
 
 class SimilarTrianglesFramework(GeometryFramework):
     """Use similarity ratios to find a missing side."""
+
+    def __init__(self, *, figure_type: FigureType = "triangle", quantity: str = "area"):
+        super().__init__(figure_type=figure_type, quantity=quantity)
+        self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         unit = _measurement_unit(settings)
@@ -523,33 +669,61 @@ class SimilarTrianglesFramework(GeometryFramework):
         side_b = _random_side(settings)
         large_a = side_a * ratio
         large_b = side_b * ratio
-        labels = _TRIANGLE_LABELS
+        labels = list(_TRIANGLE_LABELS)
         if random.choice([True, False]):
             prompt = (
                 f"\\triangle {''.join(labels)} \\sim \\triangle DEF.\\ "
-                f"{labels[0]}{labels[1]} = {side_a}\\text{{ {unit}}}, "
-                f"{labels[1]}{labels[2]} = {side_b}\\text{{ {unit}}}, "
-                f"\\text{{and the similarity ratio is }} {ratio} : 1.\\ "
                 f"\\text{{Find }} EF."
             )
             answer = f"{large_b}\\text{{ {unit}}}"
+            side_labels = {
+                f"{labels[0]}{labels[1]}": f"{side_a} {unit}",
+                f"{labels[1]}{labels[2]}": f"{side_b} {unit}",
+            }
         else:
             prompt = (
                 f"\\triangle {''.join(labels)} \\sim \\triangle DEF.\\ "
-                f"DE = {large_a}\\text{{ {unit}}} "
-                f"\\text{{and }} EF = {large_b}\\text{{ {unit}}}.\\ "
                 f"\\text{{Find }} {labels[0]}{labels[1]}."
             )
             answer = f"{side_a}\\text{{ {unit}}}"
+            side_labels = {
+                f"{labels[0]}{labels[1]}": "?",
+                f"{labels[1]}{labels[2]}": f"{side_b} {unit}",
+            }
+        fig = triangle_figure(
+            labels,
+            (50, 60, 70),
+            side_labels=side_labels,
+            kind="similar_triangles",
+        )
+        self._last = {
+            "ratio": ratio,
+            "labels": labels,
+            "figure": fig,
+            "large_a": large_a,
+        }
         return prompt, f"similar triangles ratio {ratio}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
-        ratio = float(_random_similarity_ratio(settings))
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
         return _figure_metadata(
             settings,
             figure_type="triangle",
-            labels=_TRIANGLE_LABELS,
-            dimensions={"similarity_ratio": ratio},
+            labels=last["labels"],
+            dimensions={"similarity_ratio": float(last["ratio"])},
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
 
@@ -615,10 +789,21 @@ class CoordinateDistanceFramework(GeometryFramework):
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         integer_only = bool(settings.get("integer_coordinates", True))
+        axis_aligned = bool(settings.get("axis_aligned_only", False))
         x1, y1 = _random_coord(settings), _random_coord(settings)
-        x2, y2 = _random_coord(settings), _random_coord(settings)
-        while x1 == x2 and y1 == y2:
+        if axis_aligned:
+            if random.choice([True, False]):
+                x2, y2 = x1, _random_coord(settings)
+                while y2 == y1:
+                    y2 = _random_coord(settings)
+            else:
+                x2, y2 = _random_coord(settings), y1
+                while x2 == x1:
+                    x2 = _random_coord(settings)
+        else:
             x2, y2 = _random_coord(settings), _random_coord(settings)
+            while x1 == x2 and y1 == y2:
+                x2, y2 = _random_coord(settings), _random_coord(settings)
         dist = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
         prompt = (
             f"\\text{{Find the distance between }} ({x1}, {y1}) "
@@ -637,3 +822,103 @@ class CoordinateDistanceFramework(GeometryFramework):
                 {"x": _random_coord(settings), "y": _random_coord(settings)},
             ]
         )
+
+
+def _axis_aligned_perimeter(points: list[tuple[int, int]]) -> int:
+    total = 0
+    n = len(points)
+    for i in range(n):
+        x1, y1 = points[i]
+        x2, y2 = points[(i + 1) % n]
+        total += abs(x2 - x1) + abs(y2 - y1)
+    return total
+
+
+def _random_axis_aligned_rectangle(settings: dict) -> list[tuple[int, int]]:
+    lo, hi = _bounds(settings, "coord_min", "coord_max", 0, 8)
+    max_side = max(2, min(6, int(settings.get("max_side", 5))))
+    span = max(2, hi - lo)
+    width = random.randint(2, min(max_side, span))
+    height = random.randint(2, min(max_side, span))
+    x = random.randint(lo, hi - width)
+    y = random.randint(lo, hi - height)
+    return [(x, y), (x + width, y), (x + width, y + height), (x, y + height)]
+
+
+def _random_axis_aligned_l_shape(settings: dict) -> list[tuple[int, int]]:
+    """Six-vertex L polygon with all sides parallel to the axes."""
+    lo, hi = _bounds(settings, "coord_min", "coord_max", 0, 8)
+    max_side = max(3, min(7, int(settings.get("max_side", 6))))
+    span = max(3, hi - lo)
+    outer_w = random.randint(3, min(max_side, span))
+    outer_h = random.randint(3, min(max_side, span))
+    cut_w = random.randint(1, outer_w - 1)
+    cut_h = random.randint(1, outer_h - 1)
+    x = random.randint(lo, hi - outer_w)
+    y = random.randint(lo, hi - outer_h)
+    # Cut from the top-right corner → staircase L.
+    return [
+        (x, y),
+        (x + outer_w, y),
+        (x + outer_w, y + cut_h),
+        (x + cut_w, y + cut_h),
+        (x + cut_w, y + outer_h),
+        (x, y + outer_h),
+    ]
+
+
+class CoordinatePerimeterFramework(GeometryFramework):
+    """Perimeter of an axis-aligned polygon on the coordinate plane (Grade 6)."""
+
+    instruction_latex = r"\text{Find the perimeter.}"
+    instruction_text = "Find the perimeter."
+
+    def __init__(self) -> None:
+        super().__init__(figure_type="rectangle", quantity="perimeter")
+        self._last: dict[str, Any] = {}
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        allow_l = bool(settings.get("allow_l_shape", False))
+        if allow_l and random.random() < 0.55:
+            points = _random_axis_aligned_l_shape(settings)
+            shape = "L-shaped polygon"
+        else:
+            points = _random_axis_aligned_rectangle(settings)
+            shape = "rectangle" if len(points) == 4 else "polygon"
+        labels = list("ABCDEF")[: len(points)]
+        perimeter = _axis_aligned_perimeter(points)
+        verts = ",\\ ".join(
+            f"{lab}({x}, {y})" for lab, (x, y) in zip(labels, points)
+        )
+        prompt = (
+            f"\\text{{A {shape} on the coordinate plane has vertices }} "
+            f"{verts}\\text{{. Find the perimeter.}}"
+        )
+        from ..diagrams.grade6_figures import coordinate_polygon_svg
+
+        self._last = {
+            "points": points,
+            "labels": labels,
+            "perimeter": perimeter,
+            "diagram_svg": coordinate_polygon_svg(points, labels=labels),
+        }
+        return prompt, f"perimeter of {shape} {points}", str(perimeter)
+
+    def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return question_metadata(kind="coordinate_perimeter")
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
+        return {
+            "diagram_svg": last.get("diagram_svg"),
+            "coordinate_points": [{"x": x, "y": y} for x, y in last.get("points", [])],
+        }

@@ -15,6 +15,15 @@ class GenerationSettingsMetadata(TypedDict, total=False):
     instruction_latex: str
 
 
+class GraphRegion(TypedDict, total=False):
+    """Shaded region on a coordinate plane (linear half-planes for inequalities)."""
+
+    kind: str  # "half_plane"
+    m: float
+    b: float
+    op: str  # ">", ">=", "<", "<="
+
+
 class GraphSpec(TypedDict, total=False):
     """Minimal coordinate-plane spec for client-side graph renderers."""
 
@@ -26,6 +35,7 @@ class GraphSpec(TypedDict, total=False):
     points: list[tuple[float, float]]
     show_grid: bool
     show_points: bool
+    regions: list[GraphRegion]
 
 
 class NumberLineSpecDict(TypedDict, total=False):

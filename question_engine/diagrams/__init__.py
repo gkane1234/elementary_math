@@ -20,10 +20,17 @@ from __future__ import annotations
 from .builders import (
     angle_figure,
     circle_figure,
+    kite_figure,
+    parallel_lines_transversal_figure,
+    parallelogram_figure,
     polygon_figure,
     rectangle_figure,
+    right_triangle_figure,
+    segment_figure,
+    trapezoid_figure,
     triangle_figure,
 )
+from .charts import box_plot_svg, dot_plot_svg, histogram_svg
 from .figure import GeometryFigure
 from .primitives import (
     AngleMark,
@@ -57,4 +64,13 @@ __all__ = [
     "circle_figure",
     "polygon_figure",
     "rectangle_figure",
+    "segment_figure",
+    "right_triangle_figure",
+    "parallelogram_figure",
+    "trapezoid_figure",
+    "kite_figure",
+    "parallel_lines_transversal_figure",
+    "dot_plot_svg",
+    "histogram_svg",
+    "box_plot_svg",
 ]

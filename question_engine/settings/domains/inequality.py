@@ -42,7 +42,14 @@ def compound_inequality_settings() -> list[SettingField]:
             "Compound style",
             "select",
             "and",
-            options=["and", "or"],
+            options=["and", "or", "mixed"],
+            group="inequality",
+        ),
+        SettingField(
+            "allow_inclusive",
+            "Allow inclusive inequalities (≤ / ≥)",
+            "bool",
+            True,
             group="inequality",
         ),
     ]

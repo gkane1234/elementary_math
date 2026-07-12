@@ -75,7 +75,7 @@ export const CURRICULUM: CurriculumLevel[] = [
             name: "Dividing whole numbers that result in decimals", type_id: "g6_dividing_whole_numbers_that_result_in_decimals" },
           { id: "g6_dividing_decimals_by_whole_numbers", name: "Dividing decimals by whole numbers", type_id: "g6_dividing_decimals_by_whole_numbers" },
           { id: "g6_dividing_whole_numbers_by_decimals", name: "Dividing whole numbers by decimals", type_id: "g6_dividing_whole_numbers_by_decimals" },
-          { id: "g6_dividing_decimals_by_decimals", name: "Dividing decimals by decimals" },
+          { id: "g6_dividing_decimals_by_decimals", name: "Dividing decimals by decimals", type_id: "g6_dividing_decimals_by_decimals" },
         ],
       },
       {
@@ -148,6 +148,7 @@ export const CURRICULUM: CurriculumLevel[] = [
           {
             id: "g6_distributive_property_area_diagrams_algebraic",
             name: "Distributive property with area diagrams, algebraic",
+            type_id: "g6_distributive_property_area_diagrams_algebraic",
           },
           { id: "g6_distributive_property_algebraic", name: "Distributive property, algebraic", type_id: "distributive_property" },
         ],
@@ -157,8 +158,8 @@ export const CURRICULUM: CurriculumLevel[] = [
         name: "Equations",
         topics: [
           { id: "g6_solutions_to_equations", name: "Solutions to equations", type_id: "g6_solutions_to_equations" },
-          { id: "g6_equations_tape_diagrams", name: "Tape diagrams" },
-          { id: "g6_equations_hanger_diagrams", name: "Hanger diagrams" },
+          { id: "g6_equations_tape_diagrams", name: "Tape diagrams", type_id: "g6_equations_tape_diagrams" },
+          { id: "g6_equations_hanger_diagrams", name: "Hanger diagrams", type_id: "g6_equations_hanger_diagrams" },
           { id: "g6_equations_word_problems", name: "Equations word problems", type_id: "g6_equations_word_problems" },
         ],
       },
@@ -172,7 +173,7 @@ export const CURRICULUM: CurriculumLevel[] = [
           {
             id: "g6_solving_and_graphing_one_step_inequalities",
             name: "Solving and graphing one-step inequalities", type_id: "one_step_inequalities" },
-          { id: "g6_inequalities_hanger_diagrams", name: "Hanger diagrams" },
+          { id: "g6_inequalities_hanger_diagrams", name: "Hanger diagrams", type_id: "g6_inequalities_hanger_diagrams" },
         ],
       },
       {
@@ -191,37 +192,57 @@ export const CURRICULUM: CurriculumLevel[] = [
           {
             id: "g6_parallelograms_understanding_area_formula",
             name: "Parallelograms, understanding area formula",
+            type_id: "g6_parallelograms_understanding_area_formula",
           },
-          { id: "g6_parallelograms", name: "Parallelograms" },
-          { id: "g6_triangles_understanding_area_formula", name: "Triangles, understanding area formula" },
-          { id: "g6_triangles", name: "Triangles" },
-          { id: "g6_trapezoids", name: "Trapezoids" },
-          { id: "g6_kites", name: "Kites" },
+          { id: "g6_parallelograms", name: "Parallelograms", type_id: "g6_parallelograms" },
+          {
+            id: "g6_triangles_understanding_area_formula",
+            name: "Triangles, understanding area formula",
+            type_id: "g6_triangles_understanding_area_formula",
+          },
+          { id: "g6_triangles", name: "Triangles", type_id: "g6_triangles" },
+          { id: "g6_trapezoids", name: "Trapezoids", type_id: "g6_trapezoids" },
+          { id: "g6_kites", name: "Kites", type_id: "g6_kites" },
           {
             id: "g6_polygons_on_a_grid_or_coordinate_plane",
             name: "Polygons on a grid or coordinate plane",
+            type_id: "g6_polygons_on_a_grid_or_coordinate_plane",
           },
-          { id: "g6_polygons_and_shaded_regions", name: "Polygons and shaded regions" },
+          {
+            id: "g6_polygons_and_shaded_regions",
+            name: "Polygons and shaded regions",
+            type_id: "g6_polygons_and_shaded_regions",
+          },
         ],
       },
       {
         id: "polyhedra",
         name: "Polyhedra",
         topics: [
-          { id: "g6_classifying_and_naming", name: "Classifying and naming" },
-          { id: "g6_nets", name: "Nets" },
-          { id: "g6_nets_and_surface_area", name: "Nets and surface area" },
-          { id: "g6_nets_and_surface_area_on_a_grid", name: "Nets and surface area on a grid" },
-          { id: "g6_identifying_invalid_nets", name: "Identifying invalid nets" },
+          { id: "g6_classifying_and_naming", name: "Classifying and naming", type_id: "g6_classifying_and_naming" },
+          { id: "g6_nets", name: "Nets", type_id: "g6_nets" },
+          { id: "g6_nets_and_surface_area", name: "Nets and surface area", type_id: "g6_nets_and_surface_area" },
+          {
+            id: "g6_nets_and_surface_area_on_a_grid",
+            name: "Nets and surface area on a grid",
+            type_id: "g6_nets_and_surface_area_on_a_grid",
+          },
+          {
+            id: "g6_identifying_invalid_nets",
+            name: "Identifying invalid nets",
+            type_id: "g6_identifying_invalid_nets",
+          },
           {
             id: "g6_volume_and_surface_area_using_isometric_drawings",
             name: "Volume and surface area using isometric drawings",
+            type_id: "g6_volume_and_surface_area_using_isometric_drawings",
           },
           {
             id: "g6_formulas_for_volume_and_surface_area_of_a_cube",
             name: "Formulas for volume and surface area of a cube",
+            type_id: "g6_formulas_for_volume_and_surface_area_of_a_cube",
           },
-          { id: "g6_isometric_sketching", name: "Isometric sketching" },
+          { id: "g6_isometric_sketching", name: "Isometric sketching", type_id: "g6_isometric_sketching" },
         ],
       },
       {
@@ -231,11 +252,17 @@ export const CURRICULUM: CurriculumLevel[] = [
           {
             id: "g6_rectangles_with_fraction_side_lengths",
             name: "Rectangles with fraction side lengths",
+            type_id: "g6_rectangles_with_fraction_side_lengths",
           },
-          { id: "g6_triangles_with_fraction_side_lengths", name: "Triangles with fraction side lengths" },
+          {
+            id: "g6_triangles_with_fraction_side_lengths",
+            name: "Triangles with fraction side lengths",
+            type_id: "g6_triangles_with_fraction_side_lengths",
+          },
           {
             id: "g6_right_rectangular_prisms_with_fraction_side_lengths",
             name: "Right rectangular prisms with fraction side lengths",
+            type_id: "g6_right_rectangular_prisms_with_fraction_side_lengths",
           },
         ],
       },
@@ -244,9 +271,9 @@ export const CURRICULUM: CurriculumLevel[] = [
         name: "Data Sets and Distributions",
         topics: [
           { id: "g6_interpreting_dot_plots", name: "Interpreting dot plots", type_id: "g6_interpreting_dot_plots" },
-          { id: "g6_drawing_dot_plots", name: "Drawing dot plots" },
+          { id: "g6_drawing_dot_plots", name: "Drawing dot plots", type_id: "g6_drawing_dot_plots" },
           { id: "g6_interpreting_histograms", name: "Interpreting histograms", type_id: "g6_interpreting_histograms" },
-          { id: "g6_drawing_histograms", name: "Drawing histograms" },
+          { id: "g6_drawing_histograms", name: "Drawing histograms", type_id: "g6_drawing_histograms" },
           { id: "g6_data_center_and_spread", name: "Center and spread", type_id: "g6_data_center_and_spread" },
           { id: "g6_interpreting_box_plots", name: "Interpreting box plots", type_id: "g6_interpreting_box_plots" },
           { id: "g6_drawing_box_plots", name: "Drawing box plots", type_id: "g6_drawing_box_plots" },
@@ -559,6 +586,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         name: "Quadratic Functions",
         topics: [
           { id: "graphing_quadratic_functions", name: "Graphing", type_id: "graphing_quadratic_functions" },
+          { id: "quadratic_solve_by_graphing", name: "Solving equations by graphing", type_id: "quadratic_solve_by_graphing" },
           { id: "graphing_quadratic_inequalities", name: "Graphing quadratic inequalities", type_id: "graphing_quadratic_inequalities" },
           { id: "solving_equations_by_taking_square_roots", name: "Solving equations by taking square roots", type_id: "quadratic_square_roots" },
           { id: "solving_equations_by_factoring", name: "Solving equations by factoring", type_id: "quadratic_factoring_equations" },
@@ -688,7 +716,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         topics: [
           { id: "a2_matrices_operations", name: "Operations", type_id: "a2_matrices_operations" },
           { id: "a2_matrices_determinants", name: "Determinants", type_id: "a2_matrices_determinants" },
-          { id: "a2_matrices_inverses", name: "Inverses", type_id: "pc_inverses" },
+          { id: "a2_matrices_inverses", name: "Inverses", type_id: "a2_matrices_inverses" },
           { id: "a2_matrices_cramers_rule", name: "Cramer's Rule" },
           { id: "a2_matrices_equations", name: "Equations", type_id: "a2_matrices_equations" },
           { id: "a2_matrices_geometric_transformations", name: "Geometric transformations" },
@@ -710,6 +738,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         topics: [
           { id: "a2_quadratic_functions_and_inequalities_graphing_quadratic_functions", name: "Graphing quadratic functions", type_id: "a2_quadratic_functions_and_inequalities_graphing_quadratic_functions" },
           { id: "a2_quadratic_functions_and_inequalities_graphing_quadratic_inequalities", name: "Graphing quadratic inequalities", type_id: "a2_quadratic_functions_and_inequalities_graphing_quadratic_inequalities" },
+          { id: "a2_quadratic_functions_and_inequalities_solving_equations_by_graphing", name: "Solving equations by graphing", type_id: "a2_quadratic_functions_and_inequalities_solving_equations_by_graphing" },
           { id: "a2_quadratic_functions_and_inequalities_factoring_quadratic_expressions", name: "Factoring quadratic expressions", type_id: "quadratic_factoring" },
           { id: "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions", name: "Factoring special case quadratic expressions", type_id: "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions" },
           { id: "a2_quadratic_functions_and_inequalities_solving_equations_by_taking_square_roots", name: "Solving equations by taking square roots", type_id: "quadratic_square_roots" },
@@ -797,7 +826,7 @@ export const CURRICULUM: CurriculumLevel[] = [
           { id: "a2_rational_expressions_multiplying_and_dividing", name: "Multiplying and dividing", type_id: "rational_expression_multiply_divide" },
           { id: "a2_rational_expressions_adding_and_subtracting", name: "Adding and subtracting", type_id: "rational_expression_simplification" },
           { id: "a2_rational_expressions_complex_fractions", name: "Complex fractions", type_id: "a2_rational_expressions_complex_fractions" },
-          { id: "a2_rational_expressions_equations", name: "Equations" },
+          { id: "a2_rational_expressions_equations", name: "Equations", type_id: "a2_rational_expressions_equations" },
         ],
       },
       {
@@ -1138,7 +1167,7 @@ export const CURRICULUM: CurriculumLevel[] = [
           { id: "pc_writing_polynomial_functions_and_conjugate_roots", name: "Writing polynomial functions and conjugate roots" },
           { id: "pc_complex_zeros_and_fundamental_theorem_of_algebra", name: "Complex zeros and The Fundamental Theorem of Algebra" },
           { id: "pc_graphs_of_rational_functions", name: "Graphs of rational functions", type_id: "pc_graphs_of_rational_functions" },
-          { id: "pc_rational_equations", name: "Rational equations" },
+          { id: "pc_rational_equations", name: "Rational equations", type_id: "pc_rational_equations" },
           { id: "pc_polynomial_inequalities", name: "Polynomial inequalities" },
           { id: "pc_rational_inequalities", name: "Rational inequalities" },
         ],
@@ -1229,7 +1258,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         topics: [
           { id: "a2_matrices_operations", name: "Operations", type_id: "a2_matrices_operations" },
           { id: "a2_matrices_determinants", name: "Determinants", type_id: "a2_matrices_determinants" },
-          { id: "a2_matrices_inverses", name: "Inverses", type_id: "pc_inverses" },
+          { id: "a2_matrices_inverses", name: "Inverses", type_id: "a2_matrices_inverses" },
           { id: "a2_matrices_cramer_s_rule", name: "Cramer's Rule" },
           { id: "a2_matrices_equations", name: "Equations", type_id: "a2_matrices_equations" },
           { id: "pc_multivariable_linear_systems_and_row_operations", name: "Multivariable linear systems and row operations" },

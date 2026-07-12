@@ -29,10 +29,14 @@ class QuadraticFactoringQuestionType(QuestionType):
     def generate(self, settings: dict) -> list[Question]:
         count = int(settings.get("count", 10))
         include_answer_key = bool(settings.get("include_answer_key", False))
+        deg_min = int(settings.get("min_degree", 2))
+        deg_max = int(settings.get("max_degree", 2))
+        if deg_max < deg_min:
+            deg_min, deg_max = deg_max, deg_min
 
         questions: list[Question] = []
         for _ in range(count):
-            options = build_factorable_options(settings, 2, 2)
+            options = build_factorable_options(settings, deg_min, deg_max)
             result = create_factorable_polynomial(options)
             quadratic = result.polynomial
             known_factors = list(result.factors)

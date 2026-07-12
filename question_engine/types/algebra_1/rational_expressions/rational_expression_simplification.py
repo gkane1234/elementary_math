@@ -1,7 +1,10 @@
+import random
 import uuid
 
 from packages.polynomial_core import (
     build_rational_expression_problem,
+    polynomial_excluded_values,
+    rational_excluded_values_latex,
     sum_of_fractions_latex,
     term_prompt_text,
 )
@@ -12,6 +15,96 @@ from question_engine.latex_helpers import polynomial_fraction_latex
 from question_engine.models import Question
 from question_engine.settings.enrichment import merge_enrichment_metadata, random_term_count
 from question_engine.settings.generator_profiles import schema_for_generator
+
+
+def _resolve_add_subtract_structure(settings: dict) -> dict:
+    """Apply Easy/Medium/Hard structural rules onto a copy of settings."""
+    resolved = dict(settings)
+    structure = str(resolved.get("add_subtract_structure", "auto")).strip().lower()
+    tier = str(resolved.get("difficulty_tier", "")).strip().lower()
+
+    if structure == "auto":
+        if tier == "easy":
+            structure = "shared_lcd"
+        elif tier == "medium":
+            structure = random.choice(["unlike_binomials", "multi_term"])
+        elif tier == "hard":
+            structure = "complex"
+        else:
+            structure = "complex"
+
+    if structure == "shared_lcd":
+        resolved.update(
+            {
+                "term_count": 2,
+                "max_lcd_factors": 1,
+                "leading_coefficient_one": True,
+                "monic_only": True,
+                "denominator_degree_min": 1,
+                "denominator_degree_max": 1,
+                "allow_polynomial_terms": False,
+                "allow_full_lcd_terms": False,
+                "inflation_chance": 0,
+                "cancel_factor_count": "0",
+                "prefer_simple_factors": True,
+                "content_primitive_denominators": True,
+                "force_shared_lcd": True,
+                "allow_monomial_lcd": True,
+                "factor_rrt": False,
+            }
+        )
+    elif structure == "unlike_binomials":
+        # Medium variant: 2 terms, non-monic binomial denominators.
+        resolved.update(
+            {
+                "term_count": 2,
+                "max_lcd_factors": 2,
+                "leading_coefficient_one": False,
+                "monic_only": False,
+                "denominator_degree_min": 1,
+                "denominator_degree_max": 1,
+                "allow_polynomial_terms": False,
+                "allow_full_lcd_terms": False,
+                "inflation_chance": 0,
+                "cancel_factor_count": "0",
+                "prefer_simple_factors": True,
+                "content_primitive_denominators": True,
+                "force_shared_lcd": False,
+                "allow_monomial_lcd": False,
+                "factor_rrt": False,
+            }
+        )
+    elif structure == "multi_term":
+        # Medium variant: 3 monic terms, still simple factoring.
+        resolved.update(
+            {
+                "term_count": 3,
+                "max_lcd_factors": 2,
+                "leading_coefficient_one": True,
+                "monic_only": True,
+                "denominator_degree_min": 1,
+                "denominator_degree_max": 1,
+                "allow_polynomial_terms": False,
+                "allow_full_lcd_terms": False,
+                "inflation_chance": 0,
+                "cancel_factor_count": "0",
+                "prefer_simple_factors": True,
+                "content_primitive_denominators": True,
+                "force_shared_lcd": False,
+                "allow_monomial_lcd": False,
+                "factor_rrt": False,
+            }
+        )
+    else:
+        # complex / hard — keep caller values; fill sensible defaults.
+        resolved.setdefault("max_lcd_factors", 4)
+        resolved.setdefault("prefer_simple_factors", True)
+        resolved.setdefault("content_primitive_denominators", True)
+        resolved.setdefault("force_shared_lcd", False)
+        resolved.setdefault("allow_monomial_lcd", False)
+
+    resolved["add_subtract_structure"] = structure
+    return resolved
 
 
 @register
@@ -31,48 +124,67 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
 
     def generate(self, settings: dict) -> list[Question]:
         count = int(settings.get("count", 5))
-        term_count = int(settings.get("term_count", random_term_count(settings, default=3)))
-        term_count = min(term_count, int(settings.get("max_rational_terms", 5)))
-        denominator_degree_min = int(settings.get("denominator_degree_min", 2))
-        denominator_degree_max = int(settings.get("denominator_degree_max", 3))
         include_answer_key = bool(settings.get("include_answer_key", False))
         include_solution_details = bool(settings.get("include_solution_details", True))
-        use_random_partial_solution = bool(settings.get("use_random_partial_solution", True))
-        allow_polynomial_terms = bool(settings.get("allow_polynomial_terms", True))
-        force_lcd = bool(settings.get("force_lcd", False))
-        allow_full_lcd_terms = bool(settings.get("allow_full_lcd_terms", True)) or force_lcd
-        if force_lcd:
-            allow_polynomial_terms = False
-        allow_unlike_denominators = bool(settings.get("allow_unlike_denominators", True))
-        inflation_chance = max(0.0, min(1.0, int(settings.get("inflation_chance", 15)) / 100.0))
-        max_inflation_degree = int(settings.get("max_inflation_degree", 2))
-        cancel_factor_count = settings.get("cancel_factor_count", "random")
-
-        base_options = build_factorable_options(
-            settings,
-            denominator_degree_min,
-            denominator_degree_max,
-        )
-        if not allow_unlike_denominators:
-            base_options = build_factorable_options(
-                {**settings, "factor_rrt": False},
-                denominator_degree_min,
-                denominator_degree_max,
-            )
 
         questions: list[Question] = []
         for _ in range(count):
-            for _attempt in range(80):
-                solution = build_rational_expression_problem(
-                    base_options,
-                    term_count=term_count,
-                    use_random_partial_solution=use_random_partial_solution,
-                    allow_polynomial_terms=allow_polynomial_terms,
-                    allow_full_lcd_terms=allow_full_lcd_terms,
-                    inflation_chance=inflation_chance,
-                    max_inflation_degree=max_inflation_degree,
-                    cancel_factor_count=cancel_factor_count,
+            structured = _resolve_add_subtract_structure(settings)
+            term_count = int(structured.get("term_count", random_term_count(structured, default=3)))
+            term_count = min(term_count, int(structured.get("max_rational_terms", 5)))
+            denominator_degree_min = int(structured.get("denominator_degree_min", 2))
+            denominator_degree_max = int(structured.get("denominator_degree_max", 3))
+            use_random_partial_solution = bool(structured.get("use_random_partial_solution", True))
+            allow_polynomial_terms = bool(structured.get("allow_polynomial_terms", True))
+            force_lcd = bool(structured.get("force_lcd", False))
+            allow_full_lcd_terms = bool(structured.get("allow_full_lcd_terms", True)) or force_lcd
+            if force_lcd:
+                allow_polynomial_terms = False
+            allow_unlike_denominators = bool(structured.get("allow_unlike_denominators", True))
+            inflation_chance = max(
+                0.0, min(1.0, int(structured.get("inflation_chance", 15)) / 100.0)
+            )
+            max_inflation_degree = int(structured.get("max_inflation_degree", 2))
+            cancel_factor_count = structured.get("cancel_factor_count", "random")
+            max_lcd_factors = int(structured.get("max_lcd_factors", 4))
+            prefer_simple_factors = bool(structured.get("prefer_simple_factors", True))
+            content_primitive = bool(structured.get("content_primitive_denominators", True))
+            force_shared_lcd = bool(structured.get("force_shared_lcd", False))
+            allow_monomial_lcd = bool(structured.get("allow_monomial_lcd", False))
+
+            base_options = build_factorable_options(
+                structured,
+                denominator_degree_min,
+                denominator_degree_max,
+            )
+            if not allow_unlike_denominators:
+                base_options = build_factorable_options(
+                    {**structured, "factor_rrt": False},
+                    denominator_degree_min,
+                    denominator_degree_max,
                 )
+
+            solution = None
+            for _attempt in range(80):
+                try:
+                    solution = build_rational_expression_problem(
+                        base_options,
+                        term_count=term_count,
+                        use_random_partial_solution=use_random_partial_solution,
+                        allow_polynomial_terms=allow_polynomial_terms,
+                        allow_full_lcd_terms=allow_full_lcd_terms,
+                        inflation_chance=inflation_chance,
+                        max_inflation_degree=max_inflation_degree,
+                        cancel_factor_count=cancel_factor_count,
+                        max_lcd_factors=max_lcd_factors,
+                        prefer_simple_factors=prefer_simple_factors,
+                        content_primitive=content_primitive,
+                        allow_empty_denominators=allow_polynomial_terms,
+                        force_shared_lcd=force_shared_lcd,
+                        allow_monomial_lcd=allow_monomial_lcd,
+                    )
+                except ValueError:
+                    continue
                 if force_lcd and solution.full_lcd_numerator is None:
                     continue
                 if not allow_unlike_denominators:
@@ -83,19 +195,65 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                     ]
                     if denominators and len({str(d) for d in denominators}) > 1:
                         continue
+                if len(solution.display_terms) < 2:
+                    continue
+                if max_lcd_factors <= 1 and solution.lcd.deg() > 1:
+                    continue
                 break
 
+            if solution is None:
+                raise RuntimeError("Unable to build rational expression problem")
+
             answer_latex = None
+            excluded: list[int] = []
             if include_answer_key:
+                from packages.polynomial_core.rational import _scale_fraction_to_integers
+
                 answer_numerator = solution.final_numerator or solution.simplified_numerator
                 answer_denominator = solution.final_denominator or solution.simplified_denominator
-                answer_latex = polynomial_fraction_latex(
+                answer_numerator, answer_denominator = _scale_fraction_to_integers(
                     answer_numerator,
                     answer_denominator,
                 )
+                if (
+                    answer_denominator.deg() == 0
+                    and abs(float(answer_denominator.coef_list()[0]) - 1) < 1e-10
+                ):
+                    answer_latex = answer_numerator.to_latex()
+                else:
+                    answer_latex = polynomial_fraction_latex(
+                        answer_numerator,
+                        answer_denominator,
+                    )
+                # Excluded values: zeros of every original displayed denominator.
+                from fractions import Fraction
 
+                excluded_fracs: list[Fraction] = []
+
+                def _collect_zeros(den) -> None:
+                    if den is None or den.deg() == 0:
+                        return
+                    if den.deg() == 1:
+                        a = int(round(float(den.coef(1))))
+                        b = int(round(float(den.coef(0))))
+                        if a != 0:
+                            excluded_fracs.append(Fraction(-b, a))
+                        return
+                    for root in polynomial_excluded_values(den, coef_min=-20, coef_max=20):
+                        excluded_fracs.append(Fraction(root))
+
+                for term in solution.display_terms:
+                    _collect_zeros(term.denominator)
+                _collect_zeros(solution.lcd)
+                note = rational_excluded_values_latex(excluded_fracs)
+                if note:
+                    answer_latex = f"{answer_latex},\\; {note}"
+                excluded = [
+                    int(v) if v.denominator == 1 else f"{v.numerator}/{v.denominator}"
+                    for v in sorted(set(excluded_fracs))
+                ]
             metadata = merge_enrichment_metadata(
-                settings,
+                structured,
                 {
                     "term_count": len(solution.display_terms),
                     "numerator_degree": solution.simplified_numerator.deg(),
@@ -110,6 +268,10 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                     "max_inflation_degree": max_inflation_degree,
                     "force_lcd": force_lcd,
                     "allow_unlike_denominators": allow_unlike_denominators,
+                    "add_subtract_structure": structured.get("add_subtract_structure"),
+                    "max_lcd_factors": max_lcd_factors,
+                    "lcd_degree": solution.lcd.deg(),
+                    "excluded_values": excluded,
                 },
                 answer=answer_latex,
             )

@@ -14,12 +14,15 @@ from ..frameworks.number import (
     FractionDivideWordFramework,
     GcfLcmFramework,
     GcfLcmWordFramework,
+    Grade6VisualFramework,
     IntegerArithmeticFramework,
     LikeDenominatorFractionFramework,
+    LongDivisionWithRemaindersFramework,
     OppositeFramework,
     PrimeFactorizationFramework,
     RationalFramework,
     UnlikeDenominatorFractionFramework,
+    WholeDivideToDecimalFramework,
 )
 
 _FRAC_ADD_LIKE = LikeDenominatorFractionFramework("+")
@@ -36,6 +39,7 @@ _INT_ADD_SUB = IntegerArithmeticFramework("+-")
 _INT_MULTIPLY = IntegerArithmeticFramework("*")
 _INT_DIVIDE = IntegerArithmeticFramework("/")
 _INT_NEGATIVE = IntegerArithmeticFramework("+-")
+_LONG_DIV_REMAINDER = LongDivisionWithRemaindersFramework()
 
 _GCF = GcfLcmFramework(mode="gcf")
 _LCM = GcfLcmFramework(mode="lcm")
@@ -51,6 +55,16 @@ _COMPARE = CompareOrderFramework(mode="compare")
 _ORDER = CompareOrderFramework(mode="order")
 _FRAC_DECIMAL = FractionDecimalConvertFramework()
 _DIVISIBILITY = DivisibilityFramework()
+_G6_VISUALS = {
+    mode: Grade6VisualFramework(mode)
+    for mode in (
+        "fraction_rectangle", "fraction_triangle", "fraction_prism",
+        "draw_dot_plot", "draw_histogram", "tape", "hanger", "inequality_hanger",
+        "area_model_algebraic", "grid_polygon", "shaded_polygon",
+        "classify_polyhedron", "nets", "net_surface", "net_grid", "invalid_net",
+        "isometric", "isometric_measure",
+    )
+}
 
 
 def _framework_generator(framework, topic: str, settings: dict) -> list[Question]:
@@ -168,15 +182,25 @@ def g6_numeric_expressions_with_exponents(topic: str, settings: dict) -> list[Qu
 
 
 def g6_long_division_with_remainders(topic: str, settings: dict) -> list[Question]:
-    return g6_integer_divide(topic, settings)
+    return _framework_generator(_LONG_DIV_REMAINDER, topic, settings)
 
 
 _DECIMAL_DIVIDE_WHOLE = DecimalArithmeticFramework("/")
+_WHOLE_DIVIDE_TO_DECIMAL = WholeDivideToDecimalFramework()
 
 
 def g6_dividing_decimals_by_whole_numbers(topic: str, settings: dict) -> list[Question]:
     settings = {**settings, "allow_negative": False}
     return _framework_generator(_DECIMAL_DIVIDE_WHOLE, topic, settings)
+
+
+def g6_dividing_whole_numbers_that_result_in_decimals(topic: str, settings: dict) -> list[Question]:
+    settings = {**settings, "allow_negative": False}
+    return _framework_generator(_WHOLE_DIVIDE_TO_DECIMAL, topic, settings)
+
+
+def _g6_visual(mode: str, topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_G6_VISUALS[mode], topic, settings)
 
 
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
@@ -207,5 +231,24 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "g6_divisibility": g6_divisibility,
     "g6_numeric_expressions_with_exponents": g6_numeric_expressions_with_exponents,
     "g6_long_division_with_remainders": g6_long_division_with_remainders,
+    "g6_dividing_whole_numbers_that_result_in_decimals": g6_dividing_whole_numbers_that_result_in_decimals,
     "g6_dividing_decimals_by_whole_numbers": g6_dividing_decimals_by_whole_numbers,
+    "g6_fraction_rectangle_area": lambda topic, settings: _g6_visual("fraction_rectangle", topic, settings),
+    "g6_fraction_triangle_area": lambda topic, settings: _g6_visual("fraction_triangle", topic, settings),
+    "g6_fraction_prism_volume": lambda topic, settings: _g6_visual("fraction_prism", topic, settings),
+    "g6_drawing_dot_plot": lambda topic, settings: _g6_visual("draw_dot_plot", topic, settings),
+    "g6_drawing_histogram": lambda topic, settings: _g6_visual("draw_histogram", topic, settings),
+    "g6_equations_tape_diagrams": lambda topic, settings: _g6_visual("tape", topic, settings),
+    "g6_equations_hanger_diagrams": lambda topic, settings: _g6_visual("hanger", topic, settings),
+    "g6_inequalities_hanger_diagrams": lambda topic, settings: _g6_visual("inequality_hanger", topic, settings),
+    "g6_area_model_algebraic": lambda topic, settings: _g6_visual("area_model_algebraic", topic, settings),
+    "g6_polygon_grid_area": lambda topic, settings: _g6_visual("grid_polygon", topic, settings),
+    "g6_shaded_polygon_area": lambda topic, settings: _g6_visual("shaded_polygon", topic, settings),
+    "g6_classify_polyhedron": lambda topic, settings: _g6_visual("classify_polyhedron", topic, settings),
+    "g6_cube_nets": lambda topic, settings: _g6_visual("nets", topic, settings),
+    "g6_cube_net_surface_area": lambda topic, settings: _g6_visual("net_surface", topic, settings),
+    "g6_cube_net_grid_surface_area": lambda topic, settings: _g6_visual("net_grid", topic, settings),
+    "g6_invalid_cube_net": lambda topic, settings: _g6_visual("invalid_net", topic, settings),
+    "g6_isometric_solid": lambda topic, settings: _g6_visual("isometric", topic, settings),
+    "g6_isometric_measure": lambda topic, settings: _g6_visual("isometric_measure", topic, settings),
 }

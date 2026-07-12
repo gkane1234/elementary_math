@@ -10,9 +10,12 @@ from ..frameworks.graphing import (
     GraphExponentialFramework,
     GraphInequalityFramework,
     GraphLinearEquationFramework,
+    GraphLogarithmicFramework,
     GraphPointTableFramework,
     GraphQuadraticFramework,
     GraphQuadraticInequalityFramework,
+    GraphRadicalFramework,
+    GraphRationalFramework,
     GraphSystemFramework,
     GraphSystemInequalitiesFramework,
     GraphTransformationsFramework,
@@ -20,6 +23,7 @@ from ..frameworks.graphing import (
     ReadEquationFromGraphFramework,
     ReadInterceptFromGraphFramework,
     ReadSlopeFromGraphFramework,
+    SolvePolynomialByGraphingFramework,
 )
 
 _GRAPH_LINEAR = GraphLinearEquationFramework()
@@ -27,11 +31,15 @@ _GRAPH_INEQUALITY = GraphInequalityFramework()
 _GRAPH_INEQUALITY_NUMBER_LINE = GraphInequalityFramework(default_dimension="number_line")
 _GRAPH_LINEAR_INEQUALITY = GraphInequalityFramework()
 _GRAPH_ABSOLUTE_VALUE = GraphAbsoluteValueFramework()
+_GRAPH_RADICAL = GraphRadicalFramework()
+_GRAPH_RATIONAL = GraphRationalFramework()
 _GRAPH_SYSTEM = GraphSystemFramework()
 _GRAPH_SYSTEM_INEQUALITIES = GraphSystemInequalitiesFramework()
 _GRAPH_EXPONENTIAL = GraphExponentialFramework()
+_GRAPH_LOGARITHMIC = GraphLogarithmicFramework()
 _GRAPH_QUADRATIC = GraphQuadraticFramework()
 _GRAPH_QUADRATIC_INEQUALITY = GraphQuadraticInequalityFramework()
+_SOLVE_POLYNOMIAL_BY_GRAPHING = SolvePolynomialByGraphingFramework()
 _NUMBER_LINE_PLOT = NumberLinePlotFramework()
 _READ_SLOPE = ReadSlopeFromGraphFramework()
 _READ_INTERCEPT = ReadInterceptFromGraphFramework()
@@ -53,14 +61,20 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
         _GRAPH_INEQUALITY_NUMBER_LINE, topic, settings
     ),
     "graph_absolute_value": lambda topic, settings: _batch(_GRAPH_ABSOLUTE_VALUE, topic, settings),
+    "graph_radical": lambda topic, settings: _batch(_GRAPH_RADICAL, topic, settings),
+    "graph_rational": lambda topic, settings: _batch(_GRAPH_RATIONAL, topic, settings),
     "graph_system": lambda topic, settings: _batch(_GRAPH_SYSTEM, topic, settings),
     "graph_system_inequalities": lambda topic, settings: _batch(
         _GRAPH_SYSTEM_INEQUALITIES, topic, settings
     ),
     "graph_exponential": lambda topic, settings: _batch(_GRAPH_EXPONENTIAL, topic, settings),
+    "graph_logarithmic": lambda topic, settings: _batch(_GRAPH_LOGARITHMIC, topic, settings),
     "graph_quadratic": lambda topic, settings: _batch(_GRAPH_QUADRATIC, topic, settings),
     "graph_quadratic_inequality": lambda topic, settings: _batch(
         _GRAPH_QUADRATIC_INEQUALITY, topic, settings
+    ),
+    "solve_polynomial_by_graphing": lambda topic, settings: _batch(
+        _SOLVE_POLYNOMIAL_BY_GRAPHING, topic, settings
     ),
     "number_line_plot": lambda topic, settings: _batch(_NUMBER_LINE_PLOT, topic, settings),
     "read_slope_from_graph": lambda topic, settings: _batch(_READ_SLOPE, topic, settings),

@@ -1,5 +1,9 @@
 import { CURRICULUM } from "@/lib/curriculum";
-import { REQUIRES_DIAGRAM_TYPE_IDS, typeIsNotReady } from "@/lib/diagram-readiness";
+import {
+  INCORRECT_IMPLEMENTATION_TYPE_IDS,
+  REQUIRES_DIAGRAM_TYPE_IDS,
+  typeIsNotReady,
+} from "@/lib/diagram-readiness";
 import type { CurriculumLevel, CurriculumTopic, QuestionTypeInfo } from "@/lib/types";
 
 export type TopicPickerStatus = "ready" | "preview" | "coming_soon";
@@ -97,8 +101,11 @@ export function buildCurriculumPicker(
   types: QuestionTypeInfo[] = [],
 ): PickerCourse[] {
   // Ready = wired generator that is not demoted (diagram gap, wrong implementation, etc.).
-  // Block via API flags and/or the frontend diagram denylist (defense in depth).
-  const notReadyIds = new Set<string>(REQUIRES_DIAGRAM_TYPE_IDS);
+  // Block via API flags and/or the frontend denylists (defense in depth).
+  const notReadyIds = new Set<string>([
+    ...REQUIRES_DIAGRAM_TYPE_IDS,
+    ...INCORRECT_IMPLEMENTATION_TYPE_IDS,
+  ]);
   for (const type of types) {
     if (typeIsNotReady(type)) notReadyIds.add(type.id);
   }

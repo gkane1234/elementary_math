@@ -14,6 +14,7 @@ from ..frameworks.number import (
     RationalFramework,
     RatioFramework,
     ScientificNotationFramework,
+    SetsOfNumbersFramework,
     UnitRateFramework,
 )
 
@@ -35,10 +36,15 @@ _ORDER_OF_OPERATIONS = OrderOfOperationsFramework()
 _SCI_NOTATION_WRITE = ScientificNotationFramework(mode="write")
 _SCI_NOTATION_OPS = ScientificNotationFramework(mode="operations")
 _SCI_NOTATION_ADD_SUB = ScientificNotationFramework(mode="add_subtract")
+_SETS_OF_NUMBERS = SetsOfNumbersFramework()
 
 
 def _framework_generator(framework, topic: str, settings: dict) -> list[Question]:
     return framework.generate_batch(topic, settings)
+
+
+def sets_of_numbers(topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_SETS_OF_NUMBERS, topic, settings)
 
 
 def rational_add_subtract(topic: str, settings: dict) -> list[Question]:
@@ -55,6 +61,10 @@ def rational_divide(topic: str, settings: dict) -> list[Question]:
 
 def distributive_property(topic: str, settings: dict) -> list[Question]:
     return _framework_generator(_DISTRIBUTIVE, topic, settings)
+
+
+def distributive_property_algebraic(topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_DISTRIBUTIVE_ALGEBRAIC, topic, settings)
 
 
 def percents(topic: str, settings: dict) -> list[Question]:
@@ -110,10 +120,12 @@ def order_of_operations(topic: str, settings: dict) -> list[Question]:
 
 
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
+    "sets_of_numbers": sets_of_numbers,
     "rational_add_subtract": rational_add_subtract,
     "rational_multiply": rational_multiply,
     "rational_divide": rational_divide,
     "distributive_property": distributive_property,
+    "distributive_property_algebraic": distributive_property_algebraic,
     "percents": percents,
     "percent_of_change": percent_of_change,
     "solving_proportions": solving_proportions,

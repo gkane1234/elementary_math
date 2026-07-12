@@ -11,6 +11,7 @@ FACTORING_METHOD_KEYS = (
     "factor_grouping",
     "factor_substitution",
     "factor_difference_of_squares",
+    "factor_perfect_square_trinomial",
     "factor_difference_of_cubes",
     "factor_sum_of_cubes",
 )
@@ -64,6 +65,13 @@ def factoring_method_settings() -> list[SettingField]:
             group="factoring",
         ),
         SettingField(
+            "factor_perfect_square_trinomial",
+            "Perfect square trinomial",
+            "bool",
+            True,
+            group="factoring",
+        ),
+        SettingField(
             "factor_difference_of_cubes",
             "Difference of cubes",
             "bool",
@@ -75,6 +83,28 @@ def factoring_method_settings() -> list[SettingField]:
             "Sum of cubes",
             "bool",
             True,
+            group="factoring",
+        ),
+    ]
+
+
+def special_case_extra_settings() -> list[SettingField]:
+    """Settings specific to special-product factoring types."""
+    return [
+        SettingField(
+            "allow_higher_even_powers",
+            "Higher even powers (x⁴−1, x⁸−1, …)",
+            "bool",
+            False,
+            group="factoring",
+        ),
+        SettingField(
+            "max_even_power",
+            "Max even power for higher-power problems",
+            "int",
+            8,
+            min=4,
+            max=8,
             group="factoring",
         ),
     ]
@@ -122,6 +152,7 @@ def factoring_method_overrides(settings: dict[str, Any]) -> dict[str, bool]:
             "factor_grouping": False,
             "factor_substitution": False,
             "factor_difference_of_squares": True,
+            "factor_perfect_square_trinomial": False,
             "factor_difference_of_cubes": False,
             "factor_sum_of_cubes": False,
             "factor_rrt": False,
@@ -133,6 +164,7 @@ def factoring_method_overrides(settings: dict[str, Any]) -> dict[str, bool]:
             "factor_grouping": False,
             "factor_substitution": False,
             "factor_difference_of_squares": False,
+            "factor_perfect_square_trinomial": False,
             "factor_difference_of_cubes": False,
             "factor_sum_of_cubes": False,
             "factor_rrt": False,
@@ -162,6 +194,12 @@ def parse_factoring_settings(settings: dict[str, Any]) -> ParsedFactoringSetting
             overrides.get(
                 "factor_difference_of_squares",
                 settings.get("factor_difference_of_squares", True),
+            )
+        ),
+        "perfect_square_trinomial": bool(
+            overrides.get(
+                "factor_perfect_square_trinomial",
+                settings.get("factor_perfect_square_trinomial", True),
             )
         ),
         "difference_of_cubes": bool(

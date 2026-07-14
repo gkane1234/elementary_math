@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Callable
 
 from ..core.models import Question
+from ..frameworks.adapters import framework_generators
 from ..frameworks.graphing import (
     GraphAbsoluteValueFramework,
     GraphExponentialFramework,
@@ -26,63 +27,30 @@ from ..frameworks.graphing import (
     SolvePolynomialByGraphingFramework,
 )
 
-_GRAPH_LINEAR = GraphLinearEquationFramework()
-_GRAPH_INEQUALITY = GraphInequalityFramework()
-_GRAPH_INEQUALITY_NUMBER_LINE = GraphInequalityFramework(default_dimension="number_line")
-_GRAPH_LINEAR_INEQUALITY = GraphInequalityFramework()
-_GRAPH_ABSOLUTE_VALUE = GraphAbsoluteValueFramework()
-_GRAPH_RADICAL = GraphRadicalFramework()
-_GRAPH_RATIONAL = GraphRationalFramework()
-_GRAPH_SYSTEM = GraphSystemFramework()
-_GRAPH_SYSTEM_INEQUALITIES = GraphSystemInequalitiesFramework()
-_GRAPH_EXPONENTIAL = GraphExponentialFramework()
-_GRAPH_LOGARITHMIC = GraphLogarithmicFramework()
-_GRAPH_QUADRATIC = GraphQuadraticFramework()
-_GRAPH_QUADRATIC_INEQUALITY = GraphQuadraticInequalityFramework()
-_SOLVE_POLYNOMIAL_BY_GRAPHING = SolvePolynomialByGraphingFramework()
-_NUMBER_LINE_PLOT = NumberLinePlotFramework()
-_READ_SLOPE = ReadSlopeFromGraphFramework()
-_READ_INTERCEPT = ReadInterceptFromGraphFramework()
-_READ_EQUATION = ReadEquationFromGraphFramework()
-_GRAPH_POINT_TABLE = GraphPointTableFramework()
-_GRAPH_TRANSFORMATIONS = GraphTransformationsFramework()
-_GRAPH_SINGLE_VARIABLE = GraphInequalityFramework(default_dimension="number_line")
-
-
-def _batch(framework, topic: str, settings: dict) -> list[Question]:
-    return framework.generate_batch(topic, settings)
-
-
-GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
-    "graph_linear_equation": lambda topic, settings: _batch(_GRAPH_LINEAR, topic, settings),
-    "graph_linear_inequality": lambda topic, settings: _batch(_GRAPH_LINEAR_INEQUALITY, topic, settings),
-    "graph_inequality": lambda topic, settings: _batch(_GRAPH_INEQUALITY, topic, settings),
-    "graph_inequality_number_line": lambda topic, settings: _batch(
-        _GRAPH_INEQUALITY_NUMBER_LINE, topic, settings
-    ),
-    "graph_absolute_value": lambda topic, settings: _batch(_GRAPH_ABSOLUTE_VALUE, topic, settings),
-    "graph_radical": lambda topic, settings: _batch(_GRAPH_RADICAL, topic, settings),
-    "graph_rational": lambda topic, settings: _batch(_GRAPH_RATIONAL, topic, settings),
-    "graph_system": lambda topic, settings: _batch(_GRAPH_SYSTEM, topic, settings),
-    "graph_system_inequalities": lambda topic, settings: _batch(
-        _GRAPH_SYSTEM_INEQUALITIES, topic, settings
-    ),
-    "graph_exponential": lambda topic, settings: _batch(_GRAPH_EXPONENTIAL, topic, settings),
-    "graph_logarithmic": lambda topic, settings: _batch(_GRAPH_LOGARITHMIC, topic, settings),
-    "graph_quadratic": lambda topic, settings: _batch(_GRAPH_QUADRATIC, topic, settings),
-    "graph_quadratic_inequality": lambda topic, settings: _batch(
-        _GRAPH_QUADRATIC_INEQUALITY, topic, settings
-    ),
-    "solve_polynomial_by_graphing": lambda topic, settings: _batch(
-        _SOLVE_POLYNOMIAL_BY_GRAPHING, topic, settings
-    ),
-    "number_line_plot": lambda topic, settings: _batch(_NUMBER_LINE_PLOT, topic, settings),
-    "read_slope_from_graph": lambda topic, settings: _batch(_READ_SLOPE, topic, settings),
-    "read_intercept_from_graph": lambda topic, settings: _batch(_READ_INTERCEPT, topic, settings),
-    "read_equation_from_graph": lambda topic, settings: _batch(_READ_EQUATION, topic, settings),
-    "graph_point_table": lambda topic, settings: _batch(_GRAPH_POINT_TABLE, topic, settings),
-    "graph_transformations": lambda topic, settings: _batch(_GRAPH_TRANSFORMATIONS, topic, settings),
-    "graph_single_variable_inequality": lambda topic, settings: _batch(
-        _GRAPH_SINGLE_VARIABLE, topic, settings
-    ),
-}
+GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = framework_generators(
+    {
+        "graph_linear_equation": GraphLinearEquationFramework(),
+        "graph_linear_inequality": GraphInequalityFramework(),
+        "graph_inequality": GraphInequalityFramework(),
+        "graph_inequality_number_line": GraphInequalityFramework(default_dimension="number_line"),
+        "graph_absolute_value": GraphAbsoluteValueFramework(),
+        "graph_radical": GraphRadicalFramework(),
+        "graph_rational": GraphRationalFramework(),
+        "graph_system": GraphSystemFramework(),
+        "graph_system_inequalities": GraphSystemInequalitiesFramework(),
+        "graph_exponential": GraphExponentialFramework(),
+        "graph_logarithmic": GraphLogarithmicFramework(),
+        "graph_quadratic": GraphQuadraticFramework(),
+        "graph_quadratic_inequality": GraphQuadraticInequalityFramework(),
+        "solve_polynomial_by_graphing": SolvePolynomialByGraphingFramework(),
+        "number_line_plot": NumberLinePlotFramework(),
+        "read_slope_from_graph": ReadSlopeFromGraphFramework(),
+        "read_intercept_from_graph": ReadInterceptFromGraphFramework(),
+        "read_equation_from_graph": ReadEquationFromGraphFramework(),
+        "graph_point_table": GraphPointTableFramework(),
+        "graph_transformations": GraphTransformationsFramework(),
+        "graph_single_variable_inequality": GraphInequalityFramework(
+            default_dimension="number_line"
+        ),
+    }
+)

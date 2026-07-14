@@ -1,5 +1,0 @@
-"""Graphing catalog type: a2_systems_of_equations_and_inequalities_solving_systems_by_graphing_2_variables."""
-
-from question_engine.types._from_generator import register_from_catalog
-
-register_from_catalog("a2_systems_of_equations_and_inequalities_solving_systems_by_graphing_2_variables")

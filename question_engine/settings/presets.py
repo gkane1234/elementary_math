@@ -5,7 +5,9 @@ Structure
 ``PROFILE_DIFFICULTY_PRESETS`` maps a setting profile name (``equation``,
 ``polynomial``, …) to ``{easy|medium|hard: {setting_key: value}}``.
 
-``GENERATOR_DIFFICULTY_PRESETS`` optionally overrides by generator / type id.
+``GENERATOR_DIFFICULTY_PRESETS`` optionally overrides by **family / type id**.
+Lookup order for a generate call: explicit type_id key → catalog ``generator``
+family key → setting profile → ``common_enrichment``.
 
 On generate, call ``apply_difficulty_presets`` so API clients that only send
 ``difficulty_tier`` get the same bounds as the UI. Explicit settings always win
@@ -14,8 +16,9 @@ over preset values (``{**preset, **settings}``).
 To add presets for a new question type:
 1. Prefer adding under the type's ``setting_profile`` in
    ``PROFILE_DIFFICULTY_PRESETS``.
-2. For one-off generator overrides, add an entry in
-   ``GENERATOR_DIFFICULTY_PRESETS`` keyed by generator / type id.
+2. For family-specific overrides, key ``GENERATOR_DIFFICULTY_PRESETS`` by the
+   catalog ``generator`` family (shared-family types inherit automatically).
+3. Add a type_id key only when that skill needs different bounds than its family.
 """
 
 from __future__ import annotations
@@ -2812,19 +2815,37 @@ def _normalize_tier(tier: Any) -> str | None:
     return None
 
 
+def _catalog_generator_key(type_id: str) -> str | None:
+    try:
+        from ..core.registry import get_catalog_entry
+    except ImportError:
+        return None
+    try:
+        return get_catalog_entry(type_id).generator
+    except KeyError:
+        return None
+
+
 def lookup_difficulty_preset(
     tier: Any,
     *,
     type_id: str | None = None,
     setting_profile: str | None = None,
 ) -> PresetValues:
-    """Return preset values for a tier, preferring generator overrides."""
+    """Return preset values for a tier, preferring family / type overrides."""
     normalized = _normalize_tier(tier)
     if normalized is None:
         return {}
 
+    lookup_keys: list[str] = []
     if type_id:
-        generator_presets = GENERATOR_DIFFICULTY_PRESETS.get(type_id)
+        lookup_keys.append(type_id)
+        family = _catalog_generator_key(type_id)
+        if family and family not in lookup_keys:
+            lookup_keys.append(family)
+
+    for key in lookup_keys:
+        generator_presets = GENERATOR_DIFFICULTY_PRESETS.get(key)
         if generator_presets and normalized in generator_presets:
             return dict(generator_presets[normalized])
 
@@ -2838,14 +2859,14 @@ def lookup_difficulty_preset(
 
 
 def resolve_setting_profile_for_type(type_id: str | None) -> str | None:
-    """Best-effort profile lookup from generator setting configs."""
+    """Best-effort profile lookup from type → family setting configs."""
     if not type_id:
         return None
     try:
-        from .generator_profiles import config_for_generator
+        from .generator_profiles import config_for_type
     except ImportError:
         return None
-    config = config_for_generator(type_id)
+    config = config_for_type(type_id)
     if config is None:
         return None
     return config.setting_profile

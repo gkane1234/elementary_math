@@ -1,5 +1,0 @@
-"""Catalog generator type: a2_quadratic_functions_and_inequalities_solving_equations_by_taking_square_roots."""
-
-from question_engine.types._from_generator import register_from_catalog
-
-register_from_catalog("a2_quadratic_functions_and_inequalities_solving_equations_by_taking_square_roots")

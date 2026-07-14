@@ -1,5 +1,0 @@
-"""Catalog generator type: geo_probability_sample_spaces_and_fundamental_counting_principle."""
-
-from question_engine.types._from_generator import register_from_catalog
-
-register_from_catalog("geo_probability_sample_spaces_and_fundamental_counting_principle")

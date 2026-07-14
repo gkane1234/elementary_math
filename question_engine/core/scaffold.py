@@ -3,7 +3,7 @@ from typing import Callable
 from .base import QuestionType, register
 from ..catalogs.base import TypeCatalogEntry
 from .registry import TYPE_CATALOG
-from ..settings.generator_profiles import config_for_generator
+from ..settings.generator_profiles import config_for_generator, config_for_type
 from ..settings.resolve import TypeSettingConfig, resolve_type_settings
 from ..generators import GENERATORS
 from .models import Question, SettingField
@@ -21,7 +21,11 @@ def make_catalog_type(
         generator_key,
         GENERATORS["scaffold"],
     )
-    resolved_config = setting_config or config_for_generator(generator_key)
+    resolved_config = (
+        setting_config
+        or config_for_type(entry.id)
+        or config_for_generator(generator_key)
+    )
     if resolved_config is None:
         resolved_config = TypeSettingConfig(count_default=entry.count_default)
     elif resolved_config.count_default == 10 and entry.count_default != 10:
@@ -65,11 +69,12 @@ def make_catalog_type(
 
 
 def register_catalog_types() -> None:
-    """Register every catalog entry.
+    """Register every catalog entry as a QuestionType.
 
-    Wired entries get real generators; scaffold / missing keys fall back to the
-    placeholder generator. Explicit type modules may re-register the same id
-    afterward with setting overrides.
+    Wired entries use ``GENERATORS[entry.generator]``; scaffold / missing keys
+    fall back to the placeholder generator. Type modules under ``types/`` should
+    overwrite an id only when specializing settings, binding a framework with
+    richer schema, or providing hand-written math — not for no-op re-registration.
     """
     for entry in TYPE_CATALOG:
         register(make_catalog_type(entry))

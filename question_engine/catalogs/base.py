@@ -1,6 +1,18 @@
 from dataclasses import dataclass
+from typing import Literal
 
 from ..utils.instruction_latex import resolve_instruction_latex, resolve_instruction_text
+
+CatalogIntent = Literal["ready", "shared_family", "scaffold"]
+
+
+def derive_catalog_intent(type_id: str, generator: str) -> CatalogIntent:
+    """Classify how a catalog entry relates to its producer family."""
+    if generator == "scaffold":
+        return "scaffold"
+    if generator != type_id:
+        return "shared_family"
+    return "ready"
 
 
 @dataclass(frozen=True)
@@ -14,6 +26,10 @@ class TypeCatalogEntry:
     instruction_text: str = ""
     generator: str = "scaffold"
     count_default: int = 10
+
+    @property
+    def intent(self) -> CatalogIntent:
+        return derive_catalog_intent(self.id, self.generator)
 
 
 def entry(

@@ -8,7 +8,7 @@ from ..core.base import QuestionType, register
 from ..core.models import SettingField
 from ..core.registry import get_catalog_entry
 from ..frameworks.base import QuestionFramework
-from ..settings.generator_profiles import config_for_generator
+from ..settings.generator_profiles import config_for_type
 from ..settings.resolve import TypeSettingConfig, resolve_type_settings
 
 _ENRICHMENT = "common_enrichment"
@@ -32,7 +32,7 @@ def register_framework_type(
     setting_defaults: dict[str, Any] | None = None,
 ) -> type[QuestionType]:
     entry = get_catalog_entry(type_id)
-    gen_config = config_for_generator(entry.generator) or config_for_generator(type_id)
+    gen_config = config_for_type(type_id)
 
     profile = setting_profile
     inherit_profiles = inherits

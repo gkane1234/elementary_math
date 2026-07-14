@@ -9,12 +9,15 @@ from .presets import (
     apply_difficulty_presets,
     lookup_difficulty_preset,
 )
+from .generator_profiles import config_for_generator, config_for_type
 
 __all__ = [
     "PROFILE_BUILDERS",
     "PROFILE_DIFFICULTY_PRESETS",
     "TypeSettingConfig",
     "apply_difficulty_presets",
+    "config_for_generator",
+    "config_for_type",
     "equation_coef_settings",
     "equation_settings",
     "lookup_difficulty_preset",

@@ -93,42 +93,58 @@ def _with_common_enrichment(config: TypeSettingConfig) -> TypeSettingConfig:
     )
 
 
+_OPS_TWO_STEP = ("allow_multiply", "allow_divide")
+_OPS_MULTI = ("allow_multiply", "allow_divide", "allow_add", "allow_subtract")
+
+
+def _equation_config(
+    *extra_excludes: str,
+    extra_settings: tuple = (),
+    setting_defaults: dict | None = None,
+) -> TypeSettingConfig:
+    """Shared equation-family schema pack (profile + phrase/term excludes)."""
+    return TypeSettingConfig(
+        setting_profile="equation",
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            _PHRASE_SETTINGS,
+            extra=extra_excludes,
+        ),
+        extra_settings=extra_settings,
+        setting_defaults=setting_defaults or {},
+    )
+
+
+def _inequality_config(
+    *,
+    setting_profile: str = "inequality",
+    extra_excludes: tuple[str, ...] = (),
+    extra_settings: tuple = (),
+    setting_defaults: dict | None = None,
+) -> TypeSettingConfig:
+    """Shared inequality-family schema pack (includes blank number-line defaults)."""
+    defaults = {"include_graph_metadata": True}
+    if setting_defaults:
+        defaults = {**defaults, **setting_defaults}
+    return TypeSettingConfig(
+        setting_profile=setting_profile,
+        exclude_settings=_excludes(
+            _TERM_SETTINGS,
+            _PHRASE_SETTINGS,
+            extra=extra_excludes,
+        ),
+        extra_settings=extra_settings,
+        setting_defaults=defaults,
+    )
+
+
 _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
-    "one_step_equations": TypeSettingConfig(
-        setting_profile="equation",
-        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
-    ),
-    "two_step_equations": TypeSettingConfig(
-        setting_profile="equation",
-        exclude_settings=_excludes(
-            _TERM_SETTINGS,
-            _PHRASE_SETTINGS,
-            extra=("allow_multiply", "allow_divide"),
-        ),
-    ),
-    "multi_step_equations": TypeSettingConfig(
-        setting_profile="equation",
-        exclude_settings=_excludes(
-            _TERM_SETTINGS,
-            _PHRASE_SETTINGS,
-            extra=("allow_multiply", "allow_divide", "allow_add", "allow_subtract"),
-        ),
-    ),
-    "literal_equations": TypeSettingConfig(
-        setting_profile="equation",
-        exclude_settings=_excludes(
-            _TERM_SETTINGS,
-            _PHRASE_SETTINGS,
-            extra=("allow_multiply", "allow_divide", "allow_add", "allow_subtract"),
-        ),
-    ),
-    "absolute_value_equations": TypeSettingConfig(
-        setting_profile="equation",
-        exclude_settings=_excludes(
-            _TERM_SETTINGS,
-            _PHRASE_SETTINGS,
-            extra=("allow_multiply", "allow_divide", "allow_add", "allow_subtract"),
-        ),
+    "one_step_equations": _equation_config(),
+    "two_step_equations": _equation_config(*_OPS_TWO_STEP),
+    "multi_step_equations": _equation_config(*_OPS_MULTI),
+    "literal_equations": _equation_config(*_OPS_MULTI),
+    "absolute_value_equations": _equation_config(
+        *_OPS_MULTI,
         extra_settings=(absolute_value_equation_form_settings,),
         setting_defaults={
             "allow_basic": True,
@@ -142,29 +158,14 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         },
     ),
     # Inequalities — blank number line for student work (answer key shows shading).
-    "one_step_inequalities": TypeSettingConfig(
-        setting_profile="inequality",
-        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
-        setting_defaults={"include_graph_metadata": True},
-    ),
-    "two_step_inequalities": TypeSettingConfig(
-        setting_profile="inequality",
-        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
-        setting_defaults={"include_graph_metadata": True},
-    ),
-    "multi_step_inequalities": TypeSettingConfig(
-        setting_profile="inequality",
-        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
-        setting_defaults={"include_graph_metadata": True},
-    ),
-    "compound_inequalities": TypeSettingConfig(
+    "one_step_inequalities": _inequality_config(),
+    "two_step_inequalities": _inequality_config(),
+    "multi_step_inequalities": _inequality_config(),
+    "compound_inequalities": _inequality_config(
         setting_profile="compound_inequality",
-        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
-        setting_defaults={"include_graph_metadata": True},
     ),
-    "absolute_value_inequalities": TypeSettingConfig(
-        setting_profile="inequality",
-        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("steps",)),
+    "absolute_value_inequalities": _inequality_config(
+        extra_excludes=("steps",),
         extra_settings=(absolute_value_inequality_form_settings,),
         setting_defaults={
             "allow_simple": True,
@@ -172,7 +173,6 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "allow_linear": True,
             "allow_abs_plus_constant": False,
             "allow_abs_vs_linear": False,
-            "include_graph_metadata": True,
         },
     ),
     # Numbers
@@ -1560,7 +1560,30 @@ GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {
 
 
 def config_for_generator(generator_key: str) -> TypeSettingConfig | None:
+    """Look up settings config by producer family key."""
     return GENERATOR_SETTING_CONFIGS.get(generator_key)
+
+
+def config_for_type(type_id: str) -> TypeSettingConfig | None:
+    """Resolve settings for a catalog type_id.
+
+    Prefer an explicit config keyed by ``type_id``, then fall back to the
+    catalog entry's ``generator`` family key. Shared-family types therefore
+    inherit family settings without per-alias rows.
+    """
+    if type_id in GENERATOR_SETTING_CONFIGS:
+        return GENERATOR_SETTING_CONFIGS[type_id]
+    try:
+        from ..core.registry import get_catalog_entry
+    except ImportError:
+        return None
+    try:
+        family = get_catalog_entry(type_id).generator
+    except KeyError:
+        return None
+    if family and family != type_id:
+        return GENERATOR_SETTING_CONFIGS.get(family)
+    return None
 
 
 def schema_for_generator(

@@ -1,5 +1,6 @@
 """Reusable generator frameworks for question types."""
 
+from .adapters import framework_generator, framework_generators
 from .base import QuestionFramework
 from .equation import (
     AbsoluteValueEquationsFramework,
@@ -97,6 +98,8 @@ from .word_problem import (
 )
 
 __all__ = [
+    "framework_generator",
+    "framework_generators",
     "QuestionFramework",
     "EquationFramework",
     "OneStepEquationsFramework",

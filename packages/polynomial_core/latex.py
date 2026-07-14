@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from fractions import Fraction
 from typing import TYPE_CHECKING, Sequence
 
@@ -10,10 +11,183 @@ if TYPE_CHECKING:
 
 Coef = int | float | Fraction
 
+# Unsigned numeric token for slash/op second-operand cleanup.
+_UNSIGNED_NUM = r"\d+(?:\.\d+)?(?:[eE][+-]?\d+)?"
+
 
 def fraction_latex(numerator: str, denominator: str) -> str:
     """Format a LaTeX fraction."""
     return f"\\frac{{{numerator}}}{{{denominator}}}"
+
+
+def unit_latex(unit: str, *, leading_space: bool = True) -> str:
+    """Upright unit label for math mode (avoids italicized ``cm`` / ``in`` / …).
+
+    Examples:
+        ``unit_latex("cm")`` → ``\\text{ cm}``
+        ``unit_latex("cm", leading_space=False)`` → ``\\text{cm}``
+    """
+    u = (unit or "").strip()
+    if not u:
+        return ""
+    if leading_space:
+        return f"\\text{{ {u}}}"
+    return f"\\text{{{u}}}"
+
+
+def format_with_unit(
+    value: Coef | str,
+    unit: str,
+    *,
+    power: int | None = None,
+) -> str:
+    """Numeric (or LaTeX) value with an upright unit suffix.
+
+    Examples:
+        ``format_with_unit(3, "cm")`` → ``3\\text{ cm}``
+        ``format_with_unit(r"\\frac{3}{2}", "cm")`` → ``\\frac{3}{2}\\text{ cm}``
+        ``format_with_unit(5, "cm", power=2)`` → ``5\\text{ cm}^{2}``
+    """
+    body = value if isinstance(value, str) else _coef_token(value)
+    suffix = unit_latex(unit)
+    if not suffix:
+        if power is not None and power != 1:
+            return f"{body}^{{{power}}}"
+        return body
+    if power is not None and power != 1:
+        return f"{body}{suffix}^{{{power}}}"
+    return f"{body}{suffix}"
+
+
+def format_measurement_text(
+    value: Coef | str,
+    unit: str,
+    *,
+    power: int | None = None,
+) -> str:
+    """Plain-text measurement for SVG / TikZ labels / ``prompt_text``."""
+    body = value if isinstance(value, str) else _coef_token(value)
+    u = (unit or "").strip()
+    if not u:
+        if power is not None and power != 1:
+            return f"{body}^{power}"
+        return body
+    if power is not None and power != 1:
+        return f"{body} {u}^{power}"
+    return f"{body} {u}"
+
+
+def _coef_token(value: Coef) -> str:
+    """Plain signed number string (no forced parentheses)."""
+    value = _as_number(value)
+    if isinstance(value, Fraction):
+        if value.denominator == 1:
+            return str(value.numerator)
+        sign = "-" if value < 0 else ""
+        return f"{sign}\\frac{{{abs(value.numerator)}}}{{{value.denominator}}}"
+    if isinstance(value, float) and abs(value - round(value)) < 1e-10:
+        return str(int(round(value)))
+    if isinstance(value, float):
+        return f"{value:g}"
+    return str(value)
+
+
+def paren_if_negative(value: Coef | str) -> str:
+    """Parenthesize a negative numeric token (e.g. for slash denominators)."""
+    if isinstance(value, str):
+        text = value.strip()
+        if text.startswith("-") and not text.startswith("("):
+            return f"({text})"
+        return text
+    token = _coef_token(value)
+    if token.startswith("-"):
+        return f"({token})"
+    return token
+
+
+def format_slash_fraction(numerator: Coef | str, denominator: Coef | str) -> str:
+    """Format ``a/b`` with parentheses around a negative denominator: ``2/(-1)``."""
+    num = numerator if isinstance(numerator, str) else _coef_token(numerator)
+    den = paren_if_negative(denominator)
+    return f"{num}/{den}"
+
+
+def format_binop_expression(
+    left: Coef | str,
+    op: str,
+    right: Coef | str,
+    *,
+    spaced: bool = True,
+) -> str:
+    """Format a binary operation without awkward ``+-`` / bare ``/-``.
+
+    - ``5 + (-2)`` / ``5+-2`` → ``5 - 2`` (or spaced ``5 - 2``)
+    - ``2 / -1`` → ``2/(-1)``
+    - ``2 \\div -1`` → ``2 \\div (-1)``
+    """
+    left_s = left if isinstance(left, str) else _coef_token(left)
+    right_s = right if isinstance(right, str) else _coef_token(right)
+    op_s = op.strip()
+    sep = " " if spaced else ""
+
+    right_negative = right_s.startswith("-") and not right_s.startswith("(")
+
+    if op_s == "+":
+        if right_negative:
+            return f"{left_s}{sep}-{sep}{right_s[1:]}"
+        return f"{left_s}{sep}+{sep}{right_s}"
+
+    if op_s == "-":
+        if right_negative:
+            return f"{left_s}{sep}-{sep}({right_s})"
+        return f"{left_s}{sep}-{sep}{right_s}"
+
+    if op_s == "/":
+        return format_slash_fraction(left_s, right_s)
+
+    # *, \\cdot, \\div, ÷ — parenthesize negative right operands
+    if right_negative:
+        right_s = f"({right_s})"
+    return f"{left_s}{sep}{op_s}{sep}{right_s}"
+
+
+def normalize_expression_signs(expr: str | None) -> str:
+    """Collapse awkward sign juxtaposition and parenthesize negative slash denoms.
+
+    Examples:
+        ``5+-2`` → ``5-2``
+        ``5 + -2`` → ``5 - 2``
+        ``5--2`` → ``5+2``
+        ``2/-1`` → ``2/(-1)``
+        ``2*x+-3`` → ``2*x-3``
+    """
+    if not expr:
+        return "" if expr is None else expr
+
+    s = expr
+    for _ in range(8):
+        prev = s
+        # Unspaced sign runs first (keep compact forms like `2*x-3`).
+        s = re.sub(r"\+-", "-", s)
+        s = re.sub(r"-\+", "-", s)
+        s = re.sub(r"--", "+", s)
+        # Spaced juxtapositions: `5 + -2` → `5 - 2`.
+        s = re.sub(r"\s+\+\s+-", " - ", s)
+        s = re.sub(r"\s+-\s+\+", " - ", s)
+        s = re.sub(r"\s+-\s+-", " + ", s)
+        # Slash with bare negative number (not already parenthesized).
+        s = re.sub(rf"/(\s*)-({_UNSIGNED_NUM})(?!\))", r"/(\1-\2)", s)
+        # Tighten "/( -1)" → "/(-1)"
+        s = re.sub(rf"/\(\s*-({_UNSIGNED_NUM})\s*\)", r"/(-\1)", s)
+        # Div/mul ops with bare negative second operand.
+        s = re.sub(
+            rf"(\\div|÷|\\cdot|\*)(\s*)-({_UNSIGNED_NUM})(?!\))",
+            r"\1\2(-\3)",
+            s,
+        )
+        if s == prev:
+            break
+    return s
 
 
 def square_root_latex(coeff: int, radicand: int) -> str:

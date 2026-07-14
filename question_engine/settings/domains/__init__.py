@@ -28,6 +28,8 @@ from .rational import (
 from .word_problem import (
     consecutive_integers_settings,
     distance_rate_time_settings,
+    percent_word_problem_settings,
+    similar_figures_prompt_settings,
     word_problem_settings,
     work_problem_settings,
 )
@@ -54,6 +56,8 @@ __all__ = [
     "inequality_settings",
     "consecutive_integers_settings",
     "distance_rate_time_settings",
+    "percent_word_problem_settings",
+    "similar_figures_prompt_settings",
     "word_problem_settings",
     "work_problem_settings",
     "geometry_settings",

@@ -6,8 +6,9 @@ import math
 import random
 from typing import Any
 
-from packages.polynomial_core import format_linear_latex
+from packages.polynomial_core import format_linear_latex, format_with_unit, unit_latex
 
+from .base import QuestionFramework
 from .geometry import (
     GeometryFramework,
     _ANGLE_LABELS,
@@ -24,15 +25,19 @@ from .geometry import (
     _random_side,
 )
 from ..diagrams import (
+    adjacent_angles_figure,
     angle_figure,
     circle_figure,
+    complementary_angles_figure,
+    kite_figure,
     parallel_lines_transversal_figure,
     parallelogram_figure,
     right_triangle_figure,
     segment_figure,
+    supplementary_angles_figure,
     trapezoid_figure,
     triangle_figure,
-    kite_figure,
+    vertical_angles_figure,
 )
 from ..generators.utils import random_int_range
 
@@ -71,7 +76,7 @@ def _expr_latex(a: int, b: int) -> str:
 
 
 class AngleAdditionFramework(GeometryFramework):
-    """Angle Addition Postulate: find a whole or part."""
+    """Angle Addition Postulate: find a whole or part from a multi-ray figure."""
 
     def __init__(self) -> None:
         super().__init__(figure_type="composite")
@@ -79,30 +84,114 @@ class AngleAdditionFramework(GeometryFramework):
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         symbol = _angle_symbol(settings)
-        part1 = _random_angle(settings)
-        part2 = _random_angle(settings)
-        while part1 + part2 >= 180:
-            part2 = _random_angle(settings)
-        total = part1 + part2
-        vertex, p1, p2, p3 = random.sample(_ANGLE_LABELS, 4)
-        find_total = random.choice([True, False])
-        if find_total:
-            prompt = (
-                f"\\text{{If }} m\\angle {p1}{vertex}{p2} = {part1}{symbol} "
-                f"\\text{{ and }} m\\angle {p2}{vertex}{p3} = {part2}{symbol},\\ "
-                f"\\text{{find }} m\\angle {p1}{vertex}{p3}."
-            )
-            answer = f"{total}{symbol}"
-            fig = angle_figure(p1, vertex, p3, float(total), show_measure=False)
+        tier = _difficulty_tier(settings)
+
+        if tier == "easy":
+            n = 2
+            mode = random.choice(["find_total", "find_part"])
+        elif tier == "medium":
+            n = random.choice([2, 3])
+            mode = random.choice(["find_total", "find_part", "find_span"])
         else:
+            n = random.choice([3, 4])
+            mode = random.choice(["find_span", "find_part", "find_span", "find_total"])
+
+        cap = 160 if tier == "easy" else 175
+        pieces: list[int] = []
+        for _attempt in range(12):
+            pieces = []
+            remaining = random.randint(max(40, 20 * n), cap)
+            ok = True
+            for i in range(n - 1):
+                left = n - i
+                hi = remaining - 12 * (left - 1)
+                if hi < 12:
+                    ok = False
+                    break
+                pieces.append(
+                    random.randint(12, max(12, min(hi, remaining // left + 15)))
+                )
+                remaining -= pieces[-1]
+            if not ok:
+                continue
+            pieces.append(remaining)
+            if pieces[-1] >= 12:
+                break
+        else:
+            pieces = [20] * (n - 1) + [30]
+
+        tip_count = n + 1
+        labels = random.sample(_ANGLE_LABELS, tip_count + 1)
+        vertex = labels[0]
+        tips = labels[1:]
+
+        if mode == "find_total":
+            ask_start, ask_end = 0, n
+            answer_val = sum(pieces)
+            piece_marks = [f"{p}\u00b0" for p in pieces]
+            span_marks = [(0, n, "?")]
+            given_bits = [
+                f"m\\angle {tips[i]}{vertex}{tips[i + 1]} = {pieces[i]}{symbol}"
+                for i in range(n)
+            ]
             prompt = (
-                f"\\text{{If }} m\\angle {p1}{vertex}{p3} = {total}{symbol} "
-                f"\\text{{ and }} m\\angle {p1}{vertex}{p2} = {part1}{symbol},\\ "
-                f"\\text{{find }} m\\angle {p2}{vertex}{p3}."
+                f"\\text{{In the diagram, }} "
+                + "\\text{{ and }} ".join(given_bits)
+                + f".\\ \\text{{Find }} m\\angle {tips[0]}{vertex}{tips[-1]}."
             )
-            answer = f"{part2}{symbol}"
-            fig = angle_figure(p1, vertex, p3, float(total), show_measure=True)
-        self._last = {"figure": fig, "labels": [p1, vertex, p3], "angle": total}
+        elif mode == "find_part":
+            miss = random.randrange(n)
+            ask_start, ask_end = miss, miss + 1
+            answer_val = pieces[miss]
+            piece_marks = [
+                "?" if i == miss else f"{p}\u00b0" for i, p in enumerate(pieces)
+            ]
+            span_marks = [(0, n, f"{sum(pieces)}\u00b0")]
+            labeled = [
+                f"m\\angle {tips[i]}{vertex}{tips[i + 1]} = {pieces[i]}{symbol}"
+                for i in range(n)
+                if i != miss
+            ]
+            prompt = (
+                f"\\text{{In the diagram, }} m\\angle {tips[0]}{vertex}{tips[-1]}"
+                f" = {sum(pieces)}{symbol}"
+            )
+            if labeled:
+                prompt += "\\text{{ and }} " + "\\text{{, }} ".join(labeled)
+            prompt += (
+                f".\\ \\text{{Find }} m\\angle {tips[miss]}{vertex}{tips[miss + 1]}."
+            )
+        else:
+            max_start = n - 2
+            ask_start = random.randint(0, max(0, max_start))
+            ask_end = random.randint(ask_start + 2, n)
+            answer_val = sum(pieces[ask_start:ask_end])
+            piece_marks = [f"{p}\u00b0" for p in pieces]
+            span_marks = [(ask_start, ask_end, "?")]
+            if tier == "hard" and ask_end - ask_start < n and random.random() < 0.55:
+                span_marks.append((0, n, f"{sum(pieces)}\u00b0"))
+            prompt = (
+                f"\\text{{Use the diagram to find }} "
+                f"m\\angle {tips[ask_start]}{vertex}{tips[ask_end]}."
+            )
+
+        fig = adjacent_angles_figure(
+            [float(p) for p in pieces],
+            tip_labels=tips,
+            vertex_label=vertex,
+            piece_labels=piece_marks,
+            span_marks=span_marks,
+            kind="angle_addition",
+        )
+        answer = f"{answer_val}{symbol}"
+        self._last = {
+            "figure": fig,
+            "labels": [tips[ask_start], vertex, tips[ask_end], *tips],
+            "angle": answer_val,
+            "pieces": pieces,
+            "ask_span": (ask_start, ask_end),
+            "mode": mode,
+        }
         return prompt, "angle addition", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
@@ -174,7 +263,7 @@ class SegmentAdditionFramework(GeometryFramework):
 
 
 class AngleRelationshipsFramework(GeometryFramework):
-    """Complementary, supplementary, or vertical angles."""
+    """Complementary, supplementary, or vertical angles — from relationship diagrams."""
 
     def __init__(self) -> None:
         super().__init__(figure_type="composite")
@@ -183,34 +272,45 @@ class AngleRelationshipsFramework(GeometryFramework):
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         symbol = _angle_symbol(settings)
         kind = random.choice(["complementary", "supplementary", "vertical"])
-        angle = _random_angle(settings)
-        vertex, p1, p2 = random.sample(_ANGLE_LABELS, 3)
         if kind == "complementary":
-            angle = random.randint(10, 80)
+            angle = random.randint(15, 75)
             other = 90 - angle
+            labels = tuple(random.sample(_ANGLE_LABELS, 4))
+            fig = complementary_angles_figure(float(angle), labels=labels)
             prompt = (
-                f"\\text{{Angles are complementary. If one measures }} {angle}{symbol},"
-                f"\\text{{ find the other.}}"
+                f"\\text{{The diagram shows complementary angles. "
+                f"Find the measure of the unmarked angle.}}"
             )
             answer = f"{other}{symbol}"
+            meta_labels = list(labels)
         elif kind == "supplementary":
-            angle = random.randint(20, 160)
+            angle = random.randint(25, 155)
             other = 180 - angle
+            labels = tuple(random.sample(_ANGLE_LABELS, 4))
+            fig = supplementary_angles_figure(float(angle), labels=labels)
             prompt = (
-                f"\\text{{Angles are supplementary. If one measures }} {angle}{symbol},"
-                f"\\text{{ find the other.}}"
+                f"\\text{{The diagram shows supplementary angles on a straight line. "
+                f"Find the measure of the unmarked angle.}}"
             )
             answer = f"{other}{symbol}"
+            meta_labels = list(labels)
         else:
+            angle = random.randint(25, 155)
+            if abs(angle - 90) < 8:
+                angle = 70 if angle < 90 else 110
+            labels5 = tuple(random.sample(_ANGLE_LABELS, 5))
+            fig = vertical_angles_figure(float(angle), labels=labels5)
             prompt = (
-                f"\\text{{Vertical angles are congruent. If }} m\\angle {p1}{vertex}{p2}"
-                f" = {angle}{symbol},\\text{{ find the measure of its vertical angle.}}"
+                f"\\text{{The diagram shows vertical angles formed by intersecting lines. "
+                f"Find the measure of the unmarked angle.}}"
             )
             answer = f"{angle}{symbol}"
+            meta_labels = list(labels5)
         self._last = {
-            "figure": angle_figure(p1, vertex, p2, float(angle), show_measure=True),
-            "labels": [p1, vertex, p2],
+            "figure": fig,
+            "labels": meta_labels,
             "angle": angle,
+            "kind": kind,
         }
         return prompt, f"angle relationship {kind}", answer
 
@@ -1079,41 +1179,435 @@ class SolidVolumeSurfaceFramework(GeometryFramework):
         if shape == "cube":
             s = _random_side(settings)
             if random.choice([True, False]):
-                prompt = f"\\text{{Find the volume of a cube with side }} {s}\\text{{ {unit}}}."
-                answer = f"{s ** 3}\\text{{ {unit}}}^3"
+                prompt = (
+                    f"\\text{{Find the volume of a cube with side }} "
+                    f"{format_with_unit(s, unit)}."
+                )
+                answer = format_with_unit(s ** 3, unit, power=3)
             else:
                 prompt = (
                     f"\\text{{Find the surface area of a cube with side }} "
-                    f"{s}\\text{{ {unit}}}."
+                    f"{format_with_unit(s, unit)}."
                 )
-                answer = f"{6 * s * s}\\text{{ {unit}}}^2"
+                answer = format_with_unit(6 * s * s, unit, power=2)
         elif shape == "rectangular prism":
             l, w, h = _random_side(settings), _random_side(settings), _random_side(settings)
             if random.choice([True, False]):
                 prompt = (
-                    f"\\text{{Find the volume of a }} {l}\\times{w}\\times{h}\\text{{ {unit}}} "
-                    f"\\text{{ rectangular prism.}}"
+                    f"\\text{{Find the volume of a }} {l}\\times{w}\\times{h}"
+                    f"{unit_latex(unit)} \\text{{ rectangular prism.}}"
                 )
-                answer = f"{l * w * h}\\text{{ {unit}}}^3"
+                answer = format_with_unit(l * w * h, unit, power=3)
             else:
                 sa = 2 * (l * w + l * h + w * h)
                 prompt = (
                     f"\\text{{Find the surface area of a }} {l}\\times{w}\\times{h}"
-                    f"\\text{{ {unit}}} \\text{{ rectangular prism.}}"
+                    f"{unit_latex(unit)} \\text{{ rectangular prism.}}"
                 )
-                answer = f"{sa}\\text{{ {unit}}}^2"
+                answer = format_with_unit(sa, unit, power=2)
         else:
             r = random.randint(2, 10)
             h = _random_side(settings)
             prompt = (
-                f"\\text{{Find the volume of a cylinder with radius }} {r}\\text{{ {unit}}} "
-                f"\\text{{ and height }} {h}\\text{{ {unit}}}."
+                f"\\text{{Find the volume of a cylinder with radius }} "
+                f"{format_with_unit(r, unit)} "
+                f"\\text{{ and height }} {format_with_unit(h, unit)}."
             )
-            answer = f"{r * r}\\pi \\cdot {h}\\text{{ {unit}}}^3"
+            answer = f"{r * r}\\pi \\cdot {h}{unit_latex(unit)}^{{3}}"
         return prompt, f"solid {shape}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}
+
+
+
+# ---------------------------------------------------------------------------
+# Geometric transformations on the coordinate plane (shapes, not functions)
+# ---------------------------------------------------------------------------
+
+_Point = tuple[int, int]
+
+
+def _format_vertices_latex(labels: list[str], points: list[_Point]) -> str:
+    return ",\\ ".join(f"{lab}({x}, {y})" for lab, (x, y) in zip(labels, points))
+
+
+def _format_image_vertices_latex(labels: list[str], points: list[_Point]) -> str:
+    return ",\\ ".join(f"{lab}'({x}, {y})" for lab, (x, y) in zip(labels, points))
+
+
+def _translate_points(points: list[_Point], dx: int, dy: int) -> list[_Point]:
+    return [(x + dx, y + dy) for x, y in points]
+
+
+def _reflect_over_x(points: list[_Point]) -> list[_Point]:
+    return [(x, -y) for x, y in points]
+
+
+def _reflect_over_y(points: list[_Point]) -> list[_Point]:
+    return [(-x, y) for x, y in points]
+
+
+def _reflect_over_yx(points: list[_Point]) -> list[_Point]:
+    return [(y, x) for x, y in points]
+
+
+def _rotate_90_ccw(points: list[_Point]) -> list[_Point]:
+    return [(-y, x) for x, y in points]
+
+
+def _rotate_90_cw(points: list[_Point]) -> list[_Point]:
+    return [(y, -x) for x, y in points]
+
+
+def _rotate_180(points: list[_Point]) -> list[_Point]:
+    return [(-x, -y) for x, y in points]
+
+
+def _dilate_from_origin(points: list[_Point], k: int) -> list[_Point]:
+    return [(k * x, k * y) for x, y in points]
+
+
+def _points_in_bounds(points: list[_Point], lo: int, hi: int) -> bool:
+    return all(lo <= x <= hi and lo <= y <= hi for x, y in points)
+
+
+def _translation_action(dx: int, dy: int) -> str:
+    parts: list[str] = []
+    if dx:
+        units = "unit" if abs(dx) == 1 else "units"
+        direction = "right" if dx > 0 else "left"
+        parts.append(f"{abs(dx)} {units} {direction}")
+    if dy:
+        units = "unit" if abs(dy) == 1 else "units"
+        direction = "up" if dy > 0 else "down"
+        parts.append(f"{abs(dy)} {units} {direction}")
+    joined = " and ".join(parts) if parts else "0 units"
+    return f"\\text{{translated {joined}}}"
+
+
+def _random_transform_triangle(lo: int, hi: int) -> list[_Point]:
+    for _ in range(40):
+        pts = [
+            (random.randint(lo, hi), random.randint(lo, hi)),
+            (random.randint(lo, hi), random.randint(lo, hi)),
+            (random.randint(lo, hi), random.randint(lo, hi)),
+        ]
+        if len(set(pts)) < 3:
+            continue
+        (x1, y1), (x2, y2), (x3, y3) = pts
+        if (x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1) == 0:
+            continue
+        return pts
+    return [(1, 1), (3, 1), (2, 3)]
+
+
+def _random_transform_rectangle(lo: int, hi: int, *, square: bool = False) -> list[_Point]:
+    span = max(2, hi - lo)
+    side_cap = min(3, span)
+    w = random.randint(1, side_cap)
+    h = w if square else random.randint(1, side_cap)
+    if not square and w == h and side_cap >= 2:
+        h = 1 if w != 1 else 2
+    x = random.randint(lo, hi - w)
+    y = random.randint(lo, hi - h)
+    return [(x, y), (x + w, y), (x + w, y + h), (x, y + h)]
+
+
+def _random_transform_parallelogram(lo: int, hi: int) -> list[_Point]:
+    for _ in range(40):
+        ax = random.randint(lo, hi - 3)
+        ay = random.randint(lo, hi - 3)
+        w = random.randint(2, 3)
+        dx = random.randint(1, 2)
+        dy = random.randint(2, 3)
+        pts = [(ax, ay), (ax + w, ay), (ax + w + dx, ay + dy), (ax + dx, ay + dy)]
+        if _points_in_bounds(pts, lo, hi) and len(set(pts)) == 4:
+            return pts
+    return [(-2, -1), (1, -1), (2, 2), (-1, 2)]
+
+
+def _pick_plane_figure(
+    lo: int, hi: int, *, tier: str
+) -> tuple[str, list[str], list[_Point]]:
+    if tier == "easy":
+        choices = ("triangle", "triangle", "square", "rectangle")
+    elif tier == "hard":
+        choices = ("triangle", "parallelogram", "rectangle", "quadrilateral")
+    else:
+        choices = ("triangle", "square", "rectangle", "parallelogram")
+    kind = random.choice(choices)
+    if kind == "triangle":
+        return "triangle", ["A", "B", "C"], _random_transform_triangle(lo, hi)
+    if kind == "square":
+        return "square", ["A", "B", "C", "D"], _random_transform_rectangle(lo, hi, square=True)
+    if kind == "parallelogram":
+        return "parallelogram", ["A", "B", "C", "D"], _random_transform_parallelogram(lo, hi)
+    if kind == "quadrilateral":
+        return "quadrilateral", ["A", "B", "C", "D"], _random_transform_parallelogram(lo, hi)
+    return "rectangle", ["A", "B", "C", "D"], _random_transform_rectangle(lo, hi)
+
+
+class GeometricTransformationsFramework(QuestionFramework):
+    """Graph translations, reflections, rotations, and dilations of plane figures.
+
+    Not function transformations — triangles / squares / quadrilaterals on a
+    coordinate plane. Easy: translations. Medium: reflections / rotations.
+    Hard: dilations and compositions.
+    """
+
+    instruction_latex = r"\text{Graph the transformation.}"
+    instruction_text = "Graph the transformation."
+
+    def __init__(self) -> None:
+        self._last: dict[str, Any] = {}
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from ..diagrams.grade6_figures import coordinate_transform_svg
+
+        tier = _difficulty_tier(settings)
+        lo, hi = _bounds(settings, "coord_min", "coord_max", -6, 6)
+        pre_lo = max(lo, -4)
+        pre_hi = min(hi, 4)
+        if pre_hi - pre_lo < 3:
+            pre_lo, pre_hi = -3, 3
+
+        shape_name, labels, preimage = _pick_plane_figure(pre_lo, pre_hi, tier=tier)
+        image: list[_Point] = list(preimage)
+        kind = "translation"
+        action = r"\text{translated}"
+
+        if tier == "easy":
+            kind = "translation"
+            for _attempt in range(40):
+                dx = random.choice([-4, -3, -2, -1, 1, 2, 3, 4])
+                dy = random.choice([-4, -3, -2, -1, 1, 2, 3, 4])
+                cand = _translate_points(preimage, dx, dy)
+                if _points_in_bounds(cand, lo, hi):
+                    image = cand
+                    action = _translation_action(dx, dy)
+                    break
+            else:
+                image = _translate_points(preimage, 2, 3)
+                action = _translation_action(2, 3)
+
+        elif tier == "medium":
+            options: list[tuple[str, str, Any]] = [
+                ("reflection_x", r"\text{reflected across the }x\text{-axis}", _reflect_over_x),
+                ("reflection_y", r"\text{reflected across the }y\text{-axis}", _reflect_over_y),
+                ("reflection_yx", r"\text{reflected across the line }y=x", _reflect_over_yx),
+                (
+                    "rotation_90",
+                    r"\text{rotated }90^\circ\text{ counterclockwise about the origin}",
+                    _rotate_90_ccw,
+                ),
+                (
+                    "rotation_90_cw",
+                    r"\text{rotated }90^\circ\text{ clockwise about the origin}",
+                    _rotate_90_cw,
+                ),
+                (
+                    "rotation_180",
+                    r"\text{rotated }180^\circ\text{ about the origin}",
+                    _rotate_180,
+                ),
+            ]
+            # Dilations / compositions are hard (grade progression).
+            random.shuffle(options)
+            for kind, action, fn in options:
+                cand = fn(preimage)
+                if _points_in_bounds(cand, lo, hi) and cand != preimage:
+                    image = cand
+                    break
+            else:
+                kind = "translation"
+                image = _translate_points(preimage, 2, -1)
+                action = _translation_action(2, -1)
+
+        else:  # hard — dilations and compositions
+            if random.random() < 0.45:
+                kind = "dilation"
+                for _attempt in range(25):
+                    k = random.choice([2, 3])
+                    shape_name, labels, compact = _pick_plane_figure(-2, 2, tier="hard")
+                    if any(p == (0, 0) for p in compact):
+                        continue
+                    cand = _dilate_from_origin(compact, k)
+                    if _points_in_bounds(cand, lo, hi) and cand != compact:
+                        preimage = compact
+                        image = cand
+                        action = (
+                            f"\\text{{dilated by a factor of }} {k}"
+                            r"\text{ centered at the origin}"
+                        )
+                        break
+                else:
+                    preimage = [(1, 1), (2, 1), (1, 2)]
+                    labels = ["A", "B", "C"]
+                    shape_name = "triangle"
+                    image = _dilate_from_origin(preimage, 2)
+                    action = r"\text{dilated by a factor of }2\text{ centered at the origin}"
+            else:
+                kind = "composition"
+                dx = random.choice([-3, -2, -1, 1, 2, 3])
+                dy = random.choice([-3, -2, -1, 1, 2, 3])
+                mid = _translate_points(preimage, dx, dy)
+                t_part = _translation_action(dx, dy)
+                second = random.choice(["reflect_y", "reflect_x", "rotate_180", "dilate"])
+                if second == "reflect_y":
+                    image = _reflect_over_y(mid)
+                    action = f"{t_part}\\text{{, then reflected across the }}y\\text{{-axis}}"
+                elif second == "reflect_x":
+                    image = _reflect_over_x(mid)
+                    action = f"{t_part}\\text{{, then reflected across the }}x\\text{{-axis}}"
+                elif second == "dilate":
+                    shape_name, labels, compact = _pick_plane_figure(-2, 2, tier="hard")
+                    mid = _dilate_from_origin(compact, 2)
+                    image = _translate_points(mid, dx, dy)
+                    preimage = compact
+                    action = (
+                        r"\text{dilated by a factor of }2\text{ centered at the origin, then }"
+                        + _translation_action(dx, dy)
+                    )
+                else:
+                    image = _rotate_180(mid)
+                    action = (
+                        f"{t_part}\\text{{, then rotated }}"
+                        r"180^\circ\text{ about the origin}"
+                    )
+
+        verts = _format_vertices_latex(labels, preimage)
+        image_verts = _format_image_vertices_latex(labels, image)
+        image_labels = [f"{lab}'" for lab in labels]
+        use_stimulus = bool(settings.get("show_preimage_graph", True)) and random.random() < 0.6
+
+        if use_stimulus:
+            if shape_name == "triangle":
+                prompt = (
+                    rf"\triangle {''.join(labels)}\text{{ shown on the coordinate plane is }} "
+                    f"{action}\\text{{. Graph the image.}}"
+                )
+            else:
+                prompt = (
+                    f"\\text{{The {shape_name} shown on the coordinate plane is }} {action}"
+                    f"\\text{{. Graph the image.}}"
+                )
+            prompt_mode = "stimulus"
+            prompt_svg = coordinate_transform_svg(preimage, labels=labels)
+        else:
+            if shape_name == "triangle":
+                prompt = (
+                    rf"\triangle {''.join(labels)}\text{{ has vertices }} {verts}"
+                    f"\\text{{. The figure is }} {action}"
+                    f"\\text{{. Graph the image.}}"
+                )
+            else:
+                prompt = (
+                    f"\\text{{A {shape_name} has vertices }} {verts}"
+                    f"\\text{{. The figure is }} {action}"
+                    f"\\text{{. Graph the image.}}"
+                )
+            prompt_mode = "blank"
+            prompt_svg = coordinate_transform_svg(preimage, blank=True)
+
+        answer_svg = coordinate_transform_svg(
+            preimage,
+            image=image,
+            labels=labels,
+            image_labels=image_labels,
+        )
+        self._last = {
+            "preimage": preimage,
+            "image": image,
+            "labels": labels,
+            "shape": shape_name,
+            "kind": kind,
+            "prompt_mode": prompt_mode,
+            "diagram_svg": prompt_svg,
+            "answer_diagram_svg": answer_svg,
+        }
+        return prompt, f"{kind} of {shape_name}", image_verts
+
+    def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        from .graphing import (
+            CoordinatePlaneSpec,
+            blank_graph_spec,
+            coordinate_plane_spec_to_graph_spec,
+            include_graph_metadata,
+            origin_centered_bounds,
+        )
+        from ..core.metadata import question_metadata
+
+        last = self._last
+        if not last:
+            return {}
+        preimage: list[_Point] = last["preimage"]
+        image: list[_Point] = last["image"]
+        features = [(float(x), float(y)) for x, y in preimage + image]
+        x_min, x_max, y_min, y_max = origin_centered_bounds(features, settings=settings)
+        answer_spec = CoordinatePlaneSpec(
+            points=[(float(x), float(y)) for x, y in image],
+            show_grid=True,
+            show_points=True,
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
+        pre_spec = CoordinatePlaneSpec(
+            points=[(float(x), float(y)) for x, y in preimage],
+            show_grid=True,
+            show_points=True,
+            x_min=x_min,
+            x_max=x_max,
+            y_min=y_min,
+            y_max=y_max,
+        )
+        meta: dict[str, Any] = {
+            "kind": "geometric_transformation",
+            "diagram_svg": last.get("diagram_svg"),
+            "answer_diagram_svg": last.get("answer_diagram_svg"),
+            "coordinate_points": [
+                {"x": x, "y": y, "label": lab}
+                for lab, (x, y) in zip(last["labels"], preimage)
+            ],
+            "image_points": [
+                {"x": x, "y": y, "label": f"{lab}'"}
+                for lab, (x, y) in zip(last["labels"], image)
+            ],
+            "transform_kind": last.get("kind"),
+        }
+        if not include_graph_metadata(settings):
+            return meta
+        answer_gs = coordinate_plane_spec_to_graph_spec(answer_spec, settings)
+        if last.get("prompt_mode") == "stimulus":
+            pre_gs = coordinate_plane_spec_to_graph_spec(pre_spec, settings)
+            meta.update(
+                question_metadata(
+                    graph_spec=pre_gs,
+                    answer_graph_spec=answer_gs,
+                    graph_role="stimulus",
+                )
+            )
+        else:
+            meta.update(
+                question_metadata(
+                    graph_spec=blank_graph_spec(answer_gs),
+                    answer_graph_spec=answer_gs,
+                    graph_role="blank",
+                )
+            )
+        return meta
 
 
 class RemainingGeometryFramework(GeometryFramework):
@@ -1253,14 +1747,89 @@ class RemainingGeometryFramework(GeometryFramework):
                 f"{apothem * perimeter / 2:g}\\text{{ {unit}}}^2",
             )
         if mode == "similar_polygons":
+            from ..diagrams import similar_figures_pair_figure
+
             scale = random.choice([2, 3, 4])
             side = _random_side(settings)
-            self._last = {"figure": parallelogram_figure(6, 4, show_dimensions=False), "labels": ["A", "B", "C", "D"]}
+            other = _random_side(settings)
+            while other == side:
+                other = _random_side(settings)
+            style = str(settings.get("prompt_style", "diagram")).strip().lower()
+            use_diagram = style not in {
+                "description_only",
+                "description",
+                "text",
+                "text_only",
+            } and _diagram_enabled(settings)
+            if "include_figure" in settings:
+                use_diagram = bool(settings["include_figure"]) and _diagram_enabled(settings)
+
+            task = random.choice(["scale_factor", "missing_side", "scale_factor"])
+            if task == "scale_factor":
+                answer = str(scale)
+                if use_diagram:
+                    fig = similar_figures_pair_figure(
+                        shape="rectangle",
+                        small_labels=("A", "B", "C", "D"),
+                        large_labels=("E", "F", "G", "H"),
+                        small_side_labels={
+                            "AB": f"{side} {unit}",
+                            "AD": f"{other} {unit}",
+                        },
+                        large_side_labels={
+                            "EF": f"{side * scale} {unit}",
+                            "EH": f"{other * scale} {unit}",
+                        },
+                        aspect=(3.0, 2.0),
+                        scale_factor=float(scale),
+                        kind="similar_polygons",
+                    )
+                    prompt = (
+                        r"ABCD \sim EFGH.\ "
+                        r"\text{The polygons are similar. Find the scale factor "
+                        r"from }ABCD\text{ to }EFGH."
+                    )
+                else:
+                    fig = None
+                    prompt = (
+                        f"\\text{{Two polygons have corresponding side lengths }} {side}\\text{{ and }} {side * scale}"
+                        f"\\text{{ and all corresponding angles are congruent. Find the scale factor from the first to the second.}}"
+                    )
+            else:
+                answer = f"{other * scale}\\text{{ {unit}}}"
+                if use_diagram:
+                    fig = similar_figures_pair_figure(
+                        shape="rectangle",
+                        small_labels=("A", "B", "C", "D"),
+                        large_labels=("E", "F", "G", "H"),
+                        small_side_labels={
+                            "AB": f"{side} {unit}",
+                            "AD": f"{other} {unit}",
+                        },
+                        large_side_labels={
+                            "EF": f"{side * scale} {unit}",
+                            "EH": "?",
+                        },
+                        aspect=(3.0, 2.0),
+                        scale_factor=float(scale),
+                        kind="similar_polygons",
+                    )
+                    prompt = r"ABCD \sim EFGH.\ \text{Find the length of } EH."
+                else:
+                    fig = None
+                    prompt = (
+                        f"\\text{{Two similar polygons have corresponding sides }} {side}\\text{{ {unit} and }} "
+                        f"{side * scale}\\text{{ {unit}. A second side of the smaller is }} {other}\\text{{ {unit}. "
+                        f"Find the corresponding larger side.}}"
+                    )
+            self._last = {
+                "figure": fig,
+                "labels": ["A", "B", "C", "D", "E", "F", "G", "H"],
+            }
             return (
-                f"\\text{{Two polygons have corresponding side lengths }} {side}\\text{{ and }} {side * scale}"
-                f"\\text{{ and all corresponding angles are congruent. Find the scale factor from the first to the second.}}",
-                "similar polygons scale factor",
-                str(scale),
+                prompt,
+                "similar polygons",
+                answer,
             )
         if mode == "proportional_parts":
             small, ratio = _random_side(settings), random.choice([2, 3, 4])
@@ -1377,14 +1946,9 @@ class RemainingGeometryFramework(GeometryFramework):
                 f"(x-({h}))^2+(y-({k}))^2={r*r}",
             )
         if mode == "transformations":
-            dx, dy = random.choice([(3, 2), (-4, 1), (2, -3)])
-            self._last = {"figure": triangle_figure(labels, (50, 60, 70)), "labels": labels}
-            return (
-                f"\\text{{Point }} A({random.randint(-4, 3)},{random.randint(-4, 3)}) "
-                f"\\text{{is translated }} {dx}\\text{{ units horizontally and }} {dy}\\text{{ units vertically. "
-                "Describe the translation.}",
-                "translation description",
-                f"({dx}, {dy})",
+            raise RuntimeError(
+                "geo_transformations uses GeometricTransformationsFramework; "
+                "do not call RemainingGeometryFramework('transformations')."
             )
 
         construction_answers = {
@@ -1437,10 +2001,13 @@ class RemainingGeometryFramework(GeometryFramework):
         last = self._last
         if not last:
             return {}
+        fig = last.get("figure")
+        if fig is None:
+            return {}
         return _figure_metadata(
             settings,
             figure_type="composite",
             labels=last["labels"],
             dimensions={},
-            diagram=last["figure"] if _diagram_enabled(settings) else None,
+            diagram=fig if _diagram_enabled(settings) else None,
         )

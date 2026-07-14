@@ -85,6 +85,18 @@ def probability_format_settings() -> list[SettingField]:
     ]
 
 
+def chart_drawing_settings() -> list[SettingField]:
+    return [
+        SettingField(
+            "include_axis",
+            "Include blank axis",
+            "bool",
+            True,
+            group="statistics",
+        ),
+    ]
+
+
 def statistics_settings() -> list[SettingField]:
     return [
         *statistics_data_settings(),

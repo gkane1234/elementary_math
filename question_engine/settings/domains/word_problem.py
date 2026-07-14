@@ -5,6 +5,27 @@ from __future__ import annotations
 from ...core.models import SettingField
 
 
+def similar_figures_prompt_settings() -> list[SettingField]:
+    """Diagram vs written-description prompts for similar-figures types."""
+    return [
+        SettingField(
+            "prompt_style",
+            "Prompt style",
+            "select",
+            "diagram",
+            options=["diagram", "description_only"],
+            group="similar_figures",
+        ),
+        SettingField(
+            "include_figure",
+            "Include figure diagram",
+            "bool",
+            True,
+            group="similar_figures",
+        ),
+    ]
+
+
 def word_problem_settings() -> list[SettingField]:
     return [
         SettingField(
@@ -198,6 +219,61 @@ def work_problem_settings() -> list[SettingField]:
             "bool",
             True,
             group="work_units",
+        ),
+    ]
+
+
+def percent_word_problem_settings() -> list[SettingField]:
+    """Variant and money-shape toggles for markup / discount / tax / tip."""
+    return [
+        SettingField(
+            "allow_discount",
+            "Allow discount problems",
+            "bool",
+            True,
+            group="percent_wp",
+        ),
+        SettingField(
+            "allow_tax",
+            "Allow sales tax problems",
+            "bool",
+            True,
+            group="percent_wp",
+        ),
+        SettingField(
+            "allow_markup",
+            "Allow markup problems",
+            "bool",
+            True,
+            group="percent_wp",
+        ),
+        SettingField(
+            "allow_tip",
+            "Allow tip problems",
+            "bool",
+            True,
+            group="percent_wp",
+        ),
+        SettingField(
+            "allow_price_cents",
+            "Allow non-whole-dollar prices",
+            "bool",
+            False,
+            group="percent_wp",
+        ),
+        SettingField(
+            "allow_decimal_rates",
+            "Allow decimal percent rates",
+            "bool",
+            False,
+            group="percent_wp",
+        ),
+        SettingField(
+            "allow_multi_step",
+            "Allow discount-then-tax (hard)",
+            "bool",
+            False,
+            group="percent_wp",
         ),
     ]
 

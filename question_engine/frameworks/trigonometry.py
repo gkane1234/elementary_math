@@ -17,6 +17,7 @@ from .geometry import (
 )
 from ..core.metadata import DiagramSpec
 from ..diagrams import right_triangle_figure
+from ..generators.utils import format_measurement_text, format_with_unit
 
 RatioTarget = Literal["sin", "cos", "tan", "any"]
 
@@ -60,9 +61,9 @@ class RightTriangleTrigFramework(QuestionFramework):
             mode = random.choice(["ratio", "angle", "side"])
 
         side_labels = {
-            "BC": f"{opp} {unit}",
-            "AC": f"{adj} {unit}",
-            "AB": f"{hyp} {unit}",
+            "BC": format_measurement_text(opp, unit),
+            "AC": format_measurement_text(adj, unit),
+            "AB": format_measurement_text(hyp, unit),
         }
         angle_labels = {"A": "θ"}
 
@@ -85,27 +86,36 @@ class RightTriangleTrigFramework(QuestionFramework):
             if fn == "sin":
                 prompt = (
                     f"\\text{{In right }} \\triangle ABC \\text{{ with right angle at }} C,"
-                    f"\\ BC = {opp}\\text{{ {unit}}},\\ AB = {hyp}\\text{{ {unit}}}.\\ "
+                    f"\\ BC = {format_with_unit(opp, unit)},\\ AB = {format_with_unit(hyp, unit)}.\\ "
                     f"\\text{{Find }} m\\angle A."
                 )
                 answer = f"\\sin^{{-1}}\\left(\\frac{{{opp}}}{{{hyp}}}\\right)"
-                side_labels = {"BC": f"{opp} {unit}", "AB": f"{hyp} {unit}"}
+                side_labels = {
+                    "BC": format_measurement_text(opp, unit),
+                    "AB": format_measurement_text(hyp, unit),
+                }
             elif fn == "cos":
                 prompt = (
                     f"\\text{{In right }} \\triangle ABC \\text{{ with right angle at }} C,"
-                    f"\\ AC = {adj}\\text{{ {unit}}},\\ AB = {hyp}\\text{{ {unit}}}.\\ "
+                    f"\\ AC = {format_with_unit(adj, unit)},\\ AB = {format_with_unit(hyp, unit)}.\\ "
                     f"\\text{{Find }} m\\angle A."
                 )
                 answer = f"\\cos^{{-1}}\\left(\\frac{{{adj}}}{{{hyp}}}\\right)"
-                side_labels = {"AC": f"{adj} {unit}", "AB": f"{hyp} {unit}"}
+                side_labels = {
+                    "AC": format_measurement_text(adj, unit),
+                    "AB": format_measurement_text(hyp, unit),
+                }
             else:
                 prompt = (
                     f"\\text{{In right }} \\triangle ABC \\text{{ with right angle at }} C,"
-                    f"\\ BC = {opp}\\text{{ {unit}}},\\ AC = {adj}\\text{{ {unit}}}.\\ "
+                    f"\\ BC = {format_with_unit(opp, unit)},\\ AC = {format_with_unit(adj, unit)}.\\ "
                     f"\\text{{Find }} m\\angle A."
                 )
                 answer = f"\\tan^{{-1}}\\left(\\frac{{{opp}}}{{{adj}}}\\right)"
-                side_labels = {"BC": f"{opp} {unit}", "AC": f"{adj} {unit}"}
+                side_labels = {
+                    "BC": format_measurement_text(opp, unit),
+                    "AC": format_measurement_text(adj, unit),
+                }
             text = "find angle A"
         else:
             # Missing side via trig with given angle (use nice acute angle label)
@@ -114,24 +124,24 @@ class RightTriangleTrigFramework(QuestionFramework):
             if find == "opp":
                 prompt = (
                     f"\\text{{In right }} \\triangle ABC,\\ m\\angle A = {angle}^\\circ,"
-                    f"\\ AC = {adj}\\text{{ {unit}}}.\\ \\text{{Find }} BC."
+                    f"\\ AC = {format_with_unit(adj, unit)}.\\ \\text{{Find }} BC."
                 )
                 answer = f"{adj}\\tan {angle}^\\circ"
-                side_labels = {"AC": f"{adj} {unit}", "BC": "?"}
+                side_labels = {"AC": format_measurement_text(adj, unit), "BC": "?"}
             elif find == "adj":
                 prompt = (
                     f"\\text{{In right }} \\triangle ABC,\\ m\\angle A = {angle}^\\circ,"
-                    f"\\ BC = {opp}\\text{{ {unit}}}.\\ \\text{{Find }} AC."
+                    f"\\ BC = {format_with_unit(opp, unit)}.\\ \\text{{Find }} AC."
                 )
                 answer = f"\\frac{{{opp}}}{{\\tan {angle}^\\circ}}"
-                side_labels = {"BC": f"{opp} {unit}", "AC": "?"}
+                side_labels = {"BC": format_measurement_text(opp, unit), "AC": "?"}
             else:
                 prompt = (
                     f"\\text{{In right }} \\triangle ABC,\\ m\\angle A = {angle}^\\circ,"
-                    f"\\ BC = {opp}\\text{{ {unit}}}.\\ \\text{{Find }} AB."
+                    f"\\ BC = {format_with_unit(opp, unit)}.\\ \\text{{Find }} AB."
                 )
                 answer = f"\\frac{{{opp}}}{{\\sin {angle}^\\circ}}"
-                side_labels = {"BC": f"{opp} {unit}", "AB": "?"}
+                side_labels = {"BC": format_measurement_text(opp, unit), "AB": "?"}
             angle_labels = {"A": f"{angle}°"}
             text = "trig missing side"
 

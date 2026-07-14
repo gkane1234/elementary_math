@@ -111,11 +111,9 @@ CURRICULUM_ID_OVERRIDES: dict[str, str] = {
     "geo_review_multi_step_equations": "multi_step_equations",
     "geo_parallel_writing_linear_equations": "writing_linear_equations",
     # Tier 3 — course-specific catalog ids dedup to canonical generators
-    "pa_integers_adding_and_subtracting": "rational_add_subtract",
     "pa_integers_multiplying": "rational_multiply",
     "pa_integers_dividing": "rational_divide",
     "pa_greatest_common_factor": "g6_greatest_common_factor",
-    "pa_squares_and_square_roots": "radical_simplification",
     "pythagorean_theorem": "geo_pythagorean_theorem",
     "g6_comparing_ratios": "g6_equivalent_ratios",
     "g6_comparing_rates": "g6_unit_rates",

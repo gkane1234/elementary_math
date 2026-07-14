@@ -26,6 +26,7 @@ from ..frameworks.geometry_extended import (
     CentralArcAngleFramework,
     ClassifyingTrianglesFramework,
     ExteriorAngleFramework,
+    GeometricTransformationsFramework,
     InscribedAngleFramework,
     IsoscelesTriangleFramework,
     KiteAreaFramework,
@@ -52,6 +53,7 @@ _SIMILAR_TRIANGLES = SimilarTrianglesFramework()
 _CIRCLE_MEASURE = CircleMeasureFramework()
 _COORDINATE_DISTANCE = CoordinateDistanceFramework()
 _COORDINATE_PERIMETER = CoordinatePerimeterFramework()
+_GEO_TRANSFORMATIONS = GeometricTransformationsFramework()
 _ANGLE_ADDITION = AngleAdditionFramework()
 _SEGMENT_ADDITION = SegmentAdditionFramework()
 _ANGLE_RELATIONSHIPS = AngleRelationshipsFramework()
@@ -131,7 +133,7 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "geo_circle_segment_measures": lambda topic, settings: _batch(RemainingGeometryFramework("circle_segments"), topic, settings),
     "geo_circle_equation_using": lambda topic, settings: _batch(RemainingGeometryFramework("circle_equation_using"), topic, settings),
     "geo_circle_equation_writing": lambda topic, settings: _batch(RemainingGeometryFramework("circle_equation_writing"), topic, settings),
-    "geo_transformations": lambda topic, settings: _batch(RemainingGeometryFramework("transformations"), topic, settings),
+    "geo_transformations": lambda topic, settings: _batch(_GEO_TRANSFORMATIONS, topic, settings),
     "geo_construction_segments": lambda topic, settings: _batch(RemainingGeometryFramework("construction_segments"), topic, settings),
     "geo_construction_perpendicular": lambda topic, settings: _batch(RemainingGeometryFramework("construction_perpendicular"), topic, settings),
     "geo_construction_angles": lambda topic, settings: _batch(RemainingGeometryFramework("construction_angles"), topic, settings),

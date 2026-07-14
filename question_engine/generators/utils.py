@@ -8,22 +8,36 @@ from fractions import Fraction
 from typing import Any, Callable
 
 from packages.polynomial_core import (
+    format_binop_expression,
     format_linear_latex,
+    format_measurement_text,
     format_monomial_latex,
     format_polynomial_latex,
+    format_slash_fraction,
     format_slope_intercept_latex,
+    format_with_unit,
     join_algebra_terms,
+    normalize_expression_signs,
+    paren_if_negative,
+    unit_latex,
 )
 
 from ..core.models import Question
 
 # Re-export polynomial term formatters for generator convenience.
 __all_formatters__ = (
+    "format_binop_expression",
     "format_linear_latex",
+    "format_measurement_text",
     "format_monomial_latex",
     "format_polynomial_latex",
+    "format_slash_fraction",
     "format_slope_intercept_latex",
+    "format_with_unit",
     "join_algebra_terms",
+    "normalize_expression_signs",
+    "paren_if_negative",
+    "unit_latex",
 )
 
 

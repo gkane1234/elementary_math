@@ -76,7 +76,6 @@ for tid in (
     "g6_interpreting_dot_plots",
     "g6_equations_tape_diagrams",
     "g6_drawing_dot_plots",
-    "g6_isometric_sketching",
     "finding_sine_cosine_tangent",
     "graphing_linear_equations",
 ):

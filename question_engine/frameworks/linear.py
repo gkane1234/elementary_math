@@ -187,48 +187,281 @@ def _plane_spec(
     )
 
 
+_WRITING_ASK_MODES = (
+    "slope_point",
+    "two_points",
+    "slope_intercept_info",
+    "to_point_slope",
+    "to_slope_intercept",
+    "simplify_messy",
+    "from_graph",
+)
+
+_WRITING_ALLOW_KEYS: dict[str, str] = {
+    "slope_point": "allow_slope_point",
+    "two_points": "allow_two_points",
+    "slope_intercept_info": "allow_slope_intercept_info",
+    "to_point_slope": "allow_to_point_slope",
+    "to_slope_intercept": "allow_to_slope_intercept",
+    "simplify_messy": "allow_simplify_messy",
+    "from_graph": "allow_from_graph",
+}
+
+
+def _resolve_writing_ask_mode(settings: dict) -> str:
+    """Pick a writing-linear mode from ask_mode / allow_* toggles."""
+    raw = str(settings.get("ask_mode", "mixed")).strip().lower()
+    if raw in _WRITING_ASK_MODES:
+        allow_key = _WRITING_ALLOW_KEYS[raw]
+        if bool(settings.get(allow_key, True)):
+            return raw
+    enabled = [
+        mode
+        for mode, key in _WRITING_ALLOW_KEYS.items()
+        if bool(settings.get(key, True))
+    ]
+    if not enabled:
+        enabled = list(_WRITING_ASK_MODES)
+    return random.choice(enabled)
+
+
+def _random_standard_coeffs(settings: dict, *, m: int, b: int) -> tuple[int, int, int]:
+    """Pick Ax + By = C equivalent to y = mx + b with integer A, B, C."""
+    # B y = -A x + C  with y = mx + b ⇒ A = -k m, B = k, C = k b for k ≠ 0
+    k = random_int_range(1, 4, exclude=set()) * random.choice([-1, 1])
+    a = -k * m
+    bb = k
+    c = k * b
+    # Prefer positive leading x coeff when easy to flip.
+    if a < 0 and random.random() < 0.55:
+        a, bb, c = -a, -bb, -c
+    return a, bb, c
+
+
+def _messy_linear_prompt(settings: dict) -> tuple[str, int, int]:
+    """Build an unsimplified linear relation; return (latex, m, b) for y = mx + b."""
+    m = _random_slope(settings)
+    b = _random_intercept(settings)
+    variant = random.choice(["distribute_rhs", "combine_like", "clear_constant", "mixed_paren"])
+    if variant == "distribute_rhs":
+        # y = a(x + p) + q  → m = a, b = a*p + q
+        a = m
+        p = random_int_range(-4, 4, exclude={0})
+        q = b - a * p
+        inner = f"x + {p}" if p > 0 else (f"x - {abs(p)}" if p < 0 else "x")
+        q_term = f" + {q}" if q > 0 else (f" - {abs(q)}" if q < 0 else "")
+        expr = f"y = {a}({inner}){q_term}" if a not in (1, -1) else (
+            f"y = ({inner}){q_term}" if a == 1 else f"y = -({inner}){q_term}"
+        )
+        return f"\\text{{Simplify to slope-intercept form: }} {expr}", m, b
+    if variant == "combine_like":
+        # y = (m-r)x + s + r x + (b-s)
+        r = random_int_range(-4, 4, exclude={0, m})
+        s = random_int_range(-5, 5, exclude={0})
+        t = b - s
+        m1 = m - r
+        terms = join_algebra_terms(
+            [
+                format_monomial_latex(m1, variable="x"),
+                format_monomial_latex(s, variable="", degree=0),
+                format_monomial_latex(r, variable="x"),
+                format_monomial_latex(t, variable="", degree=0),
+            ]
+        )
+        return f"\\text{{Simplify to slope-intercept form: }} y = {terms}", m, b
+    if variant == "clear_constant":
+        # ky - k b = k m x  →  rearrange / divide
+        k = random_int_range(2, 5, exclude=set())
+        left = join_algebra_terms(
+            [
+                format_monomial_latex(k, variable="y"),
+                format_monomial_latex(-k * b, variable="", degree=0),
+            ]
+        )
+        right = format_monomial_latex(k * m, variable="x") or "0"
+        return (
+            f"\\text{{Write in slope-intercept form: }} {left} = {right}",
+            m,
+            b,
+        )
+    # mixed_paren: y - y1 = m(x - x1) + c - c  (point-slope plus canceling junk)
+    x1, y1 = _random_point(settings)
+    # Keep same line: m, b with b = y1 - m*x1 — already have m,b; snap point onto line
+    y1 = m * x1 + b
+    junk = random_int_range(1, 4, exclude=set())
+    ps = _point_slope_latex(m, x1, y1)
+    # Insert +junk - junk on the right when point-slope has a product form
+    messy = f"{ps} + {junk} - {junk}"
+    return f"\\text{{Simplify to slope-intercept form: }} {messy}", m, b
+
+
 class WritingLinearEquationsFramework(QuestionFramework):
-    """Write linear equations from slope/point, two points, or intercept info."""
+    """Write linear equations: given info, form conversions, simplify, or from a graph."""
 
     instruction_latex = r"\text{Write an equation of the line.}"
     instruction_text = "Write an equation of the line."
 
+    def __init__(self) -> None:
+        self._last_plane_spec: CoordinatePlaneSpec | None = None
+        self._last_ask_mode: str | None = None
+        self._last_target_form: str = "slope_intercept"
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        mode = random.choice(["slope_point", "two_points", "slope_intercept"])
+        self._last_plane_spec = None
+        mode = _resolve_writing_ask_mode(settings)
+        self._last_ask_mode = mode
         if mode == "slope_point":
-            m = _random_slope(settings)
-            x1, y1 = _random_point(settings)
-            b = y1 - m * x1
+            return self._prompt_slope_point(settings)
+        if mode == "two_points":
+            return self._prompt_two_points(settings)
+        if mode == "slope_intercept_info":
+            return self._prompt_slope_intercept_info(settings)
+        if mode == "to_point_slope":
+            return self._prompt_to_point_slope(settings)
+        if mode == "to_slope_intercept":
+            return self._prompt_to_slope_intercept(settings)
+        if mode == "simplify_messy":
+            return self._prompt_simplify_messy(settings)
+        return self._prompt_from_graph(settings)
+
+    def _prompt_slope_point(self, settings: dict) -> tuple[str, str, str | None]:
+        m = _random_slope(settings)
+        x1, y1 = _random_point(settings)
+        b = y1 - m * x1
+        target = random.choice(["slope_intercept", "point_slope"])
+        self._last_target_form = target
+        if target == "point_slope":
             prompt = (
                 f"\\text{{Write the equation of the line with slope }} {m} "
-                f"\\text{{ that passes through }} ({x1}, {y1})."
+                f"\\text{{ that passes through }} ({x1}, {y1}) "
+                f"\\text{{ in point-slope form.}}"
             )
-            answer = _slope_intercept_latex(m, b)
-        elif mode == "two_points":
-            m = _random_slope(settings)
-            b = _random_intercept(settings)
-            x1, y1 = _random_point(settings)
-            _, coord_max = _bounds(settings, "coord_min", "coord_max", -8, 8)
-            dx = random_int_range(1, max(1, abs(coord_max)), exclude=set())
-            x2 = x1 + dx * random.choice([-1, 1])
-            y2 = m * x2 + b
+            return prompt, "Write point-slope equation", _point_slope_latex(m, x1, y1)
+        prompt = (
+            f"\\text{{Write the equation of the line with slope }} {m} "
+            f"\\text{{ that passes through }} ({x1}, {y1}) "
+            f"\\text{{ in slope-intercept form.}}"
+        )
+        return prompt, "Write slope-intercept equation", _slope_intercept_latex(m, b)
+
+    def _prompt_two_points(self, settings: dict) -> tuple[str, str, str | None]:
+        m = _random_slope(settings)
+        b = _random_intercept(settings)
+        x1, y1 = _random_point(settings)
+        y1 = m * x1 + b
+        _, coord_max = _bounds(settings, "coord_min", "coord_max", -8, 8)
+        dx = random_int_range(1, max(1, abs(coord_max)), exclude=set())
+        x2 = x1 + dx * random.choice([-1, 1])
+        y2 = m * x2 + b
+        self._last_target_form = "slope_intercept"
+        prompt = (
+            f"\\text{{Write the equation of the line through }} "
+            f"({x1}, {y1}) \\text{{ and }} ({x2}, {y2}) "
+            f"\\text{{ in slope-intercept form.}}"
+        )
+        return prompt, "Write equation from two points", _slope_intercept_latex(m, b)
+
+    def _prompt_slope_intercept_info(self, settings: dict) -> tuple[str, str, str | None]:
+        m = _random_slope(settings)
+        b = _random_intercept(settings)
+        self._last_target_form = "slope_intercept"
+        prompt = (
+            f"\\text{{Write the equation of the line with slope }} {m} "
+            f"\\text{{ and }} y\\text{{-intercept }} {b} "
+            f"\\text{{ in slope-intercept form.}}"
+        )
+        return prompt, "Write from slope and intercept", _slope_intercept_latex(m, b)
+
+    def _prompt_to_point_slope(self, settings: dict) -> tuple[str, str, str | None]:
+        m = _random_slope(settings)
+        b = _random_intercept(settings)
+        x1, y1 = _random_point(settings)
+        y1 = m * x1 + b
+        self._last_target_form = "point_slope"
+        source = random.choice(["slope_intercept", "standard", "two_points"])
+        if source == "slope_intercept":
+            given = _slope_intercept_latex(m, b)
+            prompt = (
+                f"\\text{{Write }} {given} \\text{{ in point-slope form "
+                f"using the point }} ({x1}, {y1})."
+            )
+        elif source == "standard":
+            a, bb, c = _random_standard_coeffs(settings, m=m, b=b)
+            given = _standard_form_latex(a, bb, c)
+            prompt = (
+                f"\\text{{Write }} {given} \\text{{ in point-slope form "
+                f"using the point }} ({x1}, {y1})."
+            )
+        else:
+            dx = random_int_range(1, 5, exclude=set()) * random.choice([-1, 1])
+            x2, y2 = x1 + dx, y1 + m * dx
             prompt = (
                 f"\\text{{Write the equation of the line through }} "
-                f"({x1}, {y1}) \\text{{ and }} ({x2}, {y2})."
+                f"({x1}, {y1}) \\text{{ and }} ({x2}, {y2}) "
+                f"\\text{{ in point-slope form.}}"
             )
-            answer = _slope_intercept_latex(m, b)
-        else:
-            m = _random_slope(settings)
-            b = _random_intercept(settings)
+        return prompt, "Convert to point-slope", _point_slope_latex(m, x1, y1)
+
+    def _prompt_to_slope_intercept(self, settings: dict) -> tuple[str, str, str | None]:
+        m = _random_slope(settings)
+        b = _random_intercept(settings)
+        self._last_target_form = "slope_intercept"
+        source = random.choice(["point_slope", "standard"])
+        if source == "point_slope":
+            x1, y1 = _random_point(settings)
+            y1 = m * x1 + b
+            given = _point_slope_latex(m, x1, y1)
             prompt = (
-                f"\\text{{Write the equation of the line with slope }} {m} "
-                f"\\text{{ and }} y\\text{{-intercept }} {b}."
+                f"\\text{{Write }} {given} \\text{{ in slope-intercept form.}}"
             )
-            answer = _slope_intercept_latex(m, b)
-        return prompt, "Write linear equation", answer
+        else:
+            a, bb, c = _random_standard_coeffs(settings, m=m, b=b)
+            given = _standard_form_latex(a, bb, c)
+            prompt = (
+                f"\\text{{Write }} {given} \\text{{ in slope-intercept form.}}"
+            )
+        return prompt, "Convert to slope-intercept", _slope_intercept_latex(m, b)
+
+    def _prompt_simplify_messy(self, settings: dict) -> tuple[str, str, str | None]:
+        prompt, m, b = _messy_linear_prompt(settings)
+        self._last_target_form = "slope_intercept"
+        return prompt, "Simplify to linear equation", _slope_intercept_latex(m, b)
+
+    def _prompt_from_graph(self, settings: dict) -> tuple[str, str, str | None]:
+        m = _random_slope(settings)
+        b = _random_intercept(settings)
+        self._last_target_form = "slope_intercept"
+        prompt = (
+            "\\text{The line is shown on the coordinate plane. "
+            "Write its equation in slope-intercept form.}"
+        )
+        # Line only — no highlighted points (would reveal rise/run / intercept).
+        self._last_plane_spec = _line_stimulus_spec(
+            settings, slope=float(m), y_intercept=float(b)
+        )
+        return prompt, "Read equation from graph", _slope_intercept_latex(m, b)
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
-        return question_metadata(linear_form="slope_intercept")
+        return {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        meta = question_metadata(linear_form=self._last_target_form)
+        if self._last_plane_spec is None:
+            return meta
+        from .graphing import coordinate_plane_metadata
+
+        self._last_plane_spec.points = []
+        self._last_plane_spec.show_points = False
+        forced = {**settings, "show_points": False, "include_graph_metadata": True}
+        plane = coordinate_plane_metadata(self._last_plane_spec, forced, prompt="stimulus")
+        return {**meta, **plane}
 
 
 _SLOPE_ASK_MODES = (
@@ -249,17 +482,32 @@ _SLOPE_ALLOW_KEYS: dict[str, str] = {
     "parallel_perpendicular": "allow_parallel_perpendicular",
 }
 
+_SLOPE_EQUATION_FORMS = ("slope_intercept", "point_slope", "standard")
+
 
 def _slope_bool(settings: dict, key: str, default: bool = True) -> bool:
     return bool(settings.get(key, default))
 
 
+def _slope_difficulty_tier(settings: dict) -> str:
+    tier = str(
+        settings.get("difficulty_tier") or settings.get("difficulty") or "medium"
+    ).strip().lower()
+    return tier if tier in {"easy", "medium", "hard"} else "medium"
+
+
 def _resolve_slope_ask_mode(settings: dict, *, multi_mode: bool) -> str:
-    """Pick an ask mode from settings toggles (multi-mode) or legacy flags."""
+    """Pick an ask mode from settings toggles (multi-mode) or mixed find-slope forms."""
     if not multi_mode:
         if bool(settings.get("from_equation", False)):
             return "from_equation"
-        return "from_points"
+        raw = str(settings.get("ask_mode", "mixed")).strip().lower()
+        if raw == "from_points":
+            return "from_points"
+        if raw == "from_equation":
+            return "from_equation"
+        # Basic slope: mix two-points and equation prompts (no graph mode).
+        return random.choice(["from_points", "from_equation"])
 
     raw = str(settings.get("ask_mode", "mixed")).strip().lower()
     if raw in _SLOPE_ASK_MODES:
@@ -278,12 +526,77 @@ def _resolve_slope_ask_mode(settings: dict, *, multi_mode: bool) -> str:
     return random.choice(enabled)
 
 
+def _pick_slope_equation_form(settings: dict) -> str:
+    """Choose equation presentation by difficulty / toggles.
+
+    easy → slope-intercept; medium/hard → also point-slope and standard form.
+    """
+    explicit = str(settings.get("equation_form", "mixed")).strip().lower()
+    if explicit in _SLOPE_EQUATION_FORMS:
+        return explicit
+
+    tier = _slope_difficulty_tier(settings)
+    forms: list[str] = []
+    if _slope_bool(settings, "allow_slope_intercept_form", True):
+        forms.append("slope_intercept")
+    if tier in {"medium", "hard"}:
+        if _slope_bool(settings, "allow_point_slope_form", True):
+            forms.append("point_slope")
+        if _slope_bool(settings, "allow_standard_form", True):
+            forms.append("standard")
+    if not forms:
+        forms = ["slope_intercept"]
+    return random.choice(forms)
+
+
 def _format_slope_answer(slope: Fraction) -> str:
     if slope.denominator == 1:
         return str(slope.numerator)
     # Prefer -\frac{a}{b} over \frac{-a}{b}
     sign = "-" if slope < 0 else ""
     return f"{sign}\\frac{{{abs(slope.numerator)}}}{{{slope.denominator}}}"
+
+
+def _point_slope_latex(m: int, x1: int, y1: int) -> str:
+    """Format ``y - y1 = m(x - x1)`` with clean signs."""
+    if y1 == 0:
+        left = "y"
+    elif y1 > 0:
+        left = f"y - {y1}"
+    else:
+        left = f"y + {abs(y1)}"
+
+    if x1 == 0:
+        x_part = "x"
+        wrapped = False
+    elif x1 > 0:
+        x_part = f"(x - {x1})"
+        wrapped = True
+    else:
+        x_part = f"(x + {abs(x1)})"
+        wrapped = True
+
+    if m == 0:
+        right = "0"
+    elif m == 1:
+        # Keep explicit 1(x − x1) so students recognize point-slope form.
+        right = f"1{x_part}" if wrapped else x_part
+    elif m == -1:
+        right = f"-1{x_part}" if wrapped else f"-{x_part}"
+    else:
+        right = f"{m}{x_part}" if wrapped else f"{m}({x_part})"
+    return f"{left} = {right}"
+
+
+def _standard_form_latex(a: int, b: int, c: int) -> str:
+    """Format ``Ax + By = C``."""
+    lhs = join_algebra_terms(
+        [
+            format_monomial_latex(a, variable="x"),
+            format_monomial_latex(b, variable="y"),
+        ]
+    )
+    return f"{lhs} = {c}"
 
 
 def _line_stimulus_spec(
@@ -318,10 +631,12 @@ class SlopeFramework(QuestionFramework):
         self._last_plane_spec: CoordinatePlaneSpec | None = None
         self._last_graph_role: Literal["blank", "stimulus"] | None = None
         self._last_ask_mode: str | None = None
+        self._last_equation_form: str | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         self._last_plane_spec = None
         self._last_graph_role = None
+        self._last_equation_form = None
         mode = _resolve_slope_ask_mode(settings, multi_mode=self.multi_mode)
         if self.from_equation and not self.multi_mode:
             mode = "from_equation"
@@ -350,8 +665,8 @@ class SlopeFramework(QuestionFramework):
             f"({x1}, {y1}) \\text{{ and }} ({x2}, {y2})."
         )
         answer = _format_slope_answer(slope)
-        # Optional blank student graph only — never show the solved line/points.
-        if bool(settings.get("include_graph_metadata", False)):
+        # Blank student graph only when explicitly requested (default off).
+        if bool(settings.get("graph_for_two_points", False)):
             m = float(slope)
             b = float(y1) - m * float(x1)
             from .graphing import _linear_function_expr
@@ -367,11 +682,36 @@ class SlopeFramework(QuestionFramework):
         return prompt, "Slope from points", answer
 
     def _prompt_from_equation(self, settings: dict) -> tuple[str, str, str | None]:
-        m = _random_slope(settings, exclude_zero=False)
+        # Equation prompts never attach a coordinate-plane figure.
+        form = _pick_slope_equation_form(settings)
+        self._last_equation_form = form
+        m = _random_slope(settings, exclude_zero=(form == "standard"))
+        if form == "point_slope":
+            x1, y1 = _random_point(settings)
+            eq = _point_slope_latex(m, x1, y1)
+            prompt = f"\\text{{Find the slope of the line }} {eq}."
+            return prompt, "Slope from point-slope", _format_slope_answer(Fraction(m))
+        if form == "standard":
+            b_int = _random_intercept(settings)
+            tier = _slope_difficulty_tier(settings)
+            if tier == "hard":
+                scale = random.randint(2, 5)
+            elif tier == "medium":
+                scale = random.choice([1, 1, 2, 3])
+            else:
+                scale = 1
+            a = m * scale
+            b_coef = -scale
+            c = -b_int * scale
+            if a < 0 or (a == 0 and b_coef < 0):
+                a, b_coef, c = -a, -b_coef, -c
+            eq = _standard_form_latex(a, b_coef, c)
+            prompt = f"\\text{{Find the slope of the line }} {eq}."
+            return prompt, "Slope from standard form", _format_slope_answer(Fraction(m))
         b = _random_intercept(settings)
         eq = _slope_intercept_latex(m, b)
         prompt = f"\\text{{Find the slope of the line }} {eq}."
-        return prompt, "Slope from equation", str(m)
+        return prompt, "Slope from slope-intercept", _format_slope_answer(Fraction(m))
 
     def _prompt_from_graph(self, settings: dict) -> tuple[str, str, str | None]:
         m = _random_slope(settings, exclude_zero=False)
@@ -504,7 +844,12 @@ class SlopeFramework(QuestionFramework):
         prompt_text: str,
         answer: str | None,
     ) -> dict[str, Any]:
-        meta = question_metadata(slope_source=self._last_ask_mode or "two_points")
+        meta_kwargs: dict[str, Any] = {
+            "slope_source": self._last_ask_mode or "two_points",
+        }
+        if self._last_equation_form:
+            meta_kwargs["equation_form"] = self._last_equation_form
+        meta = question_metadata(**meta_kwargs)
         if self._last_plane_spec is None:
             return meta
         from .graphing import coordinate_plane_metadata

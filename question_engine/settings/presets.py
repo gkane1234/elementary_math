@@ -289,26 +289,29 @@ PROFILE_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
         "easy": {
             "percent_min": 5,
             "percent_max": 50,
-            "base_min": 10,
+            "base_min": 20,
             "base_max": 100,
             "round_to_whole": True,
             "allow_decimal_percents": False,
+            "difficulty_tier": "easy",
         },
         "medium": {
             "percent_min": 5,
             "percent_max": 75,
-            "base_min": 10,
+            "base_min": 20,
             "base_max": 200,
             "round_to_whole": False,
             "allow_decimal_percents": False,
+            "difficulty_tier": "medium",
         },
         "hard": {
             "percent_min": 1,
             "percent_max": 99,
-            "base_min": 10,
+            "base_min": 20,
             "base_max": 500,
             "round_to_whole": False,
             "allow_decimal_percents": True,
+            "difficulty_tier": "hard",
         },
     },
     "decimal": {
@@ -401,14 +404,31 @@ PROFILE_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "num_max": 6,
         },
         "medium": {
-            "pemdas_complexity": "mixed",
+            "pemdas_complexity": "parentheses",
             "num_min": 2,
             "num_max": 9,
         },
         "hard": {
-            "pemdas_complexity": "exponent",
+            "pemdas_complexity": "mixed",
             "num_min": 2,
             "num_max": 12,
+        },
+    },
+    "writing_numeric_expressions": {
+        "easy": {
+            "expression_complexity": "simple",
+            "num_min": 2,
+            "num_max": 10,
+        },
+        "medium": {
+            "expression_complexity": "standard",
+            "num_min": 2,
+            "num_max": 15,
+        },
+        "hard": {
+            "expression_complexity": "advanced",
+            "num_min": 2,
+            "num_max": 20,
         },
     },
     "distributive": {
@@ -1351,6 +1371,65 @@ _POLYNOMIAL_MULTIPLY_SPECIAL_TIERS: TierPresets = {
 }
 
 # Optional per-generator / type-id overrides (wins over profile presets).
+_INTEREST_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": "easy",
+        "difficulty_tier": "easy",
+        "integer_only_answers": True,
+    },
+    "medium": {
+        "difficulty": "medium",
+        "difficulty_tier": "medium",
+        "integer_only_answers": False,
+    },
+    "hard": {
+        "difficulty": "hard",
+        "difficulty_tier": "hard",
+        "integer_only_answers": False,
+    },
+}
+
+# Markup / discount / tax / tip: calculator-friendly Easy/Medium money percents.
+# Answers use half-up cents (no integer-truncation construction).
+_WP_PERCENT_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": "easy",
+        "difficulty_tier": "easy",
+        "integer_only_answers": False,
+        "allow_discount": True,
+        "allow_tax": True,
+        "allow_markup": True,
+        "allow_tip": True,
+        "allow_price_cents": False,
+        "allow_decimal_rates": False,
+        "allow_multi_step": False,
+    },
+    "medium": {
+        "difficulty": "medium",
+        "difficulty_tier": "medium",
+        "integer_only_answers": False,
+        "allow_discount": True,
+        "allow_tax": True,
+        "allow_markup": True,
+        "allow_tip": True,
+        "allow_price_cents": True,
+        "allow_decimal_rates": True,
+        "allow_multi_step": False,
+    },
+    "hard": {
+        "difficulty": "hard",
+        "difficulty_tier": "hard",
+        "integer_only_answers": False,
+        "allow_discount": True,
+        "allow_tax": True,
+        "allow_markup": True,
+        "allow_tip": True,
+        "allow_price_cents": True,
+        "allow_decimal_rates": True,
+        "allow_multi_step": True,
+    },
+}
+
 _EXPONENTIAL_GROWTH_DECAY_TIERS: TierPresets = {
     "easy": {
         "ask_mode": "find_final",
@@ -1558,6 +1637,11 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
     "work_word_problems": dict(_WORK_PROBLEM_TIERS),
     "wp_work": dict(_WORK_PROBLEM_TIERS),
     "a2_equations_and_inequalities_work_word_problems": dict(_WORK_PROBLEM_TIERS),
+    "pa_simple_and_compound_interest": dict(_INTEREST_TIERS),
+    "wp_simple_and_compound_interest": dict(_INTEREST_TIERS),
+    "wp_percent": dict(_WP_PERCENT_TIERS),
+    "pa_markup_discount_and_tax": dict(_WP_PERCENT_TIERS),
+    "percent_word_problems": dict(_WP_PERCENT_TIERS),
     "polynomial_factoring_common_factor": dict(_FACTORING_COMMON_FACTOR_TIERS),
     "quadratic_factoring": dict(_QUADRATIC_FACTORING_TIERS),
     "polynomial_factoring_grouping": dict(_FACTORING_GROUPING_TIERS),
@@ -1893,6 +1977,39 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "allow_binomial_product": True,
             "coef_min": 1,
             "coef_max": 5,
+        },
+    },
+    # Pre-Algebra squares / square roots (Factors and Exponents):
+    #   easy   — perfect-square mental math mix of √n and n² / "n squared"
+    #   medium — larger perfect squares
+    #   hard   — non-perfect (leave under √ or extract) + messy large perfects
+    "pa_squares_and_square_roots": {
+        "easy": {
+            "allow_square_roots": True,
+            "allow_squares": True,
+            "allow_word_prompts": True,
+            "perfect_squares_only": True,
+            "allow_extract_square_factors": False,
+            "base_min": 2,
+            "base_max": 12,
+        },
+        "medium": {
+            "allow_square_roots": True,
+            "allow_squares": True,
+            "allow_word_prompts": True,
+            "perfect_squares_only": True,
+            "allow_extract_square_factors": False,
+            "base_min": 10,
+            "base_max": 25,
+        },
+        "hard": {
+            "allow_square_roots": True,
+            "allow_squares": True,
+            "allow_word_prompts": False,
+            "perfect_squares_only": False,
+            "allow_extract_square_factors": True,
+            "base_min": 15,
+            "base_max": 35,
         },
     },
     # Simplifying single radicals by radicand size / structure.
@@ -2263,9 +2380,54 @@ GENERATOR_DIFFICULTY_PRESETS[
 # Grade 6 / Pre-Algebra softer shared skills
 GENERATOR_DIFFICULTY_PRESETS["g6_numeric_expressions_and_order_of_operations"] = {
     "easy": {"pemdas_complexity": "basic", "num_min": 1, "num_max": 5},
-    "medium": {"pemdas_complexity": "basic", "num_min": 2, "num_max": 8},
+    "medium": {"pemdas_complexity": "parentheses", "num_min": 2, "num_max": 8},
     "hard": {"pemdas_complexity": "mixed", "num_min": 2, "num_max": 9},
 }
+GENERATOR_DIFFICULTY_PRESETS["g6_numeric_expressions_with_exponents"] = {
+    "easy": {"pemdas_complexity": "exponent", "num_min": 2, "num_max": 4},
+    "medium": {"pemdas_complexity": "exponent", "num_min": 2, "num_max": 6},
+    "hard": {"pemdas_complexity": "exponent", "num_min": 2, "num_max": 8},
+}
+GENERATOR_DIFFICULTY_PRESETS["g6_writing_numeric_expressions"] = {
+    "easy": {"expression_complexity": "simple", "num_min": 2, "num_max": 10},
+    "medium": {"expression_complexity": "standard", "num_min": 2, "num_max": 15},
+    "hard": {"expression_complexity": "advanced", "num_min": 2, "num_max": 20},
+}
+GENERATOR_DIFFICULTY_PRESETS["writing_numeric_expressions"] = dict(
+    GENERATOR_DIFFICULTY_PRESETS["g6_writing_numeric_expressions"]
+)
+_WRITING_ALGEBRAIC_EXPRESSION_TIERS = {
+    "easy": {
+        "phrase_complexity": "simple",
+        "max_phrase_operations": 1,
+        "constant_min": 2,
+        "constant_max": 9,
+        "allow_fraction_constants": False,
+    },
+    "medium": {
+        "phrase_complexity": "standard",
+        "max_phrase_operations": 2,
+        "constant_min": 2,
+        "constant_max": 12,
+        "allow_fraction_constants": False,
+    },
+    "hard": {
+        "phrase_complexity": "advanced",
+        "max_phrase_operations": 3,
+        "constant_min": 2,
+        "constant_max": 15,
+        "allow_fraction_constants": False,
+    },
+}
+GENERATOR_DIFFICULTY_PRESETS["g6_writing_algebraic_expressions"] = dict(
+    _WRITING_ALGEBRAIC_EXPRESSION_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS["verbal_expressions"] = dict(
+    _WRITING_ALGEBRAIC_EXPRESSION_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS["pa_verbal_expressions"] = dict(
+    _WRITING_ALGEBRAIC_EXPRESSION_TIERS
+)
 _DECIMAL_MULTIPLICATION_TIERS = {
     "easy": {
         "whole_times_decimal": True,
@@ -2507,7 +2669,7 @@ GENERATOR_DIFFICULTY_PRESETS["g6_shapes_and_perimeter_on_the_coordinate_plane"] 
         "coord_min": -3,
         "coord_max": 7,
         "max_side": 5,
-        "allow_l_shape": False,
+        "allow_l_shape": True,
     },
     "hard": {
         "coord_min": -5,
@@ -2519,22 +2681,82 @@ GENERATOR_DIFFICULTY_PRESETS["g6_shapes_and_perimeter_on_the_coordinate_plane"] 
 GENERATOR_DIFFICULTY_PRESETS["g6_coordinate_perimeter"] = dict(
     GENERATOR_DIFFICULTY_PRESETS["g6_shapes_and_perimeter_on_the_coordinate_plane"]
 )
+_GRID_POLYGON_TIERS = {
+    "easy": {"difficulty_tier": "easy"},
+    "medium": {"difficulty_tier": "medium"},
+    "hard": {"difficulty_tier": "hard"},
+}
+GENERATOR_DIFFICULTY_PRESETS["g6_polygon_grid_area"] = dict(_GRID_POLYGON_TIERS)
+GENERATOR_DIFFICULTY_PRESETS["g6_polygons_on_a_grid_or_coordinate_plane"] = dict(
+    _GRID_POLYGON_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS["g6_shaded_polygon_area"] = dict(_GRID_POLYGON_TIERS)
+GENERATOR_DIFFICULTY_PRESETS["g6_polygons_and_shaded_regions"] = dict(_GRID_POLYGON_TIERS)
+
+_GEO_TRANSFORM_TIERS: TierPresets = {
+    "easy": {"coord_min": -5, "coord_max": 5, "difficulty_tier": "easy"},
+    "medium": {"coord_min": -8, "coord_max": 8, "difficulty_tier": "medium"},
+    "hard": {"coord_min": -10, "coord_max": 10, "difficulty_tier": "hard"},
+}
+GENERATOR_DIFFICULTY_PRESETS["geo_transformations"] = dict(_GEO_TRANSFORM_TIERS)
+GENERATOR_DIFFICULTY_PRESETS["pa_transformations"] = dict(_GEO_TRANSFORM_TIERS)
+GENERATOR_DIFFICULTY_PRESETS[
+    "geo_transformations_translations_rotations_reflections_and_dilations"
+] = dict(_GEO_TRANSFORM_TIERS)
 GENERATOR_DIFFICULTY_PRESETS["g6_equations_tape_diagrams"] = {
     "easy": {"tape_style": "uniform", "difficulty_tier": "easy"},
     "medium": {"tape_style": "mixed", "difficulty_tier": "medium"},
     "hard": {"tape_style": "nonuniform", "difficulty_tier": "hard"},
 }
 GENERATOR_DIFFICULTY_PRESETS["pa_integers_adding_and_subtracting"] = {
+    "easy": {
+        "num_min": -10,
+        "num_max": 10,
+        "allow_negative": True,
+        "allow_integers": True,
+        "allow_decimals": True,
+        "allow_fractions": True,
+        "decimal_places": 1,
+        "denom_min": 2,
+        "denom_max": 6,
+        "require_common_denominator": True,
+        "require_unlike_denominators": False,
+    },
+    "medium": {
+        "num_min": -20,
+        "num_max": 20,
+        "allow_negative": True,
+        "allow_integers": True,
+        "allow_decimals": True,
+        "allow_fractions": True,
+        "decimal_places": 2,
+        "denom_min": 2,
+        "denom_max": 10,
+        "require_common_denominator": False,
+        "require_unlike_denominators": True,
+    },
+    "hard": {
+        "num_min": -50,
+        "num_max": 50,
+        "allow_negative": True,
+        "allow_integers": True,
+        "allow_decimals": True,
+        "allow_fractions": True,
+        "decimal_places": 3,
+        "denom_min": 2,
+        "denom_max": 12,
+        "require_common_denominator": False,
+        "require_unlike_denominators": True,
+        "allow_mixed": True,
+    },
+}
+_PA_INTEGER_OPS = {
     "easy": {"num_min": -10, "num_max": 10, "allow_negative": True},
     "medium": {"num_min": -20, "num_max": 20, "allow_negative": True},
     "hard": {"num_min": -50, "num_max": 50, "allow_negative": True},
 }
-GENERATOR_DIFFICULTY_PRESETS["pa_integers_multiplying"] = dict(
-    GENERATOR_DIFFICULTY_PRESETS["pa_integers_adding_and_subtracting"]
-)
-GENERATOR_DIFFICULTY_PRESETS["pa_integers_dividing"] = dict(
-    GENERATOR_DIFFICULTY_PRESETS["pa_integers_adding_and_subtracting"]
-)
+GENERATOR_DIFFICULTY_PRESETS["pa_integers_multiplying"] = dict(_PA_INTEGER_OPS)
+GENERATOR_DIFFICULTY_PRESETS["pa_integers_dividing"] = dict(_PA_INTEGER_OPS)
 
 # Algebra 2 / Precalc rational equations: harder structural mix
 GENERATOR_DIFFICULTY_PRESETS["a2_rational_expressions_equations"] = {

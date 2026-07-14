@@ -11,6 +11,8 @@ from .domains.number import (
     decimal_multiplication_settings,
     gcf_constraint_settings,
     long_division_remainder_settings,
+    mixed_number_form_settings,
+    squares_and_square_roots_form_settings,
 )
 from .domains.polynomial import polynomial_multiply_settings
 from .domains.radical import (
@@ -29,8 +31,12 @@ from .domains.rational import (
 from .domains.word_problem import (
     consecutive_integers_settings,
     distance_rate_time_settings,
+    percent_word_problem_settings,
+    similar_figures_prompt_settings,
     work_problem_settings,
 )
+from .domains.graphing import number_line_range_settings
+from .domains.statistics import chart_drawing_settings
 from .factoring_settings import special_case_extra_settings
 from .resolve import TypeSettingConfig
 
@@ -135,22 +141,26 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "allow_abs_equals_linear": False,
         },
     ),
-    # Inequalities
+    # Inequalities — blank number line for student work (answer key shows shading).
     "one_step_inequalities": TypeSettingConfig(
         setting_profile="inequality",
         exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"include_graph_metadata": True},
     ),
     "two_step_inequalities": TypeSettingConfig(
         setting_profile="inequality",
         exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"include_graph_metadata": True},
     ),
     "multi_step_inequalities": TypeSettingConfig(
         setting_profile="inequality",
         exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"include_graph_metadata": True},
     ),
     "compound_inequalities": TypeSettingConfig(
         setting_profile="compound_inequality",
         exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"include_graph_metadata": True},
     ),
     "absolute_value_inequalities": TypeSettingConfig(
         setting_profile="inequality",
@@ -162,6 +172,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "allow_linear": True,
             "allow_abs_plus_constant": False,
             "allow_abs_vs_linear": False,
+            "include_graph_metadata": True,
         },
     ),
     # Numbers
@@ -182,6 +193,10 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         },
     ),
     "rational_add_subtract": TypeSettingConfig(setting_profile="rational"),
+    "pa_integers_adding_and_subtracting": TypeSettingConfig(
+        setting_profile="integer",
+        extra_settings=(mixed_number_form_settings,),
+    ),
     "rational_multiply": TypeSettingConfig(setting_profile="rational"),
     "rational_divide": TypeSettingConfig(
         setting_profile="rational",
@@ -189,10 +204,37 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     ),
     "percents": TypeSettingConfig(setting_profile="percent"),
     "percent_of_change": TypeSettingConfig(setting_profile="percent"),
+    "converting_fractions_and_decimals": TypeSettingConfig(
+        setting_profile="rational",
+        inherits=("decimal",),
+    ),
+    "fractions_decimals_and_percents": TypeSettingConfig(
+        setting_profile="percent",
+        inherits=("rational", "decimal"),
+        setting_defaults={"include_percent_conversions": True},
+    ),
+    "pa_fractions_decimals_and_percents": TypeSettingConfig(
+        setting_profile="percent",
+        inherits=("rational", "decimal"),
+        setting_defaults={"include_percent_conversions": True},
+    ),
     "solving_proportions": TypeSettingConfig(setting_profile="proportion"),
     "scientific_notation_write": TypeSettingConfig(setting_profile="scientific_notation"),
     "scientific_notation_operations": TypeSettingConfig(setting_profile="scientific_notation"),
     "scientific_notation_add_subtract": TypeSettingConfig(setting_profile="scientific_notation"),
+    "pa_squares_and_square_roots": TypeSettingConfig(
+        extra_settings=(squares_and_square_roots_form_settings,),
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={
+            "allow_square_roots": True,
+            "allow_squares": True,
+            "allow_word_prompts": True,
+            "perfect_squares_only": True,
+            "allow_extract_square_factors": False,
+            "base_min": 2,
+            "base_max": 12,
+        },
+    ),
     "g6_introduction_to_ratios": TypeSettingConfig(setting_profile="ratio"),
     "g6_equivalent_ratios": TypeSettingConfig(setting_profile="ratio"),
     "g6_unit_rates": TypeSettingConfig(setting_profile="unit_rate"),
@@ -216,6 +258,10 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "g6_fraction_of_whole": TypeSettingConfig(setting_profile="rational"),
     "g6_integer_add_subtract": TypeSettingConfig(setting_profile="integer"),
     "g6_integer_multiply": TypeSettingConfig(setting_profile="integer"),
+    "g6_properties_of_addition_and_multiplication": TypeSettingConfig(
+        setting_profile="integer",
+        setting_defaults={"multiple_choice": True, "allow_negative": False},
+    ),
     "g6_integer_divide": TypeSettingConfig(setting_profile="integer"),
     "g6_negative_number_operations": TypeSettingConfig(
         setting_profile="integer",
@@ -285,19 +331,30 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "writing_linear_equations": TypeSettingConfig(
         setting_profile="graphing",
         exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
-        setting_defaults={"include_graph_metadata": True},
+        setting_defaults={
+            "include_graph_metadata": True,
+            "show_points": False,
+            "ask_mode": "mixed",
+        },
     ),
     "slope": TypeSettingConfig(
         setting_profile="linear",
         exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
-        setting_defaults={"include_graph_metadata": True},
+        setting_defaults={
+            # Equation forms never need a figure; two-point blank graph is opt-in.
+            "include_graph_metadata": False,
+            "graph_for_two_points": False,
+            "ask_mode": "mixed",
+        },
     ),
     "more_on_slope": TypeSettingConfig(
         setting_profile="more_on_slope",
         exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS),
         setting_defaults={
+            # True for from_graph / classify stimulus; two-point blank graphs stay off.
             "include_graph_metadata": True,
             "show_points": False,
+            "graph_for_two_points": False,
             "ask_mode": "mixed",
         },
     ),
@@ -420,7 +477,10 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "read_equation_from_graph": TypeSettingConfig(
         setting_profile="graphing",
         exclude_settings=_excludes(_TERM_SETTINGS, _NUMBER_LINE_SETTINGS, extra=("graph_dimension",)),
-        setting_defaults={"include_graph_metadata": True},
+        setting_defaults={
+            "include_graph_metadata": True,
+            "show_points": False,
+        },
     ),
     "graph_point_table": TypeSettingConfig(
         setting_profile="graphing",
@@ -1097,6 +1157,10 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "proof_difficulty",
         ),
     ),
+    "geo_triangles_and_quadrilaterals_area": TypeSettingConfig(
+        setting_profile="geometry_basic",
+    ),
+    "geo_quadrilateral_area": TypeSettingConfig(setting_profile="geometry_basic"),
     "geo_triangle_perimeter": TypeSettingConfig(
         setting_profile="geometry_triangles",
         exclude_settings=(
@@ -1131,7 +1195,11 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         ),
         setting_defaults={"allow_right": True},
     ),
-    "geo_similar_triangles": TypeSettingConfig(setting_profile="geometry_triangles"),
+    "geo_similar_triangles": TypeSettingConfig(
+        setting_profile="geometry_triangles",
+        extra_settings=(similar_figures_prompt_settings,),
+        setting_defaults={"prompt_style": "diagram", "include_figure": True, "include_diagram": True},
+    ),
     "geo_circle_measure": TypeSettingConfig(setting_profile="geometry_circles"),
     "geo_coordinate_distance": TypeSettingConfig(
         setting_profile="coordinate_geometry",
@@ -1159,6 +1227,9 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "geo_special_right_triangle": TypeSettingConfig(setting_profile="geometry_triangles"),
     "geo_polygon_interior": TypeSettingConfig(setting_profile="geometry_angles"),
     "geo_parallelogram_area": TypeSettingConfig(setting_profile="geometry_basic"),
+    "geo_rectangle_area": TypeSettingConfig(setting_profile="geometry_basic"),
+    "geo_square_area": TypeSettingConfig(setting_profile="geometry_basic"),
+    "geo_rhombus_area": TypeSettingConfig(setting_profile="geometry_basic"),
     "geo_trapezoid_area": TypeSettingConfig(setting_profile="geometry_basic"),
     "geo_kite_area": TypeSettingConfig(setting_profile="geometry_basic"),
     "geo_central_arc": TypeSettingConfig(setting_profile="geometry_circles"),
@@ -1174,7 +1245,12 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "binomial_theorem": TypeSettingConfig(setting_profile="polynomial"),
     "remainder_theorem": TypeSettingConfig(setting_profile="polynomial"),
     "compound_interest": TypeSettingConfig(setting_profile="percent"),
-    "writing_numeric_expressions": TypeSettingConfig(setting_profile="integer"),
+    "writing_numeric_expressions": TypeSettingConfig(
+        setting_profile="writing_numeric_expressions"
+    ),
+    "g6_writing_numeric_expressions": TypeSettingConfig(
+        setting_profile="writing_numeric_expressions"
+    ),
     "g6_decimal_divide": TypeSettingConfig(setting_profile="decimal"),
     "vector_basics": TypeSettingConfig(setting_profile="coordinate_plane"),
     "dot_product": TypeSettingConfig(setting_profile="coordinate_plane"),
@@ -1235,7 +1311,14 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "integer_data_only",
         ),
     ),
-    "g6_cube_nets": TypeSettingConfig(setting_profile="geometry_basic"),
+    "g6_drawing_dot_plot": TypeSettingConfig(
+        extra_settings=(chart_drawing_settings,),
+        setting_defaults={"include_axis": True},
+    ),
+    "g6_drawing_histogram": TypeSettingConfig(
+        extra_settings=(chart_drawing_settings,),
+        setting_defaults={"include_axis": True},
+    ),
     "conic_rotation_identify": TypeSettingConfig(setting_profile="polynomial"),
     "stats_probability_single": TypeSettingConfig(
         setting_profile="statistics",
@@ -1308,7 +1391,56 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "wp_coin": TypeSettingConfig(setting_profile="word_problem"),
     "wp_mixture": TypeSettingConfig(setting_profile="word_problem"),
     "wp_perimeter_area": TypeSettingConfig(setting_profile="word_problem"),
-    "wp_percent": TypeSettingConfig(setting_profile="word_problem"),
+    "wp_percent": TypeSettingConfig(
+        setting_profile="word_problem",
+        extra_settings=(percent_word_problem_settings,),
+        setting_defaults={
+            "allow_discount": True,
+            "allow_tax": True,
+            "allow_markup": True,
+            "allow_tip": True,
+            "allow_price_cents": False,
+            "allow_decimal_rates": False,
+            "allow_multi_step": False,
+            "integer_only_answers": False,
+        },
+    ),
+    "pa_markup_discount_and_tax": TypeSettingConfig(
+        setting_profile="word_problem",
+        extra_settings=(percent_word_problem_settings,),
+        setting_defaults={
+            "allow_discount": True,
+            "allow_tax": True,
+            "allow_markup": True,
+            "allow_tip": True,
+            "allow_price_cents": False,
+            "allow_decimal_rates": False,
+            "allow_multi_step": False,
+            "integer_only_answers": False,
+        },
+        count_default=5,
+    ),
+    "percent_word_problems": TypeSettingConfig(
+        setting_profile="word_problem",
+        extra_settings=(percent_word_problem_settings,),
+        setting_defaults={
+            "allow_discount": True,
+            "allow_tax": True,
+            "allow_markup": True,
+            "allow_tip": True,
+            "allow_price_cents": False,
+            "allow_decimal_rates": False,
+            "allow_multi_step": False,
+            "integer_only_answers": False,
+        },
+        count_default=5,
+    ),
+    "wp_simple_and_compound_interest": TypeSettingConfig(
+        setting_profile="word_problem"
+    ),
+    "pa_simple_and_compound_interest": TypeSettingConfig(
+        setting_profile="word_problem"
+    ),
     "wp_proportion": TypeSettingConfig(setting_profile="word_problem"),
     "wp_one_step_equation": TypeSettingConfig(setting_profile="word_problem"),
     "wp_two_step_equation": TypeSettingConfig(setting_profile="word_problem"),
@@ -1319,9 +1451,17 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         extra_settings=(gcf_constraint_settings,),
         setting_defaults={"require_gcf_greater_than_one": True},
     ),
-    "wp_number_line": TypeSettingConfig(setting_profile="word_problem"),
+    "wp_number_line": TypeSettingConfig(
+        setting_profile="word_problem",
+        extra_settings=(number_line_range_settings,),
+        setting_defaults={"include_graph_metadata": True},
+    ),
     "wp_coordinate_distance": TypeSettingConfig(setting_profile="word_problem"),
-    "wp_similar_figures": TypeSettingConfig(setting_profile="word_problem"),
+    "wp_similar_figures": TypeSettingConfig(
+        setting_profile="word_problem",
+        extra_settings=(similar_figures_prompt_settings,),
+        setting_defaults={"prompt_style": "diagram", "include_figure": True},
+    ),
     # Consolidation: previously unprofiled Ready generators (session scaffolds).
     "trig_sum_difference": TypeSettingConfig(setting_profile="trigonometry"),
     "trig_multiple_angle": TypeSettingConfig(setting_profile="trigonometry"),
@@ -1366,9 +1506,6 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "planes": TypeSettingConfig(setting_profile="coordinate_plane"),
     "g6_area_model_algebraic": TypeSettingConfig(setting_profile="distributive"),
     "g6_classify_polyhedron": TypeSettingConfig(setting_profile="geometry_basic"),
-    "g6_cube_net_grid_surface_area": TypeSettingConfig(setting_profile="geometry_basic"),
-    "g6_cube_net_surface_area": TypeSettingConfig(setting_profile="geometry_basic"),
-    "g6_invalid_cube_net": TypeSettingConfig(setting_profile="geometry_basic"),
     "g6_equations_hanger_diagrams": TypeSettingConfig(setting_profile="equation"),
     "g6_equations_tape_diagrams": TypeSettingConfig(setting_profile="equation"),
     "g6_inequalities_hanger_diagrams": TypeSettingConfig(setting_profile="inequality"),
@@ -1395,8 +1532,19 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "geo_proportional_parts": TypeSettingConfig(setting_profile="geometry_triangles"),
     "geo_quadrilateral_classifying": TypeSettingConfig(setting_profile="geometry_basic"),
     "geo_regular_polygon_area": TypeSettingConfig(setting_profile="geometry_basic"),
-    "geo_similar_polygons": TypeSettingConfig(setting_profile="geometry_triangles"),
-    "geo_transformations": TypeSettingConfig(setting_profile="coordinate_plane"),
+    "geo_similar_polygons": TypeSettingConfig(
+        setting_profile="geometry_triangles",
+        extra_settings=(similar_figures_prompt_settings,),
+        setting_defaults={"prompt_style": "diagram", "include_figure": True, "include_diagram": True},
+    ),
+    "geo_transformations": TypeSettingConfig(
+        setting_profile="coordinate_plane",
+        setting_defaults={
+            "include_graph_metadata": True,
+            "include_diagram": True,
+            "show_preimage_graph": True,
+        },
+    ),
     "geo_triangle_angle_bisector": TypeSettingConfig(setting_profile="geometry_triangles"),
     "geo_triangle_centroid": TypeSettingConfig(setting_profile="geometry_triangles"),
     "geo_triangle_congruence": TypeSettingConfig(setting_profile="geometry_triangles"),

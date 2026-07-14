@@ -37,7 +37,10 @@ Treat as **pre-flags**; human/agent judgment still required for Method? and Hard
 | `derivative_product_rule` | power_rule (and not product) |
 | `radical_equations` | rational (without radical/exponent) |
 | `quadratic_vertex_form_write` | conic that is not parabola |
+| `g6_integer_multiply` / other arithmetic | `g6_properties_of_addition_and_multiplication` (identify-property) |
 | `precalc_foundations` / `calculus_foundations` | thin fallback — scrutinize topic |
+
+Identify-property types also get a light **answer-shape** check: answers that are bare operation names (`multiplication`) or numeric products fail, because that usually means the type is still wired to compute-the-product generation.
 
 ## Family type lists
 

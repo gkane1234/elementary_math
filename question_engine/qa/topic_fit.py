@@ -323,6 +323,20 @@ def _setup_topic_rules() -> None:
 
     _rule(log_type, check_log, "logarithm")
 
+    def identify_property(tid: str, name: str, gen: str) -> bool:
+        return is_identify_property_type(tid, name, gen)
+
+    def check_identify_property(prompts: list[str]) -> list[str]:
+        fails: list[str] = []
+        eq_n = sum(1 for p in prompts if "=" in p)
+        if eq_n < max(1, len(prompts) // 2):
+            fails.append(
+                f"identify-property: prompts lack illustrating equations ({eq_n}/{len(prompts)})"
+            )
+        return fails
+
+    _rule(identify_property, check_identify_property, "identify_property")
+
 
 _setup_topic_rules()
 
@@ -354,6 +368,14 @@ def check_miswire(type_id: str, generator: str) -> tuple[list[str], list[str]]:
         )
     ):
         fails.append("miswire: graph_quadratic for non-quadratic topic")
+    if gen == "graph_transformations" and (
+        id_l.startswith("pa_")
+        or id_l.startswith("geo_")
+        or id_l.startswith("g6_")
+    ):
+        fails.append(
+            "miswire: graph_transformations (function/quadratic) for geometric shape transforms"
+        )
     if gen == "sequence_arithmetic_nth_term" and "geometric" in id_l:
         fails.append("miswire: arithmetic sequence generator for geometric")
     if gen == "function_operations" and "vector" in id_l:
@@ -373,6 +395,18 @@ def check_miswire(type_id: str, generator: str) -> tuple[list[str], list[str]]:
         fails.append("miswire: radical_equations for rational type")
     if gen == "quadratic_vertex_form_write" and "conic" in id_l and "parabola" not in id_l:
         fails.append("miswire: vertex_write for non-parabola conic")
+    if (
+        ("properties_of_addition" in id_l or "properties_of_multiplication" in id_l)
+        and gen
+        in (
+            "g6_integer_multiply",
+            "g6_integer_add_subtract",
+            "g6_integer_divide",
+            "integer_multiply",
+            "order_of_operations",
+        )
+    ):
+        fails.append("miswire: arithmetic generator for identify-property topic")
     if gen == "precalc_foundations":
         notes.append("thin generator: precalc_foundations")
     if gen == "calculus_foundations":
@@ -381,6 +415,83 @@ def check_miswire(type_id: str, generator: str) -> tuple[list[str], list[str]]:
         notes.append("uses radical_simplification for rationalizing denominators")
 
     return fails, notes
+
+
+_OPERATION_NAME_ANSWERS = frozenset(
+    {
+        "addition",
+        "multiplication",
+        "subtraction",
+        "division",
+        "add",
+        "multiply",
+        "subtract",
+        "divide",
+    }
+)
+_PROPERTY_NAME_TOKENS = (
+    "commutative",
+    "associative",
+    "distributive",
+    "identity",
+    "zero property",
+    "multiplicative property of zero",
+)
+
+
+def _plain_answer_text(answer: str) -> str:
+    text = (answer or "").strip()
+    text = re.sub(r"\\text\{([^{}]*)\}", r"\1", text)
+    text = re.sub(r"\s+", " ", text).strip().lower()
+    return text
+
+
+def is_identify_property_type(type_id: str, name: str = "", generator: str = "") -> bool:
+    id_l = (type_id or "").lower()
+    name_l = (name or "").lower()
+    gen = (generator or "").lower()
+    if "properties_of_addition_and_multiplication" in id_l:
+        return True
+    if gen == "g6_properties_of_addition_and_multiplication":
+        return True
+    if "identify" in name_l and "propert" in name_l:
+        return True
+    return False
+
+
+def check_identify_property_answers(answers: list[str]) -> list[str]:
+    """Flag answers that are operation names or lack a recognizable property name.
+
+    This is shape/topic fit of the key — not numeric correctness.
+    """
+    fails: list[str] = []
+    if not answers:
+        return fails
+    bad_ops = 0
+    non_property = 0
+    for raw in answers:
+        plain = _plain_answer_text(raw)
+        if not plain:
+            non_property += 1
+            continue
+        if plain in _OPERATION_NAME_ANSWERS:
+            bad_ops += 1
+            continue
+        if re.fullmatch(r"-?\d+(?:\.\d+)?", plain):
+            non_property += 1
+            continue
+        if not any(token in plain for token in _PROPERTY_NAME_TOKENS):
+            non_property += 1
+    if bad_ops:
+        fails.append(
+            f"identify-property: answer is an operation name ({bad_ops}/{len(answers)})"
+        )
+    if non_property >= max(1, (len(answers) + 1) // 2):
+        fails.append(
+            f"identify-property: answers lack property names ({non_property}/{len(answers)})"
+        )
+    return fails
+
 
 # ---------------------------------------------------------------------------
 # Catalog / resolve
@@ -494,10 +605,13 @@ def evaluate_topic_fit(
     *,
     errors_by_tier: dict[str, list[str]] | None = None,
     scaffolded_by_tier: dict[str, list[bool]] | None = None,
+    answers_by_tier: dict[str, list[str]] | None = None,
 ) -> TopicFitResult:
     """Score topic-fit heuristics for one type given sampled prompts.
 
-    Does not inspect or require answers.
+    Generally does not verify mathematical correctness of answer keys.
+    Identify-property types get a light answer-*shape* check (property name
+    vs operation name / numeric product) because wrong keys signal miswire.
     """
     tr = TopicFitResult(
         type_id=entry.id,
@@ -506,6 +620,7 @@ def evaluate_topic_fit(
     )
     errors_by_tier = errors_by_tier or {}
     scaffolded_by_tier = scaffolded_by_tier or {}
+    answers_by_tier = answers_by_tier or {}
 
     all_prompts: list[str] = []
     for tier, prompts in prompts_by_tier.items():
@@ -558,6 +673,12 @@ def evaluate_topic_fit(
     mw_fails, mw_notes = check_miswire(entry.id, entry.generator)
     tr.hard_fails.extend(mw_fails)
     tr.notes.extend(mw_notes)
+
+    if is_identify_property_type(entry.id, entry.name or "", entry.generator):
+        all_answers: list[str] = []
+        for tier_answers in answers_by_tier.values():
+            all_answers.extend(a for a in tier_answers if a)
+        tr.hard_fails.extend(check_identify_property_answers(all_answers))
 
     if all_prompts and len({prompt_sig(p) for p in all_prompts}) == 1:
         note = "weak diversity: all samples same normalized template"

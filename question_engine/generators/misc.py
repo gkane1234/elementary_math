@@ -14,69 +14,328 @@ from ..settings.params import (
     misc_expression_params_from_settings,
     polynomial_params_from_settings,
 )
-from .utils import _make_questions
+from .utils import _make_questions, format_slash_fraction
 
-_VERBAL_TEMPLATES: list[tuple[str, str, str]] = [
-    ("\\text{{the sum of }} {a} \\text{{ and a number}}", "the sum of {a} and a number", "{a} + x"),
-    ("\\text{{}} {a} \\text{{ more than a number}}", "{a} more than a number", "x + {a}"),
-    ("\\text{{}} {a} \\text{{ less than a number}}", "{a} less than a number", "x - {a}"),
-    ("\\text{{the product of }} {a} \\text{{ and a number}}", "the product of {a} and a number", "{ax}"),
-    ("\\text{{a number divided by }} {a}", "a number divided by {a}", "\\frac{{x}}{{{a}}}"),
-    ("\\text{{}} {a} \\text{{ times a number}}", "{a} times a number", "{ax}"),
-    ("\\text{{a number increased by }} {a}", "a number increased by {a}", "x + {a}"),
-    ("\\text{{a number decreased by }} {a}", "a number decreased by {a}", "x - {a}"),
-    ("\\text{{the quotient of a number and }} {a}", "the quotient of a number and {a}", "\\frac{{x}}{{{a}}}"),
-    ("\\text{{}} {a} \\text{{ less than twice a number}}", "{a} less than twice a number", "2x - {a}"),
-]
-
-
-_VERBAL_ADVANCED_TEMPLATES: list[tuple[str, str, str]] = [
-    ("\\text{{}} {a} \\text{{ less than twice a number}}", "{a} less than twice a number", "2x - {a}"),
-    ("\\text{{the sum of a number and }} {a} \\text{{, divided by }} {b}", "sum and quotient", "\\frac{{x + {a}}}{{{b}}}"),
-]
-
-
-def _templates_for_complexity(complexity: str, *, max_operations: int) -> list[tuple[str, str, str]]:
-    if complexity == "simple":
-        pool = _VERBAL_TEMPLATES[:4]
-    elif complexity == "advanced":
-        pool = _VERBAL_TEMPLATES + _VERBAL_ADVANCED_TEMPLATES
-    else:
-        pool = _VERBAL_TEMPLATES[:8]
-    if max_operations <= 1:
-        return pool[:4]
-    if max_operations == 2:
-        return pool[:8]
-    return pool
+def _verbal_constant(params, *, variable: str = "x") -> tuple[str, str, str]:
+    """Return (latex, plain_text, ax_latex) for one constant."""
+    if params.allow_fraction_constants and random.random() < 0.35:
+        a_num = random.randint(params.constant_min, params.constant_max)
+        a_den = random.randint(2, max(2, params.constant_max // 2))
+        a = f"\\frac{{{a_num}}}{{{a_den}}}"
+        return a, format_slash_fraction(a_num, a_den), f"{a}{variable}"
+    a_val = random.randint(params.constant_min, params.constant_max)
+    return (
+        str(a_val),
+        str(a_val),
+        format_monomial_latex(a_val, variable=variable) or "0",
+    )
 
 
 def _verbal_expressions(topic: str, settings: dict) -> list[Question]:
+    """Translate verbal phrases into algebraic expressions.
+
+    Tiered like writing numeric expressions:
+    - simple: one operation (sum/product/quotient with a variable)
+    - standard: multi-step / parentheses (quantity, times the sum/difference)
+    - advanced: consecutive integers, products of binomials, squared quantities
+    Medium uses standard forms only (not diluted with Easy); Hard weights advanced.
+    """
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = misc_expression_params_from_settings(settings)
-    templates = _templates_for_complexity(
-        params.phrase_complexity,
-        max_operations=params.max_phrase_operations,
-    )
+    var = params.variable
+    complexity = params.phrase_complexity
+    max_ops = params.max_phrase_operations
+
+    def _c() -> tuple[str, str, str]:
+        return _verbal_constant(params, variable=var)
+
+    def _second() -> tuple[str, str]:
+        b_val = random.randint(params.constant_min, params.constant_max)
+        if b_val == 0:
+            b_val = max(2, params.constant_min)
+        return str(b_val), str(b_val)
+
+    def simple_forms() -> list[tuple[str, str, str]]:
+        a, a_text, ax = _c()
+        return [
+            (
+                f"\\text{{the sum of }} {a} \\text{{ and a number}}",
+                f"the sum of {a_text} and a number",
+                f"{a} + {var}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ more than a number}}",
+                f"{a_text} more than a number",
+                f"{var} + {a}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ less than a number}}",
+                f"{a_text} less than a number",
+                f"{var} - {a}",
+            ),
+            (
+                f"\\text{{the product of }} {a} \\text{{ and a number}}",
+                f"the product of {a_text} and a number",
+                ax,
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ times a number}}",
+                f"{a_text} times a number",
+                ax,
+            ),
+            (
+                f"\\text{{a number increased by }} {a}",
+                f"a number increased by {a_text}",
+                f"{var} + {a}",
+            ),
+            (
+                f"\\text{{a number decreased by }} {a}",
+                f"a number decreased by {a_text}",
+                f"{var} - {a}",
+            ),
+            (
+                f"\\text{{a number divided by }} {a}",
+                f"a number divided by {a_text}",
+                f"\\frac{{{var}}}{{{a}}}",
+            ),
+            (
+                f"\\text{{the quotient of a number and }} {a}",
+                f"the quotient of a number and {a_text}",
+                f"\\frac{{{var}}}{{{a}}}",
+            ),
+            (
+                f"\\text{{the difference of a number and }} {a}",
+                f"the difference of a number and {a_text}",
+                f"{var} - {a}",
+            ),
+            (
+                f"\\text{{twice a number}}",
+                "twice a number",
+                f"2{var}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ fewer than a number}}",
+                f"{a_text} fewer than a number",
+                f"{var} - {a}",
+            ),
+        ]
+
+    def standard_forms() -> list[tuple[str, str, str]]:
+        a, a_text, _ax = _c()
+        b, b_text = _second()
+        bx = format_monomial_latex(int(b), variable=var) if b.isdigit() else f"{b}{var}"
+        if not bx:
+            bx = f"{b}{var}"
+        return [
+            (
+                f"\\text{{}} {a} \\text{{ less than twice a number}}",
+                f"{a_text} less than twice a number",
+                f"2{var} - {a}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ more than twice a number}}",
+                f"{a_text} more than twice a number",
+                f"2{var} + {a}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ times the sum of a number and }} {b}",
+                f"{a_text} times the sum of a number and {b_text}",
+                f"{a}({var} + {b})",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ times the difference of a number and }} {b}",
+                f"{a_text} times the difference of a number and {b_text}",
+                f"{a}({var} - {b})",
+            ),
+            (
+                f"\\text{{the product of }} {a} \\text{{ and the sum of a number and }} {b}",
+                f"the product of {a_text} and the sum of a number and {b_text}",
+                f"{a}({var} + {b})",
+            ),
+            (
+                f"\\text{{the sum of a number and }} {a} \\text{{, divided by }} {b}",
+                f"the sum of a number and {a_text}, divided by {b_text}",
+                f"\\frac{{{var} + {a}}}{{{b}}}",
+            ),
+            (
+                f"\\text{{the quotient of the sum of a number and }} {a}\\text{{, and }} {b}",
+                f"the quotient of the sum of a number and {a_text}, and {b_text}",
+                f"\\frac{{{var} + {a}}}{{{b}}}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ more than the product of }} {b} \\text{{ and a number}}",
+                f"{a_text} more than the product of {b_text} and a number",
+                f"{bx} + {a}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ less than the product of }} {b} \\text{{ and a number}}",
+                f"{a_text} less than the product of {b_text} and a number",
+                f"{bx} - {a}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ times the quantity of a number plus }} {b}",
+                f"{a_text} times the quantity of a number plus {b_text}",
+                f"{a}({var} + {b})",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ times the quantity of a number minus }} {b}",
+                f"{a_text} times the quantity of a number minus {b_text}",
+                f"{a}({var} - {b})",
+            ),
+            (
+                f"\\text{{the difference of }} {a} \\text{{ and the product of }} {b} "
+                f"\\text{{ and a number}}",
+                f"the difference of {a_text} and the product of {b_text} and a number",
+                f"{a} - {bx}",
+            ),
+            (
+                f"\\text{{}} {b} \\text{{ groups of the sum of a number and }} {a}",
+                f"{b_text} groups of the sum of a number and {a_text}",
+                f"{b}({var} + {a})",
+            ),
+            (
+                f"\\text{{the sum of }} {a} \\text{{ and the product of }} {b} "
+                f"\\text{{ and a number}}",
+                f"the sum of {a_text} and the product of {b_text} and a number",
+                f"{a} + {bx}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ times the quantity of twice a number plus }} {b}",
+                f"{a_text} times the quantity of twice a number plus {b_text}",
+                f"{a}(2{var} + {b})",
+            ),
+            (
+                f"\\text{{the sum of a number and }} {a}\\text{{, multiplied by }} {b}",
+                f"the sum of a number and {a_text}, multiplied by {b_text}",
+                f"{b}({var} + {a})",
+            ),
+            (
+                f"\\text{{twice the quantity of a number decreased by }} {a}",
+                f"twice the quantity of a number decreased by {a_text}",
+                f"2({var} - {a})",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ less than twice the quantity of a number plus }} {b}",
+                f"{a_text} less than twice the quantity of a number plus {b_text}",
+                f"2({var} + {b}) - {a}",
+            ),
+        ]
+
+    def advanced_forms() -> list[tuple[str, str, str]]:
+        a, a_text, _ax = _c()
+        b, b_text = _second()
+        # Keep a,b distinct for binomial products / consecutive phrasing clarity.
+        if a == b:
+            b_val = int(b) + 1 if b.isdigit() else params.constant_max
+            b, b_text = str(b_val), str(b_val)
+        return [
+            (
+                f"\\text{{the product of a number plus }} {a} \\text{{ and a number plus }} {b}",
+                f"the product of a number plus {a_text} and a number plus {b_text}",
+                f"({var} + {a})({var} + {b})",
+            ),
+            (
+                f"\\text{{the product of a number minus }} {a} \\text{{ and a number plus }} {b}",
+                f"the product of a number minus {a_text} and a number plus {b_text}",
+                f"({var} - {a})({var} + {b})",
+            ),
+            (
+                f"\\text{{the product of the quantity a number plus }} {a} "
+                f"\\text{{ and the quantity a number minus }} {b}",
+                f"the product of the quantity a number plus {a_text} "
+                f"and the quantity a number minus {b_text}",
+                f"({var} + {a})({var} - {b})",
+            ),
+            (
+                f"\\text{{the square of the sum of a number and }} {a}",
+                f"the square of the sum of a number and {a_text}",
+                f"({var} + {a})^{{2}}",
+            ),
+            (
+                f"\\text{{the square of the difference of a number and }} {a}",
+                f"the square of the difference of a number and {a_text}",
+                f"({var} - {a})^{{2}}",
+            ),
+            (
+                f"\\text{{a number squared plus }} {a}",
+                f"a number squared plus {a_text}",
+                f"{var}^{{2}} + {a}",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ times the quantity of a number squared plus }} {b}",
+                f"{a_text} times the quantity of a number squared plus {b_text}",
+                f"{a}({var}^{{2}} + {b})",
+            ),
+            (
+                f"\\text{{twice the quantity of a number increased by }} {a}",
+                f"twice the quantity of a number increased by {a_text}",
+                f"2({var} + {a})",
+            ),
+            (
+                f"\\text{{the sum of the squares of a number and }} {a}",
+                f"the sum of the squares of a number and {a_text}",
+                f"{var}^{{2}} + {a}^{{2}}",
+            ),
+            (
+                f"\\text{{the sum of three consecutive integers starting with a number}}",
+                "the sum of three consecutive integers starting with a number",
+                f"{var} + ({var} + 1) + ({var} + 2)",
+            ),
+            (
+                f"\\text{{the sum of two consecutive integers starting with a number}}",
+                "the sum of two consecutive integers starting with a number",
+                f"{var} + ({var} + 1)",
+            ),
+            (
+                f"\\text{{the sum of three consecutive even integers starting with a number}}",
+                "the sum of three consecutive even integers starting with a number",
+                f"{var} + ({var} + 2) + ({var} + 4)",
+            ),
+            (
+                f"\\text{{the sum of three consecutive odd integers starting with a number}}",
+                "the sum of three consecutive odd integers starting with a number",
+                f"{var} + ({var} + 2) + ({var} + 4)",
+            ),
+            (
+                f"\\text{{}} {a} \\text{{ less than the square of a number}}",
+                f"{a_text} less than the square of a number",
+                f"{var}^{{2}} - {a}",
+            ),
+            (
+                f"\\text{{the product of }} {a} \\text{{ and the square of the sum of a number "
+                f"and }} {b}",
+                f"the product of {a_text} and the square of the sum of a number and {b_text}",
+                f"{a}({var} + {b})^{{2}}",
+            ),
+            (
+                f"\\text{{the cube of a number increased by }} {a}",
+                f"the cube of a number increased by {a_text}",
+                f"{var}^{{3}} + {a}",
+            ),
+            (
+                f"\\text{{the quotient of }} {a} \\text{{ times a number and the quantity of a "
+                f"number plus }} {b}",
+                f"the quotient of {a_text} times a number and the quantity of a number plus {b_text}",
+                f"\\frac{{{_ax}}}{{{var} + {b}}}",
+            ),
+        ]
+
+    if complexity == "simple" or max_ops <= 1:
+        pool_builders = [simple_forms]
+    elif complexity == "advanced" or max_ops >= 3:
+        # Hard: nested / exponent / consecutive, with some medium variety.
+        pool_builders = [standard_forms, advanced_forms, advanced_forms]
+    else:
+        # Medium: multi-op / grouping only — do not dilute with Easy one-ops.
+        pool_builders = [standard_forms]
 
     def build() -> tuple[str, str, str | None]:
-        a_val: int | None = None
-        if params.allow_fraction_constants:
-            a_num = random.randint(params.constant_min, params.constant_max)
-            a_den = random.randint(2, max(2, params.constant_max // 2))
-            a = f"\\frac{{{a_num}}}{{{a_den}}}"
-            a_text = f"{a_num}/{a_den}"
-            ax = f"{a}x"
-        else:
-            a_val = random.randint(params.constant_min, params.constant_max)
-            a = str(a_val)
-            a_text = str(a_val)
-            ax = format_monomial_latex(a_val) or "0"
-        latex_tpl, text_tpl, answer_tpl = random.choice(templates)
-        b = random.randint(2, max(2, params.constant_min))
-        prompt_latex = latex_tpl.format(a=a, b=b)
-        prompt_text = text_tpl.format(a=a_text, b=b)
-        answer = answer_tpl.format(a=a, b=b, ax=ax) if include_answer_key else None
+        forms: list[tuple[str, str, str]] = []
+        for builder in pool_builders:
+            forms.extend(builder())
+        prompt_latex, prompt_text, answer_expr = random.choice(forms)
+        answer = answer_expr if include_answer_key else None
         return prompt_latex, prompt_text, answer
 
     return _make_questions(topic, count, include_answer_key, build, settings=settings)

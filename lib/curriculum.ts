@@ -220,18 +220,6 @@ export const CURRICULUM: CurriculumLevel[] = [
         name: "Polyhedra",
         topics: [
           { id: "g6_classifying_and_naming", name: "Classifying and naming", type_id: "g6_classifying_and_naming" },
-          { id: "g6_nets", name: "Nets", type_id: "g6_nets" },
-          { id: "g6_nets_and_surface_area", name: "Nets and surface area", type_id: "g6_nets_and_surface_area" },
-          {
-            id: "g6_nets_and_surface_area_on_a_grid",
-            name: "Nets and surface area on a grid",
-            type_id: "g6_nets_and_surface_area_on_a_grid",
-          },
-          {
-            id: "g6_identifying_invalid_nets",
-            name: "Identifying invalid nets",
-            type_id: "g6_identifying_invalid_nets",
-          },
           {
             id: "g6_volume_and_surface_area_using_isometric_drawings",
             name: "Volume and surface area using isometric drawings",
@@ -242,7 +230,6 @@ export const CURRICULUM: CurriculumLevel[] = [
             name: "Formulas for volume and surface area of a cube",
             type_id: "g6_formulas_for_volume_and_surface_area_of_a_cube",
           },
-          { id: "g6_isometric_sketching", name: "Isometric sketching", type_id: "g6_isometric_sketching" },
         ],
       },
       {
@@ -293,7 +280,7 @@ export const CURRICULUM: CurriculumLevel[] = [
             id: "pa_naming_decimal_places_and_rounding",
             name: "Naming decimal places and rounding", type_id: "pa_naming_decimal_places_and_rounding" },
           { id: "pa_writing_numbers_with_words", name: "Writing numbers with words" },
-          { id: "pa_integers_adding_and_subtracting", name: "Adding and subtracting", type_id: "rational_add_subtract" },
+          { id: "pa_integers_adding_and_subtracting", name: "Adding and subtracting", type_id: "pa_integers_adding_and_subtracting" },
           { id: "pa_integers_multiplying", name: "Multiplying", type_id: "rational_multiply" },
           { id: "pa_integers_dividing", name: "Dividing", type_id: "rational_divide" },
           { id: "pa_factoring", name: "Factoring" },
@@ -347,6 +334,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         name: "Factors and Exponents",
         topics: [
           { id: "pa_divisibility", name: "Divisibility", type_id: "pa_divisibility" },
+          { id: "pa_squares_and_square_roots", name: "Squares and square roots", type_id: "pa_squares_and_square_roots" },
           { id: "properties_of_exponents", name: "Properties of exponents", type_id: "properties_of_exponents" },
           { id: "scientific_notation_write", name: "Writing scientific notation", type_id: "scientific_notation_write" },
           {
@@ -430,7 +418,6 @@ export const CURRICULUM: CurriculumLevel[] = [
         id: "right_triangles",
         name: "Right Triangles",
         topics: [
-          { id: "pa_squares_and_square_roots", name: "Squares and square roots", type_id: "radical_simplification" },
           { id: "pythagorean_theorem", name: "The Pythagorean Theorem", type_id: "pythagorean_theorem" },
           { id: "radical_distance_formula", name: "The Distance Formula", type_id: "radical_distance_formula" },
         ],
@@ -450,7 +437,6 @@ export const CURRICULUM: CurriculumLevel[] = [
           { id: "visualizing_data", name: "Visualizing data", type_id: "visualizing_data" },
           { id: "center_and_spread", name: "Center and spread", type_id: "center_and_spread" },
           { id: "scatter_plots", name: "Scatter plots", type_id: "scatter_plots" },
-          { id: "using_statistical_models", name: "Using statistical models" },
         ],
       },
     ],
@@ -639,7 +625,6 @@ export const CURRICULUM: CurriculumLevel[] = [
           { id: "visualizing_data", name: "Visualizing data", type_id: "visualizing_data" },
           { id: "center_and_spread", name: "Center and spread", type_id: "center_and_spread" },
           { id: "scatter_plots", name: "Scatter plots", type_id: "scatter_plots" },
-          { id: "using_statistical_models", name: "Using statistical models" },
         ],
       },
     ],
@@ -1059,7 +1044,6 @@ export const CURRICULUM: CurriculumLevel[] = [
             id: "geo_solid_figures_identifying_volume_and_area",
             name: "Solid figures: identifying, volume, and area",
           },
-          { id: "geo_nets_of_solids", name: "Nets of solids" },
           { id: "geo_similar_solids", name: "Similar solids" },
         ],
       },

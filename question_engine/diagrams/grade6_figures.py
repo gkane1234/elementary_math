@@ -188,33 +188,69 @@ def grid_polygon_svg(points: list[tuple[int, int]], *, shaded: bool = False) -> 
     )
 
 
+def _coordinate_plane_viewport(
+    *point_sets: list[tuple[int, int]],
+    pad_cells: int = 1,
+) -> tuple[int, int, int, int]:
+    """Return integer (x_min, x_max, y_min, y_max) covering origin and points."""
+    xs = [0]
+    ys = [0]
+    for points in point_sets:
+        xs.extend(int(p[0]) for p in points)
+        ys.extend(int(p[1]) for p in points)
+    x_min = min(xs) - pad_cells
+    x_max = max(xs) + pad_cells
+    y_min = min(ys) - pad_cells
+    y_max = max(ys) + pad_cells
+    # Keep the grid readable.
+    x_min = max(x_min, -10)
+    x_max = min(x_max, 12)
+    y_min = max(y_min, -10)
+    y_max = min(y_max, 12)
+    if x_min >= x_max:
+        x_min, x_max = -5, 5
+    if y_min >= y_max:
+        y_min, y_max = -5, 5
+    return x_min, x_max, y_min, y_max
+
+
 def coordinate_polygon_svg(
     points: list[tuple[int, int]],
     *,
     labels: list[str] | None = None,
 ) -> str:
-    """Axis-aligned polygon on a labeled coordinate plane (Grade 6 perimeter)."""
-    xs = [p[0] for p in points]
-    ys = [p[1] for p in points]
-    x_min = min(min(xs), 0) - 1
-    x_max = max(max(xs), 0) + 1
-    y_min = min(min(ys), 0) - 1
-    y_max = max(max(ys), 0) + 1
-    # Keep the grid readable.
-    x_min = max(x_min, -8)
-    x_max = min(x_max, 10)
-    y_min = max(y_min, -8)
-    y_max = min(y_max, 10)
+    """Polygon on a labeled coordinate plane (Grade 6 perimeter / transforms)."""
+    return coordinate_transform_svg(points, labels=labels)
+
+
+def coordinate_transform_svg(
+    original: list[tuple[int, int]],
+    *,
+    image: list[tuple[int, int]] | None = None,
+    labels: list[str] | None = None,
+    image_labels: list[str] | None = None,
+    blank: bool = False,
+) -> str:
+    """Coordinate-plane figure for geometric transformations.
+
+    - Prompt (``image=None``): show the pre-image polygon.
+    - Answer key (``image`` set): show original lightly and the image solid.
+    - ``blank=True``: axes/grid only (student work plane).
+    """
+    sets = [original]
+    if image:
+        sets.append(image)
+    x_min, x_max, y_min, y_max = _coordinate_plane_viewport(*sets)
     scale = 26
     pad = 36
     width = pad * 2 + (x_max - x_min) * scale
     height = pad * 2 + (y_max - y_min) * scale
 
-    def px(x: int) -> float:
-        return pad + (x - x_min) * scale
+    def px(x: int | float) -> float:
+        return pad + (float(x) - x_min) * scale
 
-    def py(y: int) -> float:
-        return pad + (y_max - y) * scale
+    def py(y: int | float) -> float:
+        return pad + (y_max - float(y)) * scale
 
     grid = "".join(
         f'<line x1="{px(x)}" y1="{py(y_max)}" x2="{px(x)}" y2="{py(y_min)}" stroke="#e5e7eb"/>'
@@ -238,24 +274,56 @@ def coordinate_polygon_svg(
         for y in range(y_min, y_max + 1)
         if y != 0
     )
-    poly = " ".join(f"{px(x)},{py(y)}" for x, y in points)
-    dots = "".join(
-        f'<circle cx="{px(x)}" cy="{py(y)}" r="3.5" fill="#1e3a8a"/>' for x, y in points
+    if blank:
+        return _svg(f"{grid}{axes}{ticks}", width=int(width), height=int(height))
+
+    def _poly(
+        points: list[tuple[int, int]],
+        *,
+        fill: str,
+        stroke: str,
+        opacity: str = "0.7",
+        dash: str | None = None,
+        labs: list[str] | None = None,
+        lab_color: str = "#1e3a8a",
+    ) -> str:
+        poly = " ".join(f"{px(x)},{py(y)}" for x, y in points)
+        dash_attr = f' stroke-dasharray="{dash}"' if dash else ""
+        dots = "".join(
+            f'<circle cx="{px(x)}" cy="{py(y)}" r="3.5" fill="{stroke}"/>' for x, y in points
+        )
+        label_text = ""
+        if labs:
+            for lab, (x, y) in zip(labs, points):
+                label_text += (
+                    f'<text x="{px(x) + 6}" y="{py(y) - 6}" font-size="12" fill="{lab_color}">'
+                    f"{escape(lab)}</text>"
+                )
+        return (
+            f'<polygon points="{poly}" fill="{fill}" fill-opacity="{opacity}" '
+            f'stroke="{stroke}" stroke-width="2"{dash_attr}/>'
+            f"{dots}{label_text}"
+        )
+
+    body = _poly(
+        original,
+        fill="#dbeafe",
+        stroke="#1e3a8a",
+        opacity="0.35" if image else "0.7",
+        dash="5 4" if image else None,
+        labs=labels,
+        lab_color="#64748b" if image else "#1e3a8a",
     )
-    label_text = ""
-    if labels:
-        for lab, (x, y) in zip(labels, points):
-            label_text += (
-                f'<text x="{px(x) + 6}" y="{py(y) - 6}" font-size="12" fill="#1e3a8a">'
-                f"{escape(lab)}</text>"
-            )
-    return _svg(
-        f"{grid}{axes}{ticks}"
-        f'<polygon points="{poly}" fill="#dbeafe" fill-opacity="0.7" stroke="#1e3a8a" stroke-width="2"/>'
-        f"{dots}{label_text}",
-        width=int(width),
-        height=int(height),
-    )
+    if image:
+        body += _poly(
+            image,
+            fill="#bbf7d0",
+            stroke="#166534",
+            opacity="0.75",
+            labs=image_labels,
+            lab_color="#166534",
+        )
+    return _svg(f"{grid}{axes}{ticks}{body}", width=int(width), height=int(height))
 
 
 def cube_net_svg(side: int, *, invalid: bool = False) -> str:
@@ -280,3 +348,72 @@ def prism_svg(length: str, width: str, height: str) -> str:
         f'<text x="270" y="105" font-size="16">{escape(width)}</text>'
         f'<text x="55" y="125" font-size="16">{escape(height)}</text>'
     )
+
+
+# Grade 6 classify/naming solids (unlabeled isometric sketches).
+POLYHEDRON_KINDS: tuple[str, ...] = (
+    "cube",
+    "rectangular prism",
+    "triangular prism",
+    "square pyramid",
+    "triangular pyramid",
+)
+
+
+def _cube_solid_svg() -> str:
+    return _svg(
+        '<polygon points="110,70 200,70 245,35 155,35" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="110,70 200,70 200,160 110,160" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="200,70 245,35 245,125 200,160" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2"/>'
+    )
+
+
+def _rectangular_prism_solid_svg() -> str:
+    return _svg(
+        '<polygon points="70,75 220,75 265,40 115,40" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="70,75 220,75 220,155 70,155" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="220,75 265,40 265,120 220,155" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2"/>'
+    )
+
+
+def _triangular_prism_solid_svg() -> str:
+    # Right triangular prism: front triangle extruded back-right.
+    return _svg(
+        '<polygon points="80,150 200,150 140,55" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="200,150 250,120 190,30 140,55" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="80,150 140,55 190,30 130,125" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<line x1="140" y1="55" x2="190" y2="30" stroke="#1e3a8a" stroke-width="2"/>'
+    )
+
+
+def _square_pyramid_solid_svg() -> str:
+    return _svg(
+        '<polygon points="90,155 230,155 255,120 115,120" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="90,155 230,155 172,40" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="230,155 255,120 172,40" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<line x1="115" y1="120" x2="172" y2="40" stroke="#1e3a8a" stroke-width="1.5" stroke-dasharray="4 3"/>'
+    )
+
+
+def _triangular_pyramid_solid_svg() -> str:
+    return _svg(
+        '<polygon points="100,160 250,160 175,115" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="100,160 250,160 175,40" fill="#93c5fd" stroke="#1e3a8a" stroke-width="2"/>'
+        '<polygon points="250,160 175,115 175,40" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>'
+        '<line x1="100" y1="160" x2="175" y2="115" stroke="#1e3a8a" stroke-width="1.5" stroke-dasharray="4 3"/>'
+    )
+
+
+def polyhedron_svg(kind: str) -> str:
+    """Unlabeled isometric sketch for a Grade 6 polyhedron name."""
+    builders = {
+        "cube": _cube_solid_svg,
+        "rectangular prism": _rectangular_prism_solid_svg,
+        "triangular prism": _triangular_prism_solid_svg,
+        "square pyramid": _square_pyramid_solid_svg,
+        "triangular pyramid": _triangular_pyramid_solid_svg,
+    }
+    try:
+        return builders[kind]()
+    except KeyError as exc:
+        raise ValueError(f"Unknown polyhedron kind: {kind}") from exc

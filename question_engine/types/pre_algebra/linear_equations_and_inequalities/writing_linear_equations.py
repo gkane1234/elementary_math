@@ -1,6 +1,14 @@
-"""Writing linear equations — write y=mx+b from a shown graph."""
+"""Writing linear equations — form conversions, simplify, or read from a graph."""
 
-from question_engine.frameworks.graphing import ReadEquationFromGraphFramework
+from question_engine.frameworks.linear import WritingLinearEquationsFramework
 from question_engine.types._graphing_type import register_graphing_type
 
-register_graphing_type("writing_linear_equations", ReadEquationFromGraphFramework())
+register_graphing_type(
+    "writing_linear_equations",
+    WritingLinearEquationsFramework(),
+    setting_defaults={
+        "include_graph_metadata": True,
+        "show_points": False,
+        "ask_mode": "mixed",
+    },
+)

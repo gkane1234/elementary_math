@@ -630,3 +630,179 @@ def test_radical_equations_easy_vs_hard_prompts():
     assert any(
         q.answer_latex and "extraneous" in q.answer_latex for q in hard_qs + easy_qs
     )
+
+
+def test_g6_order_of_operations_presets_progress_by_tier():
+    easy = lookup_difficulty_preset(
+        "easy", type_id="g6_numeric_expressions_and_order_of_operations"
+    )
+    medium = lookup_difficulty_preset(
+        "medium", type_id="g6_numeric_expressions_and_order_of_operations"
+    )
+    hard = lookup_difficulty_preset(
+        "hard", type_id="g6_numeric_expressions_and_order_of_operations"
+    )
+    assert easy["pemdas_complexity"] == "basic"
+    assert medium["pemdas_complexity"] == "parentheses"
+    assert hard["pemdas_complexity"] == "mixed"
+    assert easy["num_max"] < medium["num_max"]
+
+
+def test_g6_writing_numeric_expression_presets_progress_by_tier():
+    easy = lookup_difficulty_preset("easy", type_id="g6_writing_numeric_expressions")
+    medium = lookup_difficulty_preset("medium", type_id="g6_writing_numeric_expressions")
+    hard = lookup_difficulty_preset("hard", type_id="g6_writing_numeric_expressions")
+    assert easy["expression_complexity"] == "simple"
+    assert medium["expression_complexity"] == "standard"
+    assert hard["expression_complexity"] == "advanced"
+
+
+def test_order_of_operations_samples_differ_structurally():
+    import random
+    import re
+
+    from question_engine.frameworks.number import OrderOfOperationsFramework
+
+    fw = OrderOfOperationsFramework()
+
+    def sample(tier: str, type_id: str, n: int = 24) -> list[str]:
+        settings = apply_difficulty_presets(
+            {"difficulty_tier": tier, "include_answer_key": True},
+            type_id=type_id,
+        )
+        out: list[str] = []
+        for i in range(n):
+            random.seed(5200 + i * 13 + len(tier) * 40)
+            prompt, _, answer = fw.build_prompt(settings)
+            assert answer is not None
+            # Sanity: answers are integers
+            int(answer)
+            out.append(prompt)
+        return out
+
+    easy = sample("easy", "g6_numeric_expressions_and_order_of_operations")
+    medium = sample("medium", "g6_numeric_expressions_and_order_of_operations")
+    hard = sample("hard", "g6_numeric_expressions_and_order_of_operations")
+    exponent = sample("medium", "g6_numeric_expressions_with_exponents")
+
+    paren = re.compile(r"\(")
+    power = re.compile(r"\^\{\d+\}")
+    times = re.compile(r"\\cdot|\\div")
+
+    assert not any(paren.search(p) for p in easy)
+    assert not any(power.search(p) for p in easy)
+    assert any(times.search(p) for p in easy)
+    assert len({p for p in easy}) >= 6
+
+    assert any(paren.search(p) for p in medium)
+    assert not any(power.search(p) for p in medium)
+
+    assert any(power.search(p) for p in hard)
+    assert any(paren.search(p) for p in hard)
+
+    assert all(power.search(p) for p in exponent)
+    assert len({p for p in exponent}) >= 5
+
+
+def test_writing_numeric_expression_samples_differ_structurally():
+    import random
+    import re
+
+    from question_engine.generators.advanced import _writing_numeric_expressions
+
+    def sample(tier: str, n: int = 20) -> list[str]:
+        settings = apply_difficulty_presets(
+            {
+                "difficulty_tier": tier,
+                "count": n,
+                "include_answer_key": True,
+            },
+            type_id="g6_writing_numeric_expressions",
+        )
+        random.seed(6100 + len(tier) * 17)
+        return [q.prompt_latex for q in _writing_numeric_expressions("g6", settings)]
+
+    easy = sample("easy")
+    medium = sample("medium")
+    hard = sample("hard")
+
+    power_phrase = re.compile(r"square|squared|cubed", re.I)
+    paren_phrase = re.compile(r"sum of|product of|times the|quantity", re.I)
+
+    assert not any(power_phrase.search(p) for p in easy)
+    assert any(paren_phrase.search(p) for p in medium)
+    assert any(power_phrase.search(p) for p in hard)
+    assert len({p for p in easy}) >= 5
+    assert len({p for p in hard}) >= 5
+
+
+def test_g6_writing_algebraic_expression_presets_progress_by_tier():
+    easy = lookup_difficulty_preset("easy", type_id="g6_writing_algebraic_expressions")
+    medium = lookup_difficulty_preset("medium", type_id="g6_writing_algebraic_expressions")
+    hard = lookup_difficulty_preset("hard", type_id="g6_writing_algebraic_expressions")
+    assert easy["phrase_complexity"] == "simple"
+    assert easy["max_phrase_operations"] == 1
+    assert medium["phrase_complexity"] == "standard"
+    assert medium["max_phrase_operations"] == 2
+    assert hard["phrase_complexity"] == "advanced"
+    assert hard["max_phrase_operations"] == 3
+    verbal = lookup_difficulty_preset("hard", type_id="verbal_expressions")
+    assert verbal["phrase_complexity"] == "advanced"
+
+
+def test_writing_algebraic_expression_samples_differ_structurally():
+    import random
+    import re
+
+    from question_engine.generators.misc import _verbal_expressions
+
+    def sample(tier: str, n: int = 24) -> list[str]:
+        settings = apply_difficulty_presets(
+            {
+                "difficulty_tier": tier,
+                "count": n,
+                "include_answer_key": True,
+            },
+            type_id="g6_writing_algebraic_expressions",
+        )
+        random.seed(7200 + len(tier) * 19)
+        return [q.prompt_latex for q in _verbal_expressions("g6", settings)]
+
+    easy = sample("easy")
+    medium = sample("medium")
+    hard = sample("hard")
+
+    advanced_phrase = re.compile(
+        r"consecutive|squared|square of|cube of|product of a number plus|"
+        r"product of the quantity|product of a number minus|"
+        r"sum of the squares|quotient of .* times a number and the quantity",
+        re.I,
+    )
+    multi_op_phrase = re.compile(
+        r"times the sum|times the difference|times the quantity|"
+        r"groups of the sum|more than the product|less than the product|"
+        r"less than twice|more than twice|multiplied by|twice the quantity|"
+        r"and the product of|sum of a number and .*, divided by|"
+        r"quotient of the sum|difference of .* and the product",
+        re.I,
+    )
+    simple_only = re.compile(
+        r"more than a number|less than a number|times a number|increased by|"
+        r"decreased by|a number divided by|quotient of a number and|"
+        r"product of \d+|twice a number|fewer than a number|"
+        r"difference of a number and|the sum of \d+ and a number",
+        re.I,
+    )
+
+    assert not any(advanced_phrase.search(p) for p in easy)
+    assert not any(multi_op_phrase.search(p) for p in easy)
+    assert any(simple_only.search(p) for p in easy)
+
+    # Medium is multi-op / grouping — not diluted with Easy one-ops, no Hard nests.
+    assert sum(1 for p in medium if multi_op_phrase.search(p)) >= int(0.9 * len(medium))
+    assert not any(advanced_phrase.search(p) for p in medium)
+
+    assert any(advanced_phrase.search(p) for p in hard)
+    assert len({p for p in easy}) >= 5
+    assert len({p for p in medium}) >= 5
+    assert len({p for p in hard}) >= 5

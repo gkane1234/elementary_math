@@ -25,7 +25,7 @@ BLANK_SAMPLES = [
 
 STIMULUS_SAMPLES = [
     ("more_on_slope", {"ask_mode": "from_graph", "allow_from_graph": True}),
-    ("writing_linear_equations", {}),
+    ("writing_linear_equations", {"ask_mode": "from_graph", "allow_from_graph": True}),
     ("continuous_relations", {}),
 ]
 
@@ -72,6 +72,15 @@ for tid, extra in STIMULUS_SAMPLES:
     no_points = len(gs.get("points", [])) == 0 or gs.get("show_points") is False
     if tid == "more_on_slope":
         if role == "stimulus" and has_line and no_points and len(gs.get("points", [])) == 0:
+            print(f"{tid}: OK stimulus line, no points answer={data['questions'][0].get('answer_latex')}")
+            ok += 1
+        else:
+            print(
+                f"{tid}: BAD role={role} has_line={has_line} "
+                f"pts={gs.get('points')} show_points={gs.get('show_points')} gs={gs}"
+            )
+    elif tid == "writing_linear_equations":
+        if role == "stimulus" and has_line and len(gs.get("points", [])) == 0 and gs.get("show_points") is False:
             print(f"{tid}: OK stimulus line, no points answer={data['questions'][0].get('answer_latex')}")
             ok += 1
         else:

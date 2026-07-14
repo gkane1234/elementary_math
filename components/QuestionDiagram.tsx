@@ -24,10 +24,13 @@ export function QuestionDiagram({ metadata }: QuestionDiagramProps) {
 
 export function QuestionDiagramFromMetadata({
   metadata,
+  variant = "prompt",
 }: {
   metadata?: Record<string, unknown>;
+  /** prompt: blank/stimulus under the question; answer: solution diagram on answer key */
+  variant?: "prompt" | "answer";
 }) {
-  const diagram = extractDiagramMetadata(metadata);
+  const diagram = extractDiagramMetadata(metadata, variant);
   if (!diagram?.diagram_svg) return null;
   return <QuestionDiagram metadata={diagram} />;
 }

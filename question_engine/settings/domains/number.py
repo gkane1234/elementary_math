@@ -129,6 +129,49 @@ def decimal_places_settings() -> list[SettingField]:
     ]
 
 
+def mixed_number_form_settings() -> list[SettingField]:
+    """Toggle integer / decimal / fraction operands for mixed arithmetic."""
+    return [
+        SettingField(
+            "allow_integers",
+            "Allow integers",
+            "bool",
+            True,
+            group="number",
+        ),
+        SettingField(
+            "allow_decimals",
+            "Allow decimals",
+            "bool",
+            False,
+            group="number",
+        ),
+        SettingField(
+            "allow_fractions",
+            "Allow fractions",
+            "bool",
+            False,
+            group="number",
+        ),
+        SettingField(
+            "require_common_denominator",
+            "Require common denominator",
+            "bool",
+            False,
+            group="number",
+        ),
+        SettingField(
+            "require_unlike_denominators",
+            "Require unlike denominators",
+            "bool",
+            False,
+            group="number",
+        ),
+        *decimal_places_settings(),
+        *denominator_settings(),
+    ]
+
+
 def decimal_multiplication_settings() -> list[SettingField]:
     return [
         SettingField(
@@ -457,6 +500,19 @@ def pemdas_settings() -> list[SettingField]:
     ]
 
 
+def writing_numeric_expression_settings() -> list[SettingField]:
+    return [
+        SettingField(
+            "expression_complexity",
+            "Expression complexity",
+            "select",
+            "standard",
+            options=["simple", "standard", "advanced"],
+            group="number",
+        ),
+    ]
+
+
 def sets_of_numbers_settings() -> list[SettingField]:
     """Controls for classifying numbers into natural/whole/integer/rational/etc."""
     return [
@@ -548,5 +604,68 @@ def sets_of_numbers_settings() -> list[SettingField]:
             min=-50,
             max=50,
             group="number_sets",
+        ),
+    ]
+
+
+def squares_and_square_roots_form_settings() -> list[SettingField]:
+    """Forms for evaluating squares (n²) and square roots (√n).
+
+    Easy mental-math mix uses perfect squares only; hard can introduce
+    non-perfect radicands (leave under a root or extract a square factor).
+    """
+    return [
+        SettingField(
+            "allow_square_roots",
+            "Allow square-root prompts (√n)",
+            "bool",
+            True,
+            group="square_root_forms",
+        ),
+        SettingField(
+            "allow_squares",
+            "Allow squaring prompts (n² / 'n squared')",
+            "bool",
+            True,
+            group="square_root_forms",
+        ),
+        SettingField(
+            "allow_word_prompts",
+            "Allow word prompts ('What is 7 squared?')",
+            "bool",
+            True,
+            group="square_root_forms",
+        ),
+        SettingField(
+            "perfect_squares_only",
+            "Only perfect-square radicands / integer squares",
+            "bool",
+            True,
+            group="square_root_forms",
+        ),
+        SettingField(
+            "allow_extract_square_factors",
+            "Allow simplify √(a²·b) → a√b",
+            "bool",
+            False,
+            group="square_root_forms",
+        ),
+        SettingField(
+            "base_min",
+            "Integer base min (for n² and √(n²))",
+            "int",
+            2,
+            min=1,
+            max=40,
+            group="square_root_forms",
+        ),
+        SettingField(
+            "base_max",
+            "Integer base max (for n² and √(n²))",
+            "int",
+            12,
+            min=1,
+            max=40,
+            group="square_root_forms",
         ),
     ]

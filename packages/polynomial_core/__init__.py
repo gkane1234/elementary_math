@@ -12,16 +12,23 @@ from .special_products import (
     enabled_special_patterns,
 )
 from .latex import (
+    format_binop_expression,
     format_factor_product_latex,
     format_linear_latex,
+    format_measurement_text,
     format_monomial_latex,
     format_polynomial_latex,
+    format_slash_fraction,
     format_slope_intercept_latex,
+    format_with_unit,
     fraction_latex,
     join_algebra_terms,
+    normalize_expression_signs,
+    paren_if_negative,
     polynomial_fraction_latex,
     polynomial_to_latex,
     square_root_latex,
+    unit_latex,
 )
 from .operations import content_gcd, polynomial_gcd, polynomial_lcm
 from .polynomial import Expression, Polynomial, SpecialPhrase
@@ -77,7 +84,14 @@ __all__ = [
     "format_polynomial_latex",
     "format_linear_latex",
     "format_slope_intercept_latex",
+    "format_binop_expression",
+    "format_slash_fraction",
+    "format_with_unit",
+    "format_measurement_text",
+    "unit_latex",
     "join_algebra_terms",
+    "normalize_expression_signs",
+    "paren_if_negative",
     # Operations
     "polynomial_gcd",
     "polynomial_lcm",

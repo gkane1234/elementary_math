@@ -223,17 +223,20 @@ def main() -> int:
         prompts_by_tier: dict[str, list[str]] = defaultdict(list)
         errors_by_tier: dict[str, list[str]] = defaultdict(list)
         scaffolded_by_tier: dict[str, list[bool]] = defaultdict(list)
+        answers_by_tier: dict[str, list[str]] = defaultdict(list)
         for r in rows:
             tier = r["tier"]
             prompts_by_tier[tier].append(r.get("prompt_latex") or r.get("prompt_text") or "")
             errors_by_tier[tier].append(r.get("error") or "")
             scaffolded_by_tier[tier].append(bool(r.get("metadata_flags", {}).get("scaffolded")))
+            answers_by_tier[tier].append(r.get("answer_latex") or "")
 
         result = evaluate_topic_fit(
             entry,
             dict(prompts_by_tier),
             errors_by_tier=dict(errors_by_tier),
             scaffolded_by_tier=dict(scaffolded_by_tier),
+            answers_by_tier=dict(answers_by_tier),
         )
         flags.append(
             {

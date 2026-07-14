@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 import random
 from dataclasses import dataclass, field
+from decimal import Decimal, ROUND_HALF_UP
 from typing import Any, Callable
 
 from .base import QuestionFramework
@@ -96,6 +97,49 @@ def _random_value(settings: dict, *, lo: int | None = None, hi: int | None = Non
     minimum = lo if lo is not None else default_lo
     maximum = hi if hi is not None else default_hi
     return random_int_range(minimum, maximum)
+
+
+def _tier(settings: dict) -> str:
+    raw = settings.get("difficulty_tier") or settings.get("difficulty") or "medium"
+    value = str(raw).strip().lower()
+    return value if value in {"easy", "medium", "hard"} else "medium"
+
+
+def _as_decimal(value: int | float | str | Decimal) -> Decimal:
+    return value if isinstance(value, Decimal) else Decimal(str(value))
+
+
+def _round_money(amount: Decimal) -> Decimal:
+    """Round half-up to cents — matches typical calculator money mode."""
+    return _as_decimal(amount).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+
+def _format_money(amount: Decimal) -> str:
+    return f"{_round_money(amount):.2f}"
+
+
+def _display_money(amount: Decimal) -> str:
+    """Prompt dollars: omit trailing .00 for whole-dollar prices."""
+    rounded = _round_money(amount)
+    if rounded == rounded.to_integral_value():
+        return str(int(rounded))
+    return f"{rounded:.2f}"
+
+
+def _display_rate(rate: Decimal) -> str:
+    normalized = _as_decimal(rate).normalize()
+    if normalized == normalized.to_integral_value():
+        return str(int(normalized))
+    text = format(normalized, "f")
+    return text.rstrip("0").rstrip(".") if "." in text else text
+
+
+def _percent_of(price: Decimal, rate: Decimal) -> Decimal:
+    return _round_money(price * rate / Decimal(100))
+
+
+def _apply_rate_factor(price: Decimal, factor: Decimal) -> Decimal:
+    return _round_money(price * factor)
 
 
 class WordProblemFramework(QuestionFramework):
@@ -963,54 +1007,410 @@ class PerimeterAreaFramework(WordProblemFramework):
 
 
 class PercentWordProblemFramework(WordProblemFramework):
+    """Markup / discount / tax / tip money percents.
+
+    Easy/Medium are calculator-appropriate: sensible prices and retail rates,
+    with answers keyed to half-up-to-cents arithmetic (not integer truncation).
+    Hard may use decimal rates, awkward cents, or discount-then-tax.
+    """
+
     problem_kind = "percent"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         name = _pick_name(settings)
-        variant = random.choice(["discount", "tax", "markup", "interest"])
-        price = _random_value(settings, lo=20, hi=200)
-        rate = random.choice([5, 8, 10, 12, 15, 20, 25])
+        tier = _tier(settings)
+        variant = self._pick_variant(settings)
+        if (
+            tier == "hard"
+            and bool(settings.get("allow_multi_step", True))
+            and variant in {"discount", "tax"}
+            and random.random() < 0.45
+        ):
+            return self._build_discount_then_tax(name, settings)
+
+        price = self._sample_price(settings, tier)
+        rate = self._sample_rate(settings, tier, variant)
+        price_disp = _display_money(price)
+        rate_disp = _display_rate(rate)
 
         if variant == "discount":
-            sale = price * (100 - rate) // 100
-            answer = _format_answer(sale, settings)
+            answer = _apply_rate_factor(price, (Decimal(100) - rate) / Decimal(100))
             latex = (
-                rf"\text{{{name} buys an item priced at \${price}. "
-                rf"It is on sale for {rate}\% off. What is the sale price?}}"
+                rf"\text{{{name} buys an item priced at \${price_disp}. "
+                rf"It is on sale for {rate_disp}\% off. What is the sale price?}}"
             )
             text = (
-                f"{name} buys an item priced at ${price}. "
-                f"It is on sale for {rate}% off. What is the sale price?"
+                f"{name} buys an item priced at ${price_disp}. "
+                f"It is on sale for {rate_disp}% off. What is the sale price?"
             )
         elif variant == "tax":
-            total = price * (100 + rate) // 100
-            answer = _format_answer(total, settings)
+            answer = _apply_rate_factor(price, (Decimal(100) + rate) / Decimal(100))
             latex = (
-                rf"\text{{A \${price} purchase has {rate}\% sales tax added. "
+                rf"\text{{A \${price_disp} purchase has {rate_disp}\% sales tax added. "
                 rf"What is the total cost?}}"
             )
-            text = f"A ${price} purchase has {rate}% sales tax added. What is the total cost?"
+            text = (
+                f"A ${price_disp} purchase has {rate_disp}% sales tax added. "
+                f"What is the total cost?"
+            )
         elif variant == "markup":
-            new_price = price * (100 + rate) // 100
-            answer = _format_answer(new_price, settings)
+            answer = _apply_rate_factor(price, (Decimal(100) + rate) / Decimal(100))
             latex = (
-                rf"\text{{A store marks up a \${price} item by {rate}\%. "
+                rf"\text{{A store marks up a \${price_disp} item by {rate_disp}\%. "
                 rf"What is the selling price?}}"
             )
-            text = f"A store marks up a ${price} item by {rate}%. What is the selling price?"
+            text = (
+                f"A store marks up a ${price_disp} item by {rate_disp}%. "
+                f"What is the selling price?"
+            )
+        else:  # tip
+            if random.random() < 0.5:
+                answer = _percent_of(price, rate)
+                latex = (
+                    rf"\text{{{name} leaves a {rate_disp}\% tip on a \${price_disp} bill. "
+                    rf"How much is the tip?}}"
+                )
+                text = (
+                    f"{name} leaves a {rate_disp}% tip on a ${price_disp} bill. "
+                    f"How much is the tip?"
+                )
+            else:
+                answer = _apply_rate_factor(price, (Decimal(100) + rate) / Decimal(100))
+                latex = (
+                    rf"\text{{{name} leaves a {rate_disp}\% tip on a \${price_disp} bill. "
+                    rf"What is the total, including tip?}}"
+                )
+                text = (
+                    f"{name} leaves a {rate_disp}% tip on a ${price_disp} bill. "
+                    f"What is the total, including tip?"
+                )
+
+        money = _format_money(answer)
+        if str(settings.get("answer_units", "")):
+            return latex, text, _append_units(money, settings)
+        return latex, text, f"\\${money}"
+
+    @staticmethod
+    def _pick_variant(settings: dict) -> str:
+        flags = (
+            ("discount", bool(settings.get("allow_discount", True))),
+            ("tax", bool(settings.get("allow_tax", True))),
+            ("markup", bool(settings.get("allow_markup", True))),
+            ("tip", bool(settings.get("allow_tip", True))),
+        )
+        allowed = [name for name, on in flags if on]
+        if not allowed:
+            allowed = ["discount", "tax", "markup"]
+        return random.choice(allowed)
+
+    @staticmethod
+    def _sample_price(settings: dict, tier: str) -> Decimal:
+        allow_cents = bool(settings.get("allow_price_cents", tier != "easy"))
+        if tier == "easy":
+            return Decimal(random.randint(15, 120))
+        if tier == "medium":
+            dollars = random.randint(20, 180)
+            if allow_cents and random.random() < 0.55:
+                cents = random.choice([50, 95, 99])
+                return Decimal(dollars) + Decimal(cents) / Decimal(100)
+            return Decimal(dollars)
+        dollars = random.randint(25, 250)
+        if allow_cents and random.random() < 0.75:
+            cents = random.choice([19, 25, 49, 50, 75, 89, 95, 99])
+            return Decimal(dollars) + Decimal(cents) / Decimal(100)
+        return Decimal(dollars)
+
+    @staticmethod
+    def _sample_rate(settings: dict, tier: str, variant: str) -> Decimal:
+        allow_decimal = bool(settings.get("allow_decimal_rates", tier == "hard"))
+        if variant == "tax":
+            if tier == "easy":
+                choices: list[Decimal | int | float] = [5, 6, 7, 8, 10]
+            elif tier == "medium":
+                choices = (
+                    [5, 6, 7, 7.5, 8, 8.25, 9, 10]
+                    if allow_decimal
+                    else [5, 6, 7, 8, 9, 10]
+                )
+            else:
+                choices = (
+                    [4.75, 5.5, 6.25, 7.25, 7.5, 8.25, 8.875, 9.5]
+                    if allow_decimal
+                    else [5, 6, 7, 8, 9, 11, 12]
+                )
+        elif variant == "tip":
+            if tier == "easy":
+                choices = [10, 15, 18, 20]
+            elif tier == "medium":
+                choices = [15, 18, 20, 22]
+            else:
+                choices = (
+                    [17.5, 18, 18.5, 20, 22.5]
+                    if allow_decimal
+                    else [15, 18, 20, 22, 25]
+                )
+        else:  # discount / markup
+            if tier == "easy":
+                choices = [10, 15, 20, 25]
+            elif tier == "medium":
+                choices = [8, 10, 12, 15, 20, 25, 30]
+            else:
+                choices = (
+                    [7.5, 12.5, 15, 17.5, 22.5, 33]
+                    if allow_decimal
+                    else [8, 12, 15, 18, 22, 35]
+                )
+        return _as_decimal(random.choice(choices))
+
+    def _build_discount_then_tax(
+        self, name: str, settings: dict
+    ) -> tuple[str, str, str | None]:
+        """Hard multi-step: percent off, then sales tax on the sale price."""
+        price = self._sample_price(settings, "hard")
+        discount = self._sample_rate(settings, "hard", "discount")
+        tax = self._sample_rate(settings, "hard", "tax")
+        sale = _apply_rate_factor(price, (Decimal(100) - discount) / Decimal(100))
+        total = _apply_rate_factor(sale, (Decimal(100) + tax) / Decimal(100))
+        price_disp = _display_money(price)
+        disc_disp = _display_rate(discount)
+        tax_disp = _display_rate(tax)
+        latex = (
+            rf"\text{{{name} buys an item priced at \${price_disp}. "
+            rf"It is {disc_disp}\% off, and then {tax_disp}\% sales tax is added. "
+            rf"What is the final price?}}"
+        )
+        text = (
+            f"{name} buys an item priced at ${price_disp}. "
+            f"It is {disc_disp}% off, and then {tax_disp}% sales tax is added. "
+            f"What is the final price?"
+        )
+        money = _format_money(total)
+        if str(settings.get("answer_units", "")):
+            return latex, text, _append_units(money, settings)
+        return latex, text, f"\\${money}"
+
+
+
+_COMPOUND_FREQ: dict[int, str] = {
+    1: "annually",
+    2: "semiannually",
+    4: "quarterly",
+    12: "monthly",
+}
+
+
+def _money_display(amount: float) -> str:
+    """Format a dollar amount for prompts/keys (whole dollars omit cents when exact)."""
+    cents = int(round(amount * 100))
+    if cents % 100 == 0:
+        return str(cents // 100)
+    return f"{cents / 100:.2f}"
+
+
+def _money_answer(amount: float) -> str:
+    return f"\\${_money_display(amount)}"
+
+
+def _pct_answer(rate_percent: float) -> str:
+    if abs(rate_percent - round(rate_percent)) < 1e-9:
+        return f"{int(round(rate_percent))}\\%"
+    return f"{rate_percent:.1f}\\%"
+
+
+class InterestWordProblemFramework(WordProblemFramework):
+    """Simple interest (I = Prt) and compound interest word problems."""
+
+    problem_kind = "interest"
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        difficulty = str(
+            settings.get("difficulty")
+            or settings.get("difficulty_tier")
+            or "medium"
+        )
+        name = _pick_name(settings)
+        kind = self._pick_kind(settings, difficulty)
+        if kind == "simple":
+            return self._simple(settings, name, difficulty)
+        return self._compound(settings, name, difficulty)
+
+    def _pick_kind(self, settings: dict, difficulty: str) -> str:
+        forced = str(settings.get("interest_kind", "mixed")).lower()
+        if forced in ("simple", "compound"):
+            return forced
+        if difficulty == "easy":
+            return "simple" if random.random() < 0.75 else "compound"
+        if difficulty == "hard":
+            return "simple" if random.random() < 0.35 else "compound"
+        return "simple" if random.random() < 0.5 else "compound"
+
+    def _simple_params(self, difficulty: str) -> tuple[int, float, int]:
+        """Return (principal dollars, rate percent, time years) with nice I when easy."""
+        if difficulty == "easy":
+            for _ in range(60):
+                p = random.choice([100, 200, 250, 400, 500, 800, 1000, 1200, 1500, 2000])
+                r = float(random.choice([2, 3, 4, 5, 6, 8, 10]))
+                t = random.choice([1, 2, 3, 4, 5])
+                if (p * int(r) * t) % 100 == 0:
+                    return p, r, t
+            return 1000, 5.0, 2
+        if difficulty == "hard":
+            for _ in range(60):
+                p = random.choice([750, 1250, 1800, 2400, 3500, 4500, 5000, 7500, 10000])
+                r = float(random.choice([2.5, 3.5, 4.5, 5.5, 6.5, 7, 7.5, 8.5, 9]))
+                t = random.choice([2, 3, 4, 5, 6, 8, 10])
+                interest = p * (r / 100.0) * t
+                if abs(interest * 100 - round(interest * 100)) < 1e-6:
+                    return p, r, t
+            return 5000, 5.0, 4
+        p = random.choice([300, 450, 600, 800, 1000, 1500, 2000, 2500, 3000])
+        r = float(random.choice([3, 4, 5, 6, 7, 8, 9, 10, 12]))
+        t = random.choice([1, 2, 3, 4, 5, 6])
+        return p, r, t
+
+    def _simple(
+        self, settings: dict, name: str, difficulty: str
+    ) -> tuple[str, str, str | None]:
+        p, r, t = self._simple_params(difficulty)
+        rate_decimal = float(r) / 100
+        interest = p * rate_decimal * t
+        amount = p + interest
+        years = "year" if t == 1 else "years"
+        rate_show = int(r) if float(r).is_integer() else r
+
+        if difficulty == "easy":
+            find = random.choice(["interest", "interest", "amount"])
+        elif difficulty == "hard":
+            find = random.choice(["interest", "amount", "principal", "rate", "time"])
         else:
-            interest = price * rate // 100
-            answer = _format_answer(interest, settings)
+            find = random.choice(["interest", "amount", "principal", "rate"])
+
+        if find == "interest":
             latex = (
-                rf"\text{{{name} invests \${price} at {rate}\% simple interest for one year. "
-                rf"How much interest is earned?}}"
+                rf"\text{{{name} invests \${_money_display(p)} at {rate_show}\% "
+                rf"simple interest for {t} {years}. How much interest is earned?}}"
             )
             text = (
-                f"{name} invests ${price} at {rate}% simple interest for one year. "
-                f"How much interest is earned?"
+                f"{name} invests ${_money_display(p)} at {rate_show}% "
+                f"simple interest for {t} {years}. How much interest is earned?"
+            )
+            return latex, text, _money_answer(interest)
+
+        if find == "amount":
+            latex = (
+                rf"\text{{{name} deposits \${_money_display(p)} in an account that earns "
+                rf"{rate_show}\% simple interest for {t} {years}. "
+                rf"What is the account balance at the end of the term?}}"
+            )
+            text = (
+                f"{name} deposits ${_money_display(p)} in an account that earns "
+                f"{rate_show}% simple interest for {t} {years}. "
+                f"What is the account balance at the end of the term?"
+            )
+            return latex, text, _money_answer(amount)
+
+        if find == "principal":
+            # Back-solve for P from known I, r, t with clean P.
+            interest_out = interest
+            latex = (
+                rf"\text{{{name} earned \${_money_display(interest_out)} in simple interest "
+                rf"after {t} {years} at {rate_show}\% per year. "
+                rf"What was the principal?}}"
+            )
+            text = (
+                f"{name} earned ${_money_display(interest_out)} in simple interest "
+                f"after {t} {years} at {rate_show}% per year. "
+                f"What was the principal?"
+            )
+            return latex, text, _money_answer(p)
+
+        if find == "rate":
+            latex = (
+                rf"\text{{{name} invests \${_money_display(p)} and earns "
+                rf"\${_money_display(interest)} in simple interest after {t} {years}. "
+                rf"What is the annual interest rate?}}"
+            )
+            text = (
+                f"{name} invests ${_money_display(p)} and earns "
+                f"${_money_display(interest)} in simple interest after {t} {years}. "
+                f"What is the annual interest rate?"
+            )
+            return latex, text, _pct_answer(float(r))
+
+        # find == "time"
+        latex = (
+            rf"\text{{{name} invests \${_money_display(p)} at {rate_show}\% "
+            rf"simple interest and earns \${_money_display(interest)}. "
+            rf"How many years does this take?}}"
+        )
+        text = (
+            f"{name} invests ${_money_display(p)} at {rate_show}% "
+            f"simple interest and earns ${_money_display(interest)}. "
+            f"How many years does this take?"
+        )
+        return latex, text, str(int(t)) if float(t).is_integer() else str(t)
+
+    def _compound_params(
+        self, difficulty: str
+    ) -> tuple[int, int, int, int]:
+        """Return (P, r_percent, t_years, n_compounds_per_year)."""
+        if difficulty == "easy":
+            p = random.choice([500, 800, 1000, 1200, 1500, 2000])
+            r = random.choice([2, 3, 4, 5, 6, 8, 10])
+            t = random.choice([1, 2, 3])
+            n = 1  # annual compounding for easy
+            return p, r, t, n
+        if difficulty == "hard":
+            p = random.choice([1000, 1500, 2000, 2500, 3500, 5000, 8000])
+            r = random.choice([3, 4, 5, 6, 7, 8, 9, 12])
+            t = random.choice([3, 4, 5, 6, 8, 10])
+            n = random.choice([2, 4, 12])
+            return p, r, t, n
+        p = random.choice([800, 1000, 1200, 1500, 2000, 2500, 3000])
+        r = random.choice([3, 4, 5, 6, 8, 10])
+        t = random.choice([2, 3, 4, 5])
+        n = random.choice([1, 1, 2, 4])  # mostly annual / semiannual / quarterly
+        return p, r, t, n
+
+    def _compound(
+        self, settings: dict, name: str, difficulty: str
+    ) -> tuple[str, str, str | None]:
+        p, r, t, n = self._compound_params(difficulty)
+        amount = p * (1 + r / (100 * n)) ** (n * t)
+        interest = amount - p
+        years = "year" if t == 1 else "years"
+        freq = _COMPOUND_FREQ[n]
+        find = "amount"
+        if difficulty != "easy" and random.random() < 0.45:
+            find = "interest"
+
+        if n == 1:
+            latex_core = (
+                rf"{name} invests \${_money_display(p)} in an account that pays "
+                rf"{r}\% interest compounded annually for {t} {years}."
+            )
+            text_core = (
+                f"{name} invests ${_money_display(p)} in an account that pays "
+                f"{r}% interest compounded annually for {t} {years}."
+            )
+        else:
+            latex_core = (
+                rf"{name} invests \${_money_display(p)} at {r}\% interest "
+                rf"compounded {freq} for {t} {years}."
+            )
+            text_core = (
+                f"{name} invests ${_money_display(p)} at {r}% interest "
+                f"compounded {freq} for {t} {years}."
             )
 
-        return latex, text, f"\\${answer}" if not str(settings.get("answer_units", "")) else _append_units(answer, settings)
+        if find == "interest":
+            latex = rf"\text{{{latex_core} How much interest is earned?}}"
+            text = f"{text_core} How much interest is earned?"
+            return latex, text, _money_answer(interest)
+
+        latex = rf"\text{{{latex_core} What is the balance at the end of the term?}}"
+        text = f"{text_core} What is the balance at the end of the term?"
+        return latex, text, _money_answer(amount)
 
 
 class ProportionWordProblemFramework(WordProblemFramework):
@@ -1040,54 +1440,61 @@ class OneStepEquationWordFramework(WordProblemFramework):
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         name = _pick_name(settings)
         op = random.choice(["subtract", "add", "multiply", "divide"])
-        result = _random_value(settings, lo=10, hi=60)
 
         if op == "subtract":
+            # start - spent = left → solve for start
             spent = _random_value(settings, lo=5, hi=20)
-            start = result + spent
+            left = _random_value(settings, lo=10, hi=60)
+            start = left + spent
             answer = _format_answer(start, settings)
             latex = (
-                rf"\text{{{name} had some money, spent \${spent}, and has \${result} left. "
+                rf"\text{{{name} had some money, spent \${spent}, and has \${left} left. "
                 rf"How much did {name} start with?}}"
             )
             text = (
-                f"{name} had some money, spent ${spent}, and has ${result} left. "
+                f"{name} had some money, spent ${spent}, and has ${left} left. "
                 f"How much did {name} start with?"
             )
         elif op == "add":
+            # start + received = total → solve for start (keep start positive)
             received = _random_value(settings, lo=5, hi=20)
-            start = result - received
+            start = _random_value(settings, lo=5, hi=40)
+            total = start + received
             answer = _format_answer(start, settings)
             latex = (
-                rf"\text{{{name} had some money, received \${received}, and now has \${result}. "
+                rf"\text{{{name} had some money, received \${received}, and now has \${total}. "
                 rf"How much did {name} start with?}}"
             )
             text = (
-                f"{name} had some money, received ${received}, and now has ${result}. "
+                f"{name} had some money, received ${received}, and now has ${total}. "
                 f"How much did {name} start with?"
             )
         elif op == "multiply":
+            # factor * each = total → solve for each (exact product)
             factor = random.choice([2, 3, 4, 5])
-            start = result // factor
-            answer = _format_answer(start, settings)
+            each = _random_value(settings, lo=5, hi=20)
+            total = each * factor
+            answer = _format_answer(each, settings)
             latex = (
-                rf"\text{{{name} collected {factor} equal donations totaling \${result}. "
+                rf"\text{{{name} collected {factor} equal donations totaling \${total}. "
                 rf"How much was each donation?}}"
             )
             text = (
-                f"{name} collected {factor} equal donations totaling ${result}. "
+                f"{name} collected {factor} equal donations totaling ${total}. "
                 f"How much was each donation?"
             )
         else:
+            # total shared equally among factor → each = total / factor (not the total)
             factor = random.choice([2, 3, 4, 5])
-            start = result * factor
-            answer = _format_answer(start, settings)
+            each = _random_value(settings, lo=10, hi=60)
+            total = each * factor
+            answer = _format_answer(each, settings)
             latex = (
-                rf"\text{{{name} shared \${start} equally among {factor} friends. "
+                rf"\text{{{name} shared \${total} equally among {factor} friends. "
                 rf"How much did each friend receive?}}"
             )
             text = (
-                f"{name} shared ${start} equally among {factor} friends. "
+                f"{name} shared ${total} equally among {factor} friends. "
                 f"How much did each friend receive?"
             )
 
@@ -1175,7 +1582,8 @@ class GcfLcmWordFramework(WordProblemFramework):
         require_gt_one = bool(settings.get("require_gcf_greater_than_one", True))
         if variant == "lcm":
             a = random.choice([6, 8, 9, 10, 12])
-            b = random.choice([8, 10, 12, 15, 18])
+            b_choices = [n for n in (8, 10, 12, 15, 18) if n != a]
+            b = random.choice(b_choices)
             value = math.lcm(a, b)
             answer = _format_answer(value, settings)
             latex = (
@@ -1208,6 +1616,11 @@ class GcfLcmWordFramework(WordProblemFramework):
 class NumberLineWordFramework(WordProblemFramework):
     problem_kind = "number_line"
 
+    def __init__(self, template: WordProblemTemplate | None = None) -> None:
+        super().__init__(template)
+        self._last_start: float | None = None
+        self._last_end: float | None = None
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         start = _random_value(settings, lo=-15, hi=10)
         change = _random_value(settings, lo=3, hi=20)
@@ -1225,8 +1638,44 @@ class NumberLineWordFramework(WordProblemFramework):
                 rf"What is the new temperature?}}"
             )
             text = f"The temperature was {start}°F and dropped {change}°F. What is the new temperature?"
+        self._last_start = float(start)
+        self._last_end = float(end)
         answer = _format_answer(end, settings)
         return latex, text, answer
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        from .graphing import (
+            NumberLineSpec,
+            _number_line_bounds,
+            _number_line_show_zero,
+            include_graph_metadata,
+            metadata_from_number_line_spec,
+        )
+
+        if not include_graph_metadata(settings) or self._last_end is None:
+            return {}
+        extras = (self._last_end,)
+        if self._last_start is not None:
+            extras = (self._last_start, self._last_end)
+        lo, hi, tick = _number_line_bounds(settings, *extras)
+        # Blank prompt line for student work; answer key marks the final value.
+        spec = NumberLineSpec(
+            min_value=lo,
+            max_value=hi,
+            boundary=self._last_end,
+            direction="both",
+            inclusive=True,
+            tick_interval=tick,
+            show_zero=_number_line_show_zero(settings),
+        )
+        return metadata_from_number_line_spec(spec, prompt="blank")
 
 
 class CoordinateDistanceWordFramework(WordProblemFramework):
@@ -1255,20 +1704,142 @@ class CoordinateDistanceWordFramework(WordProblemFramework):
 class SimilarFiguresWordFramework(WordProblemFramework):
     problem_kind = "similar_figures"
 
+    def __init__(self) -> None:
+        super().__init__()
+        self._last: dict[str, Any] = {}
+
+    @staticmethod
+    def _use_diagram(settings: dict) -> bool:
+        style = str(settings.get("prompt_style", "diagram")).strip().lower()
+        if style in {"description_only", "description", "text", "text_only"}:
+            return False
+        if "include_figure" in settings:
+            return bool(settings["include_figure"])
+        if "include_diagram" in settings:
+            return bool(settings["include_diagram"])
+        return True
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from ..diagrams import similar_figures_pair_figure
+
         ratio = random.choice([2, 3, 4])
         small_side = _random_value(settings, lo=3, hi=10)
+        other_small = _random_value(settings, lo=3, hi=10)
+        while other_small == small_side:
+            other_small = _random_value(settings, lo=3, hi=10)
         large_side = small_side * ratio
-        answer = _format_answer(large_side, settings)
+        other_large = other_small * ratio
         unit = _unit_label(settings, "cm") or "cm"
+        shape = random.choice(["triangle", "rectangle"])
+        task = random.choice(["missing_side", "missing_side", "scale_factor"])
+        use_diagram = self._use_diagram(settings)
+
+        if shape == "triangle":
+            small_labels = ("A", "B", "C")
+            large_labels = ("D", "E", "F")
+            angles = random.choice([(50, 60, 70), (40, 70, 70), (45, 55, 80)])
+            aspect = (3.0, 2.0)
+            corresponding = ("AB", "DE")
+            other_pair = ("BC", "EF")
+            similar_stmt_latex = r"\triangle ABC \sim \triangle DEF"
+            similar_stmt_text = "Triangle ABC ~ triangle DEF"
+        else:
+            small_labels = ("A", "B", "C", "D")
+            large_labels = ("E", "F", "G", "H")
+            angles = (50.0, 60.0, 70.0)
+            aspect = random.choice([(3.0, 2.0), (5.0, 3.0), (4.0, 2.0)])
+            corresponding = ("AB", "EF")
+            other_pair = ("AD", "EH")
+            similar_stmt_latex = r"ABCD \sim EFGH"
+            similar_stmt_text = "Quadrilateral ABCD ~ EFGH"
+
+        fig = None
+        if use_diagram:
+            if task == "scale_factor":
+                small_side_labels = {
+                    corresponding[0]: f"{small_side} {unit}",
+                    other_pair[0]: f"{other_small} {unit}",
+                }
+                large_side_labels = {
+                    corresponding[1]: f"{large_side} {unit}",
+                    other_pair[1]: f"{other_large} {unit}",
+                }
+                answer = str(ratio)
+                latex = (
+                    rf"{similar_stmt_latex}.\ "
+                    rf"\text{{The figures are similar. Find the scale factor from the smaller to the larger.}}"
+                )
+                text = (
+                    f"{similar_stmt_text}. "
+                    "The figures are similar. Find the scale factor from the smaller to the larger."
+                )
+            else:
+                small_side_labels = {
+                    corresponding[0]: f"{small_side} {unit}",
+                    other_pair[0]: f"{other_small} {unit}",
+                }
+                large_side_labels = {
+                    corresponding[1]: f"{large_side} {unit}",
+                    other_pair[1]: "?",
+                }
+                answer = _append_units(_format_answer(other_large, settings), settings)
+                missing = other_pair[1]
+                latex = (
+                    rf"{similar_stmt_latex}.\ "
+                    rf"\text{{Find the length of }} {missing}."
+                )
+                text = f"{similar_stmt_text}. Find the length of {missing}."
+            fig = similar_figures_pair_figure(
+                shape=shape,  # type: ignore[arg-type]
+                small_labels=small_labels,
+                large_labels=large_labels,
+                small_side_labels=small_side_labels,
+                large_side_labels=large_side_labels,
+                angles=angles,
+                aspect=aspect,
+                scale_factor=float(ratio),
+            )
+            self._last = {"figure": fig, "task": task, "shape": shape}
+            return latex, text, answer
+
+        # description_only
+        self._last = {"figure": None, "task": task, "shape": shape}
+        if task == "scale_factor":
+            answer = str(ratio)
+            latex = (
+                rf"\text{{Two similar {shape}s have corresponding sides of length }} "
+                rf"{small_side}\text{{ {unit} and }} {large_side}\text{{ {unit}. "
+                rf"Find the scale factor from the smaller to the larger.}}"
+            )
+            text = (
+                f"Two similar {shape}s have corresponding sides of length "
+                f"{small_side} {unit} and {large_side} {unit}. "
+                "Find the scale factor from the smaller to the larger."
+            )
+            return latex, text, answer
+
+        answer = _append_units(_format_answer(large_side, settings), settings)
         latex = (
-            rf"\text{{Two similar triangles have a scale factor of {ratio}:1. "
-            rf"The smaller triangle has a side of {small_side} {unit}. "
-            rf"What is the corresponding side in the larger triangle?}}"
+            rf"\text{{Two similar {shape}s have a scale factor of {ratio}:1. "
+            rf"The smaller {shape} has a side of {small_side} {unit}. "
+            rf"What is the corresponding side in the larger {shape}?}}"
         )
         text = (
-            f"Two similar triangles have a scale factor of {ratio}:1. "
-            f"The smaller triangle has a side of {small_side} {unit}. "
-            f"What is the corresponding side in the larger triangle?"
+            f"Two similar {shape}s have a scale factor of {ratio}:1. "
+            f"The smaller {shape} has a side of {small_side} {unit}. "
+            f"What is the corresponding side in the larger {shape}?"
         )
-        return latex, text, _append_units(answer, settings)
+        return latex, text, answer
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        fig = (self._last or {}).get("figure")
+        if fig is None or not self._use_diagram(settings):
+            return {}
+        return fig.to_metadata()

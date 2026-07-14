@@ -16,6 +16,7 @@ from ..frameworks.word_problem import (
     MixtureProblemFramework,
     NumberLineWordFramework,
     OneStepEquationWordFramework,
+    InterestWordProblemFramework,
     PercentWordProblemFramework,
     PerimeterAreaFramework,
     ProportionWordProblemFramework,
@@ -33,6 +34,7 @@ _COIN = CoinProblemFramework()
 _MIXTURE = MixtureProblemFramework()
 _PERIMETER_AREA = PerimeterAreaFramework()
 _PERCENT = PercentWordProblemFramework()
+_INTEREST = InterestWordProblemFramework()
 _PROPORTION = ProportionWordProblemFramework()
 _ONE_STEP = OneStepEquationWordFramework()
 _TWO_STEP = TwoStepEquationWordFramework()
@@ -57,6 +59,9 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "wp_mixture": lambda topic, settings: _batch(_MIXTURE, topic, settings),
     "wp_perimeter_area": lambda topic, settings: _batch(_PERIMETER_AREA, topic, settings),
     "wp_percent": lambda topic, settings: _batch(_PERCENT, topic, settings),
+    "wp_simple_and_compound_interest": lambda topic, settings: _batch(
+        _INTEREST, topic, settings
+    ),
     "wp_proportion": lambda topic, settings: _batch(_PROPORTION, topic, settings),
     "wp_one_step_equation": lambda topic, settings: _batch(_ONE_STEP, topic, settings),
     "wp_two_step_equation": lambda topic, settings: _batch(_TWO_STEP, topic, settings),

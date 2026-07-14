@@ -98,19 +98,56 @@ def _remainder_theorem(topic: str, settings: dict) -> list[Question]:
 def _compound_interest(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    difficulty = str(
+        settings.get("difficulty") or settings.get("difficulty_tier") or "medium"
+    )
 
     def build() -> tuple[str, str, str | None]:
-        p = random.choice([500, 1000, 1500, 2000, 2500])
-        r = random.choice([3, 4, 5, 6, 8])
-        t = random.randint(2, 8)
-        n = random.choice([1, 2, 4, 12])
+        if difficulty == "easy":
+            p = random.choice([500, 1000, 1500, 2000])
+            r = random.choice([3, 4, 5, 6, 8])
+            t = random.randint(2, 4)
+            n = 1
+        elif difficulty == "hard":
+            p = random.choice([1000, 2000, 2500, 5000, 8000])
+            r = random.choice([3, 4, 5, 6, 7, 8, 9, 12])
+            t = random.randint(4, 10)
+            n = random.choice([2, 4, 12])
+        else:
+            p = random.choice([1000, 1500, 2000, 2500])
+            r = random.choice([3, 4, 5, 6, 8])
+            t = random.randint(2, 6)
+            n = random.choice([1, 2, 4])
+
         amount = p * (1 + r / (100 * n)) ** (n * t)
-        prompt = (
-            f"\\text{{Principal }} \\${p} \\text{{ at }} {r}\\% "
-            f"\\text{{ compounded }} {n} \\text{{ time(s) per year for }} {t} "
-            f"\\text{{ years. Find the balance.}}"
-        )
-        answer = f"{amount:.2f}" if include_answer_key else None
+        interest = amount - p
+        years = "year" if t == 1 else "years"
+        freq = {1: "annually", 2: "semiannually", 4: "quarterly", 12: "monthly"}[n]
+        find_interest = difficulty != "easy" and random.random() < 0.4
+
+        if n == 1:
+            core = (
+                f"\\text{{An account starts with }} \\${p} \\text{{ and earns }} "
+                f"{r}\\% \\text{{ interest compounded annually for }} {t} "
+                f"\\text{{ {years}.}}"
+            )
+        else:
+            core = (
+                f"\\text{{An account starts with }} \\${p} \\text{{ at }} {r}\\% "
+                f"\\text{{ interest compounded {freq} for }} {t} "
+                f"\\text{{ {years}.}}"
+            )
+
+        if find_interest:
+            prompt = core + " \\text{ How much interest is earned?}"
+            answer_val = interest
+        else:
+            prompt = core + " \\text{ What is the ending balance?}"
+            answer_val = amount
+
+        answer = f"{answer_val:.2f}" if include_answer_key else None
+        if answer is not None:
+            answer = f"\\${answer}"
         return prompt, "compound interest", answer
 
     return _make_questions(topic, count, include_answer_key, build)
@@ -119,39 +156,175 @@ def _compound_interest(topic: str, settings: dict) -> list[Question]:
 def _writing_numeric_expressions(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    complexity = str(settings.get("expression_complexity", "standard"))
+    lo = max(1, int(settings.get("num_min", 2)))
+    hi = max(lo, int(settings.get("num_max", 20)))
 
-    templates = [
-        (
-            lambda a, b: (
+    def _n(cap: int | None = None) -> int:
+        upper = min(hi, cap) if cap is not None else hi
+        return random.randint(lo, max(lo, upper))
+
+    def simple_forms() -> list[tuple[str, str]]:
+        a, b = _n(), _n()
+        return [
+            (
                 f"\\text{{Write an expression for }} {a} \\text{{ more than }} {b}.",
                 f"{b} + {a}",
-            )
-        ),
-        (
-            lambda a, b: (
+            ),
+            (
                 f"\\text{{Write an expression for }} {a} \\text{{ less than }} {b}.",
                 f"{b} - {a}",
-            )
-        ),
-        (
-            lambda a, b: (
+            ),
+            (
+                f"\\text{{Write an expression for the sum of }} {a} \\text{{ and }} {b}.",
+                f"{a} + {b}",
+            ),
+            (
+                f"\\text{{Write an expression for the difference of }} {a} \\text{{ and }} {b}.",
+                f"{a} - {b}",
+            ),
+            (
                 f"\\text{{Write an expression for the product of }} {a} \\text{{ and }} {b}.",
                 f"{a} \\cdot {b}",
-            )
-        ),
-        (
-            lambda a, b: (
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ times }} {b}.",
+                f"{a} \\cdot {b}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ increased by }} {b}.",
+                f"{a} + {b}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ decreased by }} {b}.",
+                f"{a} - {b}",
+            ),
+            (
+                f"\\text{{Write an expression for twice }} {a}.",
+                f"2 \\cdot {a}",
+            ),
+            (
+                f"\\text{{Write an expression for the quotient of }} {a} \\text{{ and }} {b}.",
+                f"{a} \\div {b}",
+            ),
+        ]
+
+    def standard_forms() -> list[tuple[str, str]]:
+        a, b, c = _n(12), _n(12), _n(9)
+        return [
+            (
                 f"\\text{{Write an expression for }} {a} \\text{{ times the sum of }} {b} "
-                f"\\text{{ and 3.}}",
-                f"{a}({b} + 3)",
-            )
-        ),
-    ]
+                f"\\text{{ and }} {c}.",
+                f"{a}({b} + {c})",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ times the difference of }} {b} "
+                f"\\text{{ and }} {c}.",
+                f"{a}({b} - {c})",
+            ),
+            (
+                f"\\text{{Write an expression for the sum of }} {a} \\text{{ and the product of }} "
+                f"{b} \\text{{ and }} {c}.",
+                f"{a} + {b} \\cdot {c}",
+            ),
+            (
+                f"\\text{{Write an expression for the product of }} {a} \\text{{ and the sum of }} "
+                f"{b} \\text{{ and }} {c}.",
+                f"{a}({b} + {c})",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ more than the product of }} "
+                f"{b} \\text{{ and }} {c}.",
+                f"{b} \\cdot {c} + {a}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ less than the product of }} "
+                f"{b} \\text{{ and }} {c}.",
+                f"{b} \\cdot {c} - {a}",
+            ),
+            (
+                f"\\text{{Write an expression for the quotient of the sum of }} {a} \\text{{ and }} "
+                f"{b}\\text{{, and }} {c}.",
+                f"({a} + {b}) \\div {c}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ times the quantity of }} {b} "
+                f"\\text{{ plus }} {c}.",
+                f"{a}({b} + {c})",
+            ),
+            (
+                f"\\text{{Write an expression for the difference of }} {a} \\text{{ and the "
+                f"product of }} {b} \\text{{ and }} {c}.",
+                f"{a} - {b} \\cdot {c}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {c} \\text{{ groups of the sum of }} {a} "
+                f"\\text{{ and }} {b}.",
+                f"{c}({a} + {b})",
+            ),
+        ]
+
+    def advanced_forms() -> list[tuple[str, str]]:
+        a, b, c = _n(10), _n(10), _n(8)
+        return [
+            (
+                f"\\text{{Write an expression for the square of }} {a}.",
+                f"{a}^{{2}}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ squared plus }} {b}.",
+                f"{a}^{{2}} + {b}",
+            ),
+            (
+                f"\\text{{Write an expression for the product of }} {a} \\text{{ squared and }} {b}.",
+                f"{a}^{{2}} \\cdot {b}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ times the square of }} {b}.",
+                f"{a} \\cdot {b}^{{2}}",
+            ),
+            (
+                f"\\text{{Write an expression for the sum of }} {a} \\text{{ squared and }} "
+                f"{b} \\text{{ squared.}}",
+                f"{a}^{{2}} + {b}^{{2}}",
+            ),
+            (
+                f"\\text{{Write an expression for the square of the sum of }} {a} \\text{{ and }} {b}.",
+                f"({a} + {b})^{{2}}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ times the quantity }} {b} "
+                f"\\text{{ squared plus }} {c}.",
+                f"{a}({b}^{{2}} + {c})",
+            ),
+            (
+                f"\\text{{Write an expression for the sum of }} {a} \\text{{ cubed and }} {b}.",
+                f"{a}^{{3}} + {b}",
+            ),
+            (
+                f"\\text{{Write an expression for }} {a} \\text{{ more than }} {b} \\text{{ squared.}}",
+                f"{b}^{{2}} + {a}",
+            ),
+            (
+                f"\\text{{Write an expression for the product of the sum of }} {a} \\text{{ and }} "
+                f"{b}\\text{{, and }} {c} \\text{{ squared.}}",
+                f"({a} + {b}) \\cdot {c}^{{2}}",
+            ),
+        ]
+
+    if complexity == "simple":
+        pool_builders = [simple_forms]
+    elif complexity == "advanced":
+        # Prefer multi-operation and exponent phrase shapes on hard.
+        pool_builders = [standard_forms, advanced_forms, advanced_forms]
+    else:
+        pool_builders = [simple_forms, standard_forms]
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(2, 12)
-        b = random.randint(2, 20)
-        prompt, expr = random.choice(templates)(a, b)
+        forms: list[tuple[str, str]] = []
+        for builder in pool_builders:
+            forms.extend(builder())
+        prompt, expr = random.choice(forms)
         answer = expr if include_answer_key else None
         return prompt, "writing numeric expression", answer
 

@@ -109,7 +109,7 @@ export function isCoordinatePlaneGraph(metadata: QuestionGraphMetadata): boolean
 
 export function evaluateLinearFunction(expression: string, x: number): number | null {
   const normalized = expression.replace(/\s+/g, "");
-  // m*x+b — allow "+-b" from string formatting (e.g. "-0.5*x+1" or "2*x+-3")
+  // m*x+b — also accept legacy "+-b" from older emitters (prefer normalized `m*x-b`)
   const linear = normalized.match(/^(-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)\*x\+(-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)$/i);
   if (linear) {
     return Number(linear[1]) * x + Number(linear[2]);

@@ -141,7 +141,7 @@ TIER3_WIRING: list[tuple[str, str, str, str]] = [
     ("pa_fractions_decimals_and_percents", "percents", "pre_algebra", "percents"),
     ("pa_checking_for_a_proportion", "solving_proportions", "pre_algebra", "proportions_and_similarity"),
     ("pa_similar_figures", "wp_similar_figures", "pre_algebra", "proportions_and_similarity"),
-    ("pa_squares_and_square_roots", "radical_simplification", "pre_algebra", "right_triangles"),
+    ("pa_squares_and_square_roots", "pa_squares_and_square_roots", "pre_algebra", "factors_and_exponents"),
     ("pythagorean_theorem", "geo_pythagorean_theorem", "pre_algebra", "right_triangles"),
     # Grade 6 — dedup variants
     ("g6_comparing_ratios", "g6_equivalent_ratios", "grade_6", "ratios"),

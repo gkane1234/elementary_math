@@ -255,26 +255,29 @@ export const PROFILE_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
     easy: {
       percent_min: 5,
       percent_max: 50,
-      base_min: 10,
+      base_min: 20,
       base_max: 100,
       round_to_whole: true,
       allow_decimal_percents: false,
+      difficulty_tier: "easy",
     },
     medium: {
       percent_min: 5,
       percent_max: 75,
-      base_min: 10,
+      base_min: 20,
       base_max: 200,
       round_to_whole: false,
       allow_decimal_percents: false,
+      difficulty_tier: "medium",
     },
     hard: {
       percent_min: 1,
       percent_max: 99,
-      base_min: 10,
+      base_min: 20,
       base_max: 500,
       round_to_whole: false,
       allow_decimal_percents: true,
+      difficulty_tier: "hard",
     },
   },
   decimal: {
@@ -362,8 +365,13 @@ export const PROFILE_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
   },
   order_of_operations: {
     easy: { pemdas_complexity: "basic", num_min: 2, num_max: 6 },
-    medium: { pemdas_complexity: "mixed", num_min: 2, num_max: 9 },
-    hard: { pemdas_complexity: "exponent", num_min: 2, num_max: 12 },
+    medium: { pemdas_complexity: "parentheses", num_min: 2, num_max: 9 },
+    hard: { pemdas_complexity: "mixed", num_min: 2, num_max: 12 },
+  },
+  writing_numeric_expressions: {
+    easy: { expression_complexity: "simple", num_min: 2, num_max: 10 },
+    medium: { expression_complexity: "standard", num_min: 2, num_max: 15 },
+    hard: { expression_complexity: "advanced", num_min: 2, num_max: 20 },
   },
   distributive: {
     easy: { coef_min: -5, coef_max: 5, allow_negative: false },
@@ -1829,6 +1837,39 @@ export const GENERATOR_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
       coef_max: 5,
     },
   },
+  // Pre-Algebra squares / square roots (Factors and Exponents):
+  //   easy   — perfect-square mental math mix of √n and n² / "n squared"
+  //   medium — larger perfect squares
+  //   hard   — non-perfect (leave under √ or extract) + messy large perfects
+  pa_squares_and_square_roots: {
+    easy: {
+      allow_square_roots: true,
+      allow_squares: true,
+      allow_word_prompts: true,
+      perfect_squares_only: true,
+      allow_extract_square_factors: false,
+      base_min: 2,
+      base_max: 12,
+    },
+    medium: {
+      allow_square_roots: true,
+      allow_squares: true,
+      allow_word_prompts: true,
+      perfect_squares_only: true,
+      allow_extract_square_factors: false,
+      base_min: 10,
+      base_max: 25,
+    },
+    hard: {
+      allow_square_roots: true,
+      allow_squares: true,
+      allow_word_prompts: false,
+      perfect_squares_only: false,
+      allow_extract_square_factors: true,
+      base_min: 15,
+      base_max: 35,
+    },
+  },
   radical_simplification: {
     easy: {
       radicand_min: 12,
@@ -2147,9 +2188,50 @@ GENERATOR_DIFFICULTY_PRESETS.pc_rational_equations =
 
 GENERATOR_DIFFICULTY_PRESETS.g6_numeric_expressions_and_order_of_operations = {
   easy: { pemdas_complexity: "basic", num_min: 1, num_max: 5 },
-  medium: { pemdas_complexity: "basic", num_min: 2, num_max: 8 },
+  medium: { pemdas_complexity: "parentheses", num_min: 2, num_max: 8 },
   hard: { pemdas_complexity: "mixed", num_min: 2, num_max: 9 },
 };
+GENERATOR_DIFFICULTY_PRESETS.g6_numeric_expressions_with_exponents = {
+  easy: { pemdas_complexity: "exponent", num_min: 2, num_max: 4 },
+  medium: { pemdas_complexity: "exponent", num_min: 2, num_max: 6 },
+  hard: { pemdas_complexity: "exponent", num_min: 2, num_max: 8 },
+};
+GENERATOR_DIFFICULTY_PRESETS.g6_writing_numeric_expressions = {
+  easy: { expression_complexity: "simple", num_min: 2, num_max: 10 },
+  medium: { expression_complexity: "standard", num_min: 2, num_max: 15 },
+  hard: { expression_complexity: "advanced", num_min: 2, num_max: 20 },
+};
+GENERATOR_DIFFICULTY_PRESETS.writing_numeric_expressions =
+  GENERATOR_DIFFICULTY_PRESETS.g6_writing_numeric_expressions;
+const WRITING_ALGEBRAIC_EXPRESSION_TIERS: TierPresets = {
+  easy: {
+    phrase_complexity: "simple",
+    max_phrase_operations: 1,
+    constant_min: 2,
+    constant_max: 9,
+    allow_fraction_constants: false,
+  },
+  medium: {
+    phrase_complexity: "standard",
+    max_phrase_operations: 2,
+    constant_min: 2,
+    constant_max: 12,
+    allow_fraction_constants: false,
+  },
+  hard: {
+    phrase_complexity: "advanced",
+    max_phrase_operations: 3,
+    constant_min: 2,
+    constant_max: 15,
+    allow_fraction_constants: false,
+  },
+};
+GENERATOR_DIFFICULTY_PRESETS.g6_writing_algebraic_expressions =
+  WRITING_ALGEBRAIC_EXPRESSION_TIERS;
+GENERATOR_DIFFICULTY_PRESETS.verbal_expressions =
+  WRITING_ALGEBRAIC_EXPRESSION_TIERS;
+GENERATOR_DIFFICULTY_PRESETS.pa_verbal_expressions =
+  WRITING_ALGEBRAIC_EXPRESSION_TIERS;
 const DECIMAL_MULTIPLICATION_TIERS: TierPresets = {
   easy: {
     whole_times_decimal: true,
@@ -2353,25 +2435,105 @@ GENERATOR_DIFFICULTY_PRESETS.g6_long_division_with_remainders =
   LONG_DIVISION_REMAINDER_TIERS;
 GENERATOR_DIFFICULTY_PRESETS.g6_shapes_and_perimeter_on_the_coordinate_plane = {
   easy: { coord_min: 0, coord_max: 6, max_side: 4, allow_l_shape: false },
-  medium: { coord_min: -3, coord_max: 7, max_side: 5, allow_l_shape: false },
+  medium: { coord_min: -3, coord_max: 7, max_side: 5, allow_l_shape: true },
   hard: { coord_min: -5, coord_max: 8, max_side: 6, allow_l_shape: true },
 };
 GENERATOR_DIFFICULTY_PRESETS.g6_coordinate_perimeter =
   GENERATOR_DIFFICULTY_PRESETS.g6_shapes_and_perimeter_on_the_coordinate_plane;
+const GRID_POLYGON_TIERS: TierPresets = {
+  easy: { difficulty_tier: "easy" },
+  medium: { difficulty_tier: "medium" },
+  hard: { difficulty_tier: "hard" },
+};
+GENERATOR_DIFFICULTY_PRESETS.g6_polygon_grid_area = GRID_POLYGON_TIERS;
+GENERATOR_DIFFICULTY_PRESETS.g6_polygons_on_a_grid_or_coordinate_plane =
+  GRID_POLYGON_TIERS;
+GENERATOR_DIFFICULTY_PRESETS.g6_shaded_polygon_area = GRID_POLYGON_TIERS;
+GENERATOR_DIFFICULTY_PRESETS.g6_polygons_and_shaded_regions = GRID_POLYGON_TIERS;
+const GEOMETRIC_TRANSFORM_TIERS: TierPresets = {
+  easy: {
+    difficulty_tier: "easy",
+    coord_min: -6,
+    coord_max: 6,
+    include_graph_metadata: true,
+    include_diagram: true,
+    show_preimage_graph: true,
+  },
+  medium: {
+    difficulty_tier: "medium",
+    coord_min: -7,
+    coord_max: 7,
+    include_graph_metadata: true,
+    include_diagram: true,
+    show_preimage_graph: true,
+  },
+  hard: {
+    difficulty_tier: "hard",
+    coord_min: -8,
+    coord_max: 8,
+    include_graph_metadata: true,
+    include_diagram: true,
+    show_preimage_graph: true,
+  },
+};
+GENERATOR_DIFFICULTY_PRESETS.pa_transformations = GEOMETRIC_TRANSFORM_TIERS;
+GENERATOR_DIFFICULTY_PRESETS.geo_transformations = GEOMETRIC_TRANSFORM_TIERS;
+GENERATOR_DIFFICULTY_PRESETS.geo_transformations_translations_rotations_reflections_and_dilations =
+  GEOMETRIC_TRANSFORM_TIERS;
 GENERATOR_DIFFICULTY_PRESETS.g6_equations_tape_diagrams = {
   easy: { tape_style: "uniform", difficulty_tier: "easy" },
   medium: { tape_style: "mixed", difficulty_tier: "medium" },
   hard: { tape_style: "nonuniform", difficulty_tier: "hard" },
 };
 GENERATOR_DIFFICULTY_PRESETS.pa_integers_adding_and_subtracting = {
+  easy: {
+    num_min: -10,
+    num_max: 10,
+    allow_negative: true,
+    allow_integers: true,
+    allow_decimals: true,
+    allow_fractions: true,
+    decimal_places: 1,
+    denom_min: 2,
+    denom_max: 6,
+    require_common_denominator: true,
+    require_unlike_denominators: false,
+  },
+  medium: {
+    num_min: -20,
+    num_max: 20,
+    allow_negative: true,
+    allow_integers: true,
+    allow_decimals: true,
+    allow_fractions: true,
+    decimal_places: 2,
+    denom_min: 2,
+    denom_max: 10,
+    require_common_denominator: false,
+    require_unlike_denominators: true,
+  },
+  hard: {
+    num_min: -50,
+    num_max: 50,
+    allow_negative: true,
+    allow_integers: true,
+    allow_decimals: true,
+    allow_fractions: true,
+    decimal_places: 3,
+    denom_min: 2,
+    denom_max: 12,
+    require_common_denominator: false,
+    require_unlike_denominators: true,
+    allow_mixed: true,
+  },
+};
+const PA_INTEGER_OPS: TierPresets = {
   easy: { num_min: -10, num_max: 10, allow_negative: true },
   medium: { num_min: -20, num_max: 20, allow_negative: true },
   hard: { num_min: -50, num_max: 50, allow_negative: true },
 };
-GENERATOR_DIFFICULTY_PRESETS.pa_integers_multiplying =
-  GENERATOR_DIFFICULTY_PRESETS.pa_integers_adding_and_subtracting;
-GENERATOR_DIFFICULTY_PRESETS.pa_integers_dividing =
-  GENERATOR_DIFFICULTY_PRESETS.pa_integers_adding_and_subtracting;
+GENERATOR_DIFFICULTY_PRESETS.pa_integers_multiplying = { ...PA_INTEGER_OPS };
+GENERATOR_DIFFICULTY_PRESETS.pa_integers_dividing = { ...PA_INTEGER_OPS };
 GENERATOR_DIFFICULTY_PRESETS.find_missing_sides_of_triangles = {
   easy: { side_min: 3, side_max: 12, integer_only: true },
   medium: { side_min: 3, side_max: 20, integer_only: true },

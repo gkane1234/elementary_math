@@ -60,6 +60,7 @@ from .linear import (
 from .number import (
     DecimalArithmeticFramework,
     DistributiveFramework,
+    IdentifyPropertyFramework,
     NumberFramework,
     NumberParams,
     OrderOfOperationsFramework,
@@ -119,6 +120,7 @@ __all__ = [
     "DecimalArithmeticFramework",
     "WholeDivideToDecimalFramework",
     "DistributiveFramework",
+    "IdentifyPropertyFramework",
     "OrderOfOperationsFramework",
     "ProportionFramework",
     "ScientificNotationFramework",

@@ -32,7 +32,11 @@ def _format_signed(value: int | float) -> str:
 
 
 def _graph_quad_fn(a: float, b: float, c: float) -> str:
-    return f"{_format_signed(a)}*x^2+{_format_signed(b)}*x+{_format_signed(c)}"
+    from packages.polynomial_core import normalize_expression_signs
+
+    return normalize_expression_signs(
+        f"{_format_signed(a)}*x^2+{_format_signed(b)}*x+{_format_signed(c)}"
+    )
 
 
 def _vertex_from_standard(a: float, b: float, c: float) -> tuple[float, float]:

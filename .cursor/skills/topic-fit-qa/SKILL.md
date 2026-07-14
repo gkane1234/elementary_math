@@ -15,7 +15,7 @@ Verify questions **match the curriculum topic** — not that answers are mathema
 
 Catch: wrong generator / miswire, wrong method under a named technique, hard that changes topic instead of getting harder, scaffold/stub under Ready types.
 
-Do **not** spend effort verifying answer keys unless a wrong answer is incidental evidence of wrong topic.
+Do **not** spend effort verifying answer keys unless a wrong answer is incidental evidence of wrong topic. Exception: identify-property types (`g6_properties_of_addition_and_multiplication`) — auto heuristics flag keys that are bare operation names or numeric products (miswire signal).
 
 ## Workflow
 

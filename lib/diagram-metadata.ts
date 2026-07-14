@@ -16,8 +16,18 @@ export type QuestionDiagramMetadata = {
 
 export function extractDiagramMetadata(
   metadata: Record<string, unknown> | undefined,
+  variant: "prompt" | "answer" = "prompt",
 ): QuestionDiagramMetadata | null {
   if (!metadata) return null;
+
+  if (variant === "answer") {
+    const answerSvg = metadata.answer_diagram_svg;
+    if (typeof answerSvg === "string" && answerSvg.trim()) {
+      return { diagram_svg: answerSvg };
+    }
+    // Fall back to stimulus diagram when there is no separate answer figure.
+  }
+
   const svg = metadata.diagram_svg;
   const latex = metadata.diagram_latex;
   const spec = metadata.diagram_spec as DiagramSpec | undefined;
@@ -33,7 +43,15 @@ export function extractDiagramMetadata(
 
 export function hasRenderableDiagram(
   metadata: Record<string, unknown> | undefined,
+  variant: "prompt" | "answer" = "prompt",
 ): boolean {
-  const diagram = extractDiagramMetadata(metadata);
+  const diagram = extractDiagramMetadata(metadata, variant);
   return Boolean(diagram?.diagram_svg);
+}
+
+export function hasAnswerDiagram(
+  metadata: Record<string, unknown> | undefined,
+): boolean {
+  const svg = metadata?.answer_diagram_svg;
+  return typeof svg === "string" && svg.trim().length > 0;
 }

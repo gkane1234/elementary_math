@@ -15,6 +15,7 @@ from ..frameworks.number import (
     GcfLcmFramework,
     GcfLcmWordFramework,
     Grade6VisualFramework,
+    IdentifyPropertyFramework,
     IntegerArithmeticFramework,
     LikeDenominatorFractionFramework,
     LongDivisionWithRemaindersFramework,
@@ -38,6 +39,7 @@ _FRAC_OF_WHOLE = FractionDivideWordFramework(mode="whole")
 _INT_ADD_SUB = IntegerArithmeticFramework("+-")
 _INT_MULTIPLY = IntegerArithmeticFramework("*")
 _INT_DIVIDE = IntegerArithmeticFramework("/")
+_IDENTIFY_PROPERTY = IdentifyPropertyFramework()
 _INT_NEGATIVE = IntegerArithmeticFramework("+-")
 _LONG_DIV_REMAINDER = LongDivisionWithRemaindersFramework()
 
@@ -61,7 +63,7 @@ _G6_VISUALS = {
         "fraction_rectangle", "fraction_triangle", "fraction_prism",
         "draw_dot_plot", "draw_histogram", "tape", "hanger", "inequality_hanger",
         "area_model_algebraic", "grid_polygon", "shaded_polygon",
-        "classify_polyhedron", "nets", "net_surface", "net_grid", "invalid_net",
+        "classify_polyhedron",
         "isometric", "isometric_measure",
     )
 }
@@ -113,6 +115,12 @@ def g6_integer_add_subtract(topic: str, settings: dict) -> list[Question]:
 
 def g6_integer_multiply(topic: str, settings: dict) -> list[Question]:
     return _framework_generator(_INT_MULTIPLY, topic, settings)
+
+
+def g6_properties_of_addition_and_multiplication(topic: str, settings: dict) -> list[Question]:
+    # Identify-property items are always multiple choice among property names.
+    settings = {**settings, "multiple_choice": True}
+    return _framework_generator(_IDENTIFY_PROPERTY, topic, settings)
 
 
 def g6_integer_divide(topic: str, settings: dict) -> list[Question]:
@@ -215,6 +223,7 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "g6_fraction_of_whole": g6_fraction_of_whole,
     "g6_integer_add_subtract": g6_integer_add_subtract,
     "g6_integer_multiply": g6_integer_multiply,
+    "g6_properties_of_addition_and_multiplication": g6_properties_of_addition_and_multiplication,
     "g6_integer_divide": g6_integer_divide,
     "g6_negative_number_operations": g6_negative_number_operations,
     "g6_greatest_common_factor": g6_greatest_common_factor,
@@ -244,11 +253,9 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "g6_area_model_algebraic": lambda topic, settings: _g6_visual("area_model_algebraic", topic, settings),
     "g6_polygon_grid_area": lambda topic, settings: _g6_visual("grid_polygon", topic, settings),
     "g6_shaded_polygon_area": lambda topic, settings: _g6_visual("shaded_polygon", topic, settings),
-    "g6_classify_polyhedron": lambda topic, settings: _g6_visual("classify_polyhedron", topic, settings),
-    "g6_cube_nets": lambda topic, settings: _g6_visual("nets", topic, settings),
-    "g6_cube_net_surface_area": lambda topic, settings: _g6_visual("net_surface", topic, settings),
-    "g6_cube_net_grid_surface_area": lambda topic, settings: _g6_visual("net_grid", topic, settings),
-    "g6_invalid_cube_net": lambda topic, settings: _g6_visual("invalid_net", topic, settings),
+    "g6_classify_polyhedron": lambda topic, settings: _g6_visual(
+        "classify_polyhedron", topic, {**settings, "multiple_choice": True}
+    ),
     "g6_isometric_solid": lambda topic, settings: _g6_visual("isometric", topic, settings),
     "g6_isometric_measure": lambda topic, settings: _g6_visual("isometric_measure", topic, settings),
 }

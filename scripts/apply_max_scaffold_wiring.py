@@ -44,7 +44,7 @@ WIRING: list[tuple[str, str, str, str]] = [
     ("pa_checking_for_a_proportion", "solving_proportions", "pre_algebra", "proportions_and_similarity"),
     ("pa_similar_figures", "wp_similar_figures", "pre_algebra", "proportions_and_similarity"),
     ("pa_fractions_decimals_and_percents", "percents", "pre_algebra", "percents"),
-    ("pa_area_of_triangles_and_quadrilaterals", "geo_triangle_area", "pre_algebra", "plane_figures"),
+    ("pa_area_of_triangles_and_quadrilaterals", "geo_triangles_and_quadrilaterals_area", "pre_algebra", "plane_figures"),
     ("pythagorean_theorem", "geo_pythagorean_theorem", "pre_algebra", "right_triangles"),
     # ── Algebra 2 equations / order of ops ──
     ("a2_beginning_algebra_order_of_operations", "order_of_operations", "algebra_2", "beginning_algebra"),

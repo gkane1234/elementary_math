@@ -58,7 +58,9 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _pa(
         "Integers, Decimals, and Fractions",
         "pa_integers_adding_and_subtracting",
-        "Adding and subtracting", generator="g6_integer_add_subtract", instruction_text="Evaluate.",
+        "Adding and subtracting",
+        generator="pa_integers_adding_and_subtracting",
+        instruction_text="Evaluate.",
     ),
     _pa(
         "Integers, Decimals, and Fractions",
@@ -96,7 +98,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Integers, Decimals, and Fractions",
         "pa_converting_fractions_and_decimals",
         "Converting fractions and decimals",
-        generator="percents",
+        generator="converting_fractions_and_decimals",
         instruction_text="Convert.",
     ),
     # Beginning Algebra
@@ -138,6 +140,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "pa_divisibility",
         "Divisibility", generator="g6_divisibility", instruction_text="Determine if the number is divisible.",
     ),
+    _pa(
+        "Factors and Exponents",
+        "pa_squares_and_square_roots",
+        "Squares and square roots",
+        generator="pa_squares_and_square_roots",
+        instruction_text="Evaluate.",
+    ),
     # Proportions and Similarity
     _pa(
         "Proportions and Similarity",
@@ -176,7 +185,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Percents",
         "pa_fractions_decimals_and_percents",
         "Fractions, decimals, and percents",
-        generator="percents",
+        generator="fractions_decimals_and_percents",
         instruction_text="Write the equivalent value.",
     ),
     _pa(
@@ -192,7 +201,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Percents",
         "pa_simple_and_compound_interest",
         "Simple and compound interest",
-        generator="wp_percent",
+        generator="wp_simple_and_compound_interest",
         instruction_latex="\\text{Solve the problem.}",
         instruction_text="Solve the problem.",
         count_default=5,
@@ -217,9 +226,9 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Linear Equations and Inequalities",
         "pa_writing_linear_equations",
         "Writing linear equations",
-        generator="read_equation_from_graph",
-        instruction_latex=r"\text{Write the equation of the line shown.}",
-        instruction_text="Write the equation of the line shown.",
+        generator="writing_linear_equations",
+        instruction_latex=r"\text{Write the equation.}",
+        instruction_text="Write the equation.",
     ),
     _pa(
         "Linear Equations and Inequalities",
@@ -244,15 +253,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         instruction_text="Solve the problem.",
         count_default=5,
     ),
-    # Statistics
-    _pa(
-        "Statistics",
-        "using_statistical_models",
-        "Using statistical models",
-        generator="stats_statistical_model",
-        instruction_latex=r"\text{Use the linear model to make a prediction.}",
-        instruction_text="Use the linear model to make a prediction.",
-    ),
+    # Removed: using_statistical_models (not real statistical modeling — not selectable as Ready).
     # Plane Figures
     _pa(
         "Plane Figures",
@@ -276,12 +277,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Plane Figures",
         "pa_quadrilaterals",
         "Quadrilaterals",
-        generator="geo_parallelogram_area", instruction_text="Find the measure.",
+        generator="geo_quadrilateral_area", instruction_text="Find the measure.",
     ),
     _pa(
         "Plane Figures",
         "pa_area_of_triangles_and_quadrilaterals",
-        "Area of triangles and quadrilaterals", generator="geo_triangle_area", instruction_text="Find the area.",
+        "Area of triangles and quadrilaterals",
+        generator="geo_triangles_and_quadrilaterals_area",
+        instruction_text="Find the area.",
     ),
     _pa(
         "Plane Figures",
@@ -293,7 +296,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Plane Figures",
         "pa_transformations",
         "Transformations",
-        generator="graph_transformations",
+        generator="geo_transformations",
         instruction_latex="\\text{Graph the transformation.}",
         instruction_text="Graph the transformation.",
     ),
@@ -305,11 +308,6 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         generator="geo_solid_volume_surface", instruction_text="Find the volume or surface area.",
     ),
     # Right Triangles
-    _pa(
-        "Right Triangles",
-        "pa_squares_and_square_roots",
-        "Squares and square roots", generator="radical_simplification", instruction_text="Evaluate.",
-    ),
     _pa(
         "Right Triangles",
         "pythagorean_theorem",
@@ -329,5 +327,4 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Multiplying", generator="polynomial_multiply", instruction_latex="\\text{Multiply.}",
         instruction_text="Multiply.",
     ),
-    # Statistics
 )

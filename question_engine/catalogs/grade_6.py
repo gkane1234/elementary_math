@@ -307,7 +307,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Numeric Expressions, Exponents, and the Order of Operations",
         "g6_properties_of_addition_and_multiplication",
         "Properties of addition and multiplication",
-        generator="g6_integer_multiply",
+        generator="g6_properties_of_addition_and_multiplication",
         instruction_text="Identify the property.",
     ),
     _g6(
@@ -447,16 +447,9 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _g6("Polygons", "g6_polygons_and_shaded_regions", "Polygons and shaded regions", generator="g6_shaded_polygon_area", instruction_text="Find the area."),
     # Polyhedra
     _g6("Polyhedra", "g6_classifying_and_naming", "Classifying and naming", generator="g6_classify_polyhedron", instruction_text="Classify the polyhedron."),
-    _g6("Polyhedra", "g6_nets", "Nets", generator="g6_cube_nets", instruction_text="Identify the net."),
-    _g6("Polyhedra", "g6_nets_and_surface_area", "Nets and surface area", generator="g6_cube_net_surface_area", instruction_text="Find the surface area."),
-    _g6(
-        "Polyhedra",
-        "g6_nets_and_surface_area_on_a_grid",
-        "Nets and surface area on a grid",
-        generator="g6_cube_net_grid_surface_area",
-        instruction_text="Find the surface area.",
-    ),
-    _g6("Polyhedra", "g6_identifying_invalid_nets", "Identifying invalid nets", generator="g6_invalid_cube_net", instruction_text="Determine if the net is valid."),
+    # Removed nets family (not selectable as Ready):
+    #   g6_nets, g6_nets_and_surface_area, g6_nets_and_surface_area_on_a_grid,
+    #   g6_identifying_invalid_nets
     _g6(
         "Polyhedra",
         "g6_volume_and_surface_area_using_isometric_drawings",
@@ -470,7 +463,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Formulas for volume and surface area of a cube",
         generator="geo_solid_volume_surface", instruction_text="Find the volume or surface area.",
     ),
-    _g6("Polyhedra", "g6_isometric_sketching", "Isometric sketching", generator="g6_isometric_solid", instruction_text="Sketch the solid."),
+    # Removed: g6_isometric_sketching (sketch/copy isometric prism — needs drawing UI).
     # Area and Volume with Fractions
     _g6(
         "Area and Volume with Fractions",
@@ -495,9 +488,9 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     ),
     # Data Sets and Distributions
     _g6("Data Sets and Distributions", "g6_interpreting_dot_plots", "Interpreting dot plots", generator="stats_dot_plot_read", instruction_text="Interpret the dot plot."),
-    _g6("Data Sets and Distributions", "g6_drawing_dot_plots", "Drawing dot plots", generator="g6_drawing_dot_plot", instruction_text="Draw the dot plot."),
+    _g6("Data Sets and Distributions", "g6_drawing_dot_plots", "Drawing dot plots", generator="g6_drawing_dot_plot", instruction_text="Create a dot plot for the data."),
     _g6("Data Sets and Distributions", "g6_interpreting_histograms", "Interpreting histograms", generator="stats_histogram_read", instruction_text="Interpret the histogram."),
-    _g6("Data Sets and Distributions", "g6_drawing_histograms", "Drawing histograms", generator="g6_drawing_histogram", instruction_text="Draw the histogram."),
+    _g6("Data Sets and Distributions", "g6_drawing_histograms", "Drawing histograms", generator="g6_drawing_histogram", instruction_text="Create a histogram for the data."),
     _g6("Data Sets and Distributions", "g6_data_center_and_spread", "Center and spread", generator="stats_center_spread", instruction_text="Find the measure."),
     _g6("Data Sets and Distributions", "g6_interpreting_box_plots", "Interpreting box plots", generator="stats_box_plot_basics", instruction_text="Interpret the box plot."),
     _g6("Data Sets and Distributions", "g6_drawing_box_plots", "Drawing box plots", generator="stats_box_plot_basics", instruction_text="Draw the box plot."),

@@ -3,6 +3,7 @@
 import { useState, type DragEvent, type MouseEvent } from "react";
 import { QuestionDiagramFromMetadata } from "@/components/QuestionDiagram";
 import { QuestionGraphFromMetadata } from "@/components/QuestionGraph";
+import { hasAnswerDiagram } from "@/lib/diagram-metadata";
 import { MultipleChoiceOptions } from "@/components/MultipleChoiceOptions";
 import {
   InlineLatex,
@@ -149,7 +150,12 @@ export function InteractiveWorksheet({
   const headerInstruction = sharedHeaderInstruction(worksheet.questions);
   const instructionGroups = groupQuestionsByInstruction(worksheet.questions);
   const answerColumns = distributeToColumns(worksheet.questions, columnCount);
-  const showAnswers = !previewMode && worksheet.questions.some((question) => question.answer_latex);
+  const showAnswers =
+    !previewMode &&
+    worksheet.questions.some(
+      (question) =>
+        Boolean(question.answer_latex) || hasAnswerDiagram(question.metadata),
+    );
   const selectedQuestion = worksheet.questions.find((question) => question.id === selectedId) ?? null;
   const settingsQuestion = worksheet.questions.find((question) => question.id === settingsQuestionId) ?? null;
 
@@ -393,11 +399,11 @@ export function InteractiveWorksheet({
                         </span>
                       ) : question.answer_latex ? (
                         <InlineLatex content={question.answer_latex} />
-                      ) : (
+                      ) : hasAnswerDiagram(question.metadata) ? null : (
                         "—"
                       )}
                       <QuestionGraphFromMetadata metadata={question.metadata} variant="answer" />
-                      <QuestionDiagramFromMetadata metadata={question.metadata} />
+                      <QuestionDiagramFromMetadata metadata={question.metadata} variant="answer" />
                     </li>
                   );
                 })}

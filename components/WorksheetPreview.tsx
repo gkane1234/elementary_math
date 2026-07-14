@@ -2,6 +2,7 @@
 
 import { QuestionDiagramFromMetadata } from "@/components/QuestionDiagram";
 import { QuestionGraphFromMetadata } from "@/components/QuestionGraph";
+import { hasAnswerDiagram } from "@/lib/diagram-metadata";
 import { MultipleChoiceOptions } from "@/components/MultipleChoiceOptions";
 import {
   InlineLatex,
@@ -84,7 +85,10 @@ export function WorksheetPreview({ worksheet }: WorksheetPreviewProps) {
     );
   }
 
-  const showAnswers = worksheet.questions.some((question) => question.answer_latex);
+  const showAnswers = worksheet.questions.some(
+    (question) =>
+      Boolean(question.answer_latex) || hasAnswerDiagram(question.metadata),
+  );
   const columnCount = worksheet.columns ?? 1;
   const answerColumns = distributeToColumns(worksheet.questions, columnCount);
   const questionsWithInstruction = worksheet.questions.map((question) => ({
@@ -156,11 +160,11 @@ export function WorksheetPreview({ worksheet }: WorksheetPreviewProps) {
                         </span>
                       ) : question.answer_latex ? (
                         <InlineLatex content={question.answer_latex} />
-                      ) : (
+                      ) : hasAnswerDiagram(question.metadata) ? null : (
                         "—"
                       )}
                       <QuestionGraphFromMetadata metadata={question.metadata} variant="answer" />
-                      <QuestionDiagramFromMetadata metadata={question.metadata} />
+                      <QuestionDiagramFromMetadata metadata={question.metadata} variant="answer" />
                     </li>
                   );
                 })}

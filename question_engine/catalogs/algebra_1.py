@@ -689,12 +689,5 @@ CATALOG: tuple = (
         instruction_latex=r"\text{Interpret the scatter plot.}",
         instruction_text="Interpret the scatter plot.",
     ),
-    entry(
-        "using_statistical_models",
-        "Using statistical models",
-        "Pre-Algebra — Statistics",
-        generator="stats_statistical_model",
-        instruction_latex=r"\text{Use the linear model to make a prediction.}",
-        instruction_text="Use the linear model to make a prediction.",
-    ),
+    # Removed: using_statistical_models (not real statistical modeling — not selectable as Ready).
 )

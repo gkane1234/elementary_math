@@ -58,6 +58,7 @@ from .domains.number import (
     ratio_settings,
     scientific_notation_settings,
     sets_of_numbers_settings,
+    writing_numeric_expression_settings,
     unit_rate_settings,
 )
 from .domains.common import (
@@ -202,6 +203,13 @@ def order_of_operations_profile() -> list[SettingField]:
     return merge_settings(
         pemdas_settings(),
         number_coef_settings(num_min_default=2, num_max_default=9, num_bound=20),
+    )
+
+
+def writing_numeric_expressions_profile() -> list[SettingField]:
+    return merge_settings(
+        writing_numeric_expression_settings(),
+        number_coef_settings(num_min_default=2, num_max_default=20, num_bound=50),
     )
 
 
@@ -601,6 +609,7 @@ PROFILE_BUILDERS: dict[str, callable] = {
     "scientific_notation": scientific_notation_profile,
     "proportion": proportion_profile,
     "order_of_operations": order_of_operations_profile,
+    "writing_numeric_expressions": writing_numeric_expressions_profile,
     "integer": integer_profile,
     "number_sets": number_sets_profile,
     "factor": factor_profile,

@@ -11,10 +11,14 @@ from typing import Any
 
 from .base import QuestionFramework
 from ..generators.utils import (
+    format_binop_expression,
     format_fraction_division_latex,
     format_linear_latex,
+    format_measurement_text,
+    format_with_unit,
     frac_latex,
     frac_or_mixed_latex,
+    normalize_expression_signs,
     random_fraction,
     random_int_range,
 )
@@ -232,10 +236,112 @@ class RationalFramework(NumberFramework):
             prompt_latex = format_fraction_division_latex(a, b, notation)
         else:
             latex_op = {"+": "+", "-": "-", "*": "\\cdot"}[op]
-            prompt_latex = (
-                f"{self._format_operand(a, params)} {latex_op} {self._format_operand(b, params)}"
+            prompt_latex = format_binop_expression(
+                self._format_operand(a, params),
+                latex_op,
+                self._format_operand(b, params),
             )
-        return prompt_latex, f"{a} {op} {b}", frac_latex(result)
+        prompt_text = normalize_expression_signs(f"{a} {op} {b}")
+        return prompt_latex, prompt_text, frac_latex(result)
+
+
+# Mental-math percents for Easy; Medium sticks to multiples of 5 when possible.
+_EASY_PERCENTS = (5, 10, 20, 25, 40, 50, 75)
+_MEDIUM_PERCENTS = (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 75, 80)
+
+
+def _percent_difficulty_tier(settings: dict) -> str:
+    return str(
+        settings.get("difficulty_tier") or settings.get("difficulty") or "medium"
+    ).strip().lower()
+
+
+def _percent_step_for_exact(percent: int | float) -> int:
+    """Smallest whole-step so ``whole * percent / 100`` is an integer."""
+    pct = Fraction(percent).limit_denominator(1000)
+    # whole * (pct/100) ∈ ℤ  ⇒  whole * pct.numerator / (100 * pct.denominator) ∈ ℤ
+    denom = 100 * pct.denominator // math.gcd(pct.numerator, 100 * pct.denominator)
+    return max(1, denom)
+
+
+def _pick_exact_whole(
+    percent: int | float,
+    base_lo: int,
+    base_hi: int,
+    *,
+    prefer_nice: bool = False,
+) -> int:
+    step = _percent_step_for_exact(percent)
+    start = ((base_lo + step - 1) // step) * step
+    if start < step:
+        start = step
+    candidates = list(range(start, base_hi + 1, step))
+    if not candidates:
+        # Fall back outside the requested band rather than invent an inconsistent triple.
+        return max(step, (base_lo // step + 1) * step)
+    if prefer_nice:
+        nice = [w for w in candidates if w % 10 == 0 or w % 25 == 0]
+        if nice:
+            return random.choice(nice)
+    return random.choice(candidates)
+
+
+def _exact_part(whole: int, percent: int | float) -> int | float:
+    value = Fraction(whole) * Fraction(percent) / 100
+    if value.denominator == 1:
+        return int(value)
+    return float(value)
+
+
+def _pick_percent_value(
+    settings: dict,
+    *,
+    pct_lo: int,
+    pct_hi: int,
+    allow_decimal_pct: bool,
+    prefer_exact: bool,
+) -> int | float:
+    tier = _percent_difficulty_tier(settings)
+    if tier == "easy" or prefer_exact:
+        pool = [p for p in _EASY_PERCENTS if pct_lo <= p <= pct_hi]
+        if not pool:
+            pool = [p for p in _EASY_PERCENTS if p <= max(pct_hi, 50)] or list(_EASY_PERCENTS)
+        return random.choice(pool)
+    if tier == "medium" or not allow_decimal_pct:
+        pool = [p for p in _MEDIUM_PERCENTS if pct_lo <= p <= pct_hi]
+        if pool:
+            return random.choice(pool)
+        return random.randint(pct_lo, pct_hi)
+    # Hard + decimal percents: still prefer tenths that admit exact parts.
+    if allow_decimal_pct and random.random() < 0.5:
+        return round(random.uniform(pct_lo, pct_hi), 1)
+    return random.randint(pct_lo, pct_hi)
+
+
+def _format_percent_answer(settings: dict, percent: int | float, *, round_whole: bool) -> str:
+    from ..settings.enrichment import format_answer_value
+
+    return format_answer_value(
+        {**settings, "round_answers_to_whole": round_whole},
+        percent,
+    )
+
+
+def _soft_fail_independent_percent(part: int | float, whole: int, keyed_percent: int | float) -> None:
+    """Reject the legacy bug: keying a percent chosen independently of part÷whole.
+
+    Construction should make this a no-op. If it fires, part/whole and the keyed
+    percent disagree (beyond float noise) — the old ``whole * pct // 100`` path.
+    """
+    if whole == 0:
+        raise ValueError("percent whole must be nonzero")
+    actual = Fraction(part) * 100 / Fraction(whole)
+    keyed = Fraction(keyed_percent).limit_denominator(1000)
+    if abs(float(actual - keyed)) > 1e-9:
+        raise ValueError(
+            f"inconsistent percent triple: {part} / {whole} = {float(actual)}%, "
+            f"keyed {float(keyed)}% (choose percent+whole, then part)"
+        )
 
 
 class PercentFramework(NumberFramework):
@@ -255,61 +361,122 @@ class PercentFramework(NumberFramework):
         )
         round_whole = bool(settings.get("round_to_whole", settings.get("round_answers_to_whole", False)))
         allow_decimal_pct = bool(settings.get("allow_decimal_percents", False))
+        tier = _percent_difficulty_tier(settings)
+        # Easy / round-to-whole: keep mental-math exact triples (no invented rounding).
+        prefer_exact = round_whole or tier == "easy" or not allow_decimal_pct
+        prefer_nice = tier == "easy"
 
         if self.percent_change:
-            original = random.randint(base_lo, base_hi)
-            if allow_decimal_pct:
-                percent = round(random.uniform(pct_lo, pct_hi), 1)
-            else:
-                percent = random.randint(pct_lo, pct_hi)
-            increased = random.choice([True, False])
-            change = round(original * percent / 100)
+            percent = _pick_percent_value(
+                settings,
+                pct_lo=pct_lo,
+                pct_hi=pct_hi,
+                allow_decimal_pct=allow_decimal_pct,
+                prefer_exact=prefer_exact,
+            )
+            original = _pick_exact_whole(
+                percent, base_lo, base_hi, prefer_nice=prefer_nice
+            )
+            change = _exact_part(original, percent)
+            if isinstance(change, float):
+                change = int(round(change)) if round_whole else change
             if change == 0:
-                change = random.randint(5, min(40, base_hi // 4 or 5))
+                change = max(1, int(original * Fraction(percent) / 100) or 1)
+            increased = random.choice([True, False])
             new_value = original + change if increased else original - change
-            actual_pct = abs(change) / original * 100
-            if round_whole:
-                actual_pct = round(actual_pct)
+            if new_value <= 0:
+                increased = True
+                new_value = original + change
+            # Answer from the actual change, never an independently chosen percent.
+            actual_pct = Fraction(abs(change)) * 100 / Fraction(original)
+            pct_value: int | float = (
+                int(actual_pct) if actual_pct.denominator == 1 else float(actual_pct)
+            )
+            if round_whole and actual_pct.denominator != 1:
+                pct_value = int(round(float(actual_pct)))
             direction = "increase" if increased else "decrease"
             prompt = f"\\text{{From {original} to {new_value}, find the percent {direction}.}}"
-            answer_value = format_answer_value(
-                {**settings, "round_answers_to_whole": round_whole},
-                actual_pct,
-            )
+            answer_value = _format_percent_answer(settings, pct_value, round_whole=round_whole)
             return prompt, f"From {original} to {new_value}", f"{answer_value}\\%"
 
         mode = random.choice(["percent_of", "find_percent", "find_whole"])
-        if allow_decimal_pct:
-            percent = round(random.uniform(pct_lo, pct_hi), 1)
-        else:
-            percent = random.randint(pct_lo, pct_hi)
+        percent = _pick_percent_value(
+            settings,
+            pct_lo=pct_lo,
+            pct_hi=pct_hi,
+            allow_decimal_pct=allow_decimal_pct,
+            prefer_exact=prefer_exact,
+        )
+
         if mode == "percent_of":
-            base = random.randint(base_lo, base_hi)
-            result = percent * base / 100
-            if round_whole:
-                result = round(result)
+            if prefer_exact:
+                base = _pick_exact_whole(
+                    percent, base_lo, base_hi, prefer_nice=prefer_nice
+                )
+            else:
+                base = random.randint(base_lo, base_hi)
+            result = Fraction(percent) * base / 100
+            if prefer_exact and result.denominator != 1:
+                base = _pick_exact_whole(
+                    percent, base_lo, base_hi, prefer_nice=prefer_nice
+                )
+                result = Fraction(percent) * base / 100
+            result_value: int | float = int(result) if result.denominator == 1 else float(result)
+            if round_whole and result.denominator != 1:
+                result_value = int(round(float(result)))
             prompt = f"\\text{{What is {percent}\\% of {base}?}}"
-            answer = format_answer_value({**settings, "round_answers_to_whole": round_whole}, result)
+            answer = format_answer_value(
+                {**settings, "round_answers_to_whole": round_whole},
+                result_value,
+            )
             return prompt, f"What is {percent}% of {base}?", answer
 
         if mode == "find_percent":
-            whole = random.randint(base_lo, base_hi)
-            part = whole * percent // 100 if not allow_decimal_pct else round(whole * percent / 100, 1)
-            if part == 0:
-                part = max(1, percent // 10)
-            prompt = f"\\text{{{part} is what percent of {whole}?}}"
-            pct_answer = format_answer_value(
-                {**settings, "round_answers_to_whole": round_whole},
-                percent,
+            # Choose percent + whole, then part = whole * percent / 100 (exact on Easy).
+            whole = _pick_exact_whole(
+                percent, base_lo, base_hi, prefer_nice=prefer_nice
             )
+            part = _exact_part(whole, percent)
+            if part == 0:
+                whole = _pick_exact_whole(
+                    percent,
+                    max(base_lo, 20),
+                    max(base_hi, 100),
+                    prefer_nice=prefer_nice,
+                )
+                part = _exact_part(whole, percent)
+            _soft_fail_independent_percent(part, whole, percent)
+            prompt = f"\\text{{{part} is what percent of {whole}?}}"
+            pct_answer = _format_percent_answer(settings, percent, round_whole=False)
             return prompt, f"{part} is what percent of {whole}?", f"{pct_answer}\\%"
 
-        part = random.randint(max(1, base_lo // 10), min(60, base_hi // 3 or 60))
-        result = part * 100 / percent
-        if round_whole:
-            result = round(result)
+        # find_whole: choose percent + part so whole = part * 100 / percent is exact.
+        part_lo = max(1, base_lo // 10)
+        part_hi = max(part_lo, min(60, base_hi // 3 or 60))
+        if prefer_exact:
+            # part must be a multiple of percent / gcd(percent, 100) so whole is integer.
+            pct_frac = Fraction(percent).limit_denominator(1000)
+            part_step = max(1, pct_frac.numerator // math.gcd(pct_frac.numerator, 100 * pct_frac.denominator))
+            start = ((part_lo + part_step - 1) // part_step) * part_step
+            if start == 0:
+                start = part_step
+            part_choices = list(range(start, part_hi + 1, part_step))
+            if not part_choices:
+                part_choices = [part_step]
+            part = random.choice(part_choices)
+            whole_frac = Fraction(part) * 100 / pct_frac
+            result_value = int(whole_frac) if whole_frac.denominator == 1 else float(whole_frac)
+        else:
+            part = random.randint(part_lo, part_hi)
+            whole_frac = Fraction(part) * 100 / Fraction(percent)
+            result_value = int(whole_frac) if whole_frac.denominator == 1 else float(whole_frac)
+            if round_whole and whole_frac.denominator != 1:
+                result_value = int(round(float(whole_frac)))
         prompt = f"\\text{{{part} is {percent}\\% of what number?}}"
-        answer = format_answer_value({**settings, "round_answers_to_whole": round_whole}, result)
+        answer = format_answer_value(
+            {**settings, "round_answers_to_whole": round_whole},
+            result_value,
+        )
         return prompt, f"{part} is {percent}% of what number?", answer
 
 
@@ -459,10 +626,17 @@ class DecimalArithmeticFramework(NumberFramework):
         result = ops[self.operation](a, b)
         latex_op = {"+": "+", "-": "-", "*": "\\cdot", "/": "\\div"}[self.operation]
         answer_places = a_places + b_places if self.operation == "*" else places
-        prompt_latex = (
-            f"{_format_decimal(a, places=a_places)} {latex_op} {_format_decimal(b, places=b_places)}"
+        prompt_latex = format_binop_expression(
+            _format_decimal(a, places=a_places),
+            latex_op,
+            _format_decimal(b, places=b_places),
         )
-        return prompt_latex, f"{a} {self.operation} {b}", _format_decimal(result, places=answer_places)
+        prompt_text = format_binop_expression(
+            _format_decimal(a, places=a_places),
+            self.operation,
+            _format_decimal(b, places=b_places),
+        )
+        return prompt_latex, prompt_text, _format_decimal(result, places=answer_places)
 
     def _multiplication_factors(
         self, settings: dict
@@ -590,39 +764,515 @@ class DistributiveFramework(NumberFramework):
         return prompt_latex, prompt_latex, str(result)
 
 
+# ---------------------------------------------------------------------------
+# Identify the property (commutative / associative / identity / zero / distributive)
+# ---------------------------------------------------------------------------
+
+_PROPERTY_LABELS: tuple[str, ...] = (
+    "commutative property of addition",
+    "commutative property of multiplication",
+    "associative property of addition",
+    "associative property of multiplication",
+    "identity property of addition",
+    "identity property of multiplication",
+    "zero property of multiplication",
+    "distributive property",
+)
+
+
+def _property_answer_latex(name: str) -> str:
+    return rf"\text{{{name}}}"
+
+
+def _property_int(settings: dict, *, lo_default: int = 2, hi_default: int = 12) -> int:
+    lo = int(settings.get("coef_min", settings.get("num_min", lo_default)))
+    hi = int(settings.get("coef_max", settings.get("num_max", hi_default)))
+    lo = max(1, min(lo, hi))
+    hi = max(lo, hi)
+    # Grade-6 property examples stay positive and small even if presets go wider.
+    lo = max(lo_default, min(lo, hi_default))
+    hi = min(max(hi, lo), max(hi_default, lo + 4))
+    return random.randint(lo, hi)
+
+
+class IdentifyPropertyFramework(NumberFramework):
+    """Show an equation that illustrates a basic property; answer is the property name."""
+
+    instruction_latex = r"\text{Identify the property.}"
+    instruction_text = "Identify the property."
+
+    def __init__(self) -> None:
+        self._last_distractors: list[str] = []
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        self._last_distractors = []
+        name, prompt_latex, prompt_text = self._build_example(settings)
+        answer = _property_answer_latex(name)
+        distractors = [
+            _property_answer_latex(other)
+            for other in _PROPERTY_LABELS
+            if other != name
+        ]
+        random.shuffle(distractors)
+        self._last_distractors = distractors[:3]
+        return prompt_latex, prompt_text, answer
+
+    def _build_example(self, settings: dict) -> tuple[str, str, str]:
+        tier = str(settings.get("difficulty_tier", "medium")).lower()
+        if tier == "easy":
+            pool = [
+                "commutative property of addition",
+                "commutative property of multiplication",
+                "identity property of addition",
+                "identity property of multiplication",
+                "zero property of multiplication",
+            ]
+        else:
+            pool = list(_PROPERTY_LABELS)
+
+        name = random.choice(pool)
+        a = _property_int(settings)
+        b = _property_int(settings)
+        while b == a:
+            b = _property_int(settings)
+        c = _property_int(settings)
+
+        if name == "commutative property of addition":
+            latex = f"{a} + {b} = {b} + {a}"
+        elif name == "commutative property of multiplication":
+            latex = f"{a} \\cdot {b} = {b} \\cdot {a}"
+        elif name == "associative property of addition":
+            latex = f"({a} + {b}) + {c} = {a} + ({b} + {c})"
+        elif name == "associative property of multiplication":
+            latex = f"({a} \\cdot {b}) \\cdot {c} = {a} \\cdot ({b} \\cdot {c})"
+        elif name == "identity property of addition":
+            latex = f"{a} + 0 = {a}" if random.random() < 0.5 else f"0 + {a} = {a}"
+        elif name == "identity property of multiplication":
+            latex = f"{a} \\cdot 1 = {a}" if random.random() < 0.5 else f"1 \\cdot {a} = {a}"
+        elif name == "zero property of multiplication":
+            latex = f"{a} \\cdot 0 = 0" if random.random() < 0.5 else f"0 \\cdot {a} = 0"
+        else:  # distributive property
+            if random.random() < 0.5:
+                latex = (
+                    f"{a}({b} + {c}) = {a} \\cdot {b} + {a} \\cdot {c}"
+                    if random.random() < 0.5
+                    else f"{a} \\cdot {b} + {a} \\cdot {c} = {a}({b} + {c})"
+                )
+            else:
+                larger = max(b, c) + random.randint(1, 4)
+                smaller = min(b, c)
+                latex = (
+                    f"{a}({larger} - {smaller}) = {a} \\cdot {larger} - {a} \\cdot {smaller}"
+                    if random.random() < 0.5
+                    else (
+                        f"{a} \\cdot {larger} - {a} \\cdot {smaller}"
+                        f" = {a}({larger} - {smaller})"
+                    )
+                )
+
+        return name, latex, latex
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, object]:
+        meta: dict[str, object] = {}
+        if self._last_distractors:
+            meta["mc_distractors"] = list(self._last_distractors)
+        # Always present as multiple choice among property names.
+        if answer is not None:
+            from ..settings.multiple_choice import build_multiple_choice_metadata
+
+            meta.update(
+                build_multiple_choice_metadata(
+                    answer, distractors=list(self._last_distractors)
+                )
+            )
+        return meta
+
+
+def _pemdas_rand(lo: int, hi: int, *, cap: int | None = None) -> int:
+    upper = min(hi, cap) if cap is not None else hi
+    return random.randint(lo, max(lo, upper))
+
+
+def _pemdas_divisible_pair(lo: int, hi: int) -> tuple[int, int] | None:
+    """Return (dividend, divisor) both within [lo, hi], or None if impossible."""
+    candidates: list[tuple[int, int]] = []
+    for divisor in range(max(lo, 2), hi + 1):
+        for quot in range(2, hi + 1):
+            dividend = divisor * quot
+            if lo <= dividend <= hi:
+                candidates.append((dividend, divisor))
+    if not candidates:
+        return None
+    return random.choice(candidates)
+
+
+def _build_pemdas_basic(lo: int, hi: int) -> tuple[str, int]:
+    forms = [
+        "a_plus_b_times_c",
+        "a_times_b_plus_c",
+        "a_minus_b_times_c",
+        "a_times_b_minus_c",
+        "a_plus_b_times_c_minus_d",
+        "a_times_b_plus_c_times_d",
+        "a_minus_b_plus_c_times_d",
+        "a_plus_b_minus_c_times_d",
+    ]
+    if _pemdas_divisible_pair(lo, hi) is not None:
+        forms.extend(
+            [
+                "a_div_b_plus_c",
+                "a_plus_b_div_c",
+                "a_times_b_div_c",
+                "a_div_b_times_c",
+            ]
+        )
+    form = random.choice(forms)
+    if form == "a_plus_b_times_c":
+        a, b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi), _pemdas_rand(lo, hi, cap=8)
+        return f"{a} + {b} \\cdot {c}", a + b * c
+    if form == "a_times_b_plus_c":
+        a, b, c = _pemdas_rand(lo, hi, cap=8), _pemdas_rand(lo, hi, cap=8), _pemdas_rand(lo, hi)
+        return f"{a} \\cdot {b} + {c}", a * b + c
+    if form == "a_minus_b_times_c":
+        for _ in range(40):
+            b, c = _pemdas_rand(lo, hi, cap=6), _pemdas_rand(lo, hi, cap=6)
+            product = b * c
+            if product < lo:
+                continue
+            # Prefer non-negative results using an a within range when possible.
+            a_lo = max(lo, product)
+            if a_lo <= hi:
+                a = _pemdas_rand(a_lo, hi)
+                return f"{a} - {b} \\cdot {c}", a - product
+        a, b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi, cap=4), _pemdas_rand(lo, hi, cap=4)
+        return f"{a} + {b} \\cdot {c}", a + b * c
+    if form == "a_times_b_minus_c":
+        for _ in range(40):
+            a, b = _pemdas_rand(lo, hi, cap=8), _pemdas_rand(lo, hi, cap=8)
+            product = a * b
+            if product <= lo:
+                continue
+            c = _pemdas_rand(lo, min(hi, product - 1))
+            return f"{a} \\cdot {b} - {c}", product - c
+        a, b, c = _pemdas_rand(lo, hi, cap=8), _pemdas_rand(lo, hi, cap=8), _pemdas_rand(lo, hi)
+        return f"{a} \\cdot {b} + {c}", a * b + c
+    if form == "a_plus_b_times_c_minus_d":
+        for _ in range(40):
+            a, b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi, cap=7), _pemdas_rand(lo, hi, cap=7)
+            total = a + b * c
+            if total <= lo:
+                continue
+            d = _pemdas_rand(lo, min(hi, total - 1))
+            return f"{a} + {b} \\cdot {c} - {d}", total - d
+        a, b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi, cap=7), _pemdas_rand(lo, hi, cap=7)
+        return f"{a} + {b} \\cdot {c}", a + b * c
+    if form == "a_times_b_plus_c_times_d":
+        a, b = _pemdas_rand(lo, hi, cap=6), _pemdas_rand(lo, hi, cap=6)
+        c, d = _pemdas_rand(lo, hi, cap=6), _pemdas_rand(lo, hi, cap=6)
+        return f"{a} \\cdot {b} + {c} \\cdot {d}", a * b + c * d
+    if form == "a_div_b_plus_c":
+        pair = _pemdas_divisible_pair(lo, hi)
+        assert pair is not None
+        a, b = pair
+        c = _pemdas_rand(lo, hi)
+        return f"{a} \\div {b} + {c}", a // b + c
+    if form == "a_plus_b_div_c":
+        pair = _pemdas_divisible_pair(lo, hi)
+        assert pair is not None
+        b, c = pair
+        a = _pemdas_rand(lo, hi)
+        return f"{a} + {b} \\div {c}", a + b // c
+    if form == "a_minus_b_plus_c_times_d":
+        for _ in range(40):
+            b = _pemdas_rand(lo, hi)
+            a = _pemdas_rand(b, hi) if b <= hi else _pemdas_rand(lo, hi)
+            if a < b:
+                continue
+            c, d = _pemdas_rand(lo, hi, cap=6), _pemdas_rand(lo, hi, cap=6)
+            return f"{a} - {b} + {c} \\cdot {d}", a - b + c * d
+        a, b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi), _pemdas_rand(lo, hi, cap=6)
+        return f"{a} + {b} \\cdot {c}", a + b * c
+    if form == "a_times_b_div_c":
+        for _ in range(40):
+            c = _pemdas_rand(max(2, lo), hi, cap=8)
+            quot = _pemdas_rand(lo, hi, cap=6)
+            b = c * quot
+            if not (lo <= b <= hi):
+                continue
+            a = _pemdas_rand(lo, hi, cap=8)
+            return f"{a} \\cdot {b} \\div {c}", a * b // c
+        a, b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi), _pemdas_rand(lo, hi, cap=6)
+        return f"{a} + {b} \\cdot {c}", a + b * c
+    if form == "a_div_b_times_c":
+        pair = _pemdas_divisible_pair(lo, hi)
+        assert pair is not None
+        a, b = pair
+        c = _pemdas_rand(lo, hi, cap=8)
+        return f"{a} \\div {b} \\cdot {c}", (a // b) * c
+    # a_plus_b_minus_c_times_d
+    for _ in range(40):
+        c, d = _pemdas_rand(lo, hi, cap=5), _pemdas_rand(lo, hi, cap=5)
+        a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        if a + b >= c * d:
+            return f"{a} + {b} - {c} \\cdot {d}", a + b - c * d
+    a, b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi), _pemdas_rand(lo, hi, cap=5)
+    return f"{a} + {b} \\cdot {c}", a + b * c
+
+
+def _build_pemdas_parentheses(lo: int, hi: int) -> tuple[str, int]:
+    forms = [
+        "sum_times",
+        "times_sum",
+        "diff_times",
+        "times_diff",
+        "minus_sum",
+        "sum_times_minus",
+        "times_sum_minus",
+        "juxtaposed_sum",
+        "sum_times_sum",
+    ]
+    # Division-with-parentheses only when clean in-range dividends exist.
+    if any(
+        lo <= k * d <= hi
+        for d in range(max(lo, 2), hi + 1)
+        for k in range(2, hi + 1)
+    ):
+        forms.extend(["sum_div", "div_sum", "diff_div"])
+    form = random.choice(forms)
+    if form == "sum_times":
+        a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        c = _pemdas_rand(lo, hi, cap=8)
+        return f"({a} + {b}) \\cdot {c}", (a + b) * c
+    if form == "times_sum":
+        a = _pemdas_rand(lo, hi, cap=8)
+        b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        return f"{a} \\cdot ({b} + {c})", a * (b + c)
+    if form == "diff_times":
+        for _ in range(40):
+            b = _pemdas_rand(lo, hi)
+            a = _pemdas_rand(b, hi) if b <= hi else b
+            if a <= b:
+                continue
+            c = _pemdas_rand(lo, hi, cap=8)
+            return f"({a} - {b}) \\cdot {c}", (a - b) * c
+        a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        c = _pemdas_rand(lo, hi, cap=8)
+        return f"({a} + {b}) \\cdot {c}", (a + b) * c
+    if form == "times_diff":
+        for _ in range(40):
+            c = _pemdas_rand(lo, hi)
+            b = _pemdas_rand(c, hi) if c <= hi else c
+            if b <= c:
+                continue
+            a = _pemdas_rand(lo, hi, cap=8)
+            return f"{a} \\cdot ({b} - {c})", a * (b - c)
+        a = _pemdas_rand(lo, hi, cap=8)
+        b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        return f"{a} \\cdot ({b} + {c})", a * (b + c)
+    if form == "minus_sum":
+        for _ in range(40):
+            b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+            need = b + c
+            if need > hi:
+                continue
+            a = _pemdas_rand(need, hi)
+            return f"{a} - ({b} + {c})", a - (b + c)
+        a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        c = _pemdas_rand(lo, hi, cap=8)
+        return f"({a} + {b}) \\cdot {c}", (a + b) * c
+    if form == "sum_div":
+        for _ in range(40):
+            c = _pemdas_rand(max(2, lo), hi, cap=8)
+            total = c * _pemdas_rand(2, max(2, min(hi, 9)))
+            if total > 2 * hi:
+                continue
+            a = _pemdas_rand(lo, min(hi, total - lo))
+            b = total - a
+            if not (lo <= a <= hi and lo <= b <= hi):
+                continue
+            return f"({a} + {b}) \\div {c}", (a + b) // c
+        a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        c = _pemdas_rand(lo, hi, cap=8)
+        return f"({a} + {b}) \\cdot {c}", (a + b) * c
+    if form == "div_sum":
+        for _ in range(40):
+            b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+            denom = b + c
+            quot = _pemdas_rand(2, max(2, min(hi, 8)))
+            a = denom * quot
+            if lo <= a <= hi * max(3, hi):
+                # Allow dividend slightly above hi so division stays interesting,
+                # but keep it modest for worksheet size.
+                if a <= max(hi * 3, 24):
+                    return f"{a} \\div ({b} + {c})", a // denom
+        a = _pemdas_rand(lo, hi, cap=8)
+        b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        return f"{a} \\cdot ({b} + {c})", a * (b + c)
+    if form == "sum_times_minus":
+        for _ in range(40):
+            a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+            c = _pemdas_rand(lo, hi, cap=6)
+            product = (a + b) * c
+            if product <= lo:
+                continue
+            d = _pemdas_rand(lo, min(hi, product - 1))
+            return f"({a} + {b}) \\cdot {c} - {d}", product - d
+        a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        c = _pemdas_rand(lo, hi, cap=6)
+        return f"({a} + {b}) \\cdot {c}", (a + b) * c
+    if form == "times_sum_minus":
+        for _ in range(40):
+            a = _pemdas_rand(lo, hi, cap=6)
+            b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+            product = a * (b + c)
+            if product <= lo:
+                continue
+            d = _pemdas_rand(lo, min(hi, product - 1))
+            return f"{a} \\cdot ({b} + {c}) - {d}", product - d
+        a = _pemdas_rand(lo, hi, cap=6)
+        b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        return f"{a} \\cdot ({b} + {c})", a * (b + c)
+    if form == "juxtaposed_sum":
+        a = _pemdas_rand(lo, hi, cap=8)
+        b, c = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+        return f"{a}({b} + {c})", a * (b + c)
+    if form == "sum_times_sum":
+        a, b = _pemdas_rand(lo, hi, cap=6), _pemdas_rand(lo, hi, cap=6)
+        c, d = _pemdas_rand(lo, hi, cap=6), _pemdas_rand(lo, hi, cap=6)
+        return f"({a} + {b})({c} + {d})", (a + b) * (c + d)
+    # diff_div
+    for _ in range(40):
+        c = _pemdas_rand(max(2, lo), hi, cap=8)
+        diff = c * _pemdas_rand(2, max(2, min(hi, 8)))
+        b = _pemdas_rand(lo, hi)
+        a = b + diff
+        if a > max(hi * 3, 24):
+            continue
+        return f"({a} - {b}) \\div {c}", (a - b) // c
+    a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi)
+    c = _pemdas_rand(lo, hi, cap=8)
+    return f"({a} + {b}) \\cdot {c}", (a + b) * c
+
+
+def _build_pemdas_exponent(lo: int, hi: int) -> tuple[str, int]:
+    form = random.choice(
+        [
+            "power_plus",
+            "power_minus",
+            "power_times",
+            "times_power",
+            "plus_power",
+            "power_plus_product",
+            "times_power_plus",
+            "sum_squared",
+            "product_of_power_and_sum",
+            "power_minus_product",
+            "plus_times_power",
+            "diff_squared",
+            "square_plus_square",
+            "power_div",
+        ]
+    )
+    base = _pemdas_rand(lo, min(hi, 5), cap=5)
+    exp = random.choice([2, 3]) if base <= 4 else 2
+    power = base**exp
+
+    if form == "power_plus":
+        c = _pemdas_rand(lo, hi)
+        return f"{base}^{{{exp}}} + {c}", power + c
+    if form == "power_minus":
+        c = _pemdas_rand(lo, min(hi, max(lo, power - 1)))
+        c = min(c, max(lo, power - 1))
+        return f"{base}^{{{exp}}} - {c}", power - c
+    if form == "power_times":
+        c = _pemdas_rand(lo, hi, cap=8)
+        return f"{base}^{{{exp}}} \\cdot {c}", power * c
+    if form == "times_power":
+        a = _pemdas_rand(lo, hi, cap=8)
+        return f"{a} \\cdot {base}^{{{exp}}}", a * power
+    if form == "plus_power":
+        a = _pemdas_rand(lo, hi)
+        return f"{a} + {base}^{{{exp}}}", a + power
+    if form == "power_plus_product":
+        a, b = _pemdas_rand(lo, hi, cap=6), _pemdas_rand(lo, hi, cap=6)
+        return f"{base}^{{{exp}}} + {a} \\cdot {b}", power + a * b
+    if form == "times_power_plus":
+        a = _pemdas_rand(lo, hi, cap=6)
+        b = _pemdas_rand(lo, hi)
+        return f"{a} \\cdot {base}^{{{exp}}} + {b}", a * power + b
+    if form == "sum_squared":
+        a = _pemdas_rand(lo, min(hi, 6), cap=6)
+        b = _pemdas_rand(lo, min(hi, 6), cap=6)
+        while a + b > 9:
+            a = _pemdas_rand(lo, min(hi, 5), cap=5)
+            b = _pemdas_rand(lo, min(hi, 4), cap=4)
+        return f"({a} + {b})^{{2}}", (a + b) ** 2
+    if form == "product_of_power_and_sum":
+        a, b = _pemdas_rand(lo, hi, cap=5), _pemdas_rand(lo, hi, cap=5)
+        return f"{base}^{{{exp}}}({a} + {b})", power * (a + b)
+    if form == "power_minus_product":
+        a, b = _pemdas_rand(lo, hi, cap=5), _pemdas_rand(lo, hi, cap=5)
+        while power < a * b:
+            base = _pemdas_rand(lo, min(hi, 5), cap=5)
+            exp = 2 if base > 4 else random.choice([2, 3])
+            power = base**exp
+            a, b = _pemdas_rand(lo, hi, cap=5), _pemdas_rand(lo, hi, cap=5)
+        return f"{base}^{{{exp}}} - {a} \\cdot {b}", power - a * b
+    if form == "plus_times_power":
+        a, b = _pemdas_rand(lo, hi), _pemdas_rand(lo, hi, cap=6)
+        return f"{a} + {b} \\cdot {base}^{{{exp}}}", a + b * power
+    if form == "diff_squared":
+        b = _pemdas_rand(lo, min(hi, 5), cap=5)
+        a = b + _pemdas_rand(1, max(1, min(hi, 6)))
+        while a - b > 9 or a > max(hi, b + 6):
+            b = _pemdas_rand(lo, min(hi, 4), cap=4)
+            a = b + _pemdas_rand(1, max(1, min(hi, 5)))
+            if a > hi and hi >= b + 1:
+                a = _pemdas_rand(b + 1, hi)
+                break
+        return f"({a} - {b})^{{2}}", (a - b) ** 2
+    if form == "square_plus_square":
+        a = _pemdas_rand(lo, min(hi, 6), cap=6)
+        b = _pemdas_rand(lo, min(hi, 6), cap=6)
+        return f"{a}^{{2}} + {b}^{{2}}", a**2 + b**2
+    # power_div — power divisible by small divisor within bounds
+    divisors = [d for d in range(max(2, lo), min(hi, power) + 1) if power % d == 0]
+    if not divisors:
+        return f"{base}^{{{exp}}} + {_pemdas_rand(lo, hi)}", power + _pemdas_rand(lo, hi)
+    d = random.choice(divisors)
+    return f"{base}^{{{exp}}} \\div {d}", power // d
+
+
 class OrderOfOperationsFramework(NumberFramework):
     """Evaluate numeric expressions using order of operations."""
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         complexity = str(settings.get("pemdas_complexity", "mixed"))
         lo, hi = _int_range(settings, "num_min", "num_max", lo_default=2, hi_default=9)
+        lo = max(1, lo)
+        hi = max(lo, hi)
+        # Parentheses tier still includes some plain forms so worksheets aren't uniform.
         patterns = {
             "basic": ["pemdas_basic"],
-            "parentheses": ["parentheses"],
+            "parentheses": ["pemdas_basic", "parentheses"],
             "exponent": ["exponent"],
             "mixed": ["pemdas_basic", "parentheses", "exponent"],
         }
         pattern = random.choice(patterns.get(complexity, patterns["mixed"]))
         if pattern == "pemdas_basic":
-            a = random.randint(lo, hi)
-            b = random.randint(lo, hi)
-            c = random.randint(lo, hi)
-            d = random.randint(lo, min(hi, 6))
-            prompt = f"{a} + {b} \\cdot {c} - {d}"
-            answer = str(a + b * c - d)
+            prompt, value = _build_pemdas_basic(lo, hi)
         elif pattern == "parentheses":
-            a = random.randint(lo, hi)
-            b = random.randint(lo, hi)
-            c = random.randint(lo, min(hi, 6))
-            prompt = f"({a} + {b}) \\cdot {c}"
-            answer = str((a + b) * c)
+            prompt, value = _build_pemdas_parentheses(lo, hi)
         else:
-            base = random.randint(lo, min(hi, 5))
-            exp = random.randint(2, 3)
-            addend = random.randint(lo, hi)
-            prompt = f"{base}^{{{exp}}} + {addend}"
-            answer = str(base**exp + addend)
-        return prompt, "order of operations", answer
+            prompt, value = _build_pemdas_exponent(lo, hi)
+        return prompt, "order of operations", str(value)
 
 
 class ProportionFramework(NumberFramework):
@@ -829,17 +1479,26 @@ def _require_gcf_greater_than_one(settings: dict) -> bool:
     return bool(settings.get("require_gcf_greater_than_one", True))
 
 
-def _sample_values_for_gcf(lo: int, hi: int, count: int, *, require_gt_one: bool) -> list[int]:
-    """Sample ``count`` integers in [lo, hi]; optionally force GCF ≥ 2."""
+def _ensure_distinct_range(lo: int, hi: int, count: int) -> tuple[int, int]:
+    """Widen ``hi`` if needed so ``[lo, hi]`` can hold ``count`` distinct ints."""
     lo = max(2, lo)
     hi = max(lo, hi)
+    if hi - lo + 1 < count:
+        hi = lo + count - 1
+    return lo, hi
+
+
+def _sample_distinct_ints(lo: int, hi: int, count: int) -> list[int]:
+    """Sample ``count`` distinct integers in [lo, hi] (each ≥ 2)."""
+    lo, hi = _ensure_distinct_range(lo, hi, count)
+    return random.sample(range(lo, hi + 1), count)
+
+
+def _sample_values_for_gcf(lo: int, hi: int, count: int, *, require_gt_one: bool) -> list[int]:
+    """Sample ``count`` distinct integers in [lo, hi]; optionally force GCF ≥ 2."""
+    lo, hi = _ensure_distinct_range(lo, hi, count)
     if not require_gt_one:
-        values: list[int] = []
-        while len(values) < count:
-            candidate = random.randint(lo, hi)
-            if candidate > 1:
-                values.append(candidate)
-        return values
+        return _sample_distinct_ints(lo, hi, count)
 
     max_g = max(2, min(hi // 2, 12))
     for _ in range(40):
@@ -848,20 +1507,21 @@ def _sample_values_for_gcf(lo: int, hi: int, count: int, *, require_gt_one: bool
         mult_lo = max(1, (lo + g - 1) // g)
         if mult_lo > mult_hi:
             continue
-        values = [g * random.randint(mult_lo, mult_hi) for _ in range(count)]
-        if math.gcd(*values) >= 2:
+        multipliers = list(range(mult_lo, mult_hi + 1))
+        if len(multipliers) < count:
+            continue
+        chosen = random.sample(multipliers, count)
+        values = [g * m for m in chosen]
+        if len(set(values)) == count and math.gcd(*values) >= 2:
             return values
 
-    g = 2
-    mult_hi = max(2, hi // g)
-    mult_lo = max(1, (lo + g - 1) // g)
-    if mult_lo > mult_hi:
-        mult_lo = 1
-    return [g * random.randint(mult_lo, mult_hi) for _ in range(count)]
+    # Deterministic distinct fallback with non-trivial GCF.
+    fallback = [12, 18, 30, 42]
+    return fallback[:count]
 
 
 def _sample_gcf_pair(lo: int, hi: int, *, require_gt_one: bool) -> tuple[int, int, int]:
-    """Return (a, b, gcf) with optional GCF ≥ 2 constraint."""
+    """Return (a, b, gcf) with distinct a, b and optional GCF ≥ 2 constraint."""
     lo = max(2, lo)
     hi = max(lo, hi)
     g_lo = 2 if require_gt_one else 1
@@ -872,8 +1532,10 @@ def _sample_gcf_pair(lo: int, hi: int, *, require_gt_one: bool) -> tuple[int, in
         mult_lo = max(1, (lo + g - 1) // g)
         if mult_lo > mult_hi:
             continue
-        m1 = random.randint(mult_lo, mult_hi)
-        m2 = random.randint(mult_lo, mult_hi)
+        multipliers = list(range(mult_lo, mult_hi + 1))
+        if len(multipliers) < 2:
+            continue
+        m1, m2 = random.sample(multipliers, 2)
         # Keep multipliers coprime so the GCF of the pair is exactly g.
         if math.gcd(m1, m2) != 1:
             continue
@@ -885,6 +1547,12 @@ def _sample_gcf_pair(lo: int, hi: int, *, require_gt_one: bool) -> tuple[int, in
     if require_gt_one:
         return 12, 18, 6
     return 8, 15, 1
+
+
+def _sample_lcm_pair(lo: int, hi: int) -> tuple[int, int]:
+    """Return distinct (a, b) for an LCM word problem."""
+    a, b = _sample_distinct_ints(lo, hi, 2)
+    return a, b
 
 
 class IntegerArithmeticFramework(NumberFramework):
@@ -928,8 +1596,89 @@ class IntegerArithmeticFramework(NumberFramework):
         }
         result = ops[op](a, b)
         latex_op = {"+": "+", "-": "-", "*": "\\cdot", "/": "\\div"}[op]
-        prompt_latex = f"{a} {latex_op} {b}"
-        return prompt_latex, f"{a} {op} {b}", str(result)
+        prompt_latex = format_binop_expression(a, latex_op, b)
+        prompt_text = format_binop_expression(a, op, b)
+        return prompt_latex, prompt_text, str(result)
+
+
+def _enabled_number_forms(settings: dict) -> list[str]:
+    """Forms for mixed integer/decimal/fraction arithmetic (PA unit scope)."""
+    forms: list[str] = []
+    if bool(settings.get("allow_integers", True)):
+        forms.append("integer")
+    if bool(settings.get("allow_decimals", False)):
+        forms.append("decimal")
+    if bool(settings.get("allow_fractions", False)):
+        forms.append("fraction")
+    return forms or ["integer"]
+
+
+class MixedNumberArithmeticFramework(NumberFramework):
+    """Add/subtract using integers, decimals, and/or fractions per settings.
+
+    Used by Pre-Algebra Integers/Decimals/Fractions so Medium/Hard (and Easy
+    when enabled) are not integers-only.
+    """
+
+    def __init__(self, operation: str = "+-"):
+        self.operation = operation
+        self._integer = IntegerArithmeticFramework(operation)
+        self._fraction_like = LikeDenominatorFractionFramework(operation)
+        self._fraction_unlike = UnlikeDenominatorFractionFramework(operation)
+        self._fraction_any = RationalFramework(operation)
+
+    def _resolve_operation(self) -> str:
+        if self.operation == "+-":
+            return random.choice(["+", "-"])
+        return self.operation
+
+    def _decimal_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        """Decimal add/subtract scaled to num_min/num_max (not fixed 0..99.9)."""
+        places = max(1, int(settings.get("decimal_places", 2)))
+        allow_negative = bool(settings.get("allow_negative", True))
+        lo, hi = _int_bounds(settings)
+        # Keep decimals in the same magnitude band as integer operands.
+        magnitude = max(1.0, float(max(abs(lo), abs(hi), 1)))
+        minimum = 0.1 if not allow_negative else -magnitude
+        maximum = magnitude
+        a = _random_decimal(
+            places=places, minimum=minimum, maximum=maximum, allow_negative=allow_negative
+        )
+        b = _random_decimal(
+            places=places, minimum=minimum, maximum=maximum, allow_negative=allow_negative
+        )
+        # Avoid trivial integer-looking decimals when possible.
+        for _ in range(8):
+            if a != a.to_integral_value() or b != b.to_integral_value():
+                break
+            a = _random_decimal(
+                places=places, minimum=minimum, maximum=maximum, allow_negative=allow_negative
+            )
+            b = _random_decimal(
+                places=places, minimum=minimum, maximum=maximum, allow_negative=allow_negative
+            )
+        op = self._resolve_operation()
+        if op == "-" and not allow_negative and b > a:
+            a, b = b, a
+        result = a + b if op == "+" else a - b
+        latex_op = "+" if op == "+" else "-"
+        a_s = _format_decimal(a, places=places)
+        b_s = _format_decimal(b, places=places)
+        prompt_latex = format_binop_expression(a_s, latex_op, b_s)
+        prompt_text = format_binop_expression(a_s, op, b_s)
+        return prompt_latex, prompt_text, _format_decimal(result, places=places)
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        form = random.choice(_enabled_number_forms(settings))
+        if form == "integer":
+            return self._integer.build_prompt(settings)
+        if form == "decimal":
+            return self._decimal_prompt(settings)
+        if bool(settings.get("require_common_denominator", False)):
+            return self._fraction_like.build_prompt(settings)
+        if bool(settings.get("require_unlike_denominators", False)):
+            return self._fraction_unlike.build_prompt(settings)
+        return self._fraction_any.build_prompt(settings)
 
 
 class LongDivisionWithRemaindersFramework(NumberFramework):
@@ -1234,11 +1983,7 @@ class GcfLcmFramework(NumberFramework):
             result = math.gcd(*values)
             label = "GCF"
         else:
-            values = []
-            while len(values) < count:
-                candidate = random.randint(lo, hi)
-                if candidate > 1:
-                    values.append(candidate)
+            values = _sample_distinct_ints(lo, hi, count)
             result = math.lcm(*values)
             label = "LCM"
         numbers = ", ".join(str(v) for v in values)
@@ -1264,10 +2009,8 @@ class GcfLcmWordFramework(NumberFramework):
                 f"What is the greatest number of identical bags you can make?}}"
             )
             return prompt, "GCF word problem", str(g)
-        a = random.randint(lo, hi)
-        b = random.randint(lo, hi)
+        a, b = _sample_lcm_pair(lo, hi)
         lcm_val = math.lcm(a, b)
-        event = random.choice(["bell", "alarm", "timer"])
         prompt = (
             f"\\text{{Event A happens every {a} minutes and Event B every {b} minutes. "
             f"After how many minutes do they happen together?}}"
@@ -1502,13 +2245,42 @@ class CompareOrderFramework(NumberFramework):
         return prompt, "order numbers", answer
 
 
-class FractionDecimalConvertFramework(NumberFramework):
-    """Convert between fractions and decimals."""
+# Grade-appropriate F↔D↔P triples (exact). Easy sticks to the first bank.
+_EASY_FDP_TRIPLES: tuple[tuple[Fraction, str, int | float], ...] = (
+    (Fraction(1, 2), "0.5", 50),
+    (Fraction(1, 4), "0.25", 25),
+    (Fraction(3, 4), "0.75", 75),
+    (Fraction(1, 5), "0.2", 20),
+    (Fraction(2, 5), "0.4", 40),
+    (Fraction(3, 5), "0.6", 60),
+    (Fraction(4, 5), "0.8", 80),
+    (Fraction(1, 10), "0.1", 10),
+    (Fraction(3, 10), "0.3", 30),
+    (Fraction(7, 10), "0.7", 70),
+    (Fraction(1, 20), "0.05", 5),
+)
+_MEDIUM_FDP_TRIPLES: tuple[tuple[Fraction, str, int | float], ...] = _EASY_FDP_TRIPLES + (
+    (Fraction(1, 8), "0.125", 12.5),
+    (Fraction(3, 8), "0.375", 37.5),
+    (Fraction(1, 25), "0.04", 4),
+    (Fraction(3, 20), "0.15", 15),
+    (Fraction(1, 50), "0.02", 2),
+)
 
-    def __init__(self, *, to_decimal: bool | None = None):
+
+class FractionDecimalConvertFramework(NumberFramework):
+    """Convert between fractions, decimals, and optionally percents."""
+
+    def __init__(self, *, to_decimal: bool | None = None, include_percent: bool = False):
         self.to_decimal = to_decimal
+        self.include_percent = include_percent
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        include_pct = self.include_percent or bool(
+            settings.get("include_percent_conversions", False)
+        )
+        if include_pct:
+            return self._build_fdp_prompt(settings)
         params = number_params_from_settings(settings)
         denom = random.choice([2, 4, 5, 8, 10, 20, 25, 50, 100])
         num = random.randint(1, denom - 1)
@@ -1524,6 +2296,279 @@ class FractionDecimalConvertFramework(NumberFramework):
             prompt = f"\\text{{Write }} {_format_decimal(dec, places=3)} \\text{{ as a fraction.}}"
             answer = frac_latex(frac)
         return prompt, "fraction-decimal conversion", answer
+
+    def _build_fdp_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        tier = _percent_difficulty_tier(settings)
+        triples = _EASY_FDP_TRIPLES if tier == "easy" else _MEDIUM_FDP_TRIPLES
+        frac, dec_text, percent = random.choice(triples)
+        modes = [
+            "frac_to_pct",
+            "pct_to_frac",
+            "dec_to_pct",
+            "pct_to_dec",
+            "frac_to_dec",
+            "dec_to_frac",
+        ]
+        if tier == "easy":
+            # Favor percent forms so the topic isn't a fraction↔decimal-only loop.
+            modes = [
+                "frac_to_pct",
+                "frac_to_pct",
+                "pct_to_frac",
+                "dec_to_pct",
+                "pct_to_dec",
+                "frac_to_dec",
+                "dec_to_frac",
+            ]
+        mode = random.choice(modes)
+        pct_latex = (
+            f"{percent:g}\\%"
+            if isinstance(percent, float)
+            else f"{percent}\\%"
+        )
+        pct_text = f"{percent:g}%" if isinstance(percent, float) else f"{percent}%"
+
+        if mode == "frac_to_pct":
+            prompt = f"\\text{{Write }} {frac_latex(frac)} \\text{{ as a percent.}}"
+            return prompt, f"Write {frac} as a percent", pct_latex
+        if mode == "pct_to_frac":
+            prompt = f"\\text{{Write }} {pct_latex} \\text{{ as a fraction in simplest form.}}"
+            return prompt, f"Write {pct_text} as a fraction", frac_latex(frac)
+        if mode == "dec_to_pct":
+            prompt = f"\\text{{Write }} {dec_text} \\text{{ as a percent.}}"
+            return prompt, f"Write {dec_text} as a percent", pct_latex
+        if mode == "pct_to_dec":
+            prompt = f"\\text{{Write }} {pct_latex} \\text{{ as a decimal.}}"
+            return prompt, f"Write {pct_text} as a decimal", dec_text
+        if mode == "frac_to_dec":
+            prompt = f"\\text{{Write }} {frac_latex(frac)} \\text{{ as a decimal.}}"
+            return prompt, f"Write {frac} as a decimal", dec_text
+        prompt = f"\\text{{Write }} {dec_text} \\text{{ as a fraction in simplest form.}}"
+        return prompt, f"Write {dec_text} as a fraction", frac_latex(frac)
+
+
+# Grid for grade6_figures.grid_polygon_svg: x in 0..8, y in 0..5.
+_GRID_X_MAX = 8
+_GRID_Y_MAX = 5
+
+
+def _shoelace_area(points: list[tuple[int, int]]) -> Fraction:
+    double = 0
+    n = len(points)
+    for i in range(n):
+        x1, y1 = points[i]
+        x2, y2 = points[(i + 1) % n]
+        double += x1 * y2 - x2 * y1
+    return Fraction(abs(double), 2)
+
+
+def _points_on_grid(points: list[tuple[int, int]]) -> bool:
+    return all(0 <= x <= _GRID_X_MAX and 0 <= y <= _GRID_Y_MAX for x, y in points)
+
+
+def _format_grid_area_answer(area: Fraction) -> str:
+    if area.denominator == 1:
+        body = str(area.numerator)
+    else:
+        body = frac_latex(area)
+    return f"{body}\\text{{ square units}}"
+
+
+def _grid_polygon_shape_kinds(settings: dict) -> list[str]:
+    """Shape mix for polygons / shaded regions on a grid.
+
+    Returns a weighted list (with repetition) so rectangles are not predominant.
+    """
+    raw = settings.get("polygon_shapes")
+    if isinstance(raw, (list, tuple)) and raw:
+        return [str(s) for s in raw]
+    tier = str(
+        settings.get("difficulty_tier") or settings.get("difficulty") or "medium"
+    ).strip().lower()
+    if tier == "easy":
+        return [
+            "square",
+            "rectangle",
+            "triangle",
+            "triangle",
+            "parallelogram",
+            "parallelogram",
+        ]
+    if tier == "hard":
+        return [
+            "square",
+            "rectangle",
+            "triangle",
+            "triangle",
+            "parallelogram",
+            "parallelogram",
+            "trapezoid",
+            "trapezoid",
+            "l_shape",
+            "l_shape",
+            "irregular_quad",
+            "irregular_quad",
+        ]
+    return [
+        "square",
+        "rectangle",
+        "triangle",
+        "triangle",
+        "parallelogram",
+        "parallelogram",
+        "trapezoid",
+        "trapezoid",
+    ]
+
+
+def _place_origin(width: int, height: int) -> tuple[int, int]:
+    """Origin for an axis-aligned bounding box that fits the drawn grid."""
+    max_x0 = _GRID_X_MAX - width
+    max_y0 = _GRID_Y_MAX - height
+    x = random.randint(0, max(0, max_x0))
+    y = random.randint(0, max(0, max_y0))
+    # Prefer an inset when there is room, matching prior figures.
+    if max_x0 >= 1:
+        x = random.randint(1, max_x0)
+    if max_y0 >= 1:
+        y = random.randint(1, max_y0)
+    return x, y
+
+
+def _make_grid_square() -> list[tuple[int, int]]:
+    side = random.randint(2, 4)
+    x, y = _place_origin(side, side)
+    return [(x, y), (x + side, y), (x + side, y + side), (x, y + side)]
+
+
+def _make_grid_rectangle(*, non_square: bool = True) -> list[tuple[int, int]]:
+    width = random.randint(2, 5)
+    height = random.randint(2, 4)
+    if non_square and width == height:
+        height = height + 1 if height < 4 else height - 1
+    x, y = _place_origin(width, height)
+    return [(x, y), (x + width, y), (x + width, y + height), (x, y + height)]
+
+
+def _make_grid_triangle() -> list[tuple[int, int]]:
+    base = random.randint(2, 5)
+    height = random.randint(2, 4)
+    x, y = _place_origin(base, height)
+    apex_x = random.choice([x, x + base, x + base // 2])
+    if apex_x == x + base // 2 and base % 2 == 1:
+        apex_x = x + (base // 2) + random.choice([0, 1])
+    return [(x, y), (x + base, y), (apex_x, y + height)]
+
+
+def _make_grid_parallelogram() -> list[tuple[int, int]]:
+    width = random.randint(2, 4)
+    height = random.randint(2, 3)
+    shear = random.choice([-2, -1, 1, 2])
+    # Translate so every vertex lands in [0, GRID].
+    raw = [
+        (0, 0),
+        (width, 0),
+        (width + shear, height),
+        (shear, height),
+    ]
+    min_x = min(p[0] for p in raw)
+    max_x = max(p[0] for p in raw)
+    span_x = max_x - min_x
+    ox = random.randint(0, max(0, _GRID_X_MAX - span_x))
+    if _GRID_X_MAX - span_x >= 1:
+        ox = random.randint(1, _GRID_X_MAX - span_x)
+    oy = random.randint(0, max(0, _GRID_Y_MAX - height))
+    if _GRID_Y_MAX - height >= 1:
+        oy = random.randint(1, _GRID_Y_MAX - height)
+    return [(x - min_x + ox, y + oy) for x, y in raw]
+
+
+def _make_grid_trapezoid() -> list[tuple[int, int]]:
+    bottom = random.randint(3, 5)
+    top = random.randint(1, bottom - 1)
+    height = random.randint(2, 3)
+    max_offset = bottom - top
+    offset = random.randint(0, max_offset)
+    if offset == 0 and max_offset > 0 and random.random() < 0.5:
+        offset = random.randint(1, max_offset)
+    x, y = _place_origin(bottom, height)
+    return [
+        (x, y),
+        (x + bottom, y),
+        (x + offset + top, y + height),
+        (x + offset, y + height),
+    ]
+
+
+def _make_grid_l_shape() -> list[tuple[int, int]]:
+    outer_w = random.randint(3, 5)
+    outer_h = random.randint(3, 4)
+    cut_w = random.randint(1, outer_w - 1)
+    cut_h = random.randint(1, outer_h - 1)
+    x, y = _place_origin(outer_w, outer_h)
+    return [
+        (x, y),
+        (x + outer_w, y),
+        (x + outer_w, y + cut_h),
+        (x + cut_w, y + cut_h),
+        (x + cut_w, y + outer_h),
+        (x, y + outer_h),
+    ]
+
+
+def _make_grid_irregular_quad() -> list[tuple[int, int]]:
+    """Convex quad that is not an axis-aligned rectangle."""
+    for _ in range(40):
+        x = random.randint(1, 2)
+        y = random.randint(1, 2)
+        w = random.randint(3, 5)
+        h = random.randint(2, 3)
+        dx = random.randint(1, max(1, w - 2))
+        dy = random.randint(0, 1)
+        points = [
+            (x, y),
+            (x + w, y + dy),
+            (x + w - dx, y + h),
+            (x + 1, y + h - (0 if dy else 1)),
+        ]
+        if not _points_on_grid(points):
+            continue
+        if len(set(points)) < 4:
+            continue
+        area = _shoelace_area(points)
+        if area <= 0:
+            continue
+        ys_set = {p[1] for p in points}
+        xs_set = {p[0] for p in points}
+        if len(ys_set) == 2 and len(xs_set) == 2:
+            continue
+        return points
+    return [(1, 1), (6, 1), (5, 3), (2, 4)]
+
+
+def _random_grid_polygon(settings: dict) -> tuple[list[tuple[int, int]], Fraction]:
+    makers = {
+        "square": _make_grid_square,
+        "rectangle": lambda: _make_grid_rectangle(non_square=True),
+        "triangle": _make_grid_triangle,
+        "parallelogram": _make_grid_parallelogram,
+        "trapezoid": _make_grid_trapezoid,
+        "l_shape": _make_grid_l_shape,
+        "irregular_quad": _make_grid_irregular_quad,
+    }
+    kinds = [k for k in _grid_polygon_shape_kinds(settings) if k in makers]
+    if not kinds:
+        kinds = ["rectangle", "triangle", "parallelogram"]
+    for _ in range(30):
+        kind = random.choice(kinds)
+        points = makers[kind]()
+        if not _points_on_grid(points):
+            continue
+        area = _shoelace_area(points)
+        if area > 0:
+            return points, area
+    points = _make_grid_rectangle(non_square=True)
+    return points, _shoelace_area(points)
 
 
 class Grade6VisualFramework(NumberFramework):
@@ -1542,10 +2587,12 @@ class Grade6VisualFramework(NumberFramework):
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from ..diagrams.charts import dot_plot_svg, histogram_svg
         from ..diagrams.grade6_figures import (
+            POLYHEDRON_KINDS,
             area_model_svg,
             cube_net_svg,
             grid_polygon_svg,
             hanger_svg,
+            polyhedron_svg,
             prism_svg,
             rectangle_measure_svg,
             triangle_measure_svg,
@@ -1559,28 +2606,39 @@ class Grade6VisualFramework(NumberFramework):
                 volume = a * b * c
                 self._metadata = {
                     "diagram_svg": prism_svg(
-                        f"{a} {unit}", f"{b} {unit}", f"{c} {unit}"
+                        format_measurement_text(str(a), unit),
+                        format_measurement_text(str(b), unit),
+                        format_measurement_text(str(c), unit),
                     )
                 }
                 return (
                     f"\\text{{Find the volume of the right rectangular prism with side lengths }} "
-                    f"{frac_latex(a)}{unit},\\ {frac_latex(b)}{unit},\\ {frac_latex(c)}{unit}.",
+                    f"{format_with_unit(frac_latex(a), unit)},\\ "
+                    f"{format_with_unit(frac_latex(b), unit)},\\ "
+                    f"{format_with_unit(frac_latex(c), unit)}.",
                     f"Volume of prism with sides {a}, {b}, and {c} {unit}",
-                    f"{frac_latex(volume)}\\ {unit}^3",
+                    format_with_unit(frac_latex(volume), unit, power=3),
                 )
             area = a * b if self.mode == "fraction_rectangle" else a * b / 2
             shape = "rectangle" if self.mode == "fraction_rectangle" else "right triangle"
             figure = (
-                rectangle_measure_svg(f"{a} {unit}", f"{b} {unit}")
+                rectangle_measure_svg(
+                    format_measurement_text(str(a), unit),
+                    format_measurement_text(str(b), unit),
+                )
                 if self.mode == "fraction_rectangle"
-                else triangle_measure_svg(f"{a} {unit}", f"{b} {unit}")
+                else triangle_measure_svg(
+                    format_measurement_text(str(a), unit),
+                    format_measurement_text(str(b), unit),
+                )
             )
             self._metadata = {"diagram_svg": figure}
             return (
-                f"\\text{{Find the area of the {shape} with base }} {frac_latex(a)}{unit} "
-                f"\\text{{ and height }} {frac_latex(b)}{unit}.",
+                f"\\text{{Find the area of the {shape} with base }} "
+                f"{format_with_unit(frac_latex(a), unit)} "
+                f"\\text{{ and height }} {format_with_unit(frac_latex(b), unit)}.",
                 f"Area of {shape}: base {a} {unit}, height {b} {unit}",
-                f"{frac_latex(area)}\\ {unit}^2",
+                format_with_unit(frac_latex(area), unit, power=2),
             )
 
         if self.mode in {"tape", "hanger", "inequality_hanger"}:
@@ -1613,15 +2671,17 @@ class Grade6VisualFramework(NumberFramework):
             )
 
         if self.mode in {"grid_polygon", "shaded_polygon"}:
-            width, height = random.randint(2, 5), random.randint(2, 4)
-            points = [(1, 1), (1 + width, 1), (1 + width, 1 + height), (1, 1 + height)]
-            area = width * height
-            self._metadata = {"diagram_svg": grid_polygon_svg(points, shaded=self.mode == "shaded_polygon")}
+            points, area = _random_grid_polygon(settings)
+            self._metadata = {
+                "diagram_svg": grid_polygon_svg(
+                    points, shaded=self.mode == "shaded_polygon"
+                )
+            }
             noun = "shaded region" if self.mode == "shaded_polygon" else "polygon"
             return (
                 f"\\text{{Find the area of the {noun} on the grid.}}",
-                f"Area of the {noun} on the grid",
-                f"{area}\\text{{ square units}}",
+                f"Area of the {noun} on the grid ({points})",
+                _format_grid_area_answer(area),
             )
 
         if self.mode in {"nets", "net_surface", "net_grid", "invalid_net"}:
@@ -1665,28 +2725,68 @@ class Grade6VisualFramework(NumberFramework):
             )
 
         if self.mode == "classify_polyhedron":
-            self._metadata = {"diagram_svg": prism_svg("4", "3", "2")}
+            kind = random.choice(POLYHEDRON_KINDS)
+            answer = rf"\text{{{kind}}}"
+            distractors = [
+                rf"\text{{{other}}}" for other in POLYHEDRON_KINDS if other != kind
+            ]
+            random.shuffle(distractors)
+            self._metadata = {
+                "diagram_svg": polyhedron_svg(kind),
+                "mc_distractors": distractors[:3],
+            }
             return (
                 "\\text{Classify the polyhedron shown.}",
-                "Classify the polyhedron",
-                "\\text{rectangular prism}",
+                f"Classify the polyhedron ({kind})",
+                answer,
             )
 
         if self.mode in {"draw_dot_plot", "draw_histogram"}:
             values = [random.randint(1, 12) for _ in range(random.randint(6, 10))]
             listed = ",\\ ".join(str(v) for v in values)
+            include_axis = bool(settings.get("include_axis", True))
+            lo, hi = min(values), max(values)
+            bins = [(float(i), float(i + 2)) for i in range(lo - lo % 2, hi + 2, 2)]
+
             if self.mode == "draw_dot_plot":
-                self._metadata = {"diagram_svg": dot_plot_svg(values, title="Dot plot to copy")}
                 label = "dot plot"
+                completed = dot_plot_svg(values, title="Dot plot")
+                if include_axis:
+                    self._metadata = {
+                        "diagram_svg": dot_plot_svg(
+                            values,
+                            title="Dot plot",
+                            blank=True,
+                            tick_min=lo,
+                            tick_max=hi,
+                        ),
+                        "answer_diagram_svg": completed,
+                    }
+                else:
+                    self._metadata = {"answer_diagram_svg": completed}
             else:
-                lo, hi = min(values), max(values)
-                bins = [(float(i), float(i + 2)) for i in range(lo - lo % 2, hi + 2, 2)]
-                self._metadata = {"diagram_svg": histogram_svg(values, bins, title="Histogram to copy")}
                 label = "histogram"
+                completed = histogram_svg(values, bins, title="Histogram")
+                if include_axis:
+                    self._metadata = {
+                        "diagram_svg": histogram_svg(
+                            values, bins, title="Histogram", blank=True
+                        ),
+                        "answer_diagram_svg": completed,
+                    }
+                else:
+                    self._metadata = {"answer_diagram_svg": completed}
+
+            axis_hint = (
+                r" \text{Use the blank axis provided.}"
+                if include_axis
+                else ""
+            )
             return (
-                f"\\text{{Sketch/copy the {label} for the data set }} \\{{{listed}\\}}.",
-                f"Draw a {label} for {values}",
-                None,
+                f"\\text{{Create a {label} for the data set }} \\{{{listed}\\}}."
+                f"{axis_hint}",
+                f"Create a {label} for {values}",
+                r"\text{(see figure)}",
             )
         raise ValueError(f"Unknown Grade 6 visual mode: {self.mode}")
 

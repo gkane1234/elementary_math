@@ -466,7 +466,9 @@ def graph_spec_from_points(
 
 def _linear_function_expr(m: float, b: float) -> str:
     """Emit mx+b in the form the frontend linear parser accepts (e.g. -0.5*x+1)."""
-    return f"{float(m):g}*x+{float(b):g}"
+    from packages.polynomial_core import normalize_expression_signs
+
+    return normalize_expression_signs(f"{float(m):g}*x+{float(b):g}")
 
 
 def _bounds(settings: dict, min_key: str, max_key: str, lo: int, hi: int) -> tuple[int, int]:
@@ -1017,10 +1019,12 @@ def _quad_abc(a: int | Fraction, h: int | float, k: int | float) -> tuple[int | 
 
 def _quad_function_expr(a: float, h: float, k: float) -> str:
     """Emit expanded ax^2+bx+c for the frontend sampler."""
+    from packages.polynomial_core import normalize_expression_signs
+
     aa = a
     bb = -2.0 * a * h
     cc = a * h * h + k
-    return f"{aa:g}*x^2+{bb:g}*x+{cc:g}"
+    return normalize_expression_signs(f"{aa:g}*x^2+{bb:g}*x+{cc:g}")
 
 
 def _format_messy_quadratic_latex(
@@ -1782,15 +1786,15 @@ class ReadEquationFromGraphFramework(QuestionFramework):
             "\\text{The line is shown on the coordinate plane. "
             "Write its equation in slope-intercept form.}"
         )
-        x_sample = _random_coord(settings)
-        y_sample = m * x_sample + b
+        # Line only — marked points would reveal rise/run / intercept.
         self._last_spec = _plane_spec(
             settings,
-            points=[(0, b), (x_sample, y_sample)],
+            points=[],
             slope=m,
             y_intercept=b,
             functions=[_linear_function_expr(m, b)],
         )
+        self._last_spec.show_points = False
         return prompt, "Read equation from graph", eq
 
     def build_question_metadata(
@@ -1798,7 +1802,10 @@ class ReadEquationFromGraphFramework(QuestionFramework):
     ) -> dict[str, Any]:
         if self._last_spec is None:
             return {}
-        return coordinate_plane_metadata(self._last_spec, settings, prompt="stimulus")
+        self._last_spec.points = []
+        self._last_spec.show_points = False
+        forced = {**settings, "show_points": False}
+        return coordinate_plane_metadata(self._last_spec, forced, prompt="stimulus")
 
 
 class GraphTransformationsFramework(QuestionFramework):
@@ -1855,6 +1862,8 @@ def _poly_from_roots(a: int | Fraction, roots: tuple[int, ...]) -> list[int | Fr
 
 def _poly_function_expr(coeffs: list[int | Fraction]) -> str:
     """Frontend sampler expression: a*x^n+… (quadratic / cubic)."""
+    from packages.polynomial_core import normalize_expression_signs
+
     degree = len(coeffs) - 1
     parts: list[str] = []
     for i, coef in enumerate(coeffs):
@@ -1866,7 +1875,7 @@ def _poly_function_expr(coeffs: list[int | Fraction]) -> str:
             parts.append(f"{value:g}*x")
         else:
             parts.append(f"{value:g}*x^{power}")
-    return "+".join(parts)
+    return normalize_expression_signs("+".join(parts))
 
 
 def _format_factored_eq_latex(a: int | Fraction, roots: tuple[int, ...]) -> str:

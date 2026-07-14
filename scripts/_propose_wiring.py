@@ -51,7 +51,7 @@ MANUAL: dict[str, str] = {
     "pa_systems_word_problems": "systems_substitution",
     "pa_markup_discount_and_tax": "percents",
     "pa_fractions_decimals_and_percents": "percents",
-    "pa_simple_and_compound_interest": "percent_of_change",
+    "pa_simple_and_compound_interest": "wp_simple_and_compound_interest",
     # Grade 6 ratios
     "g6_part_part_whole_ratios": "g6_introduction_to_ratios",
     "g6_comparing_ratios": "g6_equivalent_ratios",

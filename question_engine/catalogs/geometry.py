@@ -91,7 +91,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "geo_basics_angles_and_their_measures",
         "Angles and their measures",
         generator="geo_angles",
-        instruction_text="Find the measure.",
+        instruction_text="Measure or draw the angle.",
     ),
     _geo(
         "Basics of Geometry",
@@ -163,9 +163,9 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _geo(
         "Parallel Lines and the Coordinate Plane",
         "geo_parallel_writing_linear_equations",
-        "Writing linear equations", generator="read_equation_from_graph",
-        instruction_latex=r"\text{Write the equation of the line shown.}",
-        instruction_text="Write the equation of the line shown.",
+        "Writing linear equations", generator="writing_linear_equations",
+        instruction_latex=r"\text{Write the equation.}",
+        instruction_text="Write the equation.",
     ),
     # Congruent Triangles
     _geo(
@@ -285,7 +285,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Quadrilaterals and Polygons",
         "geo_quadrilaterals_rhombuses",
         "Rhombuses",
-        generator="geo_parallelogram_area", instruction_text="Find the measure.",
+        generator="geo_rhombus_area", instruction_text="Find the measure.",
     ),
     _geo(
         "Quadrilaterals and Polygons",
@@ -297,7 +297,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Quadrilaterals and Polygons",
         "geo_quadrilaterals_area_of_triangles_and_quadrilaterals",
         "Area of triangles and quadrilaterals",
-        generator="geo_triangle_area",
+        generator="geo_triangles_and_quadrilaterals_area",
         instruction_text="Find the area.",
     ),
     _geo(
@@ -408,13 +408,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Solid figures: identifying, volume, and area",
         generator="geo_solid_volume_surface", instruction_text="Find the volume or surface area.",
     ),
-    _geo(
-        "Surface Area and Volume",
-        "geo_nets_of_solids",
-        "Nets of solids",
-        generator="g6_cube_nets",
-        instruction_text="Identify the net.",
-    ),
+    # Removed: geo_nets_of_solids (cube nets — not selectable as Ready).
     _geo(
         "Surface Area and Volume",
         "geo_similar_solids",
@@ -501,7 +495,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "geo_transformations_translations_rotations_reflections_and_dilations",
         "Translations, rotations, reflections, and dilations",
         generator="geo_transformations",
-        instruction_text="Describe the transformation.",
+        instruction_latex="\\text{Graph the transformation.}",
+        instruction_text="Graph the transformation.",
     ),
     # Probability and Statistics
     _geo(

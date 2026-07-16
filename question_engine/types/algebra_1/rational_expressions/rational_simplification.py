@@ -69,16 +69,30 @@ def _content_scale(poly: Polynomial, scale: int) -> Polynomial:
     return Polynomial([int(c) * scale for c in poly.coef_list()])
 
 
+def _resolve_cancel_factor_count(settings: dict) -> int:
+    """Exact number of linear factors that must cancel.
+
+    Prefers ``cancel_factor_count``. Falls back to legacy ``max_cancel_factors``
+    (treated as an exact count) so older saved settings still work.
+    """
+    if "cancel_factor_count" in settings and settings["cancel_factor_count"] is not None:
+        return max(1, int(settings["cancel_factor_count"]))
+    if "max_cancel_factors" in settings and settings["max_cancel_factors"] is not None:
+        return max(1, int(settings["max_cancel_factors"]))
+    return 1
+
+
 def _create_rational_simplification_problem(
     settings: dict,
     numerator_degree_min: int,
     numerator_degree_max: int,
     denominator_degree_min: int,
     denominator_degree_max: int,
-) -> tuple[Polynomial, Polynomial, Polynomial, Polynomial, list[int]]:
+) -> tuple[Polynomial, Polynomial, Polynomial, Polynomial, list[int], int]:
     """Build an expanded rational expression from cancelable linear factors.
 
-    Returns (numerator, denominator, reduced_num, reduced_den, excluded_roots)
+    Returns
+    (numerator, denominator, reduced_num, reduced_den, excluded_roots, cancel_count)
     where excluded_roots are zeros of the *original* denominator.
     """
     num_min, num_max = _normalize_range(numerator_degree_min, numerator_degree_max)
@@ -98,7 +112,13 @@ def _create_rational_simplification_problem(
         settings.get("prefer_difference_of_squares", False)
     )
     allow_gcf = bool(settings.get("allow_constant_gcf", False))
-    max_cancel = max(1, int(settings.get("max_cancel_factors", 1)))
+    cancel_count = _resolve_cancel_factor_count(settings)
+
+    # Degrees must be high enough to host the requested cancel factors.
+    num_min = max(num_min, cancel_count)
+    num_max = max(num_max, cancel_count)
+    den_min = max(den_min, cancel_count)
+    den_max = max(den_max, cancel_count)
 
     bound = _root_bound(coef_min, coef_max)
     coef_bound = max(1, min(4, abs(coef_min), abs(coef_max) or 4))
@@ -106,11 +126,10 @@ def _create_rational_simplification_problem(
     for _ in range(200):
         target_num = random.randint(num_min, num_max)
         target_den = random.randint(den_min, den_max)
-        max_common = min(target_num, target_den, max_cancel)
-        if max_common < 1:
+        common_count = cancel_count
+        if common_count > min(target_num, target_den):
             continue
 
-        common_count = random.randint(1, max_common)
         reduced_num_degree = target_num - common_count
         reduced_den_degree = target_den - common_count
         if reduced_den_degree < 0:
@@ -220,19 +239,23 @@ def _create_rational_simplification_problem(
             reduced_numerator,
             reduced_denominator,
             excluded,
+            common_count,
         )
 
-    # Deterministic classroom-safe fallback: (x-a)(x-b) / (x-a)(x-c)
-    a, b, c = 2, 3, -1
-    common = Polynomial([1, -a])
-    reduced_numerator = Polynomial([1, -b])
-    reduced_denominator = Polynomial([1, -c])
+    # Deterministic classroom-safe fallback sized to the requested cancel count.
+    common_roots = list(range(2, 2 + cancel_count))
+    leftover_num = cancel_count + 1
+    leftover_den = -(cancel_count + 1)
+    common = _product([Polynomial([1, -r]) for r in common_roots])
+    reduced_numerator = Polynomial([1, -leftover_num])
+    reduced_denominator = Polynomial([1, -leftover_den])
     return (
         common * reduced_numerator,
         common * reduced_denominator,
         reduced_numerator,
         reduced_denominator,
-        sorted({a, c}),
+        sorted(set(common_roots + [leftover_den])),
+        cancel_count,
     )
 
 
@@ -301,6 +324,7 @@ class RationalSimplificationQuestionType(QuestionType):
                 reduced_numerator,
                 reduced_denominator,
                 excluded,
+                cancel_count,
             ) = _create_rational_simplification_problem(
                 settings,
                 numerator_degree_min,
@@ -341,6 +365,7 @@ class RationalSimplificationQuestionType(QuestionType):
                     metadata={
                         "numerator_degree": numerator.deg(),
                         "denominator_degree": denominator.deg(),
+                        "cancel_factor_count": cancel_count,
                         "excluded_values": excluded,
                         "simplified_latex": simplified_meta,
                     },

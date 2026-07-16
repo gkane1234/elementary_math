@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AddTopicModal } from "@/components/AddTopicModal";
+import { AddTopicPanel } from "@/components/AddTopicPanel";
 import { ExportPdfButton } from "@/components/ExportPdfButton";
 import { InteractiveWorksheet } from "@/components/InteractiveWorksheet";
 import { PayForPdfButton } from "@/components/PayForPdfButton";
@@ -52,6 +53,7 @@ export function WorksheetGenerator() {
   const [error, setError] = useState<string | null>(null);
   const [topicModalOpen, setTopicModalOpen] = useState(false);
   const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
+  const [addingTypeId, setAddingTypeId] = useState<string | null>(null);
   const [paid, setPaid] = useState(Boolean(restoredUnlock));
   const [worksheetId, setWorksheetId] = useState<string | null>(restoredUnlock?.worksheetId ?? null);
   const [paymentsRequired, setPaymentsRequired] = useState(true);
@@ -175,8 +177,21 @@ export function WorksheetGenerator() {
     setWorksheet((current) => (current ? applyColumns(current) : current));
   }, [maxColumns]);
 
-  const openTopicEditor = (section?: TopicSection) => {
-    setEditingSectionId(section?.id ?? null);
+  const closeTopicModal = () => {
+    setTopicModalOpen(false);
+    setEditingSectionId(null);
+    setAddingTypeId(null);
+  };
+
+  const openTopicEditor = (section: TopicSection) => {
+    setAddingTypeId(null);
+    setEditingSectionId(section.id);
+    setTopicModalOpen(true);
+  };
+
+  const openTopicAdder = (typeId: string) => {
+    setEditingSectionId(null);
+    setAddingTypeId(typeId);
     setTopicModalOpen(true);
   };
 
@@ -203,59 +218,15 @@ export function WorksheetGenerator() {
                 <option value="3">3</option>
               </select>
             </label>
-            <button className="secondary" type="button" onClick={() => openTopicEditor()}>
-              Add question topics...
-            </button>
-          </section>
-        </aside>
 
-        <div className="worksheet-main">
-          {loading && <p className="worksheet-status interactive-only">Generating worksheet...</p>}
-          {showPaymentGate && worksheet && (
-            <p className="worksheet-status preview-banner interactive-only">
-              Preview mode — purchase to unlock the answer key and PDF export.
-            </p>
-          )}
-          <InteractiveWorksheet
-            worksheet={worksheet}
-            types={types}
-            previewMode={showPaymentGate}
-            onChange={(next) => {
-              setWorksheet(applyColumns(next));
-            }}
-            onError={setError}
-          />
-        </div>
-
-        <aside className="right-rail">
-          <section className="panel action-rail">
-            <div className="action-rail-scroll">
-              <h2>Actions</h2>
-              <p className="plan-summary">
-                Planned questions: <strong>{totalPlanned}</strong>
-              </p>
-
-              <TopicSectionList
-                sections={sections}
-                types={types}
-                onSectionsChange={setSections}
-                onEditSection={openTopicEditor}
-                compact
-              />
-
-              <button className="secondary" type="button" onClick={() => openTopicEditor()}>
-                Edit topics
-              </button>
-            </div>
-
-            <div className="action-rail-actions">
+            <div className="settings-export-actions">
               {paymentsRequired ? (
                 paid ? (
                   <ExportPdfButton disabled={!exportEnabled} />
                 ) : (
                   <>
                     <PayForPdfButton
-                      disabled={!canExport || !stripeConfigured}
+                      disabled={!canExport || !stripeConfigured || !worksheet}
                       title={title}
                       worksheet={worksheet!}
                       priceCents={pdfPriceCents}
@@ -281,6 +252,48 @@ export function WorksheetGenerator() {
               {error && <p className="error">{error}</p>}
             </div>
           </section>
+
+          <section className="panel action-rail">
+            <div className="action-rail-scroll">
+              <h2>Questions</h2>
+              <p className="plan-summary">
+                Planned questions: <strong>{totalPlanned}</strong>
+              </p>
+
+              <TopicSectionList
+                sections={sections}
+                types={types}
+                onSectionsChange={setSections}
+                onEditSection={openTopicEditor}
+                onRemoveSection={(sectionId) => {
+                  setSections((current) => current.filter((section) => section.id !== sectionId));
+                }}
+                compact
+              />
+            </div>
+          </section>
+        </aside>
+
+        <div className="worksheet-main">
+          {loading && <p className="worksheet-status interactive-only">Generating worksheet...</p>}
+          {showPaymentGate && worksheet && (
+            <p className="worksheet-status preview-banner interactive-only">
+              Preview mode — purchase to unlock the answer key and PDF export.
+            </p>
+          )}
+          <InteractiveWorksheet
+            worksheet={worksheet}
+            types={types}
+            previewMode={showPaymentGate}
+            onChange={(next) => {
+              setWorksheet(applyColumns(next));
+            }}
+            onError={setError}
+          />
+        </div>
+
+        <aside className="right-rail topics-rail">
+          <AddTopicPanel types={types} onSelectType={openTopicAdder} />
         </aside>
       </div>
 
@@ -289,12 +302,14 @@ export function WorksheetGenerator() {
         types={types}
         sections={sections}
         editingSectionId={editingSectionId}
-        onClose={() => {
-          setTopicModalOpen(false);
-          setEditingSectionId(null);
-        }}
+        addingTypeId={addingTypeId}
+        onClose={closeTopicModal}
         onSectionsChange={setSections}
-        onEditingSectionIdChange={setEditingSectionId}
+        onSwitchType={(typeId) => {
+          setEditingSectionId(null);
+          setAddingTypeId(typeId);
+          setTopicModalOpen(true);
+        }}
       />
     </>
   );

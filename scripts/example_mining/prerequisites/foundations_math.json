@@ -1,0 +1,36 @@
+{
+  "foundations_math:addition_subtraction_multiplication_division": {
+    "requires": ["foundations_math:whole_numbers"],
+    "reason": "Arithmetic operations act on whole numbers."
+  },
+  "foundations_math:number_line": {
+    "requires": ["foundations_math:whole_numbers"],
+    "reason": "Placing numbers on a line needs the counting/whole-number system."
+  },
+  "foundations_math:fractions_meaning": {
+    "requires": [
+      "foundations_math:whole_numbers",
+      "foundations_math:addition_subtraction_multiplication_division"
+    ],
+    "reason": "Fraction models partition wholes and use basic operations."
+  },
+  "foundations_math:equivalent_fractions": {
+    "requires": ["foundations_math:fractions_meaning"],
+    "reason": "Equivalence builds on fraction meaning and equal shares."
+  },
+  "foundations_math:fraction_operations": {
+    "requires": [
+      "foundations_math:fractions_meaning",
+      "foundations_math:equivalent_fractions",
+      "foundations_math:addition_subtraction_multiplication_division"
+    ],
+    "reason": "Operating with fractions needs meaning, equivalence, and arithmetic."
+  },
+  "foundations_math:decimal_place_value": {
+    "requires": [
+      "foundations_math:whole_numbers",
+      "foundations_math:fractions_meaning"
+    ],
+    "reason": "Decimals extend place value and connect to fractional tenths/hundredths."
+  }
+}

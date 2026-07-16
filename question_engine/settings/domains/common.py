@@ -26,13 +26,16 @@ def answer_format_settings(
     answer_format_default: str = "auto",
     round_whole_default: bool = False,
 ) -> list[SettingField]:
+    # Multiple choice is a separate presentation toggle, not an answer-format option.
+    if answer_format_default == "multiple_choice":
+        answer_format_default = "auto"
     return [
         SettingField(
             "answer_format",
             "Answer format",
             "select",
             answer_format_default,
-            options=["auto", "integer", "fraction", "decimal", "multiple_choice"],
+            options=["auto", "integer", "fraction", "decimal"],
             group="answer",
         ),
         SettingField(
@@ -110,10 +113,11 @@ def multiple_choice_settings(
     show_work_default: int = 0,
     multiple_choice_default: bool = False,
 ) -> list[SettingField]:
+    """MC is a simple toggle; ratio is a deeper option shown only when MC is on."""
     return [
         SettingField(
             "multiple_choice",
-            "Multiple choice",
+            "Use multiple choice instead of free response",
             "bool",
             multiple_choice_default,
             group="presentation",

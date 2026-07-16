@@ -27,6 +27,7 @@ from .domains.rational import (
     rational_expression_extra_settings,
     rational_multiply_divide_settings,
     rational_operation_settings,
+    rational_simplification_settings,
 )
 from .domains.word_problem import (
     consecutive_integers_settings,
@@ -895,6 +896,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "require_gcf",
             "difference_of_squares_only",
         ),
+        extra_settings=(rational_simplification_settings,),
         setting_defaults={
             "numerator_degree_min": 2,
             "numerator_degree_max": 3,
@@ -902,6 +904,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "denominator_degree_max": 3,
             "leading_coefficient_one": True,
             "monic_only": True,
+            "cancel_factor_count": 1,
         },
     ),
     "rational_expression_simplification": TypeSettingConfig(

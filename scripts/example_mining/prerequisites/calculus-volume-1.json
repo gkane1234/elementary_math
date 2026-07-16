@@ -1,0 +1,234 @@
+{
+  "calculus-volume-1:c1s1": {
+    "requires": ["precalculus-2e:c1s1", "precalculus-2e:c1s2"],
+    "reason": "Function review in Calc 1 assumes precalculus function notation and domain/range."
+  },
+  "calculus-volume-1:c1s2": {
+    "requires": ["calculus-volume-1:c1s1", "precalculus-2e:c3s3"],
+    "reason": "Function classes build on function review and prior polynomial/power fluency."
+  },
+  "calculus-volume-1:c1s3": {
+    "requires": ["calculus-volume-1:c1s1", "calculus-volume-1:c1s2", "precalculus-2e:c5s2"],
+    "reason": "Trigonometric functions assume familiarity with functions and precalc trig."
+  },
+  "calculus-volume-1:c1s4": {
+    "requires": ["calculus-volume-1:c1s1", "calculus-volume-1:c1s2", "precalculus-2e:c1s7"],
+    "reason": "Inverse functions require one-to-one functions and precalc inverses."
+  },
+  "calculus-volume-1:c1s5": {
+    "requires": ["calculus-volume-1:c1s1", "calculus-volume-1:c1s2", "calculus-volume-1:c1s4", "precalculus-2e:c4s1"],
+    "reason": "Logarithms are defined as inverses of exponentials; precalc exp/log helps."
+  },
+  "calculus-volume-1:c2s2": {
+    "requires": ["calculus-volume-1:c1s1", "calculus-volume-1:c1s2", "precalculus-2e:c12s1"],
+    "reason": "Limits are defined on functions; precalc intro limits provide intuition."
+  },
+  "calculus-volume-1:c2s3": {
+    "requires": ["calculus-volume-1:c2s2", "precalculus-2e:c12s2"],
+    "reason": "Limit laws evaluate limits defined previously."
+  },
+  "calculus-volume-1:c2s4": {
+    "requires": ["calculus-volume-1:c2s2", "calculus-volume-1:c2s3", "precalculus-2e:c12s3"],
+    "reason": "Continuity is defined using limits."
+  },
+  "calculus-volume-1:c2s5": {
+    "requires": ["calculus-volume-1:c2s2", "calculus-volume-1:c2s3"],
+    "reason": "Epsilon-delta proofs formalize the limit concept; not required for applications."
+  },
+  "calculus-volume-1:c3s1": {
+    "requires": [
+      "calculus-volume-1:c2s2",
+      "calculus-volume-1:c2s3",
+      "calculus-volume-1:c2s4",
+      "precalculus-2e:c12s4"
+    ],
+    "reason": "The derivative is defined as a limit; precalc derivative intro helps."
+  },
+  "calculus-volume-1:c3s2": {
+    "requires": ["calculus-volume-1:c3s1"],
+    "reason": "Derivative-as-a-function extends the pointwise derivative definition."
+  },
+  "calculus-volume-1:c3s3": {
+    "requires": ["calculus-volume-1:c3s2"],
+    "reason": "Differentiation rules operate on the derivative function."
+  },
+  "calculus-volume-1:c3s4": {
+    "requires": ["calculus-volume-1:c3s2", "calculus-volume-1:c3s3"],
+    "reason": "Applied rates interpret the derivative in context."
+  },
+  "calculus-volume-1:c3s5": {
+    "requires": ["calculus-volume-1:c1s3", "calculus-volume-1:c3s3"],
+    "reason": "Trig derivatives need trig functions and basic differentiation rules."
+  },
+  "calculus-volume-1:c3s6": {
+    "requires": ["calculus-volume-1:c3s3"],
+    "reason": "The chain rule extends the power, product, and quotient rules."
+  },
+  "calculus-volume-1:c3s7": {
+    "requires": [
+      "calculus-volume-1:c1s4",
+      "calculus-volume-1:c3s3",
+      "calculus-volume-1:c3s6"
+    ],
+    "reason": "Inverse-function derivatives use inverses and the chain rule."
+  },
+  "calculus-volume-1:c3s8": {
+    "requires": ["calculus-volume-1:c3s3", "calculus-volume-1:c3s6"],
+    "reason": "Implicit differentiation applies the chain rule to implicitly defined curves."
+  },
+  "calculus-volume-1:c3s9": {
+    "requires": [
+      "calculus-volume-1:c1s5",
+      "calculus-volume-1:c3s3",
+      "calculus-volume-1:c3s6"
+    ],
+    "reason": "Exponential and logarithmic derivatives need those functions and the chain rule."
+  },
+  "calculus-volume-1:c4s1": {
+    "requires": ["calculus-volume-1:c3s3", "calculus-volume-1:c3s6"],
+    "reason": "Related rates problems require derivatives and the chain rule."
+  },
+  "calculus-volume-1:c4s2": {
+    "requires": ["calculus-volume-1:c3s1", "calculus-volume-1:c3s2", "calculus-volume-1:c3s3"],
+    "reason": "Linear approximation uses the derivative at a point."
+  },
+  "calculus-volume-1:c4s3": {
+    "requires": ["calculus-volume-1:c3s2", "calculus-volume-1:c3s3"],
+    "reason": "Finding extrema uses the first derivative."
+  },
+  "calculus-volume-1:c4s4": {
+    "requires": [
+      "calculus-volume-1:c2s4",
+      "calculus-volume-1:c3s1",
+      "calculus-volume-1:c3s2"
+    ],
+    "reason": "Mean Value Theorem connects continuity, differentiability, and the derivative."
+  },
+  "calculus-volume-1:c4s5": {
+    "requires": ["calculus-volume-1:c3s2", "calculus-volume-1:c3s3", "calculus-volume-1:c4s3"],
+    "reason": "Curve sketching uses first and second derivative tests built on critical points."
+  },
+  "calculus-volume-1:c4s6": {
+    "requires": [
+      "calculus-volume-1:c2s2",
+      "calculus-volume-1:c2s3",
+      "calculus-volume-1:c3s3",
+      "calculus-volume-1:c4s5"
+    ],
+    "reason": "Limits at infinity and asymptotes extend limit evaluation and graph analysis."
+  },
+  "calculus-volume-1:c4s7": {
+    "requires": [
+      "calculus-volume-1:c3s3",
+      "calculus-volume-1:c4s3",
+      "calculus-volume-1:c4s5"
+    ],
+    "reason": "Optimization sets up and solves extrema problems; does not require L'Hopital's Rule."
+  },
+  "calculus-volume-1:c4s8": {
+    "requires": [
+      "calculus-volume-1:c2s2",
+      "calculus-volume-1:c2s3",
+      "calculus-volume-1:c3s3",
+      "calculus-volume-1:c4s6"
+    ],
+    "reason": "L'Hopital's Rule evaluates indeterminate limits; requires derivatives and limits at infinity, not optimization."
+  },
+  "calculus-volume-1:c4s9": {
+    "requires": ["calculus-volume-1:c3s2", "calculus-volume-1:c3s3"],
+    "reason": "Newton's Method iterates using the derivative; independent of optimization or L'Hopital."
+  },
+  "calculus-volume-1:c4s10": {
+    "requires": ["calculus-volume-1:c3s3", "calculus-volume-1:c3s9"],
+    "reason": "Antiderivatives reverse differentiation rules, including exp/log derivatives."
+  },
+  "calculus-volume-1:c5s1": {
+    "requires": ["calculus-volume-1:c2s2", "calculus-volume-1:c4s10"],
+    "reason": "Riemann sums use limits and antiderivative intuition."
+  },
+  "calculus-volume-1:c5s2": {
+    "requires": ["calculus-volume-1:c5s1"],
+    "reason": "The definite integral is defined as a limit of Riemann sums."
+  },
+  "calculus-volume-1:c5s3": {
+    "requires": ["calculus-volume-1:c3s1", "calculus-volume-1:c5s2"],
+    "reason": "The Fundamental Theorem connects differentiation and the definite integral."
+  },
+  "calculus-volume-1:c5s4": {
+    "requires": [
+      "calculus-volume-1:c4s10",
+      "calculus-volume-1:c5s2",
+      "calculus-volume-1:c5s3"
+    ],
+    "reason": "Integration formulas and net change apply FTC and antiderivatives."
+  },
+  "calculus-volume-1:c5s5": {
+    "requires": ["calculus-volume-1:c3s6", "calculus-volume-1:c5s4"],
+    "reason": "u-substitution is the chain rule in reverse."
+  },
+  "calculus-volume-1:c5s6": {
+    "requires": [
+      "calculus-volume-1:c1s5",
+      "calculus-volume-1:c3s9",
+      "calculus-volume-1:c5s4"
+    ],
+    "reason": "Integrals of exponentials and logarithms use those functions and basic integration."
+  },
+  "calculus-volume-1:c5s7": {
+    "requires": [
+      "calculus-volume-1:c1s4",
+      "calculus-volume-1:c3s7",
+      "calculus-volume-1:c5s4"
+    ],
+    "reason": "Inverse trig integrals use inverse trig functions and substitution."
+  },
+  "calculus-volume-1:c6s1": {
+    "requires": ["calculus-volume-1:c5s2", "calculus-volume-1:c5s3"],
+    "reason": "Area between curves is computed with definite integrals."
+  },
+  "calculus-volume-1:c6s2": {
+    "requires": ["calculus-volume-1:c5s2", "calculus-volume-1:c5s3"],
+    "reason": "Volume by slicing integrates cross-sectional areas."
+  },
+  "calculus-volume-1:c6s3": {
+    "requires": ["calculus-volume-1:c5s2", "calculus-volume-1:c6s2"],
+    "reason": "Shell method is an alternative volume technique; needs definite integrals."
+  },
+  "calculus-volume-1:c6s4": {
+    "requires": ["calculus-volume-1:c3s6", "calculus-volume-1:c5s5"],
+    "reason": "Arc length integrals use substitution and the chain rule."
+  },
+  "calculus-volume-1:c6s5": {
+    "requires": ["calculus-volume-1:c5s2", "calculus-volume-1:c5s3"],
+    "reason": "Work and density applications set up definite integrals."
+  },
+  "calculus-volume-1:c6s6": {
+    "requires": ["calculus-volume-1:c5s2", "calculus-volume-1:c6s5"],
+    "reason": "Centers of mass extend physical integration applications."
+  },
+  "calculus-volume-1:c6s7": {
+    "requires": [
+      "calculus-volume-1:c1s5",
+      "calculus-volume-1:c3s9",
+      "calculus-volume-1:c5s3",
+      "calculus-volume-1:c5s6"
+    ],
+    "reason": "Defines ln and e via integrals; builds on FTC and log/exp integration."
+  },
+  "calculus-volume-1:c6s8": {
+    "requires": [
+      "calculus-volume-1:c1s5",
+      "calculus-volume-1:c5s6",
+      "calculus-volume-1:c6s7"
+    ],
+    "reason": "Exponential growth/decay models use exponential functions and integrals."
+  },
+  "calculus-volume-1:c6s9": {
+    "requires": [
+      "calculus-volume-1:c1s5",
+      "calculus-volume-1:c3s9",
+      "calculus-volume-1:c5s6"
+    ],
+    "reason": "Hyperbolic functions are introduced with their derivatives and integrals."
+  }
+}

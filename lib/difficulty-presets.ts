@@ -1464,7 +1464,7 @@ export const GENERATOR_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
       monic_only: true,
       allow_constant_gcf: true,
       prefer_difference_of_squares: false,
-      max_cancel_factors: 1,
+      cancel_factor_count: 1,
     },
     medium: {
       coef_min: -8,
@@ -1477,7 +1477,7 @@ export const GENERATOR_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
       monic_only: true,
       allow_constant_gcf: false,
       prefer_difference_of_squares: true,
-      max_cancel_factors: 1,
+      cancel_factor_count: 1,
     },
     hard: {
       coef_min: -9,
@@ -1490,7 +1490,7 @@ export const GENERATOR_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
       monic_only: false,
       allow_constant_gcf: false,
       prefer_difference_of_squares: true,
-      max_cancel_factors: 2,
+      cancel_factor_count: 2,
     },
   },
   polynomial_factoring_special_cases: SPECIAL_FACTORING_TIERS,

@@ -1600,7 +1600,7 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "monic_only": True,
             "allow_constant_gcf": True,
             "prefer_difference_of_squares": False,
-            "max_cancel_factors": 1,
+            "cancel_factor_count": 1,
         },
         "medium": {
             "coef_min": -8,
@@ -1613,7 +1613,7 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "monic_only": True,
             "allow_constant_gcf": False,
             "prefer_difference_of_squares": True,
-            "max_cancel_factors": 1,
+            "cancel_factor_count": 1,
         },
         "hard": {
             "coef_min": -9,
@@ -1626,7 +1626,7 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "monic_only": False,
             "allow_constant_gcf": False,
             "prefer_difference_of_squares": True,
-            "max_cancel_factors": 2,
+            "cancel_factor_count": 2,
         },
     },
     "polynomial_factoring_special_cases": dict(_SPECIAL_FACTORING_TIERS),

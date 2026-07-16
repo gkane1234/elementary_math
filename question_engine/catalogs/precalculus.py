@@ -1,19 +1,21 @@
 COURSE_ID = "precalculus"
 
 CATEGORY_ORDER: tuple[str, ...] = (
+    # OpenStax Precalculus 2e spine (catalog labels keep prior unit names)
     'Precalculus — Functions',
     'Precalculus — Power, Polynomial, and Rational Functions',
     'Precalculus — Exponential and Logarithmic Expressions',
-    'Precalculus — Trigonometry',
+    'Precalculus — Trigonometry',  # Trig Functions / Periodic / Identities / Further Apps
+    'Precalculus — Matrices and Systems',  # Systems of Equations and Inequalities
+    'Precalculus — Conic Sections',  # Analytic Geometry
+    'Precalculus — Discrete Mathematics',  # Sequences, Probability and Counting
+    'Precalculus — Sequences and Series',
+    'Precalculus — Introduction to Calculus',
+    # Supplemental slices
     'Precalculus — Parametric Equations',
     'Precalculus — Polar Coordinates',
     'Precalculus — Vectors',
     'Precalculus — Three-Dimensional Vectors',
-    'Precalculus — Matrices and Systems',
-    'Precalculus — Conic Sections',
-    'Precalculus — Discrete Mathematics',
-    'Precalculus — Sequences and Series',
-    'Precalculus — Introduction to Calculus',
 )
 
 from .base import TypeCatalogEntry, resolve_instruction_latex, resolve_instruction_text

@@ -1,24 +1,26 @@
 COURSE_ID = "algebra_2"
 
 CATEGORY_ORDER: tuple[str, ...] = (
-    'Algebra 2 — Beginning Algebra',
+    # OpenStax Intermediate Algebra 2e spine + supplemental
+    'Algebra 2 — Beginning Algebra',  # Foundations
     'Algebra 2 — Equations and Inequalities',
-    'Algebra 2 — Relations and Introduction to Functions',
+    'Algebra 2 — Relations and Introduction to Functions',  # Graphs and Functions
     'Algebra 2 — Linear Relations and Functions',
-    'Algebra 2 — Direct and Inverse Variation',
     'Algebra 2 — Systems of Equations and Inequalities',
+    'Algebra 2 — Polynomial Functions',
+    'Algebra 2 — Quadratic Functions and Inequalities',
+    'Algebra 2 — Rational Expressions',
+    'Algebra 2 — Radical Functions and Rational Exponents',  # Roots and Radicals
+    'Algebra 2 — Exponential and Logarithmic Expressions',
+    'Algebra 2 — Conic Sections',
+    'Algebra 2 — Sequences and Series',
+    # Supplemental
     'Algebra 2 — Matrices',
     'Algebra 2 — Complex Numbers',
-    'Algebra 2 — Quadratic Functions and Inequalities',
-    'Algebra 2 — Polynomial Functions',
-    'Algebra 2 — General Functions',
-    'Algebra 2 — Radical Functions and Rational Exponents',
-    'Algebra 2 — Conic Sections',
-    'Algebra 2 — Rational Expressions',
-    'Algebra 2 — Exponential and Logarithmic Expressions',
-    'Algebra 2 — Sequences and Series',
     'Algebra 2 — Trigonometry',
     'Algebra 2 — Probability and Statistics',
+    'Algebra 2 — Direct and Inverse Variation',
+    'Algebra 2 — General Functions',
 )
 
 from .base import TypeCatalogEntry, resolve_instruction_latex, resolve_instruction_text
@@ -153,13 +155,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _a2("Conic Sections", "a2_conic_sections_classifying", "Classifying", generator="conic_sections", instruction_text="Classify the conic."),
     _a2("Conic Sections", "a2_conic_sections_systems_of_quadratic_equations", "Systems of quadratic equations", generator="quadratic_system", instruction_text="Solve the system."),
     # Rational Expressions
-    _a2("Rational Expressions", "a2_rational_expressions_graphing", "Graphing", generator="graph_rational", instruction_latex="\\text{Graph the following functions.}", instruction_text="Graph the following functions."),
+    _a2("Rational Expressions", "a2_rational_expressions_graphing", "Graphing rational functions", generator="graph_rational", instruction_latex="\\text{Graph the following functions.}", instruction_text="Graph the following functions."),
     # Hand-written: rational_simplification, rational_expression_simplification (see verify_curriculum_types.HAND_WRITTEN)
-    _a2("Rational Expressions", "a2_rational_expressions_simplifying", "Simplifying", generator="rational_simplification", instruction_latex="\\text{Simplify.}", instruction_text="Simplify."),
-    _a2("Rational Expressions", "a2_rational_expressions_multiplying_and_dividing", "Multiplying and dividing", generator="rational_expression_multiply_divide", instruction_latex="\\text{Simplify.}", instruction_text="Simplify."),
-    _a2("Rational Expressions", "a2_rational_expressions_adding_and_subtracting", "Adding and subtracting", generator="rational_expression_simplification", instruction_latex="\\text{Combine and simplify.}", instruction_text="Combine and simplify."),
+    _a2("Rational Expressions", "a2_rational_expressions_simplifying", "Simplifying rational expressions", generator="rational_simplification", instruction_latex="\\text{Simplify.}", instruction_text="Simplify."),
+    _a2("Rational Expressions", "a2_rational_expressions_multiplying_and_dividing", "Multiplying and dividing rational expressions", generator="rational_expression_multiply_divide", instruction_latex="\\text{Simplify.}", instruction_text="Simplify."),
+    _a2("Rational Expressions", "a2_rational_expressions_adding_and_subtracting", "Adding and subtracting rational expressions", generator="rational_expression_simplification", instruction_latex="\\text{Combine and simplify.}", instruction_text="Combine and simplify."),
     _a2("Rational Expressions", "a2_rational_expressions_complex_fractions", "Complex fractions", generator="complex_fractions", instruction_latex="\\text{Simplify.}", instruction_text="Simplify."),
-    _a2("Rational Expressions", "a2_rational_expressions_equations", "Equations", instruction_latex="\\text{Solve for } x.", instruction_text="Solve for x.", generator="rational_equations"),
+    _a2("Rational Expressions", "a2_rational_expressions_equations", "Rational equations", instruction_latex="\\text{Solve for } x.", instruction_text="Solve for x.", generator="rational_equations"),
     # Exponential and Logarithmic Expressions
     _a2("Exponential and Logarithmic Expressions", "a2_exponential_and_logarithmic_expressions_graphing_exponential_functions", "Graphing exponential functions", generator="graph_exponential", instruction_latex="\\text{Graph the following functions.}", instruction_text="Graph the following functions."),
     _a2("Exponential and Logarithmic Expressions", "a2_exponential_and_logarithmic_expressions_exponential_equations_not_requiring_logarithms", "Exponential equations not requiring logarithms", generator="exponential_equation_simple", instruction_latex="\\text{Solve for } x.", instruction_text="Solve for x."),

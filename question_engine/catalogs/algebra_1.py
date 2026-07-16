@@ -3,26 +3,28 @@ from .base import entry
 COURSE_ID = "algebra_1"
 
 CATEGORY_ORDER: tuple[str, ...] = (
+    # OpenStax Elementary Algebra 2e-ish order (labels keep prior catalog chapter names)
     "Pre-Algebra — Beginning Algebra",
-    "Algebra 1 — Beginning Algebra",
+    "Algebra 1 — Beginning Algebra",  # Foundations
     "Pre-Algebra — Equations",
-    "Algebra 1 — Equations",
+    "Algebra 1 — Equations",  # Solving Linear Equations and Inequalities (+ Math Models WPs)
     "Pre-Algebra — Inequalities",
     "Algebra 1 — Inequalities",
-    "Pre-Algebra — Proportions and Similarity",
     "Pre-Algebra — Percents",
-    "Algebra 1 — Relations and Introduction to Functions",
+    "Pre-Algebra — Proportions and Similarity",
+    "Algebra 1 — Linear Equations and Inequalities",  # Graphs
     "Pre-Algebra — Linear Equations and Inequalities",
-    "Algebra 1 — Linear Equations and Inequalities",
-    "Algebra 1 — Direct and inverse variation",
     "Algebra 1 — Systems of Equations and Inequalities",
+    "Algebra 1 — Polynomials",
+    "Algebra 1 — Quadratic Functions",  # after Factoring content nested under Polynomials historically
+    "Algebra 1 — Rational Expressions",
+    "Algebra 1 — Radical Expressions",  # Roots and Radicals
+    # Supplemental vs Elementary Algebra TOC
+    "Algebra 1 — Relations and Introduction to Functions",
+    "Algebra 1 — Direct and inverse variation",
     "Pre-Algebra — Factors and Exponents",
     "Algebra 1 — Exponents",
-    "Algebra 1 — Polynomials",
-    "Algebra 1 — Quadratic Functions",
     "Pre-Algebra — Right Triangles",
-    "Algebra 1 — Radical Expressions",
-    "Algebra 1 — Rational Expressions",
     "Algebra 1 — Beginning Trigonometry",
     "Pre-Algebra — Statistics",
 )
@@ -619,7 +621,7 @@ CATALOG: tuple = (
     ),
     entry(
         "rational_expression_simplification",
-        "Adding and subtracting",
+        "Adding and subtracting rational expressions",
         "Algebra 1 — Rational Expressions",
         generator="rational_expression_simplification",
         instruction_latex=r"\text{Combine and simplify.}",
@@ -627,7 +629,7 @@ CATALOG: tuple = (
     ),
     entry(
         "rational_expression_multiply_divide",
-        "Multiplying and dividing",
+        "Multiplying and dividing rational expressions",
         "Algebra 1 — Rational Expressions",
         generator="rational_expression_multiply_divide",
         instruction_latex=r"\text{Simplify.}",
@@ -635,7 +637,7 @@ CATALOG: tuple = (
     ),
     entry(
         "rational_expressions_equations",
-        "Equations",
+        "Rational equations",
         "Algebra 1 — Rational Expressions",
         generator="rational_equations",
         instruction_latex=r"\text{Solve for } x.",

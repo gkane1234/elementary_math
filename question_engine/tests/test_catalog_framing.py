@@ -45,3 +45,31 @@ def test_difficulty_presets_resolve_via_family_key():
     )
     assert merged["coef_min"] == -5
     assert merged["coef_max"] == 5
+
+
+def test_rational_expression_topic_names_include_chapter_context():
+    """Standalone topic titles should stay understandable without chapter UI context."""
+    a1_add = get_catalog_entry("rational_expression_simplification")
+    a1_md = get_catalog_entry("rational_expression_multiply_divide")
+    a1_eq = get_catalog_entry("rational_expressions_equations")
+    a2_add = get_catalog_entry("a2_rational_expressions_adding_and_subtracting")
+    a2_md = get_catalog_entry("a2_rational_expressions_multiplying_and_dividing")
+    a2_simp = get_catalog_entry("a2_rational_expressions_simplifying")
+    a2_graph = get_catalog_entry("a2_rational_expressions_graphing")
+    a2_eq = get_catalog_entry("a2_rational_expressions_equations")
+
+    assert a1_add.name == "Adding and subtracting rational expressions"
+    assert a1_md.name == "Multiplying and dividing rational expressions"
+    assert a1_eq.name == "Rational equations"
+    assert a2_add.name == "Adding and subtracting rational expressions"
+    assert a2_md.name == "Multiplying and dividing rational expressions"
+    assert a2_simp.name == "Simplifying rational expressions"
+    assert a2_graph.name == "Graphing rational functions"
+    assert a2_eq.name == "Rational equations"
+    # Already clear without chapter prefix
+    assert get_catalog_entry("rational_simplification").name == (
+        "Simplifying and excluded values"
+    )
+    assert get_catalog_entry("a2_rational_expressions_complex_fractions").name == (
+        "Complex fractions"
+    )

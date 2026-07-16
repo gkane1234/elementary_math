@@ -2,15 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Modal } from "@/components/Modal";
+import { TopicPrerequisitesPanel } from "@/components/TopicPrerequisitesPanel";
 import { TopicSettingsFields, topicSettingsFields } from "@/components/TopicSettingsFields";
-import { TopicSectionList, WorksheetPlanOutline } from "@/components/TopicSectionList";
-import { CurriculumTopicPicker } from "@/components/CurriculumTopicPicker";
-import {
-  buildCurriculumPicker,
-  findFirstTopicByTypeId,
-  findTopicSelection,
-  getDefaultSelection,
-} from "@/lib/curriculum-picker";
+import type { CurriculumSelection } from "@/lib/curriculum-picker";
 import { typeIsNotReady } from "@/lib/diagram-readiness";
 import type { QuestionTypeInfo, TopicSection } from "@/lib/types";
 
@@ -25,108 +19,85 @@ function createSectionId(): string {
   return `section-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-function firstReadyTypeId(types: QuestionTypeInfo[]): string {
-  const courses = buildCurriculumPicker(undefined, types);
-  const defaultSelection = getDefaultSelection(courses);
-  const fromCurriculum =
-    defaultSelection && findTopicSelection(courses, defaultSelection)?.typeId;
-  if (fromCurriculum) return fromCurriculum;
-  return types.find((type) => !typeIsNotReady(type))?.id ?? "";
-}
-
 type AddTopicModalProps = {
   open: boolean;
   types: QuestionTypeInfo[];
   sections: TopicSection[];
-  editingSectionId?: string | null;
+  /** When set, modal edits this existing section. */
+  editingSectionId: string | null;
+  /** When set (and not editing), modal adds a new section of this type. */
+  addingTypeId: string | null;
   onClose: () => void;
   onSectionsChange: (sections: TopicSection[]) => void;
-  onEditingSectionIdChange?: (sectionId: string | null) => void;
+  /** Switch the modal to another ready topic (prerequisite drill-down). */
+  onSwitchType?: (typeId: string) => void;
 };
 
+/** Topic options modal: add a new topic block or edit an existing one. */
 export function AddTopicModal({
   open,
   types,
   sections,
-  editingSectionId: editingSectionIdProp = null,
+  editingSectionId,
+  addingTypeId,
   onClose,
   onSectionsChange,
-  onEditingSectionIdChange,
+  onSwitchType,
 }: AddTopicModalProps) {
-  const [selectedTypeId, setSelectedTypeId] = useState("");
   const [count, setCount] = useState(5);
   const [values, setValues] = useState<Record<string, string | number | boolean>>({});
-  const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
+  const [browseSelection, setBrowseSelection] = useState<CurriculumSelection | null>(null);
 
-  const activeEditingId = editingSectionIdProp ?? editingSectionId;
-
-  const courses = useMemo(() => buildCurriculumPicker(undefined, types), [types]);
-  const selectedType = useMemo(
-    () => types.find((type) => type.id === selectedTypeId) ?? null,
-    [types, selectedTypeId],
+  const editingSection = useMemo(
+    () => sections.find((entry) => entry.id === editingSectionId) ?? null,
+    [sections, editingSectionId],
   );
-  const selectedIsReady = useMemo(() => {
-    if (!selectedType || typeIsNotReady(selectedType)) return false;
-    const mapped = findFirstTopicByTypeId(courses, selectedType.id);
-    if (mapped) return mapped.topic.hasGenerator;
-    return true;
-  }, [courses, selectedType]);
+
+  const typeId = editingSection?.type_id ?? addingTypeId;
+  const selectedType = useMemo(
+    () => (typeId ? types.find((type) => type.id === typeId) ?? null : null),
+    [types, typeId],
+  );
+  const selectedIsReady = Boolean(selectedType && !typeIsNotReady(selectedType));
+  const isEditing = Boolean(editingSection);
+  const isBrowsingOnly = Boolean(browseSelection);
 
   const fields = useMemo(
     () => topicSettingsFields(selectedType?.settings ?? []),
     [selectedType],
   );
 
-  const totalPlanned = sections.reduce((sum, section) => sum + section.count, 0);
-
-  const setEditing = (sectionId: string | null) => {
-    setEditingSectionId(sectionId);
-    onEditingSectionIdChange?.(sectionId);
-  };
-
   useEffect(() => {
-    if (!open) return;
-    if (types.length === 0) return;
-    if (activeEditingId) return;
-    if (!selectedTypeId || !selectedIsReady) {
-      const defaultTypeId = firstReadyTypeId(types);
-      if (defaultTypeId && defaultTypeId !== selectedTypeId) {
-        setSelectedTypeId(defaultTypeId);
-      }
+    if (!open) {
+      setBrowseSelection(null);
+      return;
     }
-  }, [open, types, selectedTypeId, selectedIsReady, activeEditingId]);
+    // Reset browse drill-down whenever the active type changes from outside.
+    setBrowseSelection(null);
+  }, [open, typeId]);
 
   useEffect(() => {
-    if (!open || !editingSectionIdProp) return;
-    const section = sections.find((entry) => entry.id === editingSectionIdProp);
-    if (!section) return;
-    const type = types.find((entry) => entry.id === section.type_id) ?? null;
-    setEditingSectionId(section.id);
-    setSelectedTypeId(section.type_id);
-    setCount(section.count);
-    setValues({ ...defaultTopicValues(type), ...section.settings });
-  }, [open, editingSectionIdProp, sections, types]);
+    if (!open || !selectedType) return;
 
-  useEffect(() => {
-    if (!open || activeEditingId) return;
-    setValues(defaultTopicValues(selectedType));
-  }, [open, selectedType, activeEditingId]);
+    if (editingSection) {
+      setCount(editingSection.count);
+      setValues({ ...defaultTopicValues(selectedType), ...editingSection.settings });
+      return;
+    }
 
-  const resetForm = () => {
-    setEditing(null);
     setCount(5);
     setValues(defaultTopicValues(selectedType));
-  };
+  }, [open, selectedType, editingSection]);
 
-  const applySectionChange = () => {
-    if (!selectedType || !selectedIsReady) return false;
+  const handleConfirm = () => {
+    if (!selectedType || !selectedIsReady || isBrowsingOnly) return;
 
-    if (activeEditingId) {
+    if (editingSection) {
       onSectionsChange(
-        sections.map((section) =>
-          section.id === activeEditingId
-            ? { ...section, type_id: selectedType.id, count, settings: values }
-            : section,
+        sections.map((entry) =>
+          entry.id === editingSection.id
+            ? { ...entry, count, settings: values }
+            : entry,
         ),
       );
     } else {
@@ -141,92 +112,56 @@ export function AddTopicModal({
       ]);
     }
 
-    return true;
-  };
-
-  const handleAddAndContinue = () => {
-    if (!applySectionChange()) return;
-    resetForm();
-  };
-
-  const handleAddAndClose = () => {
-    if (!applySectionChange()) return;
-    resetForm();
     onClose();
   };
 
-  const handleEditSection = (section: TopicSection) => {
-    const type = types.find((entry) => entry.id === section.type_id) ?? null;
-    setEditing(section.id);
-    setSelectedTypeId(section.type_id);
-    setCount(section.count);
-    setValues({ ...defaultTopicValues(type), ...section.settings });
+  const handleNavigateToType = (nextTypeId: string) => {
+    setBrowseSelection(null);
+    onSwitchType?.(nextTypeId);
   };
 
-  const handleRemove = (sectionId: string) => {
-    onSectionsChange(sections.filter((section) => section.id !== sectionId));
-    if (activeEditingId === sectionId) {
-      resetForm();
-    }
-  };
+  const modalOpen = open && Boolean(selectedType || browseSelection);
+  const title = isBrowsingOnly
+    ? "Topic prerequisites"
+    : isEditing
+      ? "Edit topic block"
+      : "Topic options";
 
   return (
     <Modal
-      open={open}
-      title={activeEditingId ? "Edit topic block" : "Add question topics"}
-      onClose={() => {
-        resetForm();
-        onClose();
-      }}
+      open={modalOpen}
+      title={title}
+      onClose={onClose}
       footer={
-        <>
-          {!activeEditingId && (
-            <button
-              className="secondary"
-              type="button"
-              onClick={handleAddAndContinue}
-              disabled={!selectedType || !selectedIsReady}
-            >
-              Add and continue
-            </button>
-          )}
+        isBrowsingOnly ? (
+          <button
+            className="secondary"
+            type="button"
+            onClick={() => setBrowseSelection(null)}
+          >
+            Back to topic options
+          </button>
+        ) : (
           <button
             className="primary"
             type="button"
-            onClick={handleAddAndClose}
+            onClick={handleConfirm}
             disabled={!selectedType || !selectedIsReady}
           >
-            {activeEditingId ? "Save changes" : "Add to worksheet plan"}
+            {isEditing ? "Save changes" : "Add to worksheet"}
           </button>
-        </>
+        )
       }
     >
-      <WorksheetPlanOutline sections={sections} types={types} totalPlanned={totalPlanned} />
-
-      {sections.length > 0 && (
-        <TopicSectionList
-          sections={sections}
-          types={types}
-          onSectionsChange={onSectionsChange}
-          onEditSection={handleEditSection}
-          onRemoveSection={handleRemove}
-        />
-      )}
-
-      <hr className="modal-divider" />
-
-      <CurriculumTopicPicker
-        types={types}
-        selectedTypeId={selectedTypeId}
-        onTypeIdChange={setSelectedTypeId}
-      />
-
-      {selectedType && <p className="description">{selectedType.description}</p>}
-
-      {selectedType && (
+      {selectedType && !isBrowsingOnly && (
         <>
+          <p className="description">
+            <strong>{selectedType.name}</strong>
+            {selectedType.description ? ` — ${selectedType.description}` : null}
+          </p>
+
           <label className="field">
-            <span>Questions to add</span>
+            <span>Questions</span>
             <input
               type="number"
               min={1}
@@ -246,6 +181,14 @@ export function AddTopicModal({
           />
         </>
       )}
+
+      <TopicPrerequisitesPanel
+        types={types}
+        typeId={isBrowsingOnly ? null : typeId}
+        browseSelection={browseSelection}
+        onNavigateToType={handleNavigateToType}
+        onBrowseChapter={setBrowseSelection}
+      />
     </Modal>
   );
 }

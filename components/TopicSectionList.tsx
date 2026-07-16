@@ -10,8 +10,21 @@ type TopicSectionListProps = {
   onSectionsChange: (sections: TopicSection[]) => void;
   onEditSection: (section: TopicSection) => void;
   onRemoveSection?: (sectionId: string) => void;
+  onDuplicateSection?: (section: TopicSection) => void;
   compact?: boolean;
 };
+
+function createSectionId(): string {
+  return `section-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+export function duplicateTopicSection(section: TopicSection): TopicSection {
+  return {
+    ...section,
+    id: createSectionId(),
+    settings: { ...section.settings },
+  };
+}
 
 function allowDrop(event: DragEvent) {
   event.preventDefault();
@@ -24,6 +37,7 @@ export function TopicSectionList({
   onSectionsChange,
   onEditSection,
   onRemoveSection,
+  onDuplicateSection,
   compact = false,
 }: TopicSectionListProps) {
   const [dragIndex, setDragIndex] = useState<number | null>(null);
@@ -94,13 +108,16 @@ export function TopicSectionList({
                 onClick={() => onEditSection(section)}
               >
                 <strong>{type?.name ?? section.type_id}</strong>
-                <span>× {section.count}</span>
               </button>
+              <span className="topic-section-count" title="Question count">
+                {section.count}
+              </span>
               {onRemoveSection && (
                 <button
                   type="button"
                   className="topic-remove"
                   aria-label="Remove topic"
+                  title="Remove topic"
                   onClick={() => onRemoveSection(section.id)}
                 >
                   ×
@@ -129,6 +146,28 @@ export function TopicSectionList({
               }}
             >
               Edit settings...
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const section = sections.find((entry) => entry.id === contextMenu.sectionId);
+                if (!section) {
+                  setContextMenu(null);
+                  return;
+                }
+                if (onDuplicateSection) {
+                  onDuplicateSection(section);
+                } else {
+                  const index = sections.findIndex((entry) => entry.id === section.id);
+                  const copy = duplicateTopicSection(section);
+                  const next = [...sections];
+                  next.splice(index + 1, 0, copy);
+                  onSectionsChange(next);
+                }
+                setContextMenu(null);
+              }}
+            >
+              Duplicate
             </button>
             {onRemoveSection && (
               <button

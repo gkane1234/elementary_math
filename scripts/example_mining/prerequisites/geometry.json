@@ -1,0 +1,98 @@
+{
+  "geometry:review_of_algebra": {
+    "requires": [
+      "elementary-algebra-2e:c2s4",
+      "elementary-algebra-2e:c9s2"
+    ],
+    "reason": "Geometry algebra review needs multi-step equations and simplifying radicals from Algebra 1."
+  },
+  "geometry:basics_of_geometry": {
+    "requires": [
+      "foundations_math:whole_numbers",
+      "geometry:review_of_algebra"
+    ],
+    "reason": "Points, lines, and angles need number sense and algebraic measure equations."
+  },
+  "geometry:parallel_lines_and_the_coordinate_plane": {
+    "requires": [
+      "geometry:basics_of_geometry",
+      "elementary-algebra-2e:c4s2",
+      "elementary-algebra-2e:c4s4",
+      "grade_6_math:coordinate_plane"
+    ],
+    "reason": "Parallel lines and coordinate geometry use angle basics plus linear graphs/slope."
+  },
+  "geometry:congruent_triangles": {
+    "requires": ["geometry:basics_of_geometry"],
+    "reason": "Triangle congruence builds on angle and segment basics."
+  },
+  "geometry:properties_of_triangles": {
+    "requires": ["geometry:congruent_triangles"],
+    "reason": "Midsegments, medians, and triangle inequalities extend congruence work."
+  },
+  "geometry:quadrilaterals_and_polygons": {
+    "requires": [
+      "geometry:basics_of_geometry",
+      "geometry:congruent_triangles",
+      "grade_6_math:polygons"
+    ],
+    "reason": "Polygon/quadrilateral properties use angle facts and prior area intuition."
+  },
+  "geometry:similarity": {
+    "requires": [
+      "geometry:congruent_triangles",
+      "prealgebra-2e:c6s5",
+      "grade_6_math:ratios"
+    ],
+    "reason": "Similarity uses proportions and triangle congruence concepts."
+  },
+  "geometry:right_triangles": {
+    "requires": [
+      "geometry:similarity",
+      "elementary-algebra-2e:c9s1",
+      "prealgebra-2e:c9s3"
+    ],
+    "reason": "Pythagorean and special right triangles need similarity and square roots."
+  },
+  "geometry:trigonometry": {
+    "requires": ["geometry:right_triangles"],
+    "reason": "Right-triangle trig ratios are defined on right triangles."
+  },
+  "geometry:surface_area_and_volume": {
+    "requires": [
+      "geometry:quadrilaterals_and_polygons",
+      "grade_6_math:polyhedra",
+      "prealgebra-2e:c9s6"
+    ],
+    "reason": "Solid measures extend polygon area and prior volume work."
+  },
+  "geometry:circles": {
+    "requires": [
+      "geometry:basics_of_geometry",
+      "geometry:right_triangles",
+      "prealgebra-2e:c9s5"
+    ],
+    "reason": "Circle theorems use angle/segment basics and often right triangles."
+  },
+  "geometry:transformations": {
+    "requires": [
+      "geometry:basics_of_geometry",
+      "geometry:parallel_lines_and_the_coordinate_plane"
+    ],
+    "reason": "Rigid motions and dilations act on the plane with coordinate tools."
+  },
+  "geometry:probability_and_statistics": {
+    "requires": [
+      "grade_6_math:data_sets_and_distributions",
+      "foundations_math:addition_subtraction_multiplication_division"
+    ],
+    "reason": "Counting and probability need number operations and data context."
+  },
+  "geometry:constructions": {
+    "requires": [
+      "geometry:basics_of_geometry",
+      "geometry:congruent_triangles"
+    ],
+    "reason": "Constructions formalize congruence and basic geometric objects."
+  }
+}

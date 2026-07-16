@@ -253,6 +253,51 @@ export function getUnmappedTypes(types: QuestionTypeInfo[], courses: PickerCours
   return types.filter((type) => !mapped.has(type.id) && !typeIsNotReady(type));
 }
 
+/** Map curriculum course ids to the catalog category course prefix. */
+export const COURSE_CATEGORY_PREFIX: Record<string, string> = {
+  foundations_math: "Foundations",
+  grade_6_math: "Grade 6",
+  pre_algebra: "Pre-Algebra",
+  algebra_1: "Algebra 1",
+  algebra_2: "Algebra 2",
+  geometry: "Geometry",
+  precalculus: "Precalculus",
+  calculus: "Calculus",
+};
+
+/** True when a question type's catalog category belongs to the given curriculum course. */
+export function typeBelongsToCourse(type: QuestionTypeInfo, courseId: string): boolean {
+  const prefix = COURSE_CATEGORY_PREFIX[courseId];
+  if (!prefix) return false;
+  return type.category === prefix || type.category.startsWith(`${prefix} — `);
+}
+
+export type UnmappedTypeFilterOptions = {
+  query?: string;
+  readyOnly?: boolean;
+  /** When set, only include types whose category belongs to this curriculum course. */
+  courseId?: string;
+};
+
+/** Filter the “Other question types” list (search, ready-only, and optional course). */
+export function filterUnmappedTypes(
+  unmappedTypes: QuestionTypeInfo[],
+  options: UnmappedTypeFilterOptions = {},
+): QuestionTypeInfo[] {
+  const normalized = (options.query ?? "").trim().toLowerCase();
+  return unmappedTypes.filter((type) => {
+    if (options.readyOnly && typeIsNotReady(type)) return false;
+    if (options.courseId && !typeBelongsToCourse(type, options.courseId)) return false;
+    if (!normalized) return true;
+    return (
+      type.name.toLowerCase().includes(normalized) ||
+      type.category.toLowerCase().includes(normalized) ||
+      (type.subcategory?.toLowerCase().includes(normalized) ?? false) ||
+      type.id.toLowerCase().includes(normalized)
+    );
+  });
+}
+
 export function topicStatusLabel(status: TopicPickerStatus): string {
   switch (status) {
     case "ready":

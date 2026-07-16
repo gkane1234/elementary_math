@@ -66,7 +66,6 @@ from .domains.common import (
     difficulty_settings,
     multiple_choice_settings,
     sign_restrictions,
-    term_count_settings,
 )
 from .domains.misc import misc_expression_settings
 from .domains.polynomial import (
@@ -582,12 +581,15 @@ def statistics_profile() -> list[SettingField]:
 
 
 def common_enrichment_profile() -> list[SettingField]:
-    """Cross-cutting enrichment mixin: difficulty, answer format, signs, terms, MC."""
+    """Cross-cutting enrichment mixin: difficulty, answer format, signs, MC.
+
+    Term-count controls live on domain profiles / extras that actually use them
+    (e.g. radical add/subtract), not on every generator.
+    """
     return merge_settings(
         difficulty_settings(),
         answer_format_settings(),
         sign_restrictions(),
-        term_count_settings(),
         multiple_choice_settings(),
     )
 

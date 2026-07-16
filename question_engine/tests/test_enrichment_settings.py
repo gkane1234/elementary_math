@@ -111,11 +111,25 @@ def test_common_enrichment_in_schema():
     keys = {field.key for field in schema}
     assert "difficulty_tier" in keys
     assert "answer_format" in keys
+    assert "multiple_choice" in keys
     assert "multiple_choice_ratio" in keys
+    # Terms are not a universal enrichment knob.
+    assert "min_terms" not in keys
+    assert "max_terms" not in keys
+    answer_format = next(field for field in schema if field.key == "answer_format")
+    assert "multiple_choice" not in (answer_format.options or [])
 
 
 def test_common_enrichment_profile_resolves():
     schema = resolve_type_settings(TypeSettingConfig(setting_profile="common_enrichment"))
     keys = {field.key for field in schema}
-    assert "min_terms" in keys
+    assert "multiple_choice" in keys
     assert "show_work_lines" in keys
+    assert "min_terms" not in keys
+
+
+def test_radical_add_subtract_keeps_term_controls():
+    schema = schema_for_generator("radical_add_subtract")
+    keys = {field.key for field in schema}
+    assert "min_terms" in keys
+    assert "max_terms" in keys

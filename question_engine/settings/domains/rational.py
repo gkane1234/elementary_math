@@ -102,6 +102,21 @@ def rational_equation_form_settings() -> list[SettingField]:
     ]
 
 
+def rational_simplification_settings() -> list[SettingField]:
+    """Controls for simplify-and-excluded-values rational expressions."""
+    return [
+        SettingField(
+            "cancel_factor_count",
+            "Factors to cancel",
+            "int",
+            1,
+            min=1,
+            max=4,
+            group="rational",
+        ),
+    ]
+
+
 def rational_multiply_divide_settings() -> list[SettingField]:
     """Structural controls for multiplying / dividing rational expressions."""
     return [

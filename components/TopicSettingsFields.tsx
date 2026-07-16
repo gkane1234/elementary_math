@@ -3,38 +3,11 @@ import { applyDifficultyPresetToSettings } from "@/lib/difficulty-presets";
 
 const WORKSHEET_LEVEL_KEYS = new Set(["count", "max_columns"]);
 
-/** Groups rendered before other domain groups (after ungrouped fields). */
-const PINNED_GROUP_ORDER = ["difficulty"];
+/** Shared enrichment groups rendered after question-specific settings. */
+const COMMON_GROUPS = new Set(["answer", "signs", "presentation"]);
 
-const GROUP_LABELS: Record<string, string> = {
-  polynomial: "Polynomial",
-  equation: "Equation",
-  inequality: "Inequality",
-  number: "Numbers",
-  linear: "Linear",
-  radical: "Radicals",
-  rational: "Rational expressions",
-  division: "Division notation",
-  factoring: "Factoring",
-  exponential: "Exponential",
-  trigonometry: "Trigonometry",
-  logarithm: "Logarithms",
-  sequence: "Sequences",
-  limits: "Limits",
-  derivatives: "Derivatives",
-  integrals: "Integrals",
-  expression: "Expressions",
-  systems: "Systems",
-  variation: "Variation",
-  relations: "Relations",
-  word_problem: "Word problem",
-  geometry: "Geometry",
-  difficulty: "Difficulty",
-  answer: "Answer",
-  signs: "Signs",
-  terms: "Terms",
-  presentation: "Presentation",
-};
+/** Deeper MC controls — only shown when the MC toggle is checked. */
+const MC_DETAIL_KEYS = new Set(["multiple_choice_ratio"]);
 
 const CANCEL_FACTOR_COUNT_LABELS: Record<string, string> = {
   random: "Random",
@@ -75,6 +48,23 @@ function numberFieldValue(
   const raw = fieldValue(values, field);
   const parsed = typeof raw === "number" ? raw : Number(raw);
   return Number.isFinite(parsed) ? parsed : Number(field.default);
+}
+
+function isFieldVisible(
+  field: SettingField,
+  values: Record<string, string | number | boolean>,
+): boolean {
+  if (!MC_DETAIL_KEYS.has(field.key)) return true;
+  return Boolean(values.multiple_choice ?? false);
+}
+
+function optionLabel(field: SettingField, option: string): string {
+  if (field.key === "cancel_factor_count") {
+    return CANCEL_FACTOR_COUNT_LABELS[option] ?? option;
+  }
+  if (field.key === "answer_format" && option === "auto") return "Auto";
+  if (option === "auto") return "Auto (up to 3)";
+  return option;
 }
 
 function renderBoolField(
@@ -123,17 +113,13 @@ function renderRangeField(
   );
 }
 
-function renderOtherField(
+function renderCompactField(
   field: SettingField,
   values: Record<string, string | number | boolean>,
   onChange: (key: string, value: string | number | boolean) => void,
 ) {
-  if (field.type === "range") {
-    return renderRangeField(field, values, onChange);
-  }
-
   return (
-    <label className="field" key={field.key}>
+    <label className="field field-compact" key={field.key}>
       <span>{field.label}</span>
       {field.type === "select" ? (
         <select
@@ -142,15 +128,7 @@ function renderOtherField(
         >
           {(field.options ?? []).map((option) => (
             <option key={option} value={option}>
-              {field.key === "cancel_factor_count"
-                ? (CANCEL_FACTOR_COUNT_LABELS[option] ?? option)
-                : field.key === "answer_format" && option === "auto"
-                  ? "Auto"
-                  : field.key === "answer_format" && option === "multiple_choice"
-                    ? "Multiple choice"
-                    : option === "auto"
-                      ? "Auto (up to 3)"
-                      : option}
+              {optionLabel(field, option)}
             </option>
           ))}
         </select>
@@ -167,60 +145,55 @@ function renderOtherField(
   );
 }
 
-function groupFields(fields: SettingField[]) {
-  const grouped = new Map<string, SettingField[]>();
-  const ungrouped: SettingField[] = [];
+function partitionFields(fields: SettingField[]) {
+  const difficulty: SettingField[] = [];
+  const specific: SettingField[] = [];
+  const common: SettingField[] = [];
 
   for (const field of fields) {
-    if (!field.group) {
-      ungrouped.push(field);
+    if (field.group === "difficulty" || field.key === "difficulty_tier") {
+      difficulty.push(field);
       continue;
     }
-    const bucket = grouped.get(field.group) ?? [];
-    bucket.push(field);
-    grouped.set(field.group, bucket);
+    if (COMMON_GROUPS.has(field.group ?? "") || field.key === "include_answer_key") {
+      common.push(field);
+      continue;
+    }
+    specific.push(field);
   }
 
-  return { grouped, ungrouped };
+  return { difficulty, specific, common };
 }
 
-function orderedGroupEntries(grouped: Map<string, SettingField[]>) {
-  const remaining = new Map(grouped);
-  const ordered: Array<[string, SettingField[]]> = [];
-
-  for (const key of PINNED_GROUP_ORDER) {
-    const fields = remaining.get(key);
-    if (!fields) continue;
-    ordered.push([key, fields]);
-    remaining.delete(key);
-  }
-
-  for (const entry of remaining.entries()) {
-    ordered.push(entry);
-  }
-
-  return ordered;
-}
-
-function renderGroupSection(
-  groupKey: string,
-  groupFieldsList: SettingField[],
+function renderFieldBlock(
+  fields: SettingField[],
   values: Record<string, string | number | boolean>,
   onChange: (key: string, value: string | number | boolean) => void,
+  sectionKey: string,
 ) {
-  const boolGroupFields = groupFieldsList.filter((field) => field.type === "bool");
-  const otherGroupFields = groupFieldsList.filter((field) => field.type !== "bool");
+  const visible = fields.filter((field) => isFieldVisible(field, values));
+  if (visible.length === 0) return null;
+
+  const compactFields = visible.filter(
+    (field) => field.type === "int" || field.type === "select",
+  );
+  const rangeFields = visible.filter((field) => field.type === "range");
+  const boolFields = visible.filter((field) => field.type === "bool");
 
   return (
-    <section className="settings-group" key={groupKey}>
-      <h3 className="settings-group-title">{GROUP_LABELS[groupKey] ?? groupKey}</h3>
-      {otherGroupFields.map((field) => renderOtherField(field, values, onChange))}
-      {boolGroupFields.length > 0 && (
-        <div className="field-bool-row settings-group-bools">
-          {boolGroupFields.map((field) => renderBoolField(field, values, onChange))}
+    <div className="settings-fields-section" key={sectionKey}>
+      {compactFields.length > 0 && (
+        <div className="settings-compact-grid">
+          {compactFields.map((field) => renderCompactField(field, values, onChange))}
         </div>
       )}
-    </section>
+      {boolFields.length > 0 && (
+        <div className="field-bool-row">
+          {boolFields.map((field) => renderBoolField(field, values, onChange))}
+        </div>
+      )}
+      {rangeFields.map((field) => renderRangeField(field, values, onChange))}
+    </div>
   );
 }
 
@@ -246,29 +219,13 @@ export function TopicSettingsFields({
     onChange(key, value);
   };
 
-  const difficultyFields = fields.filter((field) => field.group === "difficulty");
-  const remainingFields = fields.filter((field) => field.group !== "difficulty");
-
-  const boolFields = remainingFields.filter((field) => field.type === "bool" && !field.group);
-  const otherFields = remainingFields.filter((field) => field.type !== "bool" && !field.group);
-  const { grouped } = groupFields(remainingFields.filter((field) => field.group));
+  const { difficulty, specific, common } = partitionFields(fields);
 
   return (
     <>
-      {difficultyFields.length > 0 &&
-        renderGroupSection("difficulty", difficultyFields, values, handleFieldChange)}
-
-      {boolFields.length > 0 && (
-        <div className="field-bool-row">
-          {boolFields.map((field) => renderBoolField(field, values, handleFieldChange))}
-        </div>
-      )}
-
-      {otherFields.map((field) => renderOtherField(field, values, handleFieldChange))}
-
-      {orderedGroupEntries(grouped).map(([groupKey, groupFieldsList]) =>
-        renderGroupSection(groupKey, groupFieldsList, values, handleFieldChange),
-      )}
+      {renderFieldBlock(difficulty, values, handleFieldChange, "difficulty")}
+      {renderFieldBlock(specific, values, handleFieldChange, "specific")}
+      {renderFieldBlock(common, values, handleFieldChange, "common")}
     </>
   );
 }

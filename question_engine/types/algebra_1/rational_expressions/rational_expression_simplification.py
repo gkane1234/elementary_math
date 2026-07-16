@@ -110,7 +110,7 @@ def _resolve_add_subtract_structure(settings: dict) -> dict:
 @register
 class RationalExpressionSimplificationQuestionType(QuestionType):
     id = "rational_expression_simplification"
-    name = "Adding and subtracting"
+    name = "Adding and subtracting rational expressions"
     category = "Algebra 1 — Rational Expressions"
     description = (
         "Combine a sum of rational terms by finding a common denominator, "

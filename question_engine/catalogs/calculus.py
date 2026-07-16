@@ -1,9 +1,10 @@
 COURSE_ID = "calculus"
 
 CATEGORY_ORDER: tuple[str, ...] = (
+    # OpenStax Calculus Vol. 1 spine (indefinite+definite both under Integration in curriculum)
     'Calculus — Limits',
     'Calculus — Continuity',
-    'Calculus — Differentiation',
+    'Calculus — Differentiation',  # Derivatives
     'Calculus — Applications of Differentiation',
     'Calculus — Indefinite Integration',
     'Calculus — Definite Integration',

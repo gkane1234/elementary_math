@@ -1,18 +1,21 @@
 COURSE_ID = "pre_algebra"
 
 CATEGORY_ORDER: tuple[str, ...] = (
-    'Pre-Algebra — Integers, Decimals, and Fractions',
-    'Pre-Algebra — Equations',
+    # OpenStax Prealgebra 2e spine (catalog chapter labels still use prior names where content lives)
+    'Pre-Algebra — Integers, Decimals, and Fractions',  # maps → Whole Numbers / Integers / Fractions / Decimals
+    'Pre-Algebra — Beginning Algebra',  # Language of Algebra
+    'Pre-Algebra — Equations',  # Solving Linear Equations
+    'Pre-Algebra — Percents',
+    'Pre-Algebra — Plane Figures',  # Math Models and Geometry
+    'Pre-Algebra — Beginning Polynomials',
+    'Pre-Algebra — Linear Equations and Inequalities',  # Graphs
+    # Supplemental
     'Pre-Algebra — Inequalities',
     'Pre-Algebra — Factors and Exponents',
     'Pre-Algebra — Proportions and Similarity',
-    'Pre-Algebra — Percents',
-    'Pre-Algebra — Linear Equations and Inequalities',
-    'Pre-Algebra — Statistics',
-    'Pre-Algebra — Plane Figures',
-    'Pre-Algebra — Solid Figures',
     'Pre-Algebra — Right Triangles',
-    'Pre-Algebra — Beginning Polynomials',
+    'Pre-Algebra — Solid Figures',
+    'Pre-Algebra — Statistics',
 )
 
 from .base import TypeCatalogEntry, resolve_instruction_latex, resolve_instruction_text

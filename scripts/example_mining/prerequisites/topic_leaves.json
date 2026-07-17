@@ -1,0 +1,92 @@
+{
+  "_comment": "Topic/type_id-level prerequisites for skill deps the section→chapter export drops or misattributes. Keys and requires are curriculum type_ids. Edit here, then: python scripts/export_prerequisite_browser.py",
+
+  "calc_diff_average_rates_of_change": {
+    "requires": [],
+    "reason": "Average rate of change is pre-derivative setup; no calculus Limits chapter required."
+  },
+  "calc_diff_definition_of_the_derivative": {
+    "requires": [
+      "calc_limits_by_direct_evaluation",
+      "calc_limits_at_removable_discontinuities",
+      "calc_diff_average_rates_of_change"
+    ],
+    "reason": "The limit definition of the derivative is the skill that actually requires Limits (and average rates as the difference quotient)."
+  },
+  "calc_diff_instantaneous_rates_of_change": {
+    "requires": ["calc_diff_definition_of_the_derivative"],
+    "reason": "Instantaneous rate is the derivative at a point; builds on the definition, not a fresh Limits chapter tour."
+  },
+  "calc_diff_power_rule": {
+    "requires": [
+      "calc_diff_definition_of_the_derivative",
+      "calc_diff_instantaneous_rates_of_change"
+    ],
+    "reason": "Power Rule is a differentiation method after the derivative concept is introduced; does not re-require Limits overview."
+  },
+  "calc_diff_higher_order_derivatives": {
+    "requires": ["calc_diff_power_rule"],
+    "reason": "Higher-order derivatives repeatedly apply basic differentiation rules (starting with Power Rule)."
+  },
+  "calc_diff_product_rule": {
+    "requires": ["calc_diff_power_rule"],
+    "reason": "Product Rule extends basic differentiation; Power Rule fluency is assumed."
+  },
+  "calc_diff_quotient_rule": {
+    "requires": ["calc_diff_power_rule", "calc_diff_product_rule"],
+    "reason": "Quotient Rule builds on Power Rule and is closely related to Product Rule."
+  },
+  "calc_diff_chain_rule": {
+    "requires": [
+      "calc_diff_power_rule",
+      "calc_diff_product_rule",
+      "calc_diff_quotient_rule"
+    ],
+    "reason": "Chain Rule composes basic differentiation methods (power/product/quotient)."
+  },
+  "calc_diff_rules_using_tables": {
+    "requires": [
+      "calc_diff_power_rule",
+      "calc_diff_product_rule",
+      "calc_diff_quotient_rule",
+      "calc_diff_chain_rule"
+    ],
+    "reason": "Table-based rule problems mix Power, Product, Quotient, and Chain."
+  },
+  "calc_diff_trigonometric": {
+    "requires": [
+      "calc_diff_power_rule",
+      "calc_diff_product_rule",
+      "calc_diff_chain_rule"
+    ],
+    "reason": "As generated: Easy is basic sin/cos/tan; Medium uses sin(kx) (chain with constant); Hard mixes product and chain. Not a Limits dependency."
+  },
+  "calc_diff_inverse_trigonometric": {
+    "requires": ["calc_diff_trigonometric", "calc_diff_chain_rule"],
+    "reason": "Inverse trig derivatives use trig derivative forms and the Chain Rule."
+  },
+  "calc_diff_natural_logarithms_and_exponentials": {
+    "requires": ["calc_diff_power_rule", "calc_diff_chain_rule"],
+    "reason": "Natural exp/log derivatives use basic rules and the Chain Rule."
+  },
+  "calc_diff_other_base_logarithms_and_exponentials": {
+    "requires": ["calc_diff_natural_logarithms_and_exponentials"],
+    "reason": "Other-base exp/log reduce to natural exp/log derivatives."
+  },
+  "calc_diff_logarithmic": {
+    "requires": [
+      "calc_diff_natural_logarithms_and_exponentials",
+      "calc_diff_product_rule",
+      "calc_diff_chain_rule"
+    ],
+    "reason": "Logarithmic differentiation combines log derivatives with Product/Chain."
+  },
+  "calc_diff_implicit": {
+    "requires": ["calc_diff_product_rule", "calc_diff_chain_rule"],
+    "reason": "Implicit differentiation applies Product and Chain Rules to implicitly defined relations."
+  },
+  "calc_diff_inverse_functions": {
+    "requires": ["calc_diff_chain_rule"],
+    "reason": "Inverse-function derivatives rely on the Chain Rule relationship."
+  }
+}

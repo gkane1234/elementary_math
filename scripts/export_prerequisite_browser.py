@@ -1,11 +1,13 @@
 """Export a curriculum-facing prerequisite index for the topic picker UI.
 
-Writes lib/data/prerequisite-index.json keyed by courseId:chapterId (and leaf topic ids).
+Writes lib/data/prerequisite-index.json keyed by courseId:chapterId (chapter overview)
+and courseId:chapterId:topicId (topic/leaf skill deps from topic_leaves.json).
 """
 
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -27,6 +29,21 @@ from scripts.example_mining.prerequisite_loader import (  # noqa: E402
 
 HTML_ROOT = ROOT / "textbooks" / "openstax" / "html"
 OUT_PATH = ROOT / "lib" / "data" / "prerequisite-index.json"
+TOPIC_LEAVES_PATH = (
+    ROOT / "scripts" / "example_mining" / "prerequisites" / "topic_leaves.json"
+)
+CURRICULUM_PATH = ROOT / "lib" / "curriculum.ts"
+
+COURSE_IDS = (
+    "foundations_math",
+    "grade_6_math",
+    "pre_algebra",
+    "algebra_1",
+    "geometry",
+    "algebra_2",
+    "precalculus",
+    "calculus",
+)
 
 # Graph book → curriculum course id
 BOOK_TO_COURSE = {
@@ -122,6 +139,65 @@ OPENSTAX_CHAPTER_MAP: dict[str, dict[int, str]] = {
 }
 
 CURRICULUM_UNIT_BOOKS = {"foundations_math", "grade_6_math", "geometry"}
+
+
+def _parse_curriculum_by_type_id(src: str) -> dict[str, dict[str, str]]:
+    """Map type_id → {courseId, chapterId, topicId, title} from lib/curriculum.ts."""
+    by_type: dict[str, dict[str, str]] = {}
+    course_id: str | None = None
+    chapter_id: str | None = None
+    chapter_name: str | None = None
+
+    # Course block: id: "calculus", name: "Calculus",
+    course_re = re.compile(
+        rf'id:\s*"({"|".join(COURSE_IDS)})"\s*,\s*\n\s*name:\s*"([^"]+)"'
+    )
+    # Chapter: id + name followed by topics: [
+    chapter_re = re.compile(
+        r'\{\s*id:\s*"([^"]+)"\s*,\s*name:\s*"([^"]+)"\s*,\s*topics:\s*\['
+    )
+    # Leaf with type_id
+    leaf_re = re.compile(
+        r'\{\s*id:\s*"([^"]+)"\s*,\s*name:\s*"([^"]+)"\s*,\s*type_id:\s*"([^"]+)"\s*\}'
+    )
+
+    events: list[tuple[int, str, tuple]] = []
+    for m in course_re.finditer(src):
+        events.append((m.start(), "course", (m.group(1), m.group(2))))
+    for m in chapter_re.finditer(src):
+        events.append((m.start(), "chapter", (m.group(1), m.group(2))))
+    for m in leaf_re.finditer(src):
+        events.append((m.start(), "leaf", (m.group(1), m.group(2), m.group(3))))
+    events.sort(key=lambda e: e[0])
+
+    for _start, kind, payload in events:
+        if kind == "course":
+            course_id = payload[0]
+            chapter_id = None
+            chapter_name = None
+        elif kind == "chapter":
+            chapter_id, chapter_name = payload
+        elif kind == "leaf" and course_id and chapter_id:
+            topic_id, title, type_id = payload
+            # Prefer first curriculum placement for a type_id.
+            by_type.setdefault(
+                type_id,
+                {
+                    "courseId": course_id,
+                    "chapterId": chapter_id,
+                    "topicId": topic_id,
+                    "title": title,
+                    "chapterTitle": chapter_name or chapter_id,
+                },
+            )
+    return by_type
+
+
+def _load_topic_leaves() -> dict[str, dict]:
+    if not TOPIC_LEAVES_PATH.is_file():
+        return {}
+    raw = json.loads(TOPIC_LEAVES_PATH.read_text(encoding="utf-8"))
+    return {k: v for k, v in raw.items() if not k.startswith("_") and isinstance(v, dict)}
 
 
 def _load_progs():
@@ -257,15 +333,67 @@ def main() -> int:
         if key:
             node_to_key[full_id] = key
 
+    # Topic/leaf skill deps (intra-chapter) authored in topic_leaves.json.
+    curriculum_src = CURRICULUM_PATH.read_text(encoding="utf-8")
+    by_type = _parse_curriculum_by_type_id(curriculum_src)
+    topic_leaves = _load_topic_leaves()
+    topic_entries: dict[str, dict] = {}
+    type_to_topic_key: dict[str, str] = {}
+    leaf_warnings: list[str] = []
+
+    for type_id, leaf in topic_leaves.items():
+        loc = by_type.get(type_id)
+        if not loc:
+            leaf_warnings.append(f"Unknown type_id in topic_leaves: {type_id}")
+            continue
+        key = f"{loc['courseId']}:{loc['chapterId']}:{loc['topicId']}"
+        type_to_topic_key[type_id] = key
+        requires_refs = []
+        for req_type in leaf.get("requires", []):
+            req_loc = by_type.get(req_type)
+            if not req_loc:
+                leaf_warnings.append(
+                    f"{type_id} references unknown prerequisite type_id: {req_type}"
+                )
+                continue
+            rk = f"{req_loc['courseId']}:{req_loc['chapterId']}:{req_loc['topicId']}"
+            requires_refs.append(
+                {
+                    "key": rk,
+                    "courseId": req_loc["courseId"],
+                    "chapterId": req_loc["chapterId"],
+                    "topicId": req_loc["topicId"],
+                    "typeId": req_type,
+                    "title": req_loc["title"],
+                }
+            )
+        topic_entries[key] = {
+            "key": key,
+            "courseId": loc["courseId"],
+            "chapterId": loc["chapterId"],
+            "topicId": loc["topicId"],
+            "typeId": type_id,
+            "title": loc["title"],
+            "reason": str(leaf.get("reason", "")),
+            "requires": requires_refs,
+        }
+
     payload = {
-        "version": 1,
+        "version": 2,
         "entries": entries,
+        "topicEntries": topic_entries,
+        "typeIdToTopicKey": type_to_topic_key,
         "nodeToCurriculumKey": node_to_key,
     }
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {OUT_PATH.relative_to(ROOT)} ({len(entries)} chapter entries)")
-    return 0
+    print(
+        f"Wrote {OUT_PATH.relative_to(ROOT)} "
+        f"({len(entries)} chapter entries, {len(topic_entries)} topic entries)"
+    )
+    for warning in leaf_warnings:
+        print(f"  warning: {warning}")
+    return 1 if leaf_warnings else 0
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ type AddTopicPanelProps = {
   onSelectType: (typeId: string) => void;
 };
 
-/** Full-side curriculum browser. Selection opens the topic options modal. */
+/** Full-side curriculum browser. Double-click a ready topic to open options. */
 export function AddTopicPanel({ types, onSelectType }: AddTopicPanelProps) {
   if (types.length === 0) {
     return (
@@ -24,7 +24,10 @@ export function AddTopicPanel({ types, onSelectType }: AddTopicPanelProps) {
     <section className="panel topics-browser-panel topics-browser-panel-fill">
       <header className="topics-browser-header">
         <h2>Topics</h2>
-        <p className="hint">Select a topic to choose options and add it to the worksheet.</p>
+        <p className="hint">
+          Single-click a topic to select it and view prerequisites. Double-click a ready topic
+          to add it. Right-click a prerequisite for add or browse options.
+        </p>
       </header>
       <CurriculumTopicPicker
         types={types}

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "entries": {
     "algebra_1:factoring": {
       "key": "algebra_1:factoring",
@@ -2170,6 +2170,449 @@
         }
       ]
     }
+  },
+  "topicEntries": {
+    "calculus:derivatives:calc_diff_average_rates_of_change": {
+      "key": "calculus:derivatives:calc_diff_average_rates_of_change",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_average_rates_of_change",
+      "typeId": "calc_diff_average_rates_of_change",
+      "title": "Average rates of change",
+      "reason": "Average rate of change is pre-derivative setup; no calculus Limits chapter required.",
+      "requires": []
+    },
+    "calculus:derivatives:calc_diff_definition_of_the_derivative": {
+      "key": "calculus:derivatives:calc_diff_definition_of_the_derivative",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_definition_of_the_derivative",
+      "typeId": "calc_diff_definition_of_the_derivative",
+      "title": "Definition of the derivative",
+      "reason": "The limit definition of the derivative is the skill that actually requires Limits (and average rates as the difference quotient).",
+      "requires": [
+        {
+          "key": "calculus:limits:calc_limits_by_direct_evaluation",
+          "courseId": "calculus",
+          "chapterId": "limits",
+          "topicId": "calc_limits_by_direct_evaluation",
+          "typeId": "calc_limits_by_direct_evaluation",
+          "title": "By direct evaluation"
+        },
+        {
+          "key": "calculus:limits:calc_limits_at_removable_discontinuities",
+          "courseId": "calculus",
+          "chapterId": "limits",
+          "topicId": "calc_limits_at_removable_discontinuities",
+          "typeId": "calc_limits_at_removable_discontinuities",
+          "title": "At removable discontinuities"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_average_rates_of_change",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_average_rates_of_change",
+          "typeId": "calc_diff_average_rates_of_change",
+          "title": "Average rates of change"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_instantaneous_rates_of_change": {
+      "key": "calculus:derivatives:calc_diff_instantaneous_rates_of_change",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_instantaneous_rates_of_change",
+      "typeId": "calc_diff_instantaneous_rates_of_change",
+      "title": "Instantaneous rates of change",
+      "reason": "Instantaneous rate is the derivative at a point; builds on the definition, not a fresh Limits chapter tour.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_definition_of_the_derivative",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_definition_of_the_derivative",
+          "typeId": "calc_diff_definition_of_the_derivative",
+          "title": "Definition of the derivative"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_power_rule": {
+      "key": "calculus:derivatives:calc_diff_power_rule",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_power_rule",
+      "typeId": "calc_diff_power_rule",
+      "title": "Power Rule",
+      "reason": "Power Rule is a differentiation method after the derivative concept is introduced; does not re-require Limits overview.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_definition_of_the_derivative",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_definition_of_the_derivative",
+          "typeId": "calc_diff_definition_of_the_derivative",
+          "title": "Definition of the derivative"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_instantaneous_rates_of_change",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_instantaneous_rates_of_change",
+          "typeId": "calc_diff_instantaneous_rates_of_change",
+          "title": "Instantaneous rates of change"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_higher_order_derivatives": {
+      "key": "calculus:derivatives:calc_diff_higher_order_derivatives",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_higher_order_derivatives",
+      "typeId": "calc_diff_higher_order_derivatives",
+      "title": "Higher order derivatives",
+      "reason": "Higher-order derivatives repeatedly apply basic differentiation rules (starting with Power Rule).",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_power_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_power_rule",
+          "typeId": "calc_diff_power_rule",
+          "title": "Power Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_product_rule": {
+      "key": "calculus:derivatives:calc_diff_product_rule",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_product_rule",
+      "typeId": "calc_diff_product_rule",
+      "title": "Product Rule",
+      "reason": "Product Rule extends basic differentiation; Power Rule fluency is assumed.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_power_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_power_rule",
+          "typeId": "calc_diff_power_rule",
+          "title": "Power Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_quotient_rule": {
+      "key": "calculus:derivatives:calc_diff_quotient_rule",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_quotient_rule",
+      "typeId": "calc_diff_quotient_rule",
+      "title": "Quotient Rule",
+      "reason": "Quotient Rule builds on Power Rule and is closely related to Product Rule.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_power_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_power_rule",
+          "typeId": "calc_diff_power_rule",
+          "title": "Power Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_product_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_product_rule",
+          "typeId": "calc_diff_product_rule",
+          "title": "Product Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_chain_rule": {
+      "key": "calculus:derivatives:calc_diff_chain_rule",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_chain_rule",
+      "typeId": "calc_diff_chain_rule",
+      "title": "Chain Rule",
+      "reason": "Chain Rule composes basic differentiation methods (power/product/quotient).",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_power_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_power_rule",
+          "typeId": "calc_diff_power_rule",
+          "title": "Power Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_product_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_product_rule",
+          "typeId": "calc_diff_product_rule",
+          "title": "Product Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_quotient_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_quotient_rule",
+          "typeId": "calc_diff_quotient_rule",
+          "title": "Quotient Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_rules_using_tables": {
+      "key": "calculus:derivatives:calc_diff_rules_using_tables",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_rules_using_tables",
+      "typeId": "calc_diff_rules_using_tables",
+      "title": "Rules, using tables",
+      "reason": "Table-based rule problems mix Power, Product, Quotient, and Chain.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_power_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_power_rule",
+          "typeId": "calc_diff_power_rule",
+          "title": "Power Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_product_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_product_rule",
+          "typeId": "calc_diff_product_rule",
+          "title": "Product Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_quotient_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_quotient_rule",
+          "typeId": "calc_diff_quotient_rule",
+          "title": "Quotient Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_chain_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_chain_rule",
+          "typeId": "calc_diff_chain_rule",
+          "title": "Chain Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_trigonometric": {
+      "key": "calculus:derivatives:calc_diff_trigonometric",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_trigonometric",
+      "typeId": "calc_diff_trigonometric",
+      "title": "Trigonometric",
+      "reason": "As generated: Easy is basic sin/cos/tan; Medium uses sin(kx) (chain with constant); Hard mixes product and chain. Not a Limits dependency.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_power_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_power_rule",
+          "typeId": "calc_diff_power_rule",
+          "title": "Power Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_product_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_product_rule",
+          "typeId": "calc_diff_product_rule",
+          "title": "Product Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_chain_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_chain_rule",
+          "typeId": "calc_diff_chain_rule",
+          "title": "Chain Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_inverse_trigonometric": {
+      "key": "calculus:derivatives:calc_diff_inverse_trigonometric",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_inverse_trigonometric",
+      "typeId": "calc_diff_inverse_trigonometric",
+      "title": "Inverse trigonometric",
+      "reason": "Inverse trig derivatives use trig derivative forms and the Chain Rule.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_trigonometric",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_trigonometric",
+          "typeId": "calc_diff_trigonometric",
+          "title": "Trigonometric"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_chain_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_chain_rule",
+          "typeId": "calc_diff_chain_rule",
+          "title": "Chain Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_natural_logarithms_and_exponentials": {
+      "key": "calculus:derivatives:calc_diff_natural_logarithms_and_exponentials",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_natural_logarithms_and_exponentials",
+      "typeId": "calc_diff_natural_logarithms_and_exponentials",
+      "title": "Natural logarithms and exponentials",
+      "reason": "Natural exp/log derivatives use basic rules and the Chain Rule.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_power_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_power_rule",
+          "typeId": "calc_diff_power_rule",
+          "title": "Power Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_chain_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_chain_rule",
+          "typeId": "calc_diff_chain_rule",
+          "title": "Chain Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_other_base_logarithms_and_exponentials": {
+      "key": "calculus:derivatives:calc_diff_other_base_logarithms_and_exponentials",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_other_base_logarithms_and_exponentials",
+      "typeId": "calc_diff_other_base_logarithms_and_exponentials",
+      "title": "Other base logarithms and exponentials",
+      "reason": "Other-base exp/log reduce to natural exp/log derivatives.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_natural_logarithms_and_exponentials",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_natural_logarithms_and_exponentials",
+          "typeId": "calc_diff_natural_logarithms_and_exponentials",
+          "title": "Natural logarithms and exponentials"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_logarithmic": {
+      "key": "calculus:derivatives:calc_diff_logarithmic",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_logarithmic",
+      "typeId": "calc_diff_logarithmic",
+      "title": "Logarithmic",
+      "reason": "Logarithmic differentiation combines log derivatives with Product/Chain.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_natural_logarithms_and_exponentials",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_natural_logarithms_and_exponentials",
+          "typeId": "calc_diff_natural_logarithms_and_exponentials",
+          "title": "Natural logarithms and exponentials"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_product_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_product_rule",
+          "typeId": "calc_diff_product_rule",
+          "title": "Product Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_chain_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_chain_rule",
+          "typeId": "calc_diff_chain_rule",
+          "title": "Chain Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_implicit": {
+      "key": "calculus:derivatives:calc_diff_implicit",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_implicit",
+      "typeId": "calc_diff_implicit",
+      "title": "Implicit",
+      "reason": "Implicit differentiation applies Product and Chain Rules to implicitly defined relations.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_product_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_product_rule",
+          "typeId": "calc_diff_product_rule",
+          "title": "Product Rule"
+        },
+        {
+          "key": "calculus:derivatives:calc_diff_chain_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_chain_rule",
+          "typeId": "calc_diff_chain_rule",
+          "title": "Chain Rule"
+        }
+      ]
+    },
+    "calculus:derivatives:calc_diff_inverse_functions": {
+      "key": "calculus:derivatives:calc_diff_inverse_functions",
+      "courseId": "calculus",
+      "chapterId": "derivatives",
+      "topicId": "calc_diff_inverse_functions",
+      "typeId": "calc_diff_inverse_functions",
+      "title": "Inverse functions",
+      "reason": "Inverse-function derivatives rely on the Chain Rule relationship.",
+      "requires": [
+        {
+          "key": "calculus:derivatives:calc_diff_chain_rule",
+          "courseId": "calculus",
+          "chapterId": "derivatives",
+          "topicId": "calc_diff_chain_rule",
+          "typeId": "calc_diff_chain_rule",
+          "title": "Chain Rule"
+        }
+      ]
+    }
+  },
+  "typeIdToTopicKey": {
+    "calc_diff_average_rates_of_change": "calculus:derivatives:calc_diff_average_rates_of_change",
+    "calc_diff_definition_of_the_derivative": "calculus:derivatives:calc_diff_definition_of_the_derivative",
+    "calc_diff_instantaneous_rates_of_change": "calculus:derivatives:calc_diff_instantaneous_rates_of_change",
+    "calc_diff_power_rule": "calculus:derivatives:calc_diff_power_rule",
+    "calc_diff_higher_order_derivatives": "calculus:derivatives:calc_diff_higher_order_derivatives",
+    "calc_diff_product_rule": "calculus:derivatives:calc_diff_product_rule",
+    "calc_diff_quotient_rule": "calculus:derivatives:calc_diff_quotient_rule",
+    "calc_diff_chain_rule": "calculus:derivatives:calc_diff_chain_rule",
+    "calc_diff_rules_using_tables": "calculus:derivatives:calc_diff_rules_using_tables",
+    "calc_diff_trigonometric": "calculus:derivatives:calc_diff_trigonometric",
+    "calc_diff_inverse_trigonometric": "calculus:derivatives:calc_diff_inverse_trigonometric",
+    "calc_diff_natural_logarithms_and_exponentials": "calculus:derivatives:calc_diff_natural_logarithms_and_exponentials",
+    "calc_diff_other_base_logarithms_and_exponentials": "calculus:derivatives:calc_diff_other_base_logarithms_and_exponentials",
+    "calc_diff_logarithmic": "calculus:derivatives:calc_diff_logarithmic",
+    "calc_diff_implicit": "calculus:derivatives:calc_diff_implicit",
+    "calc_diff_inverse_functions": "calculus:derivatives:calc_diff_inverse_functions"
   },
   "nodeToCurriculumKey": {
     "foundations_math:whole_numbers": "foundations_math:whole_numbers",

@@ -1081,8 +1081,8 @@ button:disabled {
 .curriculum-topic-list {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
+  flex: 1 1 0;
+  min-height: 10rem;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   background: #ffffff;
@@ -1197,11 +1197,21 @@ button:disabled {
 }
 
 .curriculum-prereq-panel {
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  max-height: min(42vh, 20rem);
+  overflow: auto;
   border: 1px solid #dbeafe;
   border-radius: 8px;
   background: #f8fbff;
   padding: 0.7rem 0.8rem;
+}
+
+.curriculum-prereq-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 1.75rem;
 }
 
 .curriculum-prereq-header h3 {
@@ -1213,11 +1223,51 @@ button:disabled {
   color: #1d4ed8;
 }
 
+.curriculum-prereq-back-slot {
+  flex: 0 0 auto;
+  min-width: 4.75rem;
+  min-height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.curriculum-prereq-back {
+  flex: 0 0 auto;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.curriculum-prereq-back:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
 .curriculum-prereq-current {
   margin: 0.2rem 0 0;
   font-size: 0.9rem;
   color: #1f2937;
   font-weight: 600;
+}
+
+.curriculum-prereq-section {
+  margin-top: 0.65rem;
+}
+
+.curriculum-prereq-section-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
 }
 
 .curriculum-prereq-reason {
@@ -1253,6 +1303,12 @@ button:disabled {
 .curriculum-prereq-link:hover:not(:disabled) {
   background: #eff6ff;
   border-color: #93c5fd;
+}
+
+.curriculum-prereq-link.is-selected {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  box-shadow: inset 0 0 0 1px #93c5fd;
 }
 
 .curriculum-prereq-link:disabled {
@@ -1424,6 +1480,15 @@ button:disabled {
 
 .context-menu button:hover {
   background: #f3f4f6;
+}
+
+.context-menu button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.context-menu button:disabled:hover {
+  background: transparent;
 }
 
 .context-menu button.danger {

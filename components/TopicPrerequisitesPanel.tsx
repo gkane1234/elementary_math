@@ -81,26 +81,41 @@ export function TopicPrerequisitesPanel({
     return null;
   }
 
-  const handleClick = (req: PrerequisiteRef) => {
-    const jump = findJumpTargetInChapter(courses, req.courseId, req.chapterId);
+  const browsePrerequisite = (req: PrerequisiteRef) => {
+    const jump = findJumpTargetInChapter(
+      courses,
+      req.courseId,
+      req.chapterId,
+      req.topicId,
+    );
     if (!jump) return;
-
-    if (jump.hasGenerator) {
-      const topic = courses
-        .find((c) => c.id === jump.courseId)
-        ?.chapters.find((c) => c.id === jump.chapterId)
-        ?.topics.find((t) => t.id === jump.topicId);
-      if (topic?.typeId) {
-        onNavigateToType(topic.typeId);
-        return;
-      }
-    }
 
     onBrowseChapter({
       courseId: jump.courseId,
       chapterId: jump.chapterId,
       topicId: jump.topicId,
     });
+  };
+
+  const openPrerequisite = (req: PrerequisiteRef) => {
+    if (req.typeId) {
+      onNavigateToType(req.typeId);
+      return;
+    }
+    const jump = findJumpTargetInChapter(
+      courses,
+      req.courseId,
+      req.chapterId,
+      req.topicId,
+    );
+    if (!jump) return;
+
+    if (jump.hasGenerator && jump.typeId) {
+      onNavigateToType(jump.typeId);
+      return;
+    }
+
+    browsePrerequisite(req);
   };
 
   return (
@@ -115,7 +130,12 @@ export function TopicPrerequisitesPanel({
           {entry.reason ? <p className="topic-options-prereqs-reason">{entry.reason}</p> : null}
           <ul className="topic-options-prereqs-list">
             {entry.requires.map((req) => {
-              const jump = findJumpTargetInChapter(courses, req.courseId, req.chapterId);
+              const jump = findJumpTargetInChapter(
+                courses,
+                req.courseId,
+                req.chapterId,
+                req.topicId,
+              );
               const courseName =
                 courses.find((course) => course.id === req.courseId)?.name ?? req.courseId;
               return (
@@ -124,12 +144,17 @@ export function TopicPrerequisitesPanel({
                     type="button"
                     className="topic-options-prereq-link"
                     disabled={!jump}
-                    onClick={() => handleClick(req)}
+                    onClick={() => browsePrerequisite(req)}
+                    onDoubleClick={() => openPrerequisite(req)}
+                    onContextMenu={(event) => {
+                      event.preventDefault();
+                      browsePrerequisite(req);
+                    }}
                   >
                     <span className="topic-options-prereq-title">{req.title}</span>
                     <span className="topic-options-prereq-meta">
                       {courseName}
-                      {jump?.hasGenerator ? " · open topic" : jump ? " · view prerequisites" : ""}
+                      {jump?.hasGenerator ? " · ready" : jump ? " · view prerequisites" : ""}
                     </span>
                   </button>
                 </li>
@@ -137,7 +162,8 @@ export function TopicPrerequisitesPanel({
             })}
           </ul>
           <p className="topic-options-prereqs-hint">
-            Click a prerequisite to open it and see what it depends on.
+            Single-click or right-click to browse prerequisites. Double-click a ready topic to
+            open its options.
           </p>
         </>
       ) : (

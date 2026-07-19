@@ -101,6 +101,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differentiation",
         "calc_diff_instantaneous_rates_of_change",
         "Instantaneous rates of change",
+        generator="instantaneous_rate_of_change",
         instruction_text="Find the instantaneous rate of change.",
     ),
     _calc(
@@ -176,7 +177,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differentiation",
         "calc_diff_logarithmic",
         "Logarithmic",
-        generator="derivative_ln_exp", instruction_text="Differentiate.",
+        generator="derivative_logarithmic",
+        instruction_text="Differentiate using logarithmic differentiation.",
     ),
     _calc(
         "Differentiation",
@@ -189,13 +191,15 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differentiation",
         "calc_diff_inverse_functions",
         "Inverse functions",
-        instruction_text="Differentiate.",
+        generator="derivative_inverse_functions",
+        instruction_text="Find the derivative of the inverse.",
     ),
     # Applications of Differentiation
     _calc(
         "Applications of Differentiation",
         "calc_app_diff_slope_tangent_and_normal_lines",
         "Slope, tangent, and normal lines",
+        generator="tangent_normal_line",
         instruction_text="Find the slope, tangent line, or normal line.",
     ),
     _calc(
@@ -270,6 +274,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Applications of Differentiation",
         "calc_app_diff_differentials",
         "Differentials",
+        generator="differentials",
         instruction_text="Find the differential.",
     ),
     _calc(
@@ -331,6 +336,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Indefinite Integration",
         "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
         "Logarithmic rule and exponentials with subs.",
+        generator="integral_log_exp_substitution",
         instruction_text="Integrate.",
     ),
     _calc(

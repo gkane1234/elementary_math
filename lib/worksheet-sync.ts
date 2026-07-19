@@ -61,13 +61,15 @@ export function reorderQuestionsBySections(
   return ordered;
 }
 
-function sectionMatchesQuestion(
-  question: WorksheetQuestion,
+/** True when this section's type/settings changed vs the previous plan (count changes do not). */
+export function sectionRequiresRegenerate(
   section: TopicSection,
+  previous: TopicSection | undefined,
 ): boolean {
+  if (!previous) return false;
   return (
-    question.topic === section.type_id &&
-    settingsEqual(question.generation_settings, section.settings)
+    previous.type_id !== section.type_id ||
+    !settingsEqual(previous.settings, section.settings)
   );
 }
 
@@ -94,35 +96,66 @@ async function generateSectionQuestions(
   }));
 }
 
-async function syncSectionQuestions(
+export type SectionSyncPlan =
+  | { kind: "keep"; questions: WorksheetQuestion[] }
+  | { kind: "append"; questions: WorksheetQuestion[]; generateCount: number }
+  | { kind: "trim"; questions: WorksheetQuestion[] }
+  | { kind: "regenerate"; generateCount: number };
+
+/**
+ * Decide keep / append / trim / regenerate for one section without calling the API.
+ * Existing questions are already scoped to this sectionId.
+ */
+export function planSectionSync(
+  section: TopicSection,
+  existing: WorksheetQuestion[],
+  forceRegenerate = false,
+): SectionSyncPlan {
+  const kept = existing.filter((question) => question.topic === section.type_id);
+
+  if (forceRegenerate || kept.length === 0) {
+    return { kind: "regenerate", generateCount: section.count };
+  }
+
+  if (kept.length === section.count) {
+    return { kind: "keep", questions: kept };
+  }
+
+  if (kept.length < section.count) {
+    return {
+      kind: "append",
+      questions: kept,
+      generateCount: section.count - kept.length,
+    };
+  }
+
+  return { kind: "trim", questions: kept.slice(0, section.count) };
+}
+
+/**
+ * Keep/append/trim questions for one section.
+ * Existing questions are already scoped to this sectionId — do not regenerate
+ * them for count-only changes. Full regen only when forceRegenerate is set
+ * (type/settings change) or there is nothing to keep.
+ */
+export async function syncSectionQuestions(
   section: TopicSection,
   existing: WorksheetQuestion[],
   title: string,
+  forceRegenerate = false,
 ): Promise<WorksheetQuestion[]> {
-  const matching = existing.filter((question) => sectionMatchesQuestion(question, section));
+  const plan = planSectionSync(section, existing, forceRegenerate);
 
-  if (matching.length === section.count && matching.length > 0) {
-    return matching;
+  if (plan.kind === "keep" || plan.kind === "trim") {
+    return plan.questions;
   }
 
-  if (
-    matching.length > 0 &&
-    matching.length < section.count &&
-    matching.every((question) => sectionMatchesQuestion(question, section))
-  ) {
-    const extra = await generateSectionQuestions(
-      section,
-      title,
-      section.count - matching.length,
-    );
-    return [...matching, ...extra];
+  if (plan.kind === "append") {
+    const extra = await generateSectionQuestions(section, title, plan.generateCount);
+    return [...plan.questions, ...extra];
   }
 
-  if (matching.length > section.count) {
-    return matching.slice(0, section.count);
-  }
-
-  return generateSectionQuestions(section, title, section.count);
+  return generateSectionQuestions(section, title, plan.generateCount);
 }
 
 export async function syncWorksheetFromSections(
@@ -130,13 +163,21 @@ export async function syncWorksheetFromSections(
   sections: TopicSection[],
   title: string,
   maxColumns: string,
+  previousSections: TopicSection[] = [],
 ): Promise<WorksheetDraft> {
   const existingBySection = groupQuestionsBySection(current?.questions ?? []);
+  const previousById = new Map(previousSections.map((section) => [section.id, section]));
   const questions: WorksheetQuestion[] = [];
 
   for (const section of sections) {
     const existing = existingBySection.get(section.id) ?? [];
-    const sectionQuestions = await syncSectionQuestions(section, existing, title);
+    const forceRegenerate = sectionRequiresRegenerate(section, previousById.get(section.id));
+    const sectionQuestions = await syncSectionQuestions(
+      section,
+      existing,
+      title,
+      forceRegenerate,
+    );
     questions.push(
       ...sectionQuestions.map((question) => ({
         ...question,

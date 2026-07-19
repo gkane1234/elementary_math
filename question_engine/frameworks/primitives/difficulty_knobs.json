@@ -1,0 +1,169 @@
+{
+  "_meta": {
+    "description": "Single source of truth for continuous-difficulty knobs (lanes, log scales, unlocks, constructive). Edit via scripts/difficulty_knobs_server.py debug UI or by hand.",
+    "version": 1
+  },
+  "ui": {
+    "soft_slider_max": 24.0,
+    "hint_above_soft_max": true
+  },
+  "budget": {
+    "downstream_weight_power": 1.0,
+    "default_topic_d": 6.0
+  },
+  "number_lanes": {
+    "friendly_wholes": { "min_d": 0.0 },
+    "signed_small": { "min_d": 0.0 },
+    "unit_fractions": { "min_d": 3.0 },
+    "simple_rations": { "min_d": 4.0 },
+    "friendly_decimals": { "min_d": 4.0 },
+    "difficult_rations": { "min_d": 8.0 },
+    "awkward_decimals": { "min_d": 10.0 },
+    "weight_hardness_power": 2.2,
+    "weight_staleness_offset": 3.0
+  },
+  "variable_lanes": {
+    "only_x": { "min_d": 0.0 },
+    "xyz": { "min_d": 3.0 },
+    "abctuvwxyz": { "min_d": 6.0 },
+    "whole_alphabet": { "min_d": 10.0 },
+    "greek": { "min_d": 12.0 },
+    "weight_hardness_power": 2.2,
+    "weight_staleness_offset": 3.0
+  },
+  "expression_structure": {
+    "leaf_scale": 1.5,
+    "nest_scale": 3.0,
+    "scale_op_scale": 2.5,
+    "mul_unlock_d": 2.0,
+    "div_unlock_d": 4.0,
+    "exp_unlock_d": 3.0
+  },
+  "expand_simplify": {
+    "group_scale": 1.5,
+    "lone_scale": 3.0,
+    "nest_scale": 4.0,
+    "nest_unlock_d": 8.0
+  },
+  "equations": {
+    "_description": "Multi-step op count is linear and uncapped: n_ops = base_ops + floor(D / step_scale). Defaults → D=0→3, D=24→15, D=194→100. Multi-step floors at 4 (both sides). Each side is a sum of distribute chunks: chunks_per_side ≈ (n_ops-2)/4, capped by max_chunks_per_side. Clear-fractions only for modest n_ops unless forced.",
+    "step_scale": 2.0,
+    "base_ops": 3,
+    "ops_to_expr_d": 0.85,
+    "max_side_inflators": 12,
+    "max_chunks_per_side": 40
+  },
+  "polynomial": {
+    "degree_scale": 4.0,
+    "base_degree": 2
+  },
+  "like_terms": {
+    "_description": "Combine-like-terms structure. D=0 = simplest pedagogical shape (2 like + 2 unlike). Through mid_d, total display terms stay ≈3–4 and sign/structure upgrades are suppressed. Above mid_d, purchased upgrades apply; costs are high so bloat unlocks gradually.",
+    "base_n_like": 2,
+    "base_n_unlike": 2,
+    "mid_d": 5.0,
+    "mid_total_lo": 3,
+    "mid_total_hi": 4,
+    "mid_prefer_lo_chance": 0.6,
+    "upgrade_more_like_cost": 5.0,
+    "upgrade_negatives_cost": 3.0,
+    "upgrade_many_terms_cost": 8.0,
+    "upgrade_second_variable_cost": 10.0,
+    "many_terms_extra_like": 2,
+    "many_terms_extra_unlike": 1,
+    "more_like_extra": 1
+  },
+  "ooo": {
+    "_description": "Order-of-operations flat builder: sum/difference of addends, many of which are products/quotients (precedence without parentheses). n_addends = base_addends + floor(D / addend_scale). group_paren_chance unlocks rare (a±b)×c.",
+    "base_addends": 2,
+    "addend_scale": 2.5,
+    "max_addends": 20,
+    "product_chance_base": 0.6,
+    "div_chance_base": 0.15,
+    "group_paren_chance": 0.1,
+    "group_paren_min_d": 8.0
+  },
+  "constructive": {
+    "_description": "Answer-first expression inflation. D=0 = plain seed (no inflators). Meaningful distribute/split only; trivial cancel pairs are NOT default inflators (use presentation.cancel_clutter). Recurse is rare and high-D.",
+    "inflator_scale": 5.0,
+    "min_inflators_when_d_ge": 4.0,
+    "min_inflators_count": 1,
+    "pfd_scale_num_den_chance": 0.4,
+    "affine_prefer_distribute_weight": 3,
+    "numeric_scale_mul_div_chance": 0.45,
+    "numeric_scale_mul_div_min_budget": 2,
+    "allow_trivial_cancel_pair": false,
+    "recurse": {
+      "enabled": true,
+      "chance_per_block": 0.12,
+      "max_depth": 1,
+      "min_d_to_recurse": 12.0,
+      "budget_fraction_to_child": 0.4,
+      "allowed_child_levels": {
+        "L1_numeric": ["L1_numeric"],
+        "L1_affine": ["L1_affine", "L1_numeric"],
+        "L2_rational": ["L1_affine", "L1_numeric"],
+        "L3_rational_sum": ["L1_affine", "L1_numeric"],
+        "L4_pfd": ["L1_affine", "L1_numeric"]
+      }
+    }
+  },
+  "presentation": {
+    "_description": "Algebraic display variants. Default = schoolbook L→R + juxtaposition. +/× commute freely; −/÷ use value-preserving rewrites at higher min_d. clutter = identity noise; strangeness = mixed notation conventions in one expression.",
+    "commute_add_chance": 0.45,
+    "commute_mul_chance": 0.45,
+    "commute_summands_chance": 0.45,
+    "commute_factors_chance": 0.45,
+    "flip_subtraction": {
+      "enabled": true,
+      "min_d": 10.0,
+      "chance": 0.2,
+      "_rewrite": "a - b  →  -(b - a)"
+    },
+    "flip_division": {
+      "enabled": true,
+      "min_d": 12.0,
+      "chance": 0.15,
+      "_rewrite": "a/b  →  1/(b/a)"
+    },
+    "explicit_multiply": {
+      "enabled": true,
+      "min_d": 8.0,
+      "chance": 0.35,
+      "symbol": "*",
+      "_note": "symbol * → text *; latex uses * (or set cdot for \\cdot)"
+    },
+    "clutter": {
+      "_description": "Redundant/identity presentation traps. amount is a soft scale in [0, ∞); 0 disables entirely. Per-site chance ≈ 1-exp(-amount·d_factor) with d_factor from topic D vs min_d. ops weights are relative (omit an op or set 0 to disable that trap).",
+      "amount": 0.0,
+      "min_d": 0.0,
+      "ops": {
+        "unnecessary_parens": 1.0,
+        "mul_by_1": 1.0,
+        "weird_monomial": 1.0,
+        "div_by_1": 1.0,
+        "pow_1": 1.0,
+        "pow_0": 1.0,
+        "trivial_cancel": 1.0
+      }
+    },
+    "strangeness": {
+      "_description": "Inconsistent notation within one expression (mix juxtaposition/* /· /× and / /÷ /frac). amount soft scale; 0 disables. strange_mode is sampled once per expression, then glyphs mix on purpose.",
+      "amount": 0.0,
+      "min_d": 0.0
+    },
+    "cancel_clutter": {
+      "_description": "Value-preserving cancel noise around a core expression chunk: +k−k, +kx−kx, and distributive-shaped pairs that expand to cancel. Soft amount; 0 = off. Intensity scales with topic D once D ≥ min_d. Owned by the shared expression/presentation path; topics opt in via ExpressionScope.allow_cancel_clutter.",
+      "amount": 0.0,
+      "min_d": 10.0
+    }
+  },
+  "distributive": {
+    "_description": "Distributive-property topic overrides (thin client of construct_affine). cancel_clutter here overrides presentation.cancel_clutter when set.",
+    "cancel_clutter": {
+      "_description": "Topic-level override of presentation.cancel_clutter for distributive leaves.",
+      "amount": 0.0,
+      "min_d": 10.0
+    }
+  }
+}

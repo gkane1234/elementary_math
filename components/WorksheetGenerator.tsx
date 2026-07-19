@@ -64,6 +64,7 @@ export function WorksheetGenerator() {
 
   const worksheetRef = useRef<WorksheetDraft | null>(null);
   const lastContentKeyRef = useRef<string>("");
+  const lastSectionsRef = useRef<TopicSection[]>([]);
 
   const contentKey = useMemo(() => sectionContentKey(sections), [sections]);
   const orderKey = useMemo(() => sectionOrderKey(sections), [sections]);
@@ -117,6 +118,7 @@ export function WorksheetGenerator() {
         setError(null);
         setLoading(false);
         lastContentKeyRef.current = "";
+        lastSectionsRef.current = [];
       }
       return;
     }
@@ -143,11 +145,13 @@ export function WorksheetGenerator() {
     setError(null);
 
     const previousQuestions = worksheetRef.current?.questions ?? [];
+    const previousSections = lastSectionsRef.current;
 
-    syncWorksheetFromSections(worksheetRef.current, sections, title, maxColumns)
+    syncWorksheetFromSections(worksheetRef.current, sections, title, maxColumns, previousSections)
       .then((draft) => {
         if (cancelled) return;
         lastContentKeyRef.current = contentKey;
+        lastSectionsRef.current = sections;
         setWorksheet(
           applyColumns({
             ...draft,

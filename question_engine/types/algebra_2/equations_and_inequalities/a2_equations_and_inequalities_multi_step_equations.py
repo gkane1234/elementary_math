@@ -1,10 +1,3 @@
-"""Algebra 2 multi-step equations — framework-backed type."""
+"""Algebra 2 multi-step equations — uses shared multi_step_equations generator."""
 
-from question_engine.frameworks.equation import MultiStepEquationsFramework
-from question_engine.types._framework_type import register_framework_type
-
-register_framework_type(
-    "a2_equations_and_inequalities_multi_step_equations",
-    MultiStepEquationsFramework(),
-    setting_profile="equation",
-)
+# Catalog leaf; generator wired in primitive_g6.GENERATORS.

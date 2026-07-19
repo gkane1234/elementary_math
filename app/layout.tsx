@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "katex/dist/katex.min.css";
 import "./globals.css";
-import { WorksheetGenerator } from "@/components/WorksheetGenerator";
+import { DifficultyKnobsDebug } from "@/components/DifficultyKnobsDebug";
 
 export const metadata: Metadata = {
   title: "Math Worksheet Generator",
@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </header>
           {children}
         </main>
+        <DifficultyKnobsDebug />
       </body>
     </html>
   );

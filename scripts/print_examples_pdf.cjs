@@ -38,11 +38,12 @@ async function main() {
   );
   await page.waitForTimeout(500);
 
+  // Margins come from the HTML @page rule so CSS page-breaks line up with print.
   await page.pdf({
     path: pdfPath,
-    format: "Letter",
     printBackground: true,
-    margin: { top: "0.55in", right: "0.55in", bottom: "0.55in", left: "0.55in" },
+    preferCSSPageSize: true,
+    margin: { top: "0", right: "0", bottom: "0", left: "0" },
   });
 
   // Spot-checks only for the default all-types doc (keeps Grade 6 runs quieter).

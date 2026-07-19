@@ -243,11 +243,43 @@ body {
 .question-columns[data-columns="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .question-columns[data-columns="1"] { grid-template-columns: minmax(0, 1fr); }
 .question-columns[data-columns="2"] .question-graph { max-width: min(240px, 100%); }
+@page {
+  size: letter;
+  margin: 0.55in;
+}
 @media print {
-  body { padding: 0.55in 0.55in; }
-  .difficulty-block { break-inside: avoid; page-break-inside: avoid; }
-  .answer-key { break-inside: avoid; page-break-inside: avoid; }
-  .worksheet-header { break-after: avoid; }
+  body { padding: 0; margin: 0; }
+  .doc-title, .doc-subtitle {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  /* One worksheet type per printed page (first shares page 1 with the title). */
+  .type-section {
+    break-before: page;
+    page-break-before: always;
+    break-inside: auto;
+    margin: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .type-section:first-of-type {
+    break-before: auto;
+    page-break-before: auto;
+  }
+  .worksheet-header {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .difficulty-block,
+  .question-columns,
+  .question-list li,
+  .question-graph,
+  .question-diagram,
+  .answer-key,
+  .answer-list li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
 }
 """
 
@@ -538,7 +570,9 @@ def _edge_exe() -> Path | None:
     candidates = [
         Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"),
         Path(r"C:\Program Files\Microsoft\Edge\Application\msedge.exe"),
+        Path(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"),
         Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe"),
+        Path(r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"),
     ]
     for path in candidates:
         if path.exists():

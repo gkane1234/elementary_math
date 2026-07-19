@@ -65,6 +65,7 @@ from .domains.common import (
     answer_format_settings,
     difficulty_settings,
     multiple_choice_settings,
+    primitive_layered_settings,
     sign_restrictions,
 )
 from .domains.misc import misc_expression_settings
@@ -199,9 +200,10 @@ def proportion_profile() -> list[SettingField]:
 
 
 def order_of_operations_profile() -> list[SettingField]:
-    return merge_settings(
-        pemdas_settings(),
-        number_coef_settings(num_min_default=2, num_max_default=9, num_bound=20),
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable", "ooo"],
+        include_number_profile=True,
+        default_d=6,
     )
 
 
@@ -232,9 +234,79 @@ def factor_profile() -> list[SettingField]:
 
 
 def distributive_profile() -> list[SettingField]:
-    return merge_settings(
-        equation_coef_settings(coef_min_default=-9, coef_max_default=9),
-        allow_negative_settings(),
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable", "distributive"],
+        include_number_profile=True,
+        default_d=5,
+    )
+
+
+def evaluate_expressions_profile() -> list[SettingField]:
+    """Settings for evaluate-linear-expressions (catalog leaves still map here)."""
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable", "evaluate"],
+        include_number_profile=True,
+        default_d=5,
+    )
+
+
+def evaluate_linear_expressions_profile() -> list[SettingField]:
+    return evaluate_expressions_profile()
+
+
+def like_terms_profile() -> list[SettingField]:
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable", "like_terms"],
+        include_number_profile=True,
+        default_d=5,
+    )
+
+
+def expand_simplify_profile() -> list[SettingField]:
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable", "expand_simplify"],
+        include_number_profile=True,
+        default_d=5,
+    )
+
+
+def constructive_rational_profile() -> list[SettingField]:
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable"],
+        include_number_profile=True,
+        default_d=6,
+    )
+
+
+def partial_fraction_profile() -> list[SettingField]:
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable"],
+        include_number_profile=True,
+        default_d=6,
+    )
+
+
+def primitive_equations_profile() -> list[SettingField]:
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable", "equations"],
+        include_number_profile=True,
+        default_d=5,
+    )
+
+
+def primitive_inequalities_profile() -> list[SettingField]:
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable", "inequalities"],
+        include_number_profile=True,
+        default_d=5,
+    )
+
+
+def factor_gcf_profile() -> list[SettingField]:
+    return primitive_layered_settings(
+        primitive_ids=["numbers", "variable", "factor_gcf"],
+        include_number_profile=True,
+        default_d=5,
     )
 
 
@@ -616,6 +688,15 @@ PROFILE_BUILDERS: dict[str, callable] = {
     "number_sets": number_sets_profile,
     "factor": factor_profile,
     "distributive": distributive_profile,
+    "evaluate_expressions": evaluate_expressions_profile,
+    "evaluate_linear_expressions": evaluate_linear_expressions_profile,
+    "like_terms": like_terms_profile,
+    "expand_simplify": expand_simplify_profile,
+    "constructive_rational": constructive_rational_profile,
+    "partial_fraction": partial_fraction_profile,
+    "primitive_equations": primitive_equations_profile,
+    "primitive_inequalities": primitive_inequalities_profile,
+    "factor_gcf": factor_gcf_profile,
     "linear": linear_settings,
     "more_on_slope": more_on_slope_profile,
     "coordinate_plane": coordinate_plane_settings,

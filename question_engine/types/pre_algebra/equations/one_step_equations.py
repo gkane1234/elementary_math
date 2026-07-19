@@ -1,10 +1,3 @@
-"""One-step equations — framework-backed type."""
+"""One-step equations — primitive generator (catalog + GENERATORS override)."""
 
-from question_engine.frameworks.equation import OneStepEquationsFramework
-from question_engine.types._framework_type import register_framework_type
-
-register_framework_type(
-    "one_step_equations",
-    OneStepEquationsFramework(),
-    setting_profile="equation",
-)
+# Catalog registration uses GENERATORS["one_step_equations"] (primitive_g6).

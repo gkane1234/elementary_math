@@ -51,7 +51,12 @@ export type InstructionGroup<T extends { instruction_latex?: string | null }> = 
   startIndex: number;
 };
 
-/** Group consecutive questions that share the same instruction_latex. */
+/** Group consecutive questions that share the same instruction_latex.
+ *
+ * Generators should put shared directions in catalog / metadata
+ * `instruction_latex` and leave `prompt_latex` as the stem/body only.
+ * The worksheet UI renders one header per consecutive group.
+ */
 export function groupQuestionsByInstruction<T extends { instruction_latex?: string | null }>(
   questions: T[],
 ): InstructionGroup<T>[] {

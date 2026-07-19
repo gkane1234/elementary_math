@@ -52,7 +52,14 @@ def _a2(
 CATALOG: tuple[TypeCatalogEntry, ...] = (
     # Beginning Algebra
     _a2("Beginning Algebra", "a2_beginning_algebra_order_of_operations", "Order of operations", generator="order_of_operations", instruction_latex="\\text{Evaluate.}", instruction_text="Evaluate."),
-    _a2("Beginning Algebra", "a2_beginning_algebra_simplifying_algebraic_expressions", "Simplifying algebraic expressions", generator="combining_like_terms", instruction_latex="\\text{Simplify.}", instruction_text="Simplify."),
+    _a2(
+        "Beginning Algebra",
+        "a2_beginning_algebra_simplifying_algebraic_expressions",
+        "Simplifying algebraic expressions",
+        generator="expand_simplify",
+        instruction_latex="\\text{Expand and simplify.}",
+        instruction_text="Expand and simplify.",
+    ),
     # Equations and Inequalities
     _a2("Equations and Inequalities", "a2_equations_and_inequalities_multi_step_equations", "Multi-step equations", generator="multi_step_equations", instruction_latex="\\text{Solve for } x.", instruction_text="Solve for x."),
     _a2("Equations and Inequalities", "a2_equations_and_inequalities_work_word_problems", "Work word problems", generator="wp_work", instruction_latex="\\text{Solve the problem.}", instruction_text="Solve the problem.", count_default=5),

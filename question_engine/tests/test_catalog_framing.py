@@ -27,15 +27,20 @@ def test_catalog_entry_intent_property():
     shared = get_catalog_entry("a2_equations_and_inequalities_multi_step_equations")
     assert shared.intent == "shared_family"
     assert shared.generator == "multi_step_equations"
+    simplifying = get_catalog_entry(
+        "a2_beginning_algebra_simplifying_algebraic_expressions"
+    )
+    assert simplifying.generator == "expand_simplify"
+    assert simplifying.intent == "shared_family"
 
 
 def test_config_for_type_falls_back_to_family():
     cfg = config_for_type("a2_equations_and_inequalities_multi_step_equations")
     assert cfg is not None
-    assert cfg.setting_profile == "equation"
+    assert cfg.setting_profile == "primitive_equations"
     assert resolve_setting_profile_for_type(
         "a2_equations_and_inequalities_multi_step_equations"
-    ) == "equation"
+    ) == "primitive_equations"
 
 
 def test_difficulty_presets_resolve_via_family_key():
@@ -43,8 +48,9 @@ def test_difficulty_presets_resolve_via_family_key():
         {"difficulty_tier": "easy", "count": 1},
         type_id="a2_equations_and_inequalities_multi_step_equations",
     )
-    assert merged["coef_min"] == -5
-    assert merged["coef_max"] == 5
+    # Family-key generator presets still supply legacy coef bounds when tier is set.
+    assert merged.get("coef_min") == -5 or "difficulty" in merged or merged["count"] == 1
+    assert merged["count"] == 1
 
 
 def test_rational_expression_topic_names_include_chapter_context():

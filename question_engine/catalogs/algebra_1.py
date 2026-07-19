@@ -83,8 +83,8 @@ CATALOG: tuple = (
         "The Distributive Property",
         "Pre-Algebra — Beginning Algebra",
         generator="distributive_property",
-        instruction_latex=r"\text{Evaluate.}",
-        instruction_text="Evaluate.",
+        instruction_latex=r"\text{Rewrite using the distributive property.}",
+        instruction_text="Rewrite using the distributive property.",
     ),
     entry(
         "one_step_equations",

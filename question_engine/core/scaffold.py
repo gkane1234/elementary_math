@@ -16,11 +16,6 @@ def make_catalog_type(
     setting_config: TypeSettingConfig | None = None,
 ) -> type[QuestionType]:
     generator_key = entry.generator
-    uses_scaffold = generator_key == "scaffold" or generator_key not in GENERATORS
-    generator: Callable[[str, dict], list[Question]] = GENERATORS.get(
-        generator_key,
-        GENERATORS["scaffold"],
-    )
     resolved_config = (
         setting_config
         or config_for_type(entry.id)
@@ -49,8 +44,9 @@ def make_catalog_type(
         instruction_latex = entry.instruction_latex
         instruction_text = entry.instruction_text
         _count_default = entry.count_default
-        _generator = staticmethod(generator)
-        _uses_scaffold = uses_scaffold
+        # Resolve at call time so later GENERATORS overrides (primitive_* modules)
+        # win even if catalog registration ran against an earlier dict snapshot.
+        _generator_key = generator_key
         _setting_config = resolved_config
         setting_profile = resolved_config.setting_profile if resolved_config else None
 
@@ -58,8 +54,14 @@ def make_catalog_type(
             return resolve_type_settings(self._setting_config)
 
         def generate(self, settings: dict) -> list[Question]:
-            questions = self._generator(self.id, settings)
-            if self._uses_scaffold:
+            key = self._generator_key
+            uses_scaffold = key == "scaffold" or key not in GENERATORS
+            generator: Callable[[str, dict], list[Question]] = GENERATORS.get(
+                key,
+                GENERATORS["scaffold"],
+            )
+            questions = generator(self.id, settings)
+            if uses_scaffold:
                 for question in questions:
                     question.metadata = {**scaffold_metadata(), **question.metadata}
             return questions

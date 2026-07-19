@@ -140,9 +140,21 @@ def _inequality_config(
 
 
 _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
-    "one_step_equations": _equation_config(),
-    "two_step_equations": _equation_config(*_OPS_TWO_STEP),
-    "multi_step_equations": _equation_config(*_OPS_MULTI),
+    "one_step_equations": TypeSettingConfig(setting_profile="primitive_equations"),
+    "two_step_equations": TypeSettingConfig(setting_profile="primitive_equations"),
+    "multi_step_equations": TypeSettingConfig(setting_profile="primitive_equations"),
+    "pa_equations_multi_step_equations": TypeSettingConfig(
+        setting_profile="primitive_equations"
+    ),
+    "a2_equations_and_inequalities_multi_step_equations": TypeSettingConfig(
+        setting_profile="primitive_equations"
+    ),
+    "a2_beginning_algebra_simplifying_algebraic_expressions": TypeSettingConfig(
+        setting_profile="expand_simplify"
+    ),
+    "geo_review_multi_step_equations": TypeSettingConfig(
+        setting_profile="primitive_equations"
+    ),
     "literal_equations": _equation_config(*_OPS_MULTI),
     "absolute_value_equations": _equation_config(
         *_OPS_MULTI,
@@ -159,9 +171,15 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         },
     ),
     # Inequalities — blank number line for student work (answer key shows shading).
-    "one_step_inequalities": _inequality_config(),
-    "two_step_inequalities": _inequality_config(),
-    "multi_step_inequalities": _inequality_config(),
+    "one_step_inequalities": TypeSettingConfig(setting_profile="primitive_inequalities"),
+    "two_step_inequalities": TypeSettingConfig(setting_profile="primitive_inequalities"),
+    "multi_step_inequalities": TypeSettingConfig(setting_profile="primitive_inequalities"),
+    "pa_multi_step_inequalities": TypeSettingConfig(
+        setting_profile="primitive_inequalities"
+    ),
+    "a2_equations_and_inequalities_multi_step_inequalities": TypeSettingConfig(
+        setting_profile="primitive_inequalities"
+    ),
     "compound_inequalities": _inequality_config(
         setting_profile="compound_inequality",
     ),
@@ -623,8 +641,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("min_degree", "max_degree")),
     ),
     "polynomial_factoring_common_factor": TypeSettingConfig(
-        setting_profile="polynomial_factoring",
-        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_profile="factor_gcf",
     ),
     "polynomial_factoring_special_cases": TypeSettingConfig(
         setting_profile="polynomial_factoring",
@@ -879,48 +896,30 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     ),
     # Rational expressions
     "rational_simplification": TypeSettingConfig(
-        setting_profile="polynomial_division",
-        inherits=("polynomial_factoring",),
-        exclude_settings=(
-            "divide_cleanly",
-            # Factoring-method toggles are unused: this type always builds from
-            # linear factors so every difficulty stays classroom-factorable.
-            "factor_rrt",
-            "factor_normal",
-            "factor_grouping",
-            "factor_substitution",
-            "factor_difference_of_squares",
-            "factor_perfect_square_trinomial",
-            "factor_difference_of_cubes",
-            "factor_sum_of_cubes",
-            "require_gcf",
-            "difference_of_squares_only",
-        ),
-        extra_settings=(rational_simplification_settings,),
-        setting_defaults={
-            "numerator_degree_min": 2,
-            "numerator_degree_max": 3,
-            "denominator_degree_min": 2,
-            "denominator_degree_max": 3,
-            "leading_coefficient_one": True,
-            "monic_only": True,
-            "cancel_factor_count": 1,
-        },
+        setting_profile="constructive_rational",
+        setting_defaults={"integers_only": True},
+    ),
+    "a2_rational_expressions_simplifying": TypeSettingConfig(
+        setting_profile="constructive_rational",
+        setting_defaults={"integers_only": True},
     ),
     "rational_expression_simplification": TypeSettingConfig(
-        setting_profile="polynomial_division",
-        inherits=("polynomial_factoring",),
-        exclude_settings=(
-            "numerator_degree_min",
-            "numerator_degree_max",
-            "divide_cleanly",
-        ),
-        include_settings=tuple(rational_expression_extra_settings()),
+        setting_profile="constructive_rational",
+        setting_defaults={"integers_only": True},
         count_default=5,
-        setting_defaults={
-            "denominator_degree_min": 2,
-            "denominator_degree_max": 3,
-        },
+    ),
+    "a2_rational_expressions_adding_and_subtracting": TypeSettingConfig(
+        setting_profile="constructive_rational",
+        setting_defaults={"integers_only": True},
+        count_default=5,
+    ),
+    "partial_fraction_decomposition": TypeSettingConfig(
+        setting_profile="partial_fraction",
+        setting_defaults={"integers_only": True, "only_x": True},
+    ),
+    "pc_partial_fraction_decomposition": TypeSettingConfig(
+        setting_profile="partial_fraction",
+        setting_defaults={"integers_only": True, "only_x": True},
     ),
     "rational_expression_multiply_divide": TypeSettingConfig(
         setting_profile="polynomial",
@@ -989,14 +988,21 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             extra=("term_count", "phrase_complexity", "constant_min", "constant_max"),
         ),
     ),
-    "combining_like_terms": TypeSettingConfig(
-        setting_profile="algebra_expression",
-        exclude_settings=_excludes(_TERM_SETTINGS, extra=("phrase_complexity", "exponent_min", "exponent_max")),
+    "combining_like_terms": TypeSettingConfig(setting_profile="like_terms"),
+    "g6_combining_like_terms": TypeSettingConfig(setting_profile="like_terms"),
+    "expand_simplify": TypeSettingConfig(setting_profile="expand_simplify"),
+    "expand_then_simplify": TypeSettingConfig(setting_profile="expand_simplify"),
+    "g6_evaluating_algebraic_expressions": TypeSettingConfig(
+        setting_profile="evaluate_linear_expressions"
     ),
-    "g6_combining_like_terms": TypeSettingConfig(
-        setting_profile="algebra_expression",
-        exclude_settings=_excludes(_TERM_SETTINGS, extra=("phrase_complexity", "exponent_min", "exponent_max")),
+    "evaluate_algebraic_expressions": TypeSettingConfig(
+        setting_profile="evaluate_linear_expressions"
     ),
+    "g6_solving_and_graphing_one_step_inequalities": TypeSettingConfig(
+        setting_profile="primitive_inequalities"
+    ),
+    "factor_gcf": TypeSettingConfig(setting_profile="factor_gcf"),
+    "g6_factor_gcf": TypeSettingConfig(setting_profile="factor_gcf"),
     "verbal_expressions": TypeSettingConfig(
         setting_profile="algebra_expression",
         exclude_settings=_excludes(_TERM_SETTINGS, extra=("term_count", "exponent_min", "exponent_max")),
@@ -1473,6 +1479,12 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "vector_3d_basics": TypeSettingConfig(setting_profile="algebra_expression"),
     "precalc_foundations": TypeSettingConfig(setting_profile="algebra_expression"),
     "calculus_foundations": TypeSettingConfig(setting_profile="derivatives"),
+    "tangent_normal_line": TypeSettingConfig(setting_profile="derivatives"),
+    "differentials": TypeSettingConfig(setting_profile="derivatives"),
+    "integral_log_exp_substitution": TypeSettingConfig(setting_profile="integrals"),
+    "instantaneous_rate_of_change": TypeSettingConfig(setting_profile="derivatives"),
+    "derivative_inverse_functions": TypeSettingConfig(setting_profile="derivatives"),
+    "derivative_logarithmic": TypeSettingConfig(setting_profile="derivatives"),
     "derivative_inverse_trig": TypeSettingConfig(setting_profile="derivatives"),
     "derivative_other_base": TypeSettingConfig(setting_profile="derivatives"),
     "derivative_from_tables": TypeSettingConfig(setting_profile="derivatives"),

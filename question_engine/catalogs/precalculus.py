@@ -430,6 +430,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Matrices and Systems",
         "pc_partial_fraction_decomposition",
         "Partial fraction decomposition",
+        generator="partial_fraction_decomposition",
+        instruction_latex="\\text{Decompose.}",
         instruction_text="Decompose the expression.",
     ),
     # Conic Sections

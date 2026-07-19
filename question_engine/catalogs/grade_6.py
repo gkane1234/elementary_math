@@ -327,7 +327,9 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _g6(
         "Numeric Expressions, Exponents, and the Order of Operations",
         "g6_distributive_property_numeric",
-        "Distributive property, numeric", generator="distributive_property", instruction_text="Evaluate.",
+        "Distributive property, numeric",
+        generator="distributive_property",
+        instruction_text="Rewrite using the distributive property.",
     ),
     # Variables and Algebraic Expressions
     _g6(
@@ -340,8 +342,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _g6(
         "Variables and Algebraic Expressions",
         "g6_evaluating_algebraic_expressions",
-        "Evaluating algebraic expressions",
-        generator="g6_negative_number_operations",
+        "Evaluating linear expressions",
+        generator="g6_evaluating_algebraic_expressions",
         instruction_text="Evaluate.",
     ),
     # Equivalent Expressions
@@ -356,7 +358,9 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _g6(
         "Equivalent Expressions",
         "g6_distributive_property_algebraic",
-        "Distributive property, algebraic", generator="distributive_property_algebraic", instruction_text="Simplify.",
+        "Distributive property, algebraic",
+        generator="distributive_property_algebraic",
+        instruction_text="Rewrite using the distributive property.",
     ),
     # Equations
     _g6("Equations", "g6_solutions_to_equations", "Solutions to equations", generator="check_equation_solution", instruction_text="Determine if the value is a solution."),

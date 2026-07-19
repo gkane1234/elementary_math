@@ -162,7 +162,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         name: "Variables and Algebraic Expressions",
         topics: [
           { id: "g6_writing_algebraic_expressions", name: "Writing algebraic expressions", type_id: "g6_writing_algebraic_expressions" },
-          { id: "g6_evaluating_algebraic_expressions", name: "Evaluating algebraic expressions", type_id: "g6_evaluating_algebraic_expressions" },
+          { id: "g6_evaluating_algebraic_expressions", name: "Evaluating linear expressions", type_id: "g6_evaluating_algebraic_expressions" },
         ],
       },
       {

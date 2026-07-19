@@ -1,0 +1,14 @@
+---
+description: After any requested change, verify it works with concrete checks before declaring done
+alwaysApply: true
+---
+
+# Verify every change
+
+Whenever the user asks for a code or behavior change:
+
+1. Implement the change.
+2. **Verify it works** before saying you are done — run the relevant generators, API calls, unit tests, or other concrete checks.
+3. Prefer checking the live path the user actually uses when relevant (e.g. `question_engine` generate API / worksheet generators), not only unit tests.
+4. If verification fails, fix it and re-verify.
+5. Briefly say what you checked and the result.

@@ -1,11 +1,3 @@
-"""Multi-step inequalities — framework-backed type."""
+"""Multi-step inequalities — primitive generator (catalog + GENERATORS override)."""
 
-from question_engine.frameworks.equation import MultiStepInequalitiesFramework
-from question_engine.types._framework_type import register_framework_type
-
-register_framework_type(
-    "multi_step_inequalities",
-    MultiStepInequalitiesFramework(),
-    setting_profile="inequality",
-    exclude_settings=("steps", "min_terms", "max_terms", "phrase_complexity", "max_phrase_operations"),
-)
+# Catalog registration uses GENERATORS["multi_step_inequalities"] (primitive_g6).

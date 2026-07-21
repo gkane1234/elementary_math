@@ -42,15 +42,23 @@ def order_of_operations(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
+    require_exponents = bool(settings.get("require_exponents", False)) or (
+        "with_exponents" in topic
+    )
 
     def build() -> tuple[str, str, str | None]:
         ctx = build_context(
-            settings,
+            {**settings, "require_exponents": require_exponents},
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_OOO],
+            leaf_id=topic,
         )
-        expr = sample_ooo_expression(ctx)
+        expr = sample_ooo_expression(ctx, require_exponents=require_exponents)
         answer = _answer_latex(expr.value) if include_answer_key else None
-        last["meta"] = {**ctx.metadata(), "primitive_engine": "ooo"}
+        last["meta"] = {
+            **ctx.metadata(),
+            "primitive_engine": "ooo",
+            "require_exponents": require_exponents,
+        }
         # Stem only — worksheet UI factors catalog instruction_latex as a header.
         return (expr.latex, expr.text, answer)
 
@@ -65,6 +73,11 @@ def order_of_operations(topic: str, settings: dict) -> list[Question]:
         metadata_builder=metadata_builder,
         settings=settings,
     )
+
+
+def numeric_expressions_with_exponents(topic: str, settings: dict) -> list[Question]:
+    """OOO stems that always include at least one exponent."""
+    return order_of_operations(topic, {**settings, "require_exponents": True})
 
 
 def distributive_property(topic: str, settings: dict) -> list[Question]:
@@ -428,6 +441,8 @@ multi_step_inequalities = _inequality_generator("multi")
 
 GENERATORS = {
     "order_of_operations": order_of_operations,
+    # Catalog leaves that share the continuous OOO / expression-exponents path.
+    "g6_numeric_expressions_with_exponents": numeric_expressions_with_exponents,
     "distributive_property": distributive_property,
     "distributive_property_algebraic": distributive_property_algebraic,
     # Catalog aliases used by grade_6

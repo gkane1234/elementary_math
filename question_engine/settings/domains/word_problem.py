@@ -31,9 +31,9 @@ def word_problem_settings() -> list[SettingField]:
         SettingField(
             "difficulty",
             "Difficulty",
-            "select",
-            "medium",
-            options=["easy", "medium", "hard"],
+            "int",
+            6,
+            min=0,
             group="word_problem",
         ),
         SettingField(
@@ -74,6 +74,26 @@ def word_problem_settings() -> list[SettingField]:
             min=1,
             max=4,
             group="word_problem",
+        ),
+    ]
+
+
+def mixture_problem_settings() -> list[SettingField]:
+    """Toggles for percent vs cost weighted-average mixture frames."""
+    return [
+        SettingField(
+            "allow_mixture_percent",
+            "Allow percent / concentration mixtures",
+            "bool",
+            True,
+            group="mixture_structure",
+        ),
+        SettingField(
+            "allow_mixture_cost",
+            "Allow cost-per-unit mixtures",
+            "bool",
+            True,
+            group="mixture_structure",
         ),
     ]
 

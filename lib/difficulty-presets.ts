@@ -310,6 +310,26 @@ export const PROFILE_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
       unit_rate_multiplier_max: 15,
     },
   },
+  comparing_rates: {
+    easy: {
+      unit_rate_min: 2,
+      unit_rate_max: 6,
+      unit_rate_multiplier_min: 1,
+      unit_rate_multiplier_max: 4,
+    },
+    medium: {
+      unit_rate_min: 2,
+      unit_rate_max: 12,
+      unit_rate_multiplier_min: 2,
+      unit_rate_multiplier_max: 8,
+    },
+    hard: {
+      unit_rate_min: 2,
+      unit_rate_max: 20,
+      unit_rate_multiplier_min: 3,
+      unit_rate_multiplier_max: 12,
+    },
+  },
   proportion: {
     easy: { ratio_part_min: 1, ratio_part_max: 8 },
     medium: { ratio_part_min: 2, ratio_part_max: 12 },
@@ -1548,7 +1568,7 @@ export const GENERATOR_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
       allow_polynomial_terms: false,
       allow_full_lcd_terms: false,
       inflation_chance: 0,
-      cancel_factor_count: "0",
+      cancel_factor_count: "1",
       factor_rrt: false,
       force_lcd: false,
     },
@@ -1567,7 +1587,7 @@ export const GENERATOR_DIFFICULTY_PRESETS: Record<string, TierPresets> = {
       allow_polynomial_terms: true,
       allow_full_lcd_terms: true,
       inflation_chance: 15,
-      cancel_factor_count: "random",
+      cancel_factor_count: "2",
       factor_rrt: false,
       force_lcd: false,
     },
@@ -2282,6 +2302,35 @@ const WHOLE_DIVIDE_TO_DECIMAL_TIERS: TierPresets = {
 };
 GENERATOR_DIFFICULTY_PRESETS.g6_dividing_whole_numbers_that_result_in_decimals =
   WHOLE_DIVIDE_TO_DECIMAL_TIERS;
+const WHOLE_BY_DECIMAL_DIVIDE_TIERS: TierPresets = {
+  easy: {
+    decimal_places: 1,
+    max_decimal_places: 1,
+    allow_negative: false,
+    divisor_ge_one: false,
+    num_min: 1,
+    num_max: 20,
+  },
+  medium: {
+    decimal_places: 2,
+    max_decimal_places: 2,
+    allow_negative: false,
+    divisor_ge_one: true,
+    num_min: 1,
+    num_max: 80,
+  },
+  hard: {
+    decimal_places: 3,
+    max_decimal_places: 3,
+    allow_negative: true,
+    divisor_ge_one: true,
+    num_min: 1,
+    num_max: 200,
+  },
+};
+GENERATOR_DIFFICULTY_PRESETS.g6_dividing_whole_numbers_by_decimals =
+  WHOLE_BY_DECIMAL_DIVIDE_TIERS;
+GENERATOR_DIFFICULTY_PRESETS.g6_whole_by_decimal_divide = WHOLE_BY_DECIMAL_DIVIDE_TIERS;
 GENERATOR_DIFFICULTY_PRESETS.g6_distributive_property_numeric = {
   easy: { coef_min: 2, coef_max: 5, allow_negative: false },
   medium: { coef_min: 2, coef_max: 9, allow_negative: false },
@@ -2485,53 +2534,12 @@ GENERATOR_DIFFICULTY_PRESETS.g6_equations_tape_diagrams = {
   medium: { tape_style: "mixed", difficulty_tier: "medium" },
   hard: { tape_style: "nonuniform", difficulty_tier: "hard" },
 };
-GENERATOR_DIFFICULTY_PRESETS.pa_integers_adding_and_subtracting = {
-  easy: {
-    num_min: -10,
-    num_max: 10,
-    allow_negative: true,
-    allow_integers: true,
-    allow_decimals: true,
-    allow_fractions: true,
-    decimal_places: 1,
-    denom_min: 2,
-    denom_max: 6,
-    require_common_denominator: true,
-    require_unlike_denominators: false,
-  },
-  medium: {
-    num_min: -20,
-    num_max: 20,
-    allow_negative: true,
-    allow_integers: true,
-    allow_decimals: true,
-    allow_fractions: true,
-    decimal_places: 2,
-    denom_min: 2,
-    denom_max: 10,
-    require_common_denominator: false,
-    require_unlike_denominators: true,
-  },
-  hard: {
-    num_min: -50,
-    num_max: 50,
-    allow_negative: true,
-    allow_integers: true,
-    allow_decimals: true,
-    allow_fractions: true,
-    decimal_places: 3,
-    denom_min: 2,
-    denom_max: 12,
-    require_common_denominator: false,
-    require_unlike_denominators: true,
-    allow_mixed: true,
-  },
-};
 const PA_INTEGER_OPS: TierPresets = {
   easy: { num_min: -10, num_max: 10, allow_negative: true },
   medium: { num_min: -20, num_max: 20, allow_negative: true },
   hard: { num_min: -50, num_max: 50, allow_negative: true },
 };
+GENERATOR_DIFFICULTY_PRESETS.pa_integers_adding_and_subtracting = { ...PA_INTEGER_OPS };
 GENERATOR_DIFFICULTY_PRESETS.pa_integers_multiplying = { ...PA_INTEGER_OPS };
 GENERATOR_DIFFICULTY_PRESETS.pa_integers_dividing = { ...PA_INTEGER_OPS };
 GENERATOR_DIFFICULTY_PRESETS.find_missing_sides_of_triangles = {

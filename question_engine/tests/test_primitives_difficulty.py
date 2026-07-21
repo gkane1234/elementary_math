@@ -53,6 +53,19 @@ def test_clamp_and_legacy_tier_shim():
     assert settings_difficulty({"difficulty": 7.5}) == 7.5
     assert settings_difficulty({"difficulty_tier": "easy"}) == 3.0
     assert settings_difficulty({"difficulty_tier": "hard"}) == 14.0
+    from question_engine.frameworks.difficulty_budget import (
+        difficulty_band,
+        settings_difficulty_band,
+    )
+
+    assert difficulty_band(0) == "easy"
+    assert difficulty_band(4) == "easy"
+    assert difficulty_band(5) == "medium"
+    assert difficulty_band(11) == "medium"
+    assert difficulty_band(12) == "hard"
+    assert settings_difficulty_band({"difficulty": 0}) == "easy"
+    assert settings_difficulty_band({"difficulty": 15}) == "hard"
+    assert settings_difficulty_band({"difficulty_tier": "medium"}) == "medium"
 
 
 def test_parse_optional_prereq_cap_none_sentinels():
@@ -902,6 +915,188 @@ def test_ooo_flat_grows_ops_sparse_parens():
         assert "* -" not in e.text.replace(" ", "")
 
 
+def test_ooo_exp_site_chance_curve():
+    """Number chance 0.05→0.2; paren tracks via factor (shared expression API)."""
+    from question_engine.frameworks.primitives.difficulty_knobs import reload_knobs
+    from question_engine.frameworks.primitives.expression_exponents import (
+        exp_number_chance,
+        exp_paren_chance,
+        exp_site_chance,
+    )
+
+    reload_knobs()
+    assert exp_number_chance(5.0) == 0.0
+    assert exp_number_chance(10.0) == 0.0
+    assert exp_paren_chance(10.0) == 0.0
+    assert exp_site_chance(10.0, allow_exponents=False) == 0.0
+
+    just = exp_number_chance(10.0001)
+    assert 0.049 <= just <= 0.055, just
+    mid = exp_number_chance(15.0)
+    high = exp_number_chance(20.0)
+    assert just < mid < high < 0.2
+    assert exp_number_chance(100.0) == pytest.approx(0.2, abs=0.01)
+
+    # Linked: paren = number * paren_factor (default 0.45).
+    factor = 0.45
+    assert exp_paren_chance(15.0) == pytest.approx(mid * factor, abs=1e-9)
+    assert exp_paren_chance(20.0) == pytest.approx(high * factor, abs=1e-9)
+    assert exp_paren_chance(15.0) < exp_number_chance(15.0)
+
+
+def test_ooo_exponents_unlock_above_d10():
+    """Exponents only when topic D > exp_unlock_d (default 10); real ^ precedence."""
+    import re
+    from fractions import Fraction
+
+    from question_engine.frameworks.primitives.difficulty_knobs import reload_knobs
+    from question_engine.frameworks.primitives.ooo import sample_ooo_expression
+
+    reload_knobs()
+
+    def _ctx(d: float, seed: int):
+        return build_context(
+            {
+                "difficulty": d,
+                "integers_only": True,
+                "prereq_cap_numbers": 2,
+                "prereq_cap_ooo": 40,
+            },
+            [PRIM_NUMBERS, PRIM_OOO],
+            rng=random.Random(seed),
+        )
+
+    def _has_exp(e) -> bool:
+        return "^{" in e.latex or "**" in e.text
+
+    def _has_grouped_power(e) -> bool:
+        return "\\right)^{" in e.latex
+
+    def _eval_text(text: str) -> Fraction:
+        return Fraction(eval(text.replace(" ", ""), {"__builtins__": {}}))
+
+    for d in (5.0, 10.0):
+        samples = [sample_ooo_expression(_ctx(d, s)) for s in range(80)]
+        assert all(not _has_exp(e) for e in samples), f"unexpected exponent at D={d}"
+        assert all(_eval_text(e.text) == e.value for e in samples)
+
+    for d in (11.0, 15.0, 20.0):
+        samples = [sample_ooo_expression(_ctx(d, s)) for s in range(120)]
+        with_exp = [e for e in samples if _has_exp(e)]
+        # Site chance is modest (0.05→0.2); many sites per expr still yield
+        # reliable appearance across a batch — not every single question.
+        min_hit = {11.0: 25, 15.0: 45, 20.0: 60}[d]
+        assert len(with_exp) >= min_hit, (
+            f"expected exponents at D={d}, got {len(with_exp)}/{len(samples)}"
+        )
+        assert all(_eval_text(e.text) == e.value for e in samples)
+        # Bare numeral powers must not be parenthesized — that erases ^ vs ×÷.
+        for e in with_exp:
+            assert re.search(r"\\left\(\d+\^\{", e.latex) is None
+        # At least some samples mix power with ×/÷ (not only bare a^e).
+        mixed = sum(
+            1
+            for e in with_exp
+            if ("\\times" in e.latex or "\\div" in e.latex)
+            and "^{" in e.latex
+        )
+        assert mixed >= 8, f"expected ^ mixed with ×/÷ at D={d}, got {mixed}"
+
+    # Grouped bases ``(a±b)^{e}`` appear once grouping + exponents are both on.
+    # Paren-site chance is lower (~0.45× number chance), so sample a large batch.
+    grouped = [
+        e
+        for s in range(400)
+        if _has_grouped_power(e := sample_ooo_expression(_ctx(20.0, s)))
+    ]
+    assert len(grouped) >= 3, f"expected (a±b)^n forms at D=20, got {len(grouped)}"
+    assert all(_eval_text(e.text) == e.value for e in grouped)
+
+
+def test_ooo_exponents_via_catalog_generate_api():
+    """Live worksheet path: catalog generate must show exponents above unlock."""
+    import json
+
+    from question_engine.api.handler import handle_generate
+    from question_engine.frameworks.primitives.difficulty_knobs import reload_knobs
+
+    reload_knobs()
+
+    type_ids = (
+        "order_of_operations",
+        "g6_numeric_expressions_and_order_of_operations",
+    )
+
+    for type_id in type_ids:
+        for d in (5, 10):
+            status, _, body = handle_generate(
+                {
+                    "type_id": type_id,
+                    "settings": {
+                        "count": 20,
+                        "difficulty": d,
+                        "include_answer_key": True,
+                    },
+                }
+            )
+            assert status == 200, body
+            prompts = [
+                q.get("prompt_latex", "")
+                for q in json.loads(body).get("questions", [])
+            ]
+            assert prompts, f"no questions for {type_id} D={d}"
+            assert all("^{" not in p for p in prompts), (
+                f"unexpected exponents at D={d} for {type_id}: {prompts[:3]}"
+            )
+
+        for d in (15, 20):
+            status, _, body = handle_generate(
+                {
+                    "type_id": type_id,
+                    "settings": {
+                        "count": 40,
+                        "difficulty": d,
+                        "include_answer_key": True,
+                    },
+                }
+            )
+            assert status == 200, body
+            prompts = [
+                q.get("prompt_latex", "")
+                for q in json.loads(body).get("questions", [])
+            ]
+            assert len(prompts) == 40
+            with_exp = [p for p in prompts if "^{" in p]
+            min_hit = 12 if d == 15 else 18
+            assert len(with_exp) >= min_hit, (
+                f"{type_id} D={d}: expected ≥{min_hit}/40 with exponents, got "
+                f"{len(with_exp)}; samples={prompts[:4]}"
+            )
+
+        # High D should include some parenthetical bases raised to a power.
+        # Paren-site chance is intentionally lower; presence over a large batch.
+        status, _, body = handle_generate(
+            {
+                "type_id": type_id,
+                "settings": {
+                    "count": 200,
+                    "difficulty": 20,
+                    "include_answer_key": True,
+                },
+            }
+        )
+        assert status == 200, body
+        prompts = [
+            q.get("prompt_latex", "")
+            for q in json.loads(body).get("questions", [])
+        ]
+        grouped = [p for p in prompts if "\\right)^{" in p]
+        assert len(grouped) >= 1, (
+            f"{type_id}: expected (a±b)^n at D=20, got {len(grouped)}; "
+            f"samples={prompts[:6]}"
+        )
+
+
 def test_multistep_equations_compose_simplify_sides():
     from question_engine.frameworks.primitives.equations import sample_linear_equation
     from question_engine.generators.primitive_g6 import (
@@ -1041,6 +1236,57 @@ def test_special_solutions_and_clear_fractions():
     assert "clear_fractions" in frac_eq.upgrades
 
 
+def test_equation_solution_complexity_scales_with_d():
+    """Higher equation D → harder answers (not only longer LHS/RHS latex)."""
+    from question_engine.frameworks.primitives import PRIM_EQUATIONS, build_context
+    from question_engine.frameworks.primitives.equations import sample_linear_equation
+
+    def _sols(d: float, n: int = 40) -> list:
+        out = []
+        for seed in range(n):
+            ctx = build_context(
+                {
+                    "difficulty": d,
+                    "lock_variable": "x",
+                    "force_steps": "multi",
+                    # Cap numbers hard so old path would keep tiny integer answers.
+                    "prereq_cap_numbers": 1,
+                    "prereq_cap_variable": 0,
+                    "prereq_cap_equations": 50,
+                    "allow_fractions": True,
+                    "allow_decimals": False,
+                },
+                [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_EQUATIONS],
+                rng=random.Random(seed),
+            )
+            eq = sample_linear_equation(ctx, force_steps="multi")
+            if eq.solution_kind == "unique":
+                out.append(eq.solution)
+        return out
+
+    low = _sols(0.0)
+    mid = _sols(10.0)
+    high = _sols(25.0)
+    assert low and mid and high
+
+    def _hardness(sols) -> float:
+        # Integer magnitude + fraction "messy-ness" (den + |num| when non-int).
+        scores = []
+        for s in sols:
+            if s.denominator == 1:
+                scores.append(float(abs(s)))
+            else:
+                scores.append(float(abs(s.numerator) + s.denominator + 4))
+        return sum(scores) / len(scores)
+
+    assert _hardness(mid) > _hardness(low)
+    assert _hardness(high) > _hardness(mid)
+    # At high D with fractions allowed, expect some non-integer answers.
+    assert any(s.denominator > 1 for s in high)
+    # At D=0, answers should stay integers (solution_integers_until_d).
+    assert all(s.denominator == 1 for s in low)
+
+
 def test_linear_family_generators_smoke():
     from question_engine.generators import GENERATORS
 
@@ -1058,7 +1304,6 @@ def test_linear_family_generators_smoke():
         "systems_substitution",
         "systems_graphing",
         "wp_one_step_equation",
-        "wp_mixture",
         "wp_systems",
         "wp_proportion",
         "factor_gcf",
@@ -1232,6 +1477,7 @@ def test_poly_family_generators_smoke():
         "evaluate_polynomial",
         "poly_combine_like_terms",
         "poly_expand_simplify",
+        "simplify_polynomials",
         "polynomial_factoring_common_factor",
         "quadratic_factoring",
         "polynomial_factoring_special_cases",
@@ -1275,6 +1521,7 @@ def test_leaf_resolves_poly_family():
     assert resolve_primitive("quadratic_factoring") == "factor_poly"
     assert resolve_primitive("evaluate_polynomial") == "evaluate"
     assert resolve_primitive("poly_expand_simplify") == "expand_simplify"
+    assert resolve_primitive("simplify_polynomials") == "expand_simplify"
 
 
 def _count_signed_terms(latex: str) -> int:

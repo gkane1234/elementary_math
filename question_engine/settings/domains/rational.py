@@ -102,19 +102,29 @@ def rational_equation_form_settings() -> list[SettingField]:
     ]
 
 
-def rational_simplification_settings() -> list[SettingField]:
-    """Controls for simplify-and-excluded-values rational expressions."""
+def rational_cancel_count_settings() -> list[SettingField]:
+    """How many linear factors cancel — skill control for simplify / ± / ×÷.
+
+    Classroom select keeps 0–3, ``4`` (= all available), and ``auto``. Continuous
+    ``difficulty`` with ``auto`` unlocks exact counts beyond 4 unboundedly.
+    Integer API values are exact counts (no hard max of 4).
+    """
     return [
         SettingField(
             "cancel_factor_count",
-            "Factors to cancel",
-            "int",
-            1,
-            min=1,
-            max=4,
-            group="rational",
+            "Canceling factors",
+            "select",
+            "1",
+            options=["0", "1", "2", "3", "4", "auto"],
+            # Same UI section as the difficulty slider (not buried in topic-specific knobs).
+            group="difficulty",
         ),
     ]
+
+
+def rational_simplification_settings() -> list[SettingField]:
+    """Controls for simplify-and-excluded-values rational expressions."""
+    return rational_cancel_count_settings()
 
 
 def rational_multiply_divide_settings() -> list[SettingField]:
@@ -134,15 +144,7 @@ def rational_multiply_divide_settings() -> list[SettingField]:
             True,
             group="rational",
         ),
-        SettingField(
-            "cancel_factor_count",
-            "Shared factors to cancel",
-            "int",
-            1,
-            min=0,
-            max=3,
-            group="rational",
-        ),
+        *rational_cancel_count_settings(),
         SettingField(
             "max_factor_degree",
             "Max factor degree",
@@ -165,7 +167,7 @@ def rational_multiply_divide_settings() -> list[SettingField]:
             "int",
             2,
             min=2,
-            max=3,
+            max=500,
             group="rational",
         ),
         SettingField(
@@ -187,7 +189,7 @@ def rational_expression_extra_settings() -> list[SettingField]:
             "int",
             3,
             min=2,
-            max=5,
+            max=500,
             group="rational",
         ),
         SettingField(
@@ -204,7 +206,7 @@ def rational_expression_extra_settings() -> list[SettingField]:
             "int",
             4,
             min=1,
-            max=5,
+            max=500,
             group="rational",
         ),
         SettingField(
@@ -261,14 +263,6 @@ def rational_expression_extra_settings() -> list[SettingField]:
             group="rational",
         ),
         SettingField(
-            "cancel_factor_count",
-            "LCD factors to cancel in final answer",
-            "select",
-            "random",
-            options=["random", "0", "1", "2", "3", "4"],
-            group="rational",
-        ),
-        SettingField(
             "include_solution_details",
             "Include complete solution details in metadata",
             "bool",
@@ -295,7 +289,7 @@ def rational_expression_extra_settings() -> list[SettingField]:
             "int",
             5,
             min=2,
-            max=5,
+            max=500,
             group="rational",
         ),
     ]

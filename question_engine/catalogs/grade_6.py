@@ -54,11 +54,35 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _g6("Ratios", "g6_part_part_whole_ratios", "Part-part-whole ratios", instruction_text="Write the ratio.", generator="g6_introduction_to_ratios"),
     _g6("Ratios", "g6_comparing_ratios", "Comparing ratios", generator="g6_equivalent_ratios", instruction_text="Compare the ratios."),
     # Rates
-    _g6("Rates", "g6_unit_rates_and_equivalent_rates", "Unit rates and equivalent rates", generator="g6_unit_rates", instruction_text="Find the unit rate."),
-    _g6("Rates", "g6_comparing_rates", "Comparing rates", instruction_text="Compare the rates.", generator="g6_unit_rates"),
-    _g6("Rates", "g6_converting_units", "Converting units", instruction_text="Convert the units.", generator="g6_unit_rates"),
+    _g6(
+        "Rates",
+        "g6_unit_rates_and_equivalent_rates",
+        "Unit rates and equivalent rates",
+        generator="g6_unit_rates",
+        instruction_text="Find the unit rate or an equivalent rate.",
+    ),
+    _g6(
+        "Rates",
+        "g6_comparing_rates",
+        "Comparing rates",
+        instruction_text=(
+            "Solve each problem. Two double number lines representing the two rates "
+            "are provided."
+        ),
+        generator="g6_comparing_rates",
+    ),
+    _g6(
+        "Rates",
+        "g6_converting_units",
+        "Converting units",
+        instruction_text=(
+            "Convert each measurement using the given equivalence. "
+            "A double number line is provided."
+        ),
+        generator="g6_converting_units",
+    ),
     # Percents
-    _g6("Percents", "g6_introduction_to_percents", "Introduction to percents", generator="percents", instruction_text="Find the percent."),
+    _g6("Percents", "g6_introduction_to_percents", "Introduction to percents", generator="g6_introduction_to_percents", instruction_text="Shade the figure."),
     _g6(
         "Percents",
         "g6_relating_percents_fractions_and_decimals",
@@ -89,6 +113,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         instruction_text="Solve the problem.",
     ),
     # Dividing Fractions
+    # Disabled from curriculum picker (type_readiness INCORRECT / not_ready); entries kept.
     _g6(
         "Dividing Fractions",
         "g6_how_many_groups_times",

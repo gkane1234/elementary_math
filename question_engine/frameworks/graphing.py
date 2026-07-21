@@ -1910,7 +1910,16 @@ def _sample_solve_by_graphing(settings: dict) -> tuple[str, str, list[int | Frac
 
     coeffs = _poly_from_roots(a, roots)
     allow_factored = bool(settings.get("allow_factored_form", False))
-    if allow_factored and random.random() < 0.45:
+    factor_rrt = bool(settings.get("factor_rrt", False))
+    # Expanded product of 3+ linear factors demands RRT; prefer factored unless
+    # the author explicitly opted into RRT-style expanded stems.
+    if len(roots) >= 3 and not factor_rrt:
+        use_factored = True
+    elif allow_factored and random.random() < 0.45:
+        use_factored = True
+    else:
+        use_factored = False
+    if use_factored:
         prompt = _format_factored_eq_latex(a, roots)
     else:
         prompt = f"{format_polynomial_latex(coeffs)} = 0"

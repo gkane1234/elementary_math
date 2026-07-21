@@ -622,8 +622,8 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "polynomial_factoring_common_factor": factor_gcf_poly,
     "wp_one_step_equation": _wp_generator("one_step"),
     "wp_two_step_equation": _wp_generator("two_step"),
-    "wp_mixture": _wp_generator("mixture"),
-    "wp_distance_rate_time": _wp_generator("distance"),
+    # wp_mixture / wp_distance_rate_time: real narrative frameworks in word_problems.py
+    # (do not override with equation-with-story stubs).
     "wp_work": _wp_generator("work"),
     "wp_age": _wp_generator("age"),
     "wp_coin": _wp_generator("coin"),
@@ -632,6 +632,5 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "wp_proportion": _wp_generator("proportion"),
     "wp_inequality": _wp_generator("inequality"),
     "wp_systems": _wp_generator("systems"),
-    "a2_equations_and_inequalities_mixture_word_problems": _wp_generator("mixture"),
     "a2_linear_relations_and_functions_writing_linear_equations": writing_linear_equations,
 }

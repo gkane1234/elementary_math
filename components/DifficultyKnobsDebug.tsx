@@ -6,7 +6,7 @@ import { Modal } from "@/components/Modal";
 type FlatRow = {
   path: string;
   value: unknown;
-  type: "number" | "bool" | "string_list";
+  type: "number" | "bool" | "string" | "string_list";
 };
 
 type KnobsResponse = {

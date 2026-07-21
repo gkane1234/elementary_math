@@ -3,7 +3,7 @@ import uuid
 
 from packages.polynomial_core import (
     build_rational_expression_problem,
-    polynomial_excluded_values,
+    excluded_values_from_factors,
     rational_excluded_values_latex,
     sum_of_fractions_latex,
     term_prompt_text,
@@ -11,6 +11,14 @@ from packages.polynomial_core import (
 
 from question_engine.base import QuestionType, register
 from question_engine.factoring_settings import build_factorable_options
+from question_engine.frameworks.primitives.rational_cancel import (
+    ALL_AVAILABLE_CANCEL,
+    apply_continuous_rational_structure,
+    clamp_cancel_to_available,
+    is_all_available_cancel,
+    resolve_rational_cancel_count,
+    sample_all_available_factor_count,
+)
 from question_engine.latex_helpers import polynomial_fraction_latex
 from question_engine.models import Question
 from question_engine.settings.enrichment import merge_enrichment_metadata, random_term_count
@@ -45,12 +53,14 @@ def _resolve_add_subtract_structure(settings: dict) -> dict:
                 "allow_polynomial_terms": False,
                 "allow_full_lcd_terms": False,
                 "inflation_chance": 0,
-                "cancel_factor_count": "0",
                 "prefer_simple_factors": True,
                 "content_primitive_denominators": True,
                 "force_shared_lcd": True,
                 "allow_monomial_lcd": True,
                 "factor_rrt": False,
+                # Single-factor LCD cannot cancel a factor and still leave a
+                # denominator; builder rejects cancel>=1 when max_lcd_factors=1.
+                "cancel_factor_count": 0,
             }
         )
     elif structure == "unlike_binomials":
@@ -66,7 +76,6 @@ def _resolve_add_subtract_structure(settings: dict) -> dict:
                 "allow_polynomial_terms": False,
                 "allow_full_lcd_terms": False,
                 "inflation_chance": 0,
-                "cancel_factor_count": "0",
                 "prefer_simple_factors": True,
                 "content_primitive_denominators": True,
                 "force_shared_lcd": False,
@@ -74,6 +83,7 @@ def _resolve_add_subtract_structure(settings: dict) -> dict:
                 "factor_rrt": False,
             }
         )
+        resolved.setdefault("cancel_factor_count", 1)
     elif structure == "multi_term":
         # Medium variant: 3 monic terms, still simple factoring.
         resolved.update(
@@ -87,7 +97,6 @@ def _resolve_add_subtract_structure(settings: dict) -> dict:
                 "allow_polynomial_terms": False,
                 "allow_full_lcd_terms": False,
                 "inflation_chance": 0,
-                "cancel_factor_count": "0",
                 "prefer_simple_factors": True,
                 "content_primitive_denominators": True,
                 "force_shared_lcd": False,
@@ -95,6 +104,7 @@ def _resolve_add_subtract_structure(settings: dict) -> dict:
                 "factor_rrt": False,
             }
         )
+        resolved.setdefault("cancel_factor_count", 1)
     else:
         # complex / hard — keep caller values; fill sensible defaults.
         resolved.setdefault("max_lcd_factors", 4)
@@ -130,8 +140,10 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
         questions: list[Question] = []
         for _ in range(count):
             structured = _resolve_add_subtract_structure(settings)
+            # Continuous D overrides EMH plateaus for LCD / term counts.
+            structured = apply_continuous_rational_structure(structured)
             term_count = int(structured.get("term_count", random_term_count(structured, default=3)))
-            term_count = min(term_count, int(structured.get("max_rational_terms", 5)))
+            term_count = min(term_count, int(structured.get("max_rational_terms", max(term_count, 5))))
             denominator_degree_min = int(structured.get("denominator_degree_min", 2))
             denominator_degree_max = int(structured.get("denominator_degree_max", 3))
             use_random_partial_solution = bool(structured.get("use_random_partial_solution", True))
@@ -145,7 +157,7 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                 0.0, min(1.0, int(structured.get("inflation_chance", 15)) / 100.0)
             )
             max_inflation_degree = int(structured.get("max_inflation_degree", 2))
-            cancel_factor_count = structured.get("cancel_factor_count", "random")
+
             max_lcd_factors = int(structured.get("max_lcd_factors", 4))
             prefer_simple_factors = bool(structured.get("prefer_simple_factors", True))
             content_primitive = bool(structured.get("content_primitive_denominators", True))
@@ -165,9 +177,38 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                 )
 
             solution = None
+            cancel_factor_count = 0
+            requested_cancel = 0
             for _attempt in range(80):
+                if force_lcd:
+                    # Cancelled-LCD construction path never emits a full-LCD term.
+                    cancel_factor_count = 0
+                    requested_cancel = 0
+                    builder_cancel: int | str = 0
+                else:
+                    requested_cancel = resolve_rational_cancel_count(structured)
+                    if is_all_available_cancel(requested_cancel):
+                        # Cap LCD size for "all available" — cancel every factor
+                        # in a normal problem, do not grow to continuous D max.
+                        max_lcd_factors = sample_all_available_factor_count(
+                            structured, default=max_lcd_factors
+                        )
+                        structured["max_lcd_factors"] = max_lcd_factors
+                        cancel_factor_count = max_lcd_factors
+                        builder_cancel = ALL_AVAILABLE_CANCEL
+                    else:
+                        # Capacity: leave at least one LCD factor when a polynomial
+                        # answer is disallowed; otherwise every LCD factor may cancel.
+                        if allow_polynomial_terms:
+                            available = max_lcd_factors
+                        else:
+                            available = max(0, max_lcd_factors - 1)
+                        cancel_factor_count = clamp_cancel_to_available(
+                            requested_cancel, available
+                        )
+                        builder_cancel = cancel_factor_count
                 try:
-                    solution = build_rational_expression_problem(
+                    candidate = build_rational_expression_problem(
                         base_options,
                         term_count=term_count,
                         use_random_partial_solution=use_random_partial_solution,
@@ -175,7 +216,7 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                         allow_full_lcd_terms=allow_full_lcd_terms,
                         inflation_chance=inflation_chance,
                         max_inflation_degree=max_inflation_degree,
-                        cancel_factor_count=cancel_factor_count,
+                        cancel_factor_count=builder_cancel,
                         max_lcd_factors=max_lcd_factors,
                         prefer_simple_factors=prefer_simple_factors,
                         content_primitive=content_primitive,
@@ -183,26 +224,30 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                         force_shared_lcd=force_shared_lcd,
                         allow_monomial_lcd=allow_monomial_lcd,
                     )
-                except ValueError:
+                except (ValueError, RuntimeError):
                     continue
-                if force_lcd and solution.full_lcd_numerator is None:
+                if force_lcd and candidate.full_lcd_numerator is None:
                     continue
                 if not allow_unlike_denominators:
                     denominators = [
                         term.denominator
-                        for term in solution.display_terms
+                        for term in candidate.display_terms
                         if term.denominator is not None
                     ]
                     if denominators and len({str(d) for d in denominators}) > 1:
                         continue
-                if len(solution.display_terms) < 2:
+                if len(candidate.display_terms) < 2:
                     continue
-                if max_lcd_factors <= 1 and solution.lcd.deg() > 1:
+                if max_lcd_factors <= 1 and candidate.lcd.deg() > 1:
                     continue
+                solution = candidate
+                cancel_factor_count = len(candidate.cancelled_lcd_factors)
                 break
 
             if solution is None:
                 raise RuntimeError("Unable to build rational expression problem")
+
+            structured["cancel_factor_count"] = cancel_factor_count
 
             answer_latex = None
             excluded: list[int] = []
@@ -225,32 +270,18 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                         answer_numerator,
                         answer_denominator,
                     )
-                # Excluded values: zeros of every original displayed denominator.
-                from fractions import Fraction
-
-                excluded_fracs: list[Fraction] = []
-
-                def _collect_zeros(den) -> None:
-                    if den is None or den.deg() == 0:
-                        return
-                    if den.deg() == 1:
-                        a = int(round(float(den.coef(1))))
-                        b = int(round(float(den.coef(0))))
-                        if a != 0:
-                            excluded_fracs.append(Fraction(-b, a))
-                        return
-                    for root in polynomial_excluded_values(den, coef_min=-20, coef_max=20):
-                        excluded_fracs.append(Fraction(root))
-
+                # Excluded values from original LCD / display dens — collect per
+                # linear factor so canceled non-monic roots are not dropped.
+                factor_pool = list(solution.lcd_factors) + list(solution.cancelled_lcd_factors)
                 for term in solution.display_terms:
-                    _collect_zeros(term.denominator)
-                _collect_zeros(solution.lcd)
+                    factor_pool.extend(term.denominator_factors)
+                excluded_fracs = excluded_values_from_factors(factor_pool)
                 note = rational_excluded_values_latex(excluded_fracs)
                 if note:
                     answer_latex = f"{answer_latex},\\; {note}"
                 excluded = [
                     int(v) if v.denominator == 1 else f"{v.numerator}/{v.denominator}"
-                    for v in sorted(set(excluded_fracs))
+                    for v in excluded_fracs
                 ]
             metadata = merge_enrichment_metadata(
                 structured,
@@ -263,6 +294,8 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                     "has_polynomial_term": solution.polynomial_term is not None,
                     "has_full_lcd_term": solution.full_lcd_numerator is not None,
                     "has_degree_inflation": solution.inflation_factor.deg() > 0,
+                    "cancel_factor_count": cancel_factor_count,
+                    "requested_cancel_factor_count": requested_cancel,
                     "cancelled_lcd_factor_count": len(solution.cancelled_lcd_factors),
                     "inflation_chance": inflation_chance,
                     "max_inflation_degree": max_inflation_degree,

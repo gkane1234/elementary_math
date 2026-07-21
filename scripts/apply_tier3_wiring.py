@@ -145,7 +145,7 @@ TIER3_WIRING: list[tuple[str, str, str, str]] = [
     ("pythagorean_theorem", "geo_pythagorean_theorem", "pre_algebra", "right_triangles"),
     # Grade 6 — dedup variants
     ("g6_comparing_ratios", "g6_equivalent_ratios", "grade_6", "ratios"),
-    ("g6_comparing_rates", "g6_unit_rates", "grade_6", "rates"),
+    ("g6_comparing_rates", "g6_comparing_rates", "grade_6", "rates"),
     ("g6_solving_percent_problems_with_diagrams", "wp_percent", "grade_6", "percents"),
     (
         "g6_distributive_property_area_diagrams_algebraic",

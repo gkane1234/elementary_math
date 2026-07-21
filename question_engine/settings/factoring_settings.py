@@ -184,6 +184,11 @@ def parse_factoring_settings(settings: dict[str, Any]) -> ParsedFactoringSetting
         rrt_mode = "exclude" if legacy_rrt == "exclude" else "allow"
 
     overrides = factoring_method_overrides(settings)
+    rrt_enabled = bool(
+        overrides["factor_rrt"]
+        if "factor_rrt" in overrides
+        else settings.get("factor_rrt", False)
+    )
     enabled_methods = {
         "normal": bool(overrides.get("factor_normal", settings.get("factor_normal", True))),
         "grouping": bool(overrides.get("factor_grouping", settings.get("factor_grouping", True))),
@@ -211,7 +216,7 @@ def parse_factoring_settings(settings: dict[str, Any]) -> ParsedFactoringSetting
         "sum_of_cubes": bool(
             overrides.get("factor_sum_of_cubes", settings.get("factor_sum_of_cubes", True))
         ),
-        "rrt": rrt_mode != "exclude" and bool(overrides.get("factor_rrt", True)),
+        "rrt": rrt_mode != "exclude" and rrt_enabled,
     }
 
     leading_one = bool(settings.get("leading_coefficient_one", False)) or bool(

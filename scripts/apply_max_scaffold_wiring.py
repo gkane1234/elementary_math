@@ -20,7 +20,7 @@ WIRING: list[tuple[str, str, str, str]] = [
     # ── Grade 6 ratios / rates / percents ──
     ("g6_part_part_whole_ratios", "g6_introduction_to_ratios", "grade_6", "ratios"),
     ("g6_comparing_ratios", "g6_equivalent_ratios", "grade_6", "ratios"),
-    ("g6_comparing_rates", "g6_unit_rates", "grade_6", "rates"),
+    ("g6_comparing_rates", "g6_comparing_rates", "grade_6", "rates"),
     ("g6_converting_units", "g6_unit_rates", "grade_6", "rates"),
     ("g6_solving_percent_problems_with_diagrams", "percents", "grade_6", "percents"),
     ("g6_equivalent_ratio_equations", "solving_proportions", "grade_6", "equations_as_relationships_between_two_variables"),
@@ -160,7 +160,7 @@ WIRING: list[tuple[str, str, str, str]] = [
     ("a2_trigonometry_coterminal_angles", "trig_unit_circle", "algebra_2", "trigonometry"),
     ("g6_part_part_whole_ratios", "g6_introduction_to_ratios", "grade_6", "ratios"),
     ("g6_comparing_ratios", "g6_equivalent_ratios", "grade_6", "ratios"),
-    ("g6_comparing_rates", "g6_unit_rates", "grade_6", "rates"),
+    ("g6_comparing_rates", "g6_comparing_rates", "grade_6", "rates"),
     ("g6_converting_units", "g6_unit_rates", "grade_6", "rates"),
     ("g6_distributive_property_area_diagrams_algebraic", "distributive_property", "grade_6", "equivalent_expressions"),
     ("pa_integers_adding_and_subtracting", "g6_integer_add_subtract", "pre_algebra", "integers_decimals_and_fractions"),

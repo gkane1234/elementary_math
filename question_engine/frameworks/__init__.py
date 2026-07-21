@@ -59,6 +59,8 @@ from .linear import (
     WritingLinearEquationsFramework,
 )
 from .number import (
+    ComparingRatesFramework,
+    ConvertingUnitsFramework,
     DecimalArithmeticFramework,
     DistributiveFramework,
     IdentifyPropertyFramework,
@@ -71,6 +73,7 @@ from .number import (
     RatioFramework,
     ScientificNotationFramework,
     UnitRateFramework,
+    WholeByDecimalDivideFramework,
     WholeDivideToDecimalFramework,
 )
 from .statistics import ChartSpec, DataSetSpec, StatisticsFramework
@@ -120,7 +123,10 @@ __all__ = [
     "RationalFramework",
     "RatioFramework",
     "UnitRateFramework",
+    "ComparingRatesFramework",
+    "ConvertingUnitsFramework",
     "DecimalArithmeticFramework",
+    "WholeByDecimalDivideFramework",
     "WholeDivideToDecimalFramework",
     "DistributiveFramework",
     "IdentifyPropertyFramework",

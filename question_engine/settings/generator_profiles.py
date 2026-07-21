@@ -11,7 +11,6 @@ from .domains.number import (
     decimal_multiplication_settings,
     gcf_constraint_settings,
     long_division_remainder_settings,
-    mixed_number_form_settings,
     squares_and_square_roots_form_settings,
 )
 from .domains.polynomial import polynomial_multiply_settings
@@ -23,6 +22,7 @@ from .domains.radical import (
 )
 from .domains.rational import (
     division_notation_settings,
+    rational_cancel_count_settings,
     rational_equation_form_settings,
     rational_expression_extra_settings,
     rational_multiply_divide_settings,
@@ -32,6 +32,7 @@ from .domains.rational import (
 from .domains.word_problem import (
     consecutive_integers_settings,
     distance_rate_time_settings,
+    mixture_problem_settings,
     percent_word_problem_settings,
     similar_figures_prompt_settings,
     work_problem_settings,
@@ -212,10 +213,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         },
     ),
     "rational_add_subtract": TypeSettingConfig(setting_profile="rational"),
-    "pa_integers_adding_and_subtracting": TypeSettingConfig(
-        setting_profile="integer",
-        extra_settings=(mixed_number_form_settings,),
-    ),
+    "pa_integers_adding_and_subtracting": TypeSettingConfig(setting_profile="integer"),
     "rational_multiply": TypeSettingConfig(setting_profile="rational"),
     "rational_divide": TypeSettingConfig(
         setting_profile="rational",
@@ -257,6 +255,8 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "g6_introduction_to_ratios": TypeSettingConfig(setting_profile="ratio"),
     "g6_equivalent_ratios": TypeSettingConfig(setting_profile="ratio"),
     "g6_unit_rates": TypeSettingConfig(setting_profile="unit_rate"),
+    "g6_comparing_rates": TypeSettingConfig(setting_profile="comparing_rates"),
+    "g6_converting_units": TypeSettingConfig(setting_profile="unit_rate"),
     "g6_decimal_addition": TypeSettingConfig(setting_profile="decimal"),
     "g6_decimal_subtraction": TypeSettingConfig(setting_profile="decimal"),
     "g6_decimal_multiplication": TypeSettingConfig(
@@ -327,7 +327,10 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         setting_defaults={"allow_negative": False},
     ),
     "g6_dividing_decimals_by_whole_numbers": TypeSettingConfig(setting_profile="decimal"),
-    "g6_introduction_to_percents": TypeSettingConfig(setting_profile="percent"),
+    "g6_introduction_to_percents": TypeSettingConfig(
+        setting_profile="percent",
+        setting_defaults={"include_diagram": True},
+    ),
     "g6_finding_percents_with_equivalent_fractions": TypeSettingConfig(setting_profile="percent"),
     "g6_solving_percent_problems_with_formulas": TypeSettingConfig(setting_profile="percent"),
     "g6_numeric_expressions_and_order_of_operations": TypeSettingConfig(setting_profile="order_of_operations"),
@@ -624,6 +627,29 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         extra_settings=(rational_operation_settings,),
         exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS, extra=("allow_multiply", "allow_divide")),
     ),
+    "simplify_polynomials": TypeSettingConfig(
+        setting_profile="polynomial",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+    ),
+    "pa_polynomials_simplifying": TypeSettingConfig(
+        setting_profile="polynomial",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={
+            "max_degree": 2,
+            "min_degree": 2,
+            "max_terms": 3,
+            "prefer_single_hot": True,
+        },
+    ),
+    "a2_polynomial_functions_simplifying": TypeSettingConfig(
+        setting_profile="polynomial",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={
+            "max_degree": 5,
+            "min_degree": 2,
+            "prefer_single_hot": False,
+        },
+    ),
     "polynomial_multiply": TypeSettingConfig(
         setting_profile="polynomial",
         extra_settings=(polynomial_multiply_settings,),
@@ -667,11 +693,48 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "allow_higher_even_powers": False,
             "max_even_power": 8,
             "require_gcf": False,
+            "factor_rrt": False,
         },
     ),
     "polynomial_factoring_grouping": TypeSettingConfig(
         setting_profile="polynomial_factoring",
         exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"factor_rrt": False},
+    ),
+    "polynomial_factoring_sum_diff_cubes": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"min_degree": 3, "max_degree": 3, "factor_rrt": False},
+    ),
+    "a2_polynomial_functions_factoring_sum_difference_of_cubes": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"min_degree": 3, "max_degree": 3, "factor_rrt": False},
+    ),
+    "polynomial_factoring_quadratic_form": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"min_degree": 4, "max_degree": 4, "factor_rrt": False},
+    ),
+    "a2_polynomial_functions_factoring_quadratic_form": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"min_degree": 4, "max_degree": 4, "factor_rrt": False},
+    ),
+    "polynomial_factoring_all_techniques": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"factor_rrt": False},
+    ),
+    "a2_polynomial_functions_factoring_all_techniques": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"factor_rrt": False},
+    ),
+    "polynomial_factoring_general_strategy": TypeSettingConfig(
+        setting_profile="polynomial_factoring",
+        exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
+        setting_defaults={"factor_rrt": False},
     ),
     "polynomial_long_division": TypeSettingConfig(
         setting_profile="polynomial_division",
@@ -680,7 +743,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "quadratic_factoring": TypeSettingConfig(
         setting_profile="polynomial_factoring",
         exclude_settings=_excludes(_TERM_SETTINGS, _PHRASE_SETTINGS),
-        setting_defaults={"min_degree": 2, "max_degree": 2},
+        setting_defaults={"min_degree": 2, "max_degree": 2, "factor_rrt": False},
     ),
     # Quadratics
     "quadratic_square_roots": TypeSettingConfig(
@@ -897,20 +960,24 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     # Rational expressions
     "rational_simplification": TypeSettingConfig(
         setting_profile="constructive_rational",
-        setting_defaults={"integers_only": True},
+        extra_settings=(rational_cancel_count_settings,),
+        setting_defaults={"integers_only": True, "cancel_factor_count": "1"},
     ),
     "a2_rational_expressions_simplifying": TypeSettingConfig(
         setting_profile="constructive_rational",
-        setting_defaults={"integers_only": True},
+        extra_settings=(rational_cancel_count_settings,),
+        setting_defaults={"integers_only": True, "cancel_factor_count": "1"},
     ),
     "rational_expression_simplification": TypeSettingConfig(
         setting_profile="constructive_rational",
-        setting_defaults={"integers_only": True},
+        extra_settings=(rational_cancel_count_settings,),
+        setting_defaults={"integers_only": True, "cancel_factor_count": "1"},
         count_default=5,
     ),
     "a2_rational_expressions_adding_and_subtracting": TypeSettingConfig(
         setting_profile="constructive_rational",
-        setting_defaults={"integers_only": True},
+        extra_settings=(rational_cancel_count_settings,),
+        setting_defaults={"integers_only": True, "cancel_factor_count": "1"},
         count_default=5,
     ),
     "partial_fraction_decomposition": TypeSettingConfig(
@@ -936,7 +1003,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         setting_defaults={
             "allow_multiply": True,
             "allow_divide": True,
-            "cancel_factor_count": 1,
+            "cancel_factor_count": "1",
             "max_factor_degree": 1,
             "expand_polynomials": False,
             "operand_count": 2,
@@ -1361,19 +1428,20 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     "wp_distance_rate_time": TypeSettingConfig(
         setting_profile="word_problem",
         extra_settings=(distance_rate_time_settings,),
-        exclude_settings=("answer_units", "max_steps"),
+        exclude_settings=("difficulty_tier", "answer_units", "max_steps"),
         setting_defaults={
+            "difficulty": 6,
             "allow_drt_find_missing": True,
-            "allow_drt_round_trip": False,
+            "allow_drt_round_trip": True,
             "allow_drt_two_segments": False,
             "allow_drt_opposite": False,
-            "allow_drt_same_direction": False,
+            "allow_drt_same_direction": True,
             "allow_distance_mi": True,
             "allow_distance_km": True,
-            "allow_distance_m": True,
-            "allow_distance_ft": True,
+            "allow_distance_m": False,
+            "allow_distance_ft": False,
             "allow_time_hr": True,
-            "allow_time_min": True,
+            "allow_time_min": False,
         },
     ),
     "wp_work": TypeSettingConfig(
@@ -1398,7 +1466,17 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
         exclude_settings=("max_steps",),
     ),
     "wp_coin": TypeSettingConfig(setting_profile="word_problem"),
-    "wp_mixture": TypeSettingConfig(setting_profile="word_problem"),
+    "wp_mixture": TypeSettingConfig(
+        setting_profile="word_problem",
+        extra_settings=(mixture_problem_settings,),
+        exclude_settings=("difficulty_tier", "answer_units", "max_steps"),
+        setting_defaults={
+            "difficulty": 6,
+            "allow_mixture_percent": True,
+            "allow_mixture_cost": True,
+            "integer_only_answers": True,
+        },
+    ),
     "wp_perimeter_area": TypeSettingConfig(setting_profile="word_problem"),
     "wp_percent": TypeSettingConfig(
         setting_profile="word_problem",

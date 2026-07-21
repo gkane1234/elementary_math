@@ -1032,6 +1032,13 @@ button:disabled {
   justify-content: flex-end;
 }
 
+.modal-sticky-footer {
+  flex: 0 0 auto;
+  padding: 0.75rem 1.15rem;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
 .modal-action-row {
   display: flex;
   gap: 0.65rem;
@@ -1361,6 +1368,72 @@ button:disabled {
   margin: 0.5rem 0 0;
   font-size: 0.8rem;
   color: #6b7280;
+}
+
+.topic-example-preview {
+  margin: 0;
+}
+
+.modal-sticky-footer .topic-example-preview-header {
+  margin-bottom: 0.5rem;
+}
+
+.modal-sticky-footer .topic-example-preview-body {
+  max-height: min(22vh, 200px);
+  overflow: auto;
+}
+
+.topic-example-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.topic-example-preview-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.topic-example-preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.topic-example-preview-hint {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.topic-example-preview-body {
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+}
+
+.topic-example-preview-body.is-loading {
+  opacity: 0.55;
+}
+
+.topic-example-preview-answer {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed #d1d5db;
+  font-size: 0.95rem;
+}
+
+.topic-example-preview-answer-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .topic-options-prereqs {

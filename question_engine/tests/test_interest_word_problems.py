@@ -14,12 +14,6 @@ def _parse_money(answer: str | None) -> float:
     return float(cleaned)
 
 
-def _parse_percent(answer: str | None) -> float:
-    assert answer is not None
-    cleaned = str(answer).replace(r"\%", "").replace("%", "").strip()
-    return float(cleaned)
-
-
 def test_simple_interest_find_interest_matches_prt():
     fw = InterestWordProblemFramework()
     hits = 0
@@ -79,39 +73,31 @@ def test_compound_interest_matches_formula():
     assert hits >= 15, hits
 
 
-def test_simple_find_rate_and_principal():
+def test_pa_interest_never_asks_for_rate_principal_or_time():
+    """G6/PA interest is forward plug-in only (find I or A given P, r, t)."""
     fw = InterestWordProblemFramework()
-    rate_hits = 0
-    principal_hits = 0
-    for seed in range(200):
+    banned = (
+        "annual interest rate",
+        "What was the principal?",
+        "How many years does this take?",
+        "interest rate?",
+    )
+    forward_ok = 0
+    for seed in range(250):
         random.seed(seed)
-        _latex, text, answer = fw.build_prompt(
-            {"difficulty": "hard", "interest_kind": "simple"}
-        )
-        if "What is the annual interest rate?" in text:
-            m = re.search(
-                r"invests \$([\d.]+) and earns \$([\d.]+) in simple interest after "
-                r"(\d+) years?",
-                text,
-            )
-            assert m, text
-            p, interest, t = float(m.group(1)), float(m.group(2)), int(m.group(3))
-            expected = (interest / (p * t)) * 100
-            assert abs(_parse_percent(answer) - expected) < 0.05, (text, answer)
-            rate_hits += 1
-        elif "What was the principal?" in text:
-            m = re.search(
-                r"earned \$([\d.]+) in simple interest after (\d+) years? at "
-                r"([\d.]+)% per year",
-                text,
-            )
-            assert m, text
-            interest, t, r = float(m.group(1)), int(m.group(2)), float(m.group(3))
-            expected = interest / ((r / 100.0) * t)
-            assert abs(_parse_money(answer) - expected) < 0.015, (text, answer)
-            principal_hits += 1
-    assert rate_hits >= 5, rate_hits
-    assert principal_hits >= 5, principal_hits
+        for difficulty in ("easy", "medium", "hard", 0, 8, 14, 22):
+            _latex, text, answer = fw.build_prompt({"difficulty": difficulty})
+            lowered = text.lower()
+            assert not any(b.lower() in lowered for b in banned), text
+            assert "%" in text or "\\%" in _latex, text
+            assert (
+                "how much interest is earned?" in lowered
+                or "balance at the end of the term" in lowered
+                or "account balance at the end of the term" in lowered
+            ), text
+            assert answer is not None and answer.startswith("\\$"), (text, answer)
+            forward_ok += 1
+    assert forward_ok >= 200, forward_ok
 
 
 def test_no_discount_tax_markup_prompts():

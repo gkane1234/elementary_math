@@ -32,6 +32,11 @@ from question_engine.frameworks.primitives._algebra_render import (
     join_signed_terms,
     num_latex,
 )
+from question_engine.frameworks.primitives.expression_exponents import (
+    exponents_unlocked,
+    try_raise_number,
+    try_raise_paren,
+)
 from question_engine.frameworks.primitives.presentation import (
     DisplayPiece,
     PresentationStyle,
@@ -56,7 +61,7 @@ NEST_SCALE = 3.0
 SCALE_OP_SCALE = 2.5
 MUL_UNLOCK = 2.0
 DIV_UNLOCK = 4.0
-EXP_UNLOCK = 3.0
+EXP_UNLOCK = 10.0  # default; live value in difficulty_knobs → expression_structure
 
 # Shape association biases (randomized per sample for variety).
 _ASSOC_LEFT = "left"
@@ -101,9 +106,8 @@ def op_pool_for_d(d: float, *, mode: ExprMode, allow_exponent: bool) -> tuple[st
         ops.append("*")
     if d >= fget("expression_structure", "div_unlock_d", DIV_UNLOCK) and mode == "algebraic":
         ops.append("/")
-    if allow_exponent and mode == "numeric" and d >= fget(
-        "expression_structure", "exp_unlock_d", EXP_UNLOCK
-    ):
+    # Exponent as an op option when unlocked (shared expression_exponents policy).
+    if allow_exponent and exponents_unlocked(d):
         ops.append("^")
     return tuple(ops)
 
@@ -190,7 +194,7 @@ def sample_structured_expression(
         var = None
 
     if allow_exponent is None:
-        allow_exponent = mode == "numeric"
+        allow_exponent = mode == "numeric" and exponents_unlocked(eff)
 
     # One presentation style for the whole tree (commute / flip / multiply glyph).
     presentation_for_ctx(ctx, d=eff)
@@ -274,6 +278,7 @@ def _build_tree(
         force_var=force_var,
         assoc=assoc,
         allow_exponent=allow_exponent,
+        eff=eff,
     )
     node.shape_bits.append(f"assoc:{assoc}")
     return node
@@ -301,6 +306,7 @@ def _sample_expr(
     force_var: bool,
     assoc: str,
     allow_exponent: bool,
+    eff: float,
 ) -> _Node:
     n_leaves = max(1, int(n_leaves))
     nest = max(0, int(nest))
@@ -308,8 +314,8 @@ def _sample_expr(
 
     if n_leaves == 1:
         leaf = _leaf(ctx, mode=mode, var=var, force_var=force_var)
-        if allow_exponent and mode == "numeric" and "^" in pool and ctx.rng.random() < 0.22:
-            leaf = _apply_square(ctx, leaf)
+        if allow_exponent and mode == "numeric" and "^" in pool:
+            leaf = _maybe_power_number_leaf(ctx, leaf, d=eff)
         return _maybe_scale_node(
             ctx,
             leaf,
@@ -318,6 +324,8 @@ def _sample_expr(
             nest=nest,
             scale=scale,
             pool=pool,
+            allow_exponent=allow_exponent,
+            eff=eff,
         )
 
     # Split leaf budget by association style.
@@ -363,6 +371,7 @@ def _sample_expr(
         force_var=force_var,
         assoc=child_assoc,
         allow_exponent=allow_exponent,
+        eff=eff,
     )
     right = _sample_expr(
         ctx,
@@ -375,13 +384,16 @@ def _sample_expr(
         force_var=False,
         assoc=child_assoc,
         allow_exponent=allow_exponent,
+        eff=eff,
     )
 
     op = _choose_combine_op(ctx, pool, left, right, mode=mode)
     combined = _combine(ctx, left, right, op, mode=mode, var=var)
 
     if outer_paren:
-        combined = _wrap(combined)
+        combined = _wrap_maybe_power(
+            ctx, combined, allow_exponent=allow_exponent and mode == "numeric", d=eff
+        )
         combined.shape_bits.append("outer_paren")
 
     # Occasional outer constant scale (algebraic distribute look / numeric factor).
@@ -837,11 +849,13 @@ def _maybe_scale_node(
     nest: int,
     scale: int,
     pool: tuple[str, ...],
+    allow_exponent: bool = False,
+    eff: float = 0.0,
 ) -> _Node:
     out = node
     while scale > 0 and ("*" in pool or "/" in pool):
         if nest > 0 and not out.is_wrapped and out.n_ops > 0 and ctx.rng.random() < 0.6:
-            out = _wrap(out)
+            out = _wrap_maybe_power(ctx, out, allow_exponent=allow_exponent, d=eff)
             nest -= 1
         op = "*" if "*" in pool and ( "/" not in pool or ctx.rng.random() < 0.7) else (
             "/" if "/" in pool and mode == "algebraic" else "*"
@@ -853,8 +867,87 @@ def _maybe_scale_node(
         if ctx.rng.random() < 0.45:
             break
     if nest > 0 and out.n_ops > 0 and not out.is_wrapped and ctx.rng.random() < 0.3:
-        out = _wrap(out)
+        out = _wrap_maybe_power(ctx, out, allow_exponent=allow_exponent, d=eff)
     return out
+
+
+def _maybe_power_number_leaf(
+    ctx: PrimitiveContext, node: _Node, *, d: float
+) -> _Node:
+    """Number-site exponent roll on a numeric leaf (shared expression_exponents)."""
+    if node.a != 0 or node.n_ops > 0 or node.b.denominator != 1:
+        return node
+    base = abs(int(node.b))
+    if base < 2:
+        return node
+    val, latex, text, powered = try_raise_number(
+        ctx, d, base, allow_exponents=True
+    )
+    if not powered:
+        return node
+    # Preserve sign of original leaf when base was negative.
+    if node.b < 0:
+        val = -val
+        latex = f"-{latex}"
+        text = f"-{text}"
+    return _Node(
+        a=Fraction(0),
+        b=val,
+        latex=latex,
+        text=text,
+        n_leaves=1,
+        n_ops=1,
+        used_exp=True,
+        ops=["^"],
+        shape_bits=node.shape_bits + ["^"],
+    )
+
+
+def _wrap_maybe_power(
+    ctx: PrimitiveContext,
+    node: _Node,
+    *,
+    allow_exponent: bool,
+    d: float,
+) -> _Node:
+    """Wrap in parentheses; optionally raise the group (paren-site roll)."""
+    wrapped = _wrap(node)
+    if not allow_exponent or node.a != 0:
+        return wrapped
+    # Only power pure-numeric parentheticals whose value is a small integer.
+    if wrapped.b.denominator != 1:
+        return wrapped
+    inner_l = node.latex
+    inner_t = node.text
+    # If already displayed wrapped, strip for try_raise_paren which re-wraps.
+    if node.is_wrapped:
+        return wrapped
+    val, latex, text, powered = try_raise_paren(
+        ctx,
+        d,
+        wrapped.b,
+        inner_l,
+        inner_t,
+        allow_exponents=True,
+    )
+    if not powered:
+        return wrapped
+    return _Node(
+        a=Fraction(0),
+        b=val,
+        latex=latex,
+        text=text,
+        n_leaves=wrapped.n_leaves,
+        n_parens=wrapped.n_parens,
+        n_ops=wrapped.n_ops + 1,
+        nest_depth=wrapped.nest_depth,
+        used_mul=wrapped.used_mul,
+        used_div=wrapped.used_div,
+        used_exp=True,
+        is_wrapped=True,
+        ops=wrapped.ops + ["^"],
+        shape_bits=wrapped.shape_bits + ["group^"],
+    )
 
 
 def _scale_const(
@@ -898,29 +991,8 @@ def _scale_const(
 
 
 def _apply_square(ctx: PrimitiveContext, node: _Node) -> _Node:
-    """Numeric leaf squared (small bases only)."""
-    if node.a != 0 or node.n_ops > 0:
-        return node
-    if abs(node.b) > 6 or node.b.denominator != 1:
-        v = Fraction(ctx.rng.randint(2, 5))
-        node = _Node(a=Fraction(0), b=v, latex=str(int(v)), text=str(int(v)))
-    base_l = node.latex
-    base_t = node.text
-    # Parenthesize negative bases only.
-    if node.b < 0:
-        base_l = f"\\left({base_l}\\right)"
-        base_t = f"({base_t})"
-    return _Node(
-        a=Fraction(0),
-        b=node.b * node.b,
-        latex=f"{{{base_l}}}^{{2}}",
-        text=f"{base_t}^2",
-        n_leaves=1,
-        n_ops=1,
-        used_exp=True,
-        ops=["^"],
-        shape_bits=node.shape_bits + ["^2"],
-    )
+    """Deprecated alias — prefer ``_maybe_power_number_leaf``."""
+    return _maybe_power_number_leaf(ctx, node, d=0.0)
 
 
 def _small_const(

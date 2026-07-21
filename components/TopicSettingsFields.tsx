@@ -13,12 +13,14 @@ const COMMON_GROUPS = new Set(["answer", "signs", "presentation"]);
 const MC_DETAIL_KEYS = new Set(["multiple_choice_ratio"]);
 
 const CANCEL_FACTOR_COUNT_LABELS: Record<string, string> = {
-  random: "Random",
-  "0": "None",
-  "1": "1 factor",
-  "2": "2 factors",
-  "3": "3 factors",
-  "4": "All (up to 4)",
+  auto: "By difficulty",
+  random: "By difficulty",
+  "0": "0",
+  "1": "1",
+  "2": "2",
+  "3": "3",
+  "4": "All available",
+  all: "All available",
 };
 
 /** Human labels for Layer 0 number profile lane ids (incl. auto override). */
@@ -341,7 +343,13 @@ function partitionFields(fields: SettingField[]) {
     if (hasContinuousDifficulty && field.key === "difficulty_tier") {
       continue;
     }
-    if (field.group === "difficulty" || field.key === "difficulty_tier" || field.key === "difficulty") {
+    // Always surface cancel count next to difficulty (never bury under black-boxed topic knobs).
+    if (
+      field.group === "difficulty" ||
+      field.key === "difficulty_tier" ||
+      field.key === "difficulty" ||
+      field.key === "cancel_factor_count"
+    ) {
       difficulty.push(field);
       continue;
     }

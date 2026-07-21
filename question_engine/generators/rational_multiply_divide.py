@@ -73,27 +73,58 @@ def _factor_latex(poly: Polynomial, *, in_product: bool) -> str:
     return latex
 
 
-def _product_latex(factors: Sequence[Polynomial], *, expand: bool) -> str:
+def _factor_display_options(settings: dict):
+    from packages.polynomial_core import FactorablePolynomialOptions
+
+    rrt = bool(settings.get("factor_rrt", False))
+    coef_min, coef_max = _coef_bounds(settings)
+    return FactorablePolynomialOptions(
+        coef_min=coef_min,
+        coef_max=coef_max,
+        rrt_mode="allow" if rrt else "exclude",
+        enabled_methods={"rrt": rrt},
+    )
+
+
+def _product_latex(
+    factors: Sequence[Polynomial],
+    *,
+    expand: bool | None = None,
+    settings: dict | None = None,
+) -> str:
+    """Render a factor product; expand when classroom-factorable, else follow RRT policy."""
+    from packages.polynomial_core import (
+        format_polynomial_from_factors,
+        should_display_factor_product_expanded,
+    )
+
     if not factors:
         return "1"
-    if expand:
-        product = Polynomial([1])
-        for factor in factors:
-            product *= factor
-        return product.to_latex()
-    if len(factors) == 1:
-        return _factor_latex(factors[0], in_product=False)
-    return "".join(_factor_latex(f, in_product=True) for f in factors)
+    if expand is False:
+        if len(factors) == 1:
+            return _factor_latex(factors[0], in_product=False)
+        return "".join(_factor_latex(f, in_product=True) for f in factors)
+    opts = _factor_display_options(settings or {})
+    if expand is True:
+        # Author asked for expanded, but still refuse RRT-hard products unless RRT on.
+        if should_display_factor_product_expanded(tuple(factors), opts):
+            product = Polynomial([1])
+            for factor in factors:
+                product *= factor
+            return product.to_latex()
+        return format_polynomial_from_factors(tuple(factors), opts, force_factored=True)
+    return format_polynomial_from_factors(tuple(factors), opts)
 
 
 def _rational_latex(
     num_factors: Sequence[Polynomial],
     den_factors: Sequence[Polynomial],
     *,
-    expand: bool,
+    expand: bool | None = None,
+    settings: dict | None = None,
 ) -> str:
-    num = _product_latex(num_factors, expand=expand)
-    den = _product_latex(den_factors, expand=expand)
+    num = _product_latex(num_factors, expand=expand, settings=settings)
+    den = _product_latex(den_factors, expand=expand, settings=settings)
     return f"\\frac{{{num}}}{{{den}}}"
 
 
@@ -122,30 +153,27 @@ def _cancel_factors(
     return nums, dens
 
 
-def _root_of_linear(factor: Polynomial) -> int | None:
-    """Integer root of ax+b when it exists."""
+def _root_of_linear(factor: Polynomial):
+    """Exact root of ax+b as Fraction when linear, else None."""
+    from fractions import Fraction
+
     if factor.deg() != 1:
         return None
     a = int(round(float(factor.coef(1))))
     b = int(round(float(factor.coef(0))))
-    if a == 0 or b % a != 0:
+    if a == 0:
         return None
-    return -b // a
+    return Fraction(-b, a)
 
 
-def _excluded_from_factors(factors: Sequence[Polynomial]) -> list[int]:
-    excluded: list[int] = []
-    for factor in factors:
-        root = _root_of_linear(factor)
-        if root is not None:
-            excluded.append(root)
-        elif factor.deg() == 2:
-            # Expanded quadratic: scan small integer roots.
-            for candidate in range(-12, 13):
-                if abs(float(factor.evaluate(candidate))) < 1e-8:
-                    excluded.append(candidate)
-    return sorted(set(excluded))
+def _excluded_from_factors(factors: Sequence[Polynomial]) -> list:
+    from packages.polynomial_core import excluded_values_from_factors
 
+    values = excluded_values_from_factors(factors)
+    return [
+        int(v) if v.denominator == 1 else f"{v.numerator}/{v.denominator}"
+        for v in values
+    ]
 
 def _answer_latex(
     num_factors: Sequence[Polynomial],
@@ -203,7 +231,11 @@ def _unique_linears(
 
 def _build_two_operand_problem(settings: dict) -> tuple[str, str]:
     """Build A/B ⋆ C/D with controlled shared cancellations."""
-    cancel_count = max(0, int(settings.get("cancel_factor_count", 1)))
+    from question_engine.frameworks.primitives.rational_cancel import (
+        resolve_rational_cancel_count,
+    )
+
+    cancel_count = resolve_rational_cancel_count(settings)
     expand = bool(settings.get("expand_polynomials", False))
     max_degree = max(1, int(settings.get("max_factor_degree", 1)))
     op = random.choice(_allowed_operations(settings))
@@ -241,8 +273,12 @@ def _build_two_operand_problem(settings: dict) -> tuple[str, str]:
         # Keep factors for answer math; display left num as expanded product of first two.
         pass  # handled by expand flag in latex
 
-    left = _rational_latex(left_num, left_den, expand=expand and max_degree >= 2)
-    right = _rational_latex(right_num, right_den, expand=expand and max_degree >= 2)
+    left = _rational_latex(
+        left_num, left_den, expand=expand and max_degree >= 2, settings=settings
+    )
+    right = _rational_latex(
+        right_num, right_den, expand=expand and max_degree >= 2, settings=settings
+    )
 
     if op == "multiply":
         prompt = _format_multiply([left, right])
@@ -262,7 +298,11 @@ def _build_two_operand_problem(settings: dict) -> tuple[str, str]:
 
 def _build_three_operand_multiply(settings: dict) -> tuple[str, str]:
     """Three rational factors multiplied; at least one shared cancellation."""
-    cancel_count = max(1, int(settings.get("cancel_factor_count", 2)))
+    from question_engine.frameworks.primitives.rational_cancel import (
+        resolve_rational_cancel_count,
+    )
+
+    cancel_count = max(1, resolve_rational_cancel_count(settings))
     expand = bool(settings.get("expand_polynomials", False))
     max_degree = max(1, int(settings.get("max_factor_degree", 1)))
 
@@ -288,9 +328,9 @@ def _build_three_operand_multiply(settings: dict) -> tuple[str, str]:
 
     use_expand = expand and max_degree >= 2
     operands = [
-        _rational_latex(a_num, a_den, expand=use_expand),
-        _rational_latex(b_num, b_den, expand=use_expand),
-        _rational_latex(c_num, c_den, expand=use_expand),
+        _rational_latex(a_num, a_den, expand=use_expand, settings=settings),
+        _rational_latex(b_num, b_den, expand=use_expand, settings=settings),
+        _rational_latex(c_num, c_den, expand=use_expand, settings=settings),
     ]
     prompt = _format_multiply(operands)
     answer = _answer_latex(
@@ -303,19 +343,72 @@ def _build_three_operand_multiply(settings: dict) -> tuple[str, str]:
 
 def build_rational_multiply_divide_prompt(settings: dict) -> tuple[str, str, str | None]:
     """Return (prompt_latex, kind, answer_latex|None)."""
+    from question_engine.frameworks.primitives.rational_cancel import (
+        apply_continuous_rational_structure,
+        continuous_rational_term_count_max,
+    )
+
+    settings = apply_continuous_rational_structure(settings)
     include_answer_key = bool(settings.get("include_answer_key", False))
-    operand_count = max(2, min(3, int(settings.get("operand_count", 2))))
+    term_hi = continuous_rational_term_count_max(settings)
+    if term_hi is not None:
+        operand_count = max(2, int(settings.get("operand_count", 2)))
+    else:
+        operand_count = max(2, min(3, int(settings.get("operand_count", 2))))
     ops = _allowed_operations(settings)
 
-    # Three-operand form is multiply-only; fall back to two if divide-only.
+    # Three-or-more-operand form is multiply-only; fall back to two if divide-only.
     if operand_count >= 3 and "multiply" in ops and (
         "divide" not in ops or random.random() < 0.7
     ):
-        prompt, answer = _build_three_operand_multiply(settings)
+        if operand_count <= 3:
+            prompt, answer = _build_three_operand_multiply(settings)
+        else:
+            # Factors-first: chain pairwise multiply of many rationals.
+            prompt, answer = _build_multi_operand_multiply(settings, operand_count)
     else:
         prompt, answer = _build_two_operand_problem(settings)
 
     return prompt, "rational multiply/divide", answer if include_answer_key else None
+
+
+def _build_multi_operand_multiply(settings: dict, operand_count: int) -> tuple[str, str]:
+    """N rational factors multiplied; cancel_count shared factors across the product."""
+    from question_engine.frameworks.primitives.rational_cancel import (
+        resolve_rational_cancel_count,
+    )
+
+    n = max(3, int(operand_count))
+    cancel_count = max(1, resolve_rational_cancel_count(settings))
+    expand = bool(settings.get("expand_polynomials", False))
+    max_degree = max(1, int(settings.get("max_factor_degree", 1)))
+
+    pool = _unique_linears(cancel_count + 2 * n, settings)
+    shared = pool[:cancel_count]
+    rest = pool[cancel_count:]
+
+    nums: list[list] = [[rest[2 * i]] for i in range(n)]
+    dens: list[list] = [[rest[2 * i + 1]] for i in range(n)]
+    for i, shared_factor in enumerate(shared):
+        a = i % n
+        b = (i + 1) % n
+        nums[a].append(shared_factor)
+        dens[b].append(shared_factor)
+
+    use_expand = expand and max_degree >= 2
+    operands = [
+        _rational_latex(nums[i], dens[i], expand=use_expand, settings=settings)
+        for i in range(n)
+    ]
+    prompt = _format_multiply(operands)
+    all_nums = [f for slot in nums for f in slot]
+    all_dens = [f for slot in dens for f in slot]
+    answer = _answer_latex(
+        all_nums,
+        all_dens,
+        excluded=_excluded_from_factors(all_dens),
+    )
+    return prompt, answer
 
 
 def generate_rational_expression_multiply_divide(

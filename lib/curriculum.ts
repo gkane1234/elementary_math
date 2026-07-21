@@ -87,9 +87,8 @@ export const CURRICULUM: CurriculumLevel[] = [
         id: "dividing_fractions",
         name: "Dividing Fractions",
         topics: [
-          { id: "g6_how_many_groups_times", name: "How many groups/times?", type_id: "g6_how_many_groups_times" },
-          { id: "g6_what_fraction_of_a_whole", name: "What fraction of a whole?", type_id: "g6_what_fraction_of_a_whole" },
-          { id: "g6_how_much_in_each_group_time", name: "How much in each group/time?", type_id: "g6_how_much_in_each_group_time" },
+          // Disabled (kept in catalog/generators; not selectable in curriculum picker):
+          //   g6_how_many_groups_times, g6_what_fraction_of_a_whole, g6_how_much_in_each_group_time
           { id: "g6_dividing_fractions", name: "Dividing fractions", type_id: "g6_dividing_fractions" },
         ],
       },
@@ -127,7 +126,8 @@ export const CURRICULUM: CurriculumLevel[] = [
         topics: [
           { id: "g6_numbers_on_a_number_line", name: "Numbers on a number line", type_id: "g6_numbers_on_a_number_line" },
           { id: "g6_number_line_word_problems", name: "Number line word problems", type_id: "g6_number_line_word_problems" },
-          { id: "g6_opposites_of_numbers", name: "Opposites of numbers", type_id: "g6_opposites_of_numbers" },
+          // Disabled (kept in catalog/generators; not selectable in curriculum picker):
+          //   g6_opposites_of_numbers
           { id: "g6_comparing_numbers", name: "Comparing numbers", type_id: "g6_comparing_numbers" },
           { id: "g6_ordering_numbers", name: "Ordering numbers", type_id: "g6_ordering_numbers" },
           { id: "g6_absolute_values", name: "Absolute values", type_id: "g6_absolute_values" },
@@ -329,6 +329,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         id: "polynomials",
         name: "Polynomials",
         topics: [
+          { id: "pa_polynomials_simplifying", name: "Simplifying", type_id: "pa_polynomials_simplifying" },
           { id: "pa_polynomials_adding_and_subtracting", name: "Adding and subtracting", type_id: "pa_polynomials_adding_and_subtracting" },
           { id: "pa_polynomials_multiplying", name: "Multiplying", type_id: "pa_polynomials_multiplying" },
         ],
@@ -487,6 +488,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         topics: [
           { id: "polynomials_naming", name: "Naming", type_id: "polynomial_naming" },
           { id: "polynomials_adding_and_subtracting", name: "Adding and subtracting", type_id: "polynomial_add_subtract" },
+          { id: "polynomials_simplifying", name: "Simplifying", type_id: "simplify_polynomials" },
           { id: "polynomials_dividing", name: "Dividing", type_id: "radical_divide" },
           { id: "polynomials_multiplying", name: "Multiplying", type_id: "polynomial_multiply" },
         ],
@@ -646,6 +648,7 @@ export const CURRICULUM: CurriculumLevel[] = [
         name: "Polynomials and Polynomial Functions",
         topics: [
           { id: "a2_polynomial_functions_naming", name: "Naming", type_id: "a2_polynomial_functions_naming" },
+          { id: "a2_polynomial_functions_simplifying", name: "Simplifying", type_id: "a2_polynomial_functions_simplifying" },
           { id: "a2_polynomial_functions_adding_and_subtracting", name: "Adding and subtracting", type_id: "a2_polynomial_functions_adding_and_subtracting" },
           { id: "a2_polynomial_functions_multiplying", name: "Multiplying", type_id: "a2_polynomial_functions_multiplying" },
           { id: "a2_polynomial_functions_multiplying_special_cases", name: "Multiplying special cases", type_id: "a2_polynomial_functions_multiplying_special_cases" },

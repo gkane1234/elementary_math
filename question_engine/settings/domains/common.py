@@ -21,6 +21,23 @@ def difficulty_settings(
     ]
 
 
+def continuous_difficulty_settings(
+    *,
+    default_d: int = 6,
+) -> list[SettingField]:
+    """Numeric difficulty slider (EMH tier is hidden in UI when this is present)."""
+    return [
+        SettingField(
+            "difficulty",
+            "Difficulty",
+            "int",
+            default_d,
+            min=0,
+            group="difficulty",
+        ),
+    ]
+
+
 def primitive_layered_settings(
     *,
     primitive_ids: list[str],

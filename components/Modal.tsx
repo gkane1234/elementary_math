@@ -7,10 +7,12 @@ type ModalProps = {
   title: string;
   onClose: () => void;
   children: ReactNode;
+  /** Pinned between scrollable body and action footer (does not scroll). */
+  stickyFooter?: ReactNode;
   footer?: ReactNode;
 };
 
-export function Modal({ open, title, onClose, children, footer }: ModalProps) {
+export function Modal({ open, title, onClose, children, stickyFooter, footer }: ModalProps) {
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -33,6 +35,7 @@ export function Modal({ open, title, onClose, children, footer }: ModalProps) {
           </button>
         </header>
         <div className="modal-body">{children}</div>
+        {stickyFooter ? <div className="modal-sticky-footer">{stickyFooter}</div> : null}
         {footer && <footer className="modal-footer">{footer}</footer>}
       </div>
     </div>

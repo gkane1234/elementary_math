@@ -74,12 +74,44 @@ def _resolve_cancel_factor_count(settings: dict) -> int:
 
     Prefers ``cancel_factor_count``. Falls back to legacy ``max_cancel_factors``
     (treated as an exact count) so older saved settings still work.
+    UI string ``\"4\"`` / ``\"all\"`` means all-available (cancel every factor in
+    a normal-sized problem, capped — not continuous D max).
     """
     if "cancel_factor_count" in settings and settings["cancel_factor_count"] is not None:
-        return max(1, int(settings["cancel_factor_count"]))
+        raw = settings["cancel_factor_count"]
+        if isinstance(raw, str):
+            from question_engine.frameworks.primitives.rational_cancel import (
+                ALL_AVAILABLE_CANCEL,
+                resolve_rational_cancel_count,
+                sample_all_available_factor_count,
+            )
+
+            text = raw.strip().lower()
+            if text in {
+                "",
+                "random",
+                "auto",
+                "all",
+                "all_available",
+                "max",
+                "4",  # UI: "All available"
+            }:
+                resolved = resolve_rational_cancel_count(settings)
+                if resolved >= ALL_AVAILABLE_CANCEL:
+                    # Size from degree settings / continuous sample, hard-capped.
+                    den_max = int(settings.get("denominator_degree_max", 3))
+                    sampled = sample_all_available_factor_count(settings, default=max(1, den_max))
+                    return max(1, min(sampled, max(1, den_max)))
+                return resolved
+            return max(0, int(text))
+        return max(0, int(raw))
     if "max_cancel_factors" in settings and settings["max_cancel_factors"] is not None:
-        return max(1, int(settings["max_cancel_factors"]))
-    return 1
+        return max(0, int(settings["max_cancel_factors"]))
+    from question_engine.frameworks.primitives.rational_cancel import (
+        resolve_rational_cancel_count,
+    )
+
+    return resolve_rational_cancel_count(settings)
 
 
 def _create_rational_simplification_problem(

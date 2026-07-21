@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import random
 from decimal import Decimal, ROUND_HALF_UP
 from fractions import Fraction
@@ -13,7 +14,18 @@ _DIFFICULTY_SCALE = {"easy": 0.55, "medium": 1.0, "hard": 1.45}
 
 
 def difficulty_scale(settings: dict) -> float:
-    tier = str(settings.get("difficulty_tier", "medium"))
+    """Scale factor for coefficient spans from continuous D or EMH tier."""
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        raw = settings["difficulty"]
+        try:
+            d = max(0.0, float(raw))
+            # D=0 → ~0.45, D=8 → ~1.0, D=20 → ~1.5 (soft asymptote).
+            return 0.45 + 1.2 * (1.0 - math.exp(-d / 9.0))
+        except (TypeError, ValueError):
+            mapped = _DIFFICULTY_SCALE.get(str(raw).strip().lower())
+            if mapped is not None:
+                return mapped
+    tier = str(settings.get("difficulty_tier", "medium")).strip().lower()
     return _DIFFICULTY_SCALE.get(tier, 1.0)
 
 
@@ -133,6 +145,8 @@ def enrichment_metadata(settings: dict, *, answer: str | None) -> dict[str, Any]
         distractors = [str(d) for d in provided] if isinstance(provided, list) else None
         meta.update(build_multiple_choice_metadata(answer, distractors=distractors))
 
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        meta["difficulty"] = settings["difficulty"]
     tier = settings.get("difficulty_tier")
     if tier:
         meta["difficulty_tier"] = tier

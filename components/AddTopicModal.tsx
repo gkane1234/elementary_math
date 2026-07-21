@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Modal } from "@/components/Modal";
+import { TopicExamplePreview } from "@/components/TopicExamplePreview";
 import { TopicPrerequisitesPanel } from "@/components/TopicPrerequisitesPanel";
 import { TopicSettingsFields, topicSettingsFields } from "@/components/TopicSettingsFields";
 import type { CurriculumSelection } from "@/lib/curriculum-picker";
@@ -121,6 +122,8 @@ export function AddTopicModal({
   };
 
   const modalOpen = open && Boolean(selectedType || browseSelection);
+  const showExample =
+    modalOpen && Boolean(selectedType) && selectedIsReady && !isBrowsingOnly;
   const title = isBrowsingOnly
     ? "Topic prerequisites"
     : isEditing
@@ -132,6 +135,15 @@ export function AddTopicModal({
       open={modalOpen}
       title={title}
       onClose={onClose}
+      stickyFooter={
+        showExample && selectedType ? (
+          <TopicExamplePreview
+            active
+            typeId={selectedType.id}
+            settings={values}
+          />
+        ) : null
+      }
       footer={
         isBrowsingOnly ? (
           <button

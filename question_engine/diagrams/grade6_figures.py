@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import math
+import re
 from xml.sax.saxutils import escape
 
 
@@ -417,3 +419,342 @@ def polyhedron_svg(kind: str) -> str:
         return builders[kind]()
     except KeyError as exc:
         raise ValueError(f"Unknown polyhedron kind: {kind}") from exc
+
+
+# ---------------------------------------------------------------------------
+# Intro-to-percents visual models (blank prompt + shaded answer key)
+# ---------------------------------------------------------------------------
+
+_PERCENT_SHADE_FILL = "#93c5fd"
+_PERCENT_EMPTY_FILL = "#ffffff"
+_PERCENT_STROKE = "#1e3a8a"
+
+
+def _percent_grid_cells_to_shade(percent: int, rows: int, cols: int) -> int:
+    """How many cells represent ``percent``% of an R×C grid (exact when possible)."""
+    total = max(1, int(rows) * int(cols))
+    pct = max(0, min(100, int(percent)))
+    if (pct * total) % 100 == 0:
+        return (pct * total) // 100
+    return int(round(pct * total / 100.0))
+
+
+def percent_grid_svg(
+    percent: int,
+    *,
+    blank: bool = False,
+    rows: int = 10,
+    cols: int = 10,
+    title: str | None = None,
+) -> str:
+    """R×C grid; shade ``percent``% of cells (row-major) unless blank."""
+    r = max(1, int(rows))
+    c = max(1, int(cols))
+    total = r * c
+    n_shade = 0 if blank else _percent_grid_cells_to_shade(percent, r, c)
+    # Scale cells so large grids still fit a readable viewport.
+    cell = 22 if total <= 100 else max(8, int(200 / max(r, c)))
+    gap = 1 if cell >= 14 else 0
+    ox, oy = 28, 36
+    grid_w = c * cell + (c - 1) * gap
+    grid_h = r * cell + (r - 1) * gap
+    rects: list[str] = []
+    for i in range(total):
+        row, col = divmod(i, c)
+        x = ox + col * (cell + gap)
+        y = oy + row * (cell + gap)
+        fill = _PERCENT_EMPTY_FILL if blank or i >= n_shade else _PERCENT_SHADE_FILL
+        rects.append(
+            f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" '
+            f'fill="{fill}" stroke="{_PERCENT_STROKE}" stroke-width="1"/>'
+        )
+    if title is None:
+        if r == 10 and c == 10:
+            title = "100-square grid"
+        else:
+            title = f"{r}×{c} grid ({total} squares)"
+    title_el = (
+        f'<text x="{ox + grid_w / 2:.1f}" y="24" text-anchor="middle" '
+        f'font-size="14" fill="#4b5563">{escape(title)}</text>'
+    )
+    return _svg(
+        f"{title_el}{''.join(rects)}",
+        width=max(ox * 2 + grid_w, 200),
+        height=oy + grid_h + 16,
+    )
+
+
+def percent_hundred_grid_svg(percent: int, *, blank: bool = False) -> str:
+    """10×10 hundredths grid; shade ``percent`` cells (row-major) unless blank."""
+    return percent_grid_svg(percent, blank=blank, rows=10, cols=10)
+
+
+def percent_bar_svg(
+    percent: int,
+    *,
+    blank: bool = False,
+    segments: int = 10,
+    label_ticks: bool = True,
+) -> str:
+    """Horizontal percent bar; shade left ``percent``% unless blank."""
+    pct = max(0, min(100, int(percent)))
+    segs = max(2, int(segments))
+    left, top = 36, 70
+    bar_w, bar_h = 300, 44
+    seg_w = bar_w / segs
+    parts: list[str] = []
+    # Continuous fill under segment outlines so awkward percents still look right.
+    if not blank and pct > 0:
+        fill_w = bar_w * pct / 100.0
+        parts.append(
+            f'<rect x="{left}" y="{top}" width="{fill_w:.2f}" height="{bar_h}" '
+            f'fill="{_PERCENT_SHADE_FILL}" stroke="none"/>'
+        )
+    parts.append(
+        f'<rect x="{left}" y="{top}" width="{bar_w}" height="{bar_h}" '
+        f'fill="none" stroke="{_PERCENT_STROKE}" stroke-width="2"/>'
+    )
+    for i in range(segs + 1):
+        x = left + i * seg_w
+        parts.append(
+            f'<line x1="{x:.1f}" y1="{top}" x2="{x:.1f}" y2="{top + bar_h}" '
+            f'stroke="{_PERCENT_STROKE}" stroke-width="1"/>'
+        )
+        if label_ticks:
+            label = i * (100 // segs) if 100 % segs == 0 else int(round(100 * i / segs))
+            parts.append(
+                f'<text x="{x:.1f}" y="{top + bar_h + 18}" text-anchor="middle" '
+                f'font-size="11" fill="#4b5563">{label}</text>'
+            )
+    title = (
+        f'<text x="{left + bar_w / 2:.1f}" y="48" text-anchor="middle" '
+        f'font-size="14" fill="#4b5563">Percent bar</text>'
+    )
+    return _svg(f"{title}{''.join(parts)}", width=left * 2 + bar_w, height=160)
+
+
+def percent_circle_svg(
+    percent: int,
+    *,
+    blank: bool = False,
+    show_ticks: bool = True,
+) -> str:
+    """Circle / pie model; shade a wedge of ``percent``% from 12 o'clock unless blank."""
+    pct = max(0, min(100, int(percent)))
+    cx, cy, r = 160, 120, 78
+    parts: list[str] = [
+        f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{_PERCENT_EMPTY_FILL}" '
+        f'stroke="{_PERCENT_STROKE}" stroke-width="2"/>'
+    ]
+    if not blank and 0 < pct < 100:
+        # SVG angles: 0° = 3 o'clock; start at 12 o'clock (-90°) and go clockwise.
+        start = -math.pi / 2
+        sweep = 2 * math.pi * pct / 100.0
+        end = start + sweep
+        x1 = cx + r * math.cos(start)
+        y1 = cy + r * math.sin(start)
+        x2 = cx + r * math.cos(end)
+        y2 = cy + r * math.sin(end)
+        large = 1 if sweep > math.pi else 0
+        parts.append(
+            f'<path d="M {cx} {cy} L {x1:.2f} {y1:.2f} '
+            f'A {r} {r} 0 {large} 1 {x2:.2f} {y2:.2f} Z" '
+            f'fill="{_PERCENT_SHADE_FILL}" stroke="{_PERCENT_STROKE}" stroke-width="1.5"/>'
+        )
+    elif not blank and pct >= 100:
+        parts = [
+            f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{_PERCENT_SHADE_FILL}" '
+            f'stroke="{_PERCENT_STROKE}" stroke-width="2"/>'
+        ]
+    if show_ticks:
+        # Light tick marks at quarters to orient students.
+        for deg in (0, 90, 180, 270):
+            rad = math.radians(deg - 90)
+            x_out = cx + r * math.cos(rad)
+            y_out = cy + r * math.sin(rad)
+            x_in = cx + (r - 8) * math.cos(rad)
+            y_in = cy + (r - 8) * math.sin(rad)
+            parts.append(
+                f'<line x1="{x_in:.1f}" y1="{y_in:.1f}" x2="{x_out:.1f}" y2="{y_out:.1f}" '
+                f'stroke="#9ca3af" stroke-width="1.5"/>'
+            )
+    title = (
+        f'<text x="{cx}" y="28" text-anchor="middle" '
+        f'font-size="14" fill="#4b5563">Percent circle</text>'
+    )
+    return _svg(f"{title}{''.join(parts)}", width=320, height=220)
+
+
+def percent_multi_panel_svg(
+    panels: list[dict[str, object]],
+    *,
+    blank: bool = False,
+) -> str:
+    """Side-by-side percent figures (each panel is a figure dict).
+
+    Panel keys: ``figure`` (grid|bar|circle), ``percent``, optional ``rows``,
+    ``cols``, ``segments``, ``show_ticks``, ``label_ticks``, ``label``.
+    """
+    if not panels:
+        raise ValueError("percent_multi_panel_svg requires at least one panel")
+
+    gap = 16
+    ox = 12
+    pieces: list[str] = []
+    max_h = 0
+    x = ox
+    for idx, panel in enumerate(panels):
+        fig = str(panel.get("figure", "circle"))
+        pct = int(panel.get("percent", 50))  # type: ignore[arg-type]
+        label = str(panel.get("label") or f"{pct}%")
+        if fig in {"grid", "hundred_grid"}:
+            rows = int(panel.get("rows", 10))  # type: ignore[arg-type]
+            cols = int(panel.get("cols", 10))  # type: ignore[arg-type]
+            inner = percent_grid_svg(
+                pct,
+                blank=blank,
+                rows=rows,
+                cols=cols,
+                title=str(panel.get("title") or f"Figure {idx + 1}"),
+            )
+        elif fig == "bar":
+            inner = percent_bar_svg(
+                pct,
+                blank=blank,
+                segments=int(panel.get("segments", 10)),  # type: ignore[arg-type]
+                label_ticks=bool(panel.get("label_ticks", True)),
+            )
+        else:
+            inner = percent_circle_svg(
+                pct,
+                blank=blank,
+                show_ticks=bool(panel.get("show_ticks", True)),
+            )
+        # Extract inner content + size from the wrapped svg.
+        m = re.search(
+            r'width="(\d+)"[^>]*height="(\d+)"[^>]*>(.*)</svg>\s*$',
+            inner,
+            flags=re.DOTALL,
+        )
+        if not m:
+            continue
+        w, h, body = int(m.group(1)), int(m.group(2)), m.group(3)
+        # Drop the white background rect from the nested svg body.
+        body = re.sub(
+            r'<rect width="100%" height="100%" fill="#fff"/>',
+            "",
+            body,
+            count=1,
+        )
+        label_el = (
+            f'<text x="{x + w / 2:.1f}" y="18" text-anchor="middle" '
+            f'font-size="13" fill="#1e3a8a" font-weight="600">{escape(label)}</text>'
+        )
+        pieces.append(f'{label_el}<g transform="translate({x},22)">{body}</g>')
+        max_h = max(max_h, h + 22)
+        x += w + gap
+
+    return _svg("".join(pieces), width=max(x - gap + ox, 320), height=max_h + 8)
+
+
+def _dnl_tick_positions(n: int, *, left: float, right: float) -> list[float]:
+    if n <= 1:
+        return [left]
+    return [left + (right - left) * i / (n - 1) for i in range(n)]
+
+
+def _one_double_number_line(
+    *,
+    title: str,
+    top_label: str,
+    bottom_label: str,
+    top_values: list[int | float | str],
+    bottom_values: list[int | float | str],
+    origin_y: float,
+    left: float = 70.0,
+    right: float = 430.0,
+) -> str:
+    """SVG fragments for one labeled double number line (two parallel axes)."""
+    if len(top_values) != len(bottom_values):
+        raise ValueError("top_values and bottom_values must match in length")
+    if not top_values:
+        raise ValueError("double number line needs at least one tick")
+
+    xs = _dnl_tick_positions(len(top_values), left=left, right=right)
+    top_y = origin_y
+    bot_y = origin_y + 48
+    parts: list[str] = [
+        f'<text x="{left - 8:.1f}" y="{origin_y - 22:.1f}" text-anchor="end" '
+        f'font-size="14" font-weight="600" fill="#1e3a8a">{escape(title)}</text>',
+        f'<text x="{left - 8:.1f}" y="{top_y + 5:.1f}" text-anchor="end" '
+        f'font-size="12" fill="#4b5563">{escape(top_label)}</text>',
+        f'<text x="{left - 8:.1f}" y="{bot_y + 5:.1f}" text-anchor="end" '
+        f'font-size="12" fill="#4b5563">{escape(bottom_label)}</text>',
+        f'<line x1="{left:.1f}" y1="{top_y:.1f}" x2="{right:.1f}" y2="{top_y:.1f}" '
+        f'stroke="#1e3a8a" stroke-width="2"/>',
+        f'<line x1="{left:.1f}" y1="{bot_y:.1f}" x2="{right:.1f}" y2="{bot_y:.1f}" '
+        f'stroke="#1e3a8a" stroke-width="2"/>',
+    ]
+    for x, tv, bv in zip(xs, top_values, bottom_values):
+        parts.append(
+            f'<line x1="{x:.1f}" y1="{top_y - 7:.1f}" x2="{x:.1f}" y2="{top_y + 7:.1f}" '
+            f'stroke="#1e3a8a" stroke-width="2"/>'
+            f'<text x="{x:.1f}" y="{top_y - 12:.1f}" text-anchor="middle" '
+            f'font-size="13" fill="#111827">{escape(str(tv))}</text>'
+            f'<line x1="{x:.1f}" y1="{bot_y - 7:.1f}" x2="{x:.1f}" y2="{bot_y + 7:.1f}" '
+            f'stroke="#1e3a8a" stroke-width="2"/>'
+            f'<text x="{x:.1f}" y="{bot_y + 20:.1f}" text-anchor="middle" '
+            f'font-size="13" fill="#111827">{escape(str(bv))}</text>'
+            # Light vertical guide linking the paired ticks.
+            f'<line x1="{x:.1f}" y1="{top_y + 7:.1f}" x2="{x:.1f}" y2="{bot_y - 7:.1f}" '
+            f'stroke="#93c5fd" stroke-width="1" stroke-dasharray="3 3"/>'
+        )
+    return "".join(parts)
+
+
+def double_number_line_svg(
+    *,
+    title: str,
+    top_label: str,
+    bottom_label: str,
+    top_values: list[int | float | str],
+    bottom_values: list[int | float | str],
+) -> str:
+    """Single double number line (paired quantity scales)."""
+    body = _one_double_number_line(
+        title=title,
+        top_label=top_label,
+        bottom_label=bottom_label,
+        top_values=top_values,
+        bottom_values=bottom_values,
+        origin_y=55.0,
+    )
+    return _svg(body, width=460, height=140)
+
+
+def comparing_rates_double_number_lines_svg(
+    person_a: dict[str, object],
+    person_b: dict[str, object],
+) -> str:
+    """Two stacked double number lines for comparing rates.
+
+    Each ``person_*`` dict needs: ``title``, ``top_label``, ``bottom_label``,
+    ``top_values``, ``bottom_values``.
+    """
+    body_a = _one_double_number_line(
+        title=str(person_a["title"]),
+        top_label=str(person_a["top_label"]),
+        bottom_label=str(person_a["bottom_label"]),
+        top_values=list(person_a["top_values"]),  # type: ignore[arg-type]
+        bottom_values=list(person_a["bottom_values"]),  # type: ignore[arg-type]
+        origin_y=50.0,
+    )
+    body_b = _one_double_number_line(
+        title=str(person_b["title"]),
+        top_label=str(person_b["top_label"]),
+        bottom_label=str(person_b["bottom_label"]),
+        top_values=list(person_b["top_values"]),  # type: ignore[arg-type]
+        bottom_values=list(person_b["bottom_values"]),  # type: ignore[arg-type]
+        origin_y=175.0,
+    )
+    return _svg(body_a + body_b, width=460, height=280)

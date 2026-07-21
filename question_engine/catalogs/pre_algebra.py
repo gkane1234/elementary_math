@@ -320,6 +320,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     # Beginning Polynomials
     _pa(
         "Beginning Polynomials",
+        "pa_polynomials_simplifying",
+        "Simplifying",
+        generator="simplify_polynomials",
+        instruction_latex=r"\text{Simplify.}",
+        instruction_text="Simplify.",
+    ),
+    _pa(
+        "Beginning Polynomials",
         "pa_polynomials_adding_and_subtracting",
         "Adding and subtracting", generator="polynomial_add_subtract", instruction_latex="\\text{Simplify.}",
         instruction_text="Simplify.",

@@ -7,6 +7,7 @@ from typing import Any, Literal
 from .factoring import (
     FactorablePolynomialOptions,
     create_factorable_polynomial_with_exact_degree,
+    should_display_factor_product_expanded,
 )
 from .latex import format_factor_product_latex, fraction_latex
 from .polynomial import Polynomial
@@ -20,6 +21,8 @@ class RationalExpressionTerm:
     denominator: Polynomial | None
     denominator_factors: tuple[Polynomial, ...] = ()
     denominator_display_expanded: bool = True
+    numerator_factors: tuple[Polynomial, ...] = ()
+    numerator_display_expanded: bool = True
     term_kind: TermKind = "factor"
 
     @property
@@ -29,11 +32,11 @@ class RationalExpressionTerm:
     def to_latex(self) -> str:
         """LaTeX for this term (polynomial or fraction)."""
         if self.is_polynomial_term:
-            return self.numerator.to_latex()
+            return term_numerator_latex(self)
         assert self.denominator is not None
         if self.denominator.deg() == 0:
-            return self.numerator.to_latex()
-        return fraction_latex(self.numerator.to_latex(), term_denominator_latex(self))
+            return term_numerator_latex(self)
+        return fraction_latex(term_numerator_latex(self), term_denominator_latex(self))
 
     def to_text(self) -> str:
         """Plain-text for this term."""
@@ -321,37 +324,11 @@ def _factors_to_polynomial(factors: tuple[Polynomial, ...] | list[Polynomial]) -
     return _product(list(factors))
 
 
-def _is_substitution_quadratic_pair(left: Polynomial, right: Polynomial) -> bool:
-    for polynomial in (left, right):
-        if polynomial.deg() != 2:
-            return False
-        if abs(float(polynomial.coef(1))) > 1e-10:
-            return False
-    return True
-
-
 def _should_display_denominator_expanded(
     factors: tuple[Polynomial, ...],
     options: FactorablePolynomialOptions,
 ) -> bool:
-    if len(factors) <= 1:
-        return True
-
-    enabled = set(options.enabled_method_pool())
-
-    if all(factor.deg() == 1 for factor in factors):
-        if len(factors) == 2:
-            return True
-        return options.rrt_mode == "only"
-
-    if len(factors) == 2:
-        degrees = sorted(factor.deg() for factor in factors)
-        if degrees == [1, 2]:
-            return "grouping" in enabled
-        if degrees == [2, 2] and _is_substitution_quadratic_pair(factors[0], factors[1]):
-            return "substitution" in enabled
-
-    return False
+    return should_display_factor_product_expanded(factors, options)
 
 
 def _format_factor_product_latex(factors: tuple[Polynomial, ...]) -> str:
@@ -369,6 +346,52 @@ def polynomial_excluded_values(
         if abs(float(denominator.evaluate(candidate))) < 1e-8:
             excluded.append(candidate)
     return excluded
+
+
+def linear_factor_excluded_value(factor: Polynomial):
+    """Exact excluded root of a linear factor ``ax + b`` (as ``Fraction``), else ``None``."""
+    from fractions import Fraction
+
+    if factor is None or factor.deg() != 1:
+        return None
+    a = int(round(float(factor.coef(1))))
+    b = int(round(float(factor.coef(0))))
+    if a == 0:
+        return None
+    return Fraction(-b, a)
+
+
+def excluded_values_from_factors(factors) -> list:
+    """Excluded values from linear factors (and integer roots of higher-degree pieces).
+
+    Prefer per-factor roots so canceled non-monic linears (e.g. ``3x-2``) are not
+    lost when only the expanded LCD product is scanned for integer zeros.
+    """
+    from fractions import Fraction
+
+    excluded: list[Fraction] = []
+    seen: set[Fraction] = set()
+
+    def _add(value) -> None:
+        if value is None:
+            return
+        frac = Fraction(value).limit_denominator()
+        if frac in seen:
+            return
+        seen.add(frac)
+        excluded.append(frac)
+
+    for factor in factors or ():
+        if factor is None:
+            continue
+        root = linear_factor_excluded_value(factor)
+        if root is not None:
+            _add(root)
+            continue
+        if factor.deg() >= 2:
+            for candidate in polynomial_excluded_values(factor, coef_min=-20, coef_max=20):
+                _add(candidate)
+    return sorted(excluded)
 
 
 def rational_excluded_values_latex(values: list) -> str:
@@ -395,6 +418,12 @@ def rational_excluded_values_latex(values: list) -> str:
         else:
             parts.append(f"\\frac{{{frac.numerator}}}{{{frac.denominator}}}")
     return f"x \\neq {', '.join(parts)}"
+
+
+def term_numerator_latex(term: RationalExpressionTerm) -> str:
+    if term.numerator_factors and not term.numerator_display_expanded:
+        return _format_factor_product_latex(term.numerator_factors)
+    return term.numerator.to_latex()
 
 
 def term_denominator_latex(term: RationalExpressionTerm) -> str:
@@ -768,8 +797,16 @@ def _resolve_cancel_factor_count(
 ) -> int:
     if lcd_factor_count <= 0:
         return 0
-    if cancel_factor_count is None or cancel_factor_count == "random":
+    if cancel_factor_count is None:
         return random.randint(0, lcd_factor_count)
+    if isinstance(cancel_factor_count, str):
+        text = cancel_factor_count.strip().lower()
+        if text in {"", "random", "auto"}:
+            return random.randint(0, lcd_factor_count)
+        if text in {"all", "all_available", "max"}:
+            return lcd_factor_count
+        cancel_factor_count = text
+    # Explicit request: cancel exactly that many, or all available if fewer exist.
     return max(0, min(int(cancel_factor_count), lcd_factor_count))
 
 
@@ -984,25 +1021,10 @@ def _build_cancelled_expression_pieces(
             positive_leading=options.positive_leading,
         )
 
-    if not remaining_factors:
-        if polynomial_term is None:
-            polynomial_term = _random_polynomial_term(
-                coef_min,
-                coef_max,
-                max_degree=min(2, max(0, cancel_product.deg())),
-                positive_leading=options.positive_leading,
-            )
-        simplified_numerator = polynomial_term * lcd
-        return (
-            polynomial_term,
-            [],
-            [],
-            simplified_numerator,
-            polynomial_term,
-            Polynomial([1]),
-        )
-
-    remaining_denominator = _factors_to_polynomial(remaining_factors)
+    # All-cancel (no remaining LCD factors) must still emit ≥2 fractional terms
+    # so the outer builder does not reject/retry forever. Build from a constant
+    # reduced answer and distribute cancel factors across terms (same path as
+    # partial cancel). Optional polynomial term is additive only.
     # Constant reduced numerators keep post-inflation terms small and readable.
     # Choose a magnitude large enough to split across the cancel-factor terms.
     min_abs = max(2, len(cancelled_lcd_factors) + 1)
@@ -1161,6 +1183,7 @@ def _build_fraction_display_term(
     term_inflation: Polynomial,
     options: FactorablePolynomialOptions,
     force_factored: bool = False,
+    numerator_factors: tuple[Polynomial, ...] | None = None,
 ) -> RationalExpressionTerm:
     base_denominator = _factors_to_polynomial(denominator_factors)
     display_factors = denominator_factors
@@ -1169,20 +1192,46 @@ def _build_fraction_display_term(
         if force_factored
         else _should_display_denominator_expanded(denominator_factors, options)
     )
+    num_factors = numerator_factors or ()
     if term_inflation.deg() > 0:
         display_factors = denominator_factors + (term_inflation,)
+        inflated_num_factors = (
+            (num_factors + (term_inflation,)) if num_factors else ()
+        )
+        num_expanded = (
+            False
+            if force_factored
+            else (
+                _should_display_denominator_expanded(inflated_num_factors, options)
+                if inflated_num_factors
+                else True
+            )
+        )
         return RationalExpressionTerm(
             numerator=numerator * term_inflation,
             denominator=base_denominator * term_inflation,
             denominator_factors=display_factors,
             denominator_display_expanded=display_expanded and not force_factored,
+            numerator_factors=inflated_num_factors,
+            numerator_display_expanded=num_expanded,
             term_kind="factor",
         )
+    num_expanded = (
+        False
+        if force_factored
+        else (
+            _should_display_denominator_expanded(num_factors, options)
+            if num_factors
+            else True
+        )
+    )
     return RationalExpressionTerm(
         numerator=numerator,
         denominator=base_denominator,
         denominator_factors=display_factors,
         denominator_display_expanded=display_expanded,
+        numerator_factors=num_factors,
+        numerator_display_expanded=num_expanded,
         term_kind="factor",
     )
 
@@ -1219,10 +1268,13 @@ def build_rational_expression_problem(
     force_shared_lcd: bool = False,
     allow_monomial_lcd: bool = False,
 ) -> RationalExpressionSolution:
-    term_count = max(2, min(5, term_count))
+    # No pedagogical hard cap — continuous D may request dozens/hundreds of terms.
+    term_count = max(2, int(term_count))
     coef_min, coef_max = options.normalized_coef_range()
     if allow_empty_denominators is None:
         allow_empty_denominators = allow_polynomial_terms
+
+    _ALL_CANCEL = 10**9
 
     for _ in range(200):
         include_polynomial = allow_polynomial_terms and random.random() < 0.6
@@ -1232,9 +1284,13 @@ def build_rational_expression_problem(
         factor_term_count = max(1, term_count - reserved)
 
         planned_cancel: int | None
-        if cancel_factor_count is None or cancel_factor_count == "random":
+        cancel_is_auto = cancel_factor_count is None or (
+            isinstance(cancel_factor_count, str)
+            and cancel_factor_count.strip().lower() in {"", "random", "auto"}
+        )
+        if cancel_is_auto:
             # Pick cancel intent first so LCD size can leave a simple remainder.
-            default_max = min(4, max(2, options.target_degree_max))
+            default_max = max(2, options.target_degree_max)
             if max_lcd_factors is not None:
                 default_max = max(1, min(default_max, max_lcd_factors))
             lo = max(1 if max_lcd_factors == 1 else 2, factor_term_count if max_lcd_factors is None else 1)
@@ -1267,15 +1323,24 @@ def build_rational_expression_problem(
                     lo = min(lo, max_lcd_factors)
                     hi = max(lo, max_lcd_factors)
                 else:
-                    hi = max(lo, min(4, max(2, options.target_degree_max)))
+                    hi = max(lo, max(2, options.target_degree_max))
                 lcd_factor_count = random.randint(lo, hi)
-            elif planned_cancel >= 4:
-                # "All" — every LCD factor cancels; final form is a polynomial.
-                lcd_factor_count = random.randint(2, 4)
-                include_polynomial = True if allow_polynomial_terms else include_polynomial
+            elif planned_cancel >= _ALL_CANCEL:
+                # "All available": size the LCD normally, then cancel every factor
+                # present — do not inflate LCD to the cancel sentinel / continuous max.
+                lo = max(1 if max_lcd_factors == 1 else 2, factor_term_count if max_lcd_factors is None else 1)
+                if max_lcd_factors is not None:
+                    lo = min(lo, max_lcd_factors)
+                    hi = max(lo, max_lcd_factors)
+                else:
+                    hi = max(lo, max(2, options.target_degree_max))
+                lcd_factor_count = random.randint(lo, hi)
+            elif max_lcd_factors is not None and planned_cancel >= max_lcd_factors:
+                # Exact request ≥ capacity → cancel every available LCD factor.
+                lcd_factor_count = max(1, max_lcd_factors)
             else:
                 # Leave a single remaining factor so dens stay simple after distribution.
-                lcd_factor_count = min(4, planned_cancel + 1)
+                lcd_factor_count = planned_cancel + 1
             if max_lcd_factors is not None:
                 lcd_factor_count = max(1, min(lcd_factor_count, max_lcd_factors))
 
@@ -1289,7 +1354,9 @@ def build_rational_expression_problem(
             allow_monomial_factors=allow_monomial_lcd and lcd_factor_count == 1,
         )
 
-        max_subset_size = 1 if options.rrt_mode == "exclude" else None
+        # Allow multi-factor dens even when RRT is excluded; display policy keeps
+        # hard products factored via should_display_factor_product_expanded.
+        max_subset_size = max_lcd_factors
         force_shared = force_shared_lcd or lcd_factor_count == 1
         term_denominator_factor_lists = _pick_term_denominators(
             lcd_factors,
@@ -1389,11 +1456,18 @@ def build_rational_expression_problem(
             term_denominators = [
                 _factors_to_polynomial(factors) for factors in term_denominator_factor_lists
             ]
-            fractional_numerator = _compose_over_term_denominators(
-                partial_numerators,
-                term_denominators,
-                lcd,
-            )
+            # Cancelled construction rebuilds term dens from lcd_factors; keep LCD
+            # aligned (related-den LCD rewrite above can otherwise desync).
+            lcd = _product(lcd_factors)
+            simplified_denominator = lcd
+            try:
+                fractional_numerator = _compose_over_term_denominators(
+                    partial_numerators,
+                    term_denominators,
+                    lcd,
+                )
+            except ValueError:
+                continue
         else:
             if include_polynomial:
                 polynomial_term = _random_polynomial_term(
@@ -1546,8 +1620,6 @@ def build_rational_expression_problem(
                     term_factors,
                     term_inflation,
                     options,
-                    force_factored=bool(cancelled_lcd_factors)
-                    and len([factor for factor in term_factors if factor.deg() > 0]) >= 2,
                 )
             )
 
@@ -1635,7 +1707,7 @@ def sum_of_fractions_latex(terms: list[RationalExpressionTerm]) -> str:
             assert term.denominator is not None
             parts.append(
                 fraction_latex(
-                    term.numerator.to_latex(),
+                    term_numerator_latex(term),
                     term_denominator_latex(term),
                 )
             )
@@ -1654,6 +1726,17 @@ def term_denominator_text(term: RationalExpressionTerm) -> str:
 
 def term_prompt_text(term: RationalExpressionTerm) -> str:
     if term.is_polynomial_term:
+        if term.numerator_factors and not term.numerator_display_expanded:
+            if len(term.numerator_factors) == 1:
+                return str(term.numerator_factors[0])
+            return "".join(f"({factor})" for factor in term.numerator_factors)
         return str(term.numerator)
     assert term.denominator is not None
-    return f"({term.numerator})/({term_denominator_text(term)})"
+    num_text = (
+        "".join(f"({factor})" for factor in term.numerator_factors)
+        if term.numerator_factors and not term.numerator_display_expanded
+        else str(term.numerator)
+    )
+    if term.numerator_factors and not term.numerator_display_expanded and len(term.numerator_factors) == 1:
+        num_text = str(term.numerator_factors[0])
+    return f"({num_text})/({term_denominator_text(term)})"

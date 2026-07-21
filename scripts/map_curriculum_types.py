@@ -116,7 +116,7 @@ CURRICULUM_ID_OVERRIDES: dict[str, str] = {
     "pa_greatest_common_factor": "g6_greatest_common_factor",
     "pythagorean_theorem": "geo_pythagorean_theorem",
     "g6_comparing_ratios": "g6_equivalent_ratios",
-    "g6_comparing_rates": "g6_unit_rates",
+    "g6_comparing_rates": "g6_comparing_rates",
     "a2_beginning_algebra_order_of_operations": "order_of_operations",
     "a2_trigonometry_radians_and_degrees": "trig_unit_circle",
     "finding_sine_cosine_tangent": "trig_evaluate",

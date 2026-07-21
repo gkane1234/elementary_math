@@ -126,15 +126,24 @@ LEAF_TO_PRIMITIVE: dict[str, str] = {
     "evaluate_polynomial": PRIM_EVALUATE,
     "poly_combine_like_terms": PRIM_LIKE_TERMS,
     "poly_expand_simplify": PRIM_EXPAND_SIMPLIFY,
+    "simplify_polynomials": PRIM_EXPAND_SIMPLIFY,
+    "pa_polynomials_simplifying": PRIM_EXPAND_SIMPLIFY,
+    "a2_polynomial_functions_simplifying": PRIM_EXPAND_SIMPLIFY,
     "quadratic_factoring": PRIM_FACTOR_POLY,
     "a2_quadratic_functions_and_inequalities_factoring_quadratic_expressions": PRIM_FACTOR_POLY,
+    "polynomial_factoring_quadratic_form": PRIM_FACTOR_POLY,
     "a2_polynomial_functions_factoring_quadratic_form": PRIM_FACTOR_POLY,
+    "quadratic_factoring_equations": PRIM_FACTOR_POLY,
+    "a2_quadratic_functions_and_inequalities_solving_equations_by_factoring": PRIM_FACTOR_POLY,
     "polynomial_factoring_special_cases": PRIM_FACTOR_POLY,
     "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions": PRIM_FACTOR_POLY,
+    "polynomial_factoring_sum_diff_cubes": PRIM_FACTOR_POLY,
     "a2_polynomial_functions_factoring_sum_difference_of_cubes": PRIM_FACTOR_POLY,
     "polynomial_factoring_grouping": PRIM_FACTOR_POLY,
     "a2_polynomial_functions_factoring_by_grouping": PRIM_FACTOR_POLY,
+    "polynomial_factoring_all_techniques": PRIM_FACTOR_POLY,
     "a2_polynomial_functions_factoring_all_techniques": PRIM_FACTOR_POLY,
+    "polynomial_factoring_general_strategy": PRIM_FACTOR_POLY,
     # Absolute value / compound / proportions / literals
     "absolute_value_equations": PRIM_EQUATIONS,
     "a2_equations_and_inequalities_absolute_value_equations": PRIM_EQUATIONS,
@@ -391,6 +400,9 @@ def build_context(
     )
     # Topic settings (e.g. presentation overrides) readable by shared helpers.
     ctx.settings = dict(settings)  # type: ignore[attr-defined]
+    # Preserve catalog/generator leaf id for thin routers (e.g. all-techniques mixer).
+    resolved_leaf = leaf_id or settings.get("leaf_id") or settings.get("generator")
+    ctx.leaf_id = str(resolved_leaf) if resolved_leaf else None  # type: ignore[attr-defined]
     return ctx
 
 

@@ -13,7 +13,7 @@ function knobsAbsolutePath() {
   return path.join(process.cwd(), KNOBS_REL);
 }
 
-type FlatRow = { path: string; value: unknown; type: "number" | "bool" | "string_list" };
+type FlatRow = { path: string; value: unknown; type: "number" | "bool" | "string" | "string_list" };
 
 function flatten(obj: unknown, prefix = ""): FlatRow[] {
   const rows: FlatRow[] = [];
@@ -24,6 +24,10 @@ function flatten(obj: unknown, prefix = ""): FlatRow[] {
   }
   if (typeof obj === "number") {
     rows.push({ path: prefix, value: obj, type: "number" });
+    return rows;
+  }
+  if (typeof obj === "string") {
+    rows.push({ path: prefix, value: obj, type: "string" });
     return rows;
   }
   if (Array.isArray(obj) && obj.every((x) => typeof x === "string")) {

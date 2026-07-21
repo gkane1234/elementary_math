@@ -64,6 +64,18 @@ def handle_generate(body: dict[str, Any]) -> tuple[int, dict[str, str], str]:
     worksheet_settings = body.get("worksheet_settings", {})
     sections = body.get("sections")
 
+    try:
+        return _handle_generate_body(title, worksheet_settings, sections, body)
+    except Exception as error:  # noqa: BLE001 — surface generator failures to the client
+        return _json_response(500, {"error": str(error) or "Generation failed"})
+
+
+def _handle_generate_body(
+    title: str,
+    worksheet_settings: dict[str, Any],
+    sections: Any,
+    body: dict[str, Any],
+) -> tuple[int, dict[str, str], str]:
     if sections:
         all_questions: list[Question] = []
         for section in sections:

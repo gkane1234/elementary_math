@@ -44,7 +44,8 @@ class FactorablePolynomialOptions:
     coef_max: int
     leading_coefficient_one: bool = False
     positive_leading: bool = True
-    rrt_mode: RrtMode = "allow"
+    # Default exclude: do not require Rational Root Theorem unless opted in.
+    rrt_mode: RrtMode = "exclude"
     enabled_methods: dict[FactorMethod, bool] | None = None
     target_degree_min: int = 2
     target_degree_max: int = 4
@@ -120,6 +121,79 @@ def _method_allowed_without_rrt(method: FactorMethod, degree: int) -> bool:
     if method != "normal":
         return True
     return not _normal_requires_rrt(degree)
+
+
+def _is_substitution_quadratic_pair(left: Polynomial, right: Polynomial) -> bool:
+    for polynomial in (left, right):
+        if polynomial.deg() != 2:
+            return False
+        if abs(float(polynomial.coef(1))) > 1e-10:
+            return False
+    return True
+
+
+def should_display_factor_product_expanded(
+    factors: tuple[Polynomial, ...] | list[Polynomial],
+    options: FactorablePolynomialOptions | None = None,
+) -> bool:
+    """Whether to show an expanded product vs keeping the factor product.
+
+    Expand when the product is factorable by normal classroom methods (two
+    linears, GCF, grouping, difference of squares, quadratic-form substitution,
+    …). Keep **factored** when the expanded poly would require RRT (e.g. dense
+    cubic/quartic from 3+ distinct linear factors), unless RRT is enabled.
+    """
+    factor_list = tuple(factors)
+    if len(factor_list) <= 1:
+        return True
+
+    opts = options or FactorablePolynomialOptions(coef_min=-8, coef_max=8)
+    enabled = set(opts.enabled_method_pool())
+
+    # Leading constants don't change the factoring technique for the variable part.
+    variable_factors = tuple(f for f in factor_list if f.deg() >= 1)
+    if len(variable_factors) <= 1:
+        return True
+
+    if all(factor.deg() == 1 for factor in variable_factors):
+        if len(variable_factors) == 2:
+            return True
+        # 3+ linear factors → expanded form needs RRT; keep factored unless RRT on.
+        return opts.rrt_mode != "exclude"
+
+    if len(variable_factors) == 2:
+        degrees = sorted(factor.deg() for factor in variable_factors)
+        if degrees == [1, 2]:
+            return "grouping" in enabled
+        if degrees == [2, 2] and _is_substitution_quadratic_pair(
+            variable_factors[0], variable_factors[1]
+        ):
+            return "substitution" in enabled
+
+    return False
+
+
+def format_polynomial_from_factors(
+    factors: tuple[Polynomial, ...] | list[Polynomial],
+    options: FactorablePolynomialOptions | None = None,
+    *,
+    force_factored: bool = False,
+    force_expanded: bool = False,
+) -> str:
+    """Render a factor product as expanded or factored latex based on pedagogy."""
+    from .latex import format_factor_product_latex
+
+    factor_list = tuple(factors)
+    if not factor_list:
+        return "0"
+    if force_expanded or (
+        not force_factored and should_display_factor_product_expanded(factor_list, options)
+    ):
+        product = factor_list[0]
+        for other in factor_list[1:]:
+            product = product * other
+        return product.to_latex()
+    return format_factor_product_latex(factor_list)
 
 
 def _filter_methods_for_rrt_mode(

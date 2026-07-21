@@ -16,6 +16,21 @@ def test_equation_hard_preset_widens_coefficients():
     assert hard["integer_only"] is False
 
 
+def test_pa_integers_adding_presets_are_integers_only():
+    """Adding/subtracting integers must not enable decimals or fractions."""
+    for tier in ("easy", "medium", "hard"):
+        preset = lookup_difficulty_preset(
+            tier, type_id="pa_integers_adding_and_subtracting"
+        )
+        assert preset.get("allow_decimals") in (None, False)
+        assert preset.get("allow_fractions") in (None, False)
+        assert "num_min" in preset and "num_max" in preset
+        # Same integer-ops shape as multiplying/dividing.
+        mul = lookup_difficulty_preset(tier, type_id="pa_integers_multiplying")
+        assert preset["num_min"] == mul["num_min"]
+        assert preset["num_max"] == mul["num_max"]
+
+
 def test_apply_presets_fills_gaps_but_keeps_overrides():
     resolved = apply_difficulty_presets(
         {"difficulty_tier": "hard", "coef_max": 7},
@@ -73,12 +88,13 @@ def test_drt_presets_differ_by_structure():
     medium = lookup_difficulty_preset("medium", type_id="wp_distance_rate_time")
     hard = lookup_difficulty_preset("hard", type_id="wp_distance_rate_time")
     assert easy["allow_drt_find_missing"] is True
-    assert easy["allow_drt_opposite"] is False
+    assert easy["allow_drt_same_direction"] is False
     assert medium["allow_drt_round_trip"] is True
-    assert medium["allow_drt_opposite"] is False
+    assert medium["allow_drt_same_direction"] is True
     assert hard["allow_drt_find_missing"] is False
-    assert hard["allow_drt_opposite"] is True
+    assert hard["allow_drt_round_trip"] is True
     assert hard["allow_drt_same_direction"] is True
+    assert hard["allow_drt_opposite"] is False
 
 
 def test_work_presets_differ_by_structure():

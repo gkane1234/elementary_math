@@ -39,8 +39,31 @@ class WordProblemTemplate:
         return latex, text, answer
 
 
+def _topic_d(settings: dict) -> float:
+    """Continuous difficulty (0–24+); shims legacy easy/medium/hard strings."""
+    from .difficulty_budget import settings_difficulty
+
+    return settings_difficulty(settings, default=8.0)
+
+
+def _band_from_d(d: float) -> str:
+    from .difficulty_budget import difficulty_band
+
+    return difficulty_band(d)
+
+
 def _difficulty_range(settings: dict) -> tuple[int, int]:
-    difficulty = str(settings.get("difficulty", "medium"))
+    raw = settings.get("difficulty", "medium")
+    try:
+        d = float(raw)
+        if d <= 4.0:
+            return 2, 12
+        if d <= 11.0:
+            return 5, 30
+        return 10, 60
+    except (TypeError, ValueError):
+        pass
+    difficulty = str(raw).strip().lower()
     if difficulty == "easy":
         return 2, 12
     if difficulty == "hard":
@@ -101,6 +124,10 @@ def _random_value(settings: dict, *, lo: int | None = None, hi: int | None = Non
 
 def _tier(settings: dict) -> str:
     raw = settings.get("difficulty_tier") or settings.get("difficulty") or "medium"
+    try:
+        return _band_from_d(float(raw))
+    except (TypeError, ValueError):
+        pass
     value = str(raw).strip().lower()
     return value if value in {"easy", "medium", "hard"} else "medium"
 
@@ -200,13 +227,22 @@ _WORK_VARIANT_KEYS: tuple[tuple[str, str, bool], ...] = (
 
 
 def _pick_drt_units(settings: dict) -> tuple[str, str, str]:
-    """Return (distance_unit, time_unit, speed_label) from enabled toggles."""
+    """Return (distance_unit, time_unit, speed_label) from enabled toggles.
+
+    Classroom default: mi/hr and km/hr. Meter/foot and per-minute packs are
+    opt-in via settings (not on by default).
+    """
     packs: list[tuple[str, str, str]] = []
+    # Keys whose default is False unless explicitly enabled.
+    opt_in_false = {"allow_distance_m", "allow_distance_ft", "allow_time_min"}
     for distance, time_u, speed, dist_key, time_key in _DRT_UNIT_PACKS:
-        if not bool(settings.get(dist_key, True)):
+        dist_default = dist_key not in opt_in_false
+        if not bool(settings.get(dist_key, dist_default)):
             continue
-        if time_key and not bool(settings.get(time_key, True)):
-            continue
+        if time_key:
+            time_default = time_key not in opt_in_false
+            if not bool(settings.get(time_key, time_default)):
+                continue
         packs.append((distance, time_u, speed))
     if not packs:
         packs = [("mi", "hr", "mi/hr")]
@@ -214,34 +250,78 @@ def _pick_drt_units(settings: dict) -> tuple[str, str, str]:
 
 
 def _drt_rate_bounds(settings: dict, *, time_unit: str) -> tuple[int, int]:
-    difficulty = str(settings.get("difficulty", "medium"))
+    d = _topic_d(settings)
+    band = _band_from_d(d)
     if time_unit == "s":
-        if difficulty == "easy":
+        if band == "easy":
             return 2, 8
-        if difficulty == "hard":
+        if band == "hard":
             return 5, 20
         return 3, 12
     if time_unit == "min":
-        if difficulty == "easy":
+        if band == "easy":
             return 1, 5
-        if difficulty == "hard":
+        if band == "hard":
             return 2, 12
         return 1, 8
-    # hours
-    if difficulty == "easy":
-        return 20, 60
-    if difficulty == "hard":
-        return 40, 90
+    # hours — classroom DRT typically uses mph / km/h
+    if band == "easy":
+        return 20, 55
+    if band == "hard":
+        return 35, 95
     return 25, 75
 
 
 def _drt_time_bounds(settings: dict) -> tuple[int, int]:
-    difficulty = str(settings.get("difficulty", "medium"))
-    if difficulty == "easy":
-        return 2, 6
-    if difficulty == "hard":
+    band = _band_from_d(_topic_d(settings))
+    if band == "easy":
+        return 2, 5
+    if band == "hard":
         return 3, 12
     return 2, 8
+
+
+def _drt_variants_for_d(d: float) -> list[str]:
+    """Core DRT skills from curriculum examples: d=rt, round-trip, catch-up.
+
+    two_segments / opposite stay available only when explicitly allowed in settings
+    (genuine DRT, but outside the example families we prioritize).
+    """
+    out = ["find_missing"]
+    if d >= 3.0:
+        out.append("round_trip")
+    if d >= 6.0:
+        out.append("same_direction")
+    return out
+
+
+def _enabled_drt_variants(settings: dict) -> list[str]:
+    """Prefer example families; honor explicit structure toggles when set."""
+    d = _topic_d(settings)
+    core = _drt_variants_for_d(d)
+    # Explicit allows for non-core structures (never invent them from D alone).
+    extra: list[str] = []
+    if bool(settings.get("allow_drt_two_segments", False)):
+        extra.append("two_segments")
+    if bool(settings.get("allow_drt_opposite", False)):
+        extra.append("opposite")
+
+    # If the caller narrowed structure toggles, respect that filter.
+    flagged = [
+        name
+        for name, key, default in _DRT_VARIANT_KEYS
+        if bool(settings.get(key, default))
+    ]
+    nondefault_on = any(
+        bool(settings.get(key, False))
+        for _, key, default in _DRT_VARIANT_KEYS
+        if not default
+    )
+    if nondefault_on or (flagged and flagged != ["find_missing"]):
+        allowed = set(flagged)
+        chosen = [name for name in (*core, *extra) if name in allowed]
+        return chosen or list(allowed) or ["find_missing"]
+    return [*core, *extra] or ["find_missing"]
 
 
 def _enabled_variants(
@@ -292,14 +372,15 @@ def _integer_triple_together(lo: int, hi: int) -> tuple[int, int, int, int] | No
 
 
 class DistanceRateTimeFramework(WordProblemFramework):
+    """Genuine d = r·t word problems: basic missing piece, round-trip, catch-up."""
+
     problem_kind = "distance_rate_time"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        # Prefer mi/hr classroom units for round-trip / catch-up story frames.
         distance_u, time_u, speed_u = _pick_drt_units(settings)
         show_units = bool(settings.get("show_unit_labels", True))
-        variant_family = random.choice(
-            _enabled_variants(settings, _DRT_VARIANT_KEYS, fallback="find_missing")
-        )
+        variant_family = random.choice(_enabled_drt_variants(settings))
         rate_lo, rate_hi = _drt_rate_bounds(settings, time_unit=time_u)
         time_lo, time_hi = _drt_time_bounds(settings)
 
@@ -425,38 +506,85 @@ class DistanceRateTimeFramework(WordProblemFramework):
         rate_lo: int,
         rate_hi: int,
     ) -> tuple[str, str, str | None]:
+        """Round-trip: same distance both ways; find missing speed or time."""
         name = _pick_name(settings)
-        hours_out = _random_value(settings, lo=2, hi=5)
-        hours_back = _random_value(settings, lo=2, hi=5)
-        # distance = k * t_out * t_back ⇒ rates k*t_back and k*t_out stay integers.
-        max_k = min(rate_hi // hours_back, rate_hi // hours_out)
+        d = _topic_d(settings)
+        band = _band_from_d(d)
+        # Prefer hour-based classroom wording when units allow.
+        if band == "easy":
+            asks = ["find_speed_there", "find_time_there", "find_total_time"]
+        else:
+            asks = ["find_speed_there", "find_time_there"]
+        ask = random.choice(asks)
+
+        # Build integer rates/times with equal distances: r1*t1 = r2*t2.
+        t_there = random.randint(2, 5 if band != "hard" else 8)
+        t_back = random.randint(2, 5 if band != "hard" else 8)
+        while t_back == t_there:
+            t_back = random.randint(2, 6)
+        # Choose k so both speeds land in range: r_there = k*t_back, r_back = k*t_there.
+        max_k = min(rate_hi // t_back, rate_hi // t_there)
         min_k = max(
             1,
-            (rate_lo + hours_back - 1) // hours_back,
-            (rate_lo + hours_out - 1) // hours_out,
+            (rate_lo + t_back - 1) // t_back,
+            (rate_lo + t_there - 1) // t_there,
         )
         if max_k < min_k:
-            hours_out, hours_back = 2, 3
-            max_k = min(rate_hi // hours_back, rate_hi // hours_out)
-            min_k = max(1, (rate_lo + hours_back - 1) // hours_back, (rate_lo + hours_out - 1) // hours_out)
+            t_there, t_back = 2, 3
+            max_k = min(rate_hi // t_back, rate_hi // t_there)
+            min_k = max(1, (rate_lo + t_back - 1) // t_back, (rate_lo + t_there - 1) // t_there)
         k = random.randint(min_k, max(min_k, max_k))
-        outbound = k * hours_back
-        inbound = k * hours_out
-        if outbound == inbound:
-            hours_back = hours_out + 1
-            outbound = k * hours_back
-        distance = k * hours_out * hours_back
-        total = hours_out + hours_back
+        r_there = k * t_back
+        r_back = k * t_there
+        if r_there == r_back:
+            t_back = t_there + 1
+            r_there = k * t_back
+        distance = k * t_there * t_back
+
+        if ask == "find_speed_there":
+            # Given: time there, time back, speed back → speed there
+            answer = _format_answer(r_there, settings)
+            unit_suffix = f" {speed_u}" if show_units else ""
+            latex = (
+                rf"\text{{{name} drives to a destination in {t_there} {time_u} and "
+                rf"returns in {t_back} {time_u} at {r_back} {speed_u}. "
+                rf"What was {name}'s speed on the way there?}}"
+            )
+            text = (
+                f"{name} drives to a destination in {t_there} {time_u} and "
+                f"returns in {t_back} {time_u} at {r_back} {speed_u}. "
+                f"What was {name}'s speed on the way there?"
+            )
+            return latex, text, f"{answer}{unit_suffix}" if show_units else answer
+
+        if ask == "find_time_there":
+            # Given: speed there, speed back, time back → time there
+            answer = _format_answer(t_there, settings)
+            unit_suffix = f" {time_u}" if show_units else ""
+            latex = (
+                rf"\text{{{name} drives to a destination at {r_there} {speed_u} and "
+                rf"returns at {r_back} {speed_u}, taking {t_back} {time_u} on the way back. "
+                rf"How long did the trip there take?}}"
+            )
+            text = (
+                f"{name} drives to a destination at {r_there} {speed_u} and "
+                f"returns at {r_back} {speed_u}, taking {t_back} {time_u} on the way back. "
+                f"How long did the trip there take?"
+            )
+            return latex, text, f"{answer}{unit_suffix}" if show_units else answer
+
+        # find_total_time — both speeds and one-way distance known
+        total = t_there + t_back
         answer = _format_answer(total, settings)
         unit_suffix = f" {time_u}" if show_units else ""
         latex = (
-            rf"\text{{{name} drives {distance} {distance_u} at {outbound} {speed_u}, "
-            rf"then returns the same distance at {inbound} {speed_u}. "
+            rf"\text{{{name} drives {distance} {distance_u} at {r_there} {speed_u}, "
+            rf"then returns the same distance at {r_back} {speed_u}. "
             rf"How many {time_u} does the round trip take?}}"
         )
         text = (
-            f"{name} drives {distance} {distance_u} at {outbound} {speed_u}, "
-            f"then returns the same distance at {inbound} {speed_u}. "
+            f"{name} drives {distance} {distance_u} at {r_there} {speed_u}, "
+            f"then returns the same distance at {r_back} {speed_u}. "
             f"How many {time_u} does the round trip take?"
         )
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
@@ -560,29 +688,87 @@ class DistanceRateTimeFramework(WordProblemFramework):
         rate_lo: int,
         rate_hi: int,
     ) -> tuple[str, str, str | None]:
+        """Catch-up: slower traveler leaves first; faster catches up later."""
         a_name, b_name = _pick_names(settings, 2)
-        # Build clean integers: catch_time * (fast - slow) = slow * head_start
-        head_start = _random_value(settings, lo=1, hi=4)
-        catch_time = _random_value(settings, lo=2, hi=6)
-        slow = _random_value(settings, lo=rate_lo, hi=max(rate_lo + 1, rate_hi - 4))
-        gap = slow * head_start
-        diff = gap // catch_time if catch_time and gap % catch_time == 0 else None
-        if diff is None or diff < 1:
-            catch_time = head_start  # gap / catch = slow when catch == head_start and fast = 2*slow
-            diff = slow
-        fast = slow + diff
+        d = _topic_d(settings)
+        band = _band_from_d(d)
+        # Asks matching textbook catch-up frames.
+        if band == "easy":
+            asks = ["find_catch_time", "find_slow_speed", "find_leader_total_time"]
+        else:
+            asks = ["find_slow_speed", "find_leader_total_time"]
+        ask = random.choice(asks)
 
-        answer = _format_answer(catch_time, settings)
+        # Clean integers: slow*(head+catch) = fast*catch
+        # ⇒ slow = fast*catch/(head+catch), leader_total = head+catch = fast*catch/slow
+        head = random.randint(1, 3 if band == "easy" else 5)
+        catch = random.randint(2, 4 if band == "easy" else 7)
+        # Pick fast and factor so slow is an integer in range.
+        for _ in range(40):
+            fast = _random_value(settings, lo=max(rate_lo + 5, rate_lo), hi=rate_hi)
+            total_leader = head + catch
+            if (fast * catch) % total_leader != 0:
+                continue
+            slow = (fast * catch) // total_leader
+            if rate_lo <= slow < fast:
+                break
+        else:
+            # Guaranteed clean fallback: catch=head, fast=2*slow
+            head = 2
+            catch = 2
+            slow = max(rate_lo, min(rate_hi - 10, 30))
+            fast = 2 * slow
+
+        if ask == "find_slow_speed":
+            # Slow left earlier; after catch hours the fast one catches up → find slow speed
+            answer = _format_answer(slow, settings)
+            unit_suffix = f" {speed_u}" if show_units else ""
+            vehicle = random.choice(["train", "bus", "car"])
+            latex = (
+                rf"\text{{A slow {vehicle} leaves a station traveling at an unknown speed. "
+                rf"{head} {time_u} later a faster {vehicle} leaves the same station at "
+                rf"{fast} {speed_u} and catches up after {catch} {time_u}. "
+                rf"What is the slow {vehicle}'s speed?}}"
+            )
+            text = (
+                f"A slow {vehicle} leaves a station traveling at an unknown speed. "
+                f"{head} {time_u} later a faster {vehicle} leaves the same station at "
+                f"{fast} {speed_u} and catches up after {catch} {time_u}. "
+                f"What is the slow {vehicle}'s speed?"
+            )
+            return latex, text, f"{answer}{unit_suffix}" if show_units else answer
+
+        if ask == "find_leader_total_time":
+            # Jose left first slower; Rob catches after T → how long has Jose been driving?
+            leader_total = head + catch
+            answer = _format_answer(leader_total, settings)
+            unit_suffix = f" {time_u}" if show_units else ""
+            latex = (
+                rf"\text{{{a_name} leaves traveling at {slow} {speed_u}. {b_name} leaves "
+                rf"later from the same place at {fast} {speed_u} in the same direction and "
+                rf"catches up {catch} {time_u} after starting. "
+                rf"How long had {a_name} been traveling when caught?}}"
+            )
+            text = (
+                f"{a_name} leaves traveling at {slow} {speed_u}. {b_name} leaves "
+                f"later from the same place at {fast} {speed_u} in the same direction and "
+                f"catches up {catch} {time_u} after starting. "
+                f"How long had {a_name} been traveling when caught?"
+            )
+            return latex, text, f"{answer}{unit_suffix}" if show_units else answer
+
+        # find_catch_time — both speeds and head start known
+        answer = _format_answer(catch, settings)
         unit_suffix = f" {time_u}" if show_units else ""
         latex = (
             rf"\text{{{a_name} leaves traveling at {slow} {speed_u}. {b_name} leaves "
-            rf"from the same place {head_start} {time_u} later at {fast} {speed_u} "
+            rf"from the same place {head} {time_u} later at {fast} {speed_u} "
             rf"in the same direction. How many {time_u} after {b_name} starts does "
             rf"{b_name} catch up to {a_name}?}}"
         )
         text = (
             f"{a_name} leaves traveling at {slow} {speed_u}. {b_name} leaves "
-            f"from the same place {head_start} {time_u} later at {fast} {speed_u} "
+            f"from the same place {head} {time_u} later at {fast} {speed_u} "
             f"in the same direction. How many {time_u} after {b_name} starts does "
             f"{b_name} catch up to {a_name}?"
         )
@@ -942,29 +1128,179 @@ class CoinProblemFramework(WordProblemFramework):
 
 
 class MixtureProblemFramework(WordProblemFramework):
+    """Weighted-average mixtures: percent/concentration or cost per unit.
+
+    Skill: combine two amounts with two rates → mixture rate
+    ``(a1·r1 + a2·r2) / (a1 + a2)``. Story frames match classroom examples
+    (soil/sand, nuts/peanuts, alcohol solutions, spice cost blends).
+    """
+
     problem_kind = "mixture"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        total = _random_value(settings, lo=8, hi=20)
-        low_pct = random.choice([10, 15, 20, 25])
-        high_pct = low_pct + random.choice([20, 25, 30])
-        target_pct = low_pct + random.choice([5, 10, 15])
-        while target_pct >= high_pct:
-            target_pct = low_pct + 5
-        high_amount = total * (target_pct - low_pct) // (high_pct - low_pct)
-        answer = _format_answer(high_amount, settings)
-        unit = _unit_label(settings, "L") or "L"
+        d = _topic_d(settings)
+        band = _band_from_d(d)
+        variant = self._pick_variant(settings, d)
+        if variant == "cost":
+            return self._cost_mixture(settings, band)
+        return self._percent_mixture(settings, band)
+
+    @staticmethod
+    def _pick_variant(settings: dict, d: float) -> str:
+        allow_pct = bool(settings.get("allow_mixture_percent", True))
+        allow_cost = bool(settings.get("allow_mixture_cost", True))
+        options: list[str] = []
+        if allow_pct:
+            options.append("percent")
+        if allow_cost and d >= 4.0:
+            options.append("cost")
+        if not options:
+            options = ["percent"]
+        return random.choice(options)
+
+    @staticmethod
+    def _sample_amounts(band: str) -> tuple[int, int]:
+        if band == "easy":
+            choices = [2, 3, 4, 5, 6, 8, 10]
+        elif band == "hard":
+            choices = list(range(4, 25))
+        else:
+            choices = [3, 4, 5, 6, 8, 10, 12, 15]
+        a1 = random.choice(choices)
+        a2 = random.choice([c for c in choices if c != a1] or choices)
+        return a1, a2
+
+    @staticmethod
+    def _sample_percents(band: str) -> tuple[int, int]:
+        if band == "easy":
+            pool = [10, 20, 25, 30, 40, 50, 60, 75]
+        elif band == "hard":
+            pool = [10, 12, 15, 18, 20, 25, 30, 35, 40, 45, 50, 60, 70]
+        else:
+            pool = [10, 15, 20, 25, 30, 40, 50, 60, 75]
+        p1 = random.choice(pool)
+        p2 = random.choice([p for p in pool if p != p1] or pool)
+        return p1, p2
+
+    def _percent_mixture(
+        self, settings: dict, band: str
+    ) -> tuple[str, str, str | None]:
+        """Two amounts + two percents → concentration of the mixture."""
+        # Retry until mixture percent is a clean value at low/medium D.
+        for _ in range(60):
+            a1, a2 = self._sample_amounts(band)
+            p1, p2 = self._sample_percents(band)
+            total = a1 + a2
+            pure = a1 * p1 + a2 * p2
+            if band != "hard" and pure % total != 0:
+                continue
+            mix = pure / total
+            if band == "hard":
+                # Allow one-decimal percents when not integer.
+                if abs(mix - round(mix)) < 1e-9:
+                    mix_disp = str(int(round(mix)))
+                else:
+                    mix = round(mix, 1)
+                    mix_disp = f"{mix:.1f}".rstrip("0").rstrip(".")
+            else:
+                mix_disp = str(int(round(mix)))
+            break
+        else:
+            a1, a2, p1, p2, mix_disp = 4, 6, 20, 50, "38"
+
+        frame = random.choice(["soil", "nuts", "alcohol"])
+        name = _pick_name(settings)
+
+        if frame == "soil":
+            latex = (
+                rf"\text{{{name} mixes {a1} cubic yards of soil that is {p1}\% sand with "
+                rf"{a2} cubic yards of soil that is {p2}\% sand. "
+                rf"What percent of the mixture is sand?}}"
+            )
+            text = (
+                f"{name} mixes {a1} cubic yards of soil that is {p1}% sand with "
+                f"{a2} cubic yards of soil that is {p2}% sand. "
+                f"What percent of the mixture is sand?"
+            )
+        elif frame == "nuts":
+            latex = (
+                rf"\text{{{name} mixes {a1} lb of nuts that are {p1}\% peanuts with "
+                rf"{a2} lb of nuts that are {p2}\% peanuts. "
+                rf"What percent of the new mixture is peanuts?}}"
+            )
+            text = (
+                f"{name} mixes {a1} lb of nuts that are {p1}% peanuts with "
+                f"{a2} lb of nuts that are {p2}% peanuts. "
+                f"What percent of the new mixture is peanuts?"
+            )
+        else:
+            unit = "fl oz"
+            latex = (
+                rf"\text{{{name} mixes {a1} {unit} of a {p1}\% alcohol solution with "
+                rf"{a2} {unit} of a {p2}\% alcohol solution. "
+                rf"What is the concentration of the new mixture?}}"
+            )
+            text = (
+                f"{name} mixes {a1} {unit} of a {p1}% alcohol solution with "
+                f"{a2} {unit} of a {p2}% alcohol solution. "
+                f"What is the concentration of the new mixture?"
+            )
+
+        answer = f"{mix_disp}\\%"
+        return latex, text, answer
+
+    def _cost_mixture(
+        self, settings: dict, band: str
+    ) -> tuple[str, str, str | None]:
+        """Two weights + two $/unit prices → cost per unit of the blend."""
+        name = _pick_name(settings)
+        for _ in range(60):
+            w1, w2 = self._sample_amounts(band)
+            if band == "easy":
+                c1 = random.choice([2, 3, 4, 5, 6, 8])
+                c2 = random.choice([x for x in (3, 4, 5, 6, 8, 10) if x != c1])
+            elif band == "hard":
+                c1 = random.choice([2, 3, 4, 5, 6, 7, 8, 9, 12])
+                c2 = random.choice([3, 4, 5, 6, 7, 8, 9, 10, 11, 14])
+                if c2 == c1:
+                    c2 = c1 + 2
+            else:
+                c1 = random.choice([2, 3, 4, 5, 6, 8, 10])
+                c2 = random.choice([x for x in (3, 4, 5, 6, 8, 9, 12) if x != c1])
+            total_w = w1 + w2
+            total_cost = w1 * c1 + w2 * c2
+            if band != "hard" and total_cost % total_w != 0:
+                continue
+            unit_cost = total_cost / total_w
+            if band == "hard" and abs(unit_cost - round(unit_cost, 2)) > 1e-9:
+                continue
+            break
+        else:
+            w1, w2, c1, c2, unit_cost = 3, 5, 4, 8, 6.5
+
+        if abs(unit_cost - round(unit_cost)) < 1e-9:
+            cost_disp = str(int(round(unit_cost)))
+        else:
+            cost_disp = f"{unit_cost:.2f}".rstrip("0").rstrip(".")
+
+        # Cinnamon / spice blend frame (classroom cost-mixture style).
+        brand_a = random.choice(["Indonesian", "Sri Lankan", "Vietnamese"])
+        brand_b = random.choice(["Thai", "Indian", "Mexican"])
+        while brand_b == brand_a:
+            brand_b = random.choice(["Thai", "Indian", "Mexican", "Chinese"])
+        product = random.choice(["cinnamon", "coffee", "tea"])
+
         latex = (
-            rf"\text{{How many {unit} of a {high_pct}\% solution must be added to "
-            rf"{total - high_amount} {unit} of a {low_pct}\% solution to obtain "
-            rf"{total} {unit} of a {target_pct}\% solution?}}"
+            rf"\text{{{name} blends {w1} lb of {brand_a} {product} costing "
+            rf"\${c1} per lb with {w2} lb of {brand_b} {product} costing "
+            rf"\${c2} per lb. What is the cost per pound of the mixture?}}"
         )
         text = (
-            f"How many {unit} of a {high_pct}% solution must be added to "
-            f"{total - high_amount} {unit} of a {low_pct}% solution to obtain "
-            f"{total} {unit} of a {target_pct}% solution?"
+            f"{name} blends {w1} lb of {brand_a} {product} costing "
+            f"${c1} per lb with {w2} lb of {brand_b} {product} costing "
+            f"${c2} per lb. What is the cost per pound of the mixture?"
         )
-        return latex, text, _append_units(answer, settings)
+        return latex, text, f"\\${cost_disp}"
 
 
 class PerimeterAreaFramework(WordProblemFramework):
@@ -1211,79 +1547,96 @@ def _money_answer(amount: float) -> str:
     return f"\\${_money_display(amount)}"
 
 
-def _pct_answer(rate_percent: float) -> str:
-    if abs(rate_percent - round(rate_percent)) < 1e-9:
-        return f"{int(round(rate_percent))}\\%"
-    return f"{rate_percent:.1f}\\%"
+# G6 / Pre-Algebra interest: plug into I=Prt / A=P(1+rt) or A=P(1+r/n)^{nt} only.
+# Never solve for rate (precalc), time (logs / rearrange), or principal.
+_INTEREST_FORWARD_ASKS = ("interest", "amount")
 
 
 class InterestWordProblemFramework(WordProblemFramework):
-    """Simple interest (I = Prt) and compound interest word problems."""
+    """Simple interest (I = Prt) and compound interest word problems.
+
+    PA / G6 skill is forward plug-in only: given P, r, t (and n for compound),
+    find interest earned or future value. Continuous D scales magnitudes.
+    """
 
     problem_kind = "interest"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        difficulty = str(
-            settings.get("difficulty")
-            or settings.get("difficulty_tier")
-            or "medium"
-        )
+        d = _topic_d(settings)
+        band = _band_from_d(d)
         name = _pick_name(settings)
-        kind = self._pick_kind(settings, difficulty)
+        kind = self._pick_kind(settings, band)
         if kind == "simple":
-            return self._simple(settings, name, difficulty)
-        return self._compound(settings, name, difficulty)
+            return self._simple(settings, name, band, d)
+        return self._compound(settings, name, band, d)
 
-    def _pick_kind(self, settings: dict, difficulty: str) -> str:
+    def _pick_kind(self, settings: dict, band: str) -> str:
         forced = str(settings.get("interest_kind", "mixed")).lower()
         if forced in ("simple", "compound"):
             return forced
-        if difficulty == "easy":
+        if band == "easy":
             return "simple" if random.random() < 0.75 else "compound"
-        if difficulty == "hard":
+        if band == "hard":
             return "simple" if random.random() < 0.35 else "compound"
         return "simple" if random.random() < 0.5 else "compound"
 
-    def _simple_params(self, difficulty: str) -> tuple[int, float, int]:
+    @staticmethod
+    def _forward_ask(band: str) -> str:
+        """Only interest earned or ending balance — never reverse for r / t / P."""
+        if band == "easy":
+            return random.choice(["interest", "interest", "amount"])
+        return random.choice(list(_INTEREST_FORWARD_ASKS))
+
+    @staticmethod
+    def _principal_scale(d: float) -> float:
+        """Continuous D inflates principal magnitude beyond band baselines."""
+        # d≈0 → 1×; d≈8 → ~1.3×; d≈20 → ~2×; keeps answers calculator-friendly.
+        return 1.0 + max(0.0, d) / 20.0
+
+    def _simple_params(self, band: str, d: float) -> tuple[int, float, int]:
         """Return (principal dollars, rate percent, time years) with nice I when easy."""
-        if difficulty == "easy":
+        scale = self._principal_scale(d)
+        if band == "easy":
             for _ in range(60):
-                p = random.choice([100, 200, 250, 400, 500, 800, 1000, 1200, 1500, 2000])
+                base = random.choice(
+                    [100, 200, 250, 400, 500, 800, 1000, 1200, 1500, 2000]
+                )
+                p = int(round(base * scale / 50.0) * 50) or base
                 r = float(random.choice([2, 3, 4, 5, 6, 8, 10]))
                 t = random.choice([1, 2, 3, 4, 5])
                 if (p * int(r) * t) % 100 == 0:
                     return p, r, t
             return 1000, 5.0, 2
-        if difficulty == "hard":
+        if band == "hard":
             for _ in range(60):
-                p = random.choice([750, 1250, 1800, 2400, 3500, 4500, 5000, 7500, 10000])
+                base = random.choice(
+                    [750, 1250, 1800, 2400, 3500, 4500, 5000, 7500, 10000]
+                )
+                p = int(round(base * scale / 50.0) * 50) or base
                 r = float(random.choice([2.5, 3.5, 4.5, 5.5, 6.5, 7, 7.5, 8.5, 9]))
                 t = random.choice([2, 3, 4, 5, 6, 8, 10])
+                if d >= 16.0:
+                    t = random.choice([4, 5, 6, 8, 10, 12])
                 interest = p * (r / 100.0) * t
                 if abs(interest * 100 - round(interest * 100)) < 1e-6:
                     return p, r, t
             return 5000, 5.0, 4
-        p = random.choice([300, 450, 600, 800, 1000, 1500, 2000, 2500, 3000])
+        base = random.choice([300, 450, 600, 800, 1000, 1500, 2000, 2500, 3000])
+        p = int(round(base * scale / 50.0) * 50) or base
         r = float(random.choice([3, 4, 5, 6, 7, 8, 9, 10, 12]))
         t = random.choice([1, 2, 3, 4, 5, 6])
         return p, r, t
 
     def _simple(
-        self, settings: dict, name: str, difficulty: str
+        self, settings: dict, name: str, band: str, d: float
     ) -> tuple[str, str, str | None]:
-        p, r, t = self._simple_params(difficulty)
+        p, r, t = self._simple_params(band, d)
         rate_decimal = float(r) / 100
         interest = p * rate_decimal * t
         amount = p + interest
         years = "year" if t == 1 else "years"
         rate_show = int(r) if float(r).is_integer() else r
-
-        if difficulty == "easy":
-            find = random.choice(["interest", "interest", "amount"])
-        elif difficulty == "hard":
-            find = random.choice(["interest", "amount", "principal", "rate", "time"])
-        else:
-            find = random.choice(["interest", "amount", "principal", "rate"])
+        find = self._forward_ask(band)
 
         if find == "interest":
             latex = (
@@ -1296,93 +1649,56 @@ class InterestWordProblemFramework(WordProblemFramework):
             )
             return latex, text, _money_answer(interest)
 
-        if find == "amount":
-            latex = (
-                rf"\text{{{name} deposits \${_money_display(p)} in an account that earns "
-                rf"{rate_show}\% simple interest for {t} {years}. "
-                rf"What is the account balance at the end of the term?}}"
-            )
-            text = (
-                f"{name} deposits ${_money_display(p)} in an account that earns "
-                f"{rate_show}% simple interest for {t} {years}. "
-                f"What is the account balance at the end of the term?"
-            )
-            return latex, text, _money_answer(amount)
-
-        if find == "principal":
-            # Back-solve for P from known I, r, t with clean P.
-            interest_out = interest
-            latex = (
-                rf"\text{{{name} earned \${_money_display(interest_out)} in simple interest "
-                rf"after {t} {years} at {rate_show}\% per year. "
-                rf"What was the principal?}}"
-            )
-            text = (
-                f"{name} earned ${_money_display(interest_out)} in simple interest "
-                f"after {t} {years} at {rate_show}% per year. "
-                f"What was the principal?"
-            )
-            return latex, text, _money_answer(p)
-
-        if find == "rate":
-            latex = (
-                rf"\text{{{name} invests \${_money_display(p)} and earns "
-                rf"\${_money_display(interest)} in simple interest after {t} {years}. "
-                rf"What is the annual interest rate?}}"
-            )
-            text = (
-                f"{name} invests ${_money_display(p)} and earns "
-                f"${_money_display(interest)} in simple interest after {t} {years}. "
-                f"What is the annual interest rate?"
-            )
-            return latex, text, _pct_answer(float(r))
-
-        # find == "time"
+        # find == "amount" — A = P(1 + rt)
         latex = (
-            rf"\text{{{name} invests \${_money_display(p)} at {rate_show}\% "
-            rf"simple interest and earns \${_money_display(interest)}. "
-            rf"How many years does this take?}}"
+            rf"\text{{{name} deposits \${_money_display(p)} in an account that earns "
+            rf"{rate_show}\% simple interest for {t} {years}. "
+            rf"What is the account balance at the end of the term?}}"
         )
         text = (
-            f"{name} invests ${_money_display(p)} at {rate_show}% "
-            f"simple interest and earns ${_money_display(interest)}. "
-            f"How many years does this take?"
+            f"{name} deposits ${_money_display(p)} in an account that earns "
+            f"{rate_show}% simple interest for {t} {years}. "
+            f"What is the account balance at the end of the term?"
         )
-        return latex, text, str(int(t)) if float(t).is_integer() else str(t)
+        return latex, text, _money_answer(amount)
 
     def _compound_params(
-        self, difficulty: str
+        self, band: str, d: float
     ) -> tuple[int, int, int, int]:
         """Return (P, r_percent, t_years, n_compounds_per_year)."""
-        if difficulty == "easy":
-            p = random.choice([500, 800, 1000, 1200, 1500, 2000])
+        scale = self._principal_scale(d)
+        if band == "easy":
+            base = random.choice([500, 800, 1000, 1200, 1500, 2000])
+            p = int(round(base * scale / 50.0) * 50) or base
             r = random.choice([2, 3, 4, 5, 6, 8, 10])
             t = random.choice([1, 2, 3])
             n = 1  # annual compounding for easy
             return p, r, t, n
-        if difficulty == "hard":
-            p = random.choice([1000, 1500, 2000, 2500, 3500, 5000, 8000])
+        if band == "hard":
+            base = random.choice([1000, 1500, 2000, 2500, 3500, 5000, 8000])
+            p = int(round(base * scale / 50.0) * 50) or base
             r = random.choice([3, 4, 5, 6, 7, 8, 9, 12])
             t = random.choice([3, 4, 5, 6, 8, 10])
+            if d >= 16.0:
+                t = random.choice([5, 6, 8, 10, 12])
             n = random.choice([2, 4, 12])
             return p, r, t, n
-        p = random.choice([800, 1000, 1200, 1500, 2000, 2500, 3000])
+        base = random.choice([800, 1000, 1200, 1500, 2000, 2500, 3000])
+        p = int(round(base * scale / 50.0) * 50) or base
         r = random.choice([3, 4, 5, 6, 8, 10])
         t = random.choice([2, 3, 4, 5])
         n = random.choice([1, 1, 2, 4])  # mostly annual / semiannual / quarterly
         return p, r, t, n
 
     def _compound(
-        self, settings: dict, name: str, difficulty: str
+        self, settings: dict, name: str, band: str, d: float
     ) -> tuple[str, str, str | None]:
-        p, r, t, n = self._compound_params(difficulty)
+        p, r, t, n = self._compound_params(band, d)
         amount = p * (1 + r / (100 * n)) ** (n * t)
         interest = amount - p
         years = "year" if t == 1 else "years"
         freq = _COMPOUND_FREQ[n]
-        find = "amount"
-        if difficulty != "easy" and random.random() < 0.45:
-            find = "interest"
+        find = self._forward_ask(band)
 
         if n == 1:
             latex_core = (
@@ -1578,38 +1894,44 @@ class GcfLcmWordFramework(WordProblemFramework):
     problem_kind = "gcf_lcm"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+        from question_engine.word_problems.things import (
+            SAME_LETTER_MIN_DIFFICULTY,
+            pick_things,
+        )
+
         variant = random.choice(["lcm", "gcf"])
         require_gt_one = bool(settings.get("require_gcf_greater_than_one", True))
+        prefer_same_letter = False
+        if "difficulty" in settings and settings["difficulty"] is not None:
+            d = settings_difficulty(settings, default=0.0)
+            prefer_same_letter = d >= SAME_LETTER_MIN_DIFFICULTY - 1e-9
+        item_a, item_b = pick_things(2, prefer_same_first_letter=prefer_same_letter)
+
         if variant == "lcm":
             a = random.choice([6, 8, 9, 10, 12])
             b_choices = [n for n in (8, 10, 12, 15, 18) if n != a]
             b = random.choice(b_choices)
             value = math.lcm(a, b)
             answer = _format_answer(value, settings)
-            latex = (
-                rf"\text{{Hot dogs come in packs of {a} and buns come in packs of {b}. "
-                rf"What is the least number of each needed so there are no leftovers?}}"
-            )
             text = (
-                f"Hot dogs come in packs of {a} and buns come in packs of {b}. "
+                f"{item_a.capitalize()} come in packs of {a} and {item_b} come in packs of {b}. "
                 f"What is the least number of each needed so there are no leftovers?"
             )
+            latex = rf"\text{{{text}}}"
         else:
             g_lo = 2 if require_gt_one else 1
             g = random.randint(g_lo, 6)
             multipliers = [2, 3, 4, 5, 6, 7, 8, 9]
             m1 = random.choice(multipliers)
             m2 = random.choice([m for m in multipliers if m != m1 and math.gcd(m1, m) == 1])
-            roses, tulips = m1 * g, m2 * g
+            count_a, count_b = m1 * g, m2 * g
             answer = _format_answer(g, settings)
-            latex = (
-                rf"\text{{A florist has {roses} roses and {tulips} tulips to make identical "
-                rf"arrangements. What is the greatest number of arrangements that can be made?}}"
-            )
             text = (
-                f"A florist has {roses} roses and {tulips} tulips to make identical "
-                f"arrangements. What is the greatest number of arrangements that can be made?"
+                f"You have {count_a} {item_a} and {count_b} {item_b}. "
+                f"What is the greatest number of identical bags you can make?"
             )
+            latex = rf"\text{{{text}}}"
         return latex, text, answer
 
 

@@ -7,15 +7,22 @@ from fractions import Fraction
 
 from question_engine.frameworks.primitives.constructive import (
     AffineTarget,
+    ExpressionScope,
     NumericTarget,
+    PolynomialTarget,
     construct_affine,
     construct_numeric,
     construct_pfd,
+    construct_poly,
     construct_rational_sum,
+    seed_poly_target,
     verify_affine,
     verify_numeric,
     verify_pfd_combine,
+    verify_poly,
 )
+from question_engine.frameworks.primitives.expression_policy import polynomial_policy
+from question_engine.frameworks.primitives.poly_helpers import poly_degree
 from question_engine.frameworks.primitives.registry import (
     PRIM_EXPAND_SIMPLIFY,
     PRIM_NUMBERS,
@@ -40,6 +47,21 @@ def _ctx(d: float = 8.0):
         },
         [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_OOO, PRIM_EXPAND_SIMPLIFY],
         rng=random.Random(0),
+    )
+
+
+def _poly_ctx(d: float = 8.0, *, max_degree: int = 3):
+    return build_context(
+        {
+            "difficulty": d,
+            "integers_only": True,
+            "only_x": True,
+            "lock_variable": "x",
+            "max_degree": max_degree,
+        },
+        [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_OOO, PRIM_EXPAND_SIMPLIFY],
+        rng=random.Random(0),
+        policy=polynomial_policy(max_degree=max_degree),
     )
 
 
@@ -99,8 +121,6 @@ def test_construct_affine_hits_target():
 
 def test_construct_affine_distributive_scope():
     """prefer_distributive_factorization → factored form; cancel off by default."""
-    from question_engine.frameworks.primitives.constructive import ExpressionScope
-
     forms: set[str] = set()
     for seed in range(30):
         ctx = _ctx(6)
@@ -127,8 +147,6 @@ def test_construct_affine_distributive_scope():
 
 
 def test_construct_affine_cancel_clutter_opt_in():
-    from question_engine.frameworks.primitives.constructive import ExpressionScope
-
     hits = 0
     for seed in range(60):
         ctx = _ctx(24)
@@ -150,16 +168,310 @@ def test_construct_affine_cancel_clutter_opt_in():
     assert hits >= 15
 
 
+def test_construct_poly_hits_target():
+    ctx = _poly_ctx(8, max_degree=3)
+    tgt = PolynomialTarget.from_dict({2: Fraction(3), 0: Fraction(-2)})
+    surface = construct_poly(
+        ctx,
+        d=8,
+        target=tgt,
+        scope=ExpressionScope(max_degree=3),
+    )
+    assert verify_poly(surface, tgt)
+    assert surface.poly_coeffs == tgt.coeffs_dict()
+    assert surface.simplified_latex
+    assert surface.metadata.get("poly_degree") == 2
+
+
+def test_construct_poly_degree_respected():
+    """Seeded / inflated degree stays within scope.max_degree and ≥ 2."""
+    for max_deg, d in ((2, 0), (2, 5), (3, 10), (4, 15)):
+        for seed in range(12):
+            ctx = _poly_ctx(d, max_degree=max_deg)
+            ctx.rng = random.Random(seed)
+            surface = construct_poly(
+                ctx,
+                d=d,
+                scope=ExpressionScope(max_degree=max_deg),
+            )
+            assert verify_poly(surface, surface.target)
+            deg = int(surface.metadata["poly_degree"])
+            assert 2 <= deg <= max_deg
+            assert poly_degree(surface.poly_coeffs or {}) == deg
+            blob = surface.latex + (surface.simplified_latex or "")
+            assert f"^{{{deg}}}" in blob or "^" in blob
+
+
+def test_construct_poly_single_and_multi_hot():
+    single_hits = 0
+    multi_hits = 0
+    for seed in range(40):
+        ctx = _poly_ctx(10, max_degree=4)
+        ctx.rng = random.Random(seed)
+        single = construct_poly(
+            ctx,
+            d=10,
+            scope=ExpressionScope(max_degree=4, prefer_single_hot=True),
+        )
+        assert verify_poly(single, single.target)
+        assert single.metadata.get("n_hot_terms") == 1
+        single_hits += 1
+
+        ctx.rng = random.Random(seed + 100)
+        multi = construct_poly(
+            ctx,
+            d=10,
+            scope=ExpressionScope(max_degree=4, prefer_single_hot=False),
+        )
+        assert verify_poly(multi, multi.target)
+        assert multi.metadata.get("n_hot_terms", 0) >= 1
+        if multi.metadata.get("n_hot_terms", 0) >= 2:
+            multi_hits += 1
+    assert single_hits == 40
+    assert multi_hits >= 8
+
+
+def test_construct_poly_rejects_low_scope():
+    ctx = _poly_ctx(5)
+    try:
+        construct_poly(ctx, d=5, scope=ExpressionScope(max_degree=1))
+        assert False, "expected ValueError"
+    except ValueError as e:
+        assert "max_degree" in str(e)
+
+
+def test_seed_poly_target_honors_degree_cap():
+    ctx = _poly_ctx(12, max_degree=3)
+    for seed in range(20):
+        ctx.rng = random.Random(seed)
+        tgt = seed_poly_target(ctx, max_degree=3, d=12)
+        assert 2 <= tgt.degree <= 3
+
+
+def test_construct_poly_samples_at_d_levels_print():
+    """Print real latex at D=0,5,10,15 proving degree ≥ 2 appears."""
+    examples: list[str] = []
+    for d in (0, 5, 10, 15):
+        ctx = _poly_ctx(d, max_degree=4)
+        ctx.rng = random.Random(d * 17 + 3)
+        surface = construct_poly(
+            ctx,
+            d=d,
+            scope=ExpressionScope(max_degree=4),
+        )
+        assert verify_poly(surface, surface.target)
+        deg = surface.metadata["poly_degree"]
+        assert deg >= 2
+        line = (
+            f"D={d}: prompt={surface.latex}  "
+            f"simp={surface.simplified_latex}  "
+            f"deg={deg} hot={surface.metadata.get('n_hot_terms')} "
+            f"inflators={surface.inflators_applied}"
+        )
+        examples.append(line)
+        print(line)
+        assert "^" in surface.simplified_latex or "^" in surface.latex
+    assert len(examples) == 4
+
+
+def test_simplify_polynomials_generator_smoke():
+    """Live path: simplify_polynomials yields degree≥2 stems that verify."""
+    from question_engine.frameworks.primitives.difficulty_knobs import reload_knobs
+    from question_engine.generators import GENERATORS
+
+    reload_knobs()
+    gen = GENERATORS["simplify_polynomials"]
+    for d in (0, 5, 10, 15, 20):
+        qs = gen(
+            "simplify_polynomials",
+            {
+                "difficulty": d,
+                "count": 6,
+                "seed": 42 + d,
+                "integers_only": True,
+                "only_x": True,
+                "include_answer_key": True,
+                "max_degree": 4,
+            },
+        )
+        assert len(qs) == 6
+        for q in qs:
+            assert q.prompt_latex
+            assert q.answer_latex
+            assert "=" not in (q.prompt_latex or "")
+            meta = q.metadata or {}
+            assert meta.get("primitive_engine") == "construct_poly"
+            assert int(meta.get("poly_degree") or 0) >= 2
+            if d > 0:
+                # Surface should differ from standard form after inflation
+                # (compare post-normalization, matching Question.__post_init__).
+                from packages.polynomial_core import normalize_expression_signs
+
+                p = normalize_expression_signs(q.prompt_latex or "").replace(" ", "")
+                a = normalize_expression_signs(q.answer_latex or "").replace(" ", "")
+                assert p != a
+            print(
+                f"D={d}: {q.prompt_latex}  ->  {q.answer_latex}  "
+                f"(deg={meta.get('poly_degree')} hot={meta.get('n_hot_terms')})"
+            )
+
+
+def test_construct_poly_compose_nests_and_verifies():
+    """Budget > 1 accumulates compose tags; surface still ≡ target."""
+    from fractions import Fraction
+
+    tgt = PolynomialTarget.from_dict(
+        {2: Fraction(3), 1: Fraction(4), 0: Fraction(5)},
+        single_hot=False,
+    )
+    nested = 0
+    for seed in range(30):
+        ctx = _poly_ctx(20, max_degree=3)
+        ctx.rng = random.Random(seed)
+        surface = construct_poly(
+            ctx,
+            d=20,
+            target=tgt,
+            min_inflators=4,
+            scope=ExpressionScope(max_degree=3, prefer_single_hot=False),
+        )
+        assert verify_poly(surface, tgt)
+        assert surface.metadata.get("compose") is True
+        compose_tags = [t for t in surface.inflators_applied if str(t).startswith("compose:")]
+        if len(compose_tags) >= 2:
+            nested += 1
+        # Not just a bare standard-form render of the target
+        assert surface.latex != surface.simplified_latex or compose_tags
+    assert nested >= 10
+
+
+def test_construct_poly_level_bias_prefers_root():
+    """Over many samples, more compose hits at depth 0 than deeper levels."""
+    root_hits = 0
+    deep_hits = 0
+    for seed in range(80):
+        ctx = _poly_ctx(25, max_degree=4)
+        ctx.rng = random.Random(seed)
+        surface = construct_poly(
+            ctx,
+            d=25,
+            min_inflators=5,
+            scope=ExpressionScope(max_degree=4),
+        )
+        assert verify_poly(surface, surface.target)
+        counts = surface.metadata.get("compose_depth_counts") or {}
+        root_hits += int(counts.get("0", 0))
+        for k, v in counts.items():
+            if str(k) != "0":
+                deep_hits += int(v)
+    assert root_hits > 0
+    # With level_bias=0.5, root should dominate when deep nodes exist
+    assert root_hits >= deep_hits
+
+
+def test_construct_poly_compose_gallery_print():
+    """Large gallery at many D bands — prompt → answer."""
+    bands = (0, 3, 5, 8, 10, 15, 20, 25, 50)
+    for d in bands:
+        print(f"\n=== D={d} ===")
+        for i in range(5):
+            ctx = _poly_ctx(d, max_degree=4)
+            ctx.rng = random.Random(d * 100 + i * 17 + 3)
+            surface = construct_poly(
+                ctx,
+                d=d,
+                min_inflators=(0 if d <= 0 else 1),
+                scope=ExpressionScope(max_degree=4),
+            )
+            assert verify_poly(surface, surface.target)
+            depths = surface.metadata.get("compose_depth_counts")
+            print(
+                f"  [{i}] {surface.latex}  ->  {surface.simplified_latex}  "
+                f"depths={depths} tags={[t for t in surface.inflators_applied if str(t).startswith('compose:')][:6]}"
+            )
+
+
+def test_simplify_polynomials_constrained_course_targets():
+    """PA/A2 thin variants: particular PolynomialTarget constraints only."""
+    from question_engine.frameworks.primitives.difficulty_knobs import reload_knobs
+    from question_engine.generators import GENERATORS
+
+    reload_knobs()
+    gen = GENERATORS["simplify_polynomials"]
+
+    print("\n=== PA simplifying (deg=2, max_terms=3) ===")
+    for d in (0, 5, 10, 15):
+        qs = gen(
+            "pa_polynomials_simplifying",
+            {
+                "difficulty": d,
+                "count": 4,
+                "seed": 100 + d,
+                "integers_only": True,
+                "only_x": True,
+                "include_answer_key": True,
+                "max_degree": 2,
+                "min_degree": 2,
+                "max_terms": 3,
+                "prefer_single_hot": True,
+            },
+        )
+        for q in qs:
+            meta = q.metadata or {}
+            deg = int(meta.get("poly_degree") or 0)
+            n_terms = int(meta.get("n_terms") or 0)
+            assert deg == 2
+            assert 1 <= n_terms <= 3
+            print(f"  D={d}: {q.prompt_latex} -> {q.answer_latex} (terms={n_terms})")
+
+    print("\n=== A2 simplifying (max_degree=5, multi-hot) ===")
+    for d in (0, 10, 20):
+        qs = gen(
+            "a2_polynomial_functions_simplifying",
+            {
+                "difficulty": d,
+                "count": 4,
+                "seed": 200 + d,
+                "integers_only": True,
+                "only_x": True,
+                "include_answer_key": True,
+                "max_degree": 5,
+                "prefer_single_hot": False,
+            },
+        )
+        for q in qs:
+            meta = q.metadata or {}
+            deg = int(meta.get("poly_degree") or 0)
+            assert 2 <= deg <= 5
+            print(
+                f"  D={d}: {q.prompt_latex} -> {q.answer_latex} "
+                f"(deg={deg} hot={meta.get('n_hot_terms')} terms={meta.get('n_terms')})"
+            )
+
+
 def test_rational_add_and_simplify_smoke():
     ctx = _ctx(6)
-    add = construct_rational_sum(ctx, d=6, cancel_count=0)
+    add = construct_rational_sum(ctx, d=6, cancel_count=0, as_sum=True)
     assert add.level == "L3"
     assert "+" in add.latex or add.latex.count(r"\frac") >= 2
     assert add.simplified_latex
+    assert add.metadata.get("cancel_factor_count") == 0
 
-    simp = construct_rational_sum(ctx, d=8, cancel_count=1)
+    simp = construct_rational_sum(ctx, d=8, cancel_count=1, as_sum=False)
     assert simp.level == "L2"
     assert simp.metadata.get("cancel_plan", {}).get("cancel_count", 0) >= 1
+
+
+def test_rational_cancel_counts_l2_and_l3():
+    ctx = _ctx(12)
+    for k in (0, 1, 2, 3, 4):
+        simp = construct_rational_sum(ctx, d=12, cancel_count=k, as_sum=False)
+        assert simp.level == "L2"
+        assert simp.metadata.get("cancel_factor_count") == k
+        add = construct_rational_sum(ctx, d=12, cancel_count=k, as_sum=True)
+        assert add.level == "L3"
+        assert add.metadata.get("cancel_factor_count") == k
+        assert add.latex.count(r"\frac") >= 2 or "+" in add.latex
 
 
 def test_pfd_seed_then_combine():
@@ -261,7 +573,7 @@ def test_l3_sum_recurse_can_nest_blocks(monkeypatch):
         lambda _ctx, _parent: "L1_numeric",
     )
     ctx = _ctx(8)
-    surface = construct_rational_sum(ctx, d=8, cancel_count=0)
+    surface = construct_rational_sum(ctx, d=8, cancel_count=0, as_sum=True)
     assert surface.level == "L3"
     assert any(t.startswith("recurse:") for t in surface.inflators_applied)
     assert surface.metadata.get("recurse_hits", 0) >= 1
@@ -345,5 +657,7 @@ def test_relatedness_knobs_only_list_l1_children():
     allowed = knobs["constructive"]["recurse"]["allowed_child_levels"]
     for parent in ("L2_rational", "L3_rational_sum", "L4_pfd"):
         kids = set(allowed[parent])
-        assert kids <= {"L1_numeric", "L1_affine"}
+        assert kids <= {"L1_numeric", "L1_affine", "L1_poly"}
         assert "L1_numeric" in kids or "L1_affine" in kids
+    assert "L1_poly" in allowed
+    assert set(allowed["L1_poly"]) <= {"L1_poly", "L1_affine", "L1_numeric"}

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import math
 import random
+from decimal import ROUND_HALF_UP, Decimal
 from fractions import Fraction
 from typing import Callable
 
@@ -49,6 +49,13 @@ _PLACE_NAMES = (
     ("hundredths", 2),
     ("thousandths", 3),
 )
+# Round-to targets: (singular place name in prompt, decimal places after round).
+_ROUND_TARGETS = (
+    ("whole number", 0),
+    ("tenth", 1),
+    ("hundredth", 2),
+    ("thousandth", 3),
+)
 
 
 def _int_to_words(n: int) -> str:
@@ -66,77 +73,292 @@ def _int_to_words(n: int) -> str:
         if rest == 0:
             return f"{_ONES_WORDS[hundreds]} hundred"
         return f"{_ONES_WORDS[hundreds]} hundred {_int_to_words(rest)}"
-    thousands, rest = divmod(n, 1000)
+    if n < 1_000_000:
+        thousands, rest = divmod(n, 1000)
+        head = f"{_int_to_words(thousands)} thousand"
+        if rest == 0:
+            return head
+        return f"{head} {_int_to_words(rest)}"
+    millions, rest = divmod(n, 1_000_000)
+    head = f"{_int_to_words(millions)} million"
     if rest == 0:
-        return f"{_int_to_words(thousands)} thousand"
-    return f"{_int_to_words(thousands)} thousand {_int_to_words(rest)}"
+        return head
+    return f"{head} {_int_to_words(rest)}"
+
+
+def _words_max_for_difficulty(d: float) -> int:
+    """Place-value ladder for writing numbers — plateaus by skill, not forever.
+
+    Easy: teens/two-digit. Then hundreds → thousands → ten-thousands →
+    hundred-thousands → low millions. Past that the skill is the same.
+    """
+    if d < 3.0:
+        return 20
+    if d < 6.0:
+        return 99
+    if d < 10.0:
+        return 999
+    if d < 14.0:
+        return 9_999
+    if d < 18.0:
+        return 99_999
+    if d < 24.0:
+        return 999_999
+    return 9_999_999
+
+
+def _place_rounding_params(d: float) -> dict[str, float | int]:
+    """Continuous place-value / rounding ladder (not EMH plateau).
+
+    Returns caps that grow with ``d``:
+    - ``whole_max`` / ``whole_lo`` — magnitude of the integer part
+    - ``show_decimals`` — how many decimal digits are displayed
+    - ``name_max_place`` — deepest place that can be asked (1=tenths … 3=thousandths)
+    - ``round_max`` — deepest round-to target (0=whole … 2=hundredth)
+    - ``carry_p`` — probability of constructing a carry-across rounding case
+    - ``name_p`` — probability of a name-the-digit prompt vs round
+    """
+    d = max(0.0, float(d))
+    if d < 4.0:
+        return {
+            "whole_lo": 1,
+            "whole_max": 20,
+            "show_decimals": 1,
+            "name_max_place": 1,
+            "round_max": 1,
+            "carry_p": 0.05,
+            "name_p": 0.55,
+        }
+    if d < 8.0:
+        return {
+            "whole_lo": 5,
+            "whole_max": 99,
+            "show_decimals": 2,
+            "name_max_place": 2,
+            "round_max": 2,
+            "carry_p": 0.15,
+            "name_p": 0.5,
+        }
+    if d < 14.0:
+        return {
+            "whole_lo": 10,
+            "whole_max": 999,
+            "show_decimals": 2 if d < 11.0 else 3,
+            "name_max_place": 2 if d < 11.0 else 3,
+            "round_max": 2,
+            "carry_p": 0.3,
+            "name_p": 0.45,
+        }
+    if d < 22.0:
+        return {
+            "whole_lo": 50,
+            "whole_max": 9_999,
+            "show_decimals": 3,
+            "name_max_place": 3,
+            "round_max": 2,
+            "carry_p": 0.45,
+            "name_p": 0.4,
+        }
+    # Keep growing magnitude past the place-skill plateau.
+    extra = d - 22.0
+    whole_max = int(9_999 + 200 * extra + 12 * extra * extra)
+    return {
+        "whole_lo": max(100, whole_max // 10),
+        "whole_max": whole_max,
+        "show_decimals": 3,
+        "name_max_place": 3,
+        "round_max": 2,
+        "carry_p": min(0.7, 0.45 + extra / 40.0),
+        "name_p": 0.35,
+    }
+
+
+def _format_decimal_from_digits(whole: int, digits: list[int]) -> str:
+    if not digits:
+        return str(whole)
+    return f"{whole}." + "".join(str(x) for x in digits)
+
+
+def _decimal_from_digits(whole: int, digits: list[int]) -> Decimal:
+    return Decimal(_format_decimal_from_digits(whole, digits))
+
+
+def _round_half_up(value: Decimal, ndigits: int) -> Decimal:
+    if ndigits <= 0:
+        quant = Decimal("1")
+    else:
+        quant = Decimal("1").scaleb(-ndigits)
+    return value.quantize(quant, rounding=ROUND_HALF_UP)
+
+
+def _sample_decimal_digits(show: int, *, force_nonzero_last: bool = True) -> list[int]:
+    digits = [random.randint(0, 9) for _ in range(show)]
+    if force_nonzero_last and show > 0 and digits[-1] == 0:
+        digits[-1] = random.randint(1, 9)
+    return digits
+
+
+def _apply_rounding_carry(digits: list[int], ndigits: int) -> list[int]:
+    """Bias digits so rounding to ``ndigits`` needs a carry (often cascading 9s)."""
+    show = len(digits)
+    if show <= ndigits:
+        # Need one more place past the round target to decide up/down.
+        digits = digits + [0] * (ndigits + 1 - show)
+        show = len(digits)
+    # Digit immediately right of target decides round-up.
+    digits[ndigits] = random.randint(5, 9)
+    # Cascade-friendly: make the rounded place (and maybe ones above) be 9.
+    cascade_depth = random.randint(0, min(ndigits, 2))
+    for i in range(ndigits - cascade_depth, ndigits):
+        if i >= 0:
+            digits[i] = 9
+    # Trailing places after the decision digit: keep display full-length.
+    for i in range(ndigits + 1, show):
+        digits[i] = random.randint(0, 9)
+    if digits[-1] == 0:
+        digits[-1] = random.randint(1, 9)
+    return digits
 
 
 def place_value_and_rounding(topic: str, settings: dict) -> list[Question]:
-    """Name a decimal place or round to a given place (Pre-Algebra)."""
+    """Name a decimal place or round to a given place (Pre-Algebra).
+
+    Continuous ``difficulty`` climbs a place ladder: tenths/small wholes →
+    hundredths → thousandths with larger magnitudes and carry-across rounding.
+    """
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
 
     def build() -> tuple[str, str, str | None]:
-        if random.choice([True, False]):
-            whole = random.randint(10, 999)
-            tenths = random.randint(0, 9)
-            hundredths = random.randint(0, 9)
-            thousandths = random.randint(1, 9)
-            value = whole + tenths / 10 + hundredths / 100 + thousandths / 1000
-            place_name, place_idx = random.choice(_PLACE_NAMES[1:])  # tenths+
-            digit = (tenths, hundredths, thousandths)[place_idx - 1]
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        d = settings_difficulty(settings, default=8.0)
+        p = _place_rounding_params(d)
+        whole_lo = int(p["whole_lo"])
+        whole_max = int(p["whole_max"])
+        show = int(p["show_decimals"])
+        name_max = int(p["name_max_place"])
+        round_max = int(p["round_max"])
+        # Mix a lighter whole band ~25% so review stays present.
+        if whole_lo > 1 and random.random() < 0.25:
+            whole_lo = max(1, whole_lo // 5)
+        whole = random.randint(whole_lo, whole_max)
+
+        do_name = random.random() < float(p["name_p"])
+        if do_name:
+            digits = _sample_decimal_digits(show)
+            # Prefer asking about the deepest unlocked place ~60% of the time.
+            place_choices = list(range(1, name_max + 1))
+            # High D: sometimes name the ones digit in a multi-place decimal.
+            if d >= 14.0 and random.random() < 0.2:
+                place_choices = [0] + place_choices
+            if random.random() < 0.6:
+                place_idx = place_choices[-1]
+            else:
+                place_idx = random.choice(place_choices)
+            place_idx = min(place_idx, show) if place_idx > 0 else 0
+            place_name = _PLACE_NAMES[place_idx][0]
+            if place_idx == 0:
+                digit = whole % 10
+            else:
+                digit = digits[place_idx - 1]
+            shown = _format_decimal_from_digits(whole, digits)
             prompt = (
                 rf"\text{{What digit is in the {place_name} place of }} "
-                rf"{value:.3f}\text{{?}}"
+                rf"{shown}\text{{?}}"
             )
-            answer = str(digit)
-            return prompt, "place value", answer if keyed else None
+            return prompt, "place value", str(digit) if keyed else None
 
-        value = round(random.uniform(1, 99), 3)
-        place_name, ndigits = random.choice(
-            (("whole number", 0), ("tenth", 1), ("hundredth", 2))
-        )
-        rounded = round(value, ndigits)
+        # Rounding prompt.
+        ndigits = random.randint(0, round_max)
+        # Need at least one digit past the round target when possible.
+        need_show = max(show, ndigits + 1)
+        need_show = min(need_show, 3)
+        digits = _sample_decimal_digits(need_show)
+        want_carry = random.random() < float(p["carry_p"])
+        if want_carry and need_show > ndigits:
+            digits = _apply_rounding_carry(digits, ndigits)
+            # Cascade into the ones place when the fractional run is all 9s.
+            frac_nines = all(digits[i] == 9 for i in range(ndigits))
+            if (ndigits == 0 or frac_nines) and random.random() < 0.55:
+                whole = whole - (whole % 10) + 9
+        value = _decimal_from_digits(whole, digits)
+        place_name, _ = _ROUND_TARGETS[ndigits]
+        rounded = _round_half_up(value, ndigits)
+        shown = _format_decimal_from_digits(whole, digits)
         prompt = (
-            rf"\text{{Round }} {value:.3f} \text{{ to the nearest {place_name}.}}"
+            rf"\text{{Round }} {shown} \text{{ to the nearest {place_name}.}}"
         )
-        fmt = f"{{:.{ndigits}f}}" if ndigits else "{:.0f}"
-        answer = fmt.format(rounded)
+        if ndigits == 0:
+            answer = format(rounded, "f").split(".")[0]
+        else:
+            answer = f"{rounded:.{ndigits}f}"
         return prompt, "rounding", answer if keyed else None
 
     return _make_questions(topic, count, keyed, build)
 
 
 def writing_numbers_with_words(topic: str, settings: dict) -> list[Question]:
-    """Write whole numbers in words (Pre-Algebra)."""
+    """Write whole numbers in words (Pre-Algebra).
+
+    Difficulty climbs a place-value ladder (teens → … → millions) then plateaus —
+    bigger digits stop buying new skill past low millions. At higher D, sometimes
+    ask the reverse (words → numeral).
+    """
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
-    max_n = int(settings.get("coef_max", 9999))
 
     def build() -> tuple[str, str, str | None]:
-        n = random.randint(1, max(1, max_n))
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        d = settings_difficulty(settings, default=8.0)
+        max_n = _words_max_for_difficulty(d)
+        # Prefer the new place band so D=10 isn't mostly two-digit leftovers.
+        if max_n <= 20:
+            lo = 1
+        elif max_n <= 99:
+            lo = 21
+        elif max_n <= 999:
+            lo = 100
+        elif max_n <= 9_999:
+            lo = 1_000
+        elif max_n <= 99_999:
+            lo = 10_000
+        elif max_n <= 999_999:
+            lo = 100_000
+        else:
+            lo = 1_000_000
+        # Mix in easier band ~30% so review stays present.
+        if lo > 1 and random.random() < 0.3:
+            lo = max(1, lo // 10)
+        n = random.randint(lo, max_n)
+        words = _int_to_words(n)
+        # Reverse direction unlocks once students can write thousands+.
+        if d >= 12.0 and random.random() < min(0.45, (d - 12.0) / 20.0):
+            prompt = rf"\text{{Write in numerals: }} \text{{{words}}}"
+            answer = str(n)
+            return prompt, "words to number", answer if keyed else None
         prompt = rf"\text{{Write }} {n} \text{{ in words.}}"
-        answer = rf"\text{{{_int_to_words(n)}}}"
+        answer = rf"\text{{{words}}}"
         return prompt, "number words", answer if keyed else None
 
     return _make_questions(topic, count, keyed, build)
 
 
 def simplifying_numeric_fractions(topic: str, settings: dict) -> list[Question]:
-    """Simplify numeric fractions by canceling a GCF (not polynomial rationals)."""
+    """Simplify numeric fractions by canceling a GCF (not polynomial rationals).
+
+    Continuous ``difficulty`` builds factors-first: pick reduced ``a/b`` (gcd=1),
+    inflate by ``k`` (possibly a product of primes), show ``(a·k)/(b·k)``.
+    Hardness tracks number size, |GCF|, and composite multi-step cancel feel.
+    """
+    from question_engine.frameworks.number import sample_unreduced_numeric_fraction
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
 
     def build() -> tuple[str, str, str | None]:
-        g = random.randint(2, 12)
-        a = random.randint(1, 12)
-        b = random.randint(1, 12)
-        while math.gcd(a, b) != 1:
-            b = random.randint(1, 12)
-        num, den = a * g, b * g
-        if random.choice([True, False]):
-            num, den = den, num
+        num, den = sample_unreduced_numeric_fraction(settings)
         simplified = Fraction(num, den)
         prompt = rf"\text{{Simplify }} \frac{{{num}}}{{{den}}}."
         answer = frac_latex(simplified)
@@ -271,21 +493,6 @@ def scatter_plot_interpret(topic: str, settings: dict) -> list[Question]:
     return _make_questions(topic, count, keyed, build)
 
 
-def g6_whole_by_decimal_divide(topic: str, settings: dict) -> list[Question]:
-    """Divide a whole number by a decimal (Grade 6)."""
-    count = int(settings.get("count", 10))
-    keyed = bool(settings.get("include_answer_key", False))
-
-    def build() -> tuple[str, str, str | None]:
-        # n ÷ 0.2 = 5n, etc. — exact integer answers
-        divisor, mult = random.choice([(0.2, 5), (0.25, 4), (0.5, 2)])
-        n = random.randint(2, 15)
-        prompt = f"{n} \\div {divisor}"
-        return prompt, "whole ÷ decimal", str(n * mult) if keyed else None
-
-    return _make_questions(topic, count, keyed, build)
-
-
 def check_equation_solution(topic: str, settings: dict) -> list[Question]:
     """Ask whether a given value is a solution (Grade 6), not solve for x."""
     count = int(settings.get("count", 10))
@@ -337,7 +544,6 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "complex_rationalize_denominator": complex_rationalize_denominator,
     "trigonometry_and_area": trigonometry_and_area,
     "scatter_plot_interpret": scatter_plot_interpret,
-    "g6_whole_by_decimal_divide": g6_whole_by_decimal_divide,
     "check_equation_solution": check_equation_solution,
     "write_one_step_equation": write_one_step_equation,
 }

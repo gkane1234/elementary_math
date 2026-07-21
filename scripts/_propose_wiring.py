@@ -55,7 +55,7 @@ MANUAL: dict[str, str] = {
     # Grade 6 ratios
     "g6_part_part_whole_ratios": "g6_introduction_to_ratios",
     "g6_comparing_ratios": "g6_equivalent_ratios",
-    "g6_comparing_rates": "g6_unit_rates",
+    "g6_comparing_rates": "g6_comparing_rates",
     "g6_converting_units": "g6_unit_rates",
     "g6_equivalent_ratio_equations": "solving_proportions",
     "g6_relating_percents_fractions_and_decimals": "percents",

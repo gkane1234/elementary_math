@@ -128,19 +128,28 @@ LEAF_POLICY: dict[str, ExpressionPolicy] = {
     "evaluate_polynomial": POLYNOMIAL_POLICY_DEFAULT,
     "poly_combine_like_terms": POLYNOMIAL_POLICY_DEFAULT,
     "poly_expand_simplify": POLYNOMIAL_POLICY_DEFAULT,
+    "simplify_polynomials": POLYNOMIAL_POLICY_DEFAULT,
     "quadratic_factoring": polynomial_policy(max_degree=2),
     "a2_quadratic_functions_and_inequalities_factoring_quadratic_expressions": polynomial_policy(
         max_degree=2
     ),
-    "a2_polynomial_functions_factoring_quadratic_form": polynomial_policy(max_degree=2),
+    "polynomial_factoring_quadratic_form": polynomial_policy(max_degree=4),
+    "a2_polynomial_functions_factoring_quadratic_form": polynomial_policy(max_degree=4),
+    "quadratic_factoring_equations": polynomial_policy(max_degree=2),
+    "a2_quadratic_functions_and_inequalities_solving_equations_by_factoring": polynomial_policy(
+        max_degree=2
+    ),
     "polynomial_factoring_special_cases": POLYNOMIAL_POLICY_DEFAULT,
     "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions": (
         polynomial_policy(max_degree=2)
     ),
-    "a2_polynomial_functions_factoring_sum_difference_of_cubes": POLYNOMIAL_POLICY_DEFAULT,
+    "polynomial_factoring_sum_diff_cubes": polynomial_policy(max_degree=3),
+    "a2_polynomial_functions_factoring_sum_difference_of_cubes": polynomial_policy(max_degree=3),
     "polynomial_factoring_grouping": POLYNOMIAL_POLICY_DEFAULT,
     "a2_polynomial_functions_factoring_by_grouping": POLYNOMIAL_POLICY_DEFAULT,
+    "polynomial_factoring_all_techniques": POLYNOMIAL_POLICY_DEFAULT,
     "a2_polynomial_functions_factoring_all_techniques": POLYNOMIAL_POLICY_DEFAULT,
+    "polynomial_factoring_general_strategy": POLYNOMIAL_POLICY_DEFAULT,
     "rational_expression_simplification": POLYNOMIAL_POLICY_DEFAULT,
     "a2_rational_expressions_adding_and_subtracting": POLYNOMIAL_POLICY_DEFAULT,
     "rational_simplification": POLYNOMIAL_POLICY_DEFAULT,

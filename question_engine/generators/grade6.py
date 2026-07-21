@@ -17,6 +17,7 @@ from ..frameworks.number import (
     Grade6VisualFramework,
     IdentifyPropertyFramework,
     IntegerArithmeticFramework,
+    IntroductionToPercentsFramework,
     LikeDenominatorFractionFramework,
     LongDivisionWithRemaindersFramework,
     OppositeFramework,
@@ -24,6 +25,7 @@ from ..frameworks.number import (
     RationalFramework,
     UnlikeDenominatorFractionFramework,
     WholeDivideToDecimalFramework,
+    WholeByDecimalDivideFramework,
 )
 
 _FRAC_ADD_LIKE = LikeDenominatorFractionFramework("+")
@@ -57,6 +59,7 @@ _COMPARE = CompareOrderFramework(mode="compare")
 _ORDER = CompareOrderFramework(mode="order")
 _FRAC_DECIMAL = FractionDecimalConvertFramework()
 _DIVISIBILITY = DivisibilityFramework()
+_INTRO_PERCENTS = IntroductionToPercentsFramework()
 _G6_VISUALS = {
     mode: Grade6VisualFramework(mode)
     for mode in (
@@ -178,6 +181,10 @@ def g6_relating_percents_fractions_and_decimals(topic: str, settings: dict) -> l
     return _framework_generator(_FRAC_DECIMAL, topic, settings)
 
 
+def g6_introduction_to_percents(topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_INTRO_PERCENTS, topic, settings)
+
+
 def g6_divisibility(topic: str, settings: dict) -> list[Question]:
     return _framework_generator(_DIVISIBILITY, topic, settings)
 
@@ -195,6 +202,7 @@ def g6_long_division_with_remainders(topic: str, settings: dict) -> list[Questio
 
 _DECIMAL_DIVIDE_WHOLE = DecimalArithmeticFramework("/")
 _WHOLE_DIVIDE_TO_DECIMAL = WholeDivideToDecimalFramework()
+_WHOLE_BY_DECIMAL_DIVIDE = WholeByDecimalDivideFramework()
 
 
 def g6_dividing_decimals_by_whole_numbers(topic: str, settings: dict) -> list[Question]:
@@ -205,6 +213,11 @@ def g6_dividing_decimals_by_whole_numbers(topic: str, settings: dict) -> list[Qu
 def g6_dividing_whole_numbers_that_result_in_decimals(topic: str, settings: dict) -> list[Question]:
     settings = {**settings, "allow_negative": False}
     return _framework_generator(_WHOLE_DIVIDE_TO_DECIMAL, topic, settings)
+
+
+def g6_whole_by_decimal_divide(topic: str, settings: dict) -> list[Question]:
+    """Whole number ÷ non-integer decimal (continuous D unlocks ≥1 divisors / signs)."""
+    return _framework_generator(_WHOLE_BY_DECIMAL_DIVIDE, topic, settings)
 
 
 def _g6_visual(mode: str, topic: str, settings: dict) -> list[Question]:
@@ -237,11 +250,13 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "g6_comparing_numbers": g6_comparing_numbers,
     "g6_ordering_numbers": g6_ordering_numbers,
     "g6_relating_percents_fractions_and_decimals": g6_relating_percents_fractions_and_decimals,
+    "g6_introduction_to_percents": g6_introduction_to_percents,
     "g6_divisibility": g6_divisibility,
     "g6_numeric_expressions_with_exponents": g6_numeric_expressions_with_exponents,
     "g6_long_division_with_remainders": g6_long_division_with_remainders,
     "g6_dividing_whole_numbers_that_result_in_decimals": g6_dividing_whole_numbers_that_result_in_decimals,
     "g6_dividing_decimals_by_whole_numbers": g6_dividing_decimals_by_whole_numbers,
+    "g6_whole_by_decimal_divide": g6_whole_by_decimal_divide,
     "g6_fraction_rectangle_area": lambda topic, settings: _g6_visual("fraction_rectangle", topic, settings),
     "g6_fraction_triangle_area": lambda topic, settings: _g6_visual("fraction_triangle", topic, settings),
     "g6_fraction_prism_volume": lambda topic, settings: _g6_visual("fraction_prism", topic, settings),

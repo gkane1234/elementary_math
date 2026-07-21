@@ -160,6 +160,8 @@ def flatten_knobs(data: dict[str, Any] | None = None) -> list[dict[str, Any]]:
             rows.append({"path": prefix, "value": obj, "type": "bool"})
         elif isinstance(obj, (int, float)) and not isinstance(obj, bool):
             rows.append({"path": prefix, "value": obj, "type": "number"})
+        elif isinstance(obj, str):
+            rows.append({"path": prefix, "value": obj, "type": "string"})
         elif isinstance(obj, list) and all(isinstance(x, str) for x in obj):
             rows.append({"path": prefix, "value": obj, "type": "string_list"})
 

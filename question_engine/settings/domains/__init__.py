@@ -3,6 +3,7 @@
 from .equation import equation_coef_settings
 from .common import (
     answer_format_settings,
+    continuous_difficulty_settings,
     difficulty_settings,
     multiple_choice_settings,
     sign_restrictions,
@@ -28,6 +29,7 @@ from .rational import (
 from .word_problem import (
     consecutive_integers_settings,
     distance_rate_time_settings,
+    mixture_problem_settings,
     percent_word_problem_settings,
     similar_figures_prompt_settings,
     word_problem_settings,
@@ -56,6 +58,7 @@ __all__ = [
     "inequality_settings",
     "consecutive_integers_settings",
     "distance_rate_time_settings",
+    "mixture_problem_settings",
     "percent_word_problem_settings",
     "similar_figures_prompt_settings",
     "word_problem_settings",

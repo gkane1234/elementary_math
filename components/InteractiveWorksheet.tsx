@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type DragEvent, type MouseEvent } from "react";
+import { useCallback, useEffect, useState, type DragEvent, type MouseEvent } from "react";
 import { QuestionDiagramFromMetadata } from "@/components/QuestionDiagram";
 import { QuestionGraphFromMetadata } from "@/components/QuestionGraph";
 import { hasAnswerDiagram } from "@/lib/diagram-metadata";
@@ -28,6 +28,14 @@ import {
   toWorksheetQuestion,
   updateQuestion,
 } from "@/lib/worksheet";
+
+function isTypingTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+  if (target.isContentEditable) return true;
+  return Boolean(target.closest("[contenteditable='true']"));
+}
 
 type InteractiveWorksheetProps = {
   worksheet: WorksheetDraft | null;
@@ -137,6 +145,58 @@ export function InteractiveWorksheet({
   const [settingsQuestionId, setSettingsQuestionId] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
+  const handleRegenerate = useCallback(
+    async (questionId: string) => {
+      if (!worksheet) return;
+      const question = worksheet.questions.find((entry) => entry.id === questionId);
+      if (!question) return;
+
+      setBusyId(questionId);
+      setContextMenu(null);
+      try {
+        const regenerated = await regenerateQuestion({
+          type_id: question.topic,
+          settings: question.generation_settings,
+        });
+        const next = toWorksheetQuestion(regenerated);
+        onChange({
+          ...worksheet,
+          questions: updateQuestion(worksheet.questions, questionId, (current) => ({
+            ...next,
+            id: current.id,
+            spacing: current.spacing,
+            sectionId: current.sectionId,
+            generation_settings: current.generation_settings,
+          })),
+        });
+      } catch (err) {
+        onError?.(err instanceof Error ? err.message : "Failed to regenerate question");
+      } finally {
+        setBusyId(null);
+      }
+    },
+    [worksheet, onChange, onError],
+  );
+
+  useEffect(() => {
+    if (!selectedId || settingsQuestionId !== null) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "r" && event.key !== "R") return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isTypingTarget(event.target)) return;
+      // Topic / settings modals own R while open.
+      if (document.querySelector(".modal-root")) return;
+      if (busyId === selectedId) return;
+
+      event.preventDefault();
+      void handleRegenerate(selectedId);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [selectedId, settingsQuestionId, busyId, handleRegenerate]);
+
   if (!worksheet || worksheet.questions.length === 0) {
     return (
       <section className="panel preview empty">
@@ -178,34 +238,6 @@ export function InteractiveWorksheet({
     setDropIndex(null);
   };
 
-  const handleRegenerate = async (questionId: string) => {
-    const question = worksheet.questions.find((entry) => entry.id === questionId);
-    if (!question) return;
-
-    setBusyId(questionId);
-    setContextMenu(null);
-    try {
-      const regenerated = await regenerateQuestion({
-        type_id: question.topic,
-        settings: question.generation_settings,
-      });
-      const next = toWorksheetQuestion(regenerated);
-      patchWorksheet(
-        updateQuestion(worksheet.questions, questionId, (current) => ({
-          ...next,
-          id: current.id,
-          spacing: current.spacing,
-          sectionId: current.sectionId,
-          generation_settings: current.generation_settings,
-        })),
-      );
-    } catch (err) {
-      onError?.(err instanceof Error ? err.message : "Failed to regenerate question");
-    } finally {
-      setBusyId(null);
-    }
-  };
-
   const handleSpacing = (questionId: string, delta: number) => {
     patchWorksheet(
       updateQuestion(worksheet.questions, questionId, (question) => ({
@@ -235,7 +267,7 @@ export function InteractiveWorksheet({
       </header>
 
       <p className="interactive-hint interactive-only">
-        Drag a question card to reorder. Right-click for settings, regenerate, or spacing.
+        Drag a question card to reorder. Right-click for settings, regenerate, or spacing. Press R to regenerate the selected question.
       </p>
 
       <div
@@ -352,7 +384,12 @@ export function InteractiveWorksheet({
           <button type="button" onClick={() => setSettingsQuestionId(selectedQuestion.id)}>
             Edit settings
           </button>
-          <button type="button" onClick={() => handleRegenerate(selectedQuestion.id)} disabled={busyId === selectedQuestion.id}>
+          <button
+            type="button"
+            onClick={() => handleRegenerate(selectedQuestion.id)}
+            disabled={busyId === selectedQuestion.id}
+            title="Regenerate (R)"
+          >
             Regenerate
           </button>
           <button type="button" onClick={() => handleSpacing(selectedQuestion.id, 0.25)}>

@@ -222,11 +222,40 @@ def degrade_drop_most_expensive(
 
 def settings_difficulty(settings: dict[str, Any], default: float = 0.0) -> float:
     """Read continuous difficulty from settings; shim old EMH tiers if needed."""
-    if "difficulty" in settings and settings["difficulty"] is not None:
-        try:
-            return float(settings["difficulty"])
-        except (TypeError, ValueError):
-            pass
-    tier = str(settings.get("difficulty_tier", "")).strip().lower()
     legacy = {"easy": 3.0, "medium": 8.0, "hard": 14.0}
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        raw = settings["difficulty"]
+        try:
+            return float(raw)
+        except (TypeError, ValueError):
+            # UI / presets sometimes put the tier name in ``difficulty``.
+            mapped = legacy.get(str(raw).strip().lower())
+            if mapped is not None:
+                return mapped
+    tier = str(settings.get("difficulty_tier", "")).strip().lower()
     return legacy.get(tier, default)
+
+
+def difficulty_band(d: float) -> str:
+    """Map continuous D to legacy easy / medium / hard bands for presets."""
+    if d <= 4.0 + 1e-9:
+        return "easy"
+    if d <= 11.0 + 1e-9:
+        return "medium"
+    return "hard"
+
+
+def settings_difficulty_band(settings: dict[str, Any], *, default: float = 8.0) -> str:
+    """Band from continuous ``difficulty`` when present, else ``difficulty_tier``."""
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        raw = settings["difficulty"]
+        try:
+            return difficulty_band(float(raw))
+        except (TypeError, ValueError):
+            legacy = str(raw).strip().lower()
+            if legacy in {"easy", "medium", "hard"}:
+                return legacy
+    tier = str(settings.get("difficulty_tier", "")).strip().lower()
+    if tier in {"easy", "medium", "hard"}:
+        return tier
+    return difficulty_band(default)

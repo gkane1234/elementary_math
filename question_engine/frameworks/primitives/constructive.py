@@ -54,18 +54,29 @@ class ExpressionScope:
     Topics pass a scope; the generator owns commute / factor order / cancel
     clutter. Clients (distributive, expand/simplify, …) stay thin.
 
-    * ``max_degree`` — linear topics use ``1`` (affine only).
+    * ``max_degree`` — linear topics use ``1`` (affine only). Poly
+      construction via ``construct_poly`` requires ``≥ 2`` and caps the
+      seeded / inflated degree.
     * ``allow_cancel_clutter`` — when True, presentation may wrap with
       value-preserving ``+k−k`` / ``+kx−kx`` / distributive cancel pairs
       (still gated by soft ``cancel_clutter`` knobs; amount 0 → never).
     * ``prefer_distributive_factorization`` — present ``a·var+b`` as a
       factored ``outer·(sum…)`` ready for distributive rewrite, with
       commute / explicit-multiply from the shared presentation layer.
+    * ``prefer_single_hot`` — when set, bias poly seeds toward a single
+      higher-order (degree ≥ 2) term vs multiple; ``None`` = knob/D bias.
+    * ``max_terms`` / ``exact_terms`` — optional caps on nonzero terms in the
+      seeded target (thin course topics, e.g. PA ≤3 terms).
+    * ``min_degree`` — floor on seeded degree (default 2).
     """
 
     max_degree: int = 1
     allow_cancel_clutter: bool = False
     prefer_distributive_factorization: bool = False
+    prefer_single_hot: bool | None = None
+    max_terms: int | None = None
+    exact_terms: int | None = None
+    min_degree: int = 2
 
 
 # ---------------------------------------------------------------------------
@@ -97,6 +108,56 @@ class AffineTarget:
             "b": str(self.b),
             "level": self.level,
         }
+
+
+@dataclass(frozen=True)
+class PolynomialTarget:
+    """Simplified univariate polynomial as a sparse degree→coeff map.
+
+    Degrees may be ≥ 2. Callers usually pass ``coeffs`` as
+    ``tuple[(degree, coeff), ...]``; ``degree`` is derived from the map
+    (leading nonzero). ``single_hot`` marks a seed with exactly one
+    higher-order term (degree ≥ 2), optionally plus lower terms.
+    """
+
+    coeffs: tuple[tuple[int, Fraction], ...]
+    level: ConstructLevel = "L1"
+    single_hot: bool = False
+
+    def coeffs_dict(self) -> dict[int, Fraction]:
+        return {int(d): Fraction(c) for d, c in self.coeffs if c != 0}
+
+    @property
+    def degree(self) -> int:
+        from question_engine.frameworks.primitives.poly_helpers import poly_degree
+
+        return poly_degree(self.coeffs_dict())
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "kind": "polynomial",
+            "coeffs": [(int(d), str(c)) for d, c in self.coeffs],
+            "degree": self.degree,
+            "single_hot": self.single_hot,
+            "level": self.level,
+        }
+
+    @classmethod
+    def from_dict(
+        cls,
+        coeffs: dict[int, Fraction],
+        *,
+        single_hot: bool = False,
+        level: ConstructLevel = "L1",
+    ) -> PolynomialTarget:
+        items = tuple(
+            sorted(
+                ((int(d), Fraction(c)) for d, c in coeffs.items() if c != 0),
+                key=lambda t: t[0],
+                reverse=True,
+            )
+        )
+        return cls(coeffs=items, level=level, single_hot=single_hot)
 
 
 @dataclass(frozen=True)
@@ -181,6 +242,7 @@ class SurfaceExpression:
     value: Fraction | None = None
     coeff_a: Fraction | None = None
     coeff_b: Fraction | None = None
+    poly_coeffs: dict[int, Fraction] | None = None
     simplified_latex: str | None = None
     simplified_text: str | None = None
 
@@ -225,6 +287,110 @@ def seed_affine_target(
     return AffineTarget(a=a, b=b)
 
 
+def seed_poly_target(
+    ctx: PrimitiveContext,
+    *,
+    max_degree: int,
+    prefer_single_hot: bool | None = None,
+    d: float | None = None,
+    max_terms: int | None = None,
+    exact_terms: int | None = None,
+    min_degree: int = 2,
+) -> PolynomialTarget:
+    """Seed a univariate polynomial with degree in ``[min_degree, max_degree]``.
+
+    ``prefer_single_hot`` / knobs bias toward exactly one higher-order term
+    (plus optional linear/constant) vs multiple degree-≥2 terms.
+
+    Optional ``exact_terms`` / ``max_terms`` constrain the number of nonzero
+    terms (for course-specific thin topics: e.g. PA ≤3 terms).
+    """
+    from question_engine.frameworks.primitives.difficulty_knobs import section
+    from question_engine.frameworks.primitives.poly_helpers import (
+        poly_degree,
+        sample_coeff,
+        sample_poly_coeffs,
+        target_n_terms,
+        target_poly_degree,
+    )
+
+    cap = max(2, int(max_degree))
+    min_deg = max(2, int(min_degree))
+    min_deg = min(min_deg, cap)
+    eff = float(ctx.topic_d if d is None else d)
+    # Honor scope cap and D-scaled target under policy.
+    policy_deg = target_poly_degree(eff, ctx.policy)
+    deg = min(cap, max(min_deg, policy_deg if ctx.policy.max_degree >= 2 else cap))
+    if ctx.policy.max_degree >= 2:
+        deg = min(deg, int(ctx.policy.max_degree), cap)
+    else:
+        deg = min(deg, cap)
+    deg = max(min_deg, min(deg, cap))
+
+    sec = section("constructive") or {}
+    if prefer_single_hot is None:
+        base_p = float(sec.get("poly_single_hot_chance", 0.5))
+        # Slightly fewer single-hot shapes as D grows (more multi-term polys).
+        p = max(0.15, base_p - 0.02 * min(eff, 20.0))
+        prefer_single_hot = ctx.rng.random() < p
+
+    # Term-count caps (exact wins over max).
+    term_cap = deg + 1
+    if max_terms is not None:
+        term_cap = min(term_cap, max(1, int(max_terms)))
+    if exact_terms is not None:
+        term_cap = max(1, min(int(exact_terms), deg + 1))
+        # exact_terms forces multi-term sampling path when > 1
+        if exact_terms == 1:
+            prefer_single_hot = True
+        elif exact_terms >= 2:
+            prefer_single_hot = False
+
+    if prefer_single_hot and exact_terms is None:
+        # Exactly one degree ≥ 2 term; optional linear + constant.
+        coeffs: dict[int, Fraction] = {deg: sample_coeff(ctx, exclude_zero=True)}
+        extras = 1  # leading
+        if extras < term_cap and ctx.rng.random() < 0.55:
+            coeffs[0] = sample_coeff(ctx, exclude_zero=True)
+            extras += 1
+        if (
+            extras < term_cap
+            and deg > 2
+            and ctx.rng.random()
+            < float(sec.get("poly_single_hot_linear_chance", 0.35))
+        ):
+            coeffs[1] = sample_coeff(ctx, exclude_zero=True)
+        elif extras < term_cap and deg == 2 and ctx.rng.random() < 0.4:
+            coeffs[1] = sample_coeff(ctx, exclude_zero=True)
+        # Trim if somehow over term_cap
+        while len(coeffs) > term_cap:
+            drop = min((d_ for d_ in coeffs if d_ < deg), default=None)
+            if drop is None:
+                break
+            del coeffs[drop]
+        return PolynomialTarget.from_dict(coeffs, single_hot=True)
+
+    if exact_terms is not None:
+        n_terms = max(1, min(int(exact_terms), deg + 1))
+    else:
+        n_terms = min(term_cap, max(2 if term_cap >= 2 else 1, target_n_terms(eff)))
+        n_terms = min(n_terms, term_cap)
+    # Encourage ≥2 higher-order terms when deg ≥ 3 and D allows.
+    min_hot = 2 if deg >= 3 and n_terms >= 3 and ctx.rng.random() < float(
+        sec.get("poly_multi_hot_boost", 0.55)
+    ) else 1
+    if exact_terms == 1:
+        min_hot = 1
+    for _ in range(10):
+        coeffs = sample_poly_coeffs(ctx, degree=deg, n_terms=n_terms, require_leading=True)
+        hot = sum(1 for d_, c in coeffs.items() if d_ >= 2 and c != 0)
+        if len(coeffs) == n_terms and (exact_terms is not None or hot >= min_hot):
+            return PolynomialTarget.from_dict(coeffs, single_hot=(hot == 1))
+    coeffs = sample_poly_coeffs(ctx, degree=deg, n_terms=n_terms, require_leading=True)
+    hot = sum(1 for d_, c in coeffs.items() if d_ >= 2 and c != 0)
+    return PolynomialTarget.from_dict(coeffs, single_hot=(hot <= 1 and poly_degree(coeffs) >= 2))
+
+
 # ---------------------------------------------------------------------------
 # Recursive disguise (relatedness tree from difficulty_knobs.json)
 # ---------------------------------------------------------------------------
@@ -232,6 +398,7 @@ def seed_affine_target(
 RecurseKind = Literal[
     "L1_numeric",
     "L1_affine",
+    "L1_poly",
     "L2_rational",
     "L3_rational_sum",
     "L4_pfd",
@@ -273,7 +440,14 @@ def _pick_child_kind(ctx: PrimitiveContext, parent_kind: RecurseKind) -> Recurse
     if not isinstance(children, list) or not children:
         return parent_kind
     choice = str(ctx.rng.choice(children))
-    if choice in {"L1_numeric", "L1_affine", "L2_rational", "L3_rational_sum", "L4_pfd"}:
+    if choice in {
+        "L1_numeric",
+        "L1_affine",
+        "L1_poly",
+        "L2_rational",
+        "L3_rational_sum",
+        "L4_pfd",
+    }:
         return choice  # type: ignore[return-value]
     return parent_kind
 
@@ -351,6 +525,54 @@ def disguise_affine(
     )
 
 
+def disguise_poly(
+    ctx: PrimitiveContext,
+    coeffs: dict[int, Fraction],
+    var: SampledVariable,
+    *,
+    d: float,
+    depth: int,
+    parent_kind: RecurseKind = "L1_poly",
+    single_hot: bool = False,
+) -> tuple[str, str, tuple[str, ...]]:
+    """Render a polynomial block; maybe recurse through ``construct_poly``."""
+    from question_engine.frameworks.primitives.poly_helpers import poly_degree, render_poly
+
+    plain_l, plain_t = render_poly(coeffs, var)
+    deg = poly_degree(coeffs)
+    if deg <= 1:
+        a = coeffs.get(1, Fraction(0))
+        b = coeffs.get(0, Fraction(0))
+        if a == 0:
+            return disguise_numeric(ctx, b, d=d, depth=depth, parent_kind=parent_kind)
+        return disguise_affine(
+            ctx, a, b, var, d=d, depth=depth, parent_kind="L1_affine"
+        )
+    if not _should_recurse(ctx, d, depth, parent_kind):
+        return plain_l, plain_t, ()
+    child_kind = _pick_child_kind(ctx, parent_kind)
+    if child_kind != "L1_poly":
+        allowed = (_recurse_section().get("allowed_child_levels") or {}).get(parent_kind) or []
+        if isinstance(allowed, list) and "L1_poly" in allowed:
+            child_kind = "L1_poly"
+        else:
+            return plain_l, plain_t, ()
+    child = construct_poly(
+        ctx,
+        d=_child_budget(d),
+        var=var,
+        target=PolynomialTarget.from_dict(coeffs, single_hot=single_hot),
+        scope=ExpressionScope(max_degree=max(2, deg)),
+        prefer_distribute=True,
+        _depth=depth + 1,
+    )
+    return (
+        f"\\left({child.latex}\\right)",
+        f"({child.text})",
+        ("recurse:L1_poly", *child.inflators_applied),
+    )
+
+
 def _coerce_related_l1(
     parent_kind: RecurseKind,
     child_kind: RecurseKind,
@@ -392,21 +614,53 @@ def _disguise_rational_fraction(
     d: float,
     depth: int,
     parent_kind: RecurseKind,
+    num_factors: list[dict[int, Fraction]] | None = None,
+    den_factors: list[dict[int, Fraction]] | None = None,
 ) -> tuple[str, str, tuple[str, ...]]:
     """Maybe nest an L1 block into a P/Q prompt (value unchanged).
 
     Related children only: L1_affine on a degree-≤1 num/den, or L1_numeric via a
     canceling scale factor shown in both numerator and denominator.
+
+    When factor lists are provided, dens/nums follow
+    `should_display_factor_product_expanded` (classroom-factorable → expanded;
+    RRT-required → factored unless RRT enabled).
     """
-    plain_l, plain_t = _fraction_latex(num, den, var)
+    options = _factor_options_for_ctx(ctx)
+
+    def _side_latex(
+        poly: dict[int, Fraction],
+        factors: list[dict[int, Fraction]] | None,
+    ) -> tuple[str, str]:
+        if factors is not None:
+            return _render_poly_from_factor_dicts(factors, var, options)
+        return _render_poly_dict(poly, var)
+
+    nl, nt = _side_latex(num, num_factors)
+    dl, dt = _side_latex(den, den_factors)
+    plain_l, plain_t = rf"\frac{{{nl}}}{{{dl}}}", f"({nt})/({dt})"
+
     if not _should_recurse(ctx, d, depth, parent_kind):
         return plain_l, plain_t, ()
+
+    # Multi-factor dens/nums that stay factored: only allow numeric scale disguise
+    # (affine disguise needs a single linear piece).
+    from packages.polynomial_core import should_display_factor_product_expanded
+
+    multi_factored = False
+    for factors in (num_factors, den_factors):
+        if factors is None or len(factors) <= 1:
+            continue
+        polys = [_coeffs_to_polynomial(f, var.latex) for f in factors]
+        if not should_display_factor_product_expanded(polys, options):
+            multi_factored = True
+            break
 
     child_kind = _coerce_related_l1(
         parent_kind, _pick_child_kind(ctx, parent_kind), num, den
     )
 
-    if child_kind == "L1_affine":
+    if child_kind == "L1_affine" and not multi_factored:
         for poly, is_num in ((num, True), (den, False)):
             if not poly:
                 continue
@@ -422,7 +676,8 @@ def _disguise_rational_fraction(
                     _depth=depth + 1,
                 )
                 other = den if is_num else num
-                other_l, other_t = _render_poly_dict(other, var)
+                other_factors = den_factors if is_num else num_factors
+                other_l, other_t = _side_latex(other, other_factors)
                 wrapped_l = f"\\left({child.latex}\\right)"
                 wrapped_t = f"({child.text})"
                 if is_num:
@@ -440,8 +695,8 @@ def _disguise_rational_fraction(
         target=NumericTarget(value=k),
         _depth=depth + 1,
     )
-    nl, nt = _render_poly_dict(num, var)
-    dl, dt = _render_poly_dict(den, var)
+    nl, nt = _side_latex(num, num_factors)
+    dl, dt = _side_latex(den, den_factors)
     kl = f"\\left({child.latex}\\right)"
     kt = f"({child.text})"
     # rf-string: use \left not \\left (raw keeps a single backslash; \\ would double-escape).
@@ -1005,6 +1260,197 @@ def verify_affine(surface: SurfaceExpression, target: AffineTarget) -> bool:
     return surface.coeff_a == target.a and surface.coeff_b == target.b
 
 
+def verify_poly(surface: SurfaceExpression, target: PolynomialTarget) -> bool:
+    """Identity check: surface poly coeffs match the target sparse map."""
+    from question_engine.frameworks.primitives.poly_helpers import evaluate_poly
+
+    got = surface.poly_coeffs
+    if got is None and isinstance(surface.target, PolynomialTarget):
+        got = surface.target.coeffs_dict()
+    if got is None:
+        return False
+    want = target.coeffs_dict()
+    if {d: c for d, c in got.items() if c != 0} != want:
+        return False
+    # Spot-check evaluation at a few points (construction must preserve value).
+    for x in (Fraction(0), Fraction(1), Fraction(-1), Fraction(2), Fraction(-3)):
+        if evaluate_poly(got, x) != evaluate_poly(want, x):
+            return False
+    return True
+
+
+# ---------------------------------------------------------------------------
+# L1 polynomial: target sparse poly → inflate (degree ≥ 2)
+# ---------------------------------------------------------------------------
+
+
+def _poly_all_divisible(coeffs: dict[int, Fraction], k: Fraction) -> bool:
+    if k == 0:
+        return False
+    return all(c % k == 0 for c in coeffs.values())
+
+
+def _try_factor_quadratic_binomials(
+    coeffs: dict[int, Fraction],
+) -> tuple[tuple[Fraction, Fraction], tuple[Fraction, Fraction]] | None:
+    """If ``ax^2+bx+c`` factors over small integers, return ``((p,q),(r,s))`` for
+    ``(px+q)(rx+s)``.
+    """
+    a = coeffs.get(2, Fraction(0))
+    b = coeffs.get(1, Fraction(0))
+    c = coeffs.get(0, Fraction(0))
+    if a == 0 or any(d > 2 for d in coeffs):
+        return None
+    if a.denominator != 1 or b.denominator != 1 or c.denominator != 1:
+        return None
+    ai, bi, ci = int(a), int(b), int(c)
+    # Search small integer factor pairs of a and c.
+    def _divisors(n: int) -> list[int]:
+        n = abs(n) if n != 0 else 0
+        if n == 0:
+            return [0]
+        out: list[int] = []
+        for i in range(1, min(n, 12) + 1):
+            if n % i == 0:
+                out.extend([i, -i, n // i, -(n // i)])
+        # unique preserving order
+        seen: set[int] = set()
+        uniq: list[int] = []
+        for x in out:
+            if x not in seen:
+                seen.add(x)
+                uniq.append(x)
+        return uniq
+
+    for p in _divisors(ai) or [1, -1]:
+        if p == 0 or ai % p != 0:
+            continue
+        r = ai // p
+        for q in _divisors(ci) if ci != 0 else [0]:
+            if ci != 0 and q == 0:
+                continue
+            if ci == 0:
+                s = 0
+            elif q == 0 or ci % q != 0:
+                continue
+            else:
+                s = ci // q
+            if p * s + q * r == bi:
+                return (Fraction(p), Fraction(q)), (Fraction(r), Fraction(s))
+    return None
+
+
+def construct_poly(
+    ctx: PrimitiveContext,
+    *,
+    d: float | None = None,
+    var: SampledVariable | None = None,
+    target: PolynomialTarget | None = None,
+    prefer_distribute: bool = True,
+    min_inflators: int | None = None,
+    scope: ExpressionScope | None = None,
+    _depth: int = 0,
+) -> SurfaceExpression:
+    """Build an unsimplified expression that simplifies to a degree-≥2 polynomial.
+
+    Answer-first: seed (or accept) a ``PolynomialTarget``, then spend the
+    constructive budget via **compositional subset inflate** (piece-tree):
+    each unit picks a tree level (weighted toward the root), a subset of
+    children, and a local value-preserving disguise — nesting accumulates.
+    """
+    from question_engine.frameworks.primitives.poly_compose import construct_poly_composed
+    from question_engine.frameworks.primitives.poly_helpers import (
+        poly_degree,
+        render_poly,
+    )
+
+    scope = scope or ExpressionScope(max_degree=max(2, int(getattr(ctx.policy, "max_degree", 2))))
+    if scope.max_degree < 2:
+        raise ValueError("construct_poly requires scope.max_degree >= 2")
+
+    eff = float(d if d is not None else ctx.effective_d(PRIM_EXPAND_SIMPLIFY))
+    if d is None:
+        eff = max(eff, float(ctx.topic_d) * 0.5)
+    v = var or ctx.sample_variable()
+
+    tgt = target or seed_poly_target(
+        ctx,
+        max_degree=scope.max_degree,
+        prefer_single_hot=scope.prefer_single_hot,
+        d=eff,
+        max_terms=scope.max_terms,
+        exact_terms=scope.exact_terms,
+        min_degree=scope.min_degree,
+    )
+    coeffs = tgt.coeffs_dict()
+    deg = poly_degree(coeffs)
+    if deg < 2:
+        raise ValueError(f"construct_poly target degree must be ≥ 2, got {deg}")
+    if deg > scope.max_degree:
+        raise ValueError(
+            f"construct_poly target degree {deg} exceeds scope.max_degree={scope.max_degree}"
+        )
+    if ctx.policy.max_degree >= 2:
+        ctx.policy.assert_degree(deg, where="construct_poly")
+
+    latex, text, tags, extras = construct_poly_composed(
+        ctx,
+        d=eff,
+        var=v,
+        target_coeffs=coeffs,
+        prefer_distribute=prefer_distribute,
+        min_inflators=min_inflators,
+        allow_cancel_clutter=scope.allow_cancel_clutter,
+        scope_meta={
+            "max_degree": scope.max_degree,
+            "allow_cancel_clutter": scope.allow_cancel_clutter,
+            "prefer_distributive_factorization": scope.prefer_distributive_factorization,
+            "prefer_single_hot": scope.prefer_single_hot,
+            "max_terms": scope.max_terms,
+            "exact_terms": scope.exact_terms,
+            "min_degree": scope.min_degree,
+        },
+        _depth=_depth,
+        inflator_budget_fn=inflator_budget,
+    )
+
+    simp_l, simp_t = render_poly(coeffs, v)
+    hot_count = sum(1 for dd, c in coeffs.items() if dd >= 2 and c != 0)
+    depth_counts = extras.get("compose_depth_counts") or {}
+    return SurfaceExpression(
+        latex=latex,
+        text=text,
+        target=tgt,
+        level="L1",
+        inflators_applied=tuple(tags),
+        poly_coeffs=dict(coeffs),
+        coeff_a=coeffs.get(1, Fraction(0)),
+        coeff_b=coeffs.get(0, Fraction(0)),
+        simplified_latex=simp_l,
+        simplified_text=simp_t,
+        metadata={
+            "effective_d": eff,
+            "constructive": True,
+            "compose": True,
+            "var": v.name,
+            "poly_degree": deg,
+            "n_hot_terms": hot_count,
+            "single_hot": bool(tgt.single_hot or hot_count == 1),
+            "recurse_depth": _depth,
+            "compose_depth_counts": depth_counts,
+            "compose_budget": extras.get("compose_budget"),
+            "cancel_clutter": [t for t in tags if "cancel" in t],
+            "scope": extras.get("scope")
+            or {
+                "max_degree": scope.max_degree,
+                "allow_cancel_clutter": scope.allow_cancel_clutter,
+                "prefer_distributive_factorization": scope.prefer_distributive_factorization,
+                "prefer_single_hot": scope.prefer_single_hot,
+            },
+        },
+    )
+
+
 # ---------------------------------------------------------------------------
 # L2 / L3 rationals + L4 PFD — poly helpers
 # ---------------------------------------------------------------------------
@@ -1043,6 +1489,99 @@ def _poly_from_linear(root: Fraction) -> dict[int, Fraction]:
     return {1: Fraction(1), 0: -root}
 
 
+def _factor_options_for_ctx(ctx: PrimitiveContext) -> "FactorablePolynomialOptions":
+    """Presentation options for factor-product dens/nums (RRT off unless opted in)."""
+    from packages.polynomial_core import FactorablePolynomialOptions
+
+    settings = getattr(ctx, "settings", None) or {}
+    rrt = bool(settings.get("factor_rrt", False))
+    coef_min = int(settings.get("coef_min", -8))
+    coef_max = int(settings.get("coef_max", 8))
+    return FactorablePolynomialOptions(
+        coef_min=coef_min,
+        coef_max=coef_max,
+        rrt_mode="allow" if rrt else "exclude",
+        enabled_methods={"rrt": rrt},
+    )
+
+
+def _coeffs_to_polynomial(
+    coeffs: dict[int, Fraction], variable: str
+) -> "Polynomial":
+    from packages.polynomial_core import Polynomial
+
+    if not coeffs:
+        return Polynomial(((0, 0),), variable=variable)
+    terms = tuple((c, d) for d, c in coeffs.items() if c != 0)
+    if not terms:
+        return Polynomial(((0, 0),), variable=variable)
+    return Polynomial(terms, variable=variable)
+
+
+def _product_of_factor_dicts(
+    factors: list[dict[int, Fraction]],
+) -> dict[int, Fraction]:
+    out: dict[int, Fraction] = {0: Fraction(1)}
+    for fac in factors:
+        out = _poly_mul(out, fac)
+    return out
+
+
+def _render_poly_from_factor_dicts(
+    factors: list[dict[int, Fraction]],
+    var: SampledVariable,
+    options: "FactorablePolynomialOptions",
+    *,
+    force_factored: bool = False,
+) -> tuple[str, str]:
+    """Render a known factor product via the shared expand-vs-factored policy.
+
+    Expanded when classroom-factorable; factored when the expanded form would
+    require RRT (unless RRT is enabled).
+    """
+    from packages.polynomial_core import should_display_factor_product_expanded
+
+    if not factors:
+        return "1", "1"
+    if len(factors) == 1:
+        return _render_poly_dict(factors[0], var)
+
+    # Fold pure-constant factors into a single leading multiplier.
+    lead = Fraction(1)
+    variable: list[dict[int, Fraction]] = []
+    for fac in factors:
+        if not fac:
+            continue
+        if max(fac.keys()) == 0:
+            lead *= fac.get(0, Fraction(1))
+        else:
+            variable.append(fac)
+    if not variable:
+        return _render_poly_dict({0: lead}, var)
+
+    display_factors = variable if lead == 1 else [{0: lead}, *variable]
+    polys = [_coeffs_to_polynomial(fac, var.latex) for fac in display_factors]
+    expand = (not force_factored) and should_display_factor_product_expanded(
+        polys, options
+    )
+    if expand:
+        return _render_poly_dict(_product_of_factor_dicts(display_factors), var)
+
+    # Factored: render via Fraction-aware poly dicts (avoid Polynomial.to_latex
+    # which rounds Fraction constants into ugly decimals).
+    text_parts: list[str] = []
+    latex_parts: list[str] = []
+    if lead != 1:
+        lead_l, lead_t = _render_poly_dict({0: lead}, var)
+        latex_parts.append(lead_l)
+        text_parts.append(lead_t)
+    for fac in variable:
+        fl, ft = _render_poly_dict(fac, var)
+        latex_parts.append(f"\\left({fl}\\right)")
+        text_parts.append(f"({ft})")
+    return "".join(latex_parts), "".join(text_parts)
+
+
 def _render_poly_dict(
     coeffs: dict[int, Fraction], var: SampledVariable
 ) -> tuple[str, str]:
@@ -1076,120 +1615,88 @@ def _content_gcd(coeffs: dict[int, Fraction]) -> Fraction:
     return Fraction(g)
 
 
-def construct_rational_sum(
+def _pick_distinct_roots(
+    ctx: PrimitiveContext, n: int, *, used: set[Fraction] | None = None
+) -> list[Fraction]:
+    roots: list[Fraction] = []
+    seen = set(used or ())
+    guard = 0
+    while len(roots) < n and guard < 80:
+        guard += 1
+        r = sample_integerish(ctx, exclude_zero=False).value
+        if r in seen:
+            continue
+        seen.add(r)
+        roots.append(r)
+    while len(roots) < n:
+        # Deterministic fill if sampling stalls.
+        candidate = Fraction(len(roots) + 1)
+        while candidate in seen or -candidate in seen and candidate == 0:
+            candidate += 1
+        seen.add(candidate)
+        roots.append(candidate)
+    return roots
+
+
+def _render_rational_summands(
     ctx: PrimitiveContext,
     *,
-    d: float | None = None,
-    var: SampledVariable | None = None,
-    n_terms: int | None = None,
-    cancel_count: int | None = None,
-) -> SurfaceExpression:
-    """L3: build A/D1 ± B/D2 (± …) that combine to a known simplified rational.
-
-    Strategy: seed partial-like pieces (or shared LCD), combine for answer key,
-    optionally insert a cancel factor into one numerator and the LCD.
-    """
-    eff = float(d if d is not None else max(ctx.topic_d, 0.0))
-    v = var or ctx.sample_variable()
-    n = n_terms if n_terms is not None else (2 if eff < 6 else (3 if eff < 14 else 2))
-    n = max(2, min(4, n))
-    k_cancel = (
-        cancel_count
-        if cancel_count is not None
-        else (0 if eff < 4 else (1 if eff < 10 else ctx.rng.randint(1, 2)))
-    )
-
-    # Seed distinct linear dens (x - r_i)
-    roots: list[Fraction] = []
-    while len(roots) < n:
-        r = sample_integerish(ctx, exclude_zero=False).value
-        if r not in roots:
-            roots.append(r)
-
-    # Seed numerators (constants) — answer after combine over LCD
-    nums = [sample_integerish(ctx, exclude_zero=True).value for _ in range(n)]
-    dens = [_poly_from_linear(r) for r in roots]
-
-    # Combined target: sum nums[i] / dens[i]
-    lcd = {0: Fraction(1)}
-    for den in dens:
-        lcd = _poly_mul(lcd, den)
-
-    combined_num: dict[int, Fraction] = {}
-    for i, (num_i, den_i) in enumerate(zip(nums, dens)):
-        # cofactor = lcd / den_i
-        cofactor = {0: Fraction(1)}
-        for j, den_j in enumerate(dens):
-            if j != i:
-                cofactor = _poly_mul(cofactor, den_j)
-        combined_num = _poly_add(combined_num, _poly_scale(cofactor, num_i))
-
-    # Optional cancel factor: multiply num and lcd by (x - c)
-    cancel_factor: dict[int, Fraction] | None = None
-    if k_cancel >= 1:
-        c_root = sample_integerish(ctx, exclude_zero=False).value
-        while c_root in roots:
-            c_root = sample_integerish(ctx, exclude_zero=False).value
-        cancel_factor = _poly_from_linear(c_root)
-        combined_num = _poly_mul(combined_num, cancel_factor)
-        lcd = _poly_mul(lcd, cancel_factor)
-
-    # L2 cancel path: single unsimplified fraction; L1 disguise on num/den only
-    # (do not build summand disguises that would be orphaned by the combined prompt).
-    if k_cancel >= 1 and cancel_factor is not None:
-        ans_num, ans_den = _cancel_linear_factor(combined_num, lcd, cancel_factor)
-        ans_l, ans_t = _fraction_latex(ans_num, ans_den, v)
-        latex, text, recurse_tags = _disguise_rational_fraction(
-            ctx,
-            combined_num,
-            lcd,
-            v,
-            d=eff,
-            depth=0,
-            parent_kind="L2_rational",
-        )
-        plan = CancelPlan(cancel_count=k_cancel, level="L2")
-        target = RationalPolyTarget(
-            num=tuple(sorted(ans_num.items(), reverse=True)),
-            den=tuple(sorted(ans_den.items(), reverse=True)),
-            level="L2",
-        )
-        return SurfaceExpression(
-            latex=latex,
-            text=text,
-            target=target,
-            level="L2",
-            inflators_applied=("seed_sum", "insert_cancel_factor") + tuple(recurse_tags),
-            simplified_latex=ans_l,
-            simplified_text=ans_t,
-            metadata={
-                "effective_d": eff,
-                "cancel_plan": plan.as_dict(),
-                "constructive": True,
-                "mode": "simplify_rational",
-                "recurse_hits": sum(1 for t in recurse_tags if t.startswith("recurse:")),
-            },
-        )
-
-    # L3 path: sum of fractions; disguise numerators (L1_numeric) and dens (L1_affine)
+    num_polys: list[dict[int, Fraction]],
+    den_polys: list[dict[int, Fraction]],
+    den_roots: list[Fraction] | None,
+    v: SampledVariable,
+    eff: float,
+    num_factor_lists: list[list[dict[int, Fraction]]] | None = None,
+    den_factor_lists: list[list[dict[int, Fraction]]] | None = None,
+) -> tuple[str, str, list[str]]:
+    options = _factor_options_for_ctx(ctx)
     parts_l: list[str] = []
     parts_t: list[str] = []
     recurse_tags: list[str] = []
-    for i, (num_i, r) in enumerate(zip(nums, roots)):
-        nl, nt, ntags = disguise_numeric(
-            ctx, num_i, d=eff, depth=0, parent_kind="L3_rational_sum"
+    for i, (num_p, den_p) in enumerate(zip(num_polys, den_polys)):
+        num_factors = (
+            num_factor_lists[i]
+            if num_factor_lists is not None and i < len(num_factor_lists)
+            else None
         )
-        dl, dt, dtags = disguise_affine(
-            ctx,
-            Fraction(1),
-            -r,
-            v,
-            d=eff,
-            depth=0,
-            parent_kind="L3_rational_sum",
+        den_factors = (
+            den_factor_lists[i]
+            if den_factor_lists is not None and i < len(den_factor_lists)
+            else None
         )
-        recurse_tags.extend(ntags)
-        recurse_tags.extend(dtags)
+
+        if num_factors is not None and len(num_factors) > 1:
+            nl, nt = _render_poly_from_factor_dicts(num_factors, v, options)
+        elif num_p and max(num_p) == 0:
+            nl, nt, ntags = disguise_numeric(
+                ctx, num_p.get(0, Fraction(0)), d=eff, depth=0, parent_kind="L3_rational_sum"
+            )
+            recurse_tags.extend(ntags)
+        elif num_factors is not None:
+            nl, nt = _render_poly_from_factor_dicts(num_factors, v, options)
+        else:
+            nl, nt = _render_poly_dict(num_p, v)
+
+        if (
+            den_roots is not None
+            and i < len(den_roots)
+            and den_p == _poly_from_linear(den_roots[i])
+            and (den_factors is None or len(den_factors) <= 1)
+        ):
+            dl, dt, dtags = disguise_affine(
+                ctx,
+                Fraction(1),
+                -den_roots[i],
+                v,
+                d=eff,
+                depth=0,
+                parent_kind="L3_rational_sum",
+            )
+            recurse_tags.extend(dtags)
+        elif den_factors is not None:
+            dl, dt = _render_poly_from_factor_dicts(den_factors, v, options)
+        else:
+            dl, dt = _render_poly_dict(den_p, v)
         piece_l = rf"\frac{{{nl}}}{{{dl}}}"
         piece_t = f"({nt})/({dt})"
         if i == 0:
@@ -1198,10 +1705,322 @@ def construct_rational_sum(
         else:
             parts_l.append("+" + piece_l)
             parts_t.append("+" + piece_t)
+    return "".join(parts_l), "".join(parts_t), recurse_tags
 
-    latex = "".join(parts_l)
-    text = "".join(parts_t)
+
+def _construct_l2_rational(
+    ctx: PrimitiveContext,
+    *,
+    eff: float,
+    v: SampledVariable,
+    k_cancel: int,
+) -> SurfaceExpression:
+    """Single fraction: insert ``k_cancel`` common linear factors (unbounded).
+
+    ``ALL_AVAILABLE_CANCEL`` (or any huge sentinel) → cancel every factor in a
+    normal-sized problem (capped); does not grow LCD to continuous D max.
+    """
+    from question_engine.frameworks.primitives.rational_cancel import (
+        ALL_AVAILABLE_CANCEL,
+        sample_all_available_factor_count,
+    )
+
+    if int(k_cancel) >= ALL_AVAILABLE_CANCEL:
+        n_fac = sample_all_available_factor_count({"difficulty": eff}, default=3)
+        cancel_roots = _pick_distinct_roots(ctx, n_fac)
+        cancel_factors = [_poly_from_linear(r) for r in cancel_roots]
+        ans_num = {0: sample_integerish(ctx, exclude_zero=True).value}
+        ans_den = {0: Fraction(1)}
+        prompt_num_factors: list[dict[int, Fraction]] = [dict(ans_num)]
+        prompt_den_factors: list[dict[int, Fraction]] = []
+        for fac in cancel_factors:
+            prompt_num_factors.append(fac)
+            prompt_den_factors.append(fac)
+        prompt_num = _product_of_factor_dicts(prompt_num_factors)
+        prompt_den = _product_of_factor_dicts(prompt_den_factors)
+        actual_k = n_fac
+        excluded_roots = list(cancel_roots)
+    else:
+        # Reduced core with no shared factors, then insert exactly k cancels.
+        k = max(0, int(k_cancel))
+        remain_num_deg = 1 if eff < 8 else ctx.rng.randint(1, 2)
+        remain_den_deg = 1 if k == 0 else (1 if eff < 10 else ctx.rng.randint(1, 2))
+        used: set[Fraction] = set()
+        num_roots = _pick_distinct_roots(ctx, remain_num_deg, used=used)
+        used.update(num_roots)
+        den_roots = _pick_distinct_roots(ctx, remain_den_deg, used=used)
+        used.update(den_roots)
+        lead = sample_integerish(ctx, exclude_zero=True).value
+        ans_num = {0: lead}
+        for r in num_roots:
+            ans_num = _poly_mul(ans_num, _poly_from_linear(r))
+        ans_den = {0: Fraction(1)}
+        for r in den_roots:
+            ans_den = _poly_mul(ans_den, _poly_from_linear(r))
+        prompt_num_factors = [{0: lead}] + [_poly_from_linear(r) for r in num_roots]
+        prompt_den_factors = [_poly_from_linear(r) for r in den_roots]
+        cancel_roots = _pick_distinct_roots(ctx, k, used=used) if k else []
+        for r in cancel_roots:
+            fac = _poly_from_linear(r)
+            prompt_num_factors.append(fac)
+            prompt_den_factors.append(fac)
+        prompt_num = _product_of_factor_dicts(prompt_num_factors)
+        prompt_den = _product_of_factor_dicts(prompt_den_factors)
+        actual_k = k
+        excluded_roots = list(den_roots) + list(cancel_roots)
+
+    ans_l, ans_t = _fraction_latex(ans_num, ans_den, v)
+    # Domain: original denominator zeros (including canceled factors).
+    from packages.polynomial_core import rational_excluded_values_latex
+
+    note = rational_excluded_values_latex(sorted(set(excluded_roots)))
+    if note:
+        var_tex = v.latex or v.name
+        note = note.replace("x \\neq", f"{var_tex} \\neq", 1)
+        ans_l = f"{ans_l},\\; {note}"
+        excl_txt = ", ".join(str(r) for r in sorted(set(excluded_roots)))
+        ans_t = f"{ans_t}, {v.name} ≠ {excl_txt}"
+
+    latex, text, recurse_tags = _disguise_rational_fraction(
+        ctx,
+        prompt_num,
+        prompt_den,
+        v,
+        d=eff,
+        depth=0,
+        parent_kind="L2_rational",
+        num_factors=prompt_num_factors,
+        den_factors=prompt_den_factors,
+    )
+    plan = CancelPlan(cancel_count=actual_k, level="L2")
+    target = RationalPolyTarget(
+        num=tuple(sorted(ans_num.items(), reverse=True)),
+        den=tuple(sorted(ans_den.items(), reverse=True)),
+        level="L2",
+    )
+    tags = ("seed_rational",)
+    if actual_k:
+        tags = tags + ("insert_cancel_factor",)
+    return SurfaceExpression(
+        latex=latex,
+        text=text,
+        target=target,
+        level="L2",
+        inflators_applied=tags + tuple(recurse_tags),
+        simplified_latex=ans_l,
+        simplified_text=ans_t,
+        metadata={
+            "effective_d": eff,
+            "cancel_plan": plan.as_dict(),
+            "cancel_factor_count": actual_k,
+            "excluded_values": [
+                int(r) if getattr(r, "denominator", 1) == 1 else str(r)
+                for r in sorted(set(excluded_roots))
+            ],
+            "constructive": True,
+            "mode": "simplify_rational",
+            "recurse_hits": sum(1 for t in recurse_tags if t.startswith("recurse:")),
+        },
+    )
+
+
+def _construct_l3_all_cancel(
+    ctx: PrimitiveContext,
+    *,
+    eff: float,
+    v: SampledVariable,
+    n_terms: int,
+    n_factors: int | None = None,
+) -> SurfaceExpression:
+    """Add/subtract where the combined LCD factors all cancel → polynomial."""
+    from question_engine.frameworks.primitives.rational_cancel import (
+        sample_all_available_factor_count,
+    )
+
+    n = max(2, int(n_terms))
+    n_fac = int(n_factors) if n_factors is not None else sample_all_available_factor_count(
+        {"difficulty": eff}, default=3
+    )
+    n_fac = max(2, n_fac)
+    roots = _pick_distinct_roots(ctx, n_fac)
+    dens = [_poly_from_linear(r) for r in roots]
+    lcd = {0: Fraction(1)}
+    for den in dens:
+        lcd = _poly_mul(lcd, den)
+    p_val = sample_integerish(ctx, exclude_zero=True).value
+    total_num = _poly_scale(lcd, p_val)
+    # Split P·LCD across n numerators (same LCD dens) so combining cancels all factors.
+    weights = [Fraction(1, n)] * n
+    if n >= 2 and ctx.rng.random() < 0.55:
+        delta = Fraction(ctx.rng.choice([1, -1]), n * 2)
+        weights[0] += delta
+        weights[1] -= delta
+    num_polys = [_poly_scale(total_num, w) for w in weights]
+    den_polys = [dict(lcd) for _ in range(n)]
+    # Keep factor lists so multi-linear dens stay factored when RRT is off.
+    den_factor_lists = [list(dens) for _ in range(n)]
+    num_factor_lists: list[list[dict[int, Fraction]]] = []
+    for w in weights:
+        num_factor_lists.append([{0: p_val * w}] + list(dens))
+    ans_num = {0: p_val}
+    ans_den = {0: Fraction(1)}
+    ans_l, ans_t = _fraction_latex(ans_num, ans_den, v)
+    from packages.polynomial_core import rational_excluded_values_latex
+
+    note = rational_excluded_values_latex(sorted(set(roots)))
+    if note:
+        var_tex = v.latex or v.name
+        note = note.replace("x \\neq", f"{var_tex} \\neq", 1)
+        ans_l = f"{ans_l},\\; {note}"
+        excl_txt = ", ".join(str(r) for r in sorted(set(roots)))
+        ans_t = f"{ans_t}, {v.name} ≠ {excl_txt}"
+    latex, text, recurse_tags = _render_rational_summands(
+        ctx,
+        num_polys=num_polys,
+        den_polys=den_polys,
+        den_roots=None,
+        v=v,
+        eff=eff,
+        num_factor_lists=num_factor_lists,
+        den_factor_lists=den_factor_lists,
+    )
+    plan = CancelPlan(cancel_count=n_fac, level="L3")
+    target = RationalPolyTarget(
+        num=tuple(sorted(ans_num.items(), reverse=True)),
+        den=tuple(sorted(ans_den.items(), reverse=True)),
+        level="L3",
+    )
+    return SurfaceExpression(
+        latex=latex,
+        text=text,
+        target=target,
+        level="L3",
+        inflators_applied=("seed_summands", "combine_lcd", "all_cancel") + tuple(recurse_tags),
+        simplified_latex=ans_l,
+        simplified_text=ans_t,
+        metadata={
+            "effective_d": eff,
+            "n_terms": n,
+            "n_lcd_factors": n_fac,
+            "cancel_plan": plan.as_dict(),
+            "cancel_factor_count": n_fac,
+            "excluded_values": [
+                int(r) if r.denominator == 1 else str(r) for r in sorted(set(roots))
+            ],
+            "constructive": True,
+            "mode": "add_subtract_rationals",
+            "recurse_hits": sum(1 for t in recurse_tags if t.startswith("recurse:")),
+        },
+    )
+
+
+def construct_rational_sum(
+    ctx: PrimitiveContext,
+    *,
+    d: float | None = None,
+    var: SampledVariable | None = None,
+    n_terms: int | None = None,
+    cancel_count: int | None = None,
+    as_sum: bool = False,
+) -> SurfaceExpression:
+    """Build a rational simplify (L2) or add/subtract (L3) surface.
+
+    ``cancel_count`` is how many common linear factors cancel after combining /
+    in the unsimplified fraction (exact inserts; ``ALL_AVAILABLE_CANCEL`` = all
+    cancel). When ``as_sum`` is True, always emit an L3 sum; otherwise emit a
+    single L2 fraction. Term / factor counts grow unboundedly with continuous D.
+    """
+    from question_engine.frameworks.primitives.rational_cancel import (
+        ALL_AVAILABLE_CANCEL,
+        continuous_rational_term_count_max,
+        resolve_rational_cancel_count,
+        sample_rational_term_count,
+    )
+
+    eff = float(d if d is not None else max(ctx.topic_d, 0.0))
+    v = var or ctx.sample_variable()
+    if n_terms is not None:
+        n = max(2, int(n_terms))
+    else:
+        n = sample_rational_term_count({"difficulty": eff}, default=3)
+        # Cap absurd L3 summand counts for latex size; still unbounded vs old min(4).
+        term_hi = continuous_rational_term_count_max({"difficulty": eff})
+        if term_hi is not None:
+            n = min(n, term_hi)
+    if cancel_count is None:
+        k_cancel = resolve_rational_cancel_count({}, d=eff, rng=ctx.rng)
+    else:
+        k_cancel = max(0, int(cancel_count))
+
+    if not as_sum:
+        return _construct_l2_rational(ctx, eff=eff, v=v, k_cancel=k_cancel)
+
+    if k_cancel >= ALL_AVAILABLE_CANCEL:
+        return _construct_l3_all_cancel(ctx, eff=eff, v=v, n_terms=n)
+
+    # Seed distinct linear dens (x - r_i); grow with n (unbounded).
+    roots = _pick_distinct_roots(ctx, n)
+    nums = [sample_integerish(ctx, exclude_zero=True).value for _ in range(n)]
+    dens = [_poly_from_linear(r) for r in roots]
+
+    lcd = {0: Fraction(1)}
+    for den in dens:
+        lcd = _poly_mul(lcd, den)
+
+    combined_num: dict[int, Fraction] = {}
+    for i, num_i in enumerate(nums):
+        cofactor = {0: Fraction(1)}
+        for j, den_j in enumerate(dens):
+            if j != i:
+                cofactor = _poly_mul(cofactor, den_j)
+        combined_num = _poly_add(combined_num, _poly_scale(cofactor, num_i))
+
+    num_factor_lists: list[list[dict[int, Fraction]]] = [[{0: num_i}] for num_i in nums]
+    den_factor_lists: list[list[dict[int, Fraction]]] = [[dict(den)] for den in dens]
+    num_polys: list[dict[int, Fraction]] = [{0: num_i} for num_i in nums]
+    den_polys: list[dict[int, Fraction]] = [dict(den) for den in dens]
+    used_roots = set(roots)
+    applied = ["seed_summands", "combine_lcd"]
+
+    # Value-preserving cancel inserts: multiply selected terms' num and den by
+    # (x-c). Term values unchanged; after LCD combine, (x-c) cancels.
+    cancel_roots: list[Fraction] = []
+    for _ in range(k_cancel):
+        c_root = _pick_distinct_roots(ctx, 1, used=used_roots)[0]
+        used_roots.add(c_root)
+        cancel_roots.append(c_root)
+        cf = _poly_from_linear(c_root)
+        n_targets = ctx.rng.randint(1, len(num_polys))
+        targets = set(ctx.rng.sample(range(len(num_polys)), n_targets))
+        for i in targets:
+            num_polys[i] = _poly_mul(num_polys[i], cf)
+            den_polys[i] = _poly_mul(den_polys[i], cf)
+            num_factor_lists[i].append(cf)
+            den_factor_lists[i].append(cf)
+        applied.append("insert_cancel_factor")
+
+    latex, text, recurse_tags = _render_rational_summands(
+        ctx,
+        num_polys=num_polys,
+        den_polys=den_polys,
+        den_roots=roots if k_cancel == 0 else None,
+        v=v,
+        eff=eff,
+        num_factor_lists=num_factor_lists,
+        den_factor_lists=den_factor_lists,
+    )
     ans_l, ans_t = _fraction_latex(combined_num, lcd, v)
+    excluded_roots = list(roots) + list(cancel_roots)
+    from packages.polynomial_core import rational_excluded_values_latex
+
+    note = rational_excluded_values_latex(sorted(set(excluded_roots)))
+    if note:
+        var_tex = v.latex or v.name
+        note = note.replace("x \\neq", f"{var_tex} \\neq", 1)
+        ans_l = f"{ans_l},\\; {note}"
+        excl_txt = ", ".join(str(r) for r in sorted(set(excluded_roots)))
+        ans_t = f"{ans_t}, {v.name} ≠ {excl_txt}"
+    plan = CancelPlan(cancel_count=k_cancel, level="L3")
     target = RationalPolyTarget(
         num=tuple(sorted(combined_num.items(), reverse=True)),
         den=tuple(sorted(lcd.items(), reverse=True)),
@@ -1212,13 +2031,18 @@ def construct_rational_sum(
         text=text,
         target=target,
         level="L3",
-        inflators_applied=("seed_summands", "combine_lcd") + tuple(recurse_tags),
+        inflators_applied=tuple(applied) + tuple(recurse_tags),
         simplified_latex=ans_l,
         simplified_text=ans_t,
         metadata={
             "effective_d": eff,
             "n_terms": n,
-            "cancel_plan": CancelPlan(0).as_dict(),
+            "cancel_plan": plan.as_dict(),
+            "cancel_factor_count": k_cancel,
+            "excluded_values": [
+                int(r) if r.denominator == 1 else str(r)
+                for r in sorted(set(excluded_roots))
+            ],
             "constructive": True,
             "mode": "add_subtract_rationals",
             "recurse_hits": sum(1 for t in recurse_tags if t.startswith("recurse:")),
@@ -1341,13 +2165,20 @@ def construct_pfd(
     applied = ["seed_pf", "combine_lcd"]
     from question_engine.frameworks.primitives.difficulty_knobs import fget
 
+    # Dens stay a factor product for display; combined num is a sum (not factored).
+    den_factors = list(dens)
+    scale_k = Fraction(1)
     if inflator_budget(eff) >= 1 and ctx.rng.random() < fget(
         "constructive", "pfd_scale_num_den_chance", 0.4
     ):
-        k = Fraction(ctx.rng.choice([2, 3]))
-        combined_num = _poly_scale(combined_num, k)
-        lcd = _poly_scale(lcd, k)
+        scale_k = Fraction(ctx.rng.choice([2, 3]))
+        combined_num = _poly_scale(combined_num, scale_k)
+        lcd = _poly_scale(lcd, scale_k)
         applied.append("scale_num_den")
+
+    # Numerator is generally not a clean factor product after combining; den is.
+    if scale_k != 1:
+        den_factors = [{0: scale_k}] + den_factors
 
     # Student prompt may nest related L1 blocks into the combined rational.
     prompt_l, prompt_t, recurse_tags = _disguise_rational_fraction(
@@ -1358,6 +2189,7 @@ def construct_pfd(
         d=eff,
         depth=0,
         parent_kind="L4_pfd",
+        den_factors=den_factors,
     )
 
     # Answer latex: clean sum of A/(x-r) (no disguise — answer key stays readable)

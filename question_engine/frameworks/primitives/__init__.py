@@ -6,11 +6,13 @@ from question_engine.frameworks.primitives.constructive import (
     ExpressionScope,
     NumericTarget,
     PartialFractionTarget,
+    PolynomialTarget,
     RationalPolyTarget,
     SurfaceExpression,
     construct_affine,
     construct_numeric,
     construct_pfd,
+    construct_poly,
     construct_rational_sum,
 )
 from question_engine.frameworks.primitives.distributive import (
@@ -34,6 +36,12 @@ from question_engine.frameworks.primitives.expand_simplify import (
 )
 from question_engine.frameworks.primitives.expression_structure import (
     sample_structured_expression,
+)
+from question_engine.frameworks.primitives.expression_exponents import (
+    EXP_TYPES,
+    exp_number_chance,
+    exp_paren_chance,
+    exponents_unlocked,
 )
 from question_engine.frameworks.primitives.factor_gcf import (
     FACTOR_GCF_SETTINGS_SCHEMA,
@@ -152,11 +160,15 @@ __all__ = [
     "VARIABLE_LANE_MIN_D",
     "VARIABLE_LANES",
     "VARIABLE_SETTINGS_SCHEMA",
+    "PolynomialTarget",
     "assert_linear_sample",
     "audit_lane_selection",
     "audit_samples",
     "audit_variable_lane_selection",
     "build_context",
+    "construct_affine",
+    "construct_numeric",
+    "construct_poly",
     "eligible_lanes",
     "eligible_variable_lanes",
     "get_primitive_spec",
@@ -176,6 +188,10 @@ __all__ = [
     "sample_number",
     "sample_ooo_expression",
     "sample_structured_expression",
+    "EXP_TYPES",
+    "exp_number_chance",
+    "exp_paren_chance",
+    "exponents_unlocked",
     "sample_variable",
     "select_lane",
     "select_variable_lane",

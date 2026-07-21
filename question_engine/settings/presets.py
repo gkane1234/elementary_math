@@ -347,6 +347,28 @@ PROFILE_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "unit_rate_multiplier_max": 15,
         },
     },
+    # Comparing-rates inherits unit_rate EMH caps; continuous D drives the ladder
+    # inside ComparingRatesFramework.
+    "comparing_rates": {
+        "easy": {
+            "unit_rate_min": 2,
+            "unit_rate_max": 6,
+            "unit_rate_multiplier_min": 1,
+            "unit_rate_multiplier_max": 4,
+        },
+        "medium": {
+            "unit_rate_min": 2,
+            "unit_rate_max": 12,
+            "unit_rate_multiplier_min": 2,
+            "unit_rate_multiplier_max": 8,
+        },
+        "hard": {
+            "unit_rate_min": 2,
+            "unit_rate_max": 20,
+            "unit_rate_multiplier_min": 3,
+            "unit_rate_multiplier_max": 12,
+        },
+    },
     "proportion": {
         "easy": {"ratio_part_min": 1, "ratio_part_max": 8},
         "medium": {"ratio_part_min": 2, "ratio_part_max": 12},
@@ -642,9 +664,9 @@ PROFILE_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
         "hard": {"side_min": 5, "side_max": 40},
     },
     "word_problem": {
-        "easy": {"difficulty": "easy", **_COMMON_TERMS["easy"]},
-        "medium": {"difficulty": "medium", **_COMMON_TERMS["medium"]},
-        "hard": {"difficulty": "hard", **_COMMON_TERMS["hard"]},
+        "easy": {"difficulty": 3, **_COMMON_TERMS["easy"]},
+        "medium": {"difficulty": 8, **_COMMON_TERMS["medium"]},
+        "hard": {"difficulty": 14, **_COMMON_TERMS["hard"]},
     },
     "logarithm": {
         "easy": {"coef_min": 2, "coef_max": 5, "require_integer_result": True},
@@ -1039,46 +1061,64 @@ _CONSECUTIVE_INTEGERS_TIERS: TierPresets = {
 
 _DISTANCE_RATE_TIME_TIERS: TierPresets = {
     "easy": {
-        "difficulty": "easy",
+        "difficulty": 3,
         "allow_drt_find_missing": True,
-        "allow_drt_round_trip": False,
+        "allow_drt_round_trip": True,
         "allow_drt_two_segments": False,
         "allow_drt_opposite": False,
         "allow_drt_same_direction": False,
         "allow_distance_mi": True,
         "allow_distance_km": True,
-        "allow_distance_m": True,
-        "allow_distance_ft": True,
+        "allow_distance_m": False,
+        "allow_distance_ft": False,
         "allow_time_hr": True,
-        "allow_time_min": True,
+        "allow_time_min": False,
     },
     "medium": {
-        "difficulty": "medium",
+        "difficulty": 8,
         "allow_drt_find_missing": True,
         "allow_drt_round_trip": True,
-        "allow_drt_two_segments": True,
+        "allow_drt_two_segments": False,
         "allow_drt_opposite": False,
-        "allow_drt_same_direction": False,
-        "allow_distance_mi": True,
-        "allow_distance_km": True,
-        "allow_distance_m": True,
-        "allow_distance_ft": True,
-        "allow_time_hr": True,
-        "allow_time_min": True,
-    },
-    "hard": {
-        "difficulty": "hard",
-        "allow_drt_find_missing": False,
-        "allow_drt_round_trip": True,
-        "allow_drt_two_segments": True,
-        "allow_drt_opposite": True,
         "allow_drt_same_direction": True,
         "allow_distance_mi": True,
         "allow_distance_km": True,
-        "allow_distance_m": True,
-        "allow_distance_ft": True,
+        "allow_distance_m": False,
+        "allow_distance_ft": False,
         "allow_time_hr": True,
-        "allow_time_min": True,
+        "allow_time_min": False,
+    },
+    "hard": {
+        "difficulty": 14,
+        "allow_drt_find_missing": False,
+        "allow_drt_round_trip": True,
+        "allow_drt_two_segments": False,
+        "allow_drt_opposite": False,
+        "allow_drt_same_direction": True,
+        "allow_distance_mi": True,
+        "allow_distance_km": True,
+        "allow_distance_m": False,
+        "allow_distance_ft": False,
+        "allow_time_hr": True,
+        "allow_time_min": False,
+    },
+}
+
+_MIXTURE_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": 3,
+        "allow_mixture_percent": True,
+        "allow_mixture_cost": False,
+    },
+    "medium": {
+        "difficulty": 8,
+        "allow_mixture_percent": True,
+        "allow_mixture_cost": True,
+    },
+    "hard": {
+        "difficulty": 14,
+        "allow_mixture_percent": True,
+        "allow_mixture_cost": True,
     },
 }
 
@@ -1630,6 +1670,13 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
         },
     },
     "polynomial_factoring_special_cases": dict(_SPECIAL_FACTORING_TIERS),
+    "polynomial_factoring_sum_diff_cubes": dict(_SPECIAL_FACTORING_TIERS),
+    "a2_polynomial_functions_factoring_sum_difference_of_cubes": dict(_SPECIAL_FACTORING_TIERS),
+    "polynomial_factoring_quadratic_form": dict(_QUADRATIC_FACTORING_TIERS),
+    "a2_polynomial_functions_factoring_quadratic_form": dict(_QUADRATIC_FACTORING_TIERS),
+    "polynomial_factoring_all_techniques": dict(_FACTORING_GROUPING_TIERS),
+    "a2_polynomial_functions_factoring_all_techniques": dict(_FACTORING_GROUPING_TIERS),
+    "polynomial_factoring_general_strategy": dict(_FACTORING_GROUPING_TIERS),
     "consecutive_integers_word_problems": dict(_CONSECUTIVE_INTEGERS_TIERS),
     "wp_consecutive_integers": dict(_CONSECUTIVE_INTEGERS_TIERS),
     "distance_rate_time_word_problems": dict(_DISTANCE_RATE_TIME_TIERS),
@@ -1637,6 +1684,9 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
     "a2_equations_and_inequalities_distance_rate_time_word_problems": dict(
         _DISTANCE_RATE_TIME_TIERS
     ),
+    "mixture_word_problems": dict(_MIXTURE_TIERS),
+    "wp_mixture": dict(_MIXTURE_TIERS),
+    "a2_equations_and_inequalities_mixture_word_problems": dict(_MIXTURE_TIERS),
     "work_word_problems": dict(_WORK_PROBLEM_TIERS),
     "wp_work": dict(_WORK_PROBLEM_TIERS),
     "a2_equations_and_inequalities_work_word_problems": dict(_WORK_PROBLEM_TIERS),
@@ -1655,7 +1705,7 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
         _FACTORING_EQUATIONS_TIERS
     ),
     # Adding/subtracting rational expressions:
-    #   easy   — exactly 2 terms; LCD is a single monomial/binomial
+    #   easy   — exactly 2 terms; LCD is a single monomial/binomial; 1 cancel gift
     #   medium — unlike non-monic binomials (2 terms) OR monic 3-term
     #   hard   — multi-factor LCDs, optional cancel/inflation, more terms
     "rational_expression_simplification": {
@@ -1674,7 +1724,7 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "allow_polynomial_terms": False,
             "allow_full_lcd_terms": False,
             "inflation_chance": 0,
-            "cancel_factor_count": "0",
+            "cancel_factor_count": 0,
             "factor_rrt": False,
             "force_lcd": False,
         },
@@ -1693,7 +1743,7 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "allow_polynomial_terms": False,
             "allow_full_lcd_terms": False,
             "inflation_chance": 0,
-            "cancel_factor_count": "0",
+            "cancel_factor_count": 1,
             "factor_rrt": False,
             "force_lcd": False,
         },
@@ -1712,7 +1762,7 @@ GENERATOR_DIFFICULTY_PRESETS: dict[str, TierPresets] = {
             "allow_polynomial_terms": True,
             "allow_full_lcd_terms": True,
             "inflation_chance": 15,
-            "cancel_factor_count": "random",
+            "cancel_factor_count": 2,
             "factor_rrt": False,
             "force_lcd": False,
         },
@@ -2174,9 +2224,6 @@ GENERATOR_DIFFICULTY_PRESETS[
 ] = dict(_SQUARE_ROOT_TIERS)
 GENERATOR_DIFFICULTY_PRESETS["solving_equations_by_taking_square_roots"] = dict(_SQUARE_ROOT_TIERS)
 _SPECIAL_FACT_TIERS = GENERATOR_DIFFICULTY_PRESETS["polynomial_factoring_special_cases"]
-GENERATOR_DIFFICULTY_PRESETS["a2_polynomial_functions_factoring_sum_difference_of_cubes"] = dict(
-    _SPECIAL_FACT_TIERS
-)
 GENERATOR_DIFFICULTY_PRESETS[
     "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions"
 ] = dict(_SPECIAL_FACT_TIERS)
@@ -2484,6 +2531,38 @@ _WHOLE_DIVIDE_TO_DECIMAL_TIERS = {
 GENERATOR_DIFFICULTY_PRESETS["g6_dividing_whole_numbers_that_result_in_decimals"] = dict(
     _WHOLE_DIVIDE_TO_DECIMAL_TIERS
 )
+_WHOLE_BY_DECIMAL_DIVIDE_TIERS = {
+    "easy": {
+        "decimal_places": 1,
+        "max_decimal_places": 1,
+        "allow_negative": False,
+        "divisor_ge_one": False,
+        "num_min": 1,
+        "num_max": 20,
+    },
+    "medium": {
+        "decimal_places": 2,
+        "max_decimal_places": 2,
+        "allow_negative": False,
+        "divisor_ge_one": True,
+        "num_min": 1,
+        "num_max": 80,
+    },
+    "hard": {
+        "decimal_places": 3,
+        "max_decimal_places": 3,
+        "allow_negative": True,
+        "divisor_ge_one": True,
+        "num_min": 1,
+        "num_max": 200,
+    },
+}
+GENERATOR_DIFFICULTY_PRESETS["g6_dividing_whole_numbers_by_decimals"] = dict(
+    _WHOLE_BY_DECIMAL_DIVIDE_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS["g6_whole_by_decimal_divide"] = dict(
+    _WHOLE_BY_DECIMAL_DIVIDE_TIERS
+)
 GENERATOR_DIFFICULTY_PRESETS["g6_distributive_property_numeric"] = {
     "easy": {"coef_min": 2, "coef_max": 5, "allow_negative": False},
     "medium": {"coef_min": 2, "coef_max": 9, "allow_negative": False},
@@ -2711,53 +2790,30 @@ GENERATOR_DIFFICULTY_PRESETS["g6_equations_tape_diagrams"] = {
     "medium": {"tape_style": "mixed", "difficulty_tier": "medium"},
     "hard": {"tape_style": "nonuniform", "difficulty_tier": "hard"},
 }
-GENERATOR_DIFFICULTY_PRESETS["pa_integers_adding_and_subtracting"] = {
+_PA_INTEGER_OPS = {
     "easy": {
         "num_min": -10,
         "num_max": 10,
         "allow_negative": True,
-        "allow_integers": True,
-        "allow_decimals": True,
-        "allow_fractions": True,
-        "decimal_places": 1,
-        "denom_min": 2,
-        "denom_max": 6,
-        "require_common_denominator": True,
-        "require_unlike_denominators": False,
+        "allow_decimals": False,
+        "allow_fractions": False,
     },
     "medium": {
         "num_min": -20,
         "num_max": 20,
         "allow_negative": True,
-        "allow_integers": True,
-        "allow_decimals": True,
-        "allow_fractions": True,
-        "decimal_places": 2,
-        "denom_min": 2,
-        "denom_max": 10,
-        "require_common_denominator": False,
-        "require_unlike_denominators": True,
+        "allow_decimals": False,
+        "allow_fractions": False,
     },
     "hard": {
         "num_min": -50,
         "num_max": 50,
         "allow_negative": True,
-        "allow_integers": True,
-        "allow_decimals": True,
-        "allow_fractions": True,
-        "decimal_places": 3,
-        "denom_min": 2,
-        "denom_max": 12,
-        "require_common_denominator": False,
-        "require_unlike_denominators": True,
-        "allow_mixed": True,
+        "allow_decimals": False,
+        "allow_fractions": False,
     },
 }
-_PA_INTEGER_OPS = {
-    "easy": {"num_min": -10, "num_max": 10, "allow_negative": True},
-    "medium": {"num_min": -20, "num_max": 20, "allow_negative": True},
-    "hard": {"num_min": -50, "num_max": 50, "allow_negative": True},
-}
+GENERATOR_DIFFICULTY_PRESETS["pa_integers_adding_and_subtracting"] = dict(_PA_INTEGER_OPS)
 GENERATOR_DIFFICULTY_PRESETS["pa_integers_multiplying"] = dict(_PA_INTEGER_OPS)
 GENERATOR_DIFFICULTY_PRESETS["pa_integers_dividing"] = dict(_PA_INTEGER_OPS)
 
@@ -2882,9 +2938,23 @@ def apply_difficulty_presets(
 
     Preset keys fill gaps / provide defaults; any key already present in
     ``settings`` keeps the caller's value.
+
+    When a numeric continuous ``difficulty`` is present, map it to an EMH band
+    for preset lookup (number-lane / profile presets). Explicit ``difficulty``
+    always wins over any preset that also writes that key.
     """
     merged = dict(settings)
     tier = merged.get("difficulty_tier")
+    if "difficulty" in merged and merged["difficulty"] is not None:
+        raw = merged["difficulty"]
+        try:
+            d = float(raw)
+        except (TypeError, ValueError):
+            d = None
+        if d is not None:
+            from question_engine.frameworks.difficulty_budget import difficulty_band
+
+            tier = difficulty_band(d)
     profile = setting_profile or resolve_setting_profile_for_type(type_id)
     preset = lookup_difficulty_preset(tier, type_id=type_id, setting_profile=profile)
     if not preset:

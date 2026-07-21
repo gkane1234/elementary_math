@@ -32,12 +32,23 @@
     "weight_staleness_offset": 3.0
   },
   "expression_structure": {
+    "_description": "Shared expression generator. Exponents: unlock when D > exp_unlock_d; number sites use exp_chance_at_unlock→exp_chance_max; paren sites track via exp_chance_paren_factor when linked (else independent paren curve). exp_type_number / exp_type_paren are independent enums (default positive_integer, tiny 2–3). Algebraic topics may later set rational on either site.",
     "leaf_scale": 1.5,
     "nest_scale": 3.0,
     "scale_op_scale": 2.5,
     "mul_unlock_d": 2.0,
     "div_unlock_d": 4.0,
-    "exp_unlock_d": 3.0
+    "exp_unlock_d": 10.0,
+    "max_exponent": 3,
+    "exp_type_number": "positive_integer",
+    "exp_type_paren": "positive_integer",
+    "exp_chance_at_unlock": 0.05,
+    "exp_chance_max": 0.2,
+    "exp_chance_scale": 0.2,
+    "exp_chance_paren_factor": 0.45,
+    "exp_paren_link_to_number": true,
+    "exp_chance_paren_at_unlock": 0.0225,
+    "exp_chance_paren_max": 0.09
   },
   "expand_simplify": {
     "group_scale": 1.5,
@@ -46,12 +57,22 @@
     "nest_unlock_d": 8.0
   },
   "equations": {
-    "_description": "Multi-step op count is linear and uncapped: n_ops = base_ops + floor(D / step_scale). Defaults → D=0→3, D=24→15, D=194→100. Multi-step floors at 4 (both sides). Each side is a sum of distribute chunks: chunks_per_side ≈ (n_ops-2)/4, capped by max_chunks_per_side. Clear-fractions only for modest n_ops unless forced.",
+    "_description": "Multi-step op count is linear and uncapped: n_ops = base_ops + floor(D / step_scale). Defaults → D=0→3, D=24→15, D=194→100. Multi-step floors at 4 (both sides). Each side is a sum of distribute chunks: chunks_per_side ≈ (n_ops-2)/4, capped by max_chunks_per_side. Clear-fractions only for modest n_ops unless forced. Solution complexity (the answer x=…) scales separately via equations.solution.",
     "step_scale": 2.0,
     "base_ops": 3,
     "ops_to_expr_d": 0.85,
     "max_side_inflators": 12,
-    "max_chunks_per_side": 40
+    "max_chunks_per_side": 40,
+    "solution": {
+      "_description": "Answer-first seed for the unknown. Uses equation D (not the often-capped numbers budget). Low D → small integers; mid → larger ints / simple fractions; high → difficult rations when catalog allows. Honors integers_only / allow_fractions / allow_negatives. Decimals off by default (exact answers).",
+      "d_scale": 1.0,
+      "integers_until_d": 5.0,
+      "prefer_fractions_from_d": 8.0,
+      "force_fraction_chance": 0.55,
+      "difficult_fractions_from_d": 16.0,
+      "allow_decimals": false,
+      "max_right_constant": 180
+    }
   },
   "polynomial": {
     "degree_scale": 4.0,
@@ -73,8 +94,24 @@
     "many_terms_extra_unlike": 1,
     "more_like_extra": 1
   },
+  "quadratic_factoring": {
+    "_description": "Factors-first quadratic factoring. Low D: monic (x+a)(x+b) with small positive a,b. Non-monic from nonmonic_from_d. Unsimplify expanded prompt when D > unsimplify_from_d via construct_poly. Also hosts cubes / quadratic-form / special knobs shared by factor_poly leaves.",
+    "unsimplify_from_d": 10.0,
+    "nonmonic_from_d": 8.0,
+    "gcf_from_d": 12.0,
+    "gcf_chance": 0.3,
+    "special_nonmonic_from_d": 6.0,
+    "cubes_nonmonic_from_d": 8.0,
+    "cubes_const_hi_easy": 3,
+    "cubes_const_hi_hard": 5,
+    "quadratic_form_nonmonic_from_d": 8.0,
+    "quadratic_form_cubic_u_from_d": 16.0,
+    "const_hi_easy": 4,
+    "const_hi_mid": 6,
+    "const_hi_hard": 9
+  },
   "ooo": {
-    "_description": "Order-of-operations flat builder: sum/difference of addends, many of which are products/quotients (precedence without parentheses). n_addends = base_addends + floor(D / addend_scale). group_paren_chance unlocks rare (a±b)×c.",
+    "_description": "Order-of-operations flat builder (thin consumer of expression_structure exponent policy). Sum/difference of addends with products/quotients for precedence. Exponent unlock/chance/types live under expression_structure knobs.",
     "base_addends": 2,
     "addend_scale": 2.5,
     "max_addends": 20,
@@ -83,8 +120,26 @@
     "group_paren_chance": 0.1,
     "group_paren_min_d": 8.0
   },
+  "rational_cancel": {
+    "_description": "Shared cancel-count unlocks and continuous structure growth for rational simplify / ± / ×÷. Free/low D always offers exactly 1 cancel. Higher D unlocks 0, then 2, then 3, then exact counts 4+ growing unboundedly (cancel_max_* / lcd_max_* / term_max_* polynomials — no soft asymptote). UI select \"4\" still means all-available; auto samples the unlocked pool. Explicit cancel_factor_count overrides sampling. prefer_default_weight keeps 1 common once other counts unlock.",
+    "default_count": 1,
+    "unlock_0_d": 4.0,
+    "unlock_2_d": 6.0,
+    "unlock_3_d": 10.0,
+    "unlock_4_d": 14.0,
+    "prefer_default_weight": 2.5,
+    "cancel_max_base": 1.0,
+    "cancel_max_linear": 0.25,
+    "cancel_max_quad": 0.00009,
+    "lcd_max_base": 2.0,
+    "lcd_max_linear": 0.2,
+    "lcd_max_quad": 0.00008,
+    "term_max_base": 2.0,
+    "term_max_linear": 0.15,
+    "term_max_quad": 0.00008
+  },
   "constructive": {
-    "_description": "Answer-first expression inflation. D=0 = plain seed (no inflators). Meaningful distribute/split only; trivial cancel pairs are NOT default inflators (use presentation.cancel_clutter). Recurse is rare and high-D.",
+    "_description": "Answer-first expression inflation. D=0 = plain seed (no inflators). Poly uses compositional subset inflate: budget units pick a tree level (poly_level_bias^depth, favoring root), then a subset, then a local disguise. poly_single_hot_* bias seed shape.",
     "inflator_scale": 5.0,
     "min_inflators_when_d_ge": 4.0,
     "min_inflators_count": 1,
@@ -93,6 +148,14 @@
     "numeric_scale_mul_div_chance": 0.45,
     "numeric_scale_mul_div_min_budget": 2,
     "allow_trivial_cancel_pair": false,
+    "poly_single_hot_chance": 0.5,
+    "poly_single_hot_linear_chance": 0.35,
+    "poly_multi_hot_boost": 0.55,
+    "poly_level_bias": 0.5,
+    "poly_max_compose_depth": 6,
+    "poly_singleton_chance": 0.45,
+    "poly_full_set_chance": 0.12,
+    "poly_max_subset_size": 4,
     "recurse": {
       "enabled": true,
       "chance_per_block": 0.12,
@@ -102,6 +165,7 @@
       "allowed_child_levels": {
         "L1_numeric": ["L1_numeric"],
         "L1_affine": ["L1_affine", "L1_numeric"],
+        "L1_poly": ["L1_poly", "L1_affine", "L1_numeric"],
         "L2_rational": ["L1_affine", "L1_numeric"],
         "L3_rational_sum": ["L1_affine", "L1_numeric"],
         "L4_pfd": ["L1_affine", "L1_numeric"]

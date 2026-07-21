@@ -14,6 +14,12 @@ linear step target::
 Defaults: ``base_ops=3``, ``step_scale=2`` → D=0→3, D=24→15, D=194→100, …
 Multi-step floors at 4 ops (both sides). Expression complexity on each side
 scales with ``n_ops`` (not only the equations budget slice).
+
+**Solution complexity** (``seed_equation_solution``) also tracks equation ``D``
+via ``difficulty_knobs.json`` → ``equations.solution``: small integers at low D,
+larger ints / simple fractions mid-range, harder rations at high D when the
+catalog allows fractions. Special-solution modes (identity / no solution) are
+unchanged.
 """
 
 from __future__ import annotations
@@ -78,6 +84,82 @@ SolutionKind = Literal["unique", "identity", "no_solution"]
 STEP_SCALE = 2.0
 
 _LEFT_RIGHT_RE = re.compile(r"\\left\(([^()]*)\\right\)")
+
+
+def _solution_knobs() -> dict[str, Any]:
+    from question_engine.frameworks.primitives.difficulty_knobs import section
+
+    raw = section("equations").get("solution") or {}
+    return raw if isinstance(raw, dict) else {}
+
+
+def seed_equation_solution(
+    ctx: PrimitiveContext,
+    *,
+    d: float | None = None,
+    exclude_zero: bool = False,
+) -> Fraction:
+    """Sample the unknown's value; complexity tracks equation difficulty ``D``.
+
+    Unlike coefficient sampling (which uses the numbers budget slice), the
+    solution is seeded from equation ``D`` so answers harden even when
+    ``prereq_cap_numbers`` is low. Catalog constraints (``integers_only``,
+    ``allow_fractions``, ``allow_negatives``) still apply. Decimals are off
+    by default so answers stay exact fractions/integers.
+    """
+    from question_engine.frameworks.primitives.numbers import sample_number
+    from question_engine.frameworks.primitives.registry import PRIM_NUMBERS
+
+    cfg = _solution_knobs()
+    eq_d = float(d if d is not None else ctx.effective_d(PRIM_EQUATIONS))
+    sol_d = max(0.0, eq_d * float(cfg.get("d_scale", 1.0)))
+    integers_until = float(cfg.get("integers_until_d", 5.0))
+    allow_decimals = bool(cfg.get("allow_decimals", False))
+    prefer_frac_from = float(cfg.get("prefer_fractions_from_d", 8.0))
+    force_frac_chance = float(cfg.get("force_fraction_chance", 0.55))
+    difficult_from = float(cfg.get("difficult_fractions_from_d", 16.0))
+
+    settings = dict(ctx.settings_for(PRIM_NUMBERS))
+    if not allow_decimals:
+        settings["allow_decimals"] = False
+
+    catalog_ints_only = bool(settings.get("integers_only", False))
+    if not catalog_ints_only and sol_d <= integers_until:
+        settings["integers_only"] = True
+
+    fractions_ok = (
+        not bool(settings.get("integers_only", False))
+        and bool(settings.get("allow_fractions", True))
+        and not bool(settings.get("no_fractions", False))
+    )
+    if (
+        fractions_ok
+        and sol_d >= prefer_frac_from
+        and "number_profile" not in settings
+        and "force_number_profile" not in settings
+        and ctx.rng.random() < force_frac_chance
+    ):
+        settings["number_profile"] = (
+            "difficult_rations" if sol_d >= difficult_from else "simple_rations"
+        )
+
+    try:
+        return sample_number(
+            sol_d,
+            settings=settings,
+            rng=ctx.rng,
+            exclude_zero=exclude_zero,
+        ).value
+    except NicenessError:
+        return sample_integerish(ctx, exclude_zero=exclude_zero).value
+
+
+def _max_right_constant(solution: Fraction) -> float:
+    """Reject RHS constants that are pedagogically huge for the seeded solution."""
+    base = float(_solution_knobs().get("max_right_constant", 180))
+    # Fractional / large solutions need a little more room for (Δa)·x.
+    extra = abs(solution.numerator) + max(1, solution.denominator)
+    return base * min(3.0, 1.0 + 0.08 * extra)
 
 
 def _paren_inners(latex: str) -> set[str]:
@@ -212,8 +294,7 @@ def _maybe_neg(ctx: PrimitiveContext, ids: set[str], value: Fraction) -> Fractio
 
 def _build(ctx: PrimitiveContext, ids: set[str], eff: float) -> LinearEquation:
     var = ctx.sample_variable()
-    sol_n = sample_integerish(ctx, exclude_zero=False)
-    solution = sol_n.value
+    solution = seed_equation_solution(ctx, d=eff, exclude_zero=False)
 
     two_step = "two_step" in ids
     prefer_md = "multiply_divide" in ids
@@ -549,7 +630,7 @@ def _build_multi(
     """
     ids = set(ids or ())
     var = ctx.sample_variable()
-    solution = sample_integerish(ctx, exclude_zero=False).value
+    solution = seed_equation_solution(ctx, d=eff, exclude_zero=False)
     n_ops = max(3, int(n_ops))
 
     # --- Special solutions (opt-in only): different surfaces, same/shifted affine ---
@@ -666,13 +747,14 @@ def _build_multi(
 
     if use_both:
         # Distinct slope on the right; bake constant for the solution.
+        max_rb = _max_right_constant(solution)
         for _ in range(16):
             delta = Fraction(ctx.rng.choice([-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, -6]))
             right_a = left_a + delta
             if right_a == 0 or right_a == left_a:
                 continue
             right_b = left_a * solution + left_b - right_a * solution
-            if abs(right_b) > 120:
+            if abs(right_b) > max_rb:
                 continue
             right_l, right_t, right_chunks = _compose_multi_chunk_side(
                 ctx,
@@ -767,7 +849,7 @@ def compose_rhs_for_solution(
         if a_r == left_a:
             continue
         target_b = left_a * solution + left_b - a_r * solution
-        if abs(target_b) > 48:
+        if abs(target_b) > _max_right_constant(solution):
             continue
         tgt = AffineTarget(a=a_r, b=target_b)
         # Slightly vary d so distribute choices diverge from the left side.

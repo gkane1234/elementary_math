@@ -24,6 +24,13 @@ export const REQUIRES_DIAGRAM_TYPE_IDS: ReadonlySet<string> = new Set([
 /** Frontend mirror of `question_engine/type_readiness.py` INCORRECT_IMPLEMENTATION_TYPE_IDS. */
 export const INCORRECT_IMPLEMENTATION_TYPE_IDS: ReadonlySet<string> = new Set([
   "g6_distributive_property_area_diagrams_numeric",
+  // Product-disabled thin fraction-division word aliases (catalog/generators kept;
+  // removed from curriculum.ts so they do not appear in the topics list).
+  "g6_how_many_groups_times",
+  "g6_what_fraction_of_a_whole",
+  "g6_how_much_in_each_group_time",
+  // Product-disabled (catalog/generators kept; removed from curriculum.ts).
+  "g6_opposites_of_numbers",
 ]);
 
 export function typeRequiresDiagram(typeId: string, apiFlag?: boolean): boolean {

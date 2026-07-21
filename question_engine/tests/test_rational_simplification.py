@@ -19,9 +19,32 @@ def test_schema_exposes_cancel_factor_count():
     field = next(
         f for f in schema_for_generator("rational_simplification") if f.key == "cancel_factor_count"
     )
-    assert field.min == 1
-    assert field.max == 4
-    assert field.default == 1
+    assert field.type == "select"
+    assert field.label == "Canceling factors"
+    assert field.default == "1"
+    assert field.options == ["0", "1", "2", "3", "4", "auto"]
+    # Sits with the difficulty control in the topic options modal.
+    assert field.group == "difficulty"
+    # Shared with add/subtract catalog aliases.
+    a2 = next(
+        f
+        for f in schema_for_generator("a2_rational_expressions_simplifying")
+        if f.key == "cancel_factor_count"
+    )
+    assert a2.options == field.options
+    add = next(
+        f
+        for f in schema_for_generator("a2_rational_expressions_adding_and_subtracting")
+        if f.key == "cancel_factor_count"
+    )
+    assert add.options == field.options
+    mul = next(
+        f
+        for f in schema_for_generator("rational_expression_multiply_divide")
+        if f.key == "cancel_factor_count"
+    )
+    assert mul.label == "Canceling factors"
+    assert mul.options == field.options
 
 
 def test_presets_use_cancel_factor_count():

@@ -9,10 +9,12 @@ from packages.polynomial_core import Polynomial, square_root_latex
 
 from ..core.models import Question
 from ..frameworks.number import (
+    ComparingRatesFramework,
+    ConvertingUnitsFramework,
     DecimalArithmeticFramework,
     DistributiveFramework,
     FractionDecimalConvertFramework,
-    MixedNumberArithmeticFramework,
+    IntegerArithmeticFramework,
     OrderOfOperationsFramework,
     PercentFramework,
     ProportionFramework,
@@ -30,7 +32,7 @@ _EXTRACT_SQUARES = (4, 9, 16, 25, 36, 49)
 _RATIONAL_ADD_SUBTRACT = RationalFramework("+-")
 _RATIONAL_MULTIPLY = RationalFramework("*")
 _RATIONAL_DIVIDE = RationalFramework("/")
-_PA_MIXED_ADD_SUBTRACT = MixedNumberArithmeticFramework("+-")
+_PA_INTEGER_ADD_SUBTRACT = IntegerArithmeticFramework("+-")
 _DISTRIBUTIVE = DistributiveFramework()
 _DISTRIBUTIVE_ALGEBRAIC = DistributiveFramework(algebraic=True)
 _PERCENTS = PercentFramework()
@@ -41,6 +43,8 @@ _PROPORTIONS = ProportionFramework()
 _RATIO_INTRO = RatioFramework()
 _RATIO_EQUIVALENT = RatioFramework(equivalent=True)
 _UNIT_RATE = UnitRateFramework()
+_COMPARING_RATES = ComparingRatesFramework()
+_CONVERTING_UNITS = ConvertingUnitsFramework()
 _DECIMAL_ADD = DecimalArithmeticFramework("+")
 _DECIMAL_SUBTRACT = DecimalArithmeticFramework("-")
 _DECIMAL_MULTIPLY = DecimalArithmeticFramework("*")
@@ -64,8 +68,8 @@ def rational_add_subtract(topic: str, settings: dict) -> list[Question]:
 
 
 def pa_integers_adding_and_subtracting(topic: str, settings: dict) -> list[Question]:
-    """Pre-Algebra Integers/Decimals/Fractions: mixed add/subtract forms."""
-    return _framework_generator(_PA_MIXED_ADD_SUBTRACT, topic, settings)
+    """Pre-Algebra integers topic: integer add/subtract only (no decimals/fractions)."""
+    return _framework_generator(_PA_INTEGER_ADD_SUBTRACT, topic, settings)
 
 
 def rational_multiply(topic: str, settings: dict) -> list[Question]:
@@ -128,6 +132,14 @@ def g6_equivalent_ratios(topic: str, settings: dict) -> list[Question]:
 
 def g6_unit_rates(topic: str, settings: dict) -> list[Question]:
     return _framework_generator(_UNIT_RATE, topic, settings)
+
+
+def g6_comparing_rates(topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_COMPARING_RATES, topic, settings)
+
+
+def g6_converting_units(topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_CONVERTING_UNITS, topic, settings)
 
 
 def g6_decimal_addition(topic: str, settings: dict) -> list[Question]:
@@ -257,6 +269,8 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "g6_introduction_to_ratios": g6_introduction_to_ratios,
     "g6_equivalent_ratios": g6_equivalent_ratios,
     "g6_unit_rates": g6_unit_rates,
+    "g6_comparing_rates": g6_comparing_rates,
+    "g6_converting_units": g6_converting_units,
     "g6_decimal_addition": g6_decimal_addition,
     "g6_decimal_subtraction": g6_decimal_subtraction,
     "g6_decimal_multiplication": g6_decimal_multiplication,

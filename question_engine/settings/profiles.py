@@ -63,6 +63,7 @@ from .domains.number import (
 )
 from .domains.common import (
     answer_format_settings,
+    continuous_difficulty_settings,
     difficulty_settings,
     multiple_choice_settings,
     primitive_layered_settings,
@@ -147,6 +148,7 @@ def compound_inequality_profile() -> list[SettingField]:
 def number_settings() -> list[SettingField]:
     """Rational / numeric expression bounds."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         number_coef_settings(),
         denominator_settings(),
         allow_negative_settings(),
@@ -164,12 +166,14 @@ def rational_settings() -> list[SettingField]:
 
 def percent_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         percent_settings(),
     )
 
 
 def decimal_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         decimal_places_settings(),
         allow_negative_settings(default=False),
     )
@@ -177,14 +181,21 @@ def decimal_profile() -> list[SettingField]:
 
 def ratio_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         ratio_settings(),
     )
 
 
 def unit_rate_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         unit_rate_settings(),
     )
+
+
+def comparing_rates_profile() -> list[SettingField]:
+    """Same knobs as unit rate; continuous D drives the compare ladder."""
+    return unit_rate_profile()
 
 
 def scientific_notation_profile() -> list[SettingField]:
@@ -195,6 +206,7 @@ def scientific_notation_profile() -> list[SettingField]:
 
 def proportion_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         ratio_settings(part_min_default=2, part_max_default=12),
     )
 
@@ -216,6 +228,7 @@ def writing_numeric_expressions_profile() -> list[SettingField]:
 
 def integer_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         number_coef_settings(num_min_default=-20, num_max_default=20, num_bound=50),
         allow_negative_settings(),
     )
@@ -228,6 +241,7 @@ def number_sets_profile() -> list[SettingField]:
 
 def factor_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         factor_bounds_settings(),
         prime_factorization_settings(),
     )
@@ -680,6 +694,7 @@ PROFILE_BUILDERS: dict[str, callable] = {
     "decimal": decimal_profile,
     "ratio": ratio_profile,
     "unit_rate": unit_rate_profile,
+    "comparing_rates": comparing_rates_profile,
     "scientific_notation": scientific_notation_profile,
     "proportion": proportion_profile,
     "order_of_operations": order_of_operations_profile,

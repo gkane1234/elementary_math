@@ -22,12 +22,12 @@ from .domains.radical import (
 )
 from .domains.rational import (
     division_notation_settings,
-    rational_cancel_count_settings,
+    rational_constructive_adjacent_settings,
     rational_equation_form_settings,
     rational_expression_extra_settings,
     rational_multiply_divide_settings,
     rational_operation_settings,
-    rational_simplification_settings,
+    rational_simplify_adjacent_settings,
 )
 from .domains.word_problem import (
     consecutive_integers_settings,
@@ -960,24 +960,44 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
     # Rational expressions
     "rational_simplification": TypeSettingConfig(
         setting_profile="constructive_rational",
-        extra_settings=(rational_cancel_count_settings,),
-        setting_defaults={"integers_only": True, "cancel_factor_count": "1"},
+        extra_settings=(rational_simplify_adjacent_settings,),
+        setting_defaults={
+            "integers_only": True,
+            "cancel_factor_count": "1",
+            "factor_rrt": False,
+        },
     ),
     "a2_rational_expressions_simplifying": TypeSettingConfig(
         setting_profile="constructive_rational",
-        extra_settings=(rational_cancel_count_settings,),
-        setting_defaults={"integers_only": True, "cancel_factor_count": "1"},
+        extra_settings=(rational_simplify_adjacent_settings,),
+        setting_defaults={
+            "integers_only": True,
+            "cancel_factor_count": "1",
+            "factor_rrt": False,
+        },
     ),
     "rational_expression_simplification": TypeSettingConfig(
         setting_profile="constructive_rational",
-        extra_settings=(rational_cancel_count_settings,),
-        setting_defaults={"integers_only": True, "cancel_factor_count": "1"},
+        extra_settings=(rational_constructive_adjacent_settings,),
+        setting_defaults={
+            "integers_only": True,
+            "cancel_factor_count": "1",
+            "factor_rrt": False,
+            "allow_polynomial_terms": True,
+            "force_lcd": False,
+        },
         count_default=5,
     ),
     "a2_rational_expressions_adding_and_subtracting": TypeSettingConfig(
         setting_profile="constructive_rational",
-        extra_settings=(rational_cancel_count_settings,),
-        setting_defaults={"integers_only": True, "cancel_factor_count": "1"},
+        extra_settings=(rational_constructive_adjacent_settings,),
+        setting_defaults={
+            "integers_only": True,
+            "cancel_factor_count": "1",
+            "factor_rrt": False,
+            "allow_polynomial_terms": True,
+            "force_lcd": False,
+        },
         count_default=5,
     ),
     "partial_fraction_decomposition": TypeSettingConfig(
@@ -1004,6 +1024,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "allow_multiply": True,
             "allow_divide": True,
             "cancel_factor_count": "1",
+            "factor_rrt": False,
             "max_factor_degree": 1,
             "expand_polynomials": False,
             "operand_count": 2,

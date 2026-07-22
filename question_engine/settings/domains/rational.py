@@ -25,21 +25,21 @@ def division_notation_settings() -> list[SettingField]:
             "Allow ÷ symbol",
             "bool",
             True,
-            group="division",
+            group="difficulty",
         ),
         SettingField(
             "allow_complex_fraction",
             "Allow complex fraction (stacked)",
             "bool",
             True,
-            group="division",
+            group="difficulty",
         ),
         SettingField(
             "allow_slash",
             "Allow slash form (a/b) / (c/d)",
             "bool",
             True,
-            group="division",
+            group="difficulty",
         ),
     ]
 
@@ -108,6 +108,10 @@ def rational_cancel_count_settings() -> list[SettingField]:
     Classroom select keeps 0–3, ``4`` (= all available), and ``auto``. Continuous
     ``difficulty`` with ``auto`` unlocks exact counts beyond 4 unboundedly.
     Integer API values are exact counts (no hard max of 4).
+
+    For add/subtract (±) with RRT off, end-of-addition cancel is clamped so the
+    expanded combined numerator stays hand-factorable (typically ≤ 2 factors).
+    Simplify and ×÷ can still cancel more because factors stay visible in the prompt.
     """
     return [
         SettingField(
@@ -122,9 +126,53 @@ def rational_cancel_count_settings() -> list[SettingField]:
     ]
 
 
+def rational_rrt_settings() -> list[SettingField]:
+    """RRT on/off — presentation / construction for dens that need rational roots."""
+    return [
+        SettingField(
+            "factor_rrt",
+            "Rational root theorem (RRT)",
+            "bool",
+            False,
+            # Directly under canceling factors in the topic-options difficulty block.
+            group="difficulty",
+        ),
+    ]
+
+
+def rational_constructive_adjacent_settings() -> list[SettingField]:
+    """Highest-level knobs for constructive rational ± / simplify (under difficulty)."""
+    return [
+        *rational_cancel_count_settings(),
+        *rational_rrt_settings(),
+        SettingField(
+            "allow_polynomial_terms",
+            "Allow terms with no denominator",
+            "bool",
+            True,
+            group="difficulty",
+        ),
+        SettingField(
+            "force_lcd",
+            "Force a full-LCD term in every problem",
+            "bool",
+            False,
+            group="difficulty",
+        ),
+    ]
+
+
+def rational_simplify_adjacent_settings() -> list[SettingField]:
+    """Cancel + RRT for single-fraction simplify (no ± LCD-term knobs)."""
+    return [
+        *rational_cancel_count_settings(),
+        *rational_rrt_settings(),
+    ]
+
+
 def rational_simplification_settings() -> list[SettingField]:
     """Controls for simplify-and-excluded-values rational expressions."""
-    return rational_cancel_count_settings()
+    return rational_simplify_adjacent_settings()
 
 
 def rational_multiply_divide_settings() -> list[SettingField]:
@@ -135,16 +183,17 @@ def rational_multiply_divide_settings() -> list[SettingField]:
             "Allow multiplication",
             "bool",
             True,
-            group="rational",
+            group="difficulty",
         ),
         SettingField(
             "allow_divide",
             "Allow division",
             "bool",
             True,
-            group="rational",
+            group="difficulty",
         ),
         *rational_cancel_count_settings(),
+        *rational_rrt_settings(),
         SettingField(
             "max_factor_degree",
             "Max factor degree",
@@ -152,14 +201,14 @@ def rational_multiply_divide_settings() -> list[SettingField]:
             1,
             min=1,
             max=2,
-            group="rational",
+            group="difficulty",
         ),
         SettingField(
             "expand_polynomials",
             "Show expanded polynomials",
             "bool",
             False,
-            group="rational",
+            group="difficulty",
         ),
         SettingField(
             "operand_count",
@@ -168,14 +217,14 @@ def rational_multiply_divide_settings() -> list[SettingField]:
             2,
             min=2,
             max=500,
-            group="rational",
+            group="difficulty",
         ),
         SettingField(
             "leading_coefficient_one",
             "Leading coefficient one",
             "bool",
             True,
-            group="rational",
+            group="difficulty",
         ),
     ]
 

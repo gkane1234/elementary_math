@@ -12,15 +12,53 @@ const COMMON_GROUPS = new Set(["answer", "signs", "presentation"]);
 /** Deeper MC controls — only shown when the MC toggle is checked. */
 const MC_DETAIL_KEYS = new Set(["multiple_choice_ratio"]);
 
+/**
+ * Pin order inside the difficulty UI block.
+ * Continuous difficulty → canceling factors → RRT → other difficulty-adjacent knobs.
+ */
+const DIFFICULTY_PIN_ORDER = [
+  "difficulty",
+  "difficulty_tier",
+  "cancel_factor_count",
+  "factor_rrt",
+] as const;
+
+/**
+ * Highest-level generator knobs kept visible with continuous difficulty
+ * (not black-boxed under the legacy specific strip).
+ */
+const GENERATOR_PROMOTE_KEYS = new Set([
+  "term_count",
+  "max_lcd_factors",
+  "max_rational_terms",
+  "operand_count",
+  "max_factor_degree",
+  "allow_multiply",
+  "allow_divide",
+  "expand_polynomials",
+  "leading_coefficient_one",
+  "allow_polynomial_terms",
+  "force_lcd",
+  "allow_full_lcd_terms",
+  "allow_obelus",
+  "allow_complex_fraction",
+  "allow_slash",
+  "add_subtract_structure",
+  "prefer_simple_factors",
+  "inflation_chance",
+  "max_inflation_degree",
+]);
+
 const CANCEL_FACTOR_COUNT_LABELS: Record<string, string> = {
   auto: "By difficulty",
   random: "By difficulty",
   "0": "0",
   "1": "1",
   "2": "2",
-  "3": "3",
-  "4": "All available",
-  all: "All available",
+  // ± without RRT clamps end-cancel so the combined numerator stays hand-factorable.
+  "3": "3 (± caps at 2 if RRT off)",
+  "4": "All available (± caps at 2 if RRT off)",
+  all: "All available (± caps at 2 if RRT off)",
 };
 
 /** Human labels for Layer 0 number profile lane ids (incl. auto override). */
@@ -337,18 +375,22 @@ function partitionFields(fields: SettingField[]) {
   const specific: SettingField[] = [];
   const common: SettingField[] = [];
   const hasContinuousDifficulty = fields.some((field) => field.key === "difficulty");
+  const hasCancelFactorCount = fields.some((field) => field.key === "cancel_factor_count");
 
   for (const field of fields) {
     // On the primitive-difficulty experiment, hide legacy EMH when a continuous slider exists.
     if (hasContinuousDifficulty && field.key === "difficulty_tier") {
       continue;
     }
-    // Always surface cancel count next to difficulty (never bury under black-boxed topic knobs).
+    // Surface cancel / RRT / top generator knobs next to difficulty (never bury).
     if (
       field.group === "difficulty" ||
       field.key === "difficulty_tier" ||
       field.key === "difficulty" ||
-      field.key === "cancel_factor_count"
+      field.key === "cancel_factor_count" ||
+      // RRT sits under canceling factors for rational topics that expose cancel count.
+      (field.key === "factor_rrt" && hasCancelFactorCount) ||
+      GENERATOR_PROMOTE_KEYS.has(field.key)
     ) {
       difficulty.push(field);
       continue;
@@ -373,7 +415,7 @@ function partitionFields(fields: SettingField[]) {
   }
 
   return {
-    difficulty,
+    difficulty: sortDifficultyAdjacentFields(difficulty),
     prereqCaps,
     layer0,
     layer0Advanced,
@@ -381,6 +423,35 @@ function partitionFields(fields: SettingField[]) {
     common,
     hasContinuousDifficulty,
   };
+}
+
+function sortDifficultyAdjacentFields(fields: SettingField[]): SettingField[] {
+  const pinRank = new Map<string, number>(
+    DIFFICULTY_PIN_ORDER.map((key, index) => [key, index]),
+  );
+  return [...fields].sort((a, b) => {
+    const aRank = pinRank.get(a.key) ?? DIFFICULTY_PIN_ORDER.length;
+    const bRank = pinRank.get(b.key) ?? DIFFICULTY_PIN_ORDER.length;
+    if (aRank !== bRank) return aRank - bRank;
+    return 0;
+  });
+}
+
+function renderSingleField(
+  field: SettingField,
+  values: Record<string, string | number | boolean>,
+  onChange: (key: string, value: string | number | boolean) => void,
+) {
+  if (field.key === "difficulty") {
+    return renderDifficultyField(field, values, onChange);
+  }
+  if (field.type === "bool") {
+    return renderBoolField(field, values, onChange);
+  }
+  if (field.type === "range") {
+    return renderRangeField(field, values, onChange);
+  }
+  return renderCompactField(field, values, onChange);
 }
 
 function renderFieldBlock(
@@ -391,6 +462,15 @@ function renderFieldBlock(
 ) {
   const visible = fields.filter((field) => isFieldVisible(field, values));
   if (visible.length === 0) return null;
+
+  // Difficulty-adjacent block: preserve pin order (D → cancel → RRT → others).
+  if (sectionKey === "difficulty") {
+    return (
+      <div className="settings-fields-section" key={sectionKey}>
+        {visible.map((field) => renderSingleField(field, values, onChange))}
+      </div>
+    );
+  }
 
   const difficultyFields = visible.filter((field) => field.key === "difficulty");
   const compactFields = visible.filter(

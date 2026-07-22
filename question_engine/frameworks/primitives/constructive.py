@@ -1767,10 +1767,11 @@ def _construct_l2_rational(
         prompt_num = _product_of_factor_dicts(prompt_num_factors)
         prompt_den = _product_of_factor_dicts(prompt_den_factors)
         actual_k = k
-        excluded_roots = list(den_roots) + list(cancel_roots)
+        # Only cancelled roots: remaining dens factors stay visible in the answer.
+        excluded_roots = list(cancel_roots)
 
     ans_l, ans_t = _fraction_latex(ans_num, ans_den, v)
-    # Domain: original denominator zeros (including canceled factors).
+    # Domain notes only for cancelled factors (invisible after simplify).
     from packages.polynomial_core import rational_excluded_values_latex
 
     note = rational_excluded_values_latex(sorted(set(excluded_roots)))
@@ -2010,7 +2011,8 @@ def construct_rational_sum(
         den_factor_lists=den_factor_lists,
     )
     ans_l, ans_t = _fraction_latex(combined_num, lcd, v)
-    excluded_roots = list(roots) + list(cancel_roots)
+    # Only cancelled roots — LCD dens factors remain visible in the answer dens.
+    excluded_roots = list(cancel_roots)
     from packages.polynomial_core import rational_excluded_values_latex
 
     note = rational_excluded_values_latex(sorted(set(excluded_roots)))

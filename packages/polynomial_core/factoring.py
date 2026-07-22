@@ -132,6 +132,11 @@ def _is_substitution_quadratic_pair(left: Polynomial, right: Polynomial) -> bool
     return True
 
 
+# Metadata / QA flag when a solution step asks students to factor a poly that
+# is not hand-factorable under current RRT / classroom-method rules.
+NONCLASSROOM_FACTOR_STEP_FLAG = "nonclassroom_factor_step"
+
+
 def should_display_factor_product_expanded(
     factors: tuple[Polynomial, ...] | list[Polynomial],
     options: FactorablePolynomialOptions | None = None,
@@ -170,6 +175,41 @@ def should_display_factor_product_expanded(
         ):
             return "substitution" in enabled
 
+    return False
+
+
+def is_classroom_factorable(
+    polynomial: Polynomial,
+    options: FactorablePolynomialOptions | None = None,
+    *,
+    factors: tuple[Polynomial, ...] | list[Polynomial] | None = None,
+) -> bool:
+    """Whether ``polynomial`` is factorable by classroom methods under ``options``.
+
+    Mirrors the expand-vs-factored display policy: with ``rrt_mode == "exclude"``,
+    products that need RRT (e.g. dense 3+ linear factors) are not classroom-
+    factorable. Linear/quadratic targets, GCF, grouping, and special products
+    that ``should_display_factor_product_expanded`` accepts remain True.
+
+    When RRT is allowed (``rrt_mode != "exclude"``), returns True — RRT is an
+    enabled classroom method. Prefer flagging over assuming hand-factorable when
+    degree ≥ 3 and no construction factors are supplied.
+    """
+    opts = options or FactorablePolynomialOptions(coef_min=-8, coef_max=8)
+    if opts.rrt_mode != "exclude":
+        return True
+
+    if polynomial.is_zero():
+        return True
+    degree = polynomial.deg()
+    if degree <= 2:
+        return True
+
+    if factors:
+        return should_display_factor_product_expanded(tuple(factors), opts)
+
+    # Deg ≥ 3 with no known factors: cannot verify grouping/cubes cheaply;
+    # treat as non-classroom (needs RRT or is otherwise not hand-factorable).
     return False
 
 

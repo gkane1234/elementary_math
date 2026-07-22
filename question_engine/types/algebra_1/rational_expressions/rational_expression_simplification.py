@@ -15,11 +15,11 @@ from question_engine.frameworks.primitives.rational_cancel import (
     ALL_AVAILABLE_CANCEL,
     apply_continuous_rational_structure,
     clamp_cancel_to_available,
+    clamp_end_cancel_hand_factorable,
     is_all_available_cancel,
     resolve_rational_cancel_count,
     sample_all_available_factor_count,
 )
-from question_engine.latex_helpers import polynomial_fraction_latex
 from question_engine.models import Question
 from question_engine.settings.enrichment import merge_enrichment_metadata, random_term_count
 from question_engine.settings.generator_profiles import schema_for_generator
@@ -187,6 +187,7 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                     builder_cancel: int | str = 0
                 else:
                     requested_cancel = resolve_rational_cancel_count(structured)
+                    rrt_exclude = not bool(structured.get("factor_rrt", False))
                     if is_all_available_cancel(requested_cancel):
                         # Cap LCD size for "all available" — cancel every factor
                         # in a normal problem, do not grow to continuous D max.
@@ -194,8 +195,16 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                             structured, default=max_lcd_factors
                         )
                         structured["max_lcd_factors"] = max_lcd_factors
-                        cancel_factor_count = max_lcd_factors
-                        builder_cancel = ALL_AVAILABLE_CANCEL
+                        # ± end-cancel without RRT: clamp to hand-factorable max.
+                        cancel_factor_count = clamp_end_cancel_hand_factorable(
+                            max_lcd_factors,
+                            rrt_exclude=rrt_exclude,
+                        )
+                        builder_cancel = (
+                            ALL_AVAILABLE_CANCEL
+                            if not rrt_exclude
+                            else cancel_factor_count
+                        )
                     else:
                         # Capacity: leave at least one LCD factor when a polynomial
                         # answer is disallowed; otherwise every LCD factor may cancel.
@@ -205,6 +214,10 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                             available = max(0, max_lcd_factors - 1)
                         cancel_factor_count = clamp_cancel_to_available(
                             requested_cancel, available
+                        )
+                        cancel_factor_count = clamp_end_cancel_hand_factorable(
+                            cancel_factor_count,
+                            rrt_exclude=rrt_exclude,
                         )
                         builder_cancel = cancel_factor_count
                 try:
@@ -252,7 +265,10 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
             answer_latex = None
             excluded: list[int] = []
             if include_answer_key:
-                from packages.polynomial_core.rational import _scale_fraction_to_integers
+                from packages.polynomial_core.rational import (
+                    _scale_fraction_to_integers,
+                    format_simplified_rational_latex,
+                )
 
                 answer_numerator = solution.final_numerator or solution.simplified_numerator
                 answer_denominator = solution.final_denominator or solution.simplified_denominator
@@ -260,22 +276,18 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                     answer_numerator,
                     answer_denominator,
                 )
-                if (
-                    answer_denominator.deg() == 0
-                    and abs(float(answer_denominator.coef_list()[0]) - 1) < 1e-10
-                ):
-                    answer_latex = answer_numerator.to_latex()
-                else:
-                    answer_latex = polynomial_fraction_latex(
-                        answer_numerator,
-                        answer_denominator,
-                    )
-                # Excluded values from original LCD / display dens — collect per
-                # linear factor so canceled non-monic roots are not dropped.
-                factor_pool = list(solution.lcd_factors) + list(solution.cancelled_lcd_factors)
-                for term in solution.display_terms:
-                    factor_pool.extend(term.denominator_factors)
-                excluded_fracs = excluded_values_from_factors(factor_pool)
+                answer_latex = format_simplified_rational_latex(
+                    answer_numerator,
+                    answer_denominator,
+                    numerator_factors=solution.final_numerator_factors,
+                    denominator_factors=solution.final_denominator_factors,
+                    options=base_options,
+                )
+                # Only cancelled LCD factors: roots still present in the simplified
+                # dens are already visible, so omit them from x≠ notes.
+                excluded_fracs = excluded_values_from_factors(
+                    solution.cancelled_lcd_factors
+                )
                 note = rational_excluded_values_latex(excluded_fracs)
                 if note:
                     answer_latex = f"{answer_latex},\\; {note}"
@@ -305,11 +317,23 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                     "max_lcd_factors": max_lcd_factors,
                     "lcd_degree": solution.lcd.deg(),
                     "excluded_values": excluded,
+                    **(
+                        {
+                            "qa_flags": list(solution.qa_flags),
+                            "qa_flag_details": list(solution.qa_flag_details),
+                        }
+                        if solution.qa_flags
+                        else {}
+                    ),
                 },
                 answer=answer_latex,
             )
             if include_solution_details:
                 metadata["solution"] = solution.to_dict()
+            # Student-order LaTeX steps (reverse of generation). Logged on generate.
+            solution_steps = solution.student_solution_steps()
+            if solution_steps:
+                metadata["solution_steps"] = solution_steps
 
             questions.append(
                 Question(

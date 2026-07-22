@@ -11,7 +11,6 @@ import uuid
 
 from packages.polynomial_core import (
     Polynomial,
-    polynomial_excluded_values,
     polynomial_fraction_latex,
     rational_excluded_values_latex,
 )
@@ -256,14 +255,8 @@ def _create_rational_simplification_problem(
             reduced_numerator = _content_scale(reduced_numerator, -1)
             reduced_denominator = _content_scale(reduced_denominator, -1)
 
-        # Excluded values: zeros of the *original* denominator (before canceling).
-        original_den_roots = set(common_roots + den_roots)
-        scanned = polynomial_excluded_values(
-            denominator,
-            coef_min=min(-20, -bound - 2),
-            coef_max=max(20, bound + 2),
-        )
-        excluded = sorted(original_den_roots | set(scanned))
+        # Only cancelled common factors — remaining dens roots stay visible.
+        excluded = sorted(set(common_roots))
 
         return (
             numerator,
@@ -286,7 +279,7 @@ def _create_rational_simplification_problem(
         common * reduced_denominator,
         reduced_numerator,
         reduced_denominator,
-        sorted(set(common_roots + [leftover_den])),
+        sorted(set(common_roots)),
         cancel_count,
     )
 
@@ -330,7 +323,7 @@ class RationalSimplificationQuestionType(QuestionType):
     category = "Algebra 1 — Rational Expressions"
     description = (
         "Simplify rational expressions by canceling common polynomial factors "
-        "and state excluded values from the original denominator."
+        "and state excluded values for cancelled factors."
     )
     instruction_latex = (
         r"\text{Simplify. State any excluded values.}"

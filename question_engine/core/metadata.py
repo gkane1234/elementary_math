@@ -10,6 +10,13 @@ class ScaffoldMetadata(TypedDict, total=False):
     scaffolded: bool
 
 
+class PedagogyQaMetadata(TypedDict, total=False):
+    """Generator pedagogy / QA flags (mirrors topic-fit style surfacing)."""
+
+    qa_flags: list[str]
+    qa_flag_details: list[dict[str, Any]]
+
+
 class GenerationSettingsMetadata(TypedDict, total=False):
     generation_settings: dict[str, Any]
     instruction_latex: str

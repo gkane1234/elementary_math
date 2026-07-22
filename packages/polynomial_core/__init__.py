@@ -1,11 +1,13 @@
 """Symbolic polynomial layer for question generation."""
 
 from .factoring import (
+    NONCLASSROOM_FACTOR_STEP_FLAG,
     FactorablePolynomialOptions,
     FactorablePolynomialResult,
     create_factorable_polynomial,
     create_factorable_polynomial_with_exact_degree,
     format_polynomial_from_factors,
+    is_classroom_factorable,
     should_display_factor_product_expanded,
 )
 from .special_products import (
@@ -39,7 +41,9 @@ from .rational import (
     RationalExpressionSolution,
     RationalExpressionTerm,
     build_rational_expression_problem,
+    collect_nonclassroom_factor_step_details,
     excluded_values_from_factors,
+    format_simplified_rational_latex,
     linear_factor_excluded_value,
     polynomial_excluded_values,
     rational_excluded_values_latex,
@@ -62,8 +66,10 @@ __all__ = [
     # Factoring
     "FactorablePolynomialOptions",
     "FactorablePolynomialResult",
+    "NONCLASSROOM_FACTOR_STEP_FLAG",
     "create_factorable_polynomial",
     "create_factorable_polynomial_with_exact_degree",
+    "is_classroom_factorable",
     "should_display_factor_product_expanded",
     "format_polynomial_from_factors",
     "SpecialProductResult",
@@ -74,7 +80,9 @@ __all__ = [
     "RationalExpressionTerm",
     "RationalExpressionSolution",
     "build_rational_expression_problem",
+    "collect_nonclassroom_factor_step_details",
     "excluded_values_from_factors",
+    "format_simplified_rational_latex",
     "linear_factor_excluded_value",
     "polynomial_excluded_values",
     "rational_excluded_values_latex",

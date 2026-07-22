@@ -5,8 +5,11 @@ from dataclasses import dataclass, field
 from typing import Any, Literal
 
 from .factoring import (
+    NONCLASSROOM_FACTOR_STEP_FLAG,
     FactorablePolynomialOptions,
     create_factorable_polynomial_with_exact_degree,
+    format_polynomial_from_factors,
+    is_classroom_factorable,
     should_display_factor_product_expanded,
 )
 from .latex import format_factor_product_latex, fraction_latex
@@ -66,9 +69,25 @@ class RationalExpressionSolution:
     cancelled_lcd_factors: tuple[Polynomial, ...] = ()
     final_numerator: Polynomial | None = None
     final_denominator: Polynomial | None = None
+    final_numerator_factors: tuple[Polynomial, ...] = ()
+    final_denominator_factors: tuple[Polynomial, ...] = ()
     matrix_rows: list[list[float]] = field(default_factory=list)
     matrix_aug_column: list[float] = field(default_factory=list)
     matrix_solution: list[float] = field(default_factory=list)
+    # Generation order (answer → prompt). Reverse for the student solution path.
+    generation_steps: list[dict[str, str]] = field(default_factory=list)
+    # Pedagogy QA flags (e.g. nonclassroom_factor_step) when a solution step
+    # asks students to factor something that is not hand-factorable.
+    qa_flags: list[str] = field(default_factory=list)
+    qa_flag_details: list[dict[str, Any]] = field(default_factory=list)
+
+    def student_solution_steps(self) -> list[str]:
+        """LaTeX steps in student order (prompt → answer)."""
+        return [
+            step["latex"]
+            for step in reversed(self.generation_steps)
+            if isinstance(step, dict) and step.get("latex")
+        ]
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -97,6 +116,8 @@ class RationalExpressionSolution:
                     else term_denominator_latex(term),
                     "denominator_factors": [str(factor) for factor in term.denominator_factors],
                     "denominator_display_expanded": term.denominator_display_expanded,
+                    "numerator_factors": [str(factor) for factor in term.numerator_factors],
+                    "numerator_display_expanded": term.numerator_display_expanded,
                     "term_kind": term.term_kind,
                     "is_polynomial_term": term.is_polynomial_term,
                 }
@@ -111,6 +132,8 @@ class RationalExpressionSolution:
             "cancelled_lcd_factor_count": len(self.cancelled_lcd_factors),
             "final_numerator": str(self.final_numerator) if self.final_numerator is not None else None,
             "final_denominator": str(self.final_denominator) if self.final_denominator is not None else None,
+            "final_numerator_factors": [str(f) for f in self.final_numerator_factors],
+            "final_denominator_factors": [str(f) for f in self.final_denominator_factors],
             "final_numerator_latex": (
                 self.final_numerator.to_latex() if self.final_numerator is not None else None
             ),
@@ -120,6 +143,10 @@ class RationalExpressionSolution:
             "matrix_rows": self.matrix_rows,
             "matrix_aug_column": self.matrix_aug_column,
             "matrix_solution": self.matrix_solution,
+            "generation_steps": list(self.generation_steps),
+            "solution_steps": self.student_solution_steps(),
+            "qa_flags": list(self.qa_flags),
+            "qa_flag_details": list(self.qa_flag_details),
         }
 
 
@@ -984,6 +1011,151 @@ def _split_polynomial_into_summands(
     return summands
 
 
+def _poly_divisible_by(dividend: Polynomial, divisor: Polynomial) -> bool:
+    if divisor.is_zero() or divisor.deg() < 1:
+        return False
+    try:
+        _exact_divide(dividend, divisor)
+        return True
+    except ValueError:
+        return False
+
+
+def _numerator_shares_den_factor(
+    numerator: Polynomial,
+    den_factors: tuple[Polynomial, ...] | list[Polynomial],
+) -> bool:
+    """True when a displayed term already cancels (num shares a den factor)."""
+    if numerator.is_zero():
+        return False
+    for factor in den_factors:
+        if factor.deg() >= 1 and _poly_divisible_by(numerator, factor):
+            return True
+    return False
+
+
+def _count_per_term_cancels(
+    numerators: list[Polynomial],
+    den_factor_lists: list[tuple[Polynomial, ...]],
+) -> int:
+    return sum(
+        1
+        for num, dens in zip(numerators, den_factor_lists, strict=True)
+        if _numerator_shares_den_factor(num, dens)
+    )
+
+
+def _split_target_for_add_then_cancel(
+    target: Polynomial,
+    avoid_factors: tuple[Polynomial, ...],
+    parts: int,
+    coef_min: int,
+    coef_max: int,
+    positive_leading: bool,
+    *,
+    rrt_exclude: bool = True,
+) -> list[Polynomial] | None:
+    """Split combined numerator into summands that rarely share avoid_factors.
+
+    No individual summand should be divisible by a cancel factor when all terms
+    share the full LCD (that would allow per-term cancel). With RRT excluded,
+    keep companion degrees ≤ 2; the residual may still be higher degree — callers
+    should prefer unlike dens when ``target.deg() >= 3``.
+    """
+    parts = max(2, parts)
+    max_deg = max(0, target.deg())
+    if rrt_exclude:
+        max_deg = min(max_deg, 2)
+
+    for _ in range(80):
+        summands: list[Polynomial] = []
+        running = Polynomial(((0, 0),))
+        for _index in range(parts - 1):
+            # Prefer constants so cancel structure is not concentrated awkwardly.
+            if rrt_exclude or random.random() < 0.65:
+                deg = 0
+            else:
+                deg = random.randint(0, max_deg)
+            if deg == 0:
+                piece = Polynomial(
+                    [Polynomial.randomCoefficient(coef_min, coef_max, nonZero=True)]
+                )
+            else:
+                piece = Polynomial.random_polynomial(
+                    deg, coef_min, coef_max, positive_leading=positive_leading
+                )
+                if piece.is_zero():
+                    piece = Polynomial(
+                        [Polynomial.randomCoefficient(coef_min, coef_max, nonZero=True)]
+                    )
+            summands.append(_integerize_polynomial(piece))
+            running = running + piece
+        last = _integerize_polynomial(target - running)
+        if last.is_zero() or any(s.is_zero() for s in summands):
+            continue
+        summands.append(last)
+        # Every summand must avoid cancel factors for shared-LCD pedagogy.
+        shared = _count_per_term_cancels(
+            summands,
+            [tuple(avoid_factors) for _ in summands],
+        )
+        if shared == 0:
+            return summands
+        if shared == 1 and random.random() < 0.08:
+            return summands
+
+    # Fallback: constant offset split (last usually avoids exact cancel factors).
+    if target.deg() == 0:
+        return _split_polynomial_into_summands(target, parts, coef_min, coef_max)
+    offset = Polynomial(
+        [Polynomial.randomCoefficient(coef_min, coef_max, nonZero=True)]
+    )
+    last = _integerize_polynomial(target - offset)
+    if last.is_zero():
+        offset = Polynomial([offset.coef_list(reverse=True)[0] + 1])
+        last = _integerize_polynomial(target - offset)
+    return [last, offset]
+
+
+def _known_numerator_factors_for_display(
+    numerator: Polynomial,
+    cancelled_lcd_factors: tuple[Polynomial, ...],
+    options: FactorablePolynomialOptions,
+) -> tuple[Polynomial, ...]:
+    """Recover linear factors from construction when expanded form needs RRT."""
+    if numerator.is_zero() or numerator.deg() <= 2:
+        return ()
+    if options.rrt_mode != "exclude":
+        return ()
+    remaining = numerator
+    peeled: list[Polynomial] = []
+    for factor in cancelled_lcd_factors:
+        if factor.deg() < 1:
+            continue
+        if _poly_divisible_by(remaining, factor):
+            try:
+                remaining = _exact_divide(remaining, factor)
+            except ValueError:
+                continue
+            peeled.append(factor)
+    if not peeled:
+        return ()
+    remaining = _integerize_polynomial(remaining)
+    if remaining.is_zero():
+        return ()
+    # Only useful when peeling leaves a simple cofactor and enough factors to
+    # justify factored display (≥3 variable factors total, or deg≥3 product).
+    factors = ((remaining,) if not (
+        remaining.deg() == 0 and abs(float(remaining.coef(0)) - 1.0) < 1e-10
+    ) else ()) + tuple(peeled)
+    variable = [f for f in factors if f.deg() >= 1]
+    if len(variable) < 2 and remaining.deg() <= 2:
+        return ()
+    if not should_display_factor_product_expanded(factors, options):
+        return factors
+    return ()
+
+
 def _build_cancelled_expression_pieces(
     options: FactorablePolynomialOptions,
     lcd_factors: list[Polynomial],
@@ -998,19 +1170,33 @@ def _build_cancelled_expression_pieces(
     Polynomial,
     Polynomial,
     Polynomial,
+    tuple[Polynomial, ...],
+    tuple[Polynomial, ...],
+    list[tuple[Polynomial, ...]],
 ] | None:
-    """Build a cancellable expression from the reduced answer outward.
+    """Build an add-then-cancel rational sum.
 
-    Start from a nice reduced answer, split it into several simple terms, then
-    distribute each cancel factor onto some of those terms as balanced
-    inflation. That keeps numerators small and avoids dumping the whole cancel
-    product onto one residual term.
+    ``cancel_factor_count`` means: after rewriting over the LCD and adding
+    numerators, that many LCD factors cancel. Individual terms generally do
+    *not* already carry those cancel factors in both num and den (per-term
+    inflation is rare, not the main mechanism).
+
+    When RRT is excluded, the expanded combined numerator must stay
+    hand-factorable (deg ≤ 2). Callers should clamp cancel count accordingly
+    and avoid polynomial/full-LCD terms that inflate the combined degree.
     """
-    del max_subset_size  # inflated cancel terms may use remaining+cancel factors
     coef_min, coef_max = options.normalized_coef_range()
     lcd = _product(lcd_factors)
     cancel_product = _factors_to_polynomial(cancelled_lcd_factors)
     remaining_factors = _remaining_lcd_factors(lcd_factors, cancelled_lcd_factors)
+    lcd_factor_tuple = tuple(lcd_factors)
+    remaining_tuple = tuple(remaining_factors)
+    rrt_exclude = options.rrt_mode == "exclude"
+
+    # Poly / full-LCD extras make the expanded combined num RRT-hard; skip them
+    # for honest end-cancel pedagogy when RRT is off.
+    if rrt_exclude and cancelled_lcd_factors:
+        include_polynomial = False
 
     polynomial_term = None
     if include_polynomial:
@@ -1021,110 +1207,188 @@ def _build_cancelled_expression_pieces(
             positive_leading=options.positive_leading,
         )
 
-    # All-cancel (no remaining LCD factors) must still emit ≥2 fractional terms
-    # so the outer builder does not reject/retry forever. Build from a constant
-    # reduced answer and distribute cancel factors across terms (same path as
-    # partial cancel). Optional polynomial term is additive only.
-    # Constant reduced numerators keep post-inflation terms small and readable.
-    # Choose a magnitude large enough to split across the cancel-factor terms.
-    min_abs = max(2, len(cancelled_lcd_factors) + 1)
+    # Constant reduced numerator keeps the post-cancel answer readable.
+    # Combined num = final_core × cancel_product → deg = cancel count (linears).
+    min_abs = max(1, min(3, abs(coef_max) or 3))
     final_value = int(Polynomial.randomCoefficient(coef_min, coef_max, nonZero=True))
     if abs(final_value) < min_abs:
         sign = 1 if final_value > 0 else -1
         final_value = sign * min_abs
     final_core = Polynomial([final_value])
-    # Enough terms that each cancel factor can land on a distinct fraction,
-    # with at least one uninflated term left when possible.
-    desired = max(factor_term_count, len(cancelled_lcd_factors) + 1, 2)
-    pieces = _split_polynomial_into_summands(final_core, desired, coef_min, coef_max)
-    base_factor_tuple = tuple(remaining_factors)
-    expanded_entries = [
-        (piece, base_factor_tuple)
-        for piece in pieces
-        if not piece.is_zero()
+
+    # Pre-cancel combined numerator over the full LCD.
+    target_fractional = _integerize_polynomial(final_core * cancel_product)
+    if rrt_exclude and target_fractional.deg() > 2:
+        return None
+
+    n_terms = max(2, int(factor_term_count))
+
+    summands = _split_target_for_add_then_cancel(
+        target_fractional,
+        cancelled_lcd_factors,
+        n_terms,
+        coef_min,
+        coef_max,
+        options.positive_leading,
+        rrt_exclude=rrt_exclude,
+    )
+    if not summands:
+        return None
+
+    # Prefer shared LCD whenever the combined numerator is classroom-degree.
+    # When RRT is off, force shared LCD so the student path is: rewrite → add →
+    # factor expanded combined (≤ quadratic) → cancel — no unlike-den residuals.
+    use_shared_lcd = target_fractional.deg() <= 2
+    if rrt_exclude and cancelled_lcd_factors:
+        use_shared_lcd = True
+    packaged_numerators = [s for s in summands if not s.is_zero()]
+    packaged_factor_lists: list[tuple[Polynomial, ...]] = [
+        lcd_factor_tuple for _ in packaged_numerators
     ]
-    if not expanded_entries:
-        expanded_entries = [(final_core, base_factor_tuple)]
-
-    while len(expanded_entries) < len(cancelled_lcd_factors) + 1:
-        index = random.randrange(len(expanded_entries))
-        numerator, factors = expanded_entries.pop(index)
-        before = len(expanded_entries)
-        split_pieces = _split_polynomial_into_summands(numerator, 2, coef_min, coef_max)
-        for piece in split_pieces:
-            if not piece.is_zero():
-                expanded_entries.append((piece, factors))
-        if len(expanded_entries) <= before:
-            # Could not actually split (e.g. numerator ±1). Put it back and stop.
-            expanded_entries.append((numerator, factors))
-            break
-
-    random.shuffle(expanded_entries)
-    mutable_entries: list[tuple[Polynomial, list[Polynomial]]] = [
-        (numerator, list(factors)) for numerator, factors in expanded_entries
+    packaged_num_factor_lists: list[tuple[Polynomial, ...]] = [
+        _known_numerator_factors_for_display(num, cancelled_lcd_factors, options)
+        for num in packaged_numerators
     ]
 
-    # Assign each cancel factor only to currently uninflated terms so numerators
-    # stay linear (constant × one binomial), never the full cancel product.
-    for cancel_factor in cancelled_lcd_factors:
-        if not mutable_entries:
-            break
-        unused = [
-            index
-            for index, (_, factors) in enumerate(mutable_entries)
-            if len(factors) <= len(base_factor_tuple)
-        ]
-        if not unused:
-            # Make room by splitting an uninflated term. If none remain, reject
-            # this attempt rather than stack cancel factors or add inconsistent terms.
-            uninflated = [
-                index
-                for index, (_, factors) in enumerate(mutable_entries)
-                if len(factors) <= len(base_factor_tuple)
-            ]
-            if not uninflated:
-                return None
-            index = uninflated[random.randrange(len(uninflated))]
-            numerator, factors = mutable_entries.pop(index)
-            split_pieces = _split_polynomial_into_summands(numerator, 2, coef_min, coef_max)
-            for piece in split_pieces:
-                if not piece.is_zero():
-                    mutable_entries.append((piece, list(factors)))
-            unused = [
-                idx
-                for idx, (_, entry_factors) in enumerate(mutable_entries)
-                if len(entry_factors) <= len(base_factor_tuple)
-            ]
-            if not unused:
-                return None
+    # Unlike dens (add-then-cancel): residual method with rejection when a term
+    # would already cancel. Forced when shared LCD would show RRT-hard nums.
+    allow_unlike = (
+        (not use_shared_lcd)
+        or (
+            (not rrt_exclude or not cancelled_lcd_factors)
+            and (max_subset_size is None or max_subset_size >= 1)
+            and len(lcd_factors) >= 2
+            and random.random() < 0.4
+        )
+    )
+    unlike_ok = False
+    if allow_unlike:
+        for _attempt in range(40 if not use_shared_lcd else 25):
+            dens = _pick_term_denominators(
+                lcd_factors,
+                len(packaged_numerators),
+                max_subset_size=max_subset_size,
+                allow_empty=False,
+                force_shared_single=False,
+            )
+            if len(dens) != len(packaged_numerators):
+                continue
+            dens_list = list(dens)
+            nums: list[Polynomial] = []
+            ok = True
+            for i in range(len(dens_list) - 1):
+                den_poly = _factors_to_polynomial(dens_list[i])
+                num = _random_numerator_for_denominator(
+                    den_poly, coef_min, coef_max, options.positive_leading
+                )
+                for _retry in range(10):
+                    if not _numerator_shares_den_factor(num, dens_list[i]):
+                        break
+                    num = _random_numerator_for_denominator(
+                        den_poly, coef_min, coef_max, options.positive_leading
+                    )
+                if _numerator_shares_den_factor(num, dens_list[i]):
+                    ok = False
+                    break
+                # Keep prompt nums classroom-factorable when RRT is off.
+                if options.rrt_mode == "exclude" and num.deg() >= 3:
+                    ok = False
+                    break
+                nums.append(_integerize_polynomial(num))
+            if not ok:
+                continue
+            try:
+                partial = _compose_over_term_denominators(
+                    nums,
+                    [_factors_to_polynomial(d) for d in dens_list[:-1]],
+                    lcd,
+                )
+            except ValueError:
+                continue
+            residual = _integerize_polynomial(target_fractional - partial)
+            last_den = _factors_to_polynomial(dens_list[-1])
+            try:
+                cofactor = _exact_divide(lcd, last_den)
+                last_num = _exact_divide(residual, cofactor)
+            except ValueError:
+                dens_list[-1] = lcd_factor_tuple
+                last_num = residual
+            last_num = _integerize_polynomial(last_num)
+            if last_num.is_zero():
+                continue
+            if _numerator_shares_den_factor(last_num, dens_list[-1]):
+                continue
+            if options.rrt_mode == "exclude" and last_num.deg() >= 3:
+                # Only accept if we can show it factored from known cancels.
+                known = _known_numerator_factors_for_display(
+                    last_num, cancelled_lcd_factors, options
+                )
+                if not known:
+                    continue
+            nums.append(last_num)
+            if _count_per_term_cancels(nums, dens_list) > 0:
+                continue
+            try:
+                check = _compose_over_term_denominators(
+                    nums,
+                    [_factors_to_polynomial(d) for d in dens_list],
+                    lcd,
+                )
+            except ValueError:
+                continue
+            if _integerize_polynomial(check - target_fractional).is_zero():
+                packaged_numerators = nums
+                packaged_factor_lists = [tuple(d) for d in dens_list]
+                packaged_num_factor_lists = [
+                    _known_numerator_factors_for_display(
+                        num, cancelled_lcd_factors, options
+                    )
+                    for num in nums
+                ]
+                unlike_ok = True
+                break
 
-        if len(unused) == 1:
-            targets = unused
-        else:
-            target_count = random.randint(1, len(unused) - 1)
-            targets = random.sample(unused, target_count)
+    if not use_shared_lcd and not unlike_ok:
+        # Last resort: shared LCD with factored high-degree nums when possible.
+        if any(
+            options.rrt_mode == "exclude"
+            and num.deg() >= 3
+            and not packaged_num_factor_lists[i]
+            for i, num in enumerate(packaged_numerators)
+        ):
+            return None
 
-        next_entries: list[tuple[Polynomial, list[Polynomial]]] = []
-        for index, (numerator, factors) in enumerate(mutable_entries):
-            if index in targets:
-                next_entries.append((numerator * cancel_factor, factors + [cancel_factor]))
-            else:
-                next_entries.append((numerator, factors))
-        mutable_entries = next_entries
-
-    packaged = [(num, tuple(factors)) for num, factors in mutable_entries if not num.is_zero()]
-    random.shuffle(packaged)
-    packaged_numerators = [numerator for numerator, _ in packaged]
-    packaged_factor_lists = [factors for _, factors in packaged]
+    # Rare light per-term cancel spice (~8%): inflate one term by one cancel factor.
+    # Skip when RRT is off — spice makes per-term cancel visible, which is a
+    # different skill than honest end-of-addition cancel.
+    if (
+        cancelled_lcd_factors
+        and packaged_numerators
+        and not rrt_exclude
+        and random.random() < 0.08
+    ):
+        idx = random.randrange(len(packaged_numerators))
+        spice = random.choice(cancelled_lcd_factors)
+        if spice not in packaged_factor_lists[idx]:
+            packaged_numerators[idx] = _integerize_polynomial(
+                packaged_numerators[idx] * spice
+            )
+            packaged_factor_lists[idx] = packaged_factor_lists[idx] + (spice,)
+            base_num_factors = packaged_num_factor_lists[idx]
+            if base_num_factors:
+                packaged_num_factor_lists[idx] = base_num_factors + (spice,)
+            elif packaged_numerators[idx].deg() >= 3:
+                packaged_num_factor_lists[idx] = _known_numerator_factors_for_display(
+                    packaged_numerators[idx], cancelled_lcd_factors, options
+                )
 
     if not packaged_numerators and polynomial_term is None:
         return None
 
-    simplified_numerator = final_core * cancel_product
+    simplified_numerator = target_fractional
     if polynomial_term is not None:
         simplified_numerator = simplified_numerator + polynomial_term * lcd
     simplified_numerator = _integerize_polynomial(simplified_numerator)
-
     if simplified_numerator.is_zero():
         return None
 
@@ -1137,6 +1401,13 @@ def _build_cancelled_expression_pieces(
         return None
     final_numerator, final_denominator = final_form
 
+    # Known factors for factored answer presentation.
+    if polynomial_term is None and final_numerator.deg() == 0:
+        final_num_factors: tuple[Polynomial, ...] = (final_numerator,)
+    else:
+        final_num_factors = ()
+    final_den_factors = remaining_tuple
+
     return (
         polynomial_term,
         packaged_numerators,
@@ -1144,6 +1415,9 @@ def _build_cancelled_expression_pieces(
         simplified_numerator,
         final_numerator,
         final_denominator,
+        final_num_factors,
+        final_den_factors,
+        packaged_num_factor_lists,
     )
 
 
@@ -1187,16 +1461,23 @@ def _build_fraction_display_term(
 ) -> RationalExpressionTerm:
     base_denominator = _factors_to_polynomial(denominator_factors)
     display_factors = denominator_factors
-    display_expanded = (
-        False
-        if force_factored
-        else _should_display_denominator_expanded(denominator_factors, options)
-    )
-    num_factors = numerator_factors or ()
+    num_factors = tuple(numerator_factors) if numerator_factors else ()
     if term_inflation.deg() > 0:
+        # Decide expand-vs-factored on the *final* factor list. Inflating a
+        # classroom-quadratic (2 linears → expand) with another linear yields a
+        # dense cubic that needs RRT — keep that product factored when RRT is off.
         display_factors = denominator_factors + (term_inflation,)
-        inflated_num_factors = (
-            (num_factors + (term_inflation,)) if num_factors else ()
+        if num_factors:
+            inflated_num_factors = num_factors + (term_inflation,)
+        elif numerator.deg() == 0 and not numerator.is_zero():
+            # constant × inflation linear — track factors for RRT policy
+            inflated_num_factors = (numerator, term_inflation)
+        else:
+            inflated_num_factors = ()
+        display_expanded = (
+            False
+            if force_factored
+            else _should_display_denominator_expanded(display_factors, options)
         )
         num_expanded = (
             False
@@ -1211,11 +1492,16 @@ def _build_fraction_display_term(
             numerator=numerator * term_inflation,
             denominator=base_denominator * term_inflation,
             denominator_factors=display_factors,
-            denominator_display_expanded=display_expanded and not force_factored,
+            denominator_display_expanded=display_expanded,
             numerator_factors=inflated_num_factors,
             numerator_display_expanded=num_expanded,
             term_kind="factor",
         )
+    display_expanded = (
+        False
+        if force_factored
+        else _should_display_denominator_expanded(denominator_factors, options)
+    )
     num_expanded = (
         False
         if force_factored
@@ -1234,6 +1520,357 @@ def _build_fraction_display_term(
         numerator_display_expanded=num_expanded,
         term_kind="factor",
     )
+
+
+def _lcd_display_latex(lcd: Polynomial, lcd_factors: tuple[Polynomial, ...]) -> str:
+    """Prefer factored LCD when construction tracked multiple factors."""
+    if lcd_factors and len(lcd_factors) > 1:
+        return format_factor_product_latex(lcd_factors)
+    if lcd_factors and len(lcd_factors) == 1:
+        return lcd_factors[0].to_latex()
+    return lcd.to_latex()
+
+
+def _is_unit_constant(poly: Polynomial) -> bool:
+    return (
+        not poly.is_zero()
+        and poly.deg() == 0
+        and abs(float(poly.coef(0)) - 1.0) < 1e-10
+    )
+
+
+def _product_matches(factors: tuple[Polynomial, ...], target: Polynomial) -> bool:
+    if not factors:
+        return False
+    product = factors[0]
+    for other in factors[1:]:
+        product = product * other
+    return _integerize_polynomial(product - target).is_zero()
+
+
+def _rewritten_numerator_over_lcd(
+    term: RationalExpressionTerm,
+    lcd: Polynomial,
+) -> Polynomial | None:
+    """Numerator of ``term`` after rewriting over ``lcd``, or None if not exact."""
+    if term.is_polynomial_term or term.denominator is None or term.denominator.deg() < 1:
+        return _integerize_polynomial(term.numerator * lcd)
+    try:
+        cofactor = _exact_divide(lcd, term.denominator)
+    except ValueError:
+        return None
+    return _integerize_polynomial(term.numerator * cofactor)
+
+
+def _rewritten_numerator_factors_for_display(
+    term: RationalExpressionTerm,
+    lcd_factors: tuple[Polynomial, ...],
+    rewritten_num: Polynomial,
+) -> tuple[Polynomial, ...]:
+    """Known factors for a term rewritten over the LCD (when construction tracked them)."""
+    if rewritten_num.is_zero():
+        return ()
+
+    if term.is_polynomial_term or term.denominator is None or term.denominator.deg() < 1:
+        # polynomial × LCD → show poly × LCD factors so dens cancel by eye.
+        if _is_unit_constant(term.numerator):
+            factors = tuple(lcd_factors)
+        else:
+            factors = (term.numerator,) + tuple(lcd_factors)
+        return factors if _product_matches(factors, rewritten_num) else ()
+
+    cofactor_factors = tuple(
+        _remaining_lcd_factors(list(lcd_factors), term.denominator_factors)
+    )
+    num_factors = tuple(term.numerator_factors)
+    if not num_factors:
+        if _is_unit_constant(term.numerator):
+            num_factors = ()
+        elif term.numerator.deg() == 0 and not term.numerator.is_zero():
+            num_factors = (term.numerator,)
+        else:
+            return ()
+
+    factors = num_factors + cofactor_factors
+    return factors if _product_matches(factors, rewritten_num) else ()
+
+
+def _rewritten_numerator_latex(
+    term: RationalExpressionTerm,
+    lcd: Polynomial,
+    lcd_factors: tuple[Polynomial, ...],
+    options: FactorablePolynomialOptions,
+) -> str | None:
+    rewritten_num = _rewritten_numerator_over_lcd(term, lcd)
+    if rewritten_num is None:
+        return None
+    factors = _rewritten_numerator_factors_for_display(term, lcd_factors, rewritten_num)
+    # Prefer factored when expanded form would be RRT-hard (or poly×multi-factor LCD).
+    if factors and not should_display_factor_product_expanded(factors, options):
+        return format_polynomial_from_factors(factors, options, force_factored=True)
+    if factors and options.rrt_mode == "exclude" and rewritten_num.deg() >= 3:
+        return format_polynomial_from_factors(factors, options, force_factored=True)
+    return rewritten_num.to_latex()
+
+
+def _force_factored_answer_dens(
+    denominator_factors: tuple[Polynomial, ...],
+    options: FactorablePolynomialOptions,
+) -> bool:
+    """Keep 2+ remaining linears factored in the answer when RRT is off."""
+    if options.rrt_mode != "exclude":
+        return False
+    variable = [f for f in denominator_factors if f.deg() >= 1]
+    return len(variable) >= 2
+
+
+def _combined_numerator_factor_candidates(
+    combined_numerator: Polynomial,
+    cancelled_lcd_factors: tuple[Polynomial, ...],
+    final_numerator: Polynomial | None,
+    final_numerator_factors: tuple[Polynomial, ...] = (),
+) -> tuple[Polynomial, ...]:
+    """Best-effort construction factors for the expanded combined numerator."""
+    if combined_numerator.is_zero():
+        return ()
+    remaining: tuple[Polynomial, ...] = ()
+    if final_numerator_factors and _product_matches(
+        final_numerator_factors, final_numerator or Polynomial([1])
+    ):
+        remaining = tuple(
+            f
+            for f in final_numerator_factors
+            if not (f.deg() == 0 and _is_unit_constant(f))
+        )
+    elif final_numerator is not None and not final_numerator.is_zero():
+        if not _is_unit_constant(final_numerator):
+            remaining = (final_numerator,)
+
+    cancelled = tuple(f for f in cancelled_lcd_factors if f.deg() >= 1 or not _is_unit_constant(f))
+    factors = cancelled + remaining
+    if factors and _product_matches(factors, combined_numerator):
+        return factors
+    if cancelled and _product_matches(cancelled, combined_numerator):
+        return cancelled
+    return ()
+
+
+def collect_nonclassroom_factor_step_details(
+    display_terms: tuple[RationalExpressionTerm, ...] | list[RationalExpressionTerm],
+    *,
+    combined_numerator: Polynomial,
+    cancelled_lcd_factors: tuple[Polynomial, ...],
+    final_numerator: Polynomial | None = None,
+    final_numerator_factors: tuple[Polynomial, ...] = (),
+    options: FactorablePolynomialOptions | None = None,
+) -> list[dict[str, Any]]:
+    """Return details for solution-step targets that are not classroom-factorable.
+
+    Checks:
+    - Expanded prompt nums/dens whose known factors need RRT
+    - Combined-before-cancel numerator when end-cancel requires factoring it
+    """
+    opts = options or FactorablePolynomialOptions(coef_min=-8, coef_max=8)
+    details: list[dict[str, Any]] = []
+
+    for index, term in enumerate(display_terms):
+        if (
+            term.denominator is not None
+            and term.denominator_display_expanded
+            and term.denominator_factors
+            and term.denominator.deg() >= 1
+            and not is_classroom_factorable(
+                term.denominator, opts, factors=term.denominator_factors
+            )
+        ):
+            details.append(
+                {
+                    "flag": NONCLASSROOM_FACTOR_STEP_FLAG,
+                    "role": "prompt_denominator",
+                    "term_index": index,
+                    "degree": term.denominator.deg(),
+                    "latex": term.denominator.to_latex(),
+                }
+            )
+        if (
+            term.numerator_display_expanded
+            and term.numerator_factors
+            and term.numerator.deg() >= 1
+            and not is_classroom_factorable(
+                term.numerator, opts, factors=term.numerator_factors
+            )
+        ):
+            details.append(
+                {
+                    "flag": NONCLASSROOM_FACTOR_STEP_FLAG,
+                    "role": "prompt_numerator",
+                    "term_index": index,
+                    "degree": term.numerator.deg(),
+                    "latex": term.numerator.to_latex(),
+                }
+            )
+
+    if cancelled_lcd_factors and combined_numerator.deg() >= 1:
+        factors = _combined_numerator_factor_candidates(
+            combined_numerator,
+            cancelled_lcd_factors,
+            final_numerator,
+            final_numerator_factors,
+        )
+        if not is_classroom_factorable(combined_numerator, opts, factors=factors or None):
+            details.append(
+                {
+                    "flag": NONCLASSROOM_FACTOR_STEP_FLAG,
+                    "role": "combined_before_cancel",
+                    "degree": combined_numerator.deg(),
+                    "latex": combined_numerator.to_latex(),
+                    "cancelled_factor_count": len(cancelled_lcd_factors),
+                }
+            )
+
+    return details
+
+
+def nonclassroom_factor_step_qa_flags(
+    details: list[dict[str, Any]],
+) -> list[str]:
+    """Deduplicate flag names from detail records."""
+    flags: list[str] = []
+    for detail in details:
+        name = str(detail.get("flag") or "")
+        if name and name not in flags:
+            flags.append(name)
+    return flags
+
+
+def _record_rational_generation_steps(
+    display_terms: tuple[RationalExpressionTerm, ...] | list[RationalExpressionTerm],
+    lcd: Polynomial,
+    lcd_factors: tuple[Polynomial, ...],
+    combined_numerator: Polynomial,
+    combined_denominator: Polynomial,
+    cancelled_lcd_factors: tuple[Polynomial, ...],
+    final_numerator: Polynomial,
+    final_denominator: Polynomial,
+    final_numerator_factors: tuple[Polynomial, ...] = (),
+    final_denominator_factors: tuple[Polynomial, ...] = (),
+    options: FactorablePolynomialOptions | None = None,
+) -> list[dict[str, str]]:
+    """Record generation steps in answer→prompt order (reverse for students).
+
+    Typical cancel≥1 construction:
+      final → combined-before-cancel → sum over LCD → prompt
+
+    Combined-before-cancel shows the *expanded* numerator students get by
+    adding — never a construction-only factorization they could not derive.
+    Construction must keep that expanded numerator hand-factorable (deg ≤ 2
+    when RRT is off); dens may stay factored because the LCD rewrite exposes them.
+    """
+    opts = options or FactorablePolynomialOptions(coef_min=-8, coef_max=8)
+    steps: list[dict[str, str]] = []
+    final_latex = format_simplified_rational_latex(
+        final_numerator,
+        final_denominator,
+        numerator_factors=final_numerator_factors,
+        denominator_factors=final_denominator_factors,
+        options=opts,
+    )
+    steps.append({"role": "final", "latex": final_latex})
+
+    # Honest path: expanded combined numerator (no secret cancel-product display).
+    combined_latex = format_simplified_rational_latex(
+        combined_numerator,
+        combined_denominator,
+        numerator_factors=(),
+        denominator_factors=lcd_factors if combined_denominator.deg() >= 1 else (),
+        options=opts,
+        force_numerator_factored=False,
+        force_denominator_factored=_force_factored_answer_dens(lcd_factors, opts)
+        if lcd_factors
+        else False,
+    )
+    if cancelled_lcd_factors:
+        steps.append({"role": "combined_before_cancel", "latex": combined_latex})
+    elif combined_latex != final_latex:
+        steps.append({"role": "combined", "latex": combined_latex})
+
+    lcd_tex = _lcd_display_latex(lcd, lcd_factors)
+    rewritten_parts: list[str] = []
+    for term in display_terms:
+        num_tex = _rewritten_numerator_latex(term, lcd, lcd_factors, opts)
+        if num_tex is None:
+            rewritten_parts = []
+            break
+        rewritten_parts.append(fraction_latex(num_tex, lcd_tex))
+    prompt_latex = sum_of_fractions_latex(list(display_terms))
+    if rewritten_parts:
+        sum_over_lcd = " + ".join(rewritten_parts)
+        # Skip when prompt is already the LCD rewrite (common shared-LCD cancel path).
+        if sum_over_lcd != prompt_latex:
+            steps.append({"role": "sum_over_lcd", "latex": sum_over_lcd})
+
+    steps.append({"role": "prompt", "latex": prompt_latex})
+    return steps
+
+
+def format_simplified_rational_latex(
+    numerator: Polynomial,
+    denominator: Polynomial,
+    *,
+    numerator_factors: tuple[Polynomial, ...] = (),
+    denominator_factors: tuple[Polynomial, ...] = (),
+    options: FactorablePolynomialOptions | None = None,
+    force_numerator_factored: bool = False,
+    force_denominator_factored: bool | None = None,
+) -> str:
+    """Render a simplified answer using known factors when RRT policy says so."""
+    opts = options or FactorablePolynomialOptions(coef_min=-8, coef_max=8)
+    if force_denominator_factored is None:
+        force_denominator_factored = _force_factored_answer_dens(
+            denominator_factors, opts
+        )
+
+    if denominator is None or denominator.is_zero():
+        if numerator_factors:
+            return format_polynomial_from_factors(
+                numerator_factors, opts, force_factored=force_numerator_factored
+            )
+        return numerator.to_latex()
+
+    if denominator.deg() == 0:
+        lead = float(denominator.coef(0))
+        if abs(lead - 1.0) < 1e-10:
+            if numerator_factors:
+                return format_polynomial_from_factors(
+                    numerator_factors, opts, force_factored=force_numerator_factored
+                )
+            return numerator.to_latex()
+        if abs(lead + 1.0) < 1e-10:
+            flipped = _integerize_polynomial(numerator * -1)
+            if numerator_factors:
+                flipped_factors = tuple(
+                    _integerize_polynomial(f * -1) if i == 0 else f
+                    for i, f in enumerate(numerator_factors)
+                )
+                return format_polynomial_from_factors(
+                    flipped_factors, opts, force_factored=force_numerator_factored
+                )
+            return flipped.to_latex()
+
+    if numerator_factors:
+        num_latex = format_polynomial_from_factors(
+            numerator_factors, opts, force_factored=force_numerator_factored
+        )
+    else:
+        num_latex = numerator.to_latex()
+
+    if denominator_factors:
+        den_latex = format_polynomial_from_factors(
+            denominator_factors, opts, force_factored=bool(force_denominator_factored)
+        )
+    else:
+        den_latex = denominator.to_latex()
+    return fraction_latex(num_latex, den_latex)
 
 
 def _compose_expression_numerator(
@@ -1268,13 +1905,19 @@ def build_rational_expression_problem(
     force_shared_lcd: bool = False,
     allow_monomial_lcd: bool = False,
 ) -> RationalExpressionSolution:
-    # No pedagogical hard cap — continuous D may request dozens/hundreds of terms.
+    # No pedagogical hard cap on term count — continuous D may request dozens.
+    # End-cancel with RRT off: expanded combined num must stay ≤ quadratic
+    # (constant core × ≤2 linear cancel factors). Matches
+    # question_engine...HAND_FACTORABLE_END_CANCEL_MAX.
     term_count = max(2, int(term_count))
     coef_min, coef_max = options.normalized_coef_range()
     if allow_empty_denominators is None:
         allow_empty_denominators = allow_polynomial_terms
 
     _ALL_CANCEL = 10**9
+    rrt_exclude = options.rrt_mode == "exclude"
+    # Constant reduced core → at most 2 linear cancels without RRT.
+    _hand_cancel_cap = 2 if rrt_exclude else _ALL_CANCEL
 
     for _ in range(200):
         include_polynomial = allow_polynomial_terms and random.random() < 0.6
@@ -1315,6 +1958,8 @@ def build_rational_expression_problem(
                 lcd_factor_count = min(max(hi, lcd_factor_count), planned_cancel + 1)
                 if max_lcd_factors is not None:
                     lcd_factor_count = min(lcd_factor_count, max_lcd_factors)
+            if planned_cancel and planned_cancel > 0:
+                planned_cancel = min(planned_cancel, _hand_cancel_cap)
         else:
             planned_cancel = max(0, int(cancel_factor_count))
             if planned_cancel <= 0:
@@ -1328,6 +1973,7 @@ def build_rational_expression_problem(
             elif planned_cancel >= _ALL_CANCEL:
                 # "All available": size the LCD normally, then cancel every factor
                 # present — do not inflate LCD to the cancel sentinel / continuous max.
+                # With RRT off, still clamp to hand-factorable end-cancel.
                 lo = max(1 if max_lcd_factors == 1 else 2, factor_term_count if max_lcd_factors is None else 1)
                 if max_lcd_factors is not None:
                     lo = min(lo, max_lcd_factors)
@@ -1335,15 +1981,33 @@ def build_rational_expression_problem(
                 else:
                     hi = max(lo, max(2, options.target_degree_max))
                 lcd_factor_count = random.randint(lo, hi)
+                planned_cancel = min(lcd_factor_count, _hand_cancel_cap)
             elif max_lcd_factors is not None and planned_cancel >= max_lcd_factors:
                 # Exact request ≥ capacity → cancel every available LCD factor.
                 lcd_factor_count = max(1, max_lcd_factors)
+                planned_cancel = min(planned_cancel, _hand_cancel_cap, lcd_factor_count)
             else:
-                # Leave a single remaining factor so dens stay simple after distribution.
-                lcd_factor_count = planned_cancel + 1
+                # Leave at least one remaining dens factor after cancel. When
+                # capacity allows, prefer richer LCDs so students cancel after
+                # combining over a multi-factor LCD (not cancel+1 only).
+                planned_cancel = min(planned_cancel, _hand_cancel_cap)
+                min_lcd = planned_cancel + 1
+                if max_lcd_factors is not None:
+                    lcd_factor_count = random.randint(
+                        min_lcd, max(min_lcd, max_lcd_factors)
+                    )
+                else:
+                    lcd_factor_count = min_lcd + random.randint(0, 2)
             if max_lcd_factors is not None:
                 lcd_factor_count = max(1, min(lcd_factor_count, max_lcd_factors))
-
+            if planned_cancel and 0 < planned_cancel < _ALL_CANCEL:
+                planned_cancel = min(planned_cancel, _hand_cancel_cap)
+        # Honest end-cancel: no poly/full-LCD extras that inflate combined deg.
+        if rrt_exclude and planned_cancel and planned_cancel > 0:
+            include_polynomial = False
+            include_full_lcd = False
+            reserved = 0
+            factor_term_count = max(1, term_count)
         lcd_factors = _build_lcd_factors(
             options,
             lcd_factor_count,
@@ -1417,12 +2081,13 @@ def build_rational_expression_problem(
                 cancel_factor_count,
                 len(lcd_factors),
             )
+            target_cancel_count = min(target_cancel_count, _hand_cancel_cap)
         elif planned_cancel <= 0:
             target_cancel_count = 0
         elif planned_cancel >= len(lcd_factors):
-            target_cancel_count = len(lcd_factors)
+            target_cancel_count = min(len(lcd_factors), _hand_cancel_cap)
         else:
-            target_cancel_count = min(planned_cancel, len(lcd_factors) - 1)
+            target_cancel_count = min(planned_cancel, len(lcd_factors) - 1, _hand_cancel_cap)
 
         cancelled_lcd_factors = _pick_cancelled_lcd_factors(lcd_factors, target_cancel_count)
 
@@ -1433,6 +2098,9 @@ def build_rational_expression_problem(
         term_denominators: list[Polynomial]
         final_numerator: Polynomial
         final_denominator: Polynomial
+        final_numerator_factors: tuple[Polynomial, ...] = ()
+        final_denominator_factors: tuple[Polynomial, ...] = ()
+        term_numerator_factor_lists: list[tuple[Polynomial, ...]] = []
 
         if cancelled_lcd_factors:
             pieces = _build_cancelled_expression_pieces(
@@ -1452,6 +2120,9 @@ def build_rational_expression_problem(
                 simplified_numerator,
                 final_numerator,
                 final_denominator,
+                final_numerator_factors,
+                final_denominator_factors,
+                term_numerator_factor_lists,
             ) = pieces
             term_denominators = [
                 _factors_to_polynomial(factors) for factors in term_denominator_factor_lists
@@ -1469,6 +2140,9 @@ def build_rational_expression_problem(
             except ValueError:
                 continue
         else:
+            final_numerator_factors = ()
+            final_denominator_factors = tuple(lcd_factors)
+            term_numerator_factor_lists = [() for _ in range(factor_term_count)]
             if include_polynomial:
                 polynomial_term = _random_polynomial_term(
                     coef_min,
@@ -1567,7 +2241,16 @@ def build_rational_expression_problem(
 
         # Shuffle fractional slots so no fixed position absorbs extras.
         fractional_slots = list(
-            zip(partial_numerators, term_denominators, term_denominator_factor_lists, strict=True)
+            zip(
+                partial_numerators,
+                term_denominators,
+                term_denominator_factor_lists,
+                (
+                    term_numerator_factor_lists
+                    + [() for _ in range(max(0, len(partial_numerators) - len(term_numerator_factor_lists)))]
+                )[: len(partial_numerators)],
+                strict=True,
+            )
         )
         random.shuffle(fractional_slots)
 
@@ -1583,10 +2266,18 @@ def build_rational_expression_problem(
         else:
             polynomial_term_placed = False
 
-        for partial_num, term_denominator, term_factors in fractional_slots:
+        for partial_num, term_denominator, term_factors, num_factors in fractional_slots:
+            # When cancels are planned, keep per-term degree inflation rare so
+            # cancellation happens after combining — not inside each term.
+            # With RRT off, disable inflation entirely for honest end-cancel.
+            effective_inflation = inflation_chance
+            if cancelled_lcd_factors:
+                effective_inflation = (
+                    0.0 if rrt_exclude else min(inflation_chance, 0.05)
+                )
             term_inflation = _maybe_pick_term_inflation(
                 options,
-                inflation_chance,
+                effective_inflation,
                 max_inflation_degree,
             )
             if term_inflation.deg() > 0 and inflation_factor.deg() == 0:
@@ -1620,6 +2311,7 @@ def build_rational_expression_problem(
                     term_factors,
                     term_inflation,
                     options,
+                    numerator_factors=num_factors or None,
                 )
             )
 
@@ -1666,9 +2358,62 @@ def build_rational_expression_problem(
             final_numerator,
             final_denominator,
         )
+        # Keep factor lists aligned with any content scaling of the final dens.
+        if final_denominator_factors:
+            scaled_den = _factors_to_polynomial(final_denominator_factors)
+            if not _integerize_polynomial(scaled_den - final_denominator).is_zero():
+                # Content scaling changed dens; drop stale factor metadata for dens
+                # only when the product no longer matches (num factors usually fine).
+                if abs(float(scaled_den.content_gcd() or 1)) > 1:
+                    pass
+                # If degrees match, keep factors; answer formatter uses them for shape.
+                if scaled_den.deg() != final_denominator.deg():
+                    final_denominator_factors = ()
+
+        if final_numerator_factors:
+            scaled_num = _factors_to_polynomial(final_numerator_factors)
+            if scaled_num.deg() != final_numerator.deg():
+                final_numerator_factors = ()
+            elif (
+                final_numerator.deg() == 0
+                and final_numerator_factors
+                and final_numerator_factors[0].deg() == 0
+            ):
+                final_numerator_factors = (final_numerator,)
 
         combined_numerator = simplified_numerator
         combined_denominator = simplified_denominator
+        # Honest end-cancel: expanded combined num must be classroom-factorable.
+        if (
+            rrt_exclude
+            and cancelled_lcd_factors
+            and combined_numerator.deg() > 2
+        ):
+            continue
+        lcd_factor_tuple = tuple(lcd_factors)
+        display_term_tuple = tuple(display_terms)
+        generation_steps = _record_rational_generation_steps(
+            display_term_tuple,
+            lcd,
+            lcd_factor_tuple,
+            combined_numerator,
+            combined_denominator,
+            cancelled_lcd_factors,
+            final_numerator,
+            final_denominator,
+            final_numerator_factors=final_numerator_factors,
+            final_denominator_factors=final_denominator_factors,
+            options=options,
+        )
+        qa_flag_details = collect_nonclassroom_factor_step_details(
+            display_term_tuple,
+            combined_numerator=combined_numerator,
+            cancelled_lcd_factors=cancelled_lcd_factors,
+            final_numerator=final_numerator,
+            final_numerator_factors=final_numerator_factors,
+            options=options,
+        )
+        qa_flags = nonclassroom_factor_step_qa_flags(qa_flag_details)
 
         return RationalExpressionSolution(
             cancel_factor=Polynomial([1]),
@@ -1678,8 +2423,8 @@ def build_rational_expression_problem(
             simplified_numerator=simplified_numerator,
             simplified_denominator=simplified_denominator,
             lcd=lcd,
-            lcd_factors=tuple(lcd_factors),
-            display_terms=tuple(display_terms),
+            lcd_factors=lcd_factor_tuple,
+            display_terms=display_term_tuple,
             partial_numerators=tuple(partial_numerators),
             polynomial_term=polynomial_term,
             full_lcd_numerator=full_lcd_numerator,
@@ -1688,9 +2433,14 @@ def build_rational_expression_problem(
             cancelled_lcd_factors=cancelled_lcd_factors,
             final_numerator=final_numerator,
             final_denominator=final_denominator,
+            final_numerator_factors=final_numerator_factors,
+            final_denominator_factors=final_denominator_factors,
             matrix_rows=matrix_rows,
             matrix_aug_column=matrix_aug,
             matrix_solution=matrix_solution,
+            generation_steps=generation_steps,
+            qa_flags=qa_flags,
+            qa_flag_details=qa_flag_details,
         )
 
     raise RuntimeError("Unable to build rational expression problem")

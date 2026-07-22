@@ -34,6 +34,43 @@ ALL_AVAILABLE_CANCEL = 10**9
 # continuous D ceiling (which can hit 100+ and hang the UI).
 ALL_AVAILABLE_FACTOR_CAP = 8
 
+# Add-then-cancel (±): after combining over the LCD, the *expanded* combined
+# numerator must be hand-factorable without RRT (deg ≤ 2: linear/quadratic /
+# GCF / grouping / DOS). With a constant reduced core that means at most two
+# linear cancel factors. Higher requests are clamped; prefer honest clamp over
+# leaking construction factorizations into solution steps.
+HAND_FACTORABLE_END_CANCEL_MAX = 2
+
+
+def max_hand_factorable_end_cancel(
+    *,
+    rrt_exclude: bool = True,
+    final_core_degree: int = 0,
+) -> int:
+    """Max end-of-addition cancel factors that keep combined num classroom-factorable.
+
+    When RRT is allowed there is no pedagogical cap (return a huge sentinel).
+    Otherwise ``combined_deg ≈ final_core_degree + cancel_count`` for linear
+    cancels, and we require ``combined_deg ≤ 2``.
+    """
+    if not rrt_exclude:
+        return ALL_AVAILABLE_CANCEL
+    return max(0, HAND_FACTORABLE_END_CANCEL_MAX - max(0, int(final_core_degree)))
+
+
+def clamp_end_cancel_hand_factorable(
+    requested: int,
+    *,
+    rrt_exclude: bool = True,
+    final_core_degree: int = 0,
+) -> int:
+    """Clamp a requested end-cancel count to the hand-factorable maximum."""
+    cap = max_hand_factorable_end_cancel(
+        rrt_exclude=rrt_exclude,
+        final_core_degree=final_core_degree,
+    )
+    return max(0, min(int(requested), int(cap)))
+
 
 def all_available_factor_cap(settings: dict[str, Any] | None = None) -> int:
     """Max factors when UI asks to cancel all available."""

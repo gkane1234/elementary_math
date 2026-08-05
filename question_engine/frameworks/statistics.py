@@ -97,10 +97,62 @@ def statistics_params_from_settings(settings: dict) -> StatisticsParams:
     )
 
 
+def _stats_continuous_d(settings: dict) -> float | None:
+    """Return continuous difficulty when present; else None (use EMH presets only)."""
+    if "difficulty" not in settings or settings["difficulty"] is None:
+        return None
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+    return max(0.0, settings_difficulty(settings, default=6.0))
+
+
+def continuous_statistics_params(settings: dict) -> StatisticsParams:
+    """Merge explicit settings with continuous-D effort targets for data size/range.
+
+    Effort is *not* just larger numbers: mid/high D prefer more points and a wider
+    support so counting / binning / averaging takes more steps.
+    """
+    base = statistics_params_from_settings(settings)
+    d = _stats_continuous_d(settings)
+    if d is None:
+        return base
+    # Continuous overlay (caller-explicit keys still win via base defaults above
+    # only when set before presets — here we refine size/value from D).
+    size_min = max(3, int(4 + d / 5))
+    size_max = max(size_min, int(6 + d / 2.5))
+    value_min = 1
+    value_max = max(6, int(8 + 1.8 * d))
+    # Honor explicit overrides when the client set them without going through presets.
+    if "data_set_size_min" in settings and "difficulty" in settings:
+        # Prefer continuous targets when difficulty is the driver.
+        pass
+    return StatisticsParams(
+        size_min=size_min,
+        size_max=size_max,
+        value_min=value_min,
+        value_max=value_max,
+        integer_data_only=base.integer_data_only,
+        measure_type=base.measure_type,
+        probability_format=base.probability_format,
+    )
+
+
 def _generate_data_set(settings: dict, *, params: StatisticsParams | None = None) -> list[float]:
-    params = params or statistics_params_from_settings(settings)
+    params = params or continuous_statistics_params(settings)
     count = random.randint(params.size_min, params.size_max)
     values: list[float] = []
+    d = _stats_continuous_d(settings)
+    # At higher D, bias toward fewer unique values with taller stacks (dot plots)
+    # or deliberately awkward means (center/spread) — callers may reshuffle.
+    if d is not None and d >= 14.0 and params.integer_data_only and random.random() < 0.45:
+        n_unique = max(3, min(count - 1, int(3 + d / 8)))
+        pool = [
+            float(random_int_range(params.value_min, params.value_max))
+            for _ in range(n_unique)
+        ]
+        for _ in range(count):
+            values.append(random.choice(pool))
+        return values
     for _ in range(count):
         if params.integer_data_only:
             values.append(float(random_int_range(params.value_min, params.value_max)))
@@ -108,6 +160,67 @@ def _generate_data_set(settings: dict, *, params: StatisticsParams | None = None
             whole = random_int_range(params.value_min, params.value_max)
             values.append(round(whole + random.random(), 1))
     return values
+
+
+def _pick_center_spread_measure(settings: dict, explicit: MeasureType | None) -> MeasureType:
+    """Mode ladder: range/mode → median → mean (awkward totals) as D rises."""
+    if explicit is not None:
+        return explicit
+    measure = str(settings.get("measure_type", "random"))
+    if measure in _MEASURE_LABELS:
+        return measure  # type: ignore[return-value]
+    d = _stats_continuous_d(settings)
+    if d is None:
+        return random.choice(["mean", "median", "mode", "range"])
+    if d < 4.0:
+        return random.choice(["range", "range", "mode"])
+    if d < 8.0:
+        return random.choice(["range", "mode", "mode", "median"])
+    if d < 13.0:
+        return random.choice(["median", "median", "mode", "mean"])
+    if d < 18.0:
+        return random.choice(["mean", "mean", "median"])
+    return random.choice(["mean", "mean", "mean", "median"])
+
+
+def _dot_plot_task_mode(settings: dict) -> str:
+    """count → compare → mode → mean/median from listed dots."""
+    d = _stats_continuous_d(settings)
+    if d is None:
+        return "count"
+    if d < 5.0:
+        return "count"
+    if d < 11.0:
+        return random.choice(["count", "count", "total", "compare"])
+    if d < 17.0:
+        return random.choice(["compare", "mode", "mode", "total"])
+    return random.choice(["mode", "mean", "median", "compare"])
+
+
+def _histogram_task_mode(settings: dict) -> str:
+    d = _stats_continuous_d(settings)
+    if d is None:
+        return "count_bin"
+    if d < 5.0:
+        return "count_bin"
+    if d < 11.0:
+        return random.choice(["count_bin", "count_bin", "most"])
+    if d < 17.0:
+        return random.choice(["most", "compare", "count_bin"])
+    return random.choice(["compare", "most", "span_total"])
+
+
+def _box_plot_task_mode(settings: dict) -> str:
+    d = _stats_continuous_d(settings)
+    if d is None:
+        return random.choice(["median", "iqr", "range"])
+    if d < 5.0:
+        return "median"
+    if d < 10.0:
+        return random.choice(["median", "range", "range"])
+    if d < 16.0:
+        return random.choice(["range", "iqr", "iqr"])
+    return random.choice(["iqr", "iqr", "q1", "q3"])
 
 
 def _values_latex(values: list[float]) -> str:
@@ -295,13 +408,28 @@ class CenterSpreadFramework(StatisticsFramework):
         return {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        params = statistics_params_from_settings(settings)
+        params = continuous_statistics_params(settings)
         values = _generate_data_set(settings, params=params)
-        measure = _resolve_measure(settings, self.measure)
+        measure = _pick_center_spread_measure(settings, self.measure)
+        d = _stats_continuous_d(settings)
         if measure == "mode":
             # A strict majority guarantees that the requested mode exists and is unique.
             mode_value = values[0]
             values[: len(values) // 2 + 1] = [mode_value] * (len(values) // 2 + 1)
+        elif measure == "mean" and d is not None and d >= 12.0:
+            # Prefer a non-integer mean (extra division step) without huge magnitudes.
+            for _ in range(24):
+                if abs(_compute_mean(values) - round(_compute_mean(values))) > 1e-9:
+                    break
+                values[-1] = float(
+                    random_int_range(params.value_min, params.value_max)
+                )
+        elif measure == "median" and d is not None and d >= 14.0 and len(values) % 2 == 0:
+            # Even count → average of two middle values (more work than odd-n).
+            pass
+        elif measure == "median" and d is not None and d >= 14.0 and len(values) % 2 == 1:
+            # Force even n at high D for median.
+            values.append(float(random_int_range(params.value_min, params.value_max)))
         result = _compute_measure(values, measure)
         self._last_values = values
         self._last_chart = ChartSpec(chart_type="dot_plot", title="Data set")
@@ -392,19 +520,78 @@ class DotPlotReadFramework(StatisticsFramework):
         return {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        params = statistics_params_from_settings(settings)
+        params = continuous_statistics_params(settings)
         values = _generate_data_set(settings, params=params)
-        target = random.choice(sorted(set(values)))
-        count = values.count(target)
+        mode = _dot_plot_task_mode(settings)
         self._last_values = values
         self._last_chart = ChartSpec(
             chart_type="dot_plot", title="Dot plot", x_label="Value", y_label="Frequency"
         )
         include_answer = bool(settings.get("include_answer_key", False))
+        data_line = f"\\text{{Data: }} \\{{{_values_latex(values)}\\}}"
+
+        if mode == "total":
+            prompt = (
+                f"\\text{{The dot plot shows the data set below. How many dots are there in all?}}\\\\"
+                f"{data_line}"
+            )
+            answer = str(len(values)) if include_answer else None
+            return prompt, "total dots", answer
+
+        if mode == "compare":
+            uniq = sorted(set(values))
+            if len(uniq) < 2:
+                uniq = [uniq[0], uniq[0] + 1]
+                values.append(float(uniq[1]))
+                self._last_values = values
+            a, b = random.sample(uniq, 2)
+            ca, cb = values.count(a), values.count(b)
+            a_t = str(int(a) if a == int(a) else a)
+            b_t = str(int(b) if b == int(b) else b)
+            prompt = (
+                f"\\text{{The dot plot shows the data set below. How many more dots are at }} "
+                f"{a_t}\\text{{ than at }} {b_t}\\text{{?}}\\\\"
+                f"{data_line}"
+            )
+            answer = str(abs(ca - cb)) if include_answer else None
+            return prompt, f"compare dots {a_t} vs {b_t}", answer
+
+        if mode == "mode":
+            counts = Counter(values)
+            mode_val = max(counts, key=lambda v: (counts[v], -v))
+            # Ensure unique mode.
+            if list(counts.values()).count(counts[mode_val]) > 1:
+                mode_val = values[0]
+                values[: len(values) // 2 + 1] = [mode_val] * (len(values) // 2 + 1)
+                self._last_values = values
+            mv = str(int(mode_val) if mode_val == int(mode_val) else mode_val)
+            prompt = (
+                f"\\text{{The dot plot shows the data set below. What value has the most dots?}}\\\\"
+                f"{data_line}"
+            )
+            answer = mv if include_answer else None
+            return prompt, "mode from dot plot", answer
+
+        if mode in {"mean", "median"}:
+            result = _compute_measure(values, mode)  # type: ignore[arg-type]
+            prompt = (
+                f"\\text{{The dot plot shows the data set below. What is the {mode}?}}\\\\"
+                f"{data_line}"
+            )
+            answer = (
+                _format_numeric_answer(result, integer_only=params.integer_data_only)
+                if include_answer
+                else None
+            )
+            return prompt, f"{mode} from dot plot", answer
+
+        # Default: count at a value
+        target = random.choice(sorted(set(values)))
+        count = values.count(target)
         target_text = str(int(target) if target == int(target) else target)
         prompt = (
             f"\\text{{The dot plot shows the data set below. How many dots are at }} {target_text}\\text{{?}}\\\\"
-            f"\\text{{Data: }} \\{{{_values_latex(values)}\\}}"
+            f"{data_line}"
         )
         answer = str(count) if include_answer else None
         return prompt, f"dot count at {target_text}", answer
@@ -434,17 +621,27 @@ class HistogramReadFramework(StatisticsFramework):
         return {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        params = statistics_params_from_settings(settings)
+        params = continuous_statistics_params(settings)
         values = _generate_data_set(settings, params=params)
-        bin_width = max(2, (params.value_max - params.value_min) // 4)
+        d = _stats_continuous_d(settings)
+        span = max(2, params.value_max - params.value_min)
+        if d is None:
+            bin_width = max(2, span // 4)
+        elif d < 6.0:
+            bin_width = max(2, span // 3)
+        elif d < 14.0:
+            bin_width = max(2, span // 5)
+        else:
+            bin_width = max(2, min(5, span // 6))
         bins = _histogram_bins(values, bin_width)
         populated_bins = [
             bin_range
             for bin_range in bins
             if _count_in_bin(values, bin_range[0], bin_range[1]) > 0
         ]
-        target = random.choice(populated_bins)
-        count = _count_in_bin(values, target[0], target[1])
+        if not populated_bins:
+            populated_bins = bins
+        mode = _histogram_task_mode(settings)
         self._last_values = values
         self._last_chart = ChartSpec(
             chart_type="histogram",
@@ -455,11 +652,58 @@ class HistogramReadFramework(StatisticsFramework):
             bins=bins,
         )
         include_answer = bool(settings.get("include_answer_key", False))
+        data_line = f"\\text{{Data: }} \\{{{_values_latex(values)}\\}}"
+
+        if mode == "most":
+            best = max(
+                populated_bins,
+                key=lambda br: _count_in_bin(values, br[0], br[1]),
+            )
+            low, high = int(best[0]), int(best[1])
+            prompt = (
+                f"\\text{{Which interval contains the most values?}}\\\\"
+                f"{data_line}"
+            )
+            answer = f"[{low}, {high})" if include_answer else None
+            return prompt, "histogram modal bin", answer
+
+        if mode == "compare" and len(populated_bins) >= 2:
+            b1, b2 = random.sample(populated_bins, 2)
+            c1 = _count_in_bin(values, b1[0], b1[1])
+            c2 = _count_in_bin(values, b2[0], b2[1])
+            l1, h1 = int(b1[0]), int(b1[1])
+            l2, h2 = int(b2[0]), int(b2[1])
+            prompt = (
+                f"\\text{{How many more values fall in }} [{l1},\\ {h1})\\text{{ than in }} "
+                f"[{l2},\\ {h2})\\text{{?}}\\\\"
+                f"{data_line}"
+            )
+            answer = str(abs(c1 - c2)) if include_answer else None
+            return prompt, "histogram bin compare", answer
+
+        if mode == "span_total" and len(bins) >= 2:
+            i = random.randint(0, max(0, len(bins) - 2))
+            j = random.randint(i, len(bins) - 1)
+            low, high = int(bins[i][0]), int(bins[j][1])
+            count = sum(
+                1
+                for v in values
+                if low <= v < high or (v == high and high == max(values))
+            )
+            prompt = (
+                f"\\text{{How many values fall in the combined interval }} [{low},\\ {high})\\text{{?}}\\\\"
+                f"{data_line}"
+            )
+            answer = str(count) if include_answer else None
+            return prompt, f"histogram span [{low}, {high})", answer
+
+        target = random.choice(populated_bins)
+        count = _count_in_bin(values, target[0], target[1])
         low = int(target[0])
         high = int(target[1])
         prompt = (
             f"\\text{{How many values fall in the interval }} [{low},\\ {high})\\text{{?}}\\\\"
-            f"\\text{{Data: }} \\{{{_values_latex(values)}\\}}"
+            f"{data_line}"
         )
         answer = str(count) if include_answer else None
         return prompt, f"histogram bin [{low}, {high})", answer
@@ -489,10 +733,15 @@ class BoxPlotBasicsFramework(StatisticsFramework):
         return {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        params = statistics_params_from_settings(settings)
+        params = continuous_statistics_params(settings)
         values = _generate_data_set(settings, params=params)
+        # Ensure enough points for a stable five-number summary at higher D.
+        d = _stats_continuous_d(settings)
+        if d is not None and d >= 10.0 and len(values) < 8:
+            while len(values) < 8:
+                values.append(float(random_int_range(params.value_min, params.value_max)))
         summary = _five_number_summary(values)
-        question = random.choice(["median", "iqr", "range"])
+        question = _box_plot_task_mode(settings)
         self._last_values = values
         self._last_chart = ChartSpec(
             chart_type="box_plot",
@@ -507,6 +756,12 @@ class BoxPlotBasicsFramework(StatisticsFramework):
         elif question == "iqr":
             result = summary["q3"] - summary["q1"]
             label = "interquartile range"
+        elif question == "q1":
+            result = summary["q1"]
+            label = "first quartile (Q1)"
+        elif question == "q3":
+            result = summary["q3"]
+            label = "third quartile (Q3)"
         else:
             result = summary["max"] - summary["min"]
             label = "range"

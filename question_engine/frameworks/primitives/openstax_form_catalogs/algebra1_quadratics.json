@@ -1,0 +1,92 @@
+{
+  "catalog_id": "algebra1_quadratics",
+  "title": "OpenStax Elementary Algebra 2e — quadratic solve methods (Ch. 10 algebraic; no graphing)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "elementary-algebra-2e",
+      "slug": "10-3-solve-quadratic-equations-using-the-quadratic-formula",
+      "title": "10.3 Solve Quadratic Equations Using the Quadratic Formula",
+      "url": "https://openstax.org/books/elementary-algebra-2e/pages/10-3-solve-quadratic-equations-using-the-quadratic-formula",
+      "stage1": "scripts/output/example_mining/elementary-algebra-2e/stage1/10-3-solve-quadratic-equations-using-the-quadratic-formula.json"
+    },
+    "related": [
+      { "book": "elementary-algebra-2e", "slug": "10-1-solve-quadratic-equations-using-the-square-root-property" },
+      { "book": "elementary-algebra-2e", "slug": "10-2-solve-quadratic-equations-by-completing-the-square" },
+      { "book": "elementary-algebra-2e", "slug": "10-4-solve-applications-modeled-by-quadratic-equations" }
+    ]
+  },
+  "taxonomy_notes": [
+    "Solve methods only — exclude §10.5 graphing (out of algebraic scope for this catalog).",
+    "Factoring solve lives primarily under algebra1_factoring (quadratic_equation_factor / §7.6).",
+    "Leaf catalog-sampling not yet wired."
+  ],
+  "wired_type_ids": [],
+  "forms": [
+    {
+      "form_id": "square_root_property",
+      "description": "Solve x² = k or (x−h)² = k via ±√",
+      "strategy": "square_root_property",
+      "constraints": { "kind": "isolated_or_vertex" },
+      "d_min": 0,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": ["square_root"],
+      "example_item_ids": ["fs-id1168345255637", "fs-id1168345509987"],
+      "openstax_case": "§10.1",
+      "leaves": ["quadratic_square_roots"]
+    },
+    {
+      "form_id": "completing_the_square",
+      "description": "Complete the square then square-root property",
+      "strategy": "complete_square",
+      "constraints": { "kind": "complete_square" },
+      "d_min": 6,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": ["complete_square"],
+      "example_item_ids": ["fs-id1168344331852", "fs-id1168344150117"],
+      "openstax_case": "§10.2",
+      "leaves": ["quadratic_completing_square_solve", "quadratic_completing_square_constant"]
+    },
+    {
+      "form_id": "quadratic_formula",
+      "description": "Solve via quadratic formula",
+      "strategy": "quadratic_formula",
+      "constraints": { "kind": "formula" },
+      "d_min": 4,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["quadratic_formula"],
+      "example_item_ids": ["fs-id1166502221779", "fs-id1166502221189"],
+      "openstax_case": "§10.3",
+      "leaves": ["quadratic_formula"]
+    },
+    {
+      "form_id": "discriminant_classify",
+      "description": "Use discriminant to classify number/type of roots",
+      "strategy": "discriminant",
+      "constraints": { "kind": "discriminant" },
+      "d_min": 4,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["discriminant"],
+      "example_item_ids": [],
+      "openstax_case": "§10.3 related",
+      "leaves": ["quadratic_discriminant"]
+    },
+    {
+      "form_id": "quadratic_application",
+      "description": "Model → quadratic equation → solve in context",
+      "strategy": "modeling",
+      "constraints": { "kind": "word_problem" },
+      "d_min": 10,
+      "d_weight": 1.0,
+      "generation_status": "stub",
+      "tricks": ["modeling"],
+      "example_item_ids": [],
+      "openstax_case": "§10.4 — missing on A1",
+      "leaves": []
+    }
+  ]
+}

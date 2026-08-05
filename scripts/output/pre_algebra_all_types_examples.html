@@ -1,0 +1,991 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'/>
+<title>Polynomial — Pre-Algebra Ready Type Examples (E/M/H)</title>
+<link rel='stylesheet' href='file:///C:/Users/gkane/Documents/Stuff/Polynomial/node_modules/katex/dist/katex.min.css'/>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0.75in 0.7in;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 12pt;
+  line-height: 1.35;
+  color: #111827;
+  background: #fff;
+}
+.doc-title { text-align: center; font-size: 1.35rem; margin: 0 0 0.35rem; }
+.doc-subtitle { text-align: center; color: #4b5563; margin: 0 0 1.25rem; font-size: 0.95rem; }
+.type-section {
+  margin: 0 0 1.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.type-section:last-of-type { border-bottom: none; }
+.worksheet-header h2 {
+  margin: 0 0 0.35rem;
+  text-align: center;
+  font-size: 1.15rem;
+}
+.worksheet-meta { margin: 0 0 0.65rem; font-size: 0.95rem; }
+.worksheet-instruction {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+}
+.type-id {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.78rem;
+  margin: 0 0 0.5rem;
+  font-family: ui-monospace, Consolas, monospace;
+}
+.difficulty-block { margin: 0.85rem 0 1rem; }
+.difficulty-label {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #1f2937;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 0.12rem 0.45rem;
+  margin: 0 0 0.45rem;
+}
+.question-list {
+  margin: 0;
+  padding-left: 1.5rem;
+  min-width: 0;
+  max-width: 100%;
+}
+.question-list li {
+  margin-bottom: 1.15rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.question-prompt { display: inline; min-width: 0; max-width: 100%; }
+.question-list li .katex,
+.worksheet-instruction .katex,
+.mc-choice .katex {
+  white-space: normal;
+  max-width: 100%;
+}
+.question-list li .katex .base,
+.worksheet-instruction .katex .base,
+.mc-choice .katex .base {
+  display: inline;
+  white-space: normal;
+  width: auto;
+  max-width: 100%;
+}
+.question-list li .katex-html,
+.worksheet-instruction .katex-html,
+.mc-choice .katex-html {
+  white-space: normal;
+  max-width: 100%;
+}
+.question-list li .katex .text,
+.question-list li .katex .text > .mord,
+.worksheet-instruction .katex .text,
+.worksheet-instruction .katex .text > .mord,
+.mc-choice .katex .text,
+.mc-choice .katex .text > .mord {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: none;
+}
+.question-graph {
+  display: block;
+  clear: both;
+  width: 100%;
+  max-width: min(280px, 100%);
+  height: auto;
+  margin-top: 0.45rem;
+}
+.question-diagram {
+  margin-top: 0.45rem;
+  max-width: min(320px, 100%);
+}
+.question-diagram svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.question-graph .graph-axis { stroke: #374151; stroke-width: 1.5; }
+.question-graph .graph-grid { stroke: #e5e7eb; stroke-width: 1; }
+.question-graph .graph-tick { stroke: #6b7280; stroke-width: 1; }
+.question-graph .graph-label { fill: #4b5563; font-size: 11px; font-family: system-ui, sans-serif; }
+.question-graph .graph-shade { fill: #93c5fd; opacity: 0.55; }
+.question-graph .graph-boundary-filled { fill: #111827; stroke: #111827; }
+.question-graph .graph-boundary-open { fill: #ffffff; stroke: #111827; stroke-width: 1.5; }
+.question-graph .graph-line { stroke: #2563eb; stroke-width: 2; }
+.question-graph .graph-point { fill: #111827; }
+.mc-choices {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+.mc-choice {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  gap: 0.35rem;
+  align-items: start;
+}
+.mc-choice-letter { font-weight: 600; }
+.answer-key {
+  margin-top: 0.85rem;
+  padding-top: 0.65rem;
+  border-top: 2px dashed #d1d5db;
+}
+.answer-key h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+.answer-list { margin: 0; padding-left: 1.5rem; }
+.answer-list li { margin-bottom: 0.55rem; }
+.err { color: #b91c1c; font-size: 0.9rem; }
+.question-columns {
+  display: grid;
+  gap: 1.25rem 1.5rem;
+  align-items: start;
+  width: 100%;
+}
+.question-columns > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.question-columns[data-columns="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.question-columns[data-columns="1"] { grid-template-columns: minmax(0, 1fr); }
+.question-columns[data-columns="2"] .question-graph { max-width: min(240px, 100%); }
+@page {
+  size: letter;
+  margin: 0.55in;
+}
+@media print {
+  body { padding: 0; margin: 0; }
+  .doc-title, .doc-subtitle {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .type-section {
+    break-before: page;
+    page-break-before: always;
+    break-inside: auto;
+    margin: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .type-section:first-of-type {
+    break-before: auto;
+    page-break-before: auto;
+  }
+  .worksheet-header {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .difficulty-block,
+  .question-columns,
+  .question-list li,
+  .question-graph,
+  .question-diagram,
+  .answer-key,
+  .answer-list li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+</style>
+</head><body>
+<h1 class='doc-title'>Polynomial — Pre-Algebra Ready Type Examples</h1>
+<p class='doc-subtitle'>One Easy, Medium, and Hard sample per Ready Pre-Algebra type, formatted like printable worksheets (shared instructions, graphs, and diagrams).</p>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Adding and subtracting</h2>
+<p class='type-id'><code>pa_polynomials_adding_and_subtracting</code> · Pre-Algebra — Beginning Polynomials · gen=<code>polynomial_add_subtract</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Simplify.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="(2x^{2}-x+2) - (x^{2}-x-3)"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="(4x^{3}-9x^{2}+10x+3) + (2x^{3}-9x^{2}-10x+2)"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="(3x^{3}+x^{2}-2x-12) - (21x^{3}+19x^{2}+16x-22)"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="x^{2}+5"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="6x^{3}-18x^{2}+5"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="-18x^{3}-18x^{2}-18x+10"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Multiplying</h2>
+<p class='type-id'><code>pa_polynomials_multiplying</code> · Pre-Algebra — Beginning Polynomials · gen=<code>polynomial_multiply</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Multiply.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="(x)(x+2)"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="(2x+3)(5x^{3}+9x+7)"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="(17x^{5}-8x^{3}+15x^{2}-5x-14)(10x^{4}-9x+7)"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="x^{2}+2x"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="10x^{4}+15x^{3}+18x^{2}+41x+21"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="170x^{9}-80x^{7}-3x^{6}+69x^{5}-68x^{4}-191x^{3}+150x^{2}+91x-98"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Multi-step equations</h2>
+<p class='type-id'><code>pa_equations_multi_step_equations</code> · Pre-Algebra — Equations · gen=<code>multi_step_equations</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve for } x."></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="2(x + 3) + 3 = 13"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="4(x + 2) - 12 = 8"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="2(x + 5) + 28 = \frac{212}{5}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="2"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="3"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="\frac{11}{5}"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>One-step equations, word problems</h2>
+<p class='type-id'><code>pa_equations_one_step_word_problems</code> · Pre-Algebra — Equations · gen=<code>wp_one_step_equation</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the problem.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Hassan had some money, spent \$15, and has \$55 left. How much did Hassan start with?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Will had some money, spent \$14, and has \$56 left. How much did Will start with?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Tessa shared \$232 equally among 4 friends. How much did each friend receive?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="\$70"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\$70"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="\$58"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Two-step equations word problems</h2>
+<p class='type-id'><code>pa_equations_two_step_word_problems</code> · Pre-Algebra — Equations · gen=<code>wp_two_step_equation</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the problem.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{9 less than 5 times a number is 56. Find the number.}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{6 less than 5 times a number is 84. Find the number.}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{15 less than 4 times a number is 21. Find the number.}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="13"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="18"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="9"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Divisibility</h2>
+<p class='type-id'><code>pa_divisibility</code> · Pre-Algebra — Factors and Exponents · gen=<code>g6_divisibility</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Determine if the number is divisible.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Is } 15 \text{ divisible by 5?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Is } 9 \text{ divisible by 6?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Is } 25 \text{ divisible by 5?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="\text{Yes}"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\text{No}"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="\text{Yes}"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Squares and square roots</h2>
+<p class='type-id'><code>pa_squares_and_square_roots</code> · Pre-Algebra — Factors and Exponents · gen=<code>pa_squares_and_square_roots</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Evaluate.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{What is } 3 \text{ squared?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{What is } 25 \text{ squared?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\sqrt{750}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="9"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="625"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="5\sqrt{30}"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Multi-step inequalities</h2>
+<p class='type-id'><code>pa_multi_step_inequalities</code> · Pre-Algebra — Inequalities · gen=<code>multi_step_inequalities</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve for } x."></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="3(x + 1) - 3 \geq -6"></span><svg class="question-graph number-line-graph" viewBox="0 0 280 120" role="img" aria-label="Blank number line"><line x1="24.0" y1="60.0" x2="256.0" y2="60.0" class="graph-axis" /><g><line x1="140.0" y1="54.0" x2="140.0" y2="66.0" class="graph-tick" /><text x="140.0" y="80.0" text-anchor="middle" class="graph-label">0</text></g></svg></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="3(x + 5) - 3 \geq -24"></span><svg class="question-graph number-line-graph" viewBox="0 0 280 120" role="img" aria-label="Blank number line"><line x1="24.0" y1="60.0" x2="256.0" y2="60.0" class="graph-axis" /><g><line x1="140.0" y1="54.0" x2="140.0" y2="66.0" class="graph-tick" /><text x="140.0" y="80.0" text-anchor="middle" class="graph-label">0</text></g></svg></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="4(x + 4) + 12 &lt; \frac{40}{3}"></span><svg class="question-graph number-line-graph" viewBox="0 0 280 120" role="img" aria-label="Blank number line"><line x1="24.0" y1="60.0" x2="256.0" y2="60.0" class="graph-axis" /><g><line x1="140.0" y1="54.0" x2="140.0" y2="66.0" class="graph-tick" /><text x="140.0" y="80.0" text-anchor="middle" class="graph-label">0</text></g></svg></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="x \geq -2"></span><svg class="question-graph number-line-graph" viewBox="0 0 280 120" role="img" aria-label="Number line"><line x1="24.0" y1="60.0" x2="256.0" y2="60.0" class="graph-axis" /><polygon points="120.66666666666667,52.0 256.0,52.0 256.0,68.0 120.66666666666667,68.0" class="graph-shade" /><g><line x1="140.0" y1="54.0" x2="140.0" y2="66.0" class="graph-tick" /><text x="140.0" y="80.0" text-anchor="middle" class="graph-label">0</text></g><circle cx="120.66666666666667" cy="60.0" r="5" class="graph-boundary-filled" /></svg></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="x \geq -12"></span><svg class="question-graph number-line-graph" viewBox="0 0 280 120" role="img" aria-label="Number line"><line x1="24.0" y1="60.0" x2="256.0" y2="60.0" class="graph-axis" /><polygon points="40.57142857142857,52.0 256.0,52.0 256.0,68.0 40.57142857142857,68.0" class="graph-shade" /><g><line x1="140.0" y1="54.0" x2="140.0" y2="66.0" class="graph-tick" /><text x="140.0" y="80.0" text-anchor="middle" class="graph-label">0</text></g><circle cx="40.57142857142857" cy="60.0" r="5" class="graph-boundary-filled" /></svg></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="x &lt; -\frac{11}{3}"></span><svg class="question-graph number-line-graph" viewBox="0 0 280 120" role="img" aria-label="Number line"><line x1="24.0" y1="60.0" x2="256.0" y2="60.0" class="graph-axis" /><polygon points="24.0,52.0 104.55555555555557,52.0 104.55555555555557,68.0 24.0,68.0" class="graph-shade" /><g><line x1="140.0" y1="54.0" x2="140.0" y2="66.0" class="graph-tick" /><text x="140.0" y="80.0" text-anchor="middle" class="graph-label">0</text></g><circle cx="104.55555555555557" cy="60.0" r="5" class="graph-boundary-open" /></svg></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Adding and subtracting</h2>
+<p class='type-id'><code>pa_integers_adding_and_subtracting</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>pa_integers_adding_and_subtracting</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Evaluate.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="7 - 5"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\frac{3}{2} - \frac{7}{6}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="45.56 - (-8.533)"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="2"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\frac{1}{3}"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="54.093"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Converting fractions and decimals</h2>
+<p class='type-id'><code>pa_converting_fractions_and_decimals</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>converting_fractions_and_decimals</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Convert.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Write } 0.9 \text{ as a fraction.}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Write } 0.25 \text{ as a fraction.}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Write } \frac{1}{5} \text{ as a decimal.}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="\frac{9}{10}"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\frac{1}{4}"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="0.2"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Dividing</h2>
+<p class='type-id'><code>pa_integers_dividing</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>g6_integer_divide</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Divide.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="-4 \div 7"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="7 \div (-4)"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="-31 \div (-9)"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="-1"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="-2"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="3"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Factoring</h2>
+<p class='type-id'><code>pa_factoring</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>g6_factoring</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Factor.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Write the prime factorization of } 49"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Write the prime factorization of } 21"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Write the prime factorization of } 102"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="7^{2}"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="3 \cdot 7"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="2 \cdot 3 \cdot 17"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Greatest common factor</h2>
+<p class='type-id'><code>pa_greatest_common_factor</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>g6_greatest_common_factor</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the GCF.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Find the GCF of } 24, 28"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Find the GCF of } 12, 48"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Find the GCF of } 60, 120, 20"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="4"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="12"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="20"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Least common multiple</h2>
+<p class='type-id'><code>pa_least_common_multiple</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>g6_least_common_multiple</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the LCM.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Find the LCM of } 12, 6"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Find the LCM of } 12, 47"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Find the LCM of } 17, 73, 113"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="12"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="564"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="140233"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Multiplying</h2>
+<p class='type-id'><code>pa_integers_multiplying</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>g6_integer_multiply</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Multiply.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="-5 \cdot (-10)"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="13 \cdot 14"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="29 \cdot (-34)"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="50"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="182"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="-986"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Naming decimal places and rounding</h2>
+<p class='type-id'><code>pa_naming_decimal_places_and_rounding</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>place_value_and_rounding</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Name the place value or round.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{What digit is in the hundredths place of } 294.614\text{?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Round } 93.712 \text{ to the nearest hundredth.}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{What digit is in the hundredths place of } 935.407\text{?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="1"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="93.71"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="0"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Simplifying fractions</h2>
+<p class='type-id'><code>pa_simplifying_fractions</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>simplifying_numeric_fractions</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Simplify.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Simplify } \frac{12}{36}."></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Simplify } \frac{80}{10}."></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Simplify } \frac{70}{10}."></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="\frac{1}{3}"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="8"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="7"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Writing numbers with words</h2>
+<p class='type-id'><code>pa_writing_numbers_with_words</code> · Pre-Algebra — Integers, Decimals, and Fractions · gen=<code>writing_numbers_with_words</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Write the number in words.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Write } 2033 \text{ in words.}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Write } 2479 \text{ in words.}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Write } 2217 \text{ in words.}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="\text{two thousand thirty-three}"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\text{two thousand four hundred seventy-nine}"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="\text{two thousand two hundred seventeen}"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Graphing systems of equations</h2>
+<p class='type-id'><code>pa_graphing_systems_of_equations</code> · Pre-Algebra — Linear Equations and Inequalities · gen=<code>graph_system</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the system.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\begin{cases} y = -2x - 1 \\ y = -3x - 4 \end{cases}"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="40.57142857142857" y1="24" x2="40.57142857142857" y2="196" class="graph-grid" /><line x1="57.14285714285714" y1="24" x2="57.14285714285714" y2="196" class="graph-grid" /><line x1="73.71428571428571" y1="24" x2="73.71428571428571" y2="196" class="graph-grid" /><line x1="90.28571428571428" y1="24" x2="90.28571428571428" y2="196" class="graph-grid" /><line x1="106.85714285714286" y1="24" x2="106.85714285714286" y2="196" class="graph-grid" /><line x1="123.42857142857142" y1="24" x2="123.42857142857142" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="156.57142857142856" y1="24" x2="156.57142857142856" y2="196" class="graph-grid" /><line x1="173.14285714285717" y1="24" x2="173.14285714285717" y2="196" class="graph-grid" /><line x1="189.71428571428572" y1="24" x2="189.71428571428572" y2="196" class="graph-grid" /><line x1="206.28571428571428" y1="24" x2="206.28571428571428" y2="196" class="graph-grid" /><line x1="222.85714285714283" y1="24" x2="222.85714285714283" y2="196" class="graph-grid" /><line x1="239.42857142857144" y1="24" x2="239.42857142857144" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="183.71428571428572" x2="256" y2="183.71428571428572" class="graph-grid" /><line x1="24" y1="171.42857142857144" x2="256" y2="171.42857142857144" class="graph-grid" /><line x1="24" y1="159.14285714285714" x2="256" y2="159.14285714285714" class="graph-grid" /><line x1="24" y1="146.85714285714286" x2="256" y2="146.85714285714286" class="graph-grid" /><line x1="24" y1="134.57142857142856" x2="256" y2="134.57142857142856" class="graph-grid" /><line x1="24" y1="122.28571428571429" x2="256" y2="122.28571428571429" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="97.71428571428572" x2="256" y2="97.71428571428572" class="graph-grid" /><line x1="24" y1="85.42857142857142" x2="256" y2="85.42857142857142" class="graph-grid" /><line x1="24" y1="73.14285714285714" x2="256" y2="73.14285714285714" class="graph-grid" /><line x1="24" y1="60.85714285714286" x2="256" y2="60.85714285714286" class="graph-grid" /><line x1="24" y1="48.571428571428584" x2="256" y2="48.571428571428584" class="graph-grid" /><line x1="24" y1="36.28571428571428" x2="256" y2="36.28571428571428" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\begin{cases} y = 2x - 9 \\ y = x - 8 \end{cases}"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="36.888888888888886" y1="24" x2="36.888888888888886" y2="196" class="graph-grid" /><line x1="49.77777777777777" y1="24" x2="49.77777777777777" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="75.55555555555554" y1="24" x2="75.55555555555554" y2="196" class="graph-grid" /><line x1="88.44444444444444" y1="24" x2="88.44444444444444" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="114.22222222222223" y1="24" x2="114.22222222222223" y2="196" class="graph-grid" /><line x1="127.1111111111111" y1="24" x2="127.1111111111111" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="152.88888888888889" y1="24" x2="152.88888888888889" y2="196" class="graph-grid" /><line x1="165.7777777777778" y1="24" x2="165.7777777777778" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="191.55555555555554" y1="24" x2="191.55555555555554" y2="196" class="graph-grid" /><line x1="204.44444444444446" y1="24" x2="204.44444444444446" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="230.2222222222222" y1="24" x2="230.2222222222222" y2="196" class="graph-grid" /><line x1="243.11111111111111" y1="24" x2="243.11111111111111" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="186.44444444444446" x2="256" y2="186.44444444444446" class="graph-grid" /><line x1="24" y1="176.88888888888889" x2="256" y2="176.88888888888889" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="157.77777777777777" x2="256" y2="157.77777777777777" class="graph-grid" /><line x1="24" y1="148.22222222222223" x2="256" y2="148.22222222222223" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="129.11111111111111" x2="256" y2="129.11111111111111" class="graph-grid" /><line x1="24" y1="119.55555555555556" x2="256" y2="119.55555555555556" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="100.44444444444444" x2="256" y2="100.44444444444444" class="graph-grid" /><line x1="24" y1="90.88888888888889" x2="256" y2="90.88888888888889" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="71.77777777777779" x2="256" y2="71.77777777777779" class="graph-grid" /><line x1="24" y1="62.22222222222223" x2="256" y2="62.22222222222223" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="43.111111111111114" x2="256" y2="43.111111111111114" class="graph-grid" /><line x1="24" y1="33.55555555555557" x2="256" y2="33.55555555555557" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\begin{cases} y = -4x + 29 \\ y = -9x + 59 \end{cases}"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="33.666666666666664" y1="24" x2="33.666666666666664" y2="196" class="graph-grid" /><line x1="43.33333333333333" y1="24" x2="43.33333333333333" y2="196" class="graph-grid" /><line x1="53.0" y1="24" x2="53.0" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="72.33333333333334" y1="24" x2="72.33333333333334" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="91.66666666666667" y1="24" x2="91.66666666666667" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="111.0" y1="24" x2="111.0" y2="196" class="graph-grid" /><line x1="120.66666666666667" y1="24" x2="120.66666666666667" y2="196" class="graph-grid" /><line x1="130.33333333333331" y1="24" x2="130.33333333333331" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="149.66666666666666" y1="24" x2="149.66666666666666" y2="196" class="graph-grid" /><line x1="159.33333333333334" y1="24" x2="159.33333333333334" y2="196" class="graph-grid" /><line x1="169.0" y1="24" x2="169.0" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="188.33333333333334" y1="24" x2="188.33333333333334" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="207.66666666666666" y1="24" x2="207.66666666666666" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="227.0" y1="24" x2="227.0" y2="196" class="graph-grid" /><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="196" class="graph-grid" /><line x1="246.33333333333334" y1="24" x2="246.33333333333334" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="188.83333333333334" x2="256" y2="188.83333333333334" class="graph-grid" /><line x1="24" y1="181.66666666666666" x2="256" y2="181.66666666666666" class="graph-grid" /><line x1="24" y1="174.5" x2="256" y2="174.5" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="160.16666666666666" x2="256" y2="160.16666666666666" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="145.83333333333331" x2="256" y2="145.83333333333331" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="131.5" x2="256" y2="131.5" class="graph-grid" /><line x1="24" y1="124.33333333333333" x2="256" y2="124.33333333333333" class="graph-grid" /><line x1="24" y1="117.16666666666667" x2="256" y2="117.16666666666667" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="102.83333333333334" x2="256" y2="102.83333333333334" class="graph-grid" /><line x1="24" y1="95.66666666666666" x2="256" y2="95.66666666666666" class="graph-grid" /><line x1="24" y1="88.5" x2="256" y2="88.5" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="74.16666666666666" x2="256" y2="74.16666666666666" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="59.83333333333334" x2="256" y2="59.83333333333334" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="45.5" x2="256" y2="45.5" class="graph-grid" /><line x1="24" y1="38.33333333333334" x2="256" y2="38.33333333333334" class="graph-grid" /><line x1="24" y1="31.166666666666657" x2="256" y2="31.166666666666657" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="(x, y) = (-3, 5)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="40.57142857142857" y1="24" x2="40.57142857142857" y2="196" class="graph-grid" /><line x1="57.14285714285714" y1="24" x2="57.14285714285714" y2="196" class="graph-grid" /><line x1="73.71428571428571" y1="24" x2="73.71428571428571" y2="196" class="graph-grid" /><line x1="90.28571428571428" y1="24" x2="90.28571428571428" y2="196" class="graph-grid" /><line x1="106.85714285714286" y1="24" x2="106.85714285714286" y2="196" class="graph-grid" /><line x1="123.42857142857142" y1="24" x2="123.42857142857142" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="156.57142857142856" y1="24" x2="156.57142857142856" y2="196" class="graph-grid" /><line x1="173.14285714285717" y1="24" x2="173.14285714285717" y2="196" class="graph-grid" /><line x1="189.71428571428572" y1="24" x2="189.71428571428572" y2="196" class="graph-grid" /><line x1="206.28571428571428" y1="24" x2="206.28571428571428" y2="196" class="graph-grid" /><line x1="222.85714285714283" y1="24" x2="222.85714285714283" y2="196" class="graph-grid" /><line x1="239.42857142857144" y1="24" x2="239.42857142857144" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="183.71428571428572" x2="256" y2="183.71428571428572" class="graph-grid" /><line x1="24" y1="171.42857142857144" x2="256" y2="171.42857142857144" class="graph-grid" /><line x1="24" y1="159.14285714285714" x2="256" y2="159.14285714285714" class="graph-grid" /><line x1="24" y1="146.85714285714286" x2="256" y2="146.85714285714286" class="graph-grid" /><line x1="24" y1="134.57142857142856" x2="256" y2="134.57142857142856" class="graph-grid" /><line x1="24" y1="122.28571428571429" x2="256" y2="122.28571428571429" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="97.71428571428572" x2="256" y2="97.71428571428572" class="graph-grid" /><line x1="24" y1="85.42857142857142" x2="256" y2="85.42857142857142" class="graph-grid" /><line x1="24" y1="73.14285714285714" x2="256" y2="73.14285714285714" class="graph-grid" /><line x1="24" y1="60.85714285714286" x2="256" y2="60.85714285714286" class="graph-grid" /><line x1="24" y1="48.571428571428584" x2="256" y2="48.571428571428584" class="graph-grid" /><line x1="24" y1="36.28571428571428" x2="256" y2="36.28571428571428" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><polyline points="73.71428571428571,24.0 189.71428571428572,196.0" class="graph-line" fill="none" /><polyline points="79.23809523809524,24.0 156.57142857142856,196.0" class="graph-line" fill="none" /><circle cx="90.28571428571428" cy="48.571428571428584" r="4" class="graph-point" /></svg></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="(x, y) = (1, -7)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="36.888888888888886" y1="24" x2="36.888888888888886" y2="196" class="graph-grid" /><line x1="49.77777777777777" y1="24" x2="49.77777777777777" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="75.55555555555554" y1="24" x2="75.55555555555554" y2="196" class="graph-grid" /><line x1="88.44444444444444" y1="24" x2="88.44444444444444" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="114.22222222222223" y1="24" x2="114.22222222222223" y2="196" class="graph-grid" /><line x1="127.1111111111111" y1="24" x2="127.1111111111111" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="152.88888888888889" y1="24" x2="152.88888888888889" y2="196" class="graph-grid" /><line x1="165.7777777777778" y1="24" x2="165.7777777777778" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="191.55555555555554" y1="24" x2="191.55555555555554" y2="196" class="graph-grid" /><line x1="204.44444444444446" y1="24" x2="204.44444444444446" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="230.2222222222222" y1="24" x2="230.2222222222222" y2="196" class="graph-grid" /><line x1="243.11111111111111" y1="24" x2="243.11111111111111" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="186.44444444444446" x2="256" y2="186.44444444444446" class="graph-grid" /><line x1="24" y1="176.88888888888889" x2="256" y2="176.88888888888889" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="157.77777777777777" x2="256" y2="157.77777777777777" class="graph-grid" /><line x1="24" y1="148.22222222222223" x2="256" y2="148.22222222222223" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="129.11111111111111" x2="256" y2="129.11111111111111" class="graph-grid" /><line x1="24" y1="119.55555555555556" x2="256" y2="119.55555555555556" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="100.44444444444444" x2="256" y2="100.44444444444444" class="graph-grid" /><line x1="24" y1="90.88888888888889" x2="256" y2="90.88888888888889" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="71.77777777777779" x2="256" y2="71.77777777777779" class="graph-grid" /><line x1="24" y1="62.22222222222223" x2="256" y2="62.22222222222223" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="43.111111111111114" x2="256" y2="43.111111111111114" class="graph-grid" /><line x1="24" y1="33.55555555555557" x2="256" y2="33.55555555555557" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><polyline points="140.0,196.0 256.0,24.0" class="graph-line" fill="none" /><polyline points="127.1111111111111,196.0 256.0,100.44444444444444" class="graph-line" fill="none" /><circle cx="152.88888888888889" cy="176.88888888888889" r="4" class="graph-point" /></svg></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="(x, y) = (6, 5)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="33.666666666666664" y1="24" x2="33.666666666666664" y2="196" class="graph-grid" /><line x1="43.33333333333333" y1="24" x2="43.33333333333333" y2="196" class="graph-grid" /><line x1="53.0" y1="24" x2="53.0" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="72.33333333333334" y1="24" x2="72.33333333333334" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="91.66666666666667" y1="24" x2="91.66666666666667" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="111.0" y1="24" x2="111.0" y2="196" class="graph-grid" /><line x1="120.66666666666667" y1="24" x2="120.66666666666667" y2="196" class="graph-grid" /><line x1="130.33333333333331" y1="24" x2="130.33333333333331" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="149.66666666666666" y1="24" x2="149.66666666666666" y2="196" class="graph-grid" /><line x1="159.33333333333334" y1="24" x2="159.33333333333334" y2="196" class="graph-grid" /><line x1="169.0" y1="24" x2="169.0" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="188.33333333333334" y1="24" x2="188.33333333333334" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="207.66666666666666" y1="24" x2="207.66666666666666" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="227.0" y1="24" x2="227.0" y2="196" class="graph-grid" /><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="196" class="graph-grid" /><line x1="246.33333333333334" y1="24" x2="246.33333333333334" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="188.83333333333334" x2="256" y2="188.83333333333334" class="graph-grid" /><line x1="24" y1="181.66666666666666" x2="256" y2="181.66666666666666" class="graph-grid" /><line x1="24" y1="174.5" x2="256" y2="174.5" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="160.16666666666666" x2="256" y2="160.16666666666666" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="145.83333333333331" x2="256" y2="145.83333333333331" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="131.5" x2="256" y2="131.5" class="graph-grid" /><line x1="24" y1="124.33333333333333" x2="256" y2="124.33333333333333" class="graph-grid" /><line x1="24" y1="117.16666666666667" x2="256" y2="117.16666666666667" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="102.83333333333334" x2="256" y2="102.83333333333334" class="graph-grid" /><line x1="24" y1="95.66666666666666" x2="256" y2="95.66666666666666" class="graph-grid" /><line x1="24" y1="88.5" x2="256" y2="88.5" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="74.16666666666666" x2="256" y2="74.16666666666666" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="59.83333333333334" x2="256" y2="59.83333333333334" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="45.5" x2="256" y2="45.5" class="graph-grid" /><line x1="24" y1="38.33333333333334" x2="256" y2="38.33333333333334" class="graph-grid" /><line x1="24" y1="31.166666666666657" x2="256" y2="31.166666666666657" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><polyline points="181.08333333333334,24.0 239.08333333333334,196.0" class="graph-line" fill="none" /><polyline points="190.48148148148147,24.0 216.25925925925927,196.0" class="graph-line" fill="none" /><circle cx="198.0" cy="74.16666666666666" r="4" class="graph-point" /></svg></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Plotting points</h2>
+<p class='type-id'><code>pa_plotting_points</code> · Pre-Algebra — Linear Equations and Inequalities · gen=<code>plotting_points</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Plot the following points on the coordinate plane.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="(5, -1)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="40.57142857142857" y1="24" x2="40.57142857142857" y2="196" class="graph-grid" /><line x1="57.14285714285714" y1="24" x2="57.14285714285714" y2="196" class="graph-grid" /><line x1="73.71428571428571" y1="24" x2="73.71428571428571" y2="196" class="graph-grid" /><line x1="90.28571428571428" y1="24" x2="90.28571428571428" y2="196" class="graph-grid" /><line x1="106.85714285714286" y1="24" x2="106.85714285714286" y2="196" class="graph-grid" /><line x1="123.42857142857142" y1="24" x2="123.42857142857142" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="156.57142857142856" y1="24" x2="156.57142857142856" y2="196" class="graph-grid" /><line x1="173.14285714285717" y1="24" x2="173.14285714285717" y2="196" class="graph-grid" /><line x1="189.71428571428572" y1="24" x2="189.71428571428572" y2="196" class="graph-grid" /><line x1="206.28571428571428" y1="24" x2="206.28571428571428" y2="196" class="graph-grid" /><line x1="222.85714285714283" y1="24" x2="222.85714285714283" y2="196" class="graph-grid" /><line x1="239.42857142857144" y1="24" x2="239.42857142857144" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="183.71428571428572" x2="256" y2="183.71428571428572" class="graph-grid" /><line x1="24" y1="171.42857142857144" x2="256" y2="171.42857142857144" class="graph-grid" /><line x1="24" y1="159.14285714285714" x2="256" y2="159.14285714285714" class="graph-grid" /><line x1="24" y1="146.85714285714286" x2="256" y2="146.85714285714286" class="graph-grid" /><line x1="24" y1="134.57142857142856" x2="256" y2="134.57142857142856" class="graph-grid" /><line x1="24" y1="122.28571428571429" x2="256" y2="122.28571428571429" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="97.71428571428572" x2="256" y2="97.71428571428572" class="graph-grid" /><line x1="24" y1="85.42857142857142" x2="256" y2="85.42857142857142" class="graph-grid" /><line x1="24" y1="73.14285714285714" x2="256" y2="73.14285714285714" class="graph-grid" /><line x1="24" y1="60.85714285714286" x2="256" y2="60.85714285714286" class="graph-grid" /><line x1="24" y1="48.571428571428584" x2="256" y2="48.571428571428584" class="graph-grid" /><line x1="24" y1="36.28571428571428" x2="256" y2="36.28571428571428" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="(4, -1)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="38.5" y1="24" x2="38.5" y2="196" class="graph-grid" /><line x1="53.0" y1="24" x2="53.0" y2="196" class="graph-grid" /><line x1="67.5" y1="24" x2="67.5" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="96.5" y1="24" x2="96.5" y2="196" class="graph-grid" /><line x1="111.0" y1="24" x2="111.0" y2="196" class="graph-grid" /><line x1="125.5" y1="24" x2="125.5" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="154.5" y1="24" x2="154.5" y2="196" class="graph-grid" /><line x1="169.0" y1="24" x2="169.0" y2="196" class="graph-grid" /><line x1="183.5" y1="24" x2="183.5" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="212.5" y1="24" x2="212.5" y2="196" class="graph-grid" /><line x1="227.0" y1="24" x2="227.0" y2="196" class="graph-grid" /><line x1="241.5" y1="24" x2="241.5" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="185.25" x2="256" y2="185.25" class="graph-grid" /><line x1="24" y1="174.5" x2="256" y2="174.5" class="graph-grid" /><line x1="24" y1="163.75" x2="256" y2="163.75" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="142.25" x2="256" y2="142.25" class="graph-grid" /><line x1="24" y1="131.5" x2="256" y2="131.5" class="graph-grid" /><line x1="24" y1="120.75" x2="256" y2="120.75" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="99.25" x2="256" y2="99.25" class="graph-grid" /><line x1="24" y1="88.5" x2="256" y2="88.5" class="graph-grid" /><line x1="24" y1="77.75" x2="256" y2="77.75" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="56.25" x2="256" y2="56.25" class="graph-grid" /><line x1="24" y1="45.5" x2="256" y2="45.5" class="graph-grid" /><line x1="24" y1="34.75" x2="256" y2="34.75" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="(8, 2)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="33.666666666666664" y1="24" x2="33.666666666666664" y2="196" class="graph-grid" /><line x1="43.33333333333333" y1="24" x2="43.33333333333333" y2="196" class="graph-grid" /><line x1="53.0" y1="24" x2="53.0" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="72.33333333333334" y1="24" x2="72.33333333333334" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="91.66666666666667" y1="24" x2="91.66666666666667" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="111.0" y1="24" x2="111.0" y2="196" class="graph-grid" /><line x1="120.66666666666667" y1="24" x2="120.66666666666667" y2="196" class="graph-grid" /><line x1="130.33333333333331" y1="24" x2="130.33333333333331" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="149.66666666666666" y1="24" x2="149.66666666666666" y2="196" class="graph-grid" /><line x1="159.33333333333334" y1="24" x2="159.33333333333334" y2="196" class="graph-grid" /><line x1="169.0" y1="24" x2="169.0" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="188.33333333333334" y1="24" x2="188.33333333333334" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="207.66666666666666" y1="24" x2="207.66666666666666" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="227.0" y1="24" x2="227.0" y2="196" class="graph-grid" /><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="196" class="graph-grid" /><line x1="246.33333333333334" y1="24" x2="246.33333333333334" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="188.83333333333334" x2="256" y2="188.83333333333334" class="graph-grid" /><line x1="24" y1="181.66666666666666" x2="256" y2="181.66666666666666" class="graph-grid" /><line x1="24" y1="174.5" x2="256" y2="174.5" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="160.16666666666666" x2="256" y2="160.16666666666666" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="145.83333333333331" x2="256" y2="145.83333333333331" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="131.5" x2="256" y2="131.5" class="graph-grid" /><line x1="24" y1="124.33333333333333" x2="256" y2="124.33333333333333" class="graph-grid" /><line x1="24" y1="117.16666666666667" x2="256" y2="117.16666666666667" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="102.83333333333334" x2="256" y2="102.83333333333334" class="graph-grid" /><line x1="24" y1="95.66666666666666" x2="256" y2="95.66666666666666" class="graph-grid" /><line x1="24" y1="88.5" x2="256" y2="88.5" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="74.16666666666666" x2="256" y2="74.16666666666666" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="59.83333333333334" x2="256" y2="59.83333333333334" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="45.5" x2="256" y2="45.5" class="graph-grid" /><line x1="24" y1="38.33333333333334" x2="256" y2="38.33333333333334" class="graph-grid" /><line x1="24" y1="31.166666666666657" x2="256" y2="31.166666666666657" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="(5, -1)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="40.57142857142857" y1="24" x2="40.57142857142857" y2="196" class="graph-grid" /><line x1="57.14285714285714" y1="24" x2="57.14285714285714" y2="196" class="graph-grid" /><line x1="73.71428571428571" y1="24" x2="73.71428571428571" y2="196" class="graph-grid" /><line x1="90.28571428571428" y1="24" x2="90.28571428571428" y2="196" class="graph-grid" /><line x1="106.85714285714286" y1="24" x2="106.85714285714286" y2="196" class="graph-grid" /><line x1="123.42857142857142" y1="24" x2="123.42857142857142" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="156.57142857142856" y1="24" x2="156.57142857142856" y2="196" class="graph-grid" /><line x1="173.14285714285717" y1="24" x2="173.14285714285717" y2="196" class="graph-grid" /><line x1="189.71428571428572" y1="24" x2="189.71428571428572" y2="196" class="graph-grid" /><line x1="206.28571428571428" y1="24" x2="206.28571428571428" y2="196" class="graph-grid" /><line x1="222.85714285714283" y1="24" x2="222.85714285714283" y2="196" class="graph-grid" /><line x1="239.42857142857144" y1="24" x2="239.42857142857144" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="183.71428571428572" x2="256" y2="183.71428571428572" class="graph-grid" /><line x1="24" y1="171.42857142857144" x2="256" y2="171.42857142857144" class="graph-grid" /><line x1="24" y1="159.14285714285714" x2="256" y2="159.14285714285714" class="graph-grid" /><line x1="24" y1="146.85714285714286" x2="256" y2="146.85714285714286" class="graph-grid" /><line x1="24" y1="134.57142857142856" x2="256" y2="134.57142857142856" class="graph-grid" /><line x1="24" y1="122.28571428571429" x2="256" y2="122.28571428571429" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="97.71428571428572" x2="256" y2="97.71428571428572" class="graph-grid" /><line x1="24" y1="85.42857142857142" x2="256" y2="85.42857142857142" class="graph-grid" /><line x1="24" y1="73.14285714285714" x2="256" y2="73.14285714285714" class="graph-grid" /><line x1="24" y1="60.85714285714286" x2="256" y2="60.85714285714286" class="graph-grid" /><line x1="24" y1="48.571428571428584" x2="256" y2="48.571428571428584" class="graph-grid" /><line x1="24" y1="36.28571428571428" x2="256" y2="36.28571428571428" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><circle cx="222.85714285714283" cy="122.28571428571429" r="4" class="graph-point" /></svg></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="(4, -1)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="38.5" y1="24" x2="38.5" y2="196" class="graph-grid" /><line x1="53.0" y1="24" x2="53.0" y2="196" class="graph-grid" /><line x1="67.5" y1="24" x2="67.5" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="96.5" y1="24" x2="96.5" y2="196" class="graph-grid" /><line x1="111.0" y1="24" x2="111.0" y2="196" class="graph-grid" /><line x1="125.5" y1="24" x2="125.5" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="154.5" y1="24" x2="154.5" y2="196" class="graph-grid" /><line x1="169.0" y1="24" x2="169.0" y2="196" class="graph-grid" /><line x1="183.5" y1="24" x2="183.5" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="212.5" y1="24" x2="212.5" y2="196" class="graph-grid" /><line x1="227.0" y1="24" x2="227.0" y2="196" class="graph-grid" /><line x1="241.5" y1="24" x2="241.5" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="185.25" x2="256" y2="185.25" class="graph-grid" /><line x1="24" y1="174.5" x2="256" y2="174.5" class="graph-grid" /><line x1="24" y1="163.75" x2="256" y2="163.75" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="142.25" x2="256" y2="142.25" class="graph-grid" /><line x1="24" y1="131.5" x2="256" y2="131.5" class="graph-grid" /><line x1="24" y1="120.75" x2="256" y2="120.75" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="99.25" x2="256" y2="99.25" class="graph-grid" /><line x1="24" y1="88.5" x2="256" y2="88.5" class="graph-grid" /><line x1="24" y1="77.75" x2="256" y2="77.75" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="56.25" x2="256" y2="56.25" class="graph-grid" /><line x1="24" y1="45.5" x2="256" y2="45.5" class="graph-grid" /><line x1="24" y1="34.75" x2="256" y2="34.75" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><circle cx="198.0" cy="120.75" r="4" class="graph-point" /></svg></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="(8, 2)"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="33.666666666666664" y1="24" x2="33.666666666666664" y2="196" class="graph-grid" /><line x1="43.33333333333333" y1="24" x2="43.33333333333333" y2="196" class="graph-grid" /><line x1="53.0" y1="24" x2="53.0" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="72.33333333333334" y1="24" x2="72.33333333333334" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="91.66666666666667" y1="24" x2="91.66666666666667" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="111.0" y1="24" x2="111.0" y2="196" class="graph-grid" /><line x1="120.66666666666667" y1="24" x2="120.66666666666667" y2="196" class="graph-grid" /><line x1="130.33333333333331" y1="24" x2="130.33333333333331" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="149.66666666666666" y1="24" x2="149.66666666666666" y2="196" class="graph-grid" /><line x1="159.33333333333334" y1="24" x2="159.33333333333334" y2="196" class="graph-grid" /><line x1="169.0" y1="24" x2="169.0" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="188.33333333333334" y1="24" x2="188.33333333333334" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="207.66666666666666" y1="24" x2="207.66666666666666" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="227.0" y1="24" x2="227.0" y2="196" class="graph-grid" /><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="196" class="graph-grid" /><line x1="246.33333333333334" y1="24" x2="246.33333333333334" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="188.83333333333334" x2="256" y2="188.83333333333334" class="graph-grid" /><line x1="24" y1="181.66666666666666" x2="256" y2="181.66666666666666" class="graph-grid" /><line x1="24" y1="174.5" x2="256" y2="174.5" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="160.16666666666666" x2="256" y2="160.16666666666666" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="145.83333333333331" x2="256" y2="145.83333333333331" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="131.5" x2="256" y2="131.5" class="graph-grid" /><line x1="24" y1="124.33333333333333" x2="256" y2="124.33333333333333" class="graph-grid" /><line x1="24" y1="117.16666666666667" x2="256" y2="117.16666666666667" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="102.83333333333334" x2="256" y2="102.83333333333334" class="graph-grid" /><line x1="24" y1="95.66666666666666" x2="256" y2="95.66666666666666" class="graph-grid" /><line x1="24" y1="88.5" x2="256" y2="88.5" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="74.16666666666666" x2="256" y2="74.16666666666666" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="59.83333333333334" x2="256" y2="59.83333333333334" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="45.5" x2="256" y2="45.5" class="graph-grid" /><line x1="24" y1="38.33333333333334" x2="256" y2="38.33333333333334" class="graph-grid" /><line x1="24" y1="31.166666666666657" x2="256" y2="31.166666666666657" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><circle cx="217.33333333333334" cy="95.66666666666666" r="4" class="graph-point" /></svg></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Slope</h2>
+<p class='type-id'><code>pa_slope</code> · Pre-Algebra — Linear Equations and Inequalities · gen=<code>slope</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the slope.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Find the slope of the line through } (5, -3) \text{ and } (7, -7)."></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Find the slope of the line } 10x + 2y = 6."></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Find the slope of the line } y - 1 = -5(x + 10)."></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="-2"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="-5"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="-5"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Solving systems of equations by substitution</h2>
+<p class='type-id'><code>pa_systems_substitution</code> · Pre-Algebra — Linear Equations and Inequalities · gen=<code>systems_substitution</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the system.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\begin{cases} y = 2x + 1 \\ -x + 4y = 25 \end{cases}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\begin{cases} y = 6x + 18 \\ -8x - 9y = -38 \end{cases}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\begin{cases} y = 5x - 7 \\ -5x - 7y = -31 \end{cases}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="(x, y) = (3, 7)"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="(x, y) = (-2, 6)"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="(x, y) = (2, 3)"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Systems of equations word problems</h2>
+<p class='type-id'><code>pa_systems_word_problems</code> · Pre-Algebra — Linear Equations and Inequalities · gen=<code>wp_systems</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the problem.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Adult tickets cost \$12 and child tickets cost \$8. 66 tickets were sold for a total of \$680. How many adult tickets were sold?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Adult tickets cost \$10 and child tickets cost \$6. 66 tickets were sold for a total of \$552. How many adult tickets were sold?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Adult tickets cost \$10 and child tickets cost \$6. 94 tickets were sold for a total of \$776. How many adult tickets were sold?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="38"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="39"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="53"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Writing linear equations</h2>
+<p class='type-id'><code>pa_writing_linear_equations</code> · Pre-Algebra — Linear Equations and Inequalities · gen=<code>writing_linear_equations</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Write the equation.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Write } 12x - 4y = -20 \text{ in slope-intercept form.}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Write the equation of the line with slope } -2 \text{ and } y\text{-intercept } 1 \text{ in slope-intercept form.}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Write the equation of the line through } (6, -44) \text{ and } (0, -2) \text{ in slope-intercept form.}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="y = 3x + 5"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="y = -2x + 1"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="y = -7x - 2"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Fractions, decimals, and percents</h2>
+<p class='type-id'><code>pa_fractions_decimals_and_percents</code> · Pre-Algebra — Percents · gen=<code>fractions_decimals_and_percents</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Write the equivalent value.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Write } \frac{1}{5} \text{ as a percent.}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Write } 20\% \text{ as a fraction in simplest form.}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Write } 0.15 \text{ as a percent.}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="20\%"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\frac{1}{5}"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="15\%"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Markup, discount, and tax</h2>
+<p class='type-id'><code>pa_markup_discount_and_tax</code> · Pre-Algebra — Percents · gen=<code>wp_percent</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the problem.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Liam leaves a 15\% tip on a \$109 bill. How much is the tip?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{A \$103 purchase has 8\% sales tax added. What is the total cost?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Jamie buys an item priced at \$192.89. It is on sale for 12.5\% off. What is the sale price?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="\$16.35"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\$111.24"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="\$168.78"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Simple and compound interest</h2>
+<p class='type-id'><code>pa_simple_and_compound_interest</code> · Pre-Algebra — Percents · gen=<code>wp_simple_and_compound_interest</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the problem.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Uri invests \$200 at 6\% simple interest for 5 years. How much interest is earned?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Marcus invests \$1000 at 9\% simple interest for 3 years. How much interest is earned?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Nina invests \$1000 at 7\% interest compounded semiannually for 8 years. What is the balance at the end of the term?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="\$60"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\$270"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="\$1733.99"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Angle relationships</h2>
+<p class='type-id'><code>pa_angle_relationships</code> · Pre-Algebra — Plane Figures · gen=<code>geo_angle_relationships</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the angle measure.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{The diagram shows complementary angles. Find the measure of the unmarked angle.}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140.0 140.0" width="140.0" height="140.0" role="img" aria-label="Geometry diagram"><line x1="22.0" y1="118.0" x2="118.0" y2="118.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><line x1="22.0" y1="118.0" x2="92.2" y2="52.5" stroke="#1f2937" stroke-width="1.75" fill="none"/><line x1="22.0" y1="118.0" x2="22.0" y2="22.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><polyline points="34.8,118.0 34.8,105.2 22.0,105.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><path d="M 50.0 118.0 A 28.0 28.0 0 0 0 42.5 98.9" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="61.1" y="102.6" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">43°</text><path d="M 36.6 104.4 A 20.0 20.0 0 0 0 22.0 98.0" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="35.6" y="86.8" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">?</text><circle cx="22.0" cy="118.0" r="3" fill="#1f2937"/><text x="10.8" y="126.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">E</text><text x="126.8" y="122.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text><text x="99.4" y="46.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><text x="17.2" y="13.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">F</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{The diagram shows supplementary angles on a straight line. Find the measure of the unmarked angle.}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380.0 142.7" width="380.0" height="142.7" role="img" aria-label="Geometry diagram"><line x1="22.0" y1="120.7" x2="358.0" y2="120.7" stroke="#1f2937" stroke-width="1.75" fill="none"/><line x1="190.0" y1="120.7" x2="195.2" y2="22.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><path d="M 212.0 120.7 A 22.0 22.0 0 0 0 191.2 98.7" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="216.1" y="95.9" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">87°</text><path d="M 191.5 92.7 A 28.0 28.0 0 0 0 162.0 120.7" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="161.1" y="90.2" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">?</text><circle cx="190.0" cy="120.7" r="3" fill="#1f2937"/><text x="188.0" y="133.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><text x="77.2" y="125.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">F</text><text x="302.8" y="125.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><text x="201.6" y="14.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">E</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{The diagram shows supplementary angles on a straight line. Find the measure of the unmarked angle.}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380.0 139.4" width="380.0" height="139.4" role="img" aria-label="Geometry diagram"><line x1="22.0" y1="117.4" x2="358.0" y2="117.4" stroke="#1f2937" stroke-width="1.75" fill="none"/><line x1="190.0" y1="117.4" x2="164.4" y2="22.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><path d="M 212.0 117.4 A 22.0 22.0 0 0 0 184.3 96.2" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="211.9" y="88.9" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">105°</text><path d="M 182.8 90.4 A 28.0 28.0 0 0 0 162.0 117.4" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="156.7" y="91.9" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">?</text><circle cx="190.0" cy="117.4" r="3" fill="#1f2937"/><text x="188.0" y="130.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text><text x="77.2" y="122.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><text x="302.8" y="122.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">E</text><text x="170.8" y="14.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text></svg></div></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="47^\circ"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="93^\circ"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="75^\circ"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Area of triangles and quadrilaterals</h2>
+<p class='type-id'><code>pa_area_of_triangles_and_quadrilaterals</code> · Pre-Algebra — Plane Figures · gen=<code>geo_triangles_and_quadrilaterals_area</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the area.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{{Find the area of the rectangle.}}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 183.2 93.2" width="183.2" height="93.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,52.0 142.0,52.0 142.0,22.0 22.0,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="82.0" y="71.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">12 cm</text><text x="161.2" y="37.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">3 cm</text><circle cx="22.0" cy="52.0" r="3" fill="#1f2937"/><text x="9.6" y="55.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="142.0" cy="52.0" r="3" fill="#1f2937"/><text x="154.4" y="55.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="142.0" cy="22.0" r="3" fill="#1f2937"/><text x="154.4" y="18.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="9.6" y="18.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{{Find the area of the trapezoid.}}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.2 121.8" width="191.2" height="121.8" role="img" aria-label="Geometry diagram"><polygon points="22.0,80.6 150.0,80.6 115.5,41.2 56.5,41.2" fill="#dbeafe" fill-opacity="0.25" stroke="#1f2937" stroke-width="1.75"/><text x="86.0" y="99.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">13 cm</text><text x="86.0" y="22.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">6 cm</text><text x="169.2" y="60.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">4 cm</text><circle cx="22.0" cy="80.6" r="3" fill="#1f2937"/><text x="9.8" y="84.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="150.0" cy="80.6" r="3" fill="#1f2937"/><text x="162.2" y="84.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="115.5" cy="41.2" r="3" fill="#1f2937"/><text x="126.2" y="34.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="56.5" cy="41.2" r="3" fill="#1f2937"/><text x="45.8" y="34.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{{Find the area of the kite.}}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155.5 183.2" width="155.5" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="68.2,22.0 114.3,82.0 68.2,142.0 22.0,82.0" fill="#dbeafe" fill-opacity="0.25" stroke="#1f2937" stroke-width="1.75"/><text x="90.2" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">30 cm</text><text x="133.5" y="104.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">39 cm</text><circle cx="68.2" cy="22.0" r="3" fill="#1f2937"/><text x="68.2" y="9.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="114.3" cy="82.0" r="3" fill="#1f2937"/><text x="127.1" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="68.2" cy="142.0" r="3" fill="#1f2937"/><text x="68.2" y="154.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="82.0" r="3" fill="#1f2937"/><text x="9.2" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="36\text{ cm}^2"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="38\text{ cm}^2"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="585\text{ cm}^2"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Circles</h2>
+<p class='type-id'><code>pa_circles</code> · Pre-Algebra — Plane Figures · gen=<code>geo_circle_measure</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the measure.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Find the circumference of a circle with radius } 11\text{ cm}."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188.0 188.0" width="188.0" height="188.0" role="img" aria-label="Geometry diagram"><circle cx="94.0" cy="94.0" r="72.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><line x1="94.0" y1="94.0" x2="166.0" y2="94.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><text x="130.0" y="74.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">11 cm</text><circle cx="94.0" cy="94.0" r="3" fill="#1f2937"/><text x="82.8" y="102.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">O</text><circle cx="166.0" cy="94.0" r="3" fill="#1f2937"/><text x="176.0" y="94.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Find the area of a circle with radius } 15\text{ cm}."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188.0 188.0" width="188.0" height="188.0" role="img" aria-label="Geometry diagram"><circle cx="94.0" cy="94.0" r="72.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><line x1="94.0" y1="94.0" x2="166.0" y2="94.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><text x="130.0" y="74.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">15 cm</text><circle cx="94.0" cy="94.0" r="3" fill="#1f2937"/><text x="82.8" y="102.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">O</text><circle cx="166.0" cy="94.0" r="3" fill="#1f2937"/><text x="176.0" y="94.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Find the area of a circle with radius } 3\text{ cm}."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 188.0 188.0" width="188.0" height="188.0" role="img" aria-label="Geometry diagram"><circle cx="94.0" cy="94.0" r="72.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><line x1="94.0" y1="94.0" x2="166.0" y2="94.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><text x="130.0" y="74.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">3 cm</text><circle cx="94.0" cy="94.0" r="3" fill="#1f2937"/><text x="82.8" y="102.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">O</text><circle cx="166.0" cy="94.0" r="3" fill="#1f2937"/><text x="176.0" y="94.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="22\pi\text{ cm}"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="225\pi\text{ cm}^2"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="9\pi\text{ cm}^2"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Drawing and measuring angles</h2>
+<p class='type-id'><code>pa_drawing_and_measuring_angles</code> · Pre-Algebra — Plane Figures · gen=<code>geo_angles</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Measure or draw the angle.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Ray } FA\text{ is drawn. Draw ray } FC\text{ so that } m\angle AFC = 40^\circ."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196.0 44.0" width="196.0" height="44.0" role="img" aria-label="Geometry diagram"><line x1="22.0" y1="22.0" x2="174.0" y2="22.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="10.8" y="30.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">F</text><circle cx="118.0" cy="22.0" r="3" fill="#1f2937"/><text x="126.8" y="26.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Find } m\angle DFB\text{ using the diagram.}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156.7 137.9" width="156.7" height="137.9" role="img" aria-label="Geometry diagram"><line x1="42.0" y1="115.9" x2="134.7" y2="91.1" stroke="#1f2937" stroke-width="1.75" fill="none"/><line x1="42.0" y1="115.9" x2="22.0" y2="22.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><path d="M 63.2 110.2 A 22.0 22.0 0 0 0 37.4 94.4" fill="none" stroke="#2563eb" stroke-width="1.75"/><circle cx="42.0" cy="115.9" r="3" fill="#1f2937"/><text x="30.8" y="124.7" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">F</text><circle cx="134.7" cy="91.1" r="3" fill="#1f2937"/><text x="143.5" y="86.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="29.2" y="14.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Find } m\angle CFE\text{ using the diagram.}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136.7 137.5" width="136.7" height="137.5" role="img" aria-label="Geometry diagram"><line x1="22.0" y1="115.5" x2="114.7" y2="90.7" stroke="#1f2937" stroke-width="1.75" fill="none"/><line x1="22.0" y1="115.5" x2="43.6" y2="22.0" stroke="#1f2937" stroke-width="1.75" fill="none"/><path d="M 43.3 109.8 A 22.0 22.0 0 0 0 26.9 94.1" fill="none" stroke="#2563eb" stroke-width="1.75"/><circle cx="22.0" cy="115.5" r="3" fill="#1f2937"/><text x="10.8" y="124.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">F</text><circle cx="114.7" cy="90.7" r="3" fill="#1f2937"/><text x="123.5" y="85.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="43.6" cy="22.0" r="3" fill="#1f2937"/><text x="50.8" y="14.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">E</text></svg></div></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="40^\circ"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="87^\circ"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="62^\circ"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Quadrilaterals</h2>
+<p class='type-id'><code>pa_quadrilaterals</code> · Pre-Algebra — Plane Figures · gen=<code>geo_quadrilateral_area</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the measure.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{{Find the area of the square.}}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 183.2 183.2" width="183.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,142.0 142.0,142.0 142.0,22.0 22.0,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="82.0" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">7 cm</text><text x="161.2" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">7 cm</text><circle cx="22.0" cy="142.0" r="3" fill="#1f2937"/><text x="12.9" y="151.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="142.0" cy="142.0" r="3" fill="#1f2937"/><text x="151.1" y="151.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="142.0" cy="22.0" r="3" fill="#1f2937"/><text x="151.1" y="12.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="12.9" y="12.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{{Find the area of the kite.}}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 183.2 93.2" width="183.2" height="93.2" role="img" aria-label="Geometry diagram"><polygon points="82.0,22.0 142.0,37.0 82.0,52.0 22.0,37.0" fill="#dbeafe" fill-opacity="0.25" stroke="#1f2937" stroke-width="1.75"/><text x="104.0" y="71.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">20 cm</text><text x="161.2" y="59.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">5 cm</text><circle cx="82.0" cy="22.0" r="3" fill="#1f2937"/><text x="82.0" y="9.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="142.0" cy="37.0" r="3" fill="#1f2937"/><text x="154.8" y="37.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="82.0" cy="52.0" r="3" fill="#1f2937"/><text x="82.0" y="64.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="37.0" r="3" fill="#1f2937"/><text x="9.2" y="37.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{{Find the area of the rectangle.}}"></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 103.2 183.2" width="103.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,142.0 62.0,142.0 62.0,22.0 22.0,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="42.0" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">10 cm</text><text x="81.2" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">30 cm</text><circle cx="22.0" cy="142.0" r="3" fill="#1f2937"/><text x="18.0" y="154.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="62.0" cy="142.0" r="3" fill="#1f2937"/><text x="66.0" y="154.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="62.0" cy="22.0" r="3" fill="#1f2937"/><text x="66.0" y="9.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="18.0" y="9.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="49\text{ cm}^2"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="50\text{ cm}^2"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="300\text{ cm}^2"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Transformations</h2>
+<p class='type-id'><code>pa_transformations</code> · Pre-Algebra — Plane Figures · gen=<code>graph_transformations</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Graph the transformation.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Graph the transformation of } f(x) = x^2 \text{ to } y = (x - 0)^2 + 0."></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="30.444444444444443" y1="24" x2="30.444444444444443" y2="196" class="graph-grid" /><line x1="36.888888888888886" y1="24" x2="36.888888888888886" y2="196" class="graph-grid" /><line x1="43.33333333333333" y1="24" x2="43.33333333333333" y2="196" class="graph-grid" /><line x1="49.77777777777777" y1="24" x2="49.77777777777777" y2="196" class="graph-grid" /><line x1="56.22222222222222" y1="24" x2="56.22222222222222" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="69.11111111111111" y1="24" x2="69.11111111111111" y2="196" class="graph-grid" /><line x1="75.55555555555554" y1="24" x2="75.55555555555554" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="88.44444444444444" y1="24" x2="88.44444444444444" y2="196" class="graph-grid" /><line x1="94.8888888888889" y1="24" x2="94.8888888888889" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="107.77777777777777" y1="24" x2="107.77777777777777" y2="196" class="graph-grid" /><line x1="114.22222222222223" y1="24" x2="114.22222222222223" y2="196" class="graph-grid" /><line x1="120.66666666666667" y1="24" x2="120.66666666666667" y2="196" class="graph-grid" /><line x1="127.1111111111111" y1="24" x2="127.1111111111111" y2="196" class="graph-grid" /><line x1="133.55555555555554" y1="24" x2="133.55555555555554" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="146.44444444444446" y1="24" x2="146.44444444444446" y2="196" class="graph-grid" /><line x1="152.88888888888889" y1="24" x2="152.88888888888889" y2="196" class="graph-grid" /><line x1="159.33333333333334" y1="24" x2="159.33333333333334" y2="196" class="graph-grid" /><line x1="165.7777777777778" y1="24" x2="165.7777777777778" y2="196" class="graph-grid" /><line x1="172.2222222222222" y1="24" x2="172.2222222222222" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="185.11111111111111" y1="24" x2="185.11111111111111" y2="196" class="graph-grid" /><line x1="191.55555555555554" y1="24" x2="191.55555555555554" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="204.44444444444446" y1="24" x2="204.44444444444446" y2="196" class="graph-grid" /><line x1="210.88888888888889" y1="24" x2="210.88888888888889" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="223.7777777777778" y1="24" x2="223.7777777777778" y2="196" class="graph-grid" /><line x1="230.2222222222222" y1="24" x2="230.2222222222222" y2="196" class="graph-grid" /><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="196" class="graph-grid" /><line x1="243.11111111111111" y1="24" x2="243.11111111111111" y2="196" class="graph-grid" /><line x1="249.55555555555554" y1="24" x2="249.55555555555554" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="191.22222222222223" x2="256" y2="191.22222222222223" class="graph-grid" /><line x1="24" y1="186.44444444444446" x2="256" y2="186.44444444444446" class="graph-grid" /><line x1="24" y1="181.66666666666666" x2="256" y2="181.66666666666666" class="graph-grid" /><line x1="24" y1="176.88888888888889" x2="256" y2="176.88888888888889" class="graph-grid" /><line x1="24" y1="172.11111111111111" x2="256" y2="172.11111111111111" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="162.55555555555554" x2="256" y2="162.55555555555554" class="graph-grid" /><line x1="24" y1="157.77777777777777" x2="256" y2="157.77777777777777" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="148.22222222222223" x2="256" y2="148.22222222222223" class="graph-grid" /><line x1="24" y1="143.44444444444446" x2="256" y2="143.44444444444446" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="133.88888888888889" x2="256" y2="133.88888888888889" class="graph-grid" /><line x1="24" y1="129.11111111111111" x2="256" y2="129.11111111111111" class="graph-grid" /><line x1="24" y1="124.33333333333333" x2="256" y2="124.33333333333333" class="graph-grid" /><line x1="24" y1="119.55555555555556" x2="256" y2="119.55555555555556" class="graph-grid" /><line x1="24" y1="114.77777777777779" x2="256" y2="114.77777777777779" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="105.22222222222221" x2="256" y2="105.22222222222221" class="graph-grid" /><line x1="24" y1="100.44444444444444" x2="256" y2="100.44444444444444" class="graph-grid" /><line x1="24" y1="95.66666666666666" x2="256" y2="95.66666666666666" class="graph-grid" /><line x1="24" y1="90.88888888888889" x2="256" y2="90.88888888888889" class="graph-grid" /><line x1="24" y1="86.11111111111111" x2="256" y2="86.11111111111111" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="76.55555555555556" x2="256" y2="76.55555555555556" class="graph-grid" /><line x1="24" y1="71.77777777777779" x2="256" y2="71.77777777777779" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="62.22222222222223" x2="256" y2="62.22222222222223" class="graph-grid" /><line x1="24" y1="57.44444444444443" x2="256" y2="57.44444444444443" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="47.888888888888886" x2="256" y2="47.888888888888886" class="graph-grid" /><line x1="24" y1="43.111111111111114" x2="256" y2="43.111111111111114" class="graph-grid" /><line x1="24" y1="38.33333333333334" x2="256" y2="38.33333333333334" class="graph-grid" /><line x1="24" y1="33.55555555555557" x2="256" y2="33.55555555555557" class="graph-grid" /><line x1="24" y1="28.77777777777777" x2="256" y2="28.77777777777777" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Graph the transformation of } f(x) = x^2 \text{ to } y = (x - 6)^2 + 4."></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="29.272727272727273" y1="24" x2="29.272727272727273" y2="196" class="graph-grid" /><line x1="34.54545454545455" y1="24" x2="34.54545454545455" y2="196" class="graph-grid" /><line x1="39.81818181818181" y1="24" x2="39.81818181818181" y2="196" class="graph-grid" /><line x1="45.09090909090909" y1="24" x2="45.09090909090909" y2="196" class="graph-grid" /><line x1="50.36363636363636" y1="24" x2="50.36363636363636" y2="196" class="graph-grid" /><line x1="55.63636363636363" y1="24" x2="55.63636363636363" y2="196" class="graph-grid" /><line x1="60.90909090909091" y1="24" x2="60.90909090909091" y2="196" class="graph-grid" /><line x1="66.18181818181819" y1="24" x2="66.18181818181819" y2="196" class="graph-grid" /><line x1="71.45454545454547" y1="24" x2="71.45454545454547" y2="196" class="graph-grid" /><line x1="76.72727272727272" y1="24" x2="76.72727272727272" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="87.27272727272727" y1="24" x2="87.27272727272727" y2="196" class="graph-grid" /><line x1="92.54545454545455" y1="24" x2="92.54545454545455" y2="196" class="graph-grid" /><line x1="97.81818181818181" y1="24" x2="97.81818181818181" y2="196" class="graph-grid" /><line x1="103.09090909090908" y1="24" x2="103.09090909090908" y2="196" class="graph-grid" /><line x1="108.36363636363636" y1="24" x2="108.36363636363636" y2="196" class="graph-grid" /><line x1="113.63636363636364" y1="24" x2="113.63636363636364" y2="196" class="graph-grid" /><line x1="118.90909090909092" y1="24" x2="118.90909090909092" y2="196" class="graph-grid" /><line x1="124.18181818181819" y1="24" x2="124.18181818181819" y2="196" class="graph-grid" /><line x1="129.45454545454544" y1="24" x2="129.45454545454544" y2="196" class="graph-grid" /><line x1="134.72727272727275" y1="24" x2="134.72727272727275" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="145.27272727272725" y1="24" x2="145.27272727272725" y2="196" class="graph-grid" /><line x1="150.54545454545453" y1="24" x2="150.54545454545453" y2="196" class="graph-grid" /><line x1="155.81818181818184" y1="24" x2="155.81818181818184" y2="196" class="graph-grid" /><line x1="161.0909090909091" y1="24" x2="161.0909090909091" y2="196" class="graph-grid" /><line x1="166.36363636363637" y1="24" x2="166.36363636363637" y2="196" class="graph-grid" /><line x1="171.63636363636363" y1="24" x2="171.63636363636363" y2="196" class="graph-grid" /><line x1="176.9090909090909" y1="24" x2="176.9090909090909" y2="196" class="graph-grid" /><line x1="182.18181818181816" y1="24" x2="182.18181818181816" y2="196" class="graph-grid" /><line x1="187.45454545454547" y1="24" x2="187.45454545454547" y2="196" class="graph-grid" /><line x1="192.72727272727272" y1="24" x2="192.72727272727272" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="203.27272727272728" y1="24" x2="203.27272727272728" y2="196" class="graph-grid" /><line x1="208.54545454545453" y1="24" x2="208.54545454545453" y2="196" class="graph-grid" /><line x1="213.81818181818184" y1="24" x2="213.81818181818184" y2="196" class="graph-grid" /><line x1="219.0909090909091" y1="24" x2="219.0909090909091" y2="196" class="graph-grid" /><line x1="224.36363636363637" y1="24" x2="224.36363636363637" y2="196" class="graph-grid" /><line x1="229.63636363636363" y1="24" x2="229.63636363636363" y2="196" class="graph-grid" /><line x1="234.9090909090909" y1="24" x2="234.9090909090909" y2="196" class="graph-grid" /><line x1="240.18181818181816" y1="24" x2="240.18181818181816" y2="196" class="graph-grid" /><line x1="245.45454545454547" y1="24" x2="245.45454545454547" y2="196" class="graph-grid" /><line x1="250.72727272727272" y1="24" x2="250.72727272727272" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="192.0909090909091" x2="256" y2="192.0909090909091" class="graph-grid" /><line x1="24" y1="188.1818181818182" x2="256" y2="188.1818181818182" class="graph-grid" /><line x1="24" y1="184.27272727272728" x2="256" y2="184.27272727272728" class="graph-grid" /><line x1="24" y1="180.36363636363637" x2="256" y2="180.36363636363637" class="graph-grid" /><line x1="24" y1="176.45454545454547" x2="256" y2="176.45454545454547" class="graph-grid" /><line x1="24" y1="172.54545454545456" x2="256" y2="172.54545454545456" class="graph-grid" /><line x1="24" y1="168.63636363636363" x2="256" y2="168.63636363636363" class="graph-grid" /><line x1="24" y1="164.72727272727272" x2="256" y2="164.72727272727272" class="graph-grid" /><line x1="24" y1="160.8181818181818" x2="256" y2="160.8181818181818" class="graph-grid" /><line x1="24" y1="156.9090909090909" x2="256" y2="156.9090909090909" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="149.0909090909091" x2="256" y2="149.0909090909091" class="graph-grid" /><line x1="24" y1="145.1818181818182" x2="256" y2="145.1818181818182" class="graph-grid" /><line x1="24" y1="141.27272727272728" x2="256" y2="141.27272727272728" class="graph-grid" /><line x1="24" y1="137.36363636363637" x2="256" y2="137.36363636363637" class="graph-grid" /><line x1="24" y1="133.45454545454544" x2="256" y2="133.45454545454544" class="graph-grid" /><line x1="24" y1="129.54545454545456" x2="256" y2="129.54545454545456" class="graph-grid" /><line x1="24" y1="125.63636363636363" x2="256" y2="125.63636363636363" class="graph-grid" /><line x1="24" y1="121.72727272727272" x2="256" y2="121.72727272727272" class="graph-grid" /><line x1="24" y1="117.81818181818183" x2="256" y2="117.81818181818183" class="graph-grid" /><line x1="24" y1="113.9090909090909" x2="256" y2="113.9090909090909" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="106.0909090909091" x2="256" y2="106.0909090909091" class="graph-grid" /><line x1="24" y1="102.18181818181819" x2="256" y2="102.18181818181819" class="graph-grid" /><line x1="24" y1="98.27272727272727" x2="256" y2="98.27272727272727" class="graph-grid" /><line x1="24" y1="94.36363636363636" x2="256" y2="94.36363636363636" class="graph-grid" /><line x1="24" y1="90.45454545454545" x2="256" y2="90.45454545454545" class="graph-grid" /><line x1="24" y1="86.54545454545455" x2="256" y2="86.54545454545455" class="graph-grid" /><line x1="24" y1="82.63636363636364" x2="256" y2="82.63636363636364" class="graph-grid" /><line x1="24" y1="78.72727272727273" x2="256" y2="78.72727272727273" class="graph-grid" /><line x1="24" y1="74.81818181818181" x2="256" y2="74.81818181818181" class="graph-grid" /><line x1="24" y1="70.9090909090909" x2="256" y2="70.9090909090909" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="63.09090909090909" x2="256" y2="63.09090909090909" class="graph-grid" /><line x1="24" y1="59.18181818181819" x2="256" y2="59.18181818181819" class="graph-grid" /><line x1="24" y1="55.27272727272725" x2="256" y2="55.27272727272725" class="graph-grid" /><line x1="24" y1="51.363636363636346" x2="256" y2="51.363636363636346" class="graph-grid" /><line x1="24" y1="47.45454545454544" x2="256" y2="47.45454545454544" class="graph-grid" /><line x1="24" y1="43.54545454545456" x2="256" y2="43.54545454545456" class="graph-grid" /><line x1="24" y1="39.636363636363654" x2="256" y2="39.636363636363654" class="graph-grid" /><line x1="24" y1="35.72727272727275" x2="256" y2="35.72727272727275" class="graph-grid" /><line x1="24" y1="31.818181818181813" x2="256" y2="31.818181818181813" class="graph-grid" /><line x1="24" y1="27.909090909090907" x2="256" y2="27.909090909090907" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Graph the transformation of } f(x) = x^2 \text{ to } y = (x + 7)^2 + 6."></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Blank coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="28.833333333333332" y1="24" x2="28.833333333333332" y2="196" class="graph-grid" /><line x1="33.666666666666664" y1="24" x2="33.666666666666664" y2="196" class="graph-grid" /><line x1="38.5" y1="24" x2="38.5" y2="196" class="graph-grid" /><line x1="43.33333333333333" y1="24" x2="43.33333333333333" y2="196" class="graph-grid" /><line x1="48.16666666666667" y1="24" x2="48.16666666666667" y2="196" class="graph-grid" /><line x1="53.0" y1="24" x2="53.0" y2="196" class="graph-grid" /><line x1="57.833333333333336" y1="24" x2="57.833333333333336" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="67.5" y1="24" x2="67.5" y2="196" class="graph-grid" /><line x1="72.33333333333334" y1="24" x2="72.33333333333334" y2="196" class="graph-grid" /><line x1="77.16666666666666" y1="24" x2="77.16666666666666" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="86.83333333333333" y1="24" x2="86.83333333333333" y2="196" class="graph-grid" /><line x1="91.66666666666667" y1="24" x2="91.66666666666667" y2="196" class="graph-grid" /><line x1="96.5" y1="24" x2="96.5" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="106.16666666666667" y1="24" x2="106.16666666666667" y2="196" class="graph-grid" /><line x1="111.0" y1="24" x2="111.0" y2="196" class="graph-grid" /><line x1="115.83333333333333" y1="24" x2="115.83333333333333" y2="196" class="graph-grid" /><line x1="120.66666666666667" y1="24" x2="120.66666666666667" y2="196" class="graph-grid" /><line x1="125.5" y1="24" x2="125.5" y2="196" class="graph-grid" /><line x1="130.33333333333331" y1="24" x2="130.33333333333331" y2="196" class="graph-grid" /><line x1="135.16666666666669" y1="24" x2="135.16666666666669" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="144.83333333333334" y1="24" x2="144.83333333333334" y2="196" class="graph-grid" /><line x1="149.66666666666666" y1="24" x2="149.66666666666666" y2="196" class="graph-grid" /><line x1="154.5" y1="24" x2="154.5" y2="196" class="graph-grid" /><line x1="159.33333333333334" y1="24" x2="159.33333333333334" y2="196" class="graph-grid" /><line x1="164.16666666666666" y1="24" x2="164.16666666666666" y2="196" class="graph-grid" /><line x1="169.0" y1="24" x2="169.0" y2="196" class="graph-grid" /><line x1="173.83333333333334" y1="24" x2="173.83333333333334" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="183.5" y1="24" x2="183.5" y2="196" class="graph-grid" /><line x1="188.33333333333334" y1="24" x2="188.33333333333334" y2="196" class="graph-grid" /><line x1="193.16666666666666" y1="24" x2="193.16666666666666" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="202.83333333333334" y1="24" x2="202.83333333333334" y2="196" class="graph-grid" /><line x1="207.66666666666666" y1="24" x2="207.66666666666666" y2="196" class="graph-grid" /><line x1="212.5" y1="24" x2="212.5" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="222.16666666666666" y1="24" x2="222.16666666666666" y2="196" class="graph-grid" /><line x1="227.0" y1="24" x2="227.0" y2="196" class="graph-grid" /><line x1="231.83333333333334" y1="24" x2="231.83333333333334" y2="196" class="graph-grid" /><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="196" class="graph-grid" /><line x1="241.5" y1="24" x2="241.5" y2="196" class="graph-grid" /><line x1="246.33333333333334" y1="24" x2="246.33333333333334" y2="196" class="graph-grid" /><line x1="251.16666666666666" y1="24" x2="251.16666666666666" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="192.41666666666666" x2="256" y2="192.41666666666666" class="graph-grid" /><line x1="24" y1="188.83333333333334" x2="256" y2="188.83333333333334" class="graph-grid" /><line x1="24" y1="185.25" x2="256" y2="185.25" class="graph-grid" /><line x1="24" y1="181.66666666666666" x2="256" y2="181.66666666666666" class="graph-grid" /><line x1="24" y1="178.08333333333334" x2="256" y2="178.08333333333334" class="graph-grid" /><line x1="24" y1="174.5" x2="256" y2="174.5" class="graph-grid" /><line x1="24" y1="170.91666666666666" x2="256" y2="170.91666666666666" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="163.75" x2="256" y2="163.75" class="graph-grid" /><line x1="24" y1="160.16666666666666" x2="256" y2="160.16666666666666" class="graph-grid" /><line x1="24" y1="156.58333333333334" x2="256" y2="156.58333333333334" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="149.41666666666669" x2="256" y2="149.41666666666669" class="graph-grid" /><line x1="24" y1="145.83333333333331" x2="256" y2="145.83333333333331" class="graph-grid" /><line x1="24" y1="142.25" x2="256" y2="142.25" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="135.08333333333331" x2="256" y2="135.08333333333331" class="graph-grid" /><line x1="24" y1="131.5" x2="256" y2="131.5" class="graph-grid" /><line x1="24" y1="127.91666666666667" x2="256" y2="127.91666666666667" class="graph-grid" /><line x1="24" y1="124.33333333333333" x2="256" y2="124.33333333333333" class="graph-grid" /><line x1="24" y1="120.75" x2="256" y2="120.75" class="graph-grid" /><line x1="24" y1="117.16666666666667" x2="256" y2="117.16666666666667" class="graph-grid" /><line x1="24" y1="113.58333333333333" x2="256" y2="113.58333333333333" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="106.41666666666666" x2="256" y2="106.41666666666666" class="graph-grid" /><line x1="24" y1="102.83333333333334" x2="256" y2="102.83333333333334" class="graph-grid" /><line x1="24" y1="99.25" x2="256" y2="99.25" class="graph-grid" /><line x1="24" y1="95.66666666666666" x2="256" y2="95.66666666666666" class="graph-grid" /><line x1="24" y1="92.08333333333334" x2="256" y2="92.08333333333334" class="graph-grid" /><line x1="24" y1="88.5" x2="256" y2="88.5" class="graph-grid" /><line x1="24" y1="84.91666666666666" x2="256" y2="84.91666666666666" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="77.75" x2="256" y2="77.75" class="graph-grid" /><line x1="24" y1="74.16666666666666" x2="256" y2="74.16666666666666" class="graph-grid" /><line x1="24" y1="70.58333333333334" x2="256" y2="70.58333333333334" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="63.41666666666666" x2="256" y2="63.41666666666666" class="graph-grid" /><line x1="24" y1="59.83333333333334" x2="256" y2="59.83333333333334" class="graph-grid" /><line x1="24" y1="56.25" x2="256" y2="56.25" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="49.08333333333334" x2="256" y2="49.08333333333334" class="graph-grid" /><line x1="24" y1="45.5" x2="256" y2="45.5" class="graph-grid" /><line x1="24" y1="41.91666666666666" x2="256" y2="41.91666666666666" class="graph-grid" /><line x1="24" y1="38.33333333333334" x2="256" y2="38.33333333333334" class="graph-grid" /><line x1="24" y1="34.75" x2="256" y2="34.75" class="graph-grid" /><line x1="24" y1="31.166666666666657" x2="256" y2="31.166666666666657" class="graph-grid" /><line x1="24" y1="27.583333333333343" x2="256" y2="27.583333333333343" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /></svg></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="y = (x - 0)^2 + 0"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="30.444444444444443" y1="24" x2="30.444444444444443" y2="196" class="graph-grid" /><line x1="36.888888888888886" y1="24" x2="36.888888888888886" y2="196" class="graph-grid" /><line x1="43.33333333333333" y1="24" x2="43.33333333333333" y2="196" class="graph-grid" /><line x1="49.77777777777777" y1="24" x2="49.77777777777777" y2="196" class="graph-grid" /><line x1="56.22222222222222" y1="24" x2="56.22222222222222" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="69.11111111111111" y1="24" x2="69.11111111111111" y2="196" class="graph-grid" /><line x1="75.55555555555554" y1="24" x2="75.55555555555554" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="88.44444444444444" y1="24" x2="88.44444444444444" y2="196" class="graph-grid" /><line x1="94.8888888888889" y1="24" x2="94.8888888888889" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="107.77777777777777" y1="24" x2="107.77777777777777" y2="196" class="graph-grid" /><line x1="114.22222222222223" y1="24" x2="114.22222222222223" y2="196" class="graph-grid" /><line x1="120.66666666666667" y1="24" x2="120.66666666666667" y2="196" class="graph-grid" /><line x1="127.1111111111111" y1="24" x2="127.1111111111111" y2="196" class="graph-grid" /><line x1="133.55555555555554" y1="24" x2="133.55555555555554" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="146.44444444444446" y1="24" x2="146.44444444444446" y2="196" class="graph-grid" /><line x1="152.88888888888889" y1="24" x2="152.88888888888889" y2="196" class="graph-grid" /><line x1="159.33333333333334" y1="24" x2="159.33333333333334" y2="196" class="graph-grid" /><line x1="165.7777777777778" y1="24" x2="165.7777777777778" y2="196" class="graph-grid" /><line x1="172.2222222222222" y1="24" x2="172.2222222222222" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="185.11111111111111" y1="24" x2="185.11111111111111" y2="196" class="graph-grid" /><line x1="191.55555555555554" y1="24" x2="191.55555555555554" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="204.44444444444446" y1="24" x2="204.44444444444446" y2="196" class="graph-grid" /><line x1="210.88888888888889" y1="24" x2="210.88888888888889" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="223.7777777777778" y1="24" x2="223.7777777777778" y2="196" class="graph-grid" /><line x1="230.2222222222222" y1="24" x2="230.2222222222222" y2="196" class="graph-grid" /><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="196" class="graph-grid" /><line x1="243.11111111111111" y1="24" x2="243.11111111111111" y2="196" class="graph-grid" /><line x1="249.55555555555554" y1="24" x2="249.55555555555554" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="191.22222222222223" x2="256" y2="191.22222222222223" class="graph-grid" /><line x1="24" y1="186.44444444444446" x2="256" y2="186.44444444444446" class="graph-grid" /><line x1="24" y1="181.66666666666666" x2="256" y2="181.66666666666666" class="graph-grid" /><line x1="24" y1="176.88888888888889" x2="256" y2="176.88888888888889" class="graph-grid" /><line x1="24" y1="172.11111111111111" x2="256" y2="172.11111111111111" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="162.55555555555554" x2="256" y2="162.55555555555554" class="graph-grid" /><line x1="24" y1="157.77777777777777" x2="256" y2="157.77777777777777" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="148.22222222222223" x2="256" y2="148.22222222222223" class="graph-grid" /><line x1="24" y1="143.44444444444446" x2="256" y2="143.44444444444446" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="133.88888888888889" x2="256" y2="133.88888888888889" class="graph-grid" /><line x1="24" y1="129.11111111111111" x2="256" y2="129.11111111111111" class="graph-grid" /><line x1="24" y1="124.33333333333333" x2="256" y2="124.33333333333333" class="graph-grid" /><line x1="24" y1="119.55555555555556" x2="256" y2="119.55555555555556" class="graph-grid" /><line x1="24" y1="114.77777777777779" x2="256" y2="114.77777777777779" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="105.22222222222221" x2="256" y2="105.22222222222221" class="graph-grid" /><line x1="24" y1="100.44444444444444" x2="256" y2="100.44444444444444" class="graph-grid" /><line x1="24" y1="95.66666666666666" x2="256" y2="95.66666666666666" class="graph-grid" /><line x1="24" y1="90.88888888888889" x2="256" y2="90.88888888888889" class="graph-grid" /><line x1="24" y1="86.11111111111111" x2="256" y2="86.11111111111111" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="76.55555555555556" x2="256" y2="76.55555555555556" class="graph-grid" /><line x1="24" y1="71.77777777777779" x2="256" y2="71.77777777777779" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="62.22222222222223" x2="256" y2="62.22222222222223" class="graph-grid" /><line x1="24" y1="57.44444444444443" x2="256" y2="57.44444444444443" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="47.888888888888886" x2="256" y2="47.888888888888886" class="graph-grid" /><line x1="24" y1="43.111111111111114" x2="256" y2="43.111111111111114" class="graph-grid" /><line x1="24" y1="38.33333333333334" x2="256" y2="38.33333333333334" class="graph-grid" /><line x1="24" y1="33.55555555555557" x2="256" y2="33.55555555555557" class="graph-grid" /><line x1="24" y1="28.77777777777777" x2="256" y2="28.77777777777777" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><circle cx="114.22222222222223" cy="33.55555555555557" r="4" class="graph-point" /><circle cx="120.66666666666667" cy="67.0" r="4" class="graph-point" /><circle cx="127.1111111111111" cy="90.88888888888889" r="4" class="graph-point" /><circle cx="133.55555555555554" cy="105.22222222222221" r="4" class="graph-point" /><circle cx="140.0" cy="110.0" r="4" class="graph-point" /><circle cx="146.44444444444446" cy="105.22222222222221" r="4" class="graph-point" /><circle cx="152.88888888888889" cy="90.88888888888889" r="4" class="graph-point" /><circle cx="159.33333333333334" cy="67.0" r="4" class="graph-point" /><circle cx="165.7777777777778" cy="33.55555555555557" r="4" class="graph-point" /></svg></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="y = (x - 6)^2 + 4"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="29.272727272727273" y1="24" x2="29.272727272727273" y2="196" class="graph-grid" /><line x1="34.54545454545455" y1="24" x2="34.54545454545455" y2="196" class="graph-grid" /><line x1="39.81818181818181" y1="24" x2="39.81818181818181" y2="196" class="graph-grid" /><line x1="45.09090909090909" y1="24" x2="45.09090909090909" y2="196" class="graph-grid" /><line x1="50.36363636363636" y1="24" x2="50.36363636363636" y2="196" class="graph-grid" /><line x1="55.63636363636363" y1="24" x2="55.63636363636363" y2="196" class="graph-grid" /><line x1="60.90909090909091" y1="24" x2="60.90909090909091" y2="196" class="graph-grid" /><line x1="66.18181818181819" y1="24" x2="66.18181818181819" y2="196" class="graph-grid" /><line x1="71.45454545454547" y1="24" x2="71.45454545454547" y2="196" class="graph-grid" /><line x1="76.72727272727272" y1="24" x2="76.72727272727272" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="87.27272727272727" y1="24" x2="87.27272727272727" y2="196" class="graph-grid" /><line x1="92.54545454545455" y1="24" x2="92.54545454545455" y2="196" class="graph-grid" /><line x1="97.81818181818181" y1="24" x2="97.81818181818181" y2="196" class="graph-grid" /><line x1="103.09090909090908" y1="24" x2="103.09090909090908" y2="196" class="graph-grid" /><line x1="108.36363636363636" y1="24" x2="108.36363636363636" y2="196" class="graph-grid" /><line x1="113.63636363636364" y1="24" x2="113.63636363636364" y2="196" class="graph-grid" /><line x1="118.90909090909092" y1="24" x2="118.90909090909092" y2="196" class="graph-grid" /><line x1="124.18181818181819" y1="24" x2="124.18181818181819" y2="196" class="graph-grid" /><line x1="129.45454545454544" y1="24" x2="129.45454545454544" y2="196" class="graph-grid" /><line x1="134.72727272727275" y1="24" x2="134.72727272727275" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="145.27272727272725" y1="24" x2="145.27272727272725" y2="196" class="graph-grid" /><line x1="150.54545454545453" y1="24" x2="150.54545454545453" y2="196" class="graph-grid" /><line x1="155.81818181818184" y1="24" x2="155.81818181818184" y2="196" class="graph-grid" /><line x1="161.0909090909091" y1="24" x2="161.0909090909091" y2="196" class="graph-grid" /><line x1="166.36363636363637" y1="24" x2="166.36363636363637" y2="196" class="graph-grid" /><line x1="171.63636363636363" y1="24" x2="171.63636363636363" y2="196" class="graph-grid" /><line x1="176.9090909090909" y1="24" x2="176.9090909090909" y2="196" class="graph-grid" /><line x1="182.18181818181816" y1="24" x2="182.18181818181816" y2="196" class="graph-grid" /><line x1="187.45454545454547" y1="24" x2="187.45454545454547" y2="196" class="graph-grid" /><line x1="192.72727272727272" y1="24" x2="192.72727272727272" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="203.27272727272728" y1="24" x2="203.27272727272728" y2="196" class="graph-grid" /><line x1="208.54545454545453" y1="24" x2="208.54545454545453" y2="196" class="graph-grid" /><line x1="213.81818181818184" y1="24" x2="213.81818181818184" y2="196" class="graph-grid" /><line x1="219.0909090909091" y1="24" x2="219.0909090909091" y2="196" class="graph-grid" /><line x1="224.36363636363637" y1="24" x2="224.36363636363637" y2="196" class="graph-grid" /><line x1="229.63636363636363" y1="24" x2="229.63636363636363" y2="196" class="graph-grid" /><line x1="234.9090909090909" y1="24" x2="234.9090909090909" y2="196" class="graph-grid" /><line x1="240.18181818181816" y1="24" x2="240.18181818181816" y2="196" class="graph-grid" /><line x1="245.45454545454547" y1="24" x2="245.45454545454547" y2="196" class="graph-grid" /><line x1="250.72727272727272" y1="24" x2="250.72727272727272" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="192.0909090909091" x2="256" y2="192.0909090909091" class="graph-grid" /><line x1="24" y1="188.1818181818182" x2="256" y2="188.1818181818182" class="graph-grid" /><line x1="24" y1="184.27272727272728" x2="256" y2="184.27272727272728" class="graph-grid" /><line x1="24" y1="180.36363636363637" x2="256" y2="180.36363636363637" class="graph-grid" /><line x1="24" y1="176.45454545454547" x2="256" y2="176.45454545454547" class="graph-grid" /><line x1="24" y1="172.54545454545456" x2="256" y2="172.54545454545456" class="graph-grid" /><line x1="24" y1="168.63636363636363" x2="256" y2="168.63636363636363" class="graph-grid" /><line x1="24" y1="164.72727272727272" x2="256" y2="164.72727272727272" class="graph-grid" /><line x1="24" y1="160.8181818181818" x2="256" y2="160.8181818181818" class="graph-grid" /><line x1="24" y1="156.9090909090909" x2="256" y2="156.9090909090909" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="149.0909090909091" x2="256" y2="149.0909090909091" class="graph-grid" /><line x1="24" y1="145.1818181818182" x2="256" y2="145.1818181818182" class="graph-grid" /><line x1="24" y1="141.27272727272728" x2="256" y2="141.27272727272728" class="graph-grid" /><line x1="24" y1="137.36363636363637" x2="256" y2="137.36363636363637" class="graph-grid" /><line x1="24" y1="133.45454545454544" x2="256" y2="133.45454545454544" class="graph-grid" /><line x1="24" y1="129.54545454545456" x2="256" y2="129.54545454545456" class="graph-grid" /><line x1="24" y1="125.63636363636363" x2="256" y2="125.63636363636363" class="graph-grid" /><line x1="24" y1="121.72727272727272" x2="256" y2="121.72727272727272" class="graph-grid" /><line x1="24" y1="117.81818181818183" x2="256" y2="117.81818181818183" class="graph-grid" /><line x1="24" y1="113.9090909090909" x2="256" y2="113.9090909090909" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="106.0909090909091" x2="256" y2="106.0909090909091" class="graph-grid" /><line x1="24" y1="102.18181818181819" x2="256" y2="102.18181818181819" class="graph-grid" /><line x1="24" y1="98.27272727272727" x2="256" y2="98.27272727272727" class="graph-grid" /><line x1="24" y1="94.36363636363636" x2="256" y2="94.36363636363636" class="graph-grid" /><line x1="24" y1="90.45454545454545" x2="256" y2="90.45454545454545" class="graph-grid" /><line x1="24" y1="86.54545454545455" x2="256" y2="86.54545454545455" class="graph-grid" /><line x1="24" y1="82.63636363636364" x2="256" y2="82.63636363636364" class="graph-grid" /><line x1="24" y1="78.72727272727273" x2="256" y2="78.72727272727273" class="graph-grid" /><line x1="24" y1="74.81818181818181" x2="256" y2="74.81818181818181" class="graph-grid" /><line x1="24" y1="70.9090909090909" x2="256" y2="70.9090909090909" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="63.09090909090909" x2="256" y2="63.09090909090909" class="graph-grid" /><line x1="24" y1="59.18181818181819" x2="256" y2="59.18181818181819" class="graph-grid" /><line x1="24" y1="55.27272727272725" x2="256" y2="55.27272727272725" class="graph-grid" /><line x1="24" y1="51.363636363636346" x2="256" y2="51.363636363636346" class="graph-grid" /><line x1="24" y1="47.45454545454544" x2="256" y2="47.45454545454544" class="graph-grid" /><line x1="24" y1="43.54545454545456" x2="256" y2="43.54545454545456" class="graph-grid" /><line x1="24" y1="39.636363636363654" x2="256" y2="39.636363636363654" class="graph-grid" /><line x1="24" y1="35.72727272727275" x2="256" y2="35.72727272727275" class="graph-grid" /><line x1="24" y1="31.818181818181813" x2="256" y2="31.818181818181813" class="graph-grid" /><line x1="24" y1="27.909090909090907" x2="256" y2="27.909090909090907" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><circle cx="150.54545454545453" cy="31.818181818181813" r="4" class="graph-point" /><circle cx="155.81818181818184" cy="59.18181818181819" r="4" class="graph-point" /><circle cx="161.0909090909091" cy="78.72727272727273" r="4" class="graph-point" /><circle cx="166.36363636363637" cy="90.45454545454545" r="4" class="graph-point" /><circle cx="171.63636363636363" cy="94.36363636363636" r="4" class="graph-point" /><circle cx="176.9090909090909" cy="90.45454545454545" r="4" class="graph-point" /><circle cx="182.18181818181816" cy="78.72727272727273" r="4" class="graph-point" /><circle cx="187.45454545454547" cy="59.18181818181819" r="4" class="graph-point" /><circle cx="192.72727272727272" cy="31.818181818181813" r="4" class="graph-point" /></svg></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="y = (x + 7)^2 + 6"></span><svg class="question-graph coordinate-plane-graph" viewBox="0 0 280 220" role="img" aria-label="Coordinate plane"><line x1="24.0" y1="24" x2="24.0" y2="196" class="graph-grid" /><line x1="28.833333333333332" y1="24" x2="28.833333333333332" y2="196" class="graph-grid" /><line x1="33.666666666666664" y1="24" x2="33.666666666666664" y2="196" class="graph-grid" /><line x1="38.5" y1="24" x2="38.5" y2="196" class="graph-grid" /><line x1="43.33333333333333" y1="24" x2="43.33333333333333" y2="196" class="graph-grid" /><line x1="48.16666666666667" y1="24" x2="48.16666666666667" y2="196" class="graph-grid" /><line x1="53.0" y1="24" x2="53.0" y2="196" class="graph-grid" /><line x1="57.833333333333336" y1="24" x2="57.833333333333336" y2="196" class="graph-grid" /><line x1="62.666666666666664" y1="24" x2="62.666666666666664" y2="196" class="graph-grid" /><line x1="67.5" y1="24" x2="67.5" y2="196" class="graph-grid" /><line x1="72.33333333333334" y1="24" x2="72.33333333333334" y2="196" class="graph-grid" /><line x1="77.16666666666666" y1="24" x2="77.16666666666666" y2="196" class="graph-grid" /><line x1="82.0" y1="24" x2="82.0" y2="196" class="graph-grid" /><line x1="86.83333333333333" y1="24" x2="86.83333333333333" y2="196" class="graph-grid" /><line x1="91.66666666666667" y1="24" x2="91.66666666666667" y2="196" class="graph-grid" /><line x1="96.5" y1="24" x2="96.5" y2="196" class="graph-grid" /><line x1="101.33333333333333" y1="24" x2="101.33333333333333" y2="196" class="graph-grid" /><line x1="106.16666666666667" y1="24" x2="106.16666666666667" y2="196" class="graph-grid" /><line x1="111.0" y1="24" x2="111.0" y2="196" class="graph-grid" /><line x1="115.83333333333333" y1="24" x2="115.83333333333333" y2="196" class="graph-grid" /><line x1="120.66666666666667" y1="24" x2="120.66666666666667" y2="196" class="graph-grid" /><line x1="125.5" y1="24" x2="125.5" y2="196" class="graph-grid" /><line x1="130.33333333333331" y1="24" x2="130.33333333333331" y2="196" class="graph-grid" /><line x1="135.16666666666669" y1="24" x2="135.16666666666669" y2="196" class="graph-grid" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-grid" /><line x1="144.83333333333334" y1="24" x2="144.83333333333334" y2="196" class="graph-grid" /><line x1="149.66666666666666" y1="24" x2="149.66666666666666" y2="196" class="graph-grid" /><line x1="154.5" y1="24" x2="154.5" y2="196" class="graph-grid" /><line x1="159.33333333333334" y1="24" x2="159.33333333333334" y2="196" class="graph-grid" /><line x1="164.16666666666666" y1="24" x2="164.16666666666666" y2="196" class="graph-grid" /><line x1="169.0" y1="24" x2="169.0" y2="196" class="graph-grid" /><line x1="173.83333333333334" y1="24" x2="173.83333333333334" y2="196" class="graph-grid" /><line x1="178.66666666666666" y1="24" x2="178.66666666666666" y2="196" class="graph-grid" /><line x1="183.5" y1="24" x2="183.5" y2="196" class="graph-grid" /><line x1="188.33333333333334" y1="24" x2="188.33333333333334" y2="196" class="graph-grid" /><line x1="193.16666666666666" y1="24" x2="193.16666666666666" y2="196" class="graph-grid" /><line x1="198.0" y1="24" x2="198.0" y2="196" class="graph-grid" /><line x1="202.83333333333334" y1="24" x2="202.83333333333334" y2="196" class="graph-grid" /><line x1="207.66666666666666" y1="24" x2="207.66666666666666" y2="196" class="graph-grid" /><line x1="212.5" y1="24" x2="212.5" y2="196" class="graph-grid" /><line x1="217.33333333333334" y1="24" x2="217.33333333333334" y2="196" class="graph-grid" /><line x1="222.16666666666666" y1="24" x2="222.16666666666666" y2="196" class="graph-grid" /><line x1="227.0" y1="24" x2="227.0" y2="196" class="graph-grid" /><line x1="231.83333333333334" y1="24" x2="231.83333333333334" y2="196" class="graph-grid" /><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="196" class="graph-grid" /><line x1="241.5" y1="24" x2="241.5" y2="196" class="graph-grid" /><line x1="246.33333333333334" y1="24" x2="246.33333333333334" y2="196" class="graph-grid" /><line x1="251.16666666666666" y1="24" x2="251.16666666666666" y2="196" class="graph-grid" /><line x1="256.0" y1="24" x2="256.0" y2="196" class="graph-grid" /><line x1="24" y1="196.0" x2="256" y2="196.0" class="graph-grid" /><line x1="24" y1="192.41666666666666" x2="256" y2="192.41666666666666" class="graph-grid" /><line x1="24" y1="188.83333333333334" x2="256" y2="188.83333333333334" class="graph-grid" /><line x1="24" y1="185.25" x2="256" y2="185.25" class="graph-grid" /><line x1="24" y1="181.66666666666666" x2="256" y2="181.66666666666666" class="graph-grid" /><line x1="24" y1="178.08333333333334" x2="256" y2="178.08333333333334" class="graph-grid" /><line x1="24" y1="174.5" x2="256" y2="174.5" class="graph-grid" /><line x1="24" y1="170.91666666666666" x2="256" y2="170.91666666666666" class="graph-grid" /><line x1="24" y1="167.33333333333334" x2="256" y2="167.33333333333334" class="graph-grid" /><line x1="24" y1="163.75" x2="256" y2="163.75" class="graph-grid" /><line x1="24" y1="160.16666666666666" x2="256" y2="160.16666666666666" class="graph-grid" /><line x1="24" y1="156.58333333333334" x2="256" y2="156.58333333333334" class="graph-grid" /><line x1="24" y1="153.0" x2="256" y2="153.0" class="graph-grid" /><line x1="24" y1="149.41666666666669" x2="256" y2="149.41666666666669" class="graph-grid" /><line x1="24" y1="145.83333333333331" x2="256" y2="145.83333333333331" class="graph-grid" /><line x1="24" y1="142.25" x2="256" y2="142.25" class="graph-grid" /><line x1="24" y1="138.66666666666669" x2="256" y2="138.66666666666669" class="graph-grid" /><line x1="24" y1="135.08333333333331" x2="256" y2="135.08333333333331" class="graph-grid" /><line x1="24" y1="131.5" x2="256" y2="131.5" class="graph-grid" /><line x1="24" y1="127.91666666666667" x2="256" y2="127.91666666666667" class="graph-grid" /><line x1="24" y1="124.33333333333333" x2="256" y2="124.33333333333333" class="graph-grid" /><line x1="24" y1="120.75" x2="256" y2="120.75" class="graph-grid" /><line x1="24" y1="117.16666666666667" x2="256" y2="117.16666666666667" class="graph-grid" /><line x1="24" y1="113.58333333333333" x2="256" y2="113.58333333333333" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-grid" /><line x1="24" y1="106.41666666666666" x2="256" y2="106.41666666666666" class="graph-grid" /><line x1="24" y1="102.83333333333334" x2="256" y2="102.83333333333334" class="graph-grid" /><line x1="24" y1="99.25" x2="256" y2="99.25" class="graph-grid" /><line x1="24" y1="95.66666666666666" x2="256" y2="95.66666666666666" class="graph-grid" /><line x1="24" y1="92.08333333333334" x2="256" y2="92.08333333333334" class="graph-grid" /><line x1="24" y1="88.5" x2="256" y2="88.5" class="graph-grid" /><line x1="24" y1="84.91666666666666" x2="256" y2="84.91666666666666" class="graph-grid" /><line x1="24" y1="81.33333333333334" x2="256" y2="81.33333333333334" class="graph-grid" /><line x1="24" y1="77.75" x2="256" y2="77.75" class="graph-grid" /><line x1="24" y1="74.16666666666666" x2="256" y2="74.16666666666666" class="graph-grid" /><line x1="24" y1="70.58333333333334" x2="256" y2="70.58333333333334" class="graph-grid" /><line x1="24" y1="67.0" x2="256" y2="67.0" class="graph-grid" /><line x1="24" y1="63.41666666666666" x2="256" y2="63.41666666666666" class="graph-grid" /><line x1="24" y1="59.83333333333334" x2="256" y2="59.83333333333334" class="graph-grid" /><line x1="24" y1="56.25" x2="256" y2="56.25" class="graph-grid" /><line x1="24" y1="52.66666666666666" x2="256" y2="52.66666666666666" class="graph-grid" /><line x1="24" y1="49.08333333333334" x2="256" y2="49.08333333333334" class="graph-grid" /><line x1="24" y1="45.5" x2="256" y2="45.5" class="graph-grid" /><line x1="24" y1="41.91666666666666" x2="256" y2="41.91666666666666" class="graph-grid" /><line x1="24" y1="38.33333333333334" x2="256" y2="38.33333333333334" class="graph-grid" /><line x1="24" y1="34.75" x2="256" y2="34.75" class="graph-grid" /><line x1="24" y1="31.166666666666657" x2="256" y2="31.166666666666657" class="graph-grid" /><line x1="24" y1="27.583333333333343" x2="256" y2="27.583333333333343" class="graph-grid" /><line x1="24" y1="24.0" x2="256" y2="24.0" class="graph-grid" /><line x1="24" y1="110.0" x2="256" y2="110.0" class="graph-axis" /><line x1="140.0" y1="24" x2="140.0" y2="196" class="graph-axis" /><circle cx="86.83333333333333" cy="31.166666666666657" r="4" class="graph-point" /><circle cx="91.66666666666667" cy="56.25" r="4" class="graph-point" /><circle cx="96.5" cy="74.16666666666666" r="4" class="graph-point" /><circle cx="101.33333333333333" cy="84.91666666666666" r="4" class="graph-point" /><circle cx="106.16666666666667" cy="88.5" r="4" class="graph-point" /><circle cx="111.0" cy="84.91666666666666" r="4" class="graph-point" /><circle cx="115.83333333333333" cy="74.16666666666666" r="4" class="graph-point" /><circle cx="120.66666666666667" cy="56.25" r="4" class="graph-point" /><circle cx="125.5" cy="31.166666666666657" r="4" class="graph-point" /></svg></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Triangles</h2>
+<p class='type-id'><code>pa_plane_figures_triangles</code> · Pre-Algebra — Plane Figures · gen=<code>geo_triangle_area</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the measure.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Find the area of } \triangle ABC."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172.0 178.4" width="172.0" height="178.4" role="img" aria-label="Geometry diagram"><polygon points="22.0,137.2 150.0,137.2 58.4,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><line x1="58.4" y1="22.0" x2="58.4" y2="137.2" stroke="#1f2937" stroke-width="1.75" stroke-dasharray="6 4" fill="none"/><polyline points="58.4,124.4 71.2,124.4 71.2,137.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="86.0" y="156.4" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">10 cm</text><text x="45.1" y="65.7" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">9 cm</text><circle cx="22.0" cy="137.2" r="3" fill="#1f2937"/><text x="11.5" y="144.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="150.0" cy="137.2" r="3" fill="#1f2937"/><text x="161.3" y="143.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="58.4" cy="22.0" r="3" fill="#1f2937"/><text x="55.4" y="9.6" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Find the area of } \triangle ABC."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172.0 148.5" width="172.0" height="148.5" role="img" aria-label="Geometry diagram"><polygon points="22.0,107.3 150.0,107.3 66.1,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><line x1="66.1" y1="22.0" x2="66.1" y2="107.3" stroke="#1f2937" stroke-width="1.75" stroke-dasharray="6 4" fill="none"/><polyline points="66.1,94.5 78.9,94.5 78.9,107.3" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="86.0" y="126.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">18 cm</text><text x="53.0" y="50.6" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">12 cm</text><circle cx="22.0" cy="107.3" r="3" fill="#1f2937"/><text x="10.5" y="113.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="150.0" cy="107.3" r="3" fill="#1f2937"/><text x="161.9" y="112.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="66.1" cy="22.0" r="3" fill="#1f2937"/><text x="63.2" y="9.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Find the area of } \triangle ABC."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 183.2 179.8" width="183.2" height="179.8" role="img" aria-label="Geometry diagram"><polygon points="41.2,22.0 161.2,138.6 41.2,138.6" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="54.0,138.6 54.0,125.8 41.2,125.8" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="101.2" y="157.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">35 cm</text><text x="22.0" y="80.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">34 cm</text><circle cx="41.2" cy="138.6" r="3" fill="#1f2937"/><text x="31.2" y="147.4" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="161.2" cy="138.6" r="3" fill="#1f2937"/><text x="169.2" y="147.4" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="41.2" cy="22.0" r="3" fill="#1f2937"/><text x="31.2" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="45\text{ cm}^2"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="108\text{ cm}^2"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="595\text{ cm}^2"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Checking for a proportion</h2>
+<p class='type-id'><code>pa_checking_for_a_proportion</code> · Pre-Algebra — Proportions and Similarity · gen=<code>solving_proportions</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Determine if the ratios form a proportion.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\frac{5}{5} = \frac{x}{8}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\frac{2}{2} = \frac{x}{10}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\frac{8}{4} = \frac{x}{7}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="8"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="10"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="14"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Proportions word problems</h2>
+<p class='type-id'><code>pa_proportions_word_problems</code> · Pre-Algebra — Proportions and Similarity · gen=<code>wp_proportion</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the problem.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{If 4 apples cost \$1.25, how much do 10 apples cost at the same rate?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{If 3 notebooks cost \$1.25, how much do 8 notebooks cost at the same rate?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{If 5 apples cost \$1.00, how much do 9 apples cost at the same rate?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="\$3"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="\$3"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="\$2"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Similar figures</h2>
+<p class='type-id'><code>pa_similar_figures</code> · Pre-Algebra — Proportions and Similarity · gen=<code>wp_similar_figures</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the missing measure.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Two similar triangles have a scale factor of 2:1. The smaller triangle has a side of 5 cm. What is the corresponding side in the larger triangle?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Two similar triangles have a scale factor of 4:1. The smaller triangle has a side of 9 cm. What is the corresponding side in the larger triangle?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Two similar triangles have a scale factor of 4:1. The smaller triangle has a side of 6 cm. What is the corresponding side in the larger triangle?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="10"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="36"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="24"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Similar figures word problems</h2>
+<p class='type-id'><code>pa_similar_figures_word_problems</code> · Pre-Algebra — Proportions and Similarity · gen=<code>wp_similar_figures</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Solve the problem.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Two similar triangles have a scale factor of 3:1. The smaller triangle has a side of 4 cm. What is the corresponding side in the larger triangle?}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Two similar triangles have a scale factor of 4:1. The smaller triangle has a side of 3 cm. What is the corresponding side in the larger triangle?}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Two similar triangles have a scale factor of 3:1. The smaller triangle has a side of 5 cm. What is the corresponding side in the larger triangle?}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="12"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="12"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="15"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>The Pythagorean Theorem</h2>
+<p class='type-id'><code>pythagorean_theorem</code> · Pre-Algebra — Right Triangles · gen=<code>geo_pythagorean_theorem</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the missing side.}"></span></p>
+</header>
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{In right } \triangle ABC,\ \text{find } BC."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 153.2 183.2" width="153.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="41.2,22.0 131.2,142.0 41.2,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="54.0,142.0 54.0,129.2 41.2,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="101.6" y="70.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">6 cm</text><text x="22.0" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">10 cm</text><text x="86.2" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><circle cx="41.2" cy="142.0" r="3" fill="#1f2937"/><text x="31.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="131.2" cy="142.0" r="3" fill="#1f2937"/><text x="139.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="41.2" cy="22.0" r="3" fill="#1f2937"/><text x="31.2" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{In right } \triangle ABC,\ \text{find } AC."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 153.2 183.2" width="153.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="41.2,22.0 131.2,142.0 41.2,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="54.0,142.0 54.0,129.2 41.2,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="101.6" y="70.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">15 cm</text><text x="86.2" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">20 cm</text><text x="22.0" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><circle cx="41.2" cy="142.0" r="3" fill="#1f2937"/><text x="31.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="131.2" cy="142.0" r="3" fill="#1f2937"/><text x="139.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="41.2" cy="22.0" r="3" fill="#1f2937"/><text x="31.2" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{In right } \triangle ABC,\ \text{find } AB."></span><div class="question-diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 153.2 183.2" width="153.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="41.2,22.0 131.2,142.0 41.2,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="54.0,142.0 54.0,129.2 41.2,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="86.2" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">4 cm</text><text x="22.0" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">5 cm</text><text x="101.6" y="70.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><circle cx="41.2" cy="142.0" r="3" fill="#1f2937"/><text x="31.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="131.2" cy="142.0" r="3" fill="#1f2937"/><text x="139.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="41.2" cy="22.0" r="3" fill="#1f2937"/><text x="31.2" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="8\text{ cm}"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="25\text{ cm}"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="3\text{ cm}"></span></li>
+</ol></div>
+</section>
+<section class='type-section'>
+<header class='worksheet-header'>
+<h2>Classifying, volume, and surface area</h2>
+<p class='type-id'><code>pa_classifying_volume_and_surface_area</code> · Pre-Algebra — Solid Figures · gen=<code>geo_solid_volume_surface</code></p>
+<p class="worksheet-meta">Name: ________________________________ Date: ____________</p>
+<p class="worksheet-instruction"><span data-latex="\text{Find the volume or surface area.}"></span></p>
+</header>
+<div class="question-columns" data-columns="2">
+<div class='difficulty-block'><div class='difficulty-label'>Easy</div><ol class="question-list" start="1"><li value="1"><span class="question-prompt" data-latex="\text{Find the surface area of a } 5\times3\times9\text{ cm} \text{ rectangular prism.}"></span></li></ol></div>
+<div class='difficulty-block'><div class='difficulty-label'>Medium</div><ol class="question-list" start="2"><li value="2"><span class="question-prompt" data-latex="\text{Find the surface area of a } 17\times16\times7\text{ cm} \text{ rectangular prism.}"></span></li></ol></div>
+</div>
+<div class='difficulty-block'><div class='difficulty-label'>Hard</div><ol class="question-list" start="3"><li value="3"><span class="question-prompt" data-latex="\text{Find the volume of a } 27\times29\times6\text{ cm} \text{ rectangular prism.}"></span></li></ol></div>
+<div class="answer-key"><h3>Answer Key</h3>
+<ol class="answer-list">
+<li value="1"><strong>Easy:</strong> <span data-latex="174\text{ cm}^2"></span></li>
+<li value="2"><strong>Medium:</strong> <span data-latex="1006\text{ cm}^2"></span></li>
+<li value="3"><strong>Hard:</strong> <span data-latex="4698\text{ cm}^3"></span></li>
+</ol></div>
+</section>
+<script src='file:///C:/Users/gkane/Documents/Stuff/Polynomial/node_modules/katex/dist/katex.min.js'></script>
+
+<script>
+(function () {
+  function enableKatexSoftWrap(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    var nodes = [];
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue && node.nodeValue.indexOf('\u00a0') !== -1) {
+        nodes.push(node);
+      }
+    }
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].nodeValue = nodes[i].nodeValue.replace(/\u00a0/g, ' ');
+    }
+  }
+  function renderAll() {
+    if (typeof katex === 'undefined') return false;
+    document.querySelectorAll('[data-latex]').forEach(function (el) {
+      var latex = el.getAttribute('data-latex') || '';
+      try {
+        katex.render(latex, el, { throwOnError: false, displayMode: false });
+        enableKatexSoftWrap(el);
+      } catch (err) {
+        el.textContent = latex;
+      }
+    });
+    document.documentElement.setAttribute('data-math-ready', '1');
+    return true;
+  }
+  function boot() {
+    if (renderAll()) return;
+    var tries = 0;
+    var timer = setInterval(function () {
+      tries += 1;
+      if (renderAll() || tries > 80) clearInterval(timer);
+    }, 50);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+
+</body></html>

@@ -56,7 +56,8 @@ def test_generator_wired_and_not_formula_percents():
     for q in qs:
         latex = q.prompt_latex or ""
         text = (q.prompt_text or "").lower()
-        assert "Shade the figure to represent" in latex
+        assert "Shade the" in latex and "to represent" in latex
+        assert "100-square grid" in latex or "figure" in latex or "bar" in latex or "circle" in latex
         assert "what is" not in text
         assert "of what number" not in text
         assert "what percent of" not in text

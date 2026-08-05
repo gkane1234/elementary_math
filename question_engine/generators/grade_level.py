@@ -369,25 +369,33 @@ def simplifying_numeric_fractions(topic: str, settings: dict) -> list[Question]:
 
 def complex_rationalize_denominator(topic: str, settings: dict) -> list[Question]:
     """Rationalize denominators of complex numbers (multiply by conjugate)."""
+    from question_engine.settings.params import apply_complex_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_complex_continuous_knobs(settings)
+    lo = int(local.get("complex_entry_min", -6))
+    hi = int(local.get("complex_entry_max", 6))
+    # Keep nonzero imag and avoid zero den magnitude.
+    lo = min(lo, -1)
+    hi = max(hi, 1)
 
     def build() -> tuple[str, str, str | None]:
         # a/(b+ci) or (a+bi)/(c+di) — keep integers small and den non-real.
         if random.choice([True, False]):
-            a = random.randint(1, 8)
-            c = random.randint(-6, 6)
-            d = random.choice([i for i in range(-6, 7) if i != 0])
+            a = random.randint(1, max(1, hi))
+            c = random.randint(lo, hi)
+            d = random.choice([i for i in range(lo, hi + 1) if i != 0])
             # a/(c+di) * (c-di)/(c-di)
             den = c * c + d * d
             real = Fraction(a * c, den)
             imag = Fraction(-a * d, den)
             prompt = rf"\text{{Rationalize }} \dfrac{{{a}}}{{{c}{'+' if d > 0 else ''}{d}i}}."
         else:
-            a = random.randint(-5, 5)
-            b = random.choice([i for i in range(-5, 6) if i != 0])
-            c = random.randint(-5, 5)
-            d = random.choice([i for i in range(-5, 6) if i != 0])
+            a = random.randint(lo, hi)
+            b = random.choice([i for i in range(lo, hi + 1) if i != 0])
+            c = random.randint(lo, hi)
+            d = random.choice([i for i in range(lo, hi + 1) if i != 0])
             den = c * c + d * d
             real = Fraction(a * c + b * d, den)
             imag = Fraction(b * c - a * d, den)
@@ -422,23 +430,37 @@ def trigonometry_and_area(topic: str, settings: dict) -> list[Question]:
     """Area of a triangle via (1/2)ab sin C."""
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    if d < 4.0:
+        side_hi = 8
+        angles = [(30, Fraction(1, 2)), (90, Fraction(1, 1))]
+    elif d < 10.0:
+        side_hi = 10 + int(d // 3)
+        angles = [
+            (30, Fraction(1, 2)),
+            (45, Fraction(1, 1)),
+            (60, Fraction(1, 1)),
+            (90, Fraction(1, 1)),
+        ]
+    else:
+        side_hi = min(18, 12 + int((d - 10) // 2))
+        angles = [
+            (30, Fraction(1, 2)),
+            (45, Fraction(1, 1)),
+            (60, Fraction(1, 1)),
+            (90, Fraction(1, 1)),
+            (120, Fraction(1, 1)),  # sin 120 = √3/2 → same √3 form
+        ]
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(3, 12)
-        b = random.randint(3, 12)
-        # Nice sine values
-        angle, sin_val = random.choice(
-            [
-                (30, Fraction(1, 2)),
-                (45, Fraction(1, 1)),  # use √2/2 → area = ab√2/4
-                (60, Fraction(1, 1)),  # √3/2 → area = ab√3/4
-                (90, Fraction(1, 1)),
-            ]
-        )
-        if angle == 45:
+        a = random.randint(3, side_hi)
+        b = random.randint(3, side_hi)
+        angle, _sin_val = random.choice(angles)
+        if angle in (45, 135):
             area_latex = rf"\frac{{{a * b}}}{{4}}\sqrt{{2}}"
-            # store numeric for check: ab * sqrt(2) / 4
-        elif angle == 60:
+        elif angle in (60, 120):
             area_latex = rf"\frac{{{a * b}}}{{4}}\sqrt{{3}}"
         elif angle == 90:
             area_val = Fraction(a * b, 2)
@@ -494,22 +516,125 @@ def scatter_plot_interpret(topic: str, settings: dict) -> list[Question]:
 
 
 def check_equation_solution(topic: str, settings: dict) -> list[Question]:
-    """Ask whether a given value is a solution (Grade 6), not solve for x."""
+    """Ask whether a given value is a solution (Grade 6), not solve for x.
+
+    Continuous difficulty maps to equation *structure* effort:
+    one-step → two-step ax+b → negatives / larger coeffs → fractions on either side.
+    Magnitude alone is not the hardness signal.
+    """
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    try:
+        d = float(settings["difficulty"]) if settings.get("difficulty") is not None else None
+    except (TypeError, ValueError):
+        d = None
+    if d is None:
+        tier = str(settings.get("difficulty_tier", "medium")).strip().lower()
+        d = {"easy": 3.0, "medium": 8.0, "hard": 14.0}.get(tier, 8.0)
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(2, 9)
-        x = random.randint(1, 12)
-        b = random.randint(1, 20)
-        rhs = a * x + b
-        candidate = x if random.random() < 0.55 else random.randint(1, 12)
-        while candidate == x and random.random() < 0.5:
-            candidate = random.randint(1, 12)
-        is_sol = candidate == x
+        # Mode split by effort anchors (0 / 5 / 10 / 15 / 20 / 25).
+        if d < 4.0:
+            # One-step: x + b = c or ax = c (small positives).
+            if random.random() < 0.5:
+                x = random.randint(1, 9)
+                b = random.randint(1, 9)
+                rhs = x + b
+                eq = rf"x + {b} = {rhs}"
+            else:
+                a = random.randint(2, 5)
+                x = random.randint(1, 8)
+                rhs = a * x
+                eq = rf"{a}x = {rhs}"
+            cand_hi = 12
+        elif d < 10.0:
+            # Standard two-step ax + b = c, positive.
+            a = random.randint(2, 6)
+            x = random.randint(1, 10)
+            b = random.randint(1, 12)
+            rhs = a * x + b
+            eq = rf"{a}x + {b} = {rhs}"
+            cand_hi = 14
+        elif d < 16.0:
+            # Negatives and/or subtraction form; still integer arithmetic.
+            a = random.randint(2, 8)
+            x = random.randint(-6, 12)
+            if x == 0:
+                x = random.choice([-3, -2, -1, 1, 2, 4])
+            b = random.randint(1, 15)
+            if random.random() < 0.5:
+                rhs = a * x - b
+                eq = rf"{a}x - {b} = {rhs}"
+            else:
+                rhs = a * x + b
+                # Put negative coefficient occasionally.
+                if random.random() < 0.4:
+                    a = -a
+                    rhs = a * x + b
+                eq = rf"{a}x + {b} = {rhs}" if b >= 0 else rf"{a}x - {abs(b)} = {rhs}"
+            cand_hi = 16
+        elif d < 21.0:
+            # Larger composites / both sides have x-terms disguised as check-work.
+            a = random.randint(3, 12)
+            x = random.randint(-8, 15)
+            if x == 0:
+                x = random.choice([-5, -2, 2, 5, 7])
+            b = random.randint(2, 24)
+            c = random.randint(1, 9)
+            # (a)x + b = c·x + rhs_adjust  → still check-by-substitution.
+            if random.random() < 0.45 and a != c:
+                rhs_const = a * x + b - c * x
+                eq = rf"{a}x + {b} = {c}x + {rhs_const}"
+            else:
+                rhs = a * x + b
+                eq = rf"{a}x + {b} = {rhs}"
+            cand_hi = 18
+        else:
+            # Fraction coefficients / fractional candidate — more substitution care.
+            from fractions import Fraction
+
+            a_num, a_den = random.randint(1, 5), random.choice([2, 3, 4])
+            a = Fraction(a_num, a_den)
+            x = Fraction(random.randint(-6, 10), 1)
+            if x == 0:
+                x = Fraction(random.choice([-3, -1, 2, 4]), 1)
+            b = Fraction(random.randint(1, 9), 1)
+            rhs = a * x + b
+
+            def _fl(v: Fraction) -> str:
+                if v.denominator == 1:
+                    return str(v.numerator)
+                return rf"\frac{{{v.numerator}}}{{{v.denominator}}}"
+
+            eq = rf"{_fl(a)}x + {_fl(b)} = {_fl(rhs)}"
+            # Candidate: true solution or a nearby distractor (integer or half).
+            if random.random() < 0.55:
+                candidate = x
+            else:
+                bump = Fraction(random.choice([-2, -1, 1, 2, 3]), random.choice([1, 2]))
+                candidate = x + bump
+            is_sol = candidate == x
+            prompt = (
+                rf"\text{{Is }} x = {_fl(candidate)} \text{{ a solution of }} "
+                rf"{eq}\text{{?}}"
+            )
+            answer = r"\text{yes}" if is_sol else r"\text{no}"
+            return prompt, "check solution", answer if keyed else None
+
+        # Integer branches: pick yes/no candidate with nearby distractors.
+        true_x = x if isinstance(x, int) else int(x)
+        if random.random() < 0.55:
+            candidate = true_x
+        else:
+            candidate = true_x
+            for _ in range(8):
+                candidate = random.randint(-abs(cand_hi) // 2, cand_hi)
+                if candidate != true_x:
+                    break
+        is_sol = candidate == true_x
         prompt = (
             rf"\text{{Is }} x = {candidate} \text{{ a solution of }} "
-            rf"{a}x + {b} = {rhs}\text{{?}}"
+            rf"{eq}\text{{?}}"
         )
         answer = r"\text{yes}" if is_sol else r"\text{no}"
         return prompt, "check solution", answer if keyed else None
@@ -518,23 +643,142 @@ def check_equation_solution(topic: str, settings: dict) -> list[Question]:
 
 
 def write_one_step_equation(topic: str, settings: dict) -> list[Question]:
-    """Write a one-step equation from a simple verbal relationship (Grade 6)."""
+    """Write a one-step equation from a verbal relationship (Grade 6).
+
+    Continuous effort (not magnitude alone):
+    - constant-rate leaf: rate×time → find time / larger awkward rates → decimals
+    - other-relationships leaf: cost / perimeter / tickets (different structures)
+    """
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    other = "other_relationship" in topic
 
     def build() -> tuple[str, str, str | None]:
-        rate = random.randint(2, 12)
-        hours = random.randint(2, 8)
-        total = rate * hours
+        d = (
+            settings_difficulty(settings, default=0.0)
+            if "difficulty" in settings and settings["difficulty"] is not None
+            else 0.0
+        )
+        if other:
+            return _other_relationship_prompt(d, keyed)
+        return _constant_rate_prompt(d, keyed)
+
+    return _make_questions(topic, count, keyed, build)
+
+
+def _constant_rate_prompt(d: float, keyed: bool) -> tuple[str, str, str | None]:
+    if d < 5:
+        rate = random.randint(2, 8)
+        hours = random.randint(2, 5)
+        mode = "find_distance"
+    elif d < 12:
+        rate = random.randint(3, 14)
+        hours = random.randint(3, 8)
+        mode = random.choice(["find_distance", "find_distance", "find_time"])
+    elif d < 18:
+        rate = random.randint(6, 24)
+        hours = random.randint(4, 12)
+        mode = random.choice(["find_distance", "find_time"])
+    else:
+        # Awkward non-nice rates; sometimes ask for rate given d and t.
+        rate = random.choice([7, 9, 11, 13, 14, 16, 18, 22])
+        hours = random.choice([3, 5, 6, 7, 9, 11])
+        mode = random.choice(["find_distance", "find_time", "find_rate"])
+
+    total = rate * hours
+    if mode == "find_time":
+        prompt = (
+            rf"\text{{A bike travels at }} {rate} \text{{ miles per hour and covers }} "
+            rf"{total} \text{{ miles at a constant rate. Write an equation for the time }} "
+            rf"t \text{{ in hours, then find }} t."
+        )
+        answer = rf"t = {total}\div {rate};\; t = {hours}"
+        tag = "write constant-rate time"
+    elif mode == "find_rate":
+        prompt = (
+            rf"\text{{A bike covers }} {total} \text{{ miles in }} {hours}"
+            rf"\text{{ hours at a constant rate. Write an equation for the speed }} "
+            rf"r \text{{ in mph, then find }} r."
+        )
+        answer = rf"r = {total}\div {hours};\; r = {rate}"
+        tag = "write constant-rate speed"
+    else:
         prompt = (
             rf"\text{{A bike travels at }} {rate} \text{{ miles per hour. "
             rf"Write an equation for the distance }} d \text{{ after }} "
             rf"{hours} \text{{ hours, then find }} d."
         )
         answer = rf"d = {rate}\cdot {hours};\; d = {total}"
-        return prompt, "write rate equation", answer if keyed else None
+        tag = "write constant-rate distance"
+    return prompt, tag, answer if keyed else None
 
-    return _make_questions(topic, count, keyed, build)
+
+def _other_relationship_prompt(d: float, keyed: bool) -> tuple[str, str, str | None]:
+    """Non-rate one-step relationships: cost, perimeter halves, tickets."""
+    if d < 5:
+        kind = "cost"
+    elif d < 10:
+        kind = random.choice(["cost", "cost", "tickets"])
+    elif d < 16:
+        kind = random.choice(["tickets", "perimeter", "cost"])
+    else:
+        # High D: prefer invert / perimeter structure over plain cost×qty.
+        kind = random.choice(["perimeter", "perimeter", "tickets", "invert_cost"])
+
+    if kind == "cost":
+        price = random.randint(2, 6) if d < 8 else random.randint(3, 12)
+        qty = random.randint(2, 5) if d < 8 else random.randint(3, 9)
+        total = price * qty
+        prompt = (
+            rf"\text{{Pencils cost }} {price} \text{{ cents each. Write an equation "
+            rf"for the cost }} c \text{{ of }} {qty} \text{{ pencils, then find }} c."
+        )
+        answer = rf"c = {price}\cdot {qty};\; c = {total}"
+        tag = "write cost equation"
+    elif kind == "invert_cost":
+        price = random.choice([7, 9, 11, 13, 14])
+        qty = random.randint(4, 10)
+        total = price * qty
+        prompt = (
+            rf"\text{{Pencils cost }} {price} \text{{ cents each. The total cost is }} "
+            rf"{total} \text{{ cents. Write an equation for the number of pencils }} n"
+            rf"\text{{, then find }} n."
+        )
+        answer = rf"{price}n = {total};\; n = {qty}"
+        tag = "write invert cost"
+    elif kind == "tickets":
+        adult = random.randint(3, 10) if d < 15 else random.choice([8, 9, 11, 12, 15, 18])
+        n = random.randint(2, 5) if d < 15 else random.randint(5, 11)
+        total = adult * n
+        prompt = (
+            rf"\text{{Tickets cost \$}}{adult}\text{{ each. Write an equation for the "
+            rf"total }} T \text{{ for }} {n} \text{{ tickets, then find }} T."
+        )
+        answer = rf"T = {adult}\cdot {n};\; T = {total}"
+        tag = "write tickets equation"
+    else:
+        # Perimeter of square: P = 4s
+        side = random.randint(3, 10) if d < 16 else random.randint(8, 22)
+        peri = 4 * side
+        if d >= 12 or random.random() < 0.55:
+            prompt = (
+                rf"\text{{A square has perimeter }} {peri}"
+                rf"\text{{. Write an equation for the side length }} s"
+                rf"\text{{, then find }} s."
+            )
+            answer = rf"4s = {peri};\; s = {side}"
+            tag = "write perimeter→side"
+        else:
+            prompt = (
+                rf"\text{{A square has side length }} {side}"
+                rf"\text{{. Write an equation for its perimeter }} P"
+                rf"\text{{, then find }} P."
+            )
+            answer = rf"P = 4\cdot {side};\; P = {peri}"
+            tag = "write side→perimeter"
+    return prompt, tag, answer if keyed else None
 
 
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {

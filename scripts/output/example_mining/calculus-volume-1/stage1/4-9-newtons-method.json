@@ -1,0 +1,1026 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "4-9-newtons-method",
+  "title": "4.9 Newton\u2019s Method",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/4-9-newtons-method",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/4-9-newtons-method.html",
+  "objectives": [
+    "4.9.1 Describe the steps of Newton\u2019s method.",
+    "4.9.2 Explain what an iterative process means.",
+    "4.9.3 Recognize when Newton\u2019s method does not work.",
+    "4.9.4 Apply iterative processes to various situations."
+  ],
+  "headings": [
+    "4.9 Newton\u2019s Method",
+    "Learning Objectives",
+    "Describing Newton\u2019s Method",
+    "Example 4.46",
+    "Checkpoint 4.45",
+    "Example 4.47",
+    "Checkpoint 4.46",
+    "Failures of Newton\u2019s Method",
+    "Example 4.48",
+    "Checkpoint 4.47",
+    "Other Iterative Processes",
+    "Example 4.49",
+    "Checkpoint 4.48",
+    "Student Project",
+    "Section 4.9 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1165043423917",
+      "kind": "example",
+      "title": "Example 4.46",
+      "position": 1,
+      "nearest_heading": "Describing Newton\u2019s Method",
+      "prompt_text": "Finding a Root of a Polynomial Use Newton\u2019s method to approximate a root of $f (x) = x^{3} - 3 x + 1$ in the interval $\\left[\\right. 1 , 2 \\left]\\right. .$ Let $x_{0} = 2$ and find $x_{1} , x_{2} , x_{3} , x_{4} ,$ and $x_{5} .$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - 3 x + 1",
+        "\\left[\\right. 1 , 2 \\left]\\right. .",
+        "x_{0} = 2",
+        "x_{1} , x_{2} , x_{3} , x_{4} ,",
+        "x_{5} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043423917",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043433379",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.45",
+      "position": 2,
+      "nearest_heading": "Finding a Root of a Polynomial",
+      "prompt_text": "Letting $x_{0} = 0 ,$ let\u2019s use Newton\u2019s method to approximate the root of $f (x) = x^{3} - 3 x + 1$ over the interval $\\left[\\right. 0 , 1 \\left]\\right.$ by calculating $x_{1}$ and $x_{2} .$",
+      "prompt_latex_bits": [
+        "x_{0} = 0 ,",
+        "f (x) = x^{3} - 3 x + 1",
+        "\\left[\\right. 0 , 1 \\left]\\right.",
+        "x_{1}",
+        "x_{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043433379",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042936506",
+      "kind": "example",
+      "title": "Example 4.47",
+      "position": 3,
+      "nearest_heading": "Finding a Root of a Polynomial",
+      "prompt_text": "Finding a Square Root Use Newton\u2019s method to approximate $\\sqrt{2}$ ( Figure 4.79 ). Let $f (x) = x^{2} - 2 ,$ let $x_{0} = 2 ,$ and calculate $x_{1} , x_{2} , x_{3} , x_{4} , x_{5} .$ (We note that since $f (x) = x^{2} - 2$ has a zero at $\\sqrt{2} ,$ the initial value $x_{0} = 2$ is a reasonable choice to approximate $\\sqrt{2} . \\left.\\right)$",
+      "prompt_latex_bits": [
+        "\\sqrt{2}",
+        "f (x) = x^{2} - 2 ,",
+        "x_{0} = 2 ,",
+        "x_{1} , x_{2} , x_{3} , x_{4} , x_{5} .",
+        "f (x) = x^{2} - 2",
+        "\\sqrt{2} ,",
+        "x_{0} = 2",
+        "\\sqrt{2} . \\left.\\right)"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042936506",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043098719",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.46",
+      "position": 4,
+      "nearest_heading": "Finding a Square Root",
+      "prompt_text": "Use Newton\u2019s method to approximate $\\sqrt{3}$ by letting $f (x) = x^{2} - 3$ and $x_{0} = 3 .$ Find $x_{1}$ and $x_{2} .$",
+      "prompt_latex_bits": [
+        "\\sqrt{3}",
+        "f (x) = x^{2} - 3",
+        "x_{0} = 3 .",
+        "x_{1}",
+        "x_{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043098719",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043091063",
+      "kind": "example",
+      "title": "Example 4.48",
+      "position": 5,
+      "nearest_heading": "Failures of Newton\u2019s Method",
+      "prompt_text": "When Newton\u2019s Method Fails Consider the function $f (x) = x^{3} - 2 x + 2 .$ Let $x_{0} = 0 .$ Show that the sequence $x_{1} , x_{2} ,\\ldots$ fails to approach a root of $f .$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - 2 x + 2 .",
+        "x_{0} = 0 .",
+        "x_{1} , x_{2} ,\\ldots",
+        "f ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043091063",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043428456",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.47",
+      "position": 6,
+      "nearest_heading": "When Newton\u2019s Method Fails",
+      "prompt_text": "For $f (x) = x^{3} - 2 x + 2 ,$ let $x_{0} = \u22121.5$ and find $x_{1}$ and $x_{2} .$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - 2 x + 2 ,",
+        "x_{0} = \u22121.5",
+        "x_{1}",
+        "x_{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043428456",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043210088",
+      "kind": "example",
+      "title": "Example 4.49",
+      "position": 7,
+      "nearest_heading": "Other Iterative Processes",
+      "prompt_text": "Finding a Limit for an Iterative Process Let $F (x) = \\frac{1}{2} x + 4$ and let $x_{0} = 0 .$ For all $n \\geq 1 ,$ let $x_{n} = F \\left(\\right. x_{n - 1} \\left.\\right) .$ Find the values $x_{1} , x_{2} , x_{3} , x_{4} , x_{5} .$ Make a conjecture about what happens to this list of numbers $x_{1} , x_{2} , x_{3} \\ldots , x_{n} ,\\ldots$ as $n \\to \\infty .$ If the list of numbers $x_{1} , x_{2} , x_{3} ,\\ldots$ approaches a finite number $x \\star ,$ then $x \\star$ satisfies $x \\star = F \\left(\\right. x \\star \\left.\\right) ,$ and $x \\star$ is called a fixed point of $F .$",
+      "prompt_latex_bits": [
+        "F (x) = \\frac{1}{2} x + 4",
+        "x_{0} = 0 .",
+        "n \\geq 1 ,",
+        "x_{n} = F \\left(\\right. x_{n - 1} \\left.\\right) .",
+        "x_{1} , x_{2} , x_{3} , x_{4} , x_{5} .",
+        "x_{1} , x_{2} , x_{3} \\ldots , x_{n} ,\\ldots",
+        "n \\to \\infty .",
+        "x_{1} , x_{2} , x_{3} ,\\ldots",
+        "x \\star ,",
+        "x \\star",
+        "x \\star = F \\left(\\right. x \\star \\left.\\right) ,",
+        "x \\star",
+        "F ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043210088",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042954795",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.48",
+      "position": 8,
+      "nearest_heading": "Finding a Limit for an Iterative Process",
+      "prompt_text": "Consider the function $F (x) = \\frac{1}{3} x + 6 .$ Let $x_{0} = 0$ and let $x_{n} = F \\left(\\right. x_{n - 1} \\left.\\right)$ for $n \\geq 2 .$ Find $x_{1} , x_{2} , x_{3} , x_{4} , x_{5} .$ Make a conjecture about what happens to the list of numbers $x_{1} , x_{2} , x_{3} ,\\ldots x_{n} ,\\ldots$ as $n \\to \\infty .$",
+      "prompt_latex_bits": [
+        "F (x) = \\frac{1}{3} x + 6 .",
+        "x_{0} = 0",
+        "x_{n} = F \\left(\\right. x_{n - 1} \\left.\\right)",
+        "n \\geq 2 .",
+        "x_{1} , x_{2} , x_{3} , x_{4} , x_{5} .",
+        "x_{1} , x_{2} , x_{3} ,\\ldots x_{n} ,\\ldots",
+        "n \\to \\infty ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042954795",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043395265",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 9,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "406 . $f (x) = x^{2} + 1$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043395265",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042320000",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 10,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "407 . $f (x) = x^{3} + 2 x + 1$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} + 2 x + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042320000",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043250239",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 11,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "408 . $f (x) = \\sin x$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043250239",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043390900",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 12,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "409 . $f (x) = e^{x}$",
+      "prompt_latex_bits": [
+        "f (x) = e^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043390900",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043430597",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 13,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "410 . $f (x) = x^{3} + 3 x e^{x}$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} + 3 x e^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043430597",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042706893",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 14,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "411 . $f (x) = x^{2} - 4 ,$ with $x_{0} = 0$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} - 4 ,",
+        "x_{0} = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042706893",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042708723",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "412 . $f (x) = x^{2} - 4 x + 3 ,$ with $x_{0} = 2$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} - 4 x + 3 ,",
+        "x_{0} = 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042708723",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710979",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "413 . What is the value of $\\text{``} c \\\\\"$ for Newton\u2019s method?",
+      "prompt_latex_bits": [
+        "\\text{``} c \\\\\""
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710979",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042330022",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "414 . $x_{n + 1} = x_{n} ^{2} - \\frac{1}{2}$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = x_{n} ^{2} - \\frac{1}{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042330022",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042328680",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "415 . $x_{n + 1} = 2 x_{n} \\left(\\right. 1 - x_{n} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = 2 x_{n} \\left(\\right. 1 - x_{n} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042328680",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042583690",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "416 . $x_{n + 1} = \\sqrt{x_{n}}$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = \\sqrt{x_{n}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042583690",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043393828",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "417 . $x_{n + 1} = \\frac{1}{\\sqrt{x_{n}}}$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = \\frac{1}{\\sqrt{x_{n}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043393828",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043286618",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "418 . $x_{n + 1} = 3 x_{n} \\left(\\right. 1 - x_{n} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = 3 x_{n} \\left(\\right. 1 - x_{n} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043286618",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042319140",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "419 . $x_{n + 1} = x_{n} ^{2} + x_{n} - 2$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = x_{n} ^{2} + x_{n} - 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042319140",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043131639",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "420 . $x_{n + 1} = \\frac{1}{2} x_{n} - 1$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = \\frac{1}{2} x_{n} - 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043131639",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043327548",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "421 . $x_{n + 1} = \\left|\\right. x_{n} \\left|\\right.$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = \\left|\\right. x_{n} \\left|\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043327548",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042609041",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "422 . $x^{2} - 10 = 0$",
+      "prompt_latex_bits": [
+        "x^{2} - 10 = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042609041",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043379909",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "423 . $x^{4} - 100 = 0$",
+      "prompt_latex_bits": [
+        "x^{4} - 100 = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043379909",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042372001",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "424 . $x^{2} - x = 0$",
+      "prompt_latex_bits": [
+        "x^{2} - x = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042372001",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043078171",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "425 . $x^{3} - x = 0$",
+      "prompt_latex_bits": [
+        "x^{3} - x = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043078171",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043327755",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "426 . $x + 5 \\cos (x) = 0$",
+      "prompt_latex_bits": [
+        "x + 5 \\cos (x) = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043327755",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043298557",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "427 . $x + \\tan (x) = 0 ,$ choose $x_{0} \\in \\left(\\right. - \\frac{\\pi}{2} , \\frac{\\pi}{2} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "x + \\tan (x) = 0 ,",
+        "x_{0} \\in \\left(\\right. - \\frac{\\pi}{2} , \\frac{\\pi}{2} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043298557",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043398519",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "428 . $\\frac{1}{1 - x} = 2$",
+      "prompt_latex_bits": [
+        "\\frac{1}{1 - x} = 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043398519",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042639363",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "429 . $1 + x + x^{2} + x^{3} + x^{4} = 2$",
+      "prompt_latex_bits": [
+        "1 + x + x^{2} + x^{3} + x^{4} = 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042639363",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043395050",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "430 . $x^{3} + (x + 1)^{3} = 10^{3}$",
+      "prompt_latex_bits": [
+        "x^{3} + (x + 1)^{3} = 10^{3}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043395050",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042660241",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "431 . $x = \\sin^{2} (x)$",
+      "prompt_latex_bits": [
+        "x = \\sin^{2} (x)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042660241",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043321501",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "432 . $\\sin x$",
+      "prompt_latex_bits": [
+        "\\sin x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043321501",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043194445",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "433 . $\\tan (x)$ on $x = \\left(\\right. \\frac{\\pi}{2} , \\frac{3 \\pi}{2} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "\\tan (x)",
+        "x = \\left(\\right. \\frac{\\pi}{2} , \\frac{3 \\pi}{2} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043194445",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043276362",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "434 . $e^{x} - 2$",
+      "prompt_latex_bits": [
+        "e^{x} - 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043276362",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042705973",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "435 . $\\ln (x) + 2$",
+      "prompt_latex_bits": [
+        "\\ln (x) + 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042705973",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042708278",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "436 . To find candidates for maxima and minima, we need to find the critical points $f^{'} (x) = 0 .$ Show that to solve for the critical points of a function $f (x) ,$ Newton\u2019s method is given by $x_{n + 1} = x_{n} - \\frac{f^{'} \\left(\\right. x_{n} \\left.\\right)}{f^{''} \\left(\\right. x_{n} \\left.\\right)} .$",
+      "prompt_latex_bits": [
+        "f^{'} (x) = 0 .",
+        "f (x) ,",
+        "x_{n + 1} = x_{n} - \\frac{f^{'} \\left(\\right. x_{n} \\left.\\right)}{f^{''} \\left(\\right. x_{n} \\left.\\right)} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042708278",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042318840",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "437 . What additional restrictions are necessary on the function $f ?$",
+      "prompt_latex_bits": [
+        "f ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042318840",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043425469",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "438 . Minimum of $f (x) = x^{2} + 2 x + 4$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} + 2 x + 4"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043425469",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043393663",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "439 . Minimum of $f (x) = 3 x^{3} + 2 x^{2} - 16$",
+      "prompt_latex_bits": [
+        "f (x) = 3 x^{3} + 2 x^{2} - 16"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043393663",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042709569",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "440 . Minimum of $f (x) = x^{2} e^{x}$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} e^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042709569",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043327319",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "441 . Maximum of $f (x) = x + \\frac{1}{x}$",
+      "prompt_latex_bits": [
+        "f (x) = x + \\frac{1}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043327319",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042407298",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "442 . Maximum of $f (x) = x^{3} + 10 x^{2} + 15 x - 2$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} + 10 x^{2} + 15 x - 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042407298",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042364609",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "443 . Maximum of $f (x) = \\frac{\\sqrt{x} - \\sqrt[3]{x}}{x}$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{\\sqrt{x} - \\sqrt[3]{x}}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042364609",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043431672",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "444 . Minimum of $f (x) = x^{2} \\sin x ,$ closest non-zero minimum to $x = 0$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} \\sin x ,",
+        "x = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043431672",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043426178",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "445 . Minimum of $f (x) = x^{4} + x^{3} + 3 x^{2} + 12 x + 6$",
+      "prompt_latex_bits": [
+        "f (x) = x^{4} + x^{3} + 3 x^{2} + 12 x + 6"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043426178",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043427439",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "446 . Newton\u2019s method, $x^{2} + 2 = 0$",
+      "prompt_latex_bits": [
+        "x^{2} + 2 = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043427439",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042461106",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "447 . Newton\u2019s method, $0 = e^{x}$",
+      "prompt_latex_bits": [
+        "0 = e^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042461106",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042374586",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "448 . Newton\u2019s method, $0 = 1 + x^{2}$ starting at $x_{0} = 0$",
+      "prompt_latex_bits": [
+        "0 = 1 + x^{2}",
+        "x_{0} = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042374586",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042705923",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "449 . Solving $x_{n + 1} = \u2212 x_{n} ^{3}$ starting at $x_{0} = \u22121$",
+      "prompt_latex_bits": [
+        "x_{n + 1} = \u2212 x_{n} ^{3}",
+        "x_{0} = \u22121"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042705923",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043333903",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "450 . Find a root to $0 = x^{2} - x - 3$ accurate to three decimal places.",
+      "prompt_latex_bits": [
+        "0 = x^{2} - x - 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043333903",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042450785",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "451 . Find a root to $0 = \\sin x + 3 x$ accurate to four decimal places.",
+      "prompt_latex_bits": [
+        "0 = \\sin x + 3 x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042450785",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043094076",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "452 . Find a root to $0 = e^{x} - 2$ accurate to four decimal places.",
+      "prompt_latex_bits": [
+        "0 = e^{x} - 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043094076",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043174650",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "453 . Find a root to $\\ln (x + 2) = \\frac{1}{2}$ accurate to four decimal places.",
+      "prompt_latex_bits": [
+        "\\ln (x + 2) = \\frac{1}{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043174650",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043394928",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "454 . Why would you use the secant method over Newton\u2019s method? What are the necessary restrictions on $f ?$",
+      "prompt_latex_bits": [
+        "f ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043394928",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043251688",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "455 . $f (x) = x^{2} + 2 x + 1 , x_{0} = 1$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} + 2 x + 1 , x_{0} = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043251688",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042645634",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "456 . $f (x) = x^{2} , x_{0} = 1$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} , x_{0} = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042645634",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043183794",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "457 . $f (x) = \\sin x , x_{0} = 1$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin x , x_{0} = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043183794",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042632602",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "458 . $f (x) = e^{x} - 1 , x_{0} = 2$",
+      "prompt_latex_bits": [
+        "f (x) = e^{x} - 1 , x_{0} = 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042632602",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042545815",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "459 . $f (x) = x^{3} + 2 x + 4 , x_{0} = 0$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} + 2 x + 4 , x_{0} = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042545815",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043393688",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "460 . Use Newton\u2019s method to solve for the eccentric anomaly $E$ when the mean anomaly $M = \\frac{\\pi}{3}$ and the eccentricity of the orbit $\\epsilon = 0.25 ;$ round to three decimals.",
+      "prompt_latex_bits": [
+        "E",
+        "M = \\frac{\\pi}{3}",
+        "\\epsilon = 0.25 ;"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043393688",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042320304",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "461 . Use Newton\u2019s method to solve for the eccentric anomaly $E$ when the mean anomaly $M = \\frac{3 \\pi}{2}$ and the eccentricity of the orbit $\\epsilon = 0.8 ;$ round to three decimals.",
+      "prompt_latex_bits": [
+        "E",
+        "M = \\frac{3 \\pi}{2}",
+        "\\epsilon = 0.8 ;"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042320304",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710933",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "462 . Use Newton\u2019s method to determine the interest rate if the interest was compounded annually.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710933",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043317181",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "463 . Use Newton\u2019s method to determine the interest rate if the interest was compounded continuously.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043317181",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043423992",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 67,
+      "nearest_heading": "Section 4.9 Exercises",
+      "prompt_text": "464 . The total cost for printing $x$ books can be given by the equation $C (x) = 1000 + 12 x + \\left(\\right. \\frac{1}{2} \\left.\\right) x^{2 / 3} .$ Use Newton\u2019s method to find the break-even point if the printer sells each book for $\\$ 2 0 .$",
+      "prompt_latex_bits": [
+        "x",
+        "C (x) = 1000 + 12 x + \\left(\\right. \\frac{1}{2} \\left.\\right) x^{2 / 3} .",
+        "\\$ 2 0 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043423992",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:34.511834+00:00",
+  "stage": "1_inventory"
+}

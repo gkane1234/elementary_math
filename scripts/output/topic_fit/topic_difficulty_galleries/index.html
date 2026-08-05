@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Calc1 conceptual × Spec galleries</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+/* If katex.css fails to load, MathML text duplicates the HTML render
+   (looks like "Find ddx … Find d/dx …"). Match KaTeX's sr-only clip. */
+.katex .katex-mathml {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+</style>
+<link rel="stylesheet" href="../_assets/katex/katex.min.css"/>
+<script defer src="../_assets/katex/katex.min.js"></script>
+<script defer src="../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>Topic difficulty galleries (Calc 1) — conceptual × Spec</h1>
+<p>Each gallery is a <strong>2D grid</strong>: rows = conceptual difficulty (0 → approx conceptual max for the full <code>allow_*</code> kit), columns = Spec difficulty (independent; demo ladder, unbounded in intent).</p>
+<p>Generated: 2026-08-05 19:09 UTC</p>
+<table><thead><tr>
+<th>Topic</th>
+<th>type_id</th>
+<th>Conceptual max</th>
+<th>Gallery</th>
+</tr></thead><tbody>
+<tr>
+<td>Limits — direct evaluation</td>
+<td><code>calc_limits_by_direct_evaluation</code></td>
+<td>25</td>
+<td><a href="direct/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Limits — removable discontinuities</td>
+<td><code>calc_limits_at_removable_discontinuities</code></td>
+<td>25</td>
+<td><a href="removable/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Limits — jump discontinuities / kinks</td>
+<td><code>calc_limits_at_jump_discontinuities_and_kinks</code></td>
+<td>25</td>
+<td><a href="jump/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Limits — essential discontinuities</td>
+<td><code>calc_limits_at_essential_discontinuities</code></td>
+<td>25</td>
+<td><a href="essential/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Limits — at infinity</td>
+<td><code>calc_limits_at_infinity</code></td>
+<td>25</td>
+<td><a href="infinity/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Continuity — classify</td>
+<td><code>calc_continuity_determining_and_classifying</code></td>
+<td>25</td>
+<td><a href="continuity/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>L&#x27;Hôpital&#x27;s rule</td>
+<td><code>calc_app_diff_lhopitals_rule</code></td>
+<td>25</td>
+<td><a href="lhopital/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — power rule</td>
+<td><code>calc_diff_power_rule</code></td>
+<td>25</td>
+<td><a href="deriv_power/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — product rule</td>
+<td><code>calc_diff_product_rule</code></td>
+<td>25</td>
+<td><a href="deriv_product/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — quotient rule</td>
+<td><code>calc_diff_quotient_rule</code></td>
+<td>25</td>
+<td><a href="deriv_quotient/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — chain rule</td>
+<td><code>calc_diff_chain_rule</code></td>
+<td>25</td>
+<td><a href="deriv_chain/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — trigonometric</td>
+<td><code>calc_diff_trigonometric</code></td>
+<td>25</td>
+<td><a href="deriv_trig/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — ln / exp</td>
+<td><code>calc_diff_natural_logarithms_and_exponentials</code></td>
+<td>25</td>
+<td><a href="deriv_ln_exp/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — inverse trig</td>
+<td><code>calc_diff_inverse_trigonometric</code></td>
+<td>25</td>
+<td><a href="deriv_invtrig/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — higher order</td>
+<td><code>calc_diff_higher_order_derivatives</code></td>
+<td>25</td>
+<td><a href="deriv_higher/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Derivatives — general</td>
+<td><code>calc_diff_general</code></td>
+<td>25</td>
+<td><a href="deriv_general/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Linear approximations</td>
+<td><code>calc_app_diff_linear_approximations</code></td>
+<td>25</td>
+<td><a href="linear_approx/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Differentials</td>
+<td><code>calc_app_diff_differentials</code></td>
+<td>25</td>
+<td><a href="differentials/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — power rule</td>
+<td><code>calc_indef_int_power_rule</code></td>
+<td>25</td>
+<td><a href="int_power/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — trigonometric</td>
+<td><code>calc_indef_int_trigonometric</code></td>
+<td>25</td>
+<td><a href="int_trig/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — log / exp</td>
+<td><code>calc_indef_int_logarithmic_rule_and_exponentials</code></td>
+<td>25</td>
+<td><a href="int_log_exp/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — inverse trig</td>
+<td><code>calc_indef_int_inverse_trigonometric</code></td>
+<td>25</td>
+<td><a href="int_invtrig/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — substitution (power)</td>
+<td><code>calc_indef_int_power_rule_with_substitution</code></td>
+<td>25</td>
+<td><a href="int_sub/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — log/exp with substitution</td>
+<td><code>calc_indef_int_logarithmic_rule_and_exponentials_with_substitution</code></td>
+<td>25</td>
+<td><a href="int_log_exp_sub/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — trigonometric substitution</td>
+<td><code>calc_indef_int_trigonometric_with_substitution</code></td>
+<td>25</td>
+<td><a href="int_trig_sub/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — invtrig with substitution</td>
+<td><code>calc_indef_int_inverse_trigonometric_with_substitution</code></td>
+<td>25</td>
+<td><a href="int_invtrig_sub/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — integration by parts</td>
+<td><code>calc_indef_int_integration_by_parts</code></td>
+<td>25</td>
+<td><a href="int_parts/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — partial fractions</td>
+<td><code>calc_indef_int_partial_fractions</code></td>
+<td>25</td>
+<td><a href="int_pfd/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Integrals — multi-trick</td>
+<td><code>calc_indef_int_multi_trick</code></td>
+<td>25</td>
+<td><a href="int_multi/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>FTC — first</td>
+<td><code>calc_def_int_first_fundamental_theorem_of_calculus</code></td>
+<td>25</td>
+<td><a href="ftc1/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>FTC — second</td>
+<td><code>calc_def_int_second_fundamental_theorem_of_calculus</code></td>
+<td>25</td>
+<td><a href="ftc2/gallery.html">gallery.html</a></td>
+</tr>
+<tr>
+<td>Definite — substitution / change of variables</td>
+<td><code>calc_def_int_substitution_with_change_of_variables</code></td>
+<td>25</td>
+<td><a href="def_sub/gallery.html">gallery.html</a></td>
+</tr>
+</tbody></table>
+<h2>What Spec does <strong>right now</strong></h2>
+<p>Independent `<code>spec_difficulty</code>` runs the <strong>expression flesher</strong> on a <strong>fixed conceptual skeleton</strong> (topic form + answer from undressed core):</p>
+<ul>
+<li>`<code>cancel_quot_bait</code>` — write body as a canceling quotient</li>
+<li>`<code>add_cancel_const</code><code> / </code><code>add_cancel_linear</code>` — add then subtract the same piece</li>
+<li>`<code>double_neg</code><code> — </code><code>-(-(body))</code>`</li>
+<li>`<code>exp_ln_id</code><code> / </code><code>ln_exp_id</code><code> — </code>$e^{\ln(·)}$<code> / </code>$\ln(e^{·})$` when allow_exp+allow_log</li>
+<li>`<code>poly_inflate</code>` — compose_inflate on parseable pure-poly islands only</li>
+<li><strong>Answer is taken from the undressed skeleton</strong> (`<code>spec_answer_preserved</code>`)</li>
+<li>Spec does <strong>not</strong> raise poly degree / invent a different harder problem</li>
+</ul>
+<p>Shared API: `<code>expression_flesh.flesh_from_skeleton</code><code> / </code><code>n_dress_layers</code>`.</p>
+<p>Conceptual still owns forms, singularity type, allow_*-gated classes, jump piece counts, L&#x27;Hôpital step unlocks, exotic exponents, higher-order derivatives — and is <strong>clamped</strong> to approx conceptual max for the current checkboxes.</p>
+<h2>Honest limitations</h2>
+<ul>
+<li>Equivalence is by construction (cancel pairs / identity wraps / poly inflate), not a CAS proof.</li>
+<li>Some leaves restrict cancel-quot and exp/ln wraps (jump, continuity, L&#x27;Hôpital, FTC).</li>
+<li>Poly inflate skips non-poly latex (honest shortfall).</li>
+<li>Trig identity wraps are stubbed (`<code>trig_pythag_id</code>`) — not implemented yet.</li>
+<li>High conceptual exotic-power density still depends on pack sampling bias.</li>
+</ul>
+<h2>Ideas for later</h2>
+<p>1. AST-level equivalent rewrites (expand/factor) with a simplify check. 2. Soft “reasonable” Spec band on worksheets (0–16) vs sandbox 32+. 3. Stronger conceptual bias toward `$x^\pi$` / higher-order at high C. 4. Trig Pythagorean / angle-addition identity wraps in the flesher catalog.</p>
+<p>Open each <code>gallery.html</code> in a browser (local KaTeX under <code>../_assets/katex</code>).</p>
+</body></html>

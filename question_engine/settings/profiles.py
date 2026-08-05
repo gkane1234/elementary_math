@@ -64,6 +64,7 @@ from .domains.number import (
 from .domains.common import (
     answer_format_settings,
     continuous_difficulty_settings,
+    dual_difficulty_settings,
     difficulty_settings,
     multiple_choice_settings,
     primitive_layered_settings,
@@ -89,8 +90,13 @@ from .standard import merge_settings
 
 
 def polynomial_settings() -> list[SettingField]:
-    """Core polynomial customization: degree, coefficients, variable."""
+    """Core polynomial customization: continuous D + degree, coefficients, variable.
+
+    Continuous ``difficulty`` drives ``primitive_polynomial`` / ``build_context``
+    budgets; EMH presets still apply when only ``difficulty_tier`` is set.
+    """
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         polynomial_degree_settings(),
         polynomial_coef_settings(),
         polynomial_variable_settings(),
@@ -108,6 +114,7 @@ def polynomial_factoring_profile() -> list[SettingField]:
 def polynomial_division_profile() -> list[SettingField]:
     """Long division and rational-expression degree controls."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         polynomial_coef_settings(),
         polynomial_division_settings(),
         polynomial_variable_settings(),
@@ -117,6 +124,7 @@ def polynomial_division_profile() -> list[SettingField]:
 def equation_settings() -> list[SettingField]:
     """Linear equation solving: coefficients, variable, solution type, operations."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         equation_coef_settings(),
         equation_variable_settings(),
         equation_solution_settings(),
@@ -127,6 +135,7 @@ def equation_settings() -> list[SettingField]:
 def inequality_profile() -> list[SettingField]:
     """Inequality solving inherits equation bounds plus graph/step options."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         equation_coef_settings(),
         equation_variable_settings(),
         equation_solution_settings(),
@@ -200,6 +209,7 @@ def comparing_rates_profile() -> list[SettingField]:
 
 def scientific_notation_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         scientific_notation_settings(),
     )
 
@@ -221,6 +231,7 @@ def order_of_operations_profile() -> list[SettingField]:
 
 def writing_numeric_expressions_profile() -> list[SettingField]:
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         writing_numeric_expression_settings(),
         number_coef_settings(num_min_default=2, num_max_default=20, num_bound=50),
     )
@@ -236,7 +247,10 @@ def integer_profile() -> list[SettingField]:
 
 def number_sets_profile() -> list[SettingField]:
     """Classify numbers into natural, whole, integer, rational, irrational, real."""
-    return sets_of_numbers_settings()
+    return merge_settings(
+        continuous_difficulty_settings(default_d=6),
+        sets_of_numbers_settings(),
+    )
 
 
 def factor_profile() -> list[SettingField]:
@@ -327,6 +341,7 @@ def factor_gcf_profile() -> list[SettingField]:
 def linear_settings() -> list[SettingField]:
     """Slope, intercept, and coordinate-plane bounds."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         linear_slope_settings(),
         linear_intercept_settings(),
         coordinate_bounds_settings(),
@@ -346,6 +361,7 @@ def more_on_slope_profile() -> list[SettingField]:
 def coordinate_plane_settings() -> list[SettingField]:
     """Coordinate-plane types without slope/intercept controls."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         coordinate_bounds_settings(),
         quadrant_settings(),
         graphing_metadata_settings(),
@@ -355,6 +371,7 @@ def coordinate_plane_settings() -> list[SettingField]:
 def number_line_profile() -> list[SettingField]:
     """1D number-line types: range, optional zero mark, and graph metadata."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         number_line_range_settings(),
         graphing_metadata_settings(),
     )
@@ -363,6 +380,7 @@ def number_line_profile() -> list[SettingField]:
 def graphing_profile() -> list[SettingField]:
     """Graphing generators: bounds, grid, number line, and table options."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         linear_slope_settings(),
         linear_intercept_settings(),
         coordinate_bounds_settings(),
@@ -377,6 +395,7 @@ def graphing_profile() -> list[SettingField]:
 def systems_profile() -> list[SettingField]:
     """Linear systems: coefficient bounds, size, and method weights."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         linear_intercept_settings(),
         linear_slope_settings(),
         coordinate_bounds_settings(),
@@ -387,6 +406,7 @@ def systems_profile() -> list[SettingField]:
 def variation_profile() -> list[SettingField]:
     """Direct and inverse variation constant bounds and mix weights."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         variation_settings(),
     )
 
@@ -394,6 +414,7 @@ def variation_profile() -> list[SettingField]:
 def relations_profile() -> list[SettingField]:
     """Function/relation evaluation with linear parameters and tables."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         linear_slope_settings(),
         linear_intercept_settings(),
         coordinate_bounds_settings(),
@@ -405,6 +426,7 @@ def relations_profile() -> list[SettingField]:
 def geometry_basic_profile() -> list[SettingField]:
     """Segment lengths, units, and diagram metadata."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         geometry_metadata_settings(),
         measurement_unit_settings(),
         side_length_settings(),
@@ -444,6 +466,7 @@ def geometry_circles_profile() -> list[SettingField]:
 def coordinate_geometry_profile() -> list[SettingField]:
     """Coordinate-plane geometry; reuses linear bounds where they overlap."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         geometry_metadata_settings(),
         coordinate_bounds_settings(),
         quadrant_settings(),
@@ -452,12 +475,16 @@ def coordinate_geometry_profile() -> list[SettingField]:
 
 
 def radical_profile() -> list[SettingField]:
-    return radical_settings()
+    return merge_settings(
+        continuous_difficulty_settings(default_d=6),
+        radical_settings(),
+    )
 
 
 def quadratic_profile() -> list[SettingField]:
     """Quadratic equation / expression types."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         polynomial_coef_settings(coef_min_default=-12, coef_max_default=12),
         polynomial_degree_settings(min_degree_default=2, max_degree_default=2),
         polynomial_factoring_settings(),
@@ -467,6 +494,7 @@ def quadratic_profile() -> list[SettingField]:
 def quadratic_graph_profile() -> list[SettingField]:
     """Graphing quadratic functions: form toggles, transforms, and plane metadata."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         quadratic_graph_settings(),
         linear_intercept_settings(),
         coordinate_bounds_settings(),
@@ -485,6 +513,7 @@ def quadratic_inequality_graph_profile() -> list[SettingField]:
 def polynomial_solve_graph_profile() -> list[SettingField]:
     """Solve polynomial equations by graphing: monic/stretch, roots, degree, plane."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         polynomial_solve_graph_settings(),
         coordinate_bounds_settings(),
         graphing_metadata_settings(),
@@ -605,6 +634,7 @@ def exponential_growth_decay_settings() -> list[SettingField]:
 def exponential_profile() -> list[SettingField]:
     """Exponential equations and growth/decay word problems."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         exponential_growth_decay_settings(),
         exponential_equation_settings(),
     )
@@ -613,6 +643,7 @@ def exponential_profile() -> list[SettingField]:
 def exponential_graph_profile() -> list[SettingField]:
     """Graphing exponential functions: form toggles, bounds, and plane metadata."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         exponential_graph_settings(),
         coordinate_bounds_settings(),
         graphing_metadata_settings(),
@@ -622,6 +653,7 @@ def exponential_graph_profile() -> list[SettingField]:
 def absolute_value_graph_profile() -> list[SettingField]:
     """Graphing absolute-value equations: transform toggles, coefs, and plane metadata."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         absolute_value_graph_settings(),
         linear_intercept_settings(),
         coordinate_bounds_settings(),
@@ -630,49 +662,85 @@ def absolute_value_graph_profile() -> list[SettingField]:
 
 
 def trigonometry_profile() -> list[SettingField]:
-    return trigonometry_settings()
+    """Unit-circle / trig eval; continuous D drives angle / function unlock."""
+    return merge_settings(
+        continuous_difficulty_settings(default_d=6),
+        trigonometry_settings(),
+    )
 
 
 def logarithm_profile() -> list[SettingField]:
-    return logarithm_settings()
+    """Log evaluate / equations; continuous D drives base and argument ladders."""
+    return merge_settings(
+        continuous_difficulty_settings(default_d=6),
+        logarithm_settings(),
+    )
 
 
 def sequence_profile() -> list[SettingField]:
-    return sequence_settings()
+    return merge_settings(
+        continuous_difficulty_settings(default_d=6),
+        sequence_settings(),
+    )
 
 
 def limits_profile() -> list[SettingField]:
-    return limit_settings()
+    """Poly limits; independent conceptual + Spec difficulty axes."""
+    return merge_settings(
+        dual_difficulty_settings(default_conceptual=6, default_spec=0),
+        limit_settings(),
+    )
 
 
 def derivatives_profile() -> list[SettingField]:
-    return derivative_settings()
+    """Derivative rules; conceptual + Spec axes + function/method allow-lists.
+
+    Topic leaves set sensible ``allow_*`` defaults via generator_profiles;
+    conceptual spends on methods / forms; Spec densifies ExpressionSpec.
+    """
+    return merge_settings(
+        dual_difficulty_settings(default_conceptual=6, default_spec=0),
+        derivative_settings(),
+    )
 
 
 def integrals_profile() -> list[SettingField]:
-    return integral_settings()
+    """Basic integrals; independent conceptual + Spec difficulty axes."""
+    return merge_settings(
+        dual_difficulty_settings(default_conceptual=6, default_spec=0),
+        integral_settings(),
+    )
 
 
 def algebra_expression_profile() -> list[SettingField]:
     """Simplifying expressions, like terms, verbal expressions."""
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         equation_coef_settings(coef_min_default=-12, coef_max_default=12),
         misc_expression_settings(),
     )
 
 
 def statistics_profile() -> list[SettingField]:
-    """Data set size, integer data, and probability formatting."""
-    return statistics_settings()
+    """Continuous difficulty plus data-set / measure / probability fields."""
+    return merge_settings(
+        continuous_difficulty_settings(default_d=6),
+        statistics_settings(),
+    )
 
 
 def common_enrichment_profile() -> list[SettingField]:
-    """Cross-cutting enrichment mixin: difficulty, answer format, signs, MC.
+    """Cross-cutting enrichment mixin: continuous difficulty, answer format, signs, MC.
+
+    Every wired generator inherits this mixin, so every topic exposes a numeric
+    ``difficulty`` field. Legacy ``difficulty_tier`` remains for EMH preset
+    fallback (hidden in the UI when continuous difficulty is present).
 
     Term-count controls live on domain profiles / extras that actually use them
     (e.g. radical add/subtract), not on every generator.
     """
     return merge_settings(
+        continuous_difficulty_settings(default_d=6),
         difficulty_settings(),
         answer_format_settings(),
         sign_restrictions(),

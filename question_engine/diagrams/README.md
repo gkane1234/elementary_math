@@ -9,6 +9,20 @@ Reusable drawing layer for geometry questions. Generators build a
 | `diagram_latex` | TikZ string for PDF/export/print |
 | `diagram_spec` | Structured summary (kind, labels, segments, points) |
 
+## Figure families (diversity)
+
+See `figure_families.py` and `scripts/output/ml/FIGURE_DIVERSITY.md`.
+
+```python
+from question_engine.diagrams import sample_figure_from_settings
+
+sample = sample_figure_from_settings("angle_rays", settings, build=True)
+# sample.params / sample.complexity scale with continuous difficulty;
+# seed + _batch_index keep worksheet items distinct.
+```
+
+We parameterize textbook figure *kinds* (not copyrighted OpenStax bitmaps).
+
 ## Primitives
 
 | Class | Role |

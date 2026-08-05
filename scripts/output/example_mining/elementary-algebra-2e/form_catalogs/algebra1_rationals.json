@@ -1,0 +1,119 @@
+{
+  "catalog_id": "algebra1_rationals",
+  "title": "OpenStax Elementary Algebra 2e — rational expressions form taxonomy (Ch. 8)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "elementary-algebra-2e",
+      "slug": "8-1-simplify-rational-expressions",
+      "title": "8.1 Simplify Rational Expressions",
+      "url": "https://openstax.org/books/elementary-algebra-2e/pages/8-1-simplify-rational-expressions",
+      "stage1": "scripts/output/example_mining/elementary-algebra-2e/stage1/8-1-simplify-rational-expressions.json"
+    },
+    "related": [
+      { "book": "elementary-algebra-2e", "slug": "8-2-multiply-and-divide-rational-expressions" },
+      { "book": "elementary-algebra-2e", "slug": "8-3-add-and-subtract-rational-expressions-with-a-common-denominator" },
+      { "book": "elementary-algebra-2e", "slug": "8-4-add-and-subtract-rational-expressions-with-unlike-denominators" },
+      { "book": "elementary-algebra-2e", "slug": "8-5-simplify-complex-rational-expressions" },
+      { "book": "elementary-algebra-2e", "slug": "8-6-solve-rational-equations" }
+    ]
+  },
+  "taxonomy_notes": [
+    "Algebraic rational forms only — no graphing applications beyond equation solving.",
+    "OpenStax separates ± with common vs unlike denominators; our leaf often folds both."
+  ],
+  "wired_type_ids": ["rational_simplification"],
+  "forms": [
+    {
+      "form_id": "simplify_cancel",
+      "description": "Factor numerator/denominator and cancel common factors",
+      "strategy": "factor_cancel",
+      "constraints": { "kind": "simplify", "cancel_min": 1 },
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["factor", "cancel"],
+      "example_item_ids": ["fs-id1169596588865", "fs-id1169596584785", "fs-id1169596363395"],
+      "openstax_case": "§8.1",
+      "leaves": ["rational_simplification", "rational_expression_simplification"]
+    },
+    {
+      "form_id": "multiply_divide",
+      "description": "Multiply or divide rationals (factor then cancel across)",
+      "strategy": "mul_div",
+      "constraints": { "op": ["mul", "div"] },
+      "d_min": 4,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["factor", "cancel"],
+      "example_item_ids": [],
+      "openstax_case": "§8.2",
+      "leaves": ["rational_expression_multiply_divide"]
+    },
+    {
+      "form_id": "add_sub_common_denom",
+      "description": "± rationals with a common denominator",
+      "strategy": "combine_like_denoms",
+      "constraints": { "denoms": "common" },
+      "d_min": 3,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": ["combine"],
+      "example_item_ids": ["fs-id1169595185567", "fs-id1169597570539"],
+      "openstax_case": "§8.3",
+      "leaves": ["rational_expression_simplification"]
+    },
+    {
+      "form_id": "add_sub_unlike_denoms",
+      "description": "± rationals with unlike denominators (LCD)",
+      "strategy": "lcd_combine",
+      "constraints": { "denoms": "unlike" },
+      "d_min": 6,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["lcd", "combine"],
+      "example_item_ids": ["fs-id1169597368792", "fs-id1169597688690"],
+      "openstax_case": "§8.4",
+      "leaves": ["rational_expression_simplification"]
+    },
+    {
+      "form_id": "complex_rational",
+      "description": "Simplify a complex rational expression",
+      "strategy": "complex_fraction",
+      "constraints": { "kind": "complex" },
+      "d_min": 10,
+      "d_weight": 1.0,
+      "generation_status": "deferred",
+      "tricks": ["lcd"],
+      "example_item_ids": [],
+      "openstax_case": "§8.5 — A2 home (complex_fractions)",
+      "leaves": ["complex_fractions"]
+    },
+    {
+      "form_id": "rational_equation",
+      "description": "Solve rational equations; check extraneous",
+      "strategy": "clear_denoms_solve",
+      "constraints": { "kind": "equation" },
+      "d_min": 6,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["clear_denoms", "extraneous"],
+      "example_item_ids": [],
+      "openstax_case": "§8.6",
+      "leaves": ["rational_expressions_equations"]
+    },
+    {
+      "form_id": "proportion_application",
+      "description": "Proportion / similar-figure applications",
+      "strategy": "proportion",
+      "constraints": { "kind": "proportion_app" },
+      "d_min": 4,
+      "d_weight": 0.8,
+      "generation_status": "stub",
+      "tricks": ["cross_multiply"],
+      "example_item_ids": [],
+      "openstax_case": "§8.7 — partial via solving_proportions",
+      "leaves": ["solving_proportions"]
+    }
+  ]
+}

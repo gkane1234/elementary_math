@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from typing import Any, Literal
 
 from question_engine.frameworks.primitives.equations import sample_linear_equation
-from question_engine.frameworks.primitives.inequalities import sample_linear_inequality
 from question_engine.frameworks.primitives.proportions import sample_proportion
 from question_engine.frameworks.primitives.registry import PrimitiveContext
 from question_engine.frameworks.primitives.systems import sample_linear_system
@@ -36,6 +35,9 @@ class WordProblemItem:
     equation_latex: str
     upgrades: tuple[str, ...]
     effective_d: float
+    shape_id: str = ""
+    n_constraints: int = 0
+    frame: str = ""
 
 
 _NAMES = ("Alex", "Jordan", "Sam", "Riley", "Casey", "Taylor")
@@ -50,6 +52,19 @@ def sample_word_problem(ctx: PrimitiveContext, kind: WPKind) -> WordProblemItem:
         return _wp_inequality(ctx)
     if kind in {"one_step", "two_step"}:
         return _wp_steps(ctx, kind)
+    # Narrative samplers: continuous-D upgrades + composed presentation.
+    if kind == "coin":
+        from question_engine.frameworks.primitives.narrative_wp import sample_coin_wp
+
+        return sample_coin_wp(ctx)
+    if kind == "age":
+        from question_engine.frameworks.primitives.narrative_wp import sample_age_wp
+
+        return sample_age_wp(ctx)
+    if kind == "consecutive":
+        from question_engine.frameworks.primitives.narrative_wp import sample_consecutive_wp
+
+        return sample_consecutive_wp(ctx)
     return _wp_story_equation(ctx, kind)
 
 
@@ -146,19 +161,92 @@ def _wp_proportion(ctx: PrimitiveContext) -> WordProblemItem:
 
 
 def _wp_inequality(ctx: PrimitiveContext) -> WordProblemItem:
-    ineq = sample_linear_inequality(ctx, force_steps="two")
+    """Real inequality word problems with continuous effort (not equation stubs)."""
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+    d = float(ctx.topic_d)
     name = ctx.rng.choice(_NAMES)
+    # Effort ladder: compare-only → one-step rearrange → two-step with awkward nums
+    # → inclusive “at least/at most” with messier totals.
+    if d < 5:
+        # Compare: x > k style after translating words.
+        k = ctx.rng.randint(3, 12)
+        op = ctx.rng.choice([">", "\\ge"])
+        word = "more than" if op == ">" else "at least"
+        latex = (
+            f"\\text{{{name} wants a score {word} }} {k}"
+            f"\\text{{. Write an inequality for the score }} x\\text{{.}}"
+        )
+        text = f"{name} wants a score {word} {k}. Write an inequality for the score x."
+        answer = f"x {op} {k}"
+        upgrades: tuple[str, ...] = ("compare_only",)
+        eff = d
+    elif d < 12:
+        # One-step: x + a ≥ b or similar.
+        a = ctx.rng.randint(2, 9)
+        need = ctx.rng.randint(8, 20)
+        total = need + a
+        latex = (
+            f"\\text{{{name} already has }} {a}"
+            f"\\text{{ points and needs at least }} {total}"
+            f"\\text{{ points in total. What scores }} x "
+            f"\\text{{ on the next round work?}}"
+        )
+        text = (
+            f"{name} already has {a} points and needs at least {total} points in total. "
+            f"What scores x on the next round work?"
+        )
+        answer = f"x \\ge {need}"
+        upgrades = ("one_step_translate",)
+        eff = d
+    elif d < 18:
+        # Two-step: ax + b ≤ c
+        a = ctx.rng.randint(2, 5)
+        b = ctx.rng.randint(1, 8)
+        x_sol = ctx.rng.randint(2, 8)
+        rhs = a * x_sol + b
+        latex = (
+            f"\\text{{{name} buys }} x \\text{{ notebooks at \\$}}{a}"
+            f"\\text{{ each and a }} \\${b}"
+            f"\\text{{ pen. The total must be at most \\$}}{rhs}"
+            f"\\text{{. How many notebooks can }} {name}\\text{{ buy?}}"
+        )
+        text = (
+            f"{name} buys x notebooks at ${a} each and a ${b} pen. "
+            f"The total must be at most ${rhs}. How many notebooks can {name} buy?"
+        )
+        answer = f"x \\le {x_sol}"
+        upgrades = ("two_step_story",)
+        eff = d
+    else:
+        # Harder: larger coeffs / “fewer than” with leftover rearrange.
+        a = ctx.rng.randint(3, 8)
+        b = ctx.rng.randint(5, 20)
+        x_sol = ctx.rng.randint(4, 12)
+        rhs = a * x_sol + b
+        latex = (
+            f"\\text{{{name} rents a bike for \\$}}{b}"
+            f"\\text{{ plus \\$}}{a}\\text{{ per hour. }} "
+            f"{name}\\text{{ can spend less than \\$}}{rhs}"
+            f"\\text{{. For how many hours }} x \\text{{ can }} {name}"
+            f"\\text{{ ride?}}"
+        )
+        text = (
+            f"{name} rents a bike for ${b} plus ${a} per hour. "
+            f"{name} can spend less than ${rhs}. For how many hours x can {name} ride?"
+        )
+        answer = f"x < {x_sol}"
+        upgrades = ("two_step_strict", "larger_coeffs")
+        eff = d
+
     return WordProblemItem(
-        latex=(
-            f"\\text{{{name} needs a quantity satisfying }} {ineq.latex}"
-            f"\\text{{. Solve.}}"
-        ),
-        text=f"{name} needs a quantity satisfying {ineq.text}. Solve.",
-        answer_latex=ineq.solution_latex,
+        latex=latex,
+        text=text,
+        answer_latex=answer,
         kind="inequality",
-        equation_latex=ineq.latex,
-        upgrades=ineq.upgrades,
-        effective_d=ineq.effective_d,
+        equation_latex=answer,
+        upgrades=upgrades,
+        effective_d=eff,
     )
 
 

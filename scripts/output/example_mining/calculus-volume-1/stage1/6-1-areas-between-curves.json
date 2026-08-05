@@ -1,0 +1,1030 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "6-1-areas-between-curves",
+  "title": "6.1 Areas between Curves",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/6-1-areas-between-curves",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/6-1-areas-between-curves.html",
+  "objectives": [
+    "6.1.1 Determine the area of a region between two curves by integrating with respect to the independent variable.",
+    "6.1.2 Find the area of a compound region.",
+    "6.1.3 Determine the area of a region between two curves by integrating with respect to the dependent variable."
+  ],
+  "headings": [
+    "6.1 Areas between Curves",
+    "Learning Objectives",
+    "Area of a Region between Two Curves",
+    "Media",
+    "Theorem 6.1",
+    "Example 6.1",
+    "Checkpoint 6.1",
+    "Example 6.2",
+    "Checkpoint 6.2",
+    "Areas of Compound Regions",
+    "Theorem 6.2",
+    "Example 6.3",
+    "Checkpoint 6.3",
+    "Example 6.4",
+    "Checkpoint 6.4",
+    "Regions Defined with Respect to y",
+    "Theorem 6.3",
+    "Example 6.5",
+    "Checkpoint 6.5",
+    "Section 6.1 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1167793900960",
+      "kind": "example",
+      "title": "Example 6.1",
+      "position": 1,
+      "nearest_heading": "Finding the Area between Two Curves",
+      "prompt_text": "Finding the Area of a Region between Two Curves 1 If R is the region bounded above by the graph of the function $f (x) = x + 4$ and below by the graph of the function $g (x) = 3 - \\frac{x}{2}$ over the interval $\\left[\\right. 1 , 4 \\left]\\right. ,$ find the area of region $R .$",
+      "prompt_latex_bits": [
+        "f (x) = x + 4",
+        "g (x) = 3 - \\frac{x}{2}",
+        "\\left[\\right. 1 , 4 \\left]\\right. ,",
+        "R ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1167793900960",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793957091",
+      "kind": "checkpoint",
+      "title": "Checkpoint 6.1",
+      "position": 2,
+      "nearest_heading": "Finding the Area of a Region between Two Curves 1",
+      "prompt_text": "If $R$ is the region bounded by the graphs of the functions $f (x) = \\frac{x}{2} + 5$ and $g (x) = x + \\frac{1}{2}$ over the interval $\\left[\\right. 1 , 5 \\left]\\right. ,$ find the area of region $R .$",
+      "prompt_latex_bits": [
+        "R",
+        "f (x) = \\frac{x}{2} + 5",
+        "g (x) = x + \\frac{1}{2}",
+        "\\left[\\right. 1 , 5 \\left]\\right. ,",
+        "R ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793957091",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793852231",
+      "kind": "example",
+      "title": "Example 6.2",
+      "position": 3,
+      "nearest_heading": "Finding the Area of a Region between Two Curves 1",
+      "prompt_text": "Finding the Area of a Region between Two Curves 2 If $R$ is the region bounded above by the graph of the function $f (x) = 9 - (x / 2)^{2}$ and below by the graph of the function $g (x) = 6 - x ,$ find the area of region $R .$",
+      "prompt_latex_bits": [
+        "R",
+        "f (x) = 9 - (x / 2)^{2}",
+        "g (x) = 6 - x ,",
+        "R ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1167793852231",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793470839",
+      "kind": "checkpoint",
+      "title": "Checkpoint 6.2",
+      "position": 4,
+      "nearest_heading": "Finding the Area of a Region between Two Curves 2",
+      "prompt_text": "If R is the region bounded above by the graph of the function $f (x) = x$ and below by the graph of the function $g (x) = x^{4} ,$ find the area of region $R .$",
+      "prompt_latex_bits": [
+        "f (x) = x",
+        "g (x) = x^{4} ,",
+        "R ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793470839",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793263971",
+      "kind": "example",
+      "title": "Example 6.3",
+      "position": 5,
+      "nearest_heading": "Finding the Area of a Region between Curves That Cross",
+      "prompt_text": "Finding the Area of a Region Bounded by Functions That Cross If R is the region between the graphs of the functions $f (x) = \\sin x$ and $g (x) = \\cos x$ over the interval $\\left[\\right. 0 , \\pi \\left]\\right. ,$ find the area of region $R .$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin x",
+        "g (x) = \\cos x",
+        "\\left[\\right. 0 , \\pi \\left]\\right. ,",
+        "R ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1167793263971",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793278122",
+      "kind": "checkpoint",
+      "title": "Checkpoint 6.3",
+      "position": 6,
+      "nearest_heading": "Finding the Area of a Region Bounded by Functions That Cross",
+      "prompt_text": "If R is the region between the graphs of the functions $f (x) = \\sin x$ and $g (x) = \\cos x$ over the interval $\\left[\\right. \\pi / 2 , 2 \\pi \\left]\\right. ,$ find the area of region $R .$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin x",
+        "g (x) = \\cos x",
+        "\\left[\\right. \\pi / 2 , 2 \\pi \\left]\\right. ,",
+        "R ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793278122",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793455088",
+      "kind": "example",
+      "title": "Example 6.4",
+      "position": 7,
+      "nearest_heading": "Finding the Area of a Region Bounded by Functions That Cross",
+      "prompt_text": "Finding the Area of a Complex Region Consider the region depicted in Figure 6.7 . Find the area of $R .$ Figure 6.7 Two integrals are required to calculate the area of this region.",
+      "prompt_latex_bits": [
+        "R ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1167793455088",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793456255",
+      "kind": "checkpoint",
+      "title": "Checkpoint 6.4",
+      "position": 8,
+      "nearest_heading": "Finding the Area of a Complex Region",
+      "prompt_text": "Consider the region depicted in the following figure. Find the area of $R .$",
+      "prompt_latex_bits": [
+        "R ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793456255",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793930320",
+      "kind": "example",
+      "title": "Example 6.5",
+      "position": 9,
+      "nearest_heading": "Finding the Area between Two Curves, Integrating along the y -axis",
+      "prompt_text": "Integrating with Respect to y Let\u2019s revisit Example 6.4 , only this time let\u2019s integrate with respect to $y .$ Let $R$ be the region depicted in Figure 6.10 . Find the area of $R$ by integrating with respect to $y .$ Figure 6.10 The area of region $R$ can be calculated using one integral only when the curves are treated as functions of $y .$",
+      "prompt_latex_bits": [
+        "y .",
+        "R",
+        "R",
+        "y .",
+        "R",
+        "y ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1167793930320",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793668614",
+      "kind": "checkpoint",
+      "title": "Checkpoint 6.5",
+      "position": 10,
+      "nearest_heading": "Integrating with Respect to y",
+      "prompt_text": "Let\u2019s revisit the checkpoint associated with Example 6.4 , only this time, let\u2019s integrate with respect to $y .$ Let $R$ be the region depicted in the following figure. Find the area of $R$ by integrating with respect to $y .$",
+      "prompt_latex_bits": [
+        "y .",
+        "R",
+        "R",
+        "y ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793668614",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793956497",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 11,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "1 . $y = x^{2} - 3 \\text{and} y = 1$",
+      "prompt_latex_bits": [
+        "y = x^{2} - 3 \\text{and} y = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793956497",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793540984",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 12,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "2 . $y = x^{2} \\text{and} y = 3 x + 4$",
+      "prompt_latex_bits": [
+        "y = x^{2} \\text{and} y = 3 x + 4"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793540984",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793499141",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 13,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "3 . $y = x^{3}$ and $y = x^{2} + x$",
+      "prompt_latex_bits": [
+        "y = x^{3}",
+        "y = x^{2} + x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793499141",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793423487",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 14,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "4 . $y = \\cos \\theta$ and $y = 0.5 ,$ for $0 \\leq \\theta \\leq \\pi$",
+      "prompt_latex_bits": [
+        "y = \\cos \\theta",
+        "y = 0.5 ,",
+        "0 \\leq \\theta \\leq \\pi"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793423487",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793463068",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "5 . $x = y^{2} \\text{and} x = 9$",
+      "prompt_latex_bits": [
+        "x = y^{2} \\text{and} x = 9"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793463068",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793470639",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "6 . $y = x \\text{and} x = y^{2}$",
+      "prompt_latex_bits": [
+        "y = x \\text{and} x = y^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793470639",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793637355",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "7 . $y = x^{2} \\text{and} y = \u2212 x^{2} + 18 x$",
+      "prompt_latex_bits": [
+        "y = x^{2} \\text{and} y = \u2212 x^{2} + 18 x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793637355",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167794199254",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "8 . $y = \\frac{1}{x} , y = \\frac{1}{x^{2}} , \\text{and} x = 3$",
+      "prompt_latex_bits": [
+        "y = \\frac{1}{x} , y = \\frac{1}{x^{2}} , \\text{and} x = 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167794199254",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793637971",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "9 . $y = \\cos x$ and $y = \\cos^{2} x$ on $x = \\left[\\right. \u2212 \\pi , \\pi \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = \\cos x",
+        "y = \\cos^{2} x",
+        "x = \\left[\\right. \u2212 \\pi , \\pi \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793637971",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167794163651",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "10 . $y = e^{x} , y = e^{2 x - 1} , \\text{and} x = 0$",
+      "prompt_latex_bits": [
+        "y = e^{x} , y = e^{2 x - 1} , \\text{and} x = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167794163651",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793294684",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "11 . $y = e^{x} , y = e^{\u2212 x} , x = \u22121 \\text{and} x = 1$",
+      "prompt_latex_bits": [
+        "y = e^{x} , y = e^{\u2212 x} , x = \u22121 \\text{and} x = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793294684",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793293855",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "12 . $y = e , y = e^{x} , \\text{and} y = e^{\u2212 x}$",
+      "prompt_latex_bits": [
+        "y = e , y = e^{x} , \\text{and} y = e^{\u2212 x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793293855",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793455053",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "13 . $y = \\left|\\right. x \\left|\\right. \\text{and} y = x^{2}$",
+      "prompt_latex_bits": [
+        "y = \\left|\\right. x \\left|\\right. \\text{and} y = x^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793455053",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793546880",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "14 . $y = \\sin \\left(\\right. \\pi x \\left.\\right) , y = 2 x , \\text{and} x > 0$",
+      "prompt_latex_bits": [
+        "y = \\sin \\left(\\right. \\pi x \\left.\\right) , y = 2 x , \\text{and} x > 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793546880",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793318490",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "15 . $y = 12 - x , y = \\sqrt{x} , \\text{and} y = 1$",
+      "prompt_latex_bits": [
+        "y = 12 - x , y = \\sqrt{x} , \\text{and} y = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793318490",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793626898",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "16 . $y = \\sin x$ and $y = \\cos x$ over $x = \\left[\\right. \u2212 \\pi , \\pi \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = \\sin x",
+        "y = \\cos x",
+        "x = \\left[\\right. \u2212 \\pi , \\pi \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793626898",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793378470",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "17 . $y = x^{3} \\text{and} y = x^{2} - 2 x$ over $x = \\left[\\right. \u22121 , 1 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = x^{3} \\text{and} y = x^{2} - 2 x",
+        "x = \\left[\\right. \u22121 , 1 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793378470",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793928049",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "18 . $y = x^{2} + 9 \\text{and} y = 10 + 2 x$ over $x = \\left[\\right. \u22121 , 3 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = x^{2} + 9 \\text{and} y = 10 + 2 x",
+        "x = \\left[\\right. \u22121 , 3 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793928049",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793455122",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "19 . $y = x^{3} + 3 x$ and $y = 4 x$",
+      "prompt_latex_bits": [
+        "y = x^{3} + 3 x",
+        "y = 4 x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793455122",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793298201",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "20 . $x = y^{3} \\text{and} x = 3 y - 2$",
+      "prompt_latex_bits": [
+        "x = y^{3} \\text{and} x = 3 y - 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793298201",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793956299",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "21 . $x = 2 y \\text{and} x = y^{3} - y$",
+      "prompt_latex_bits": [
+        "x = 2 y \\text{and} x = y^{3} - y"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793956299",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793244345",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "22 . $x = \u22123 + y^{2} \\text{and} x = y - y^{2}$",
+      "prompt_latex_bits": [
+        "x = \u22123 + y^{2} \\text{and} x = y - y^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793244345",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793394824",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "23 . $y^{2} = x \\text{and} x = y + 2$",
+      "prompt_latex_bits": [
+        "y^{2} = x \\text{and} x = y + 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793394824",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793638664",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "24 . $x = \\left|\\right. y \\left|\\right. \\text{and} 2 x = \u2212 y^{2} + 2$",
+      "prompt_latex_bits": [
+        "x = \\left|\\right. y \\left|\\right. \\text{and} 2 x = \u2212 y^{2} + 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793638664",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793469835",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "25 . $x = \\sin y , x = \\cos (2 y) , y = \\pi / 2 , \\text{and} y = \u2212 \\pi / 2$",
+      "prompt_latex_bits": [
+        "x = \\sin y , x = \\cos (2 y) , y = \\pi / 2 , \\text{and} y = \u2212 \\pi / 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793469835",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793423469",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "26 . $x = y^{4} \\text{and} x = y^{5}$",
+      "prompt_latex_bits": [
+        "x = y^{4} \\text{and} x = y^{5}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793423469",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793372408",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "27 . $y = x e^{x} , y = e^{x} , x = 0 , \\text{and} x = 1$",
+      "prompt_latex_bits": [
+        "y = x e^{x} , y = e^{x} , x = 0 , \\text{and} x = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793372408",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793473627",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "28 . $y = x^{6} \\text{and} y = x^{4}$",
+      "prompt_latex_bits": [
+        "y = x^{6} \\text{and} y = x^{4}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793473627",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167794054213",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "29 . $x = y^{3} + 2 y^{2} + 1 \\text{and} x = \u2212 y^{2} + 1$",
+      "prompt_latex_bits": [
+        "x = y^{3} + 2 y^{2} + 1 \\text{and} x = \u2212 y^{2} + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167794054213",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793479297",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "30 . $y = \\left|\\right. x \\left|\\right. \\text{and} y = x^{2} - 1$",
+      "prompt_latex_bits": [
+        "y = \\left|\\right. x \\left|\\right. \\text{and} y = x^{2} - 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793479297",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167794291677",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "31 . $y = 4 - 3 x \\text{and} y = \\frac{1}{x}$",
+      "prompt_latex_bits": [
+        "y = 4 - 3 x \\text{and} y = \\frac{1}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167794291677",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793499063",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "32 . $y = \\sin x , x = \u2212 \\pi / 6 , x = \\pi / 6 , \\text{and} y = \\cos^{3} x$",
+      "prompt_latex_bits": [
+        "y = \\sin x , x = \u2212 \\pi / 6 , x = \\pi / 6 , \\text{and} y = \\cos^{3} x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793499063",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793473545",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "33 . $y = x^{2} - 3 x + 2 \\text{and} y = x^{3} - 2 x^{2} - x + 2$",
+      "prompt_latex_bits": [
+        "y = x^{2} - 3 x + 2 \\text{and} y = x^{3} - 2 x^{2} - x + 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793473545",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793469771",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "34 . $y = 2 \\cos^{3} (3 x) , y = \u22121 , x = \\frac{\\pi}{4} , \\text{and} x = - \\frac{\\pi}{4}$",
+      "prompt_latex_bits": [
+        "y = 2 \\cos^{3} (3 x) , y = \u22121 , x = \\frac{\\pi}{4} , \\text{and} x = - \\frac{\\pi}{4}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793469771",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793978418",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "35 . $y + y^{3} = x \\text{and} 2 y = x$",
+      "prompt_latex_bits": [
+        "y + y^{3} = x \\text{and} 2 y = x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793978418",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793551299",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "36 . $y = \\sqrt{1 - x^{2}} \\text{and} y = x^{2} - 1$",
+      "prompt_latex_bits": [
+        "y = \\sqrt{1 - x^{2}} \\text{and} y = x^{2} - 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793551299",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793545637",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "37 . $y = \\cos^{\u22121} x , y = \\sin^{\u22121} x , x = \u22121 , \\text{and} x = 1$",
+      "prompt_latex_bits": [
+        "y = \\cos^{\u22121} x , y = \\sin^{\u22121} x , x = \u22121 , \\text{and} x = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793545637",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793477066",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "38 . [T] $x = e^{y} \\text{and} y = x - 2$",
+      "prompt_latex_bits": [
+        "x = e^{y} \\text{and} y = x - 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793477066",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793952121",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "39 . [T] $y = x^{2} \\text{and} y = \\sqrt{1 - x^{2}}$",
+      "prompt_latex_bits": [
+        "y = x^{2} \\text{and} y = \\sqrt{1 - x^{2}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793952121",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793518492",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "40 . [T] $y = 3 x^{2} + 8 x + 9 \\text{and} 3 y = x + 24$",
+      "prompt_latex_bits": [
+        "y = 3 x^{2} + 8 x + 9 \\text{and} 3 y = x + 24"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793518492",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793395009",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "41 . [T] $x = \\sqrt{4 - y^{2}} \\text{and} y^{2} = 1 + x^{2}$",
+      "prompt_latex_bits": [
+        "x = \\sqrt{4 - y^{2}} \\text{and} y^{2} = 1 + x^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793395009",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793421237",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "42 . [T] $x^{2} = y^{3} \\text{and} x = 3 y$",
+      "prompt_latex_bits": [
+        "x^{2} = y^{3} \\text{and} x = 3 y"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793421237",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793640024",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "43 . [T] $y = \\sin^{3} x + 2 , y = \\tan x , x = \u22121.5 , \\text{and} x = 1.5$",
+      "prompt_latex_bits": [
+        "y = \\sin^{3} x + 2 , y = \\tan x , x = \u22121.5 , \\text{and} x = 1.5"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793640024",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793485270",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "44 . [T] $y = \\sqrt{1 - x^{2}} \\text{and} y^{2} = x^{2}$",
+      "prompt_latex_bits": [
+        "y = \\sqrt{1 - x^{2}} \\text{and} y^{2} = x^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793485270",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793521340",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "45 . [T] $y = \\sqrt{1 - x^{2}} \\text{and} y = x^{2} + 2 x + 1$",
+      "prompt_latex_bits": [
+        "y = \\sqrt{1 - x^{2}} \\text{and} y = x^{2} + 2 x + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793521340",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793931545",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "46 . [T] $x = 4 - y^{2} \\text{and} x = 1 + 3 y + y^{2}$",
+      "prompt_latex_bits": [
+        "x = 4 - y^{2} \\text{and} x = 1 + 3 y + y^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793931545",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793595212",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "47 . [T] $y = \\cos x , y = e^{x} , x = \u2212 \\pi , \\text{and} x = 0$",
+      "prompt_latex_bits": [
+        "y = \\cos x , y = e^{x} , x = \u2212 \\pi , \\text{and} x = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793595212",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793221704",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "48 . The largest triangle with a base on the $x -\\text{axis}$ that fits inside the upper half of the unit circle $y^{2} + x^{2} = 1$ is given by $y = 1 + x$ and $y = 1 - x .$ See the following figure. What is the area inside the semicircle but outside the triangle?",
+      "prompt_latex_bits": [
+        "x -\\text{axis}",
+        "y^{2} + x^{2} = 1",
+        "y = 1 + x",
+        "y = 1 - x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793221704",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793634260",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "49 . A factory selling cell phones has a marginal cost function $C (x) = 0.01 x^{2} - 3 x + 229 ,$ where $x$ represents the number of cell phones, $C$ is the marginal cost, in dollars, of selling $x$ phones, and a marginal revenue function given by $R (x) = 429 - 2 x$ , where $R$ is the revenue, in dollars, earned by selling $x$ cell phonesFind the area between the graphs of these curves and $x = 0 .$ What does this area represent?",
+      "prompt_latex_bits": [
+        "C (x) = 0.01 x^{2} - 3 x + 229 ,",
+        "x",
+        "C",
+        "x",
+        "R (x) = 429 - 2 x",
+        "R",
+        "x",
+        "x = 0 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793634260",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793627001",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "50 . An amusement park has a marginal cost function $C (x) = 1000 e^{\u2212 x} + 5 ,$ where $x$ represents the number of tickets sold, and a marginal revenue function given by $R (x) = 60 - 0.1 x .$ Find the total profit generated when selling $550$ tickets. Use a calculator to determine intersection points, if necessary, to two decimal places.",
+      "prompt_latex_bits": [
+        "C (x) = 1000 e^{\u2212 x} + 5 ,",
+        "x",
+        "R (x) = 60 - 0.1 x .",
+        "550"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793627001",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167794005221",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "51 . The tortoise versus the hare: The speed of the hare is given by the sinusoidal function $H (t) = 1 - \\cos \\left(\\right. \\left(\\right. \\pi t \\left.\\right) / 2 \\left.\\right)$ whereas the speed of the tortoise is $T (t) = 0 . 1032 t$ where $t$ is time measured in hours and the speed is measured in miles per hour. Find the area between the curves from time $t = 0$ to the first time after one hour when the tortoise and hare are traveling at the same speed. What does it represent? Use a calculator to determine the intersection points, if necessary, accurate to three decimal places.",
+      "prompt_latex_bits": [
+        "H (t) = 1 - \\cos \\left(\\right. \\left(\\right. \\pi t \\left.\\right) / 2 \\left.\\right)",
+        "T (t) = 0 . 1032 t",
+        "t",
+        "t = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167794005221",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793543343",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "52 . The tortoise versus the hare: The speed of the hare is given by the sinusoidal function $H (t) = (1 / 2) - (1 / 2) \\cos \\left(\\right. 2 \\pi t \\left.\\right)$ whereas the speed of the tortoise is $T (t) = \\sqrt{t} ,$ where $t$ is time measured in hours and speed is measured in kilometers per hour. If the race is over in $1$ hour, who won the race and by how much? Use a calculator to determine the intersection points, if necessary, accurate to three decimal places.",
+      "prompt_latex_bits": [
+        "H (t) = (1 / 2) - (1 / 2) \\cos \\left(\\right. 2 \\pi t \\left.\\right)",
+        "T (t) = \\sqrt{t} ,",
+        "t",
+        "1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793543343",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167794127463",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "53 . $y = x^{2} + 2 x + 1 \\text{and} y = \u2212 x^{2} - 3 x + 4$",
+      "prompt_latex_bits": [
+        "y = x^{2} + 2 x + 1 \\text{and} y = \u2212 x^{2} - 3 x + 4"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167794127463",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793455306",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "54 . $y = x^{4} \\text{and} x = y^{5}$",
+      "prompt_latex_bits": [
+        "y = x^{4} \\text{and} x = y^{5}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793455306",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793455357",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "55 . $x = y^{2} - 2 \\text{and} x = 2 y$",
+      "prompt_latex_bits": [
+        "x = y^{2} - 2 \\text{and} x = 2 y"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793455357",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793937980",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "56 . Determine the equations for the sides of the square that touches the unit circle on all four sides, as seen in the following figure. Find the area between the perimeter of this square and the unit circle. Is there another way to solve this without using calculus?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793937980",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1167793423271",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 67,
+      "nearest_heading": "Section 6.1 Exercises",
+      "prompt_text": "57 . Find the area between the perimeter of the unit circle and the triangle created from $y = 2 x + 1 , y = 1 - 2 x$ and $y = - \\frac{3}{5} ,$ as seen in the following figure. Is there a way to solve this without using calculus?",
+      "prompt_latex_bits": [
+        "y = 2 x + 1 , y = 1 - 2 x",
+        "y = - \\frac{3}{5} ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1167793423271",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:43.541826+00:00",
+  "stage": "1_inventory"
+}

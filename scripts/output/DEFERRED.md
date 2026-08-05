@@ -38,6 +38,14 @@ DEFERRED = [
 
     (
 
+        "g6 / geo nets family (cube nets, nets + SA, grid nets, invalid nets)",
+
+        "Removed from Ready curriculum/catalog until a real nets-of-solids surface exists.",
+
+    ),
+
+    (
+
         "pc_vectors_diagrams",
 
         "Needs tip-to-tail vector diagram composition.",

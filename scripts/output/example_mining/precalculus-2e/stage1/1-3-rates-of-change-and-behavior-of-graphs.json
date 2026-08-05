@@ -1,0 +1,925 @@
+{
+  "book": "precalculus-2e",
+  "slug": "1-3-rates-of-change-and-behavior-of-graphs",
+  "title": "1.3 Rates of Change and Behavior of Graphs",
+  "source_url": "https://openstax.org/books/precalculus-2e/pages/1-3-rates-of-change-and-behavior-of-graphs",
+  "local_path": "textbooks/openstax/html/precalculus-2e/1-3-rates-of-change-and-behavior-of-graphs.html",
+  "objectives": [
+    "Find the average rate of change of a function.",
+    "Use a graph to determine where a function is increasing, decreasing, or constant.",
+    "Use a graph to locate local maxima and local minima.",
+    "Use a graph to locate the absolute maximum and absolute minimum."
+  ],
+  "headings": [
+    "1.3 Rates of Change and Behavior of Graphs",
+    "Learning Objectives",
+    "Finding the Average Rate of Change of a Function",
+    "Rate of Change",
+    "How To",
+    "Example 1",
+    "Try It #1",
+    "Example 2",
+    "Example 3",
+    "Example 4",
+    "Try It #2",
+    "Example 5",
+    "Example 6",
+    "Try It #3",
+    "Using a Graph to Determine Where a Function is Increasing, Decreasing, or Constant",
+    "Local Minima and Local Maxima",
+    "Example 7",
+    "Example 8",
+    "Try It #4",
+    "Example 9",
+    "Analyzing the Toolkit Functions for Increasing or Decreasing Intervals",
+    "Use A Graph to Locate the Absolute Maximum and Absolute Minimum",
+    "Absolute Maxima and Minima",
+    "Example 10",
+    "Media",
+    "1.3 Section Exercises",
+    "Footnotes"
+  ],
+  "items": [
+    {
+      "item_id": "Example_01_03_01",
+      "kind": "example",
+      "title": "Example 1",
+      "position": 1,
+      "nearest_heading": "How To",
+      "prompt_text": "Computing an Average Rate of Change Using the data in Table 1 , find the average rate of change of the price of gasoline between 2007 and 2009.",
+      "prompt_latex_bits": [],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_01",
+      "notes": ""
+    },
+    {
+      "item_id": "ti_01_03_01",
+      "kind": "other_exercise",
+      "title": "Try It #1",
+      "position": 2,
+      "nearest_heading": "Try It #1",
+      "prompt_text": "Using the data in Table 1 , find the average rate of change between 2005 and 2010.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "ti_01_03_01",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_02",
+      "kind": "example",
+      "title": "Example 2",
+      "position": 3,
+      "nearest_heading": "Try It #1",
+      "prompt_text": "Computing Average Rate of Change from a Graph Given the function $g (t)$ shown in Figure 1 , find the average rate of change on the interval $\\left[\\right. - 1 , 2 \\left]\\right. .$ Figure 1",
+      "prompt_latex_bits": [
+        "g (t)",
+        "\\left[\\right. - 1 , 2 \\left]\\right. .",
+        "\\frac{y_{2} - y_{1}}{x_{1} - x_{2}} ,",
+        "\\left(\\right. x_{1} , y_{1} \\left.\\right)",
+        "\\left(\\right. x_{2} , y_{2} \\left.\\right) ."
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_02",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_03",
+      "kind": "example",
+      "title": "Example 3",
+      "position": 4,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Computing Average Rate of Change from a Table After picking up a friend who lives 10 miles away, Anna records her distance from home over time. The values are shown in Table 2 . Find her average speed over the first 6 hours. t (hours) 0 1 2 3 4 5 6 7 D ( t ) (miles) 10 55 90 153 214 240 292 300 Table 2",
+      "prompt_latex_bits": [],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_03",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_04",
+      "kind": "example",
+      "title": "Example 4",
+      "position": 5,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Computing Average Rate of Change for a Function Expressed as a Formula Compute the average rate of change of $f (x) = x^{2} - \\frac{1}{x}$ on the interval $[\\text{2}, \\text{4}].$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} - \\frac{1}{x}",
+        "[\\text{2}, \\text{4}]."
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_04",
+      "notes": ""
+    },
+    {
+      "item_id": "ti_01_03_02",
+      "kind": "other_exercise",
+      "title": "Try It #2",
+      "position": 6,
+      "nearest_heading": "Try It #2",
+      "prompt_text": "Find the average rate of change of $f (x) = x - 2 \\sqrt{x}$ on the interval $\\left[\\right. 1 , 9 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = x - 2 \\sqrt{x}",
+        "\\left[\\right. 1 , 9 \\left]\\right. ."
+      ],
+      "has_solution": false,
+      "source_anchor": "ti_01_03_02",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_05",
+      "kind": "example",
+      "title": "Example 5",
+      "position": 7,
+      "nearest_heading": "Try It #2",
+      "prompt_text": "Finding the Average Rate of Change of a Force The electrostatic force $F ,$ measured in newtons, between two charged particles can be related to the distance between the particles $d ,$ in centimeters, by the formula $F (d) = \\frac{2}{d^{2}} .$ Find the average rate of change of force if the distance between the particles is increased from 2 cm to 6 cm.",
+      "prompt_latex_bits": [
+        "F ,",
+        "d ,",
+        "F (d) = \\frac{2}{d^{2}} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_05",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_06",
+      "kind": "example",
+      "title": "Example 6",
+      "position": 8,
+      "nearest_heading": "Finding the Average Rate of Change of a Force",
+      "prompt_text": "Finding an Average Rate of Change as an Expression Find the average rate of change of $g (t) = t^{2} + 3 t + 1$ on the interval $\\left[\\right. 0 , a \\left]\\right. .$ The answer will be an expression involving $a .$",
+      "prompt_latex_bits": [
+        "g (t) = t^{2} + 3 t + 1",
+        "\\left[\\right. 0 , a \\left]\\right. .",
+        "a ."
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_06",
+      "notes": ""
+    },
+    {
+      "item_id": "ti_01_03_03",
+      "kind": "other_exercise",
+      "title": "Try It #3",
+      "position": 9,
+      "nearest_heading": "Try It #3",
+      "prompt_text": "Find the average rate of change of $f (x) = x^{2} + 2 x - 8$ on the interval $\\left[\\right. 5 , a \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} + 2 x - 8",
+        "\\left[\\right. 5 , a \\left]\\right. ."
+      ],
+      "has_solution": false,
+      "source_anchor": "ti_01_03_03",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_07",
+      "kind": "example",
+      "title": "Example 7",
+      "position": 10,
+      "nearest_heading": "Local Minima and Local Maxima",
+      "prompt_text": "Finding Increasing and Decreasing Intervals on a Graph Given the function $p (t)$ in Figure 6 , identify the intervals on which the function appears to be increasing. Figure 6",
+      "prompt_latex_bits": [
+        "p (t)",
+        "t = 1",
+        "t = 3",
+        "t = 4"
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_07",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_08",
+      "kind": "example",
+      "title": "Example 8",
+      "position": 11,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Finding Local Extrema from a Graph Graph the function $f (x) = \\frac{2}{x} + \\frac{x}{3} .$ Then use the graph to estimate the local extrema of the function and to determine the intervals on which the function is increasing.",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{2}{x} + \\frac{x}{3} .",
+        "\\left(\\right. - \\infty , - \\text{2} .\\text{449})",
+        "\\left(\\right. 2.449 , \\infty \\left.\\right) .",
+        "\\pm \\sqrt{6} ,"
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_08",
+      "notes": ""
+    },
+    {
+      "item_id": "ti_01_03_04",
+      "kind": "other_exercise",
+      "title": "Try It #4",
+      "position": 12,
+      "nearest_heading": "Try It #4",
+      "prompt_text": "Graph the function $f (x) = x^{3} - 6 x^{2} - 15 x + 20$ to estimate the local extrema of the function. Use these to determine the intervals on which the function is increasing and decreasing.",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - 6 x^{2} - 15 x + 20"
+      ],
+      "has_solution": false,
+      "source_anchor": "ti_01_03_04",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_09",
+      "kind": "example",
+      "title": "Example 9",
+      "position": 13,
+      "nearest_heading": "Try It #4",
+      "prompt_text": "Finding Local Maxima and Minima from a Graph For the function $f$ whose graph is shown in Figure 9 , find all local maxima and minima. Figure 9",
+      "prompt_latex_bits": [
+        "f"
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_09",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_01_03_10",
+      "kind": "example",
+      "title": "Example 10",
+      "position": 14,
+      "nearest_heading": "Absolute Maxima and Minima",
+      "prompt_text": "Finding Absolute Maxima and Minima from a Graph For the function $f$ shown in Figure 14 , find all absolute maxima and minima. Figure 14",
+      "prompt_latex_bits": [
+        "f"
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_01_03_10",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135457758",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Verbal",
+      "prompt_text": "1 . Can the average rate of change of a function be constant?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135457758",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135536268",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Verbal",
+      "prompt_text": "2 . If a function $f$ is increasing on $(a , b)$ and decreasing on $(b , c) ,$ then what can be said about the local extremum of $f$ on $(a , c) ?$",
+      "prompt_latex_bits": [
+        "f",
+        "(a , b)",
+        "(b , c) ,",
+        "f",
+        "(a , c) ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135536268",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137704665",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Verbal",
+      "prompt_text": "3 . How are the absolute maximum and minimum similar to and different from the local extrema?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137704665",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137911363",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Verbal",
+      "prompt_text": "4 . How does the graph of the absolute value function compare to the graph of the quadratic function, $y = x^{2} ,$ in terms of increasing and decreasing intervals?",
+      "prompt_latex_bits": [
+        "y = x^{2} ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137911363",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134486779",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "5 . $f (x) = 4 x^{2} - 7$ on $\\left[\\right. 1 , b \\left]\\right.$",
+      "prompt_latex_bits": [
+        "f (x) = 4 x^{2} - 7",
+        "\\left[\\right. 1 , b \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134486779",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134158932",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "6 . $g (x) = 2 x^{2} - 9$ on $\\left[\\right. 4 , b \\left]\\right.$",
+      "prompt_latex_bits": [
+        "g (x) = 2 x^{2} - 9",
+        "\\left[\\right. 4 , b \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134158932",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135403475",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "7 . $p (x) = 3 x + 4$ on $\\left[\\right. 2 , 2 + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "p (x) = 3 x + 4",
+        "\\left[\\right. 2 , 2 + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135403475",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135237067",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "8 . $k (x) = 4 x - 2$ on $\\left[\\right. 3 , 3 + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "k (x) = 4 x - 2",
+        "\\left[\\right. 3 , 3 + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135237067",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137579498",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "9 . $f (x) = 2 x^{2} + 1$ on $\\left[\\right. x , x + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "f (x) = 2 x^{2} + 1",
+        "\\left[\\right. x , x + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137579498",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134495260",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "10 . $g (x) = 3 x^{2} - 2$ on $\\left[\\right. x , x + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "g (x) = 3 x^{2} - 2",
+        "\\left[\\right. x , x + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134495260",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134374799",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "11 . $a (t) = \\frac{1}{t + 4}$ on $\\left[\\right. 9 , 9 + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "a (t) = \\frac{1}{t + 4}",
+        "\\left[\\right. 9 , 9 + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134374799",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137693536",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "12 . $b (x) = \\frac{1}{x + 3}$ on $\\left[\\right. 1 , 1 + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "b (x) = \\frac{1}{x + 3}",
+        "\\left[\\right. 1 , 1 + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137693536",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134104075",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "13 . $j (x) = 3 x^{3}$ on $\\left[\\right. 1 , 1 + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "j (x) = 3 x^{3}",
+        "\\left[\\right. 1 , 1 + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134104075",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137851687",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "14 . $r (t) = 4 t^{3}$ on $\\left[\\right. 2 , 2 + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "r (t) = 4 t^{3}",
+        "\\left[\\right. 2 , 2 + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137851687",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137432064",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Algebraic",
+      "prompt_text": "15 . Find $\\frac{f (x + h) - f (x)}{h}$ given $f (x) = 2 x^{2} - 3 x$ on $\\left[\\right. x , x + h \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\frac{f (x + h) - f (x)}{h}",
+        "f (x) = 2 x^{2} - 3 x",
+        "\\left[\\right. x , x + h \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137432064",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135701406",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Graphical",
+      "prompt_text": "16 . Estimate the average rate of change from $x = 1$ to $x = 4.$",
+      "prompt_latex_bits": [
+        "x = 1",
+        "x = 4."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135701406",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137769703",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Graphical",
+      "prompt_text": "17 . Estimate the average rate of change from $x = 2$ to $x = 5.$",
+      "prompt_latex_bits": [
+        "x = 2",
+        "x = 5."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137769703",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165133213915",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Graphical",
+      "prompt_text": "18 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165133213915",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137897938",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Graphical",
+      "prompt_text": "19 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137897938",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135600844",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Graphical",
+      "prompt_text": "20 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135600844",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135422567",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Graphical",
+      "prompt_text": "21 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135422567",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134373481",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Graphical",
+      "prompt_text": "22 . Estimate the intervals where the function is increasing or decreasing.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134373481",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134149087",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Graphical",
+      "prompt_text": "23 . Estimate the point(s) at which the graph of $f$ has a local maximum or a local minimum.",
+      "prompt_latex_bits": [
+        "f"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134149087",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135428496",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Graphical",
+      "prompt_text": "24 . If the complete graph of the function is shown, estimate the intervals where the function is increasing or decreasing.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135428496",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135428507",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Graphical",
+      "prompt_text": "25 . If the complete graph of the function is shown, estimate the absolute maximum and absolute minimum.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135428507",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134043824",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Numeric",
+      "prompt_text": "26 . Table 3 gives the annual sales (in millions of dollars) of a product from 1998 to 2006. What was the average rate of change of annual sales (a) between 2001 and 2002, and (b) between 2001 and 2004? Year Sales (millions of dollars) 1998 201 1999 219 2000 233 2001 243 2002 249 2003 251 2004 249 2005 243 2006 233 Table 3",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134043824",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135547288",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Numeric",
+      "prompt_text": "27 . Table 4 gives the population of a town (in thousands) from 2000 to 2008. What was the average rate of change of population (a) between 2002 and 2004, and (b) between 2002 and 2006? Year Population (thousands) 2000 87 2001 84 2002 83 2003 80 2004 77 2005 76 2006 78 2007 81 2008 85 Table 4",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135547288",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134547387",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Numeric",
+      "prompt_text": "28 . $f (x) = x^{2}$ on $\\left[\\right. 1 , 5 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2}",
+        "\\left[\\right. 1 , 5 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134547387",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137851207",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Numeric",
+      "prompt_text": "29 . $h (x) = 5 - 2 x^{2}$ on $\\left[\\right. \u22122 , \\text{4} \\left]\\right.$",
+      "prompt_latex_bits": [
+        "h (x) = 5 - 2 x^{2}",
+        "\\left[\\right. \u22122 , \\text{4} \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137851207",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134384576",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Numeric",
+      "prompt_text": "30 . $q (x) = x^{3}$ on $\\left[\\right. \u22124 , \\text{2} \\left]\\right.$",
+      "prompt_latex_bits": [
+        "q (x) = x^{3}",
+        "\\left[\\right. \u22124 , \\text{2} \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134384576",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135453186",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Numeric",
+      "prompt_text": "31 . $g (x) = 3 x^{3} - 1$ on $\\left[\\right. \u22123 , \\text{3} \\left]\\right.$",
+      "prompt_latex_bits": [
+        "g (x) = 3 x^{3} - 1",
+        "\\left[\\right. \u22123 , \\text{3} \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135453186",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134199306",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Numeric",
+      "prompt_text": "32 . $y = \\frac{1}{x}$ on $\\left[\\right. 1 , \\text{3} \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = \\frac{1}{x}",
+        "\\left[\\right. 1 , \\text{3} \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134199306",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135317474",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Numeric",
+      "prompt_text": "33 . $p (t) = \\frac{\\left(\\right. t^{2} - 4 \\left.\\right) (t + 1)}{t^{2} + 3}$ on $\\left[\\right. \u22123 , \\text{1} \\left]\\right.$",
+      "prompt_latex_bits": [
+        "p (t) = \\frac{\\left(\\right. t^{2} - 4 \\left.\\right) (t + 1)}{t^{2} + 3}",
+        "\\left[\\right. \u22123 , \\text{1} \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135317474",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135208859",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Numeric",
+      "prompt_text": "34 . $k (t) = 6 t^{2} + \\frac{4}{t^{3}}$ on $\\left[\\right. \u22121 , 3 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "k (t) = 6 t^{2} + \\frac{4}{t^{3}}",
+        "\\left[\\right. \u22121 , 3 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135208859",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134043700",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Technology",
+      "prompt_text": "35 . $f (x) = x^{4} - 4 x^{3} + 5$",
+      "prompt_latex_bits": [
+        "f (x) = x^{4} - 4 x^{3} + 5"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134043700",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137836516",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Technology",
+      "prompt_text": "36 . $h (x) = x^{5} + 5 x^{4} + 10 x^{3} + 10 x^{2} - 1$",
+      "prompt_latex_bits": [
+        "h (x) = x^{5} + 5 x^{4} + 10 x^{3} + 10 x^{2} - 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137836516",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135257278",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Technology",
+      "prompt_text": "37 . $g (t) = t \\sqrt{t + 3}$",
+      "prompt_latex_bits": [
+        "g (t) = t \\sqrt{t + 3}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135257278",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137892185",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Technology",
+      "prompt_text": "38 . $k (t) = 3 t^{\\frac{2}{3}} - t$",
+      "prompt_latex_bits": [
+        "k (t) = 3 t^{\\frac{2}{3}} - t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137892185",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135602253",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Technology",
+      "prompt_text": "39 . $m (x) = x^{4} + 2 x^{3} - 12 x^{2} - 10 x + 4$",
+      "prompt_latex_bits": [
+        "m (x) = x^{4} + 2 x^{3} - 12 x^{2} - 10 x + 4"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135602253",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165137400141",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Technology",
+      "prompt_text": "40 . $n (x) = x^{4} - 8 x^{3} + 18 x^{2} - 6 x + 2$",
+      "prompt_latex_bits": [
+        "n (x) = x^{4} - 8 x^{3} + 18 x^{2} - 6 x + 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165137400141",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135536257",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Extension",
+      "prompt_text": "41 . The graph of the function $f$ is shown in Figure 18 . Figure 18 Based on the calculator screen shot, the point $(1.333 , 5.185)$ is which of the following? \u24d0 a relative (local) maximum of the function \u24d1 the vertex of the function \u24d2 the absolute maximum of the function \u24d3 a zero of the function",
+      "prompt_latex_bits": [
+        "f",
+        "(1.333 , 5.185)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135536257",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134378686",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Extension",
+      "prompt_text": "42 . Let $f (x) = \\frac{1}{x} .$ Find a number $c$ such that the average rate of change of the function $f$ on the interval $(1 , c)$ is $- \\frac{1}{4} .$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{1}{x} .",
+        "c",
+        "f",
+        "(1 , c)",
+        "- \\frac{1}{4} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134378686",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134299101",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Extension",
+      "prompt_text": "43 . Let $f (x) = \\frac{1}{x}$ . Find the number $b$ such that the average rate of change of $f$ on the interval $(2 , b)$ is $- \\frac{1}{10} .$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{1}{x}",
+        "b",
+        "f",
+        "(2 , b)",
+        "- \\frac{1}{10} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134299101",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165134151841",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Real-World Applications",
+      "prompt_text": "44 . At the start of a trip, the odometer on a car read 21,395. At the end of the trip, 13.5 hours later, the odometer read 22,125. Assume the scale on the odometer is in miles. What is the average speed the car traveled during this trip?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165134151841",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135387234",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Real-World Applications",
+      "prompt_text": "45 . A driver of a car stopped at a gas station to fill up their gas tank. They looked at their watch, and the time read exactly 3:40 p.m. At this time, they started pumping gas into the tank. At exactly 3:44, the tank was full and they noticed that they had pumped 10.7 gallons. What is the average rate of flow of the gasoline into the gas tank?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135387234",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135387253",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Real-World Applications",
+      "prompt_text": "46 . Near the surface of the moon, the distance that an object falls is a function of time. It is given by $d (t) = 2.6667 t^{2} ,$ where $t$ is in seconds and $d (t)$ is in feet. If an object is dropped from a certain height, find the average velocity of the object from $t = 1$ to $t = 2.$",
+      "prompt_latex_bits": [
+        "d (t) = 2.6667 t^{2} ,",
+        "t",
+        "d (t)",
+        "t = 1",
+        "t = 2."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135387253",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165135571880",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Real-World Applications",
+      "prompt_text": "47 . The graph in Figure 19 illustrates the decay of a radioactive substance over $t$ days. Figure 19 Use the graph to estimate the average decay rate from $t = 5$ to $t = 15.$",
+      "prompt_latex_bits": [
+        "t",
+        "t = 5",
+        "t = 15."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165135571880",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:14.627679+00:00",
+  "stage": "1_inventory"
+}

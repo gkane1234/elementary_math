@@ -1,0 +1,110 @@
+{
+  "catalog_id": "algebra2_exp_log",
+  "title": "OpenStax Intermediate Algebra 2e — exponential & logarithmic equations (Ch 10)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "intermediate-algebra-2e",
+      "chapters": ["10"],
+      "title": "Exponential and Logarithmic Functions",
+      "url": "https://openstax.org/books/intermediate-algebra-2e/pages/10-introduction",
+      "stage1": "scripts/output/example_mining/intermediate-algebra-2e/stage1/"
+    }
+  },
+  "taxonomy_notes": [
+    "Forms mirror §§10.2–10.5 (evaluate/graph warmups deferred; equation + property forms prioritized).",
+    "Growth/decay applications remain stub (word-problem leaf already exists separately)."
+  ],
+  "forms": [
+    {
+      "form_id": "exp_same_base",
+      "description": "b^x = b^k → x = k (same base, no log)",
+      "strategy": "same_base",
+      "constraints": { "kind": "same_base", "needs_log": false },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_exponential_and_logarithmic_expressions_exponential_equations_not_requiring_logarithms"],
+      "example_item_ids": [],
+      "openstax_case": "§10.2 / §10.5 Solve exponential equations (same base)"
+    },
+    {
+      "form_id": "exp_requiring_log",
+      "description": "b^{cx} = k — take log / rewrite",
+      "strategy": "take_logarithm",
+      "constraints": { "kind": "coef_exponent", "needs_log": true },
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_exponential_and_logarithmic_expressions_exponential_equations_requiring_logarithms"],
+      "example_item_ids": [],
+      "openstax_case": "§10.5 Solve exponential equations using logarithms"
+    },
+    {
+      "form_id": "log_equation_basic",
+      "description": "log_b(x) = k → x = b^k",
+      "strategy": "log_definition",
+      "constraints": { "kind": "basic_log_eq" },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_simple",
+        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_hard"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§10.3 Solve logarithmic equations"
+    },
+    {
+      "form_id": "log_properties_condense",
+      "description": "Use product/quotient/power properties (condense or expand)",
+      "strategy": "log_properties",
+      "constraints": { "kind": "properties" },
+      "d_min": 4,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": ["a2_exponential_and_logarithmic_expressions_properties_of_logarithms"],
+      "example_item_ids": [],
+      "openstax_case": "§10.4 Use the properties of logarithms"
+    },
+    {
+      "form_id": "change_of_base",
+      "description": "Change-of-base formula evaluation",
+      "strategy": "change_of_base",
+      "constraints": { "kind": "change_of_base" },
+      "d_min": 6,
+      "d_weight": 1.4,
+      "generation_status": "stub",
+      "leaves": ["a2_exponential_and_logarithmic_expressions_properties_of_logarithms"],
+      "example_item_ids": [],
+      "openstax_case": "§10.4 Use the Change of Base Formula"
+    },
+    {
+      "form_id": "log_equation_properties",
+      "description": "log equations needing product/quotient properties first",
+      "strategy": "properties_then_solve",
+      "constraints": { "kind": "log_eq_properties" },
+      "d_min": 8,
+      "d_weight": 1.6,
+      "generation_status": "stub",
+      "leaves": ["a2_exponential_and_logarithmic_expressions_logarithmic_equations_hard"],
+      "example_item_ids": [],
+      "openstax_case": "§10.5 Solve logarithmic equations using properties"
+    },
+    {
+      "form_id": "exp_growth_decay",
+      "description": "Exponential growth/decay application models",
+      "strategy": "growth_decay_model",
+      "constraints": { "kind": "application" },
+      "d_min": 8,
+      "d_weight": 1.0,
+      "generation_status": "deferred",
+      "leaves": [
+        "a2_exponential_and_logarithmic_expressions_discrete_exponential_growth_and_decay_word_problems",
+        "a2_exponential_and_logarithmic_expressions_continuous_exponential_growth_and_decay_word_problems"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§10.5 Use exponential models — leaf exists; catalog stamp not yet wired"
+    }
+  ]
+}

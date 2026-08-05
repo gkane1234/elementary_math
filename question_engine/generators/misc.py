@@ -31,6 +31,54 @@ def _verbal_constant(params, *, variable: str = "x") -> tuple[str, str, str]:
     )
 
 
+def _verbal_complexity_from_continuous(settings: dict) -> tuple[str, int] | None:
+    """Map continuous difficulty → (phrase_complexity, max_ops) for effort ramps.
+
+    Returns None when continuous ``difficulty`` is absent so EMH presets win.
+    """
+    if "difficulty" not in settings or settings["difficulty"] is None:
+        return None
+    try:
+        d = float(settings["difficulty"])
+    except (TypeError, ValueError):
+        return None
+    # Effort: one-op → grouping/parens → nested / consecutive / products of binomials.
+    if d < 3.0:
+        return "simple", 1
+    if d < 8.0:
+        # Mostly simple with a light mix of standard (sum/product phrasing).
+        return ("simple", 1) if random.random() < 0.55 else ("standard", 2)
+    if d < 14.0:
+        return "standard", 2
+    if d < 20.0:
+        return ("standard", 2) if random.random() < 0.45 else ("advanced", 3)
+    return "advanced", 3
+
+
+def _exponent_bounds_from_continuous(settings: dict) -> tuple[int, int] | None:
+    """Map continuous difficulty → (exponent_min, exponent_max) for exponent laws.
+
+    Returns None when continuous ``difficulty`` is absent so EMH / explicit
+    exponent knobs win.
+    """
+    if "difficulty" not in settings or settings["difficulty"] is None:
+        return None
+    try:
+        d = float(settings["difficulty"])
+    except (TypeError, ValueError):
+        return None
+    # Small positive exponents → wider range + negatives at higher D.
+    if d < 4.0:
+        return 1, 3
+    if d < 10.0:
+        return 1, 5
+    if d < 16.0:
+        return 1, 7
+    if d < 22.0:
+        return 1, 9
+    return 1, max(10, int(6 + d / 3))
+
+
 def _verbal_expressions(topic: str, settings: dict) -> list[Question]:
     """Translate verbal phrases into algebraic expressions.
 
@@ -39,10 +87,27 @@ def _verbal_expressions(topic: str, settings: dict) -> list[Question]:
     - standard: multi-step / parentheses (quantity, times the sum/difference)
     - advanced: consecutive integers, products of binomials, squared quantities
     Medium uses standard forms only (not diluted with Easy); Hard weights advanced.
+    Continuous ``difficulty`` overrides EMH phrase_complexity for finer ramps.
     """
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    params = misc_expression_params_from_settings(settings)
+    local = dict(settings)
+    mapped = _verbal_complexity_from_continuous(local)
+    if mapped is not None:
+        complexity, max_ops = mapped
+        local["phrase_complexity"] = complexity
+        local["max_phrase_operations"] = max_ops
+        # Grow constant awkwardness with D (not magnitude-as-hardness alone).
+        try:
+            d = float(local["difficulty"])
+        except (TypeError, ValueError):
+            d = 0.0
+        local.setdefault("constant_min", 2)
+        local.setdefault(
+            "constant_max",
+            9 if d < 8 else (12 if d < 15 else (15 if d < 22 else 20)),
+        )
+    params = misc_expression_params_from_settings(local)
     var = params.variable
     complexity = params.phrase_complexity
     max_ops = params.max_phrase_operations
@@ -324,8 +389,16 @@ def _verbal_expressions(topic: str, settings: dict) -> list[Question]:
     if complexity == "simple" or max_ops <= 1:
         pool_builders = [simple_forms]
     elif complexity == "advanced" or max_ops >= 3:
-        # Hard: nested / exponent / consecutive, with some medium variety.
-        pool_builders = [standard_forms, advanced_forms, advanced_forms]
+        # Continuous high-D: advanced-only. EMH hard still mixes some standard.
+        try:
+            d_cont = float(settings["difficulty"]) if settings.get("difficulty") is not None else None
+        except (TypeError, ValueError):
+            d_cont = None
+        if d_cont is not None and d_cont >= 18.0:
+            pool_builders = [advanced_forms]
+        else:
+            # Hard EMH: nested / exponent / consecutive, with some medium variety.
+            pool_builders = [standard_forms, advanced_forms, advanced_forms]
     else:
         # Medium: multi-op / grouping only — do not dilute with Easy one-ops.
         pool_builders = [standard_forms]
@@ -413,13 +486,35 @@ def _combining_like_terms(topic: str, settings: dict) -> list[Question]:
 def _properties_of_exponents(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    params = misc_expression_params_from_settings(settings)
-    ops = allowed_rational_operations(settings)
+    local = dict(settings)
+    bounds = _exponent_bounds_from_continuous(local)
+    if bounds is not None:
+        local["exponent_min"], local["exponent_max"] = bounds
+    params = misc_expression_params_from_settings(local)
+    ops = allowed_rational_operations(local)
+    d_cont = None
+    if "difficulty" in local and local["difficulty"] is not None:
+        try:
+            d_cont = float(local["difficulty"])
+        except (TypeError, ValueError):
+            d_cont = None
 
     def build() -> tuple[str, str, str | None]:
-        patterns = ["product", "quotient", "power", "negative"]
-        if "+" in ops or "-" in ops:
-            patterns.append("sum")
+        # Continuous D unlocks pattern ladder; EMH keeps the full pool.
+        if d_cont is None:
+            patterns = ["product", "quotient", "power", "negative"]
+            if "+" in ops or "-" in ops:
+                patterns.append("sum")
+        elif d_cont < 5.0:
+            patterns = ["product", "quotient"]
+        elif d_cont < 12.0:
+            patterns = ["product", "quotient", "power"]
+        elif d_cont < 18.0:
+            patterns = ["product", "quotient", "power", "negative"]
+        else:
+            patterns = ["product", "quotient", "power", "negative"]
+            if "+" in ops or "-" in ops:
+                patterns.append("sum")
         pattern = random.choice(patterns)
         base = random.choice([params.variable, "y", "a"])
         exp_lo, exp_hi = params.exponent_min, params.exponent_max

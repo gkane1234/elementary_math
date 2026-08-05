@@ -58,6 +58,11 @@ def order_of_operations(topic: str, settings: dict) -> list[Question]:
             **ctx.metadata(),
             "primitive_engine": "ooo",
             "require_exponents": require_exponents,
+            "upgrades": list(expr.upgrades),
+            "n_ops": expr.n_ops,
+            "nest_depth": expr.nest_depth,
+            "shape_id": expr.shape_id,
+            "effective_d": expr.effective_d,
         }
         # Stem only — worksheet UI factors catalog instruction_latex as a header.
         return (expr.latex, expr.text, answer)
@@ -96,7 +101,15 @@ def distributive_property(topic: str, settings: dict) -> list[Question]:
         ctx.prereq_settings[PRIM_NUMBERS].setdefault("exclude_zero", True)
         expr = sample_distributive_numeric(ctx)
         answer = expr.expanded_latex if include_answer_key else None
-        last["meta"] = {**ctx.metadata(), "primitive_engine": "distributive"}
+        last["meta"] = {
+            **ctx.metadata(),
+            "primitive_engine": "distributive",
+            "distributive_form": expr.form,
+            "form_id": expr.form_id,
+            "n_terms_inside": expr.n_terms_inside,
+            "factor_side": expr.factor_side,
+            "structure_upgrades": list(expr.upgrades),
+        }
         # Stem only — instruction comes from catalog / metadata.instruction_latex.
         return (expr.latex, expr.text, answer)
 
@@ -113,11 +126,31 @@ def distributive_property(topic: str, settings: dict) -> list[Question]:
     )
 
 
+def _g6_algebra_settings(settings: dict) -> dict:
+    """Classroom G6 defaults: no Greek vars; integers preferred at low D."""
+    local = dict(settings)
+    local.setdefault("allow_greek", False)
+    try:
+        d = float(local["difficulty"]) if local.get("difficulty") is not None else None
+    except (TypeError, ValueError):
+        d = None
+    if d is not None and d < 8.0:
+        local.setdefault("force_variable_lane", "only_x")
+    elif d is not None:
+        local.setdefault("force_variable_lane", "xyz")
+    if d is not None and d < 12.0:
+        local.setdefault("integers_only", True)
+    return local
+
+
 def distributive_property_algebraic(topic: str, settings: dict) -> list[Question]:
-    """Algebraic distributive via presentation layer (var-outer or const-outer forms)."""
+    """Algebraic distributive via shared primitive + presentation forms."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
+    local_settings = (
+        _g6_algebra_settings(settings) if topic.startswith("g6_") else dict(settings)
+    )
 
     def build() -> tuple[str, str, str | None]:
         from question_engine.frameworks.primitives.distributive import (
@@ -125,7 +158,7 @@ def distributive_property_algebraic(topic: str, settings: dict) -> list[Question
         )
 
         ctx = build_context(
-            settings,
+            local_settings,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_DISTRIBUTIVE],
         )
         if PRIM_NUMBERS not in ctx.prereq_settings:
@@ -133,12 +166,15 @@ def distributive_property_algebraic(topic: str, settings: dict) -> list[Question
         ctx.prereq_settings[PRIM_NUMBERS].setdefault("exclude_zero", True)
         expr = sample_distributive_algebraic(ctx)
         answer = expr.expanded_latex if include_answer_key else None
-        cancel_tags = [u for u in expr.upgrades if str(u).startswith("cancel:")]
         last["meta"] = {
             **ctx.metadata(),
             "primitive_engine": "distributive_algebraic",
             "distributive_form": expr.form,
-            "cancel_clutter": cancel_tags,
+            "form_id": expr.form_id,
+            "n_terms_inside": expr.n_terms_inside,
+            "factor_side": expr.factor_side,
+            "structure_upgrades": list(expr.upgrades),
+            "cancel_clutter": [u for u in expr.upgrades if str(u).startswith("cancel:")],
         }
         return (expr.latex, expr.text, answer)
 
@@ -154,15 +190,15 @@ def distributive_property_algebraic(topic: str, settings: dict) -> list[Question
         settings=settings,
     )
 
-
 def evaluate_algebraic_expressions(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
+    local_settings = _g6_algebra_settings(settings) if topic.startswith("g6_") else dict(settings)
 
     def build() -> tuple[str, str, str | None]:
         ctx = build_context(
-            settings,
+            local_settings,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_EVALUATE],
             policy=LINEAR_POLICY,
             leaf_id="evaluate_algebraic_expressions",
@@ -205,10 +241,20 @@ def combining_like_terms(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
+    local_settings = _g6_algebra_settings(settings) if topic.startswith("g6_") else dict(settings)
+    # Stretch classroom D so structure upgrades (negatives / more likes / many terms)
+    # land inside the 0–25 slider instead of waiting for PA-level D.
+    if topic.startswith("g6_") and local_settings.get("difficulty") is not None:
+        try:
+            d = float(local_settings["difficulty"])
+            # Map 0→0, 5→9, 10→18, 15→27, 20→36, 25→45 so mid/high buy upgrades.
+            local_settings["difficulty"] = d * 1.8 if d >= 1 else 0.0
+        except (TypeError, ValueError):
+            pass
 
     def build() -> tuple[str, str, str | None]:
         ctx = build_context(
-            settings,
+            local_settings,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_LIKE_TERMS],
             policy=LINEAR_POLICY,
             leaf_id="combining_like_terms",

@@ -182,11 +182,14 @@ def _quadratic_vertex_identify(topic: str, settings: dict) -> list[Question]:
 
 
 def _quadratic_vertex_form_write(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_quadratic_graph_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_quadratic_graph_continuous_knobs(settings)
 
     def build() -> tuple[str, str, str | None]:
-        a, h, k, _, _ = _random_vertex_parabola(settings)
+        a, h, k, _, _ = _random_vertex_parabola(local)
         prompt = (
             f"\\text{{Write the equation in vertex form for a parabola with "
             f"vertex }} ({h}, {k}) \\text{{ and }} a = {a}."
@@ -237,7 +240,14 @@ def _quadratic_graph_inequality(topic: str, settings: dict) -> list[Question]:
     return questions
 
 
-def _random_complex() -> tuple[int, int]:
+def _random_complex(settings: dict | None = None) -> tuple[int, int]:
+    if settings:
+        from question_engine.settings.params import apply_complex_continuous_knobs
+
+        local = apply_complex_continuous_knobs(settings)
+        lo = int(local.get("complex_entry_min", -8))
+        hi = int(local.get("complex_entry_max", 8))
+        return random.randint(lo, hi), random.randint(lo, hi)
     return random.randint(-8, 8), random.randint(-8, 8)
 
 
@@ -246,8 +256,8 @@ def _complex_add_subtract(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
 
     def build() -> tuple[str, str, str | None]:
-        a1, b1 = _random_complex()
-        a2, b2 = _random_complex()
+        a1, b1 = _random_complex(settings)
+        a2, b2 = _random_complex(settings)
         op = random.choice(["+", "-"])
         if op == "+":
             real, imag = a1 + a2, b1 + b2
@@ -265,8 +275,8 @@ def _complex_multiply(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
 
     def build() -> tuple[str, str, str | None]:
-        a1, b1 = _random_complex()
-        a2, b2 = _random_complex()
+        a1, b1 = _random_complex(settings)
+        a2, b2 = _random_complex(settings)
         real = a1 * a2 - b1 * b2
         imag = a1 * b2 + b1 * a2
         prompt = f"\\left({_complex_latex(a1, b1)}\\right)\\left({_complex_latex(a2, b2)}\\right)"
@@ -277,6 +287,11 @@ def _complex_multiply(topic: str, settings: dict) -> list[Question]:
 
 
 def _complex_operations(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_complex_continuous_knobs
+
+    local = apply_complex_continuous_knobs(settings)
+    if bool(local.get("complex_prefer_multiply", False)) and random.random() < 0.65:
+        return _complex_multiply(topic, settings)
     fn = random.choice([_complex_add_subtract, _complex_multiply])
     return fn(topic, settings)
 
@@ -287,7 +302,7 @@ def _complex_graph(topic: str, settings: dict) -> list[Question]:
 
     questions: list[Question] = []
     for _ in range(count):
-        real, imag = _random_complex()
+        real, imag = _random_complex(settings)
         prompt = f"\\text{{Plot }} {_complex_latex(real, imag)} \\text{{ on the complex plane.}}"
         answer = f"({real}, {imag})" if include_answer_key else None
         metadata: dict[str, Any] = {}
@@ -333,7 +348,7 @@ def _complex_absolute_value(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
 
     def build() -> tuple[str, str, str | None]:
-        real, imag = _random_complex()
+        real, imag = _random_complex(settings)
         # Prefer non-zero imag so this is clearly a complex modulus.
         if imag == 0:
             imag = random.choice([-3, -2, -1, 1, 2, 3])
@@ -391,12 +406,28 @@ def _conic_blank_and_answer(
 
 def _conic_sections(topic: str, settings: dict) -> list[Question]:
     """Circles / ellipses / hyperbolas: graph, write equations, or classify."""
+    from question_engine.settings.params import apply_conic_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_conic_continuous_knobs(settings)
     tid = topic.lower()
     graphing = "graphing" in tid or ("graphs" in tid and "writing" not in tid)
     # Carry curve metadata from the most recent build() into metadata_builder.
     last: dict[str, Any] = {"meta": {}}
+    c_lo = int(local.get("conic_center_min", -5))
+    c_hi = int(local.get("conic_center_max", 5))
+    r_lo = int(local.get("conic_radius_min", 2))
+    r_hi = int(local.get("conic_radius_max", 7))
+    a_lo = int(local.get("conic_axis_min", 2))
+    a_hi = int(local.get("conic_axis_max", 8))
+    f_hi = int(local.get("conic_focus_max", 5))
+    allow_translated = bool(local.get("conic_allow_translated", True))
+
+    def _center() -> tuple[int, int]:
+        if not allow_translated or (c_lo == 0 and c_hi == 0):
+            return 0, 0
+        return random.randint(c_lo, c_hi), random.randint(c_lo, c_hi)
 
     def build() -> tuple[str, str, str | None]:
         last["meta"] = {}
@@ -404,27 +435,31 @@ def _conic_sections(topic: str, settings: dict) -> list[Question]:
         if "classify" in tid:
             kind = random.choice(["circle", "ellipse", "hyperbola", "parabola"])
             if kind == "circle":
-                r = random.randint(2, 6)
+                r = random.randint(r_lo, r_hi)
                 eq = rf"x^2+y^2={r * r}"
             elif kind == "ellipse":
-                a, b = random.randint(4, 7), random.randint(2, 5)
+                a, b = random.randint(max(a_lo, 3), a_hi), random.randint(a_lo, max(a_lo, a_hi - 1))
                 while a == b:
-                    b = random.randint(2, 5)
+                    b = random.randint(a_lo, max(a_lo, a_hi - 1))
                 eq = rf"\frac{{x^2}}{{{a * a}}}+\frac{{y^2}}{{{b * b}}}=1"
             elif kind == "hyperbola":
-                a, b = random.randint(2, 5), random.randint(2, 5)
+                a, b = random.randint(a_lo, a_hi), random.randint(a_lo, a_hi)
                 if random.choice([True, False]):
                     eq = rf"\frac{{x^2}}{{{a * a}}}-\frac{{y^2}}{{{b * b}}}=1"
                 else:
                     eq = rf"\frac{{y^2}}{{{a * a}}}-\frac{{x^2}}{{{b * b}}}=1"
             else:
-                p = random.randint(1, 4)
+                p = random.randint(1, max(1, f_hi))
                 eq = rf"x^2={4 * p}y"
             return rf"\text{{Classify the conic: }} {eq}.", "conic classify", kind if keyed else None
 
         if "circle" in tid:
-            h, k, r = random.randint(-5, 5), random.randint(-5, 5), random.randint(2, 7)
-            eq = rf"(x-({h}))^2+(y-({k}))^2={r * r}"
+            h, k = _center()
+            r = random.randint(r_lo, r_hi)
+            if h == 0 and k == 0:
+                eq = rf"x^2+y^2={r * r}"
+            else:
+                eq = rf"(x-({h}))^2+(y-({k}))^2={r * r}"
             if "writing" in tid:
                 prompt = (
                     rf"\text{{Write the equation of the circle with center }}({h},{k})"
@@ -445,23 +480,35 @@ def _conic_sections(topic: str, settings: dict) -> list[Question]:
             return prompt, "circle conic", answer if keyed else None
 
         if "ellipse" in tid:
-            a, b = random.randint(3, 8), random.randint(2, 6)
+            a, b = random.randint(max(a_lo, 3), a_hi), random.randint(a_lo, max(a_lo, a_hi - 1))
             while a == b:
-                b = random.randint(2, 6)
-            eq = rf"\frac{{x^2}}{{{a * a}}}+\frac{{y^2}}{{{b * b}}}=1"
-            if "writing" in tid:
-                prompt = (
-                    rf"\text{{Write the equation of an ellipse centered at the origin "
-                    rf"with }}a={a}\text{{ and }}b={b}."
+                b = random.randint(a_lo, max(a_lo, a_hi - 1))
+            h, k = _center() if allow_translated else (0, 0)
+            if h == 0 and k == 0:
+                eq = rf"\frac{{x^2}}{{{a * a}}}+\frac{{y^2}}{{{b * b}}}=1"
+            else:
+                eq = (
+                    rf"\frac{{(x-({h}))^2}}{{{a * a}}}+\frac{{(y-({k}))^2}}{{{b * b}}}=1"
                 )
+            if "writing" in tid:
+                if h == 0 and k == 0:
+                    prompt = (
+                        rf"\text{{Write the equation of an ellipse centered at the origin "
+                        rf"with }}a={a}\text{{ and }}b={b}."
+                    )
+                else:
+                    prompt = (
+                        rf"\text{{Write the equation of an ellipse centered at }}({h},{k})"
+                        rf"\text{{ with }}a={a}\text{{ and }}b={b}."
+                    )
                 answer = eq
             elif graphing:
                 prompt = eq
                 answer = rf"a={a},\ b={b}"
                 last["meta"] = _conic_blank_and_answer(
                     settings,
-                    curve=f"ellipse(0,0,{a},{b})",
-                    features=[(a, 0), (-a, 0), (0, b), (0, -b)],
+                    curve=f"ellipse({h},{k},{a},{b})",
+                    features=[(h + a, k), (h - a, k), (h, k + b), (h, k - b)],
                 )
             else:
                 prompt = rf"\text{{Find }}a\text{{ and }}b\text{{ for }} {eq}."
@@ -469,7 +516,7 @@ def _conic_sections(topic: str, settings: dict) -> list[Question]:
             return prompt, "ellipse conic", answer if keyed else None
 
         if "hyperbola" in tid:
-            a, b = random.randint(2, 6), random.randint(2, 6)
+            a, b = random.randint(a_lo, a_hi), random.randint(a_lo, a_hi)
             horizontal = random.choice([True, False])
             if horizontal:
                 eq = rf"\frac{{x^2}}{{{a * a}}}-\frac{{y^2}}{{{b * b}}}=1"
@@ -499,7 +546,7 @@ def _conic_sections(topic: str, settings: dict) -> list[Question]:
             return prompt, "hyperbola conic", answer if keyed else None
 
         # Parabola (writing / focus–directrix form)
-        p = random.randint(1, 5)
+        p = random.randint(1, max(1, f_hi))
         vertical = random.choice([True, False])
         if vertical:
             eq = rf"x^2={4 * p}y"
@@ -533,10 +580,15 @@ def _conic_sections(topic: str, settings: dict) -> list[Question]:
     )
 
 
-def _random_matrix() -> Matrix2:
+def _random_matrix(settings: dict | None = None) -> Matrix2:
+    from question_engine.settings.params import apply_matrix_continuous_knobs
+
+    local = apply_matrix_continuous_knobs(settings or {})
+    lo = int(local.get("matrix_entry_min", -5))
+    hi = int(local.get("matrix_entry_max", 5))
     return (
-        (random.randint(-5, 5), random.randint(-5, 5)),
-        (random.randint(-5, 5), random.randint(-5, 5)),
+        (random.randint(lo, hi), random.randint(lo, hi)),
+        (random.randint(lo, hi), random.randint(lo, hi)),
     )
 
 
@@ -545,8 +597,8 @@ def _matrix_add_subtract(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
 
     def build() -> tuple[str, str, str | None]:
-        m1 = _random_matrix()
-        m2 = _random_matrix()
+        m1 = _random_matrix(settings)
+        m2 = _random_matrix(settings)
         op = random.choice(["+", "-"])
         if op == "+":
             result = (
@@ -566,12 +618,16 @@ def _matrix_add_subtract(topic: str, settings: dict) -> list[Question]:
 
 
 def _matrix_scalar_multiply(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_matrix_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_matrix_continuous_knobs(settings)
+    s_hi = int(local.get("matrix_scalar_max", 6))
 
     def build() -> tuple[str, str, str | None]:
-        scalar = random_int_range(-6, 6, exclude={0})
-        m = _random_matrix()
+        scalar = random_int_range(-s_hi, s_hi, exclude={0})
+        m = _random_matrix(settings)
         result = (
             (scalar * m[0][0], scalar * m[0][1]),
             (scalar * m[1][0], scalar * m[1][1]),
@@ -589,12 +645,19 @@ def _matrix_operations(topic: str, settings: dict) -> list[Question]:
 
 
 def _inverse_function_basic(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_relations_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_relations_continuous_knobs(settings)
+    slope_lo = int(local.get("slope_min", -6))
+    slope_hi = int(local.get("slope_max", 6))
+    int_lo = int(local.get("intercept_min", -8))
+    int_hi = int(local.get("intercept_max", 8))
 
     def build() -> tuple[str, str, str | None]:
-        m = random_int_range(-6, 6, exclude={0})
-        b = random.randint(-8, 8)
+        m = random_int_range(slope_lo, slope_hi, exclude={0})
+        b = random.randint(min(int_lo, int_hi), max(int_lo, int_hi))
         prompt = f"\\text{{Find the inverse of }} f(x) = {format_linear_latex(m, b)}"
         inv_b = -b / m
         inv_sign = "+" if inv_b >= 0 else "-"
@@ -637,40 +700,212 @@ def _function_evaluate(topic: str, settings: dict) -> list[Question]:
 
 
 def _function_operations(topic: str, settings: dict) -> list[Question]:
+    """Algebraic (f±g)(x) / (f·g)(x) / (f∘g)(x) with continuous D knobs."""
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+    from question_engine.frameworks.primitives.poly_expression import (
+        pack_compose_algebraic,
+        spec_snapshot,
+    )
+    from question_engine.settings.params import apply_relations_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_relations_continuous_knobs(settings)
+    d = float(local.get("difficulty") or 6)
+    slope_lo = int(local.get("slope_min", -3))
+    slope_hi = int(local.get("slope_max", 3))
+    int_lo = int(local.get("intercept_min", -5))
+    int_hi = int(local.get("intercept_max", 5))
+    coord_lo = int(local.get("coord_min", -3))
+    coord_hi = int(local.get("coord_max", 3))
+    # Unlock product / compose with D (add/sub always available).
+    allow_product = d >= 6.0 or bool(local.get("allow_function_product"))
+    allow_compose = d >= 10.0 or bool(local.get("allow_function_compose"))
+    allow_quotient = d >= 8.0 or bool(local.get("allow_function_quotient"))
+    use_pc_catalog = str(topic).startswith("pc_")
+    use_a2_catalog = str(topic).startswith("a2_")
+    last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        x = random.randint(-3, 3)
-        m1 = random.randint(1, 4)
-        b1 = random.randint(-5, 5)
-        m2 = random.randint(1, 4)
-        b2 = random.randint(-5, 5)
-        op = random.choice(["+", "-"])
+        x = random.randint(coord_lo, coord_hi)
+        m1 = random.randint(max(1, abs(slope_lo) or 1), max(1, abs(slope_hi) or 4))
+        if slope_lo < 0 and random.random() < 0.4:
+            m1 = -m1
+        b1 = random.randint(int_lo, int_hi)
+        m2 = random.randint(max(1, abs(slope_lo) or 1), max(1, abs(slope_hi) or 4))
+        if slope_lo < 0 and random.random() < 0.4:
+            m2 = -m2
+        b2 = random.randint(int_lo, int_hi)
+        form_stamp: dict[str, Any] = {}
+        op: str | None = None
+        method: str | None = None
+        if use_a2_catalog:
+            from question_engine.frameworks.primitives.openstax_a2 import (
+                a2_form_constraints,
+                select_a2_form,
+            )
+
+            form, form_stamp = select_a2_form(
+                "algebra2_function_ops",
+                d=d,
+                rng=random.Random(random.randrange(1 << 30)),
+                leaf_id=str(topic or ""),
+            )
+            cons = a2_form_constraints(form)
+            method = str(cons.get("method") or "add")
+            op = str(cons.get("op") or "+")
+            if method == "product" and not allow_product:
+                method, op = "add", "+"
+            elif method == "compose" and not allow_compose:
+                method, op = ("product", "*") if allow_product else ("add", "+")
+        elif use_pc_catalog:
+            from question_engine.frameworks.primitives.openstax_precalc import (
+                pc_form_constraints,
+                select_pc_form,
+            )
+
+            form, form_stamp = select_pc_form(
+                "precalculus_function_ops",
+                d=d,
+                rng=random.Random(random.randrange(1 << 30)),
+                leaf_id=str(topic or ""),
+            )
+            cons = pc_form_constraints(form)
+            method = str(cons.get("method") or "add")
+            op = str(cons.get("op") or "+")
+            # Respect D unlocks: fall back if catalog picked a locked op.
+            if method == "product" and not allow_product:
+                method, op = "add", "+"
+            elif method == "compose" and not allow_compose:
+                method, op = ("product", "*") if allow_product else ("add", "+")
+            elif method == "quotient" and not allow_quotient:
+                method, op = ("product", "*") if allow_product else ("subtract", "-")
+        if op is None or method is None:
+            ops = ["+", "-"]
+            if allow_product:
+                ops.append("*")
+            if allow_compose:
+                ops.append("compose")
+            if allow_quotient:
+                ops.append("/")
+            op = random.choice(ops)
         f_val = m1 * x + b1
         g_val = m2 * x + b2
-        result = f_val + g_val if op == "+" else f_val - g_val
+        if op == "+" or method == "add":
+            result = f_val + g_val
+            ask = rf"(f + g)({x})"
+            method = "add"
+            op = "+"
+        elif op == "-" or method == "subtract":
+            result = f_val - g_val
+            ask = rf"(f - g)({x})"
+            method = "subtract"
+            op = "-"
+        elif op == "*" or method == "product":
+            result = f_val * g_val
+            ask = rf"(f \cdot g)({x})"
+            method = "product"
+            op = "*"
+        elif op == "/" or method == "quotient":
+            # Prefer integer results: evaluate at a point where g(x) ≠ 0.
+            if g_val == 0:
+                b2 = b2 + 1 if b2 >= 0 else b2 - 1
+                g_val = m2 * x + b2
+            result = Fraction(f_val, g_val)
+            ask = rf"\left(\frac{{f}}{{g}}\right)({x})"
+            method = "quotient"
+            op = "/"
+            result_s = (
+                str(result)
+                if result.denominator == 1
+                else rf"\frac{{{result.numerator}}}{{{result.denominator}}}"
+            )
+        else:
+            # (f ∘ g)(x) = f(g(x))
+            result = m1 * g_val + b1
+            ask = rf"(f \circ g)({x})"
+            method = "compose"
+            op = "compose"
+            result_s = str(result)
+        if method != "quotient":
+            result_s = str(result)
         s1 = "+" if b1 >= 0 else "-"
         s2 = "+" if b2 >= 0 else "-"
         prompt = (
             f"\\text{{If }} f(x) = {m1}x {s1} {abs(b1)} \\text{{ and }} "
-            f"g(x) = {m2}x {s2} {abs(b2)}, \\text{{ find }} (f {op} g)({x})."
+            f"g(x) = {m2}x {s2} {abs(b2)}, \\text{{ find }} {ask}."
         )
-        answer = str(result) if include_answer_key else None
-        return prompt, f"(f {op} g)({x})", answer
+        answer = result_s if include_answer_key else None
+        pack_spec = pack_compose_algebraic(
+            d,
+            coef_hi=max(abs(slope_lo), abs(slope_hi), 4),
+            course_tag="a2" if str(topic).startswith("a2_") else "pc",
+            composition_depth=1 if method == "compose" else 0,
+        )
+        snap = spec_snapshot(pack_spec)
+        snap["pack"] = "structured_function_ops"
+        snap["family"] = method
+        snap["allow_function_product"] = allow_product
+        snap["allow_function_compose"] = allow_compose
+        if form_stamp.get("form_id"):
+            snap["form_id"] = form_stamp["form_id"]
+        last["meta"] = {
+            "primitive_engine": "function_operations",
+            "mode": method,
+            "op": op,
+            "allow_function_product": allow_product,
+            "allow_function_compose": allow_compose,
+            "slope_min": slope_lo,
+            "slope_max": slope_hi,
+            "spec_snapshot": snap,
+            "function_classes": ["algebraic"],
+            "methods_used": [method],
+            "structure_id": f"function_operations:{method}",
+            "degree_max": 1,
+            "composition_depth": snap.get("composition_depth", 0),
+            **form_stamp,
+        }
+        return prompt, ask, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_function_ops",
+            generator="function_operations",
+            methods_used=["function_ops"],
+            knobs={
+                "allow_function_product": allow_product,
+                "allow_function_compose": allow_compose,
+                "slope_min": slope_lo,
+                "slope_max": slope_hi,
+            },
+            answer=answer,
+            course_tag="a2" if str(topic).startswith("a2_") else "pc",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=local,
+    )
 
 
 def _matrix_inverse(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_matrix_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_matrix_continuous_knobs(settings)
+    det_max = int(local.get("matrix_det_abs_max", 4))
 
     def build() -> tuple[str, str, str | None]:
         while True:
-            matrix = _random_matrix()
+            matrix = _random_matrix(settings)
             determinant = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
-            if determinant in {-4, -3, -2, -1, 1, 2, 3, 4}:
+            if determinant != 0 and abs(determinant) <= det_max:
                 break
         adjugate = ((matrix[1][1], -matrix[0][1]), (-matrix[1][0], matrix[0][0]))
         answer = (
@@ -682,15 +917,20 @@ def _matrix_inverse(topic: str, settings: dict) -> list[Question]:
 
 
 def _matrix_cramers_rule(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_matrix_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_matrix_continuous_knobs(settings)
+    lo = int(local.get("matrix_entry_min", -5))
+    hi = int(local.get("matrix_entry_max", 5))
 
     def build() -> tuple[str, str, str | None]:
         while True:
-            a, b, c, d = (random_int_range(-5, 5, exclude={0}) for _ in range(4))
+            a, b, c, d = (random_int_range(lo, hi, exclude={0}) for _ in range(4))
             if abs(a * d - b * c) >= 2:
                 break
-        x, y = random.randint(-5, 5), random.randint(-5, 5)
+        x, y = random.randint(lo, hi), random.randint(lo, hi)
         e, f = a * x + b * y, c * x + d * y
         eq1 = f"{join_algebra_terms([format_monomial_latex(a, variable='x'), format_monomial_latex(b, variable='y')])} = {e}"
         eq2 = f"{join_algebra_terms([format_monomial_latex(c, variable='x'), format_monomial_latex(d, variable='y')])} = {f}"
@@ -701,8 +941,12 @@ def _matrix_cramers_rule(topic: str, settings: dict) -> list[Question]:
 
 
 def _matrix_transformation(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_matrix_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_matrix_continuous_knobs(settings)
+    p_hi = int(local.get("matrix_point_max", 6))
     transforms = (
         ("reflection across the x-axis", ((1, 0), (0, -1))),
         ("reflection across the y-axis", ((-1, 0), (0, 1))),
@@ -712,7 +956,7 @@ def _matrix_transformation(topic: str, settings: dict) -> list[Question]:
 
     def build() -> tuple[str, str, str | None]:
         name, matrix = random.choice(transforms)
-        x, y = random.randint(-6, 6), random.randint(-6, 6)
+        x, y = random.randint(-p_hi, p_hi), random.randint(-p_hi, p_hi)
         image = (matrix[0][0] * x + matrix[0][1] * y, matrix[1][0] * x + matrix[1][1] * y)
         prompt = rf"\text{{Apply {name} to }} ({x}, {y}) \text{{ using }} {_matrix_latex(matrix)}."
         return prompt, name, f"({image[0]}, {image[1]})" if keyed else None
@@ -721,12 +965,21 @@ def _matrix_transformation(topic: str, settings: dict) -> list[Question]:
 
 
 def _polynomial_writing(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_polynomial_theory_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_polynomial_theory_continuous_knobs(settings)
+    span = int(local.get("root_span", 6))
+    lead_choices = tuple(local.get("leading_choices", (-2, -1, 1, 2)))
+    # Writing uses signed leading coefficients.
+    signed_leads = sorted({c for c in lead_choices} | {-c for c in lead_choices if c})
+    signed_leads = [c for c in signed_leads if c != 0] or [-2, -1, 1, 2]
 
     def build() -> tuple[str, str, str | None]:
-        roots = random.sample([value for value in range(-6, 7) if value], 2)
-        a = random.choice([-2, -1, 1, 2])
+        pool = [v for v in range(-span, span + 1) if v]
+        roots = random.sample(pool, 2)
+        a = random.choice(signed_leads)
         coefficient_b = -a * sum(roots)
         coefficient_c = a * roots[0] * roots[1]
         expression = format_polynomial_latex([a, coefficient_b, coefficient_c])
@@ -737,12 +990,17 @@ def _polynomial_writing(topic: str, settings: dict) -> list[Question]:
 
 
 def _polynomial_conjugate_writing(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_polynomial_theory_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_polynomial_theory_continuous_knobs(settings)
+    span = int(local.get("root_span", 4))
+    imag_hi = max(1, min(5, span))
 
     def build() -> tuple[str, str, str | None]:
-        real = random.randint(-4, 4)
-        imaginary = random.randint(1, 5)
+        real = random.randint(-span, span)
+        imaginary = random.randint(1, imag_hi)
         b, c = -2 * real, real * real + imaginary * imaginary
         sign = "+" if real >= 0 else "-"
         prompt = rf"\text{{Write a monic quadratic with roots }} {real} {sign} {imaginary}i \text{{ and }} {real} {'-' if real >= 0 else '+'} {imaginary}i."
@@ -752,16 +1010,29 @@ def _polynomial_conjugate_writing(topic: str, settings: dict) -> list[Question]:
 
 
 def _descartes_rule_of_signs(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_polynomial_theory_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_polynomial_theory_continuous_knobs(settings)
+    deg_lo = int(local.get("poly_theory_degree_min", 3))
+    deg_hi = int(local.get("poly_theory_degree_max", 4))
+    coef_lo = int(local.get("poly_theory_coef_min", -6))
+    coef_hi = int(local.get("poly_theory_coef_max", 6))
 
     def changes(values: list[int]) -> int:
         return sum(left * right < 0 for left, right in zip(values, values[1:]))
 
     def build() -> tuple[str, str, str | None]:
-        coefficients = [random_int_range(-6, 6, exclude={0}) for _ in range(4)]
+        n_terms = random.randint(max(3, deg_lo), max(3, deg_hi)) + 1
+        coefficients = [random_int_range(coef_lo, coef_hi, exclude={0}) for _ in range(n_terms)]
         positive = changes(coefficients)
-        negative = changes([value if (3 - index) % 2 == 0 else -value for index, value in enumerate(coefficients)])
+        negative = changes(
+            [
+                value if (len(coefficients) - 1 - index) % 2 == 0 else -value
+                for index, value in enumerate(coefficients)
+            ]
+        )
         expression = format_polynomial_latex(coefficients)
         answer = (
             rf"\text{{positive: }} {positive}, {positive - 2}, \ldots; "
@@ -774,14 +1045,22 @@ def _descartes_rule_of_signs(topic: str, settings: dict) -> list[Question]:
 
 
 def _polynomial_end_behavior(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_polynomial_theory_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_polynomial_theory_continuous_knobs(settings)
+    deg_lo = int(local.get("poly_theory_degree_min", 3))
+    deg_hi = int(local.get("poly_theory_degree_max", 6))
+    coef_lo = int(local.get("poly_theory_coef_min", -8))
+    coef_hi = int(local.get("poly_theory_coef_max", 8))
 
     def build() -> tuple[str, str, str | None]:
-        degree = random.choice([3, 4, 5, 6])
-        leading = random.choice([-3, -2, 2, 3])
-        mid = random.randint(-8, 8)
-        const = random.randint(-8, 8)
+        degree = random.randint(max(3, deg_lo), max(3, deg_hi))
+        lead_pool = [v for v in range(coef_lo, coef_hi + 1) if abs(v) >= 2]
+        leading = random.choice(lead_pool or [-3, -2, 2, 3])
+        mid = random.randint(coef_lo, coef_hi)
+        const = random.randint(coef_lo, coef_hi)
         # Sparse polynomial: leading, x^2, constant (zeros omitted by formatter).
         coeffs = [0] * (degree + 1)
         coeffs[0] = leading
@@ -802,11 +1081,16 @@ def _polynomial_end_behavior(topic: str, settings: dict) -> list[Question]:
 
 
 def _fundamental_theorem_algebra(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_polynomial_theory_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_polynomial_theory_continuous_knobs(settings)
+    deg_lo = int(local.get("poly_theory_degree_min", 3))
+    deg_hi = int(local.get("poly_theory_degree_max", 8))
 
     def build() -> tuple[str, str, str | None]:
-        degree = random.randint(3, 8)
+        degree = random.randint(max(3, deg_lo), max(3, deg_hi))
         return (
             rf"\text{{By the Fundamental Theorem of Algebra, how many complex zeros, counting multiplicity, does a degree-}}{degree}\text{{ polynomial have?}}",
             "number of complex zeros",
@@ -817,20 +1101,27 @@ def _fundamental_theorem_algebra(topic: str, settings: dict) -> list[Question]:
 
 
 def _rational_zero_root_theorem(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_polynomial_theory_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_polynomial_theory_continuous_knobs(settings)
+    lead_choices = list(local.get("leading_choices", (2, 3, 4, 5, 6)))
+    const_choices = list(local.get("constant_choices", (2, 3, 4, 5, 6, 8, 9, 10)))
+    coef_lo = int(local.get("poly_theory_coef_min", -8))
+    coef_hi = int(local.get("poly_theory_coef_max", 8))
 
     def divisors(number: int) -> list[int]:
         return [factor for factor in range(1, abs(number) + 1) if number % factor == 0]
 
     def build() -> tuple[str, str, str | None]:
-        leading = random.choice([2, 3, 4, 5, 6])
-        constant = random.choice([2, 3, 4, 5, 6, 8, 9, 10])
+        leading = random.choice(lead_choices)
+        constant = random.choice(const_choices)
         candidates = sorted({Fraction(p, q) for p in divisors(constant) for q in divisors(leading)})
         candidate_text = [str(value.numerator) if value.denominator == 1 else f"{value.numerator}/{value.denominator}" for value in candidates]
         answer = rf"\pm\{{{', '.join(candidate_text)}\}}" if keyed else None
         poly = format_polynomial_latex(
-            [leading, random.randint(-8, 8), random.randint(-8, 8), constant]
+            [leading, random.randint(coef_lo, coef_hi), random.randint(coef_lo, coef_hi), constant]
         )
         return rf"\text{{List all possible rational zeros of }} {poly}.", "rational zero candidates", answer
 
@@ -838,12 +1129,22 @@ def _rational_zero_root_theorem(topic: str, settings: dict) -> list[Question]:
 
 
 def _radical_domain_range(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_radical_domain_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_radical_domain_continuous_knobs(settings)
+    coord_lo = int(local.get("coord_min", -6))
+    coord_hi = int(local.get("coord_max", 6))
+    coef_lo = int(local.get("coef_min", 1))
+    coef_hi = int(local.get("coef_max", 3))
+    allow_reflection = bool(local.get("allow_reflection", True))
 
     def build() -> tuple[str, str, str | None]:
-        h, k = random.randint(-6, 6), random.randint(-6, 6)
-        a = random.choice([-3, -2, -1, 1, 2, 3])
+        h = random.randint(min(coord_lo, coord_hi), max(coord_lo, coord_hi))
+        k = random.randint(min(coord_lo, coord_hi), max(coord_lo, coord_hi))
+        a_mag = random.randint(max(1, coef_lo), max(1, coef_hi))
+        a = -a_mag if allow_reflection and random.random() < 0.4 else a_mag
         inner = f"x - {h}" if h >= 0 else f"x + {-h}"
         domain = rf"[{h}, \infty)"
         value = rf"[{k}, \infty)" if a > 0 else rf"(-\infty, {k}]"
@@ -853,11 +1154,16 @@ def _radical_domain_range(topic: str, settings: dict) -> list[Question]:
 
 
 def _quadratic_system(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_systems_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_systems_continuous_knobs(settings)
+    span = int(local.get("solution_coord_max", 4))
 
     def build() -> tuple[str, str, str | None]:
-        roots = random.sample(range(-4, 5), 2)
+        pool = list(range(-span, span + 1))
+        roots = random.sample(pool, 2)
         # x^2 = mx+b has prescribed intersections at the selected roots.
         intercept = roots[0] * roots[1]
         linear_constant = -intercept
@@ -873,24 +1179,33 @@ def _quadratic_system(topic: str, settings: dict) -> list[Question]:
 
 
 def _points_three_dimensions(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_systems_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_systems_continuous_knobs(settings)
+    span = int(local.get("solution_coord_max", 8))
 
     def build() -> tuple[str, str, str | None]:
-        point = tuple(random.randint(-8, 8) for _ in range(3))
+        point = tuple(random.randint(-span, span) for _ in range(3))
         return rf"\text{{State the coordinates of point }} P \text{{ in three dimensions: }} P=({point[0]}, {point[1]}, {point[2]}).", "3D coordinates", rf"({point[0]}, {point[1]}, {point[2]})" if keyed else None
 
     return _make_questions(topic, count, keyed, build)
 
 
 def _planes(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_systems_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_systems_continuous_knobs(settings)
+    coef_span = int(local.get("max_coefficient_magnitude", 4))
+    coord_span = int(local.get("solution_coord_max", 4))
 
     def build() -> tuple[str, str, str | None]:
-        a, b, c = (random_int_range(-4, 4, exclude={0}) for _ in range(3))
-        x, y = random.randint(-4, 4), random.randint(-4, 4)
-        z = random.randint(-4, 4)
+        a, b, c = (random_int_range(-coef_span, coef_span, exclude={0}) for _ in range(3))
+        x, y = random.randint(-coord_span, coord_span), random.randint(-coord_span, coord_span)
+        z = random.randint(-coord_span, coord_span)
         d = a * x + b * y + c * z
         plane = join_algebra_terms(
             [
@@ -909,16 +1224,21 @@ def _planes(topic: str, settings: dict) -> list[Question]:
 
 
 def _system_three_variables(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_systems_continuous_knobs
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_systems_continuous_knobs(settings)
+    coef_span = int(local.get("max_coefficient_magnitude", 4))
+    coord_span = int(local.get("solution_coord_max", 5))
 
     def build() -> tuple[str, str, str | None]:
-        x, y, z = (random.randint(-5, 5) for _ in range(3))
+        x, y, z = (random.randint(-coord_span, coord_span) for _ in range(3))
         while True:
             a, b, c = (
-                random_int_range(-4, 4, exclude={0}),
-                random_int_range(-4, 4, exclude={0}),
-                random_int_range(-4, 4, exclude={0}),
+                random_int_range(-coef_span, coef_span, exclude={0}),
+                random_int_range(-coef_span, coef_span, exclude={0}),
+                random_int_range(-coef_span, coef_span, exclude={0}),
             )
             determinant = (
                 a * ((-c) * (-b) - a * a)
@@ -969,28 +1289,41 @@ def _degrees_minutes_seconds(topic: str, settings: dict) -> list[Question]:
 def _graphing_trig_functions(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
-    tier = str(settings.get("difficulty_tier") or "medium").lower()
-    # Easy: parent ±sin/±cos. Medium: amplitude. Hard: amplitude + period (+ optional phase).
-    if tier == "easy":
-        mode = "parent"
-    elif tier == "hard":
-        mode = "transform"
+    from question_engine.settings.params import trig_graph_structure_from_continuous
+
+    structure = trig_graph_structure_from_continuous(settings)
+    if structure is not None:
+        mode = structure["mode"]
+        amp_max = max(1, int(structure["amp_max"]))
+        period_max = max(1, int(structure["period_factor_max"]))
+        allow_phase = bool(structure["allow_phase"])
+        allow_reflection = bool(structure["allow_reflection"])
     else:
-        mode = "amplitude"
+        tier = str(settings.get("difficulty_tier") or "medium").lower()
+        if tier == "easy":
+            mode = "parent"
+        elif tier == "hard":
+            mode = "transform"
+        else:
+            mode = "amplitude"
+        amp_max = 4
+        period_max = 3
+        allow_phase = mode == "transform"
+        allow_reflection = True
 
     questions: list[Question] = []
     for _ in range(count):
         fn = random.choice(["sin", "cos"])
-        sign = random.choice([1, -1])
+        sign = random.choice([1, -1]) if allow_reflection else 1
         amp = 1
         b = 1  # period factor: period = 2π/b
         h = 0  # phase shift
         if mode == "amplitude":
-            amp = random.choice([2, 3, 4])
+            amp = random.randint(2, amp_max) if amp_max >= 2 else 2
         elif mode == "transform":
-            amp = random.choice([2, 3, 4])
-            b = random.choice([2, 3])
-            if random.random() < 0.5:
+            amp = random.randint(2, amp_max) if amp_max >= 2 else 2
+            b = random.randint(2, period_max) if period_max >= 2 else 2
+            if allow_phase and random.random() < 0.5:
                 h = random.choice([1, 2])  # shift by π/h style: write as (bx - π/k)
 
         if mode == "parent":
@@ -1068,10 +1401,16 @@ def _graphing_trig_functions(topic: str, settings: dict) -> list[Question]:
 def _inverse_exponential_logarithmic(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import apply_inverse_exp_log_continuous_knobs
+
+    local = apply_inverse_exp_log_continuous_knobs(settings)
+    bases = tuple(local.get("inv_base_choices") or (2, 3, 5))
+    shift_max = int(local.get("inv_shift_max", 4))
 
     def build() -> tuple[str, str, str | None]:
-        base = random.choice([2, 3, 5])
-        h, k = random.randint(-4, 4), random.randint(-4, 4)
+        base = random.choice(list(bases))
+        h = random.randint(-shift_max, shift_max) if shift_max else 0
+        k = random.randint(-shift_max, shift_max) if shift_max else 0
         if random.choice([True, False]):
             prompt = rf"\text{{Find the inverse of }} f(x)={base}^{{x {h:+}}} {k:+}."
             answer = rf"f^{{-1}}(x)=\log_{{{base}}}(x {(-k):+}) {-h:+}"

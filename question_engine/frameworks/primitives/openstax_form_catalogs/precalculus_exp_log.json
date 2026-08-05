@@ -1,0 +1,183 @@
+{
+  "catalog_id": "precalculus_exp_log",
+  "title": "OpenStax Precalculus 2e §4.5–4.6 Exp/Log properties & equations — form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "precalculus-2e",
+      "slug": "4-6-exponential-and-logarithmic-equations",
+      "title": "4.6 Exponential and Logarithmic Equations",
+      "url": "https://openstax.org/books/precalculus-2e/pages/4-6-exponential-and-logarithmic-equations",
+      "stage1": "scripts/output/example_mining/precalculus-2e/stage1/4-6-exponential-and-logarithmic-equations.json"
+    },
+    "related": [
+      {
+        "book": "precalculus-2e",
+        "slug": "4-5-logarithmic-properties",
+        "stage1": "scripts/output/example_mining/precalculus-2e/stage1/4-5-logarithmic-properties.json",
+        "note": "Product / quotient / power / change-of-base"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "§4.5: product, quotient, power rules; expand/condense; change of base.",
+    "§4.6: like bases; rewrite common base; logs to solve exponential; log definition; one-to-one of logs.",
+    "Wired across pc log-props / exp-equation / log-equation leaves via leaves[] tags."
+  ],
+  "forms": [
+    {
+      "form_id": "log_product_rule_expand",
+      "description": "Expand log(MN) → log M + log N",
+      "strategy": "log_product",
+      "constraints": { "rule": "product", "direction": "expand" },
+      "d_min": 0,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": ["log_props"],
+      "leaves": ["pc_properties_of_logarithms", "pc_writing_logs_in_terms_of_others"],
+      "wired_generators": ["log_change_of_base"],
+      "example_item_ids": ["Example_04_05_01"],
+      "openstax_case": "§4.5 Example 1 — product rule"
+    },
+    {
+      "form_id": "log_quotient_rule_expand",
+      "description": "Expand log(M/N) → log M − log N",
+      "strategy": "log_quotient",
+      "constraints": { "rule": "quotient", "direction": "expand" },
+      "d_min": 2,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": ["log_props"],
+      "leaves": ["pc_properties_of_logarithms", "pc_writing_logs_in_terms_of_others"],
+      "wired_generators": ["log_change_of_base"],
+      "example_item_ids": [],
+      "openstax_case": "§4.5 quotient rule"
+    },
+    {
+      "form_id": "log_power_rule_expand",
+      "description": "Expand log(M^p) → p log M",
+      "strategy": "log_power",
+      "constraints": { "rule": "power", "direction": "expand" },
+      "d_min": 2,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": ["log_props"],
+      "leaves": ["pc_properties_of_logarithms", "pc_writing_logs_in_terms_of_others"],
+      "wired_generators": ["log_change_of_base"],
+      "example_item_ids": [],
+      "openstax_case": "§4.5 power rule"
+    },
+    {
+      "form_id": "log_change_of_base",
+      "description": "Rewrite log_b(a) using change-of-base",
+      "strategy": "change_of_base",
+      "constraints": { "rule": "change_of_base" },
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["log_props"],
+      "leaves": ["pc_properties_of_logarithms", "pc_writing_logs_in_terms_of_others"],
+      "wired_generators": ["log_change_of_base"],
+      "example_item_ids": [],
+      "openstax_case": "§4.5 change-of-base formula"
+    },
+    {
+      "form_id": "exp_same_base",
+      "description": "Solve b^x = b^k by equating exponents",
+      "strategy": "same_base",
+      "constraints": { "kind": "same_base" },
+      "d_min": 0,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["exp_equation"],
+      "leaves": ["pc_exponential_equations_not_requiring_logarithms"],
+      "wired_generators": ["exponential_equation_simple"],
+      "example_item_ids": ["Example_04_06_01"],
+      "openstax_case": "§4.6 Example 1 — common base"
+    },
+    {
+      "form_id": "exp_rewrite_common_base",
+      "description": "Rewrite both sides to a common base (e.g. 8=2³, 16=2⁴)",
+      "strategy": "rewrite_common_base",
+      "constraints": { "kind": "rewrite_common_base" },
+      "d_min": 6,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["exp_equation"],
+      "leaves": ["pc_exponential_equations_not_requiring_logarithms"],
+      "wired_generators": ["exponential_equation_simple"],
+      "example_item_ids": ["Example_04_06_02", "Example_04_06_03"],
+      "openstax_case": "§4.6 Example 2 — rewrite to common base"
+    },
+    {
+      "form_id": "exp_needs_logarithm",
+      "description": "Solve b^{cx} = k using logarithms",
+      "strategy": "take_log",
+      "constraints": { "kind": "needs_log" },
+      "d_min": 6,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["exp_equation", "log"],
+      "leaves": ["pc_exponential_equations_requiring_logarithms"],
+      "wired_generators": ["exponential_equation_with_log"],
+      "example_item_ids": [],
+      "openstax_case": "§4.6 use logarithms to solve exponential"
+    },
+    {
+      "form_id": "log_definition_equation",
+      "description": "Solve log_b(x) = k via definition x = b^k",
+      "strategy": "log_definition",
+      "constraints": { "kind": "definition" },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["log_equation"],
+      "leaves": ["pc_logarithmic_equations_simple", "pc_logarithmic_equations_hard"],
+      "wired_generators": ["log_equation_simple"],
+      "example_item_ids": [],
+      "openstax_case": "§4.6 definition of logarithm"
+    },
+    {
+      "form_id": "log_one_to_one",
+      "description": "Solve log_b(f(x)) = log_b(g(x)) by equating arguments",
+      "strategy": "log_1to1",
+      "constraints": { "kind": "one_to_one" },
+      "d_min": 10,
+      "d_weight": 1.4,
+      "generation_status": "stub",
+      "tricks": ["log_equation"],
+      "leaves": ["pc_logarithmic_equations_hard"],
+      "wired_generators": ["log_equation_simple"],
+      "example_item_ids": [],
+      "openstax_case": "§4.6 one-to-one property of logs"
+    },
+    {
+      "form_id": "log_condense",
+      "description": "Condense sum/difference of logs into a single log",
+      "strategy": "log_condense",
+      "constraints": { "direction": "condense" },
+      "d_min": 8,
+      "d_weight": 1.2,
+      "generation_status": "stub",
+      "tricks": ["log_props"],
+      "leaves": ["pc_properties_of_logarithms"],
+      "wired_generators": ["log_change_of_base"],
+      "example_item_ids": [],
+      "openstax_case": "§4.5 condense logarithmic expressions"
+    },
+    {
+      "form_id": "exp_log_models",
+      "description": "Applied growth/decay / logistic-style models",
+      "strategy": "exp_model",
+      "constraints": { "kind": "model" },
+      "d_min": 12,
+      "d_weight": 0.6,
+      "generation_status": "deferred",
+      "tricks": ["exp_model"],
+      "leaves": [],
+      "wired_generators": [],
+      "example_item_ids": [],
+      "openstax_case": "§4.7 exponential and logarithmic models (gap)"
+    }
+  ]
+}

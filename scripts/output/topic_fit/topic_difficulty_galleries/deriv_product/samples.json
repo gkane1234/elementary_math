@@ -1,0 +1,2817 @@
+{
+  "pack_id": "deriv_product",
+  "type_id": "calc_diff_product_rule",
+  "leaf": "derivative_product_rule",
+  "approx_max_conceptual_d": 25.0,
+  "conceptual_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "spec_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    16.0,
+    32.0
+  ],
+  "allows": {
+    "allow_trig": true,
+    "allow_exp": true,
+    "allow_log": true,
+    "allow_roots": true,
+    "allow_invtrig": true,
+    "allow_triple_product": true
+  },
+  "rows": [
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 0.0,
+      "seed": 744,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\ln\\left(\\left(2x + 1\\right)\\right)\\ln\\left(\\left(2x - 1\\right)\\right)\\right)",
+      "answer_latex": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x - 1\\right)\\right)+\\ln\\left(\\left(2x + 1\\right)\\right)\\left(2\\frac{1}{\\left(2x - 1\\right)}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x "
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 4.0,
+      "seed": 744,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\left(\\ln\\left(\\left(2x + 1\\right)\\right)\\ln\\left(\\left(2x - 1\\right)\\right)\\right)+\\left(2x\\right)\\right)-\\left(2x\\right)\\right)",
+      "answer_latex": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x - 1\\right)\\right)+\\ln\\left(\\left(2x + 1\\right)\\right)\\left(2\\frac{1}{\\left(2x - 1\\right)}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x "
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 8.0,
+      "seed": 744,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(-\\left(-\\frac{-\\left(2-x\\right)\\left(\\ln\\left(\\left(2x + 1\\right)\\right)\\ln\\left(\\left(2x - 1\\right)\\right)\\right)}{-\\left(2-x\\right)}\\right)\\right)",
+      "answer_latex": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x - 1\\right)\\right)+\\ln\\left(\\left(2x + 1\\right)\\right)\\left(2\\frac{1}{\\left(2x - 1\\right)}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x "
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 16.0,
+      "seed": 744,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(e^{\\ln\\left(\\left(\\left(\\left(\\ln\\left(\\left(2x + 1\\right)\\right)\\ln\\left(\\left(2x - 1\\right)\\right)\\right)+5-5\\right)+\\left(-x\\right)\\right)-\\left(-x\\right)\\right)}\\right)",
+      "answer_latex": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x - 1\\right)\\right)+\\ln\\left(\\left(2x + 1\\right)\\right)\\left(2\\frac{1}{\\left(2x - 1\\right)}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x "
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 32.0,
+      "seed": 744,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\frac{2\\left(x-2\\right)\\left(-\\left(-\\left(\\ln\\left(\\left(2x + 1\\right)\\right)\\ln\\left(\\left(2x - 1\\right)\\right)\\right)\\right)\\right)}{2\\left(x-2\\right)}+6-6\\right)",
+      "answer_latex": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x - 1\\right)\\right)+\\ln\\left(\\left(2x + 1\\right)\\right)\\left(2\\frac{1}{\\left(2x - 1\\right)}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\frac{1}{\\left(2x + 1\\right)}\\ln\\left(\\left(2x "
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 0.0,
+      "seed": 812,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arctan(x)\\sin(3x)\\right)",
+      "answer_latex": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos(3x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos("
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 4.0,
+      "seed": 812,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\arctan(x)\\sin(3x)+6\\right)-6\\right)",
+      "answer_latex": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos(3x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos("
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 8.0,
+      "seed": 812,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\frac{3\\left(x+2\\right)\\arctan(x)\\sin(3x)}{3\\left(x+2\\right)}+1-1\\right)",
+      "answer_latex": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos(3x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos("
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 16.0,
+      "seed": 812,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(-\\left(-e^{\\ln\\left(\\frac{2\\left(x-1\\right)\\arctan(x)\\sin(3x)}{2\\left(x-1\\right)}\\right)}\\right)\\right)",
+      "answer_latex": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos(3x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos("
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 32.0,
+      "seed": 812,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(e^{\\ln\\left(\\left(-\\left(-\\arctan(x)\\sin(3x)\\right)\\right)+\\left(3x-1\\right)-\\left(3x-1\\right)\\right)}\\right)",
+      "answer_latex": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos(3x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{1+x^{2}}\\sin(3x)+\\arctan(x)\\left(3\\cos("
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 0.0,
+      "seed": 880,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\sqrt{\\left(4x + 2\\right)}\\cos(2x)\\right]",
+      "answer_latex": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\sqrt{\\left(4x + 2\\right)}\\left(-2\\sin(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 4.0,
+      "seed": 880,
+      "prompt_latex": "\\frac{d}{dx}\\left[-\\left(-\\sqrt{\\left(4x + 2\\right)}\\cos(2x)\\right)\\right]",
+      "answer_latex": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\sqrt{\\left(4x + 2\\right)}\\left(-2\\sin(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 8.0,
+      "seed": 880,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\frac{-\\left(1-x\\right)\\sqrt{\\left(4x + 2\\right)}\\cos(2x)}{-\\left(1-x\\right)}+1-1\\right]",
+      "answer_latex": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\sqrt{\\left(4x + 2\\right)}\\left(-2\\sin(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 16.0,
+      "seed": 880,
+      "prompt_latex": "\\frac{d}{dx}\\left[-\\left(-e^{\\ln\\left(\\left(\\sqrt{\\left(4x + 2\\right)}\\cos(2x)+6-6\\right)\\right)}\\right)\\right]",
+      "answer_latex": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\sqrt{\\left(4x + 2\\right)}\\left(-2\\sin(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 32.0,
+      "seed": 880,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(\\frac{2\\left(x-1\\right)e^{\\ln\\left(\\sqrt{\\left(4x + 2\\right)}\\cos(2x)\\right)}}{2\\left(x-1\\right)}+\\left(3x-1\\right)\\right)-\\left(3x-1\\right)\\right]",
+      "answer_latex": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\sqrt{\\left(4x + 2\\right)}\\left(-2\\sin(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\frac{1}{2\\sqrt{\\left(4x + 2\\right)}}\\cos(2x)+\\"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 0.0,
+      "seed": 948,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arcsin^{3}(3x)\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)\\right)",
+      "answer_latex": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)+\\arcsin^{3}(3x)\\left(5\\sec^{2}(\\tan\\left(\\left(5x - 4\\right)\\right))\\sec^{2}(\\left(5x - 4\\right))\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 4.0,
+      "seed": 948,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(-\\left(-\\left(\\arcsin^{3}(3x)\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)\\right)\\right)\\right)",
+      "answer_latex": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)+\\arcsin^{3}(3x)\\left(5\\sec^{2}(\\tan\\left(\\left(5x - 4\\right)\\right))\\sec^{2}(\\left(5x - 4\\right))\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 8.0,
+      "seed": 948,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\left(-\\left(-\\left(\\arcsin^{3}(3x)\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)\\right)\\right)\\right)+\\left(-x+3\\right)\\right)-\\left(-x+3\\right)\\right)",
+      "answer_latex": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)+\\arcsin^{3}(3x)\\left(5\\sec^{2}(\\tan\\left(\\left(5x - 4\\right)\\right))\\sec^{2}(\\left(5x - 4\\right))\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 16.0,
+      "seed": 948,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\frac{\\left(x-1\\right)\\left(\\left(\\arcsin^{3}(3x)\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)\\right)+\\left(3x\\right)\\right)-\\left(3x\\right)}{x-1}+\\left(-x+3\\right)-\\left(-x+3\\right)\\right)",
+      "answer_latex": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)+\\arcsin^{3}(3x)\\left(5\\sec^{2}(\\tan\\left(\\left(5x - 4\\right)\\right))\\sec^{2}(\\left(5x - 4\\right))\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 32.0,
+      "seed": 948,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(-\\left(-\\ln\\left(e^{\\left(\\arcsin^{3}(3x)\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)\\right)}\\right)\\right)\\right)+5-5\\right)",
+      "answer_latex": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\left(\\tan\\left(\\left(5x - 4\\right)\\right)\\right)+\\arcsin^{3}(3x)\\left(5\\sec^{2}(\\tan\\left(\\left(5x - 4\\right)\\right))\\sec^{2}(\\left(5x - 4\\right))\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9\\arcsin^{2}(3x)\\frac{1}{\\sqrt{1-(3x)^{2}}}\\tan\\"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 0.0,
+      "seed": 1016,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\sqrt{\\left(4x + 1\\right)}\\arccos(x)\\left(2x^{2}\\right)\\right)",
+      "answer_latex": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)x^{2} + 2\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sqrt{\\left(4x + 1\\right)}x^{2} + 4\\sqrt{\\left(4x + 1\\right)}\\arccos(x)x",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 4.0,
+      "seed": 1016,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\sqrt{\\left(4x + 1\\right)}\\arccos(x)\\left(2x^{2}\\right)+\\left(3x-1\\right)-\\left(3x-1\\right)\\right)",
+      "answer_latex": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)x^{2} + 2\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sqrt{\\left(4x + 1\\right)}x^{2} + 4\\sqrt{\\left(4x + 1\\right)}\\arccos(x)x",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 8.0,
+      "seed": 1016,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(-\\left(-\\sqrt{\\left(4x + 1\\right)}\\arccos(x)\\left(2x^{2}\\right)\\right)\\right)+4-4\\right)",
+      "answer_latex": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)x^{2} + 2\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sqrt{\\left(4x + 1\\right)}x^{2} + 4\\sqrt{\\left(4x + 1\\right)}\\arccos(x)x",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 16.0,
+      "seed": 1016,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(-\\left(-\\left(e^{\\ln\\left(\\sqrt{\\left(4x + 1\\right)}\\arccos(x)\\left(2x^{2}\\right)\\right)}+\\left(3x\\right)-\\left(3x\\right)\\right)\\right)\\right)",
+      "answer_latex": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)x^{2} + 2\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sqrt{\\left(4x + 1\\right)}x^{2} + 4\\sqrt{\\left(4x + 1\\right)}\\arccos(x)x",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 32.0,
+      "seed": 1016,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(-\\left(-\\left(\\ln\\left(e^{\\sqrt{\\left(4x + 1\\right)}\\arccos(x)\\left(2x^{2}\\right)}\\right)+3-3\\right)\\right)\\right)",
+      "answer_latex": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)x^{2} + 2\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sqrt{\\left(4x + 1\\right)}x^{2} + 4\\sqrt{\\left(4x + 1\\right)}\\arccos(x)x",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_two_poly",
+          "detail": "catalog/skeleton product_two_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "8\\frac{1}{2\\sqrt{\\left(4x + 1\\right)}}\\arccos(x)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 0.0,
+      "seed": 1084,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\sqrt{\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)\\right)",
+      "answer_latex": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)+\\sqrt{\\sqrt{5x}}\\left(3\\frac{1}{\\ln\\left(x^{3}\\right)}\\frac{1}{x^{3}}x^{2}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 4.0,
+      "seed": 1084,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\frac{\\left(x-3\\right)\\sqrt{\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)}{x-3}\\right)",
+      "answer_latex": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)+\\sqrt{\\sqrt{5x}}\\left(3\\frac{1}{\\ln\\left(x^{3}\\right)}\\frac{1}{x^{3}}x^{2}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 8.0,
+      "seed": 1084,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(e^{\\ln\\left(\\ln\\left(e^{\\sqrt{\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)}\\right)\\right)}\\right)",
+      "answer_latex": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)+\\sqrt{\\sqrt{5x}}\\left(3\\frac{1}{\\ln\\left(x^{3}\\right)}\\frac{1}{x^{3}}x^{2}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 16.0,
+      "seed": 1084,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\left(-\\left(-\\frac{2\\left(x+1\\right)\\sqrt{\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)}{2\\left(x+1\\right)}\\right)\\right)+5\\right)-5\\right)",
+      "answer_latex": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)+\\sqrt{\\sqrt{5x}}\\left(3\\frac{1}{\\ln\\left(x^{3}\\right)}\\frac{1}{x^{3}}x^{2}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 32.0,
+      "seed": 1084,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\frac{\\left(x-3\\right)\\sqrt{\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)}{x-3}+\\left(3x+1\\right)\\right)-\\left(3x+1\\right)+\\left(2x\\right)-\\left(2x\\right)\\right)",
+      "answer_latex": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}\\ln\\left(\\ln\\left(x^{3}\\right)\\right)+\\sqrt{\\sqrt{5x}}\\left(3\\frac{1}{\\ln\\left(x^{3}\\right)}\\frac{1}{x^{3}}x^{2}\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_exp",
+          "detail": "catalog/skeleton product_poly_exp"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "5\\frac{1}{2\\sqrt{\\sqrt{5x}}}\\frac{1}{2\\sqrt{5x}}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 0.0,
+      "seed": 1169,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\sin(2x)\\ln^{2}(3x)\\arccos^{3}(x)\\right)",
+      "answer_latex": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3x\\right)\\frac{1}{3x}\\sin(2x)\\arccos^{3}(x) + 3\\arccos^{2}(x)\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sin(2x)\\ln^{2}(3x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 4.0,
+      "seed": 1169,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\sin(2x)\\ln^{2}(3x)\\arccos^{3}(x)+4\\right)-4\\right)",
+      "answer_latex": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3x\\right)\\frac{1}{3x}\\sin(2x)\\arccos^{3}(x) + 3\\arccos^{2}(x)\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sin(2x)\\ln^{2}(3x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 8.0,
+      "seed": 1169,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\ln\\left(e^{\\left(\\sin(2x)\\ln^{2}(3x)\\arccos^{3}(x)+6-6\\right)}\\right)\\right)",
+      "answer_latex": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3x\\right)\\frac{1}{3x}\\sin(2x)\\arccos^{3}(x) + 3\\arccos^{2}(x)\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sin(2x)\\ln^{2}(3x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 16.0,
+      "seed": 1169,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\ln\\left(e^{e^{\\ln\\left(\\left(-\\left(-\\sin(2x)\\ln^{2}(3x)\\arccos^{3}(x)\\right)\\right)\\right)}}\\right)\\right)",
+      "answer_latex": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3x\\right)\\frac{1}{3x}\\sin(2x)\\arccos^{3}(x) + 3\\arccos^{2}(x)\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sin(2x)\\ln^{2}(3x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 32.0,
+      "seed": 1169,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(e^{\\ln\\left(\\sin(2x)\\ln^{2}(3x)\\arccos^{3}(x)\\right)}+4-4\\right)+6-6\\right)",
+      "answer_latex": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3x\\right)\\frac{1}{3x}\\sin(2x)\\arccos^{3}(x) + 3\\arccos^{2}(x)\\left(-\\frac{1}{\\sqrt{1-(x)^{2}}}\\right)\\sin(2x)\\ln^{2}(3x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "triple_product",
+          "detail": "allow_triple_product enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)\\ln^{2}(3x)\\arccos^{3}(x) + 6\\ln\\left(3"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 32.0
+    }
+  ]
+}

@@ -1,0 +1,982 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "4-8-lhopitals-rule",
+  "title": "4.8 L\u2019H\u00f4pital\u2019s Rule",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/4-8-lhopitals-rule",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/4-8-lhopitals-rule.html",
+  "objectives": [
+    "4.8.1 Recognize when to apply L\u2019H\u00f4pital\u2019s rule.",
+    "4.8.2 Identify indeterminate forms produced by quotients, products, subtractions, and powers, and apply L\u2019H\u00f4pital\u2019s rule in each case.",
+    "4.8.3 Describe the relative growth rates of functions."
+  ],
+  "headings": [
+    "4.8 L\u2019H\u00f4pital\u2019s Rule",
+    "Learning Objectives",
+    "Applying L\u2019H\u00f4pital\u2019s Rule",
+    "Theorem 4.12",
+    "Example 4.38",
+    "Checkpoint 4.37",
+    "Theorem 4.13",
+    "Example 4.39",
+    "Checkpoint 4.38",
+    "Example 4.40",
+    "Checkpoint 4.39",
+    "Other Indeterminate Forms",
+    "Example 4.41",
+    "Checkpoint 4.40",
+    "Example 4.42",
+    "Checkpoint 4.41",
+    "Example 4.43",
+    "Checkpoint 4.42",
+    "Example 4.44",
+    "Checkpoint 4.43",
+    "Growth Rates of Functions",
+    "Example 4.45",
+    "Checkpoint 4.44",
+    "Section 4.8 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1165043397578",
+      "kind": "example",
+      "title": "Example 4.38",
+      "position": 1,
+      "nearest_heading": "Proof",
+      "prompt_text": "Applying L\u2019H\u00f4pital\u2019s Rule (0/0 Case) Evaluate each of the following limits by applying L\u2019H\u00f4pital\u2019s rule. $\\lim_{x \\to 0} \\frac{1 - \\cos x}{x}$ $\\lim_{x \\to 1} \\frac{\\sin \\left(\\right. \\pi x \\left.\\right)}{\\ln x}$ $\\lim_{x \\to \\infty} \\frac{e^{1 / x} - 1}{1 / x}$ $\\lim_{x \\to 0} \\frac{\\sin x - x}{x^{2}}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{1 - \\cos x}{x}",
+        "\\lim_{x \\to 1} \\frac{\\sin \\left(\\right. \\pi x \\left.\\right)}{\\ln x}",
+        "\\lim_{x \\to \\infty} \\frac{e^{1 / x} - 1}{1 / x}",
+        "\\lim_{x \\to 0} \\frac{\\sin x - x}{x^{2}}"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043397578",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043393593",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.37",
+      "position": 2,
+      "nearest_heading": "Applying L\u2019H\u00f4pital\u2019s Rule (0/0 Case)",
+      "prompt_text": "Evaluate $\\lim_{x \\to 0} \\frac{x}{\\tan x} .$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{x}{\\tan x} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043393593",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043427623",
+      "kind": "example",
+      "title": "Example 4.39",
+      "position": 3,
+      "nearest_heading": "L\u2019H\u00f4pital\u2019s Rule ( \u221e / \u221e ( \u221e / \u221e Case)",
+      "prompt_text": "Applying L\u2019H\u00f4pital\u2019s Rule $\\left(\\right. \\infty / \\infty$ Case) Evaluate each of the following limits by applying L\u2019H\u00f4pital\u2019s rule. $\\lim_{x \\to \\infty} \\frac{3 x + 5}{2 x + 1}$ $\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\ln x}{\\cot x}$",
+      "prompt_latex_bits": [
+        "\\left(\\right. \\infty / \\infty",
+        "\\lim_{x \\to \\infty} \\frac{3 x + 5}{2 x + 1}",
+        "\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\ln x}{\\cot x}"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043427623",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042333392",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.38",
+      "position": 4,
+      "nearest_heading": "Applying L\u2019H\u00f4pital\u2019s Rule ( \u221e / \u221e ( \u221e / \u221e Case)",
+      "prompt_text": "Evaluate $\\lim_{x \\to \\infty} \\frac{\\ln x}{5 x} .$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} \\frac{\\ln x}{5 x} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042333392",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042350228",
+      "kind": "example",
+      "title": "Example 4.40",
+      "position": 5,
+      "nearest_heading": "Applying L\u2019H\u00f4pital\u2019s Rule ( \u221e / \u221e ( \u221e / \u221e Case)",
+      "prompt_text": "When L\u2019H\u00f4pital\u2019s Rule Does Not Apply Consider $\\lim_{x \\to 1} \\frac{x^{2} + 5}{3 x + 4} .$ Show that the limit cannot be evaluated by applying L\u2019H\u00f4pital\u2019s rule.",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 1} \\frac{x^{2} + 5}{3 x + 4} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042350228",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043174646",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.39",
+      "position": 6,
+      "nearest_heading": "When L\u2019H\u00f4pital\u2019s Rule Does Not Apply",
+      "prompt_text": "Explain why we cannot apply L\u2019H\u00f4pital\u2019s rule to evaluate $\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\cos x}{x} .$ Evaluate $\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\cos x}{x}$ by other means.",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\cos x}{x} .",
+        "\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\cos x}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043174646",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042368495",
+      "kind": "example",
+      "title": "Example 4.41",
+      "position": 7,
+      "nearest_heading": "Indeterminate Form of Type 0 \u00b7 \u221e 0 \u00b7 \u221e",
+      "prompt_text": "Indeterminate Form of Type $0 \\cdot \\infty$ Evaluate $\\underset{x \\to 0^{+}}{\\text{lim}} x \\ln x .$",
+      "prompt_latex_bits": [
+        "0 \\cdot \\infty",
+        "\\underset{x \\to 0^{+}}{\\text{lim}} x \\ln x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042368495",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043430905",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.40",
+      "position": 8,
+      "nearest_heading": "Indeterminate Form of Type 0 \u00b7 \u221e 0 \u00b7 \u221e",
+      "prompt_text": "Evaluate $\\lim_{x \\to 0} x \\cot x .$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} x \\cot x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043430905",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043323875",
+      "kind": "example",
+      "title": "Example 4.42",
+      "position": 9,
+      "nearest_heading": "Indeterminate Form of Type \u221e \u2212 \u221e \u221e \u2212 \u221e",
+      "prompt_text": "Indeterminate Form of Type $\\infty - \\infty$ Evaluate $\\underset{x \\to 0^{+}}{\\text{lim}} \\left(\\right. \\frac{1}{x^{2}} - \\frac{1}{\\tan x} \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "\\infty - \\infty",
+        "\\underset{x \\to 0^{+}}{\\text{lim}} \\left(\\right. \\frac{1}{x^{2}} - \\frac{1}{\\tan x} \\left.\\right) ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043323875",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043348549",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.41",
+      "position": 10,
+      "nearest_heading": "Indeterminate Form of Type \u221e \u2212 \u221e \u221e \u2212 \u221e",
+      "prompt_text": "Evaluate $\\underset{x \\to 0^{+}}{\\text{lim}} \\left(\\right. \\frac{1}{x} - \\frac{1}{\\sin x} \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} \\left(\\right. \\frac{1}{x} - \\frac{1}{\\sin x} \\left.\\right) ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043348549",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043390815",
+      "kind": "example",
+      "title": "Example 4.43",
+      "position": 11,
+      "nearest_heading": "Indeterminate Form of Type \u221e \u2212 \u221e \u221e \u2212 \u221e",
+      "prompt_text": "Indeterminate Form of Type $\\infty^{0}$ Evaluate $\\lim_{x \\to \\infty} x^{1 / x} .$",
+      "prompt_latex_bits": [
+        "\\infty^{0}",
+        "\\lim_{x \\to \\infty} x^{1 / x} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043390815",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042407362",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.42",
+      "position": 12,
+      "nearest_heading": "Indeterminate Form of Type \u221e 0 \u221e 0",
+      "prompt_text": "Evaluate $\\lim_{x \\to \\infty} x^{1 / \\ln (x)} .$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} x^{1 / \\ln (x)} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042407362",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043108292",
+      "kind": "example",
+      "title": "Example 4.44",
+      "position": 13,
+      "nearest_heading": "Indeterminate Form of Type \u221e 0 \u221e 0",
+      "prompt_text": "Indeterminate Form of Type $0^{0}$ Evaluate $\\underset{x \\to 0^{+}}{\\text{lim}} x^{\\sin x} .$",
+      "prompt_latex_bits": [
+        "0^{0}",
+        "\\underset{x \\to 0^{+}}{\\text{lim}} x^{\\sin x} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043108292",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042660254",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.43",
+      "position": 14,
+      "nearest_heading": "Indeterminate Form of Type 0 0 0 0",
+      "prompt_text": "Evaluate $\\underset{x \\to 0^{+}}{\\text{lim}} x^{x} .$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} x^{x} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042660254",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043422462",
+      "kind": "example",
+      "title": "Example 4.45",
+      "position": 15,
+      "nearest_heading": "Growth Rates of Functions",
+      "prompt_text": "Comparing the Growth Rates of $\\ln (x) ,$ $x^{2} ,$ and $e^{x}$ For each of the following pairs of functions, use L\u2019H\u00f4pital\u2019s rule to evaluate $\\lim_{x \\to \\infty} \\left(\\right. \\frac{f (x)}{g (x)} \\left.\\right) .$ $f (x) = x^{2} \\text{and} g (x) = e^{x}$ $f (x) = \\ln (x) \\text{and} g (x) = x^{2}$",
+      "prompt_latex_bits": [
+        "\\ln (x) ,",
+        "x^{2} ,",
+        "e^{x}",
+        "\\lim_{x \\to \\infty} \\left(\\right. \\frac{f (x)}{g (x)} \\left.\\right) .",
+        "f (x) = x^{2} \\text{and} g (x) = e^{x}",
+        "f (x) = \\ln (x) \\text{and} g (x) = x^{2}"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043422462",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042463715",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.44",
+      "position": 16,
+      "nearest_heading": "Comparing the Growth Rates of ln ( x ) , ln ( x ) , x 2 , x 2 , and e x e x",
+      "prompt_text": "Compare the growth rates of $x^{100}$ and $2^{x} .$",
+      "prompt_latex_bits": [
+        "x^{100}",
+        "2^{x} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042463715",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043217921",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "356 . Evaluate the limit $\\lim_{x \\to \\infty} \\frac{e^{x}}{x} .$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} \\frac{e^{x}}{x} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043217921",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043217966",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "357 . Evaluate the limit $\\lim_{x \\to \\infty} \\frac{e^{x}}{x^{k}} .$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} \\frac{e^{x}}{x^{k}} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043217966",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043218017",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "358 . Evaluate the limit $\\lim_{x \\to \\infty} \\frac{\\ln x}{x^{k}} .$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} \\frac{\\ln x}{x^{k}} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043218017",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043218066",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "359 . Evaluate the limit $\\lim_{x \\to a} \\frac{x - a}{x^{2} - a^{2}} , a \\neq 0$ .",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to a} \\frac{x - a}{x^{2} - a^{2}} , a \\neq 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043218066",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043218132",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "360 . Evaluate the limit $\\lim_{x \\to a} \\frac{x - a}{x^{3} - a^{3}} , a \\neq 0$ .",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to a} \\frac{x - a}{x^{3} - a^{3}} , a \\neq 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043218132",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042469654",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "361 . Evaluate the limit $\\lim_{x \\to a} \\frac{x - a}{x^{n} - a^{n}} , a \\neq 0$ .",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to a} \\frac{x - a}{x^{n} - a^{n}} , a \\neq 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042469654",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042469737",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "362 . $\\underset{x \\to 0^{+}}{\\text{lim}} x^{2} \\ln x$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} x^{2} \\ln x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042469737",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042469817",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "363 . $\\lim_{x \\to \\infty} x^{1 / x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} x^{1 / x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042469817",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711562",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "364 . $\\lim_{x \\to 0} x^{2 / x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} x^{2 / x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711562",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711603",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "365 . $\\lim_{x \\to 0} \\frac{x^{2}}{1 / x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{x^{2}}{1 / x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711603",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711670",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "366 . $\\lim_{x \\to \\infty} \\frac{e^{x}}{x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} \\frac{e^{x}}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711670",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711715",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "367 . $\\lim_{x \\to 3} \\frac{x^{2} - 9}{x - 3}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 3} \\frac{x^{2} - 9}{x - 3}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711715",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711767",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "368 . $\\lim_{x \\to 3} \\frac{x^{2} - 9}{x + 3}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 3} \\frac{x^{2} - 9}{x + 3}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711767",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042499499",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "369 . $\\lim_{x \\to 0} \\frac{(1 + x)^{\u22122} - 1}{x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{(1 + x)^{\u22122} - 1}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042499499",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042499561",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "370 . $\\lim_{x \\to \\pi / 2} \\frac{\\cos x}{\\frac{\\pi}{2} - x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\pi / 2} \\frac{\\cos x}{\\frac{\\pi}{2} - x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042499561",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042499616",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "371 . $\\lim_{x \\to \\pi} \\frac{x - \\pi}{\\sin x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\pi} \\frac{x - \\pi}{\\sin x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042499616",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042499664",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "372 . $\\lim_{x \\to 1} \\frac{x - 1}{\\sin x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 1} \\frac{x - 1}{\\sin x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042499664",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711252",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "373 . $\\lim_{x \\to 0} \\frac{(1 + x)^{n} - 1}{x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{(1 + x)^{n} - 1}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711252",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711310",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "374 . $\\lim_{x \\to 0} \\frac{(1 + x)^{n} - 1 - n x}{x^{2}}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{(1 + x)^{n} - 1 - n x}{x^{2}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711310",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711396",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "375 . $\\lim_{x \\to 0} \\frac{\\sin x - \\tan x}{x^{3}}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{\\sin x - \\tan x}{x^{3}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711396",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042711455",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "376 . $\\lim_{x \\to 0} \\frac{\\sqrt{1 + x} - \\sqrt{1 - x}}{x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{\\sqrt{1 + x} - \\sqrt{1 - x}}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042711455",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042602902",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "377 . $\\lim_{x \\to 0} \\frac{e^{x} - x - 1}{x^{2}}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{e^{x} - x - 1}{x^{2}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042602902",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042602961",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "378 . $\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\tan x}{\\sqrt{x}}$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\tan x}{\\sqrt{x}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042602961",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042603005",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "379 . $\\lim_{x \\to 1} \\frac{x - 1}{\\ln x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 1} \\frac{x - 1}{\\ln x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042603005",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042603052",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "380 . $\\lim_{x \\to 0} (x + 1)^{1 / x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} (x + 1)^{1 / x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042603052",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042603107",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "381 . $\\lim_{x \\to 1} \\frac{\\sqrt{x} - \\sqrt[3]{x}}{x - 1}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 1} \\frac{\\sqrt{x} - \\sqrt[3]{x}}{x - 1}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042603107",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042617552",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "382 . $\\underset{x \\to 0^{+}}{\\text{lim}} x^{2 x}$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} x^{2 x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042617552",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042617597",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "383 . $\\lim_{x \\to \\infty} x \\sin \\left(\\right. \\frac{1}{x} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} x \\sin \\left(\\right. \\frac{1}{x} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042617597",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042617646",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "384 . $\\lim_{x \\to 0} \\frac{\\sin x - x}{x^{2}}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{\\sin x - x}{x^{2}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042617646",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042617696",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "385 . $\\underset{x \\to 0^{+}}{\\text{lim}} x \\ln \\left(\\right. x^{4} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} x \\ln \\left(\\right. x^{4} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042617696",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042617748",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "386 . $\\lim_{x \\to \\infty} \\left(\\right. x - e^{x} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} \\left(\\right. x - e^{x} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042617748",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042707732",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "387 . $\\lim_{x \\to \\infty} x^{2} e^{\u2212 x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} x^{2} e^{\u2212 x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042707732",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042707778",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "388 . $\\lim_{x \\to 0} \\frac{3^{x} - 2^{x}}{x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{3^{x} - 2^{x}}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042707778",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042707843",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "389 . $\\lim_{x \\to 0} \\frac{1 + 1 / x}{1 - 1 / x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{1 + 1 / x}{1 - 1 / x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042707843",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042707901",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "390 . $\\lim_{x \\to \\pi / 4} \\left(\\right. 1 - \\tan x \\left.\\right) \\cot x$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\pi / 4} \\left(\\right. 1 - \\tan x \\left.\\right) \\cot x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042707901",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042707959",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "391 . $\\lim_{x \\to \\infty} x e^{1 / x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} x e^{1 / x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042707959",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042525338",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "392 . $\\underset{x \\to 0^{+}}{\\text{lim}} x^{1 / \\cos x}$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} x^{1 / \\cos x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042525338",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042525384",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "393 . $\\underset{x \\to 0^{+}}{\\text{lim}} x^{1 / x}$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} x^{1 / x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042525384",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042525428",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "394 . $\\underset{x \\to 0^{-}}{\\text{lim}} \\left(\\right. 1 - \\frac{1}{x} \\left.\\right)^{x}$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{-}}{\\text{lim}} \\left(\\right. 1 - \\frac{1}{x} \\left.\\right)^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042525428",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042525481",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "395 . $\\lim_{x \\to \\infty} \\left(\\right. 1 - \\frac{1}{x} \\left.\\right)^{x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\infty} \\left(\\right. 1 - \\frac{1}{x} \\left.\\right)^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042525481",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042525544",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "396 . [T] $\\lim_{x \\to 0} \\frac{e^{x} - 1}{x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{e^{x} - 1}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042525544",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043382933",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "397 . [T] $\\lim_{x \\to 0} x \\sin \\left(\\right. \\frac{1}{x} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} x \\sin \\left(\\right. \\frac{1}{x} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043382933",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043382987",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "398 . [T] $\\lim_{x \\to 1} \\frac{x - 1}{1 - \\cos \\left(\\right. \\pi x \\left.\\right)}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 1} \\frac{x - 1}{1 - \\cos \\left(\\right. \\pi x \\left.\\right)}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043382987",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043383052",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "399 . [T] $\\lim_{x \\to 1} \\frac{e^{(x - 1)} - 1}{x - 1}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 1} \\frac{e^{(x - 1)} - 1}{x - 1}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043383052",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043383121",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "400 . [T] $\\lim_{x \\to 1} \\frac{(x - 1)^{2}}{\\ln x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 1} \\frac{(x - 1)^{2}}{\\ln x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043383121",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710174",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "401 . [T] $\\lim_{x \\to \\pi} \\frac{1 + \\cos x}{\\sin x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to \\pi} \\frac{1 + \\cos x}{\\sin x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710174",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710228",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "402 . [T] $\\lim_{x \\to 0} \\left(\\right. \\csc x - \\frac{1}{x} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\left(\\right. \\csc x - \\frac{1}{x} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710228",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710284",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "403 . [T] $\\underset{x \\to 0^{+}}{\\text{lim}} \\tan \\left(\\right. x^{x} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} \\tan \\left(\\right. x^{x} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710284",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710348",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "404 . [T] $\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\ln x}{\\sin x}$",
+      "prompt_latex_bits": [
+        "\\underset{x \\to 0^{+}}{\\text{lim}} \\frac{\\ln x}{\\sin x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710348",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710404",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Section 4.8 Exercises",
+      "prompt_text": "405 . [T] $\\lim_{x \\to 0} \\frac{e^{x} - e^{\u2212 x}}{x}$",
+      "prompt_latex_bits": [
+        "\\lim_{x \\to 0} \\frac{e^{x} - e^{\u2212 x}}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710404",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:33.687613+00:00",
+  "stage": "1_inventory"
+}

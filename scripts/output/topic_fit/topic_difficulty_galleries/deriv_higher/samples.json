@@ -1,0 +1,2264 @@
+{
+  "pack_id": "deriv_higher",
+  "type_id": "calc_diff_higher_order_derivatives",
+  "leaf": "derivative_higher_order",
+  "approx_max_conceptual_d": 25.0,
+  "conceptual_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "spec_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    16.0,
+    32.0
+  ],
+  "allows": {
+    "allow_trig": true,
+    "allow_exp": true,
+    "allow_log": true
+  },
+  "rows": [
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 0.0,
+      "seed": 479,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-x^{2}\\right]",
+      "answer_latex": "-2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "power_poly",
+          "detail": "catalog/skeleton power_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 4.0,
+      "seed": 479,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[e^{\\ln\\left(\\left(-x^{2}\\right)\\right)}\\right]",
+      "answer_latex": "-2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "power_poly",
+          "detail": "catalog/skeleton power_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 8.0,
+      "seed": 479,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-\\left(-\\frac{2\\left(x+2\\right)\\left(-x^{2}\\right)}{2\\left(x+2\\right)}\\right)\\right]",
+      "answer_latex": "-2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "power_poly",
+          "detail": "catalog/skeleton power_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 16.0,
+      "seed": 479,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\ln\\left(e^{\\frac{-\\left(2-x\\right)\\left(-x^{2}\\right)}{-\\left(2-x\\right)}}\\right)+4-4\\right]",
+      "answer_latex": "-2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "power_poly",
+          "detail": "catalog/skeleton power_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 32.0,
+      "seed": 479,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\left(\\left(-x^{2}\\right)+\\left(2x+2\\right)\\right)-\\left(2x+2\\right)+\\left(2x-2\\right)-\\left(2x-2\\right)+2\\right)-2\\right]",
+      "answer_latex": "-2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "power_poly",
+          "detail": "catalog/skeleton power_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 0.0,
+      "seed": 547,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[x^{5} + x^{4}\\right]",
+      "answer_latex": "20x^{3} + 12x^{2}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power+sum",
+          "detail": "method power+sum"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "20x^{3} + 12x^{2}"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 4.0,
+      "seed": 547,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(x^{5} + x^{4}\\right)+\\left(x\\right)-\\left(x\\right)\\right]",
+      "answer_latex": "20x^{3} + 12x^{2}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power+sum",
+          "detail": "method power+sum"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "20x^{3} + 12x^{2}"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 8.0,
+      "seed": 547,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-\\left(-\\left(-2x^{5} + 3x^{5} + x^{4}\\right)\\right)\\right]",
+      "answer_latex": "20x^{3} + 12x^{2}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power+sum",
+          "detail": "method power+sum"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "20x^{3} + 12x^{2}"
+        },
+        {
+          "kind": "effort",
+          "tag": "poly_inflate",
+          "detail": "poly-core compose inflate (pure poly islands only)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 16.0,
+      "seed": 547,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\frac{3\\left(x-3\\right)\\left(-\\left(-\\left(x^{5} + x^{4}\\right)\\right)\\right)}{3\\left(x-3\\right)}+\\left(2x+1\\right)\\right)-\\left(2x+1\\right)\\right]",
+      "answer_latex": "20x^{3} + 12x^{2}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power+sum",
+          "detail": "method power+sum"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "20x^{3} + 12x^{2}"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 32.0,
+      "seed": 547,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\frac{-\\left(3+x\\right)\\left(x^{5} + x^{4}\\right)}{-\\left(3+x\\right)}+\\left(x+2\\right)-\\left(x+2\\right)\\right)+2-2\\right]",
+      "answer_latex": "20x^{3} + 12x^{2}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power+sum",
+          "detail": "method power+sum"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "20x^{3} + 12x^{2}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 0.0,
+      "seed": 615,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[e^{\\left(2x + 2\\right)}\\right]",
+      "answer_latex": "4e^{\\left(2x + 2\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{\\left(2x + 2\\right)}"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 4.0,
+      "seed": 615,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(e^{\\left(2x + 2\\right)}+3\\right)-3\\right]",
+      "answer_latex": "4e^{\\left(2x + 2\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{\\left(2x + 2\\right)}"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 8.0,
+      "seed": 615,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\frac{3\\left(x+2\\right)\\left(e^{\\left(2x + 2\\right)}+1-1\\right)}{3\\left(x+2\\right)}\\right]",
+      "answer_latex": "4e^{\\left(2x + 2\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{\\left(2x + 2\\right)}"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 16.0,
+      "seed": 615,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\left(-\\left(-e^{\\left(2x + 2\\right)}\\right)\\right)+\\left(2x+2\\right)\\right)-\\left(2x+2\\right)+\\left(-x+2\\right)-\\left(-x+2\\right)\\right]",
+      "answer_latex": "4e^{\\left(2x + 2\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{\\left(2x + 2\\right)}"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 32.0,
+      "seed": 615,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\left(\\ln\\left(e^{e^{\\left(2x + 2\\right)}}\\right)+4\\right)-4\\right)+\\left(-x-2\\right)-\\left(-x-2\\right)\\right]",
+      "answer_latex": "4e^{\\left(2x + 2\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{\\left(2x + 2\\right)}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 0.0,
+      "seed": 683,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[e^{\\left(3x + 4\\right)}\\right]",
+      "answer_latex": "9e^{\\left(3x + 4\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9e^{\\left(3x + 4\\right)}"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 4.0,
+      "seed": 683,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[e^{\\ln\\left(e^{\\left(3x + 4\\right)}\\right)}\\right]",
+      "answer_latex": "9e^{\\left(3x + 4\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9e^{\\left(3x + 4\\right)}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 8.0,
+      "seed": 683,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[e^{\\ln\\left(\\frac{4\\left(x+1\\right)e^{\\left(3x + 4\\right)}}{4\\left(x+1\\right)}\\right)}\\right]",
+      "answer_latex": "9e^{\\left(3x + 4\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9e^{\\left(3x + 4\\right)}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 16.0,
+      "seed": 683,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-\\left(-\\left(\\left(e^{\\left(3x + 4\\right)}+4-4\\right)+3-3\\right)\\right)\\right]",
+      "answer_latex": "9e^{\\left(3x + 4\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9e^{\\left(3x + 4\\right)}"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 32.0,
+      "seed": 683,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\frac{-\\left(1-x\\right)\\left(-\\left(-e^{\\ln\\left(e^{\\left(3x + 4\\right)}\\right)}\\right)\\right)}{-\\left(1-x\\right)}\\right]",
+      "answer_latex": "9e^{\\left(3x + 4\\right)}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "9e^{\\left(3x + 4\\right)}"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 0.0,
+      "seed": 751,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\ln\\left(\\left(2x - 4\\right)\\right)\\tan(5x)\\right]",
+      "answer_latex": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}(5x)\\frac{1}{\\left(2x - 4\\right)} + 50\\sec^{2}(5x)\\tan(5x)\\ln\\left(\\left(2x - 4\\right)\\right) + 10\\frac{1}{\\left(2x - 4\\right)}\\sec^{2}(5x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}("
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 4.0,
+      "seed": 751,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\left(\\ln\\left(\\left(2x - 4\\right)\\right)\\tan(5x)\\right)+5\\right)-5\\right]",
+      "answer_latex": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}(5x)\\frac{1}{\\left(2x - 4\\right)} + 50\\sec^{2}(5x)\\tan(5x)\\ln\\left(\\left(2x - 4\\right)\\right) + 10\\frac{1}{\\left(2x - 4\\right)}\\sec^{2}(5x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}("
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 8.0,
+      "seed": 751,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\frac{\\left(x+2\\right)\\left(\\ln\\left(\\left(2x - 4\\right)\\right)\\tan(5x)\\right)}{x+2}+\\left(3x\\right)-\\left(3x\\right)\\right]",
+      "answer_latex": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}(5x)\\frac{1}{\\left(2x - 4\\right)} + 50\\sec^{2}(5x)\\tan(5x)\\ln\\left(\\left(2x - 4\\right)\\right) + 10\\frac{1}{\\left(2x - 4\\right)}\\sec^{2}(5x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}("
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 16.0,
+      "seed": 751,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\ln\\left(e^{\\frac{-\\left(2-x\\right)\\left(\\ln\\left(\\left(2x - 4\\right)\\right)\\tan(5x)\\right)}{-\\left(2-x\\right)}}\\right)+4\\right)-4\\right]",
+      "answer_latex": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}(5x)\\frac{1}{\\left(2x - 4\\right)} + 50\\sec^{2}(5x)\\tan(5x)\\ln\\left(\\left(2x - 4\\right)\\right) + 10\\frac{1}{\\left(2x - 4\\right)}\\sec^{2}(5x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}("
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 32.0,
+      "seed": 751,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\ln\\left(e^{\\left(-\\left(-\\left(\\ln\\left(\\left(2x - 4\\right)\\right)\\tan(5x)\\right)\\right)\\right)}\\right)+3\\right)-3\\right]",
+      "answer_latex": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}(5x)\\frac{1}{\\left(2x - 4\\right)} + 50\\sec^{2}(5x)\\tan(5x)\\ln\\left(\\left(2x - 4\\right)\\right) + 10\\frac{1}{\\left(2x - 4\\right)}\\sec^{2}(5x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\left(2x - 4\\right)^{-2}\\tan(5x) + 10\\sec^{2}("
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 0.0,
+      "seed": 819,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[e^{e^{2x}}\\right]",
+      "answer_latex": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e^{2x}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 4.0,
+      "seed": 819,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-\\left(-e^{e^{2x}}\\right)\\right]",
+      "answer_latex": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e^{2x}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 8.0,
+      "seed": 819,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-\\left(-\\ln\\left(e^{e^{e^{2x}}}\\right)\\right)\\right]",
+      "answer_latex": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e^{2x}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 16.0,
+      "seed": 819,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\frac{2\\left(x-1\\right)e^{\\ln\\left(e^{e^{2x}}\\right)}}{2\\left(x-1\\right)}+5\\right)-5\\right]",
+      "answer_latex": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e^{2x}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 32.0,
+      "seed": 819,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\frac{-\\left(3+x\\right)e^{\\ln\\left(e^{e^{2x}}\\right)}}{-\\left(3+x\\right)}+\\left(x-1\\right)\\right)-\\left(x-1\\right)\\right]",
+      "answer_latex": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e^{2x}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{2x}}\\left(e^{2x}\\right)^{2} + 4e^{2x}e^{e"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 0.0,
+      "seed": 904,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[e^{e^{\\left(2x + 1\\right)}}\\right]",
+      "answer_latex": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + 1\\right)}\\right)^{2} + 4e^{\\left(2x + 1\\right)}e^{e^{\\left(2x + 1\\right)}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + "
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 4.0,
+      "seed": 904,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-\\left(-e^{e^{\\left(2x + 1\\right)}}\\right)\\right]",
+      "answer_latex": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + 1\\right)}\\right)^{2} + 4e^{\\left(2x + 1\\right)}e^{e^{\\left(2x + 1\\right)}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + "
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 8.0,
+      "seed": 904,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\left(-\\left(-e^{e^{\\left(2x + 1\\right)}}\\right)\\right)+\\left(-x+2\\right)\\right)-\\left(-x+2\\right)\\right]",
+      "answer_latex": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + 1\\right)}\\right)^{2} + 4e^{\\left(2x + 1\\right)}e^{e^{\\left(2x + 1\\right)}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + "
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 16.0,
+      "seed": 904,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\ln\\left(e^{\\left(\\frac{\\left(x+2\\right)e^{e^{\\left(2x + 1\\right)}}}{x+2}+5-5\\right)}\\right)\\right]",
+      "answer_latex": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + 1\\right)}\\right)^{2} + 4e^{\\left(2x + 1\\right)}e^{e^{\\left(2x + 1\\right)}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + "
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "ln_exp_id",
+          "detail": "\\ln(e^{\u00b7}) identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 32.0,
+      "seed": 904,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[e^{\\ln\\left(\\frac{-\\left(2-x\\right)\\left(\\left(e^{e^{\\left(2x + 1\\right)}}+5\\right)-5\\right)}{-\\left(2-x\\right)}\\right)}\\right]",
+      "answer_latex": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + 1\\right)}\\right)^{2} + 4e^{\\left(2x + 1\\right)}e^{e^{\\left(2x + 1\\right)}}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "higher_order_2",
+          "detail": "catalog/skeleton higher_order_2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4e^{e^{\\left(2x + 1\\right)}}\\left(e^{\\left(2x + "
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "exp_ln_id",
+          "detail": "e^{\\ln(\u00b7)} identity wrap"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 32.0
+    }
+  ]
+}

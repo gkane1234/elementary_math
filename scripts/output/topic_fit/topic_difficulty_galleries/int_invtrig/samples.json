@@ -1,0 +1,2444 @@
+{
+  "pack_id": "int_invtrig",
+  "type_id": "calc_indef_int_inverse_trigonometric",
+  "leaf": "integral_substitution",
+  "approx_max_conceptual_d": 25.0,
+  "conceptual_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "spec_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    16.0,
+    32.0
+  ],
+  "allows": {
+    "allow_trig": true,
+    "allow_exp": true,
+    "allow_log": true
+  },
+  "rows": [
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 0.0,
+      "seed": 384,
+      "prompt_latex": "\\int \\frac{1}{1+x^{2}}\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 4.0,
+      "seed": 384,
+      "prompt_latex": "\\int  \\left(\\frac{1}{1+x^{2}}+6\\right)-6\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 8.0,
+      "seed": 384,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{1}{1+x^{2}}+6-6\\right)+\\left(-x+3\\right)\\right)-\\left(-x+3\\right)\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 16.0,
+      "seed": 384,
+      "prompt_latex": "\\int  -\\left(-\\left(\\left(\\frac{1}{1+x^{2}}+2\\right)-2\\right)+\\left(3x-2\\right)-\\left(3x-2\\right)\\right)\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 32.0,
+      "seed": 384,
+      "prompt_latex": "\\int  \\left(\\left(\\left(\\frac{1}{1+x^{2}}+\\left(x+3\\right)\\right)-\\left(x+3\\right)+3-3\\right)+4\\right)-4\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 0.0,
+      "seed": 452,
+      "prompt_latex": "\\int \\frac{1}{1+x^{2}}\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 4.0,
+      "seed": 452,
+      "prompt_latex": "\\int  \\frac{1}{1+x^{2}}+\\left(3x-2\\right)-\\left(3x-2\\right)\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 8.0,
+      "seed": 452,
+      "prompt_latex": "\\int  -\\left(-\\left(\\left(\\frac{1}{1+x^{2}}+4\\right)-4\\right)\\right)\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 16.0,
+      "seed": 452,
+      "prompt_latex": "\\int  \\left(-\\left(-\\frac{-\\left(1-x\\right)\\frac{1}{1+x^{2}}}{-\\left(1-x\\right)}\\right)\\right)+4-4\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 32.0,
+      "seed": 452,
+      "prompt_latex": "\\int  \\left(\\left(\\left(\\frac{1}{1+x^{2}}+\\left(3x+2\\right)-\\left(3x+2\\right)\\right)+4-4\\right)+\\left(2x-2\\right)\\right)-\\left(2x-2\\right)\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 0.0,
+      "seed": 520,
+      "prompt_latex": "\\int \\frac{1}{9+x^{2}}\\,dx",
+      "answer_latex": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_a2",
+          "detail": "catalog/skeleton arctan_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 4.0,
+      "seed": 520,
+      "prompt_latex": "\\int  \\left(\\frac{1}{9+x^{2}}+1\\right)-1\\,dx",
+      "answer_latex": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_a2",
+          "detail": "catalog/skeleton arctan_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 8.0,
+      "seed": 520,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-\\frac{1}{9+x^{2}}\\right)\\right)+3\\right)-3\\,dx",
+      "answer_latex": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_a2",
+          "detail": "catalog/skeleton arctan_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 16.0,
+      "seed": 520,
+      "prompt_latex": "\\int  \\left(\\frac{-\\left(2+x\\right)\\left(\\left(\\frac{1}{9+x^{2}}+1\\right)-1\\right)}{-\\left(2+x\\right)}+\\left(-2x-2\\right)\\right)-\\left(-2x-2\\right)\\,dx",
+      "answer_latex": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_a2",
+          "detail": "catalog/skeleton arctan_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 32.0,
+      "seed": 520,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-\\frac{1}{9+x^{2}}\\right)\\right)+\\left(-2x-2\\right)-\\left(-2x-2\\right)+4\\right)-4\\,dx",
+      "answer_latex": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_a2",
+          "detail": "catalog/skeleton arctan_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 0.0,
+      "seed": 588,
+      "prompt_latex": "\\int \\frac{1}{1+x^{2}}\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 4.0,
+      "seed": 588,
+      "prompt_latex": "\\int  \\frac{4\\left(x-2\\right)\\frac{1}{1+x^{2}}}{4\\left(x-2\\right)}\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 8.0,
+      "seed": 588,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-\\frac{1}{1+x^{2}}\\right)\\right)+1\\right)-1\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 16.0,
+      "seed": 588,
+      "prompt_latex": "\\int  \\frac{\\left(x+2\\right)\\left(\\left(\\frac{1}{1+x^{2}}+\\left(2x-2\\right)-\\left(2x-2\\right)\\right)+3-3\\right)}{x+2}\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 32.0,
+      "seed": 588,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{\\left(x+1\\right)\\frac{1}{1+x^{2}}}{x+1}+6-6\\right)+4\\right)-4\\,dx",
+      "answer_latex": "\\arctan(x)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_basic",
+          "detail": "catalog/skeleton arctan_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 0.0,
+      "seed": 656,
+      "prompt_latex": "\\int \\frac{1}{4+4x^{2}}\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_scaled",
+          "detail": "catalog/skeleton arctan_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 4.0,
+      "seed": 656,
+      "prompt_latex": "\\int  \\frac{2\\left(x-1\\right)\\frac{1}{4+4x^{2}}}{2\\left(x-1\\right)}\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_scaled",
+          "detail": "catalog/skeleton arctan_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 8.0,
+      "seed": 656,
+      "prompt_latex": "\\int  \\frac{4\\left(x+2\\right)\\left(\\frac{1}{4+4x^{2}}+\\left(x+2\\right)-\\left(x+2\\right)\\right)}{4\\left(x+2\\right)}\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_scaled",
+          "detail": "catalog/skeleton arctan_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 16.0,
+      "seed": 656,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{\\left(x+1\\right)\\frac{1}{4+4x^{2}}}{x+1}+1-1\\right)+\\left(2x\\right)\\right)-\\left(2x\\right)\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_scaled",
+          "detail": "catalog/skeleton arctan_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 32.0,
+      "seed": 656,
+      "prompt_latex": "\\int  \\frac{-\\left(3+x\\right)\\left(\\left(\\frac{1}{4+4x^{2}}+5-5\\right)+\\left(2x-2\\right)\\right)-\\left(2x-2\\right)}{-\\left(3+x\\right)}\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arctan_scaled",
+          "detail": "catalog/skeleton arctan_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arctan\\left(\\frac{2x}{2}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 0.0,
+      "seed": 724,
+      "prompt_latex": "\\int \\frac{1}{\\sqrt{4-x^{2}}}\\,dx",
+      "answer_latex": "\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_a2",
+          "detail": "catalog/skeleton arcsin_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\arcsin\\left(\\frac{x}{2}\\right)+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 4.0,
+      "seed": 724,
+      "prompt_latex": "\\int  -\\left(-\\frac{1}{\\sqrt{4-x^{2}}}\\right)\\,dx",
+      "answer_latex": "\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_a2",
+          "detail": "catalog/skeleton arcsin_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\arcsin\\left(\\frac{x}{2}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 8.0,
+      "seed": 724,
+      "prompt_latex": "\\int  \\frac{-\\left(1+x\\right)\\frac{1}{\\sqrt{4-x^{2}}}}{-\\left(1+x\\right)}+\\left(2x-2\\right)-\\left(2x-2\\right)\\,dx",
+      "answer_latex": "\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_a2",
+          "detail": "catalog/skeleton arcsin_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\arcsin\\left(\\frac{x}{2}\\right)+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 16.0,
+      "seed": 724,
+      "prompt_latex": "\\int  \\left(\\left(\\left(\\frac{1}{\\sqrt{4-x^{2}}}+6\\right)-6\\right)+\\left(3x-2\\right)\\right)-\\left(3x-2\\right)+\\left(x+3\\right)-\\left(x+3\\right)\\,dx",
+      "answer_latex": "\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_a2",
+          "detail": "catalog/skeleton arcsin_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\arcsin\\left(\\frac{x}{2}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 32.0,
+      "seed": 724,
+      "prompt_latex": "\\int  \\left(\\frac{-\\left(2-x\\right)\\left(-\\left(-\\frac{1}{\\sqrt{4-x^{2}}}\\right)\\right)}{-\\left(2-x\\right)}+\\left(-x-1\\right)\\right)-\\left(-x-1\\right)\\,dx",
+      "answer_latex": "\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_a2",
+          "detail": "catalog/skeleton arcsin_a2"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\arcsin\\left(\\frac{x}{2}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 0.0,
+      "seed": 809,
+      "prompt_latex": "\\int \\frac{1}{\\sqrt{16-16x^{2}}}\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_scaled",
+          "detail": "catalog/skeleton arcsin_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 4.0,
+      "seed": 809,
+      "prompt_latex": "\\int  \\frac{-\\left(1-x\\right)\\frac{1}{\\sqrt{16-16x^{2}}}}{-\\left(1-x\\right)}\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_scaled",
+          "detail": "catalog/skeleton arcsin_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 8.0,
+      "seed": 809,
+      "prompt_latex": "\\int  \\frac{\\left(x+2\\right)\\left(\\frac{1}{\\sqrt{16-16x^{2}}}+\\left(-x-2\\right)-\\left(-x-2\\right)\\right)}{x+2}\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_scaled",
+          "detail": "catalog/skeleton arcsin_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 16.0,
+      "seed": 809,
+      "prompt_latex": "\\int  \\frac{-\\left(3+x\\right)\\left(\\left(\\left(\\frac{1}{\\sqrt{16-16x^{2}}}+4\\right)-4\\right)+6-6\\right)}{-\\left(3+x\\right)}\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_scaled",
+          "detail": "catalog/skeleton arcsin_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 32.0,
+      "seed": 809,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{1}{\\sqrt{16-16x^{2}}}+\\left(3x+2\\right)\\right)-\\left(3x+2\\right)+\\left(3x\\right)\\right)-\\left(3x\\right)+6-6\\,dx",
+      "answer_latex": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "arcsin_scaled",
+          "detail": "catalog/skeleton arcsin_scaled"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "invtrig",
+          "detail": "method invtrig"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{1}{4}\\arcsin\\left(\\frac{4x}{4}\\right)+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 32.0
+    }
+  ]
+}

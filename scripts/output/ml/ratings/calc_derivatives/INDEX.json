@@ -1,0 +1,123 @@
+{
+  "campaign": "calc_derivatives",
+  "n_rows": 360,
+  "n_ok": 360,
+  "n_errors": 0,
+  "difficulties": [
+    0.0,
+    3.0,
+    6.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "by_pack": {
+    "power": 48,
+    "product": 40,
+    "quotient": 40,
+    "chain": 48,
+    "trig": 40,
+    "ln_exp": 40,
+    "invtrig": 32,
+    "general": 40,
+    "higher_order": 32
+  },
+  "by_difficulty": {
+    "0.0": 45,
+    "3.0": 45,
+    "6.0": 45,
+    "8.0": 45,
+    "12.0": 45,
+    "16.0": 45,
+    "20.0": 45,
+    "25.0": 45
+  },
+  "packs": [
+    {
+      "pack": "power",
+      "type_id": "calc_diff_power_rule",
+      "generator": "derivative_power_rule",
+      "n_per_d": 6,
+      "openstax": "3.3 power / sum / negative exponents"
+    },
+    {
+      "pack": "product",
+      "type_id": "calc_diff_product_rule",
+      "generator": "derivative_product_rule",
+      "n_per_d": 5,
+      "openstax": "3.3 product rule"
+    },
+    {
+      "pack": "quotient",
+      "type_id": "calc_diff_quotient_rule",
+      "generator": "derivative_quotient_rule",
+      "n_per_d": 5,
+      "openstax": "3.3 quotient rule"
+    },
+    {
+      "pack": "chain",
+      "type_id": "calc_diff_chain_rule",
+      "generator": "derivative_chain_rule",
+      "n_per_d": 6,
+      "openstax": "3.6 chain rule"
+    },
+    {
+      "pack": "trig",
+      "type_id": "calc_diff_trigonometric",
+      "generator": "derivative_trigonometric",
+      "n_per_d": 5,
+      "openstax": "3.5 trig derivatives"
+    },
+    {
+      "pack": "ln_exp",
+      "type_id": "calc_diff_natural_logarithms_and_exponentials",
+      "generator": "derivative_ln_exp",
+      "n_per_d": 5,
+      "openstax": "3.9 ln / exp"
+    },
+    {
+      "pack": "invtrig",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "generator": "derivative_inverse_trig",
+      "n_per_d": 4,
+      "openstax": "3.7 / invtrig forms (OpenStax + extensions)"
+    },
+    {
+      "pack": "general",
+      "type_id": "calc_diff_general",
+      "generator": "derivative_general",
+      "n_per_d": 5,
+      "openstax": "mixed rules (combined textbook exercises)"
+    },
+    {
+      "pack": "higher_order",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "generator": "derivative_higher_order",
+      "n_per_d": 4,
+      "openstax": "higher-order (Mad-Libs path; thinner Spec metadata)"
+    }
+  ],
+  "rating_schema": {
+    "rating_1_to_5": "int 1..5 or null",
+    "minutes": "float minutes or null",
+    "notes": "optional string"
+  },
+  "join_keys": [
+    "rating_id",
+    "type_id",
+    "generator",
+    "seed",
+    "difficulty",
+    "theta_full",
+    "spec_snapshot"
+  ],
+  "elapsed_s": 0.24,
+  "paths": {
+    "jsonl": "items.jsonl",
+    "json": "items.json",
+    "rater": "rater.html",
+    "coverage": "COVERAGE.md"
+  }
+}

@@ -223,6 +223,16 @@ def degrade_drop_most_expensive(
 def settings_difficulty(settings: dict[str, Any], default: float = 0.0) -> float:
     """Read continuous difficulty from settings; shim old EMH tiers if needed."""
     legacy = {"easy": 3.0, "medium": 8.0, "hard": 14.0}
+    # Prefer explicit conceptual axis when present (Calc dual-difficulty UI).
+    if (
+        "conceptual_difficulty" in settings
+        and settings["conceptual_difficulty"] is not None
+    ):
+        raw = settings["conceptual_difficulty"]
+        try:
+            return float(raw)
+        except (TypeError, ValueError):
+            pass
     if "difficulty" in settings and settings["difficulty"] is not None:
         raw = settings["difficulty"]
         try:
@@ -234,6 +244,95 @@ def settings_difficulty(settings: dict[str, Any], default: float = 0.0) -> float
                 return mapped
     tier = str(settings.get("difficulty_tier", "")).strip().lower()
     return legacy.get(tier, default)
+
+
+def settings_conceptual_difficulty(
+    settings: dict[str, Any], default: float = 0.0
+) -> float:
+    """Conceptual / method difficulty (capped by leaf approx max)."""
+    return settings_difficulty(settings, default=default)
+
+
+def settings_spec_difficulty(settings: dict[str, Any]) -> float | None:
+    """Independent Spec/effort difficulty, or None when unset (legacy single-D).
+
+    ``None`` means callers should derive Spec spend from the legacy single-D
+    budget split. An explicit ``0`` means Spec is intentionally off.
+    """
+    if "spec_difficulty" not in settings or settings["spec_difficulty"] is None:
+        return None
+    try:
+        return max(0.0, float(settings["spec_difficulty"]))
+    except (TypeError, ValueError):
+        return None
+
+
+def resolve_dual_difficulty(
+    settings: dict[str, Any], *, default_conceptual: float = 6.0
+) -> tuple[float, float | None]:
+    """Return ``(conceptual_d, spec_d_or_None)``.
+
+    When ``spec_difficulty`` is absent, Spec is ``None`` (legacy single-D path).
+    """
+    c = settings_conceptual_difficulty(settings, default=default_conceptual)
+    return max(0.0, float(c)), settings_spec_difficulty(settings)
+
+
+def dual_axis_rngs(
+    settings: dict[str, Any],
+    *,
+    xor_mask: int = 0,
+) -> tuple[random.Random, random.Random]:
+    """Return ``(skeleton_rng, dress_rng)`` for dual-axis Spec isolation.
+
+    Skeleton stream ignores Spec seed when ``conceptual_seed`` is set (or when
+    Spec is peeled from ``seed``). Dress stream may mix ``spec_seed``.
+    Legacy single-D (no ``spec_difficulty``): both streams share the same seed.
+    """
+    raw = settings.get("seed")
+    try:
+        base = int(raw) if raw is not None else None
+    except (TypeError, ValueError):
+        base = None
+
+    spec = settings_spec_difficulty(settings)
+    c = float(settings_conceptual_difficulty(settings, default=0.0))
+
+    # Dress / Spec stream
+    if base is None and settings.get("spec_seed") is None:
+        dress = random.Random()
+    else:
+        dbase = 0 if base is None else base
+        try:
+            if settings.get("spec_seed") is not None:
+                dbase = dbase + int(settings["spec_seed"]) * 10007
+        except (TypeError, ValueError):
+            pass
+        idx = int(settings.get("_batch_index") or 0)
+        dress = random.Random((dbase + idx * 1009) ^ int(xor_mask))
+
+    # Skeleton / conceptual stream
+    if spec is None and settings.get("conceptual_seed") is None:
+        return dress, dress
+
+    if settings.get("conceptual_seed") is not None:
+        try:
+            sk = random.Random(int(settings["conceptual_seed"]) + int(c * 1000))
+            return sk, dress
+        except (TypeError, ValueError):
+            pass
+
+    sk_base = 0 if base is None else base
+    try:
+        # Gallery historically used seed += int(S*31); peel Spec contribution.
+        if spec is not None:
+            sk_base = sk_base - int(float(spec) * 31)
+    except (TypeError, ValueError):
+        pass
+    sk = random.Random(
+        (sk_base & 0xFFFFFFFF) ^ (int(c * 1009) & 0xFFFFFFFF) ^ int(xor_mask)
+    )
+    return sk, dress
 
 
 def difficulty_band(d: float) -> str:

@@ -1,0 +1,892 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "4-2-linear-approximations-and-differentials",
+  "title": "4.2 Linear Approximations and Differentials",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/4-2-linear-approximations-and-differentials",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/4-2-linear-approximations-and-differentials.html",
+  "objectives": [
+    "4.2.1 Describe the linear approximation to a function at a point.",
+    "4.2.2 Write the linearization of a given function.",
+    "4.2.3 Draw a graph that illustrates the use of differentials to approximate the change in a quantity.",
+    "4.2.4 Calculate the relative error and percentage error in using a differential approximation."
+  ],
+  "headings": [
+    "4.2 Linear Approximations and Differentials",
+    "Learning Objectives",
+    "Linear Approximation of a Function at a Point",
+    "Example 4.5",
+    "Checkpoint 4.5",
+    "Example 4.6",
+    "Checkpoint 4.6",
+    "Example 4.7",
+    "Checkpoint 4.7",
+    "Differentials",
+    "Example 4.8",
+    "Checkpoint 4.8",
+    "Example 4.9",
+    "Checkpoint 4.9",
+    "Calculating the Amount of Error",
+    "Example 4.10",
+    "Checkpoint 4.10",
+    "Example 4.11",
+    "Checkpoint 4.11",
+    "Section 4.2 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1165043051419",
+      "kind": "example",
+      "title": "Example 4.5",
+      "position": 1,
+      "nearest_heading": "Linear Approximation of a Function at a Point",
+      "prompt_text": "Linear Approximation of $\\sqrt{x}$ Find the linear approximation of $f (x) = \\sqrt{x}$ at $x = 9$ and use the approximation to estimate $\\sqrt{9.1} .$",
+      "prompt_latex_bits": [
+        "\\sqrt{x}",
+        "f (x) = \\sqrt{x}",
+        "x = 9",
+        "\\sqrt{9.1} .",
+        "\\sqrt{9.1}",
+        "\\sqrt{x} ,",
+        "x",
+        "9 .",
+        "\\sqrt{9.1} .",
+        "\\sqrt{9.1} ?"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043051419",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043105329",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.5",
+      "position": 2,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Find the local linear approximation to $f (x) = \\sqrt[3]{x}$ at $x = 8 .$ Use it to approximate $\\sqrt[3]{8.1}$ to five decimal places.",
+      "prompt_latex_bits": [
+        "f (x) = \\sqrt[3]{x}",
+        "x = 8 .",
+        "\\sqrt[3]{8.1}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043105329",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043100241",
+      "kind": "example",
+      "title": "Example 4.6",
+      "position": 3,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Linear Approximation of $\\sin x$ Find the linear approximation of $f (x) = \\sin x$ at $x = \\frac{\\pi}{3}$ and use it to approximate $\\sin (62 \u00b0) .$",
+      "prompt_latex_bits": [
+        "\\sin x",
+        "f (x) = \\sin x",
+        "x = \\frac{\\pi}{3}",
+        "\\sin (62 \u00b0) ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043100241",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042322345",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.6",
+      "position": 4,
+      "nearest_heading": "Linear Approximation of sin x sin x",
+      "prompt_text": "Find the linear approximation for $f (x) = \\cos x$ at $x = \\frac{\\pi}{2} .$",
+      "prompt_latex_bits": [
+        "f (x) = \\cos x",
+        "x = \\frac{\\pi}{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042322345",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043161464",
+      "kind": "example",
+      "title": "Example 4.7",
+      "position": 5,
+      "nearest_heading": "Linear Approximation of sin x sin x",
+      "prompt_text": "Approximating Roots and Powers Find the linear approximation of $f (x) = \\left((1 + x)\\right)^{n}$ at $x = 0 .$ Use this approximation to estimate $\\left((1.01)\\right)^{3} .$",
+      "prompt_latex_bits": [
+        "f (x) = \\left((1 + x)\\right)^{n}",
+        "x = 0 .",
+        "\\left((1.01)\\right)^{3} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043161464",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043286811",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.7",
+      "position": 6,
+      "nearest_heading": "Approximating Roots and Powers",
+      "prompt_text": "Find the linear approximation of $f (x) = \\left((1 + x)\\right)^{4}$ at $x = 0$ without using the result from the preceding example.",
+      "prompt_latex_bits": [
+        "f (x) = \\left((1 + x)\\right)^{4}",
+        "x = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043286811",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043166548",
+      "kind": "example",
+      "title": "Example 4.8",
+      "position": 7,
+      "nearest_heading": "Differentials",
+      "prompt_text": "Computing differentials For each of the following functions, find dy and evaluate when $x = 3$ and $d x = 0.1 .$ $y = x^{2} + 2 x$ $y = \\cos x$",
+      "prompt_latex_bits": [
+        "x = 3",
+        "d x = 0.1 .",
+        "y = x^{2} + 2 x",
+        "y = \\cos x"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043166548",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043395020",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.8",
+      "position": 8,
+      "nearest_heading": "Computing differentials",
+      "prompt_text": "For $y = e^{x^{2}} ,$ find $d y .$",
+      "prompt_latex_bits": [
+        "y = e^{x^{2}} ,",
+        "d y ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043395020",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043349128",
+      "kind": "example",
+      "title": "Example 4.9",
+      "position": 9,
+      "nearest_heading": "Computing differentials",
+      "prompt_text": "Approximating Change with Differentials Let $y = x^{2} + 2 x .$ Compute $\\Delta y$ and dy at $x = 3$ if $d x = 0.1 .$",
+      "prompt_latex_bits": [
+        "y = x^{2} + 2 x .",
+        "\\Delta y",
+        "x = 3",
+        "d x = 0.1 ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043349128",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042987991",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.9",
+      "position": 10,
+      "nearest_heading": "Approximating Change with Differentials",
+      "prompt_text": "For $y = x^{2} + 2 x ,$ find $\\Delta y$ and $d y$ at $x = 3$ if $d x = 0.2 .$",
+      "prompt_latex_bits": [
+        "y = x^{2} + 2 x ,",
+        "\\Delta y",
+        "d y",
+        "x = 3",
+        "d x = 0.2 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042987991",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043397423",
+      "kind": "example",
+      "title": "Example 4.10",
+      "position": 11,
+      "nearest_heading": "Calculating the Amount of Error",
+      "prompt_text": "Volume of a Cube Suppose the side length of a cube is measured to be 5 cm with an accuracy of 0.1 cm. Use differentials to estimate the error in the computed volume of the cube. Compute the volume of the cube if the side length is (i) 4.9 cm and (ii) 5.1 cm to compare the estimated error with the actual potential error.",
+      "prompt_latex_bits": [],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043397423",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042708694",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.10",
+      "position": 12,
+      "nearest_heading": "Volume of a Cube",
+      "prompt_text": "Estimate the error in the computed volume of a cube if the side length is measured to be 6 cm with an accuracy of 0.2 cm.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042708694",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043087612",
+      "kind": "example",
+      "title": "Example 4.11",
+      "position": 13,
+      "nearest_heading": "Volume of a Cube",
+      "prompt_text": "Relative and Percentage Error An astronaut using a camera measures the radius of Earth as 4000 mi with an error of $\\pm 80$ mi. Let\u2019s use differentials to estimate the relative and percentage error of using this radius measurement to calculate the volume of Earth, assuming the planet is a perfect sphere.",
+      "prompt_latex_bits": [
+        "\\pm 80"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043087612",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043315340",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.11",
+      "position": 14,
+      "nearest_heading": "Relative and Percentage Error",
+      "prompt_text": "Determine the percentage error if the radius of Earth is measured to be 3950 mi with an error of $\\pm 100$ mi.",
+      "prompt_latex_bits": [
+        "\\pm 100"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043315340",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043427582",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "46 . What is the linear approximation for any generic linear function $y = m x + b ?$",
+      "prompt_latex_bits": [
+        "y = m x + b ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043427582",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043337881",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "47 . Determine the necessary conditions such that the linear approximation function is constant. Use a graph to prove your result.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043337881",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042956294",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "48 . Explain why the linear approximation becomes less accurate as you increase the distance between $x$ and $a .$ Use a graph to prove your argument.",
+      "prompt_latex_bits": [
+        "x",
+        "a ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042956294",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042517836",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "49 . When is the linear approximation exact?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042517836",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042390137",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "50 . $f (x) = x + x^{4} , a = 0$",
+      "prompt_latex_bits": [
+        "f (x) = x + x^{4} , a = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042390137",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043187591",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "51 . $f (x) = \\frac{1}{x} , a = 2$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{1}{x} , a = 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043187591",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042709000",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "52 . $f (x) = \\tan x , a = \\frac{\\pi}{4}$",
+      "prompt_latex_bits": [
+        "f (x) = \\tan x , a = \\frac{\\pi}{4}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042709000",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043354593",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "53 . $f (x) = \\sin x , a = \\frac{\\pi}{2}$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin x , a = \\frac{\\pi}{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043354593",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043309898",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "54 . $f (x) = x \\sin x , a = 2 \\pi$",
+      "prompt_latex_bits": [
+        "f (x) = x \\sin x , a = 2 \\pi"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043309898",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042479002",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "55 . $f (x) = \\sin^{2} x , a = 0$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin^{2} x , a = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042479002",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043342062",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "56 . [T] $\\left((2.001)\\right)^{6}$",
+      "prompt_latex_bits": [
+        "\\left((2.001)\\right)^{6}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043342062",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042555827",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "57 . [T] $\\sin (0.02)$",
+      "prompt_latex_bits": [
+        "\\sin (0.02)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042555827",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042582997",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "58 . [T] $\\cos (0.03)$",
+      "prompt_latex_bits": [
+        "\\cos (0.03)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042582997",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042562934",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "59 . [T] $(15.99)^{1 / 4}$",
+      "prompt_latex_bits": [
+        "(15.99)^{1 / 4}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042562934",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042516449",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "60 . [T] $\\frac{1}{0.98}$",
+      "prompt_latex_bits": [
+        "\\frac{1}{0.98}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042516449",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042516429",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "61 . [T] $\\sin (3.14)$",
+      "prompt_latex_bits": [
+        "\\sin (3.14)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042516429",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043315361",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "62 . [T] $(1.01)^{3}$",
+      "prompt_latex_bits": [
+        "(1.01)^{3}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043315361",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042563786",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "63 . [T] $\\cos (0.01)$",
+      "prompt_latex_bits": [
+        "\\cos (0.01)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042563786",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043372988",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "64 . [T] $\\left(\\right. \\sin (0.01) \\left.\\right)^{2}$",
+      "prompt_latex_bits": [
+        "\\left(\\right. \\sin (0.01) \\left.\\right)^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043372988",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042621397",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "65 . [T] $(1.01)^{\u22123}$",
+      "prompt_latex_bits": [
+        "(1.01)^{\u22123}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042621397",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042639968",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "66 . [T] $\\left(\\right. 1 + \\frac{1}{10} \\left.\\right)^{10}$",
+      "prompt_latex_bits": [
+        "\\left(\\right. 1 + \\frac{1}{10} \\left.\\right)^{10}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042639968",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043309945",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "67 . [T] $\\sqrt{8.99}$",
+      "prompt_latex_bits": [
+        "\\sqrt{8.99}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043309945",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042559103",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "68 . $y = 3 x^{4} + x^{2} - 2 x + 1$",
+      "prompt_latex_bits": [
+        "y = 3 x^{4} + x^{2} - 2 x + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042559103",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043423603",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "69 . $y = x \\cos x$",
+      "prompt_latex_bits": [
+        "y = x \\cos x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043423603",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042520660",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "70 . $y = \\sqrt{1 + x}$",
+      "prompt_latex_bits": [
+        "y = \\sqrt{1 + x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042520660",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042476060",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "71 . $y = \\frac{x^{2} + 2}{x - 1}$",
+      "prompt_latex_bits": [
+        "y = \\frac{x^{2} + 2}{x - 1}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042476060",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043099120",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "72 . $y = 3 x^{2} - x + 6 ,$ $x = 2 ,$ $d x = 0.1$",
+      "prompt_latex_bits": [
+        "y = 3 x^{2} - x + 6 ,",
+        "x = 2 ,",
+        "d x = 0.1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043099120",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043373007",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "73 . $y = \\frac{1}{x + 1} ,$ $x = 1 ,$ $d x = 0.25$",
+      "prompt_latex_bits": [
+        "y = \\frac{1}{x + 1} ,",
+        "x = 1 ,",
+        "d x = 0.25"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043373007",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042960014",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "74 . $y = \\tan x ,$ $x = 0 ,$ $d x = \\frac{\\pi}{10}$",
+      "prompt_latex_bits": [
+        "y = \\tan x ,",
+        "x = 0 ,",
+        "d x = \\frac{\\pi}{10}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042960014",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043423569",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "75 . $y = \\frac{3 x^{2} + 2}{\\sqrt{x + 1}} ,$ $x = 0 ,$ $d x = 0.1$",
+      "prompt_latex_bits": [
+        "y = \\frac{3 x^{2} + 2}{\\sqrt{x + 1}} ,",
+        "x = 0 ,",
+        "d x = 0.1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043423569",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042705848",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "76 . $y = \\frac{\\sin (2 x)}{x} ,$ $x = \\pi ,$ $d x = 0.25$",
+      "prompt_latex_bits": [
+        "y = \\frac{\\sin (2 x)}{x} ,",
+        "x = \\pi ,",
+        "d x = 0.25"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042705848",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043197192",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "77 . $y = x^{3} + 2 x + \\frac{1}{x} ,$ $x = 1 ,$ $d x = 0.05$",
+      "prompt_latex_bits": [
+        "y = x^{3} + 2 x + \\frac{1}{x} ,",
+        "x = 1 ,",
+        "d x = 0.05"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043197192",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043394460",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "78 . $d V$ if the sides of a cube change from 10 to 10.1.",
+      "prompt_latex_bits": [
+        "d V"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043394460",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043308223",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "79 . $d A$ if the sides of a cube change from $x$ to $x + d x .$",
+      "prompt_latex_bits": [
+        "d A",
+        "x",
+        "x + d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043308223",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043253928",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "80 . $d A$ if the radius of a sphere changes from $r$ by $d r .$",
+      "prompt_latex_bits": [
+        "d A",
+        "r",
+        "d r ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043253928",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043353383",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "81 . $d V$ if the radius of a sphere changes from $r$ by $d r .$",
+      "prompt_latex_bits": [
+        "d V",
+        "r",
+        "d r ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043353383",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042327314",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "82 . $d V$ if a circular cylinder with $r = 2$ changes height from 3 cm to $3.05 \\text{cm} .$",
+      "prompt_latex_bits": [
+        "d V",
+        "r = 2",
+        "3.05 \\text{cm} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042327314",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042550550",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "83 . $d V$ if a circular cylinder of height 3 changes from $r = 2$ to $r = 1.9 \\text{cm} .$",
+      "prompt_latex_bits": [
+        "d V",
+        "r = 2",
+        "r = 1.9 \\text{cm} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042550550",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043348660",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "84 . A spherical golf ball is measured to have a radius of $5 \\text{mm} ,$ with a possible measurement error of $0.1 \\text{mm} .$ What is the possible change in volume?",
+      "prompt_latex_bits": [
+        "5 \\text{mm} ,",
+        "0.1 \\text{mm} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043348660",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042514755",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "85 . A pool has a rectangular base of 10 ft by 20 ft and a depth of 6 ft. What is the change in volume if you only fill it up to 5.5 ft?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042514755",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043424666",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "86 . An ice cream cone has height 4 in. and radius 1 in. If the cone is 0.1 in. thick, what is the difference between the volume of the cone, including the shell, and the volume of the ice cream you can fit inside the shell?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043424666",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042514174",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "87 . $\\sqrt{1 - x} \\approx 1 - \\frac{1}{2} x$",
+      "prompt_latex_bits": [
+        "\\sqrt{1 - x} \\approx 1 - \\frac{1}{2} x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042514174",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043430031",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "88 . $\\frac{1}{\\sqrt{1 - x^{2}}} \\approx 1$",
+      "prompt_latex_bits": [
+        "\\frac{1}{\\sqrt{1 - x^{2}}} \\approx 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043430031",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043180116",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 4.2 Exercises",
+      "prompt_text": "89 . $\\sqrt{c^{2} + x^{2}} \\approx c$",
+      "prompt_latex_bits": [
+        "\\sqrt{c^{2} + x^{2}} \\approx c"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043180116",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-17T16:21:41.593938+00:00",
+  "stage": "1_inventory"
+}

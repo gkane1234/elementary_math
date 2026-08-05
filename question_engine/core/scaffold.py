@@ -22,7 +22,11 @@ def make_catalog_type(
         or config_for_generator(generator_key)
     )
     if resolved_config is None:
-        resolved_config = TypeSettingConfig(count_default=entry.count_default)
+        # Scaffolds / unwired types still expose continuous difficulty via enrichment.
+        resolved_config = TypeSettingConfig(
+            inherits=("common_enrichment",),
+            count_default=entry.count_default,
+        )
     elif resolved_config.count_default == 10 and entry.count_default != 10:
         resolved_config = TypeSettingConfig(
             setting_profile=resolved_config.setting_profile,

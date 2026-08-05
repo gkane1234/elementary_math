@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Calculus derivative-rules gallery</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+
+</style>
+<link rel="stylesheet" href="../_assets/katex/katex.min.css"/>
+<script defer src="../_assets/katex/katex.min.js"></script>
+<script defer src="../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>Calculus derivative-rules gallery</h1>
+<p>Generated: 2026-07-29T16:29:56.182161+00:00</p>
+<p>Continuous-D samples via live <code>_generate_for_type</code> (D = 0, 5, 10, 15, 20, 25, 2/level).</p>
+<p>Open <a href="gallery.html">gallery.html</a> in a browser for KaTeX.</p>
+<h2>Structure inventory (all types)</h2>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>66</strong> · samples: <strong>180</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_product_rule:power+product+sum</code></td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>derivative_quotient_rule:power+quotient+sum</code></td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_trig:chain</code></td>
+<td>9</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:power+sum</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>derivative_logarithmic:power</code></td>
+<td>7</td>
+</tr>
+<tr>
+<td><code>derivative_chain_rule:chain</code></td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>derivative_chain_rule:chain+power</code></td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:poly3_second</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:linear</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:poly4_third</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:trig</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_logarithmic:root</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:power</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:power+quotient+sum</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:quad</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:limit_x</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:linear_coef</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:circle</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:linear</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:chain+power+product</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:power+product</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:log_x</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:power</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:poly</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:quad_const</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:cube</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:named</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:ellipse</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:line_prod</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:cubic</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:exp</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_trig:power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:chain+power+product+sum</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:a_kx</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:a_x</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:log_linear</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:log_power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_product_rule:power+product</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_quotient_rule:power+quotient</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:chain</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:chain+power+quotient</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:power+quotient</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:cubic</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:exp</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:poly</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:reciprocal</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:limit_h</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:poly</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:eval</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:exp</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:exp_k</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:cubes</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:ln</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:power_med</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:table</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_trig:chain+power</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:chain</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:chain+power</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_logarithmic:product_powers</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:change_order</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:reciprocal</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:sqrt</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:trig</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h2>c1: Average rates of change</h2>
+<p><code>calc_diff_average_rates_of_change</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>5</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>average_rate_of_change:linear</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:quad</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:poly</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:quad_const</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>average_rate_of_change:reciprocal</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Find the average rate of change of }f(x)=x^{2}\text{ on }[3,4].$</td>
+<td>$7$</td>
+<td><code>average_rate_of_change:quad · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find the average rate of change of }f(x)=x^{2}\text{ on }[2,4].$</td>
+<td>$6$</td>
+<td><code>average_rate_of_change:quad · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find the average rate of change of }f(x)=3x - 3\text{ on }[2,4].$</td>
+<td>$3$</td>
+<td><code>average_rate_of_change:linear · band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find the average rate of change of }f(x)=x^{2}\text{ on }[1,4].$</td>
+<td>$5$</td>
+<td><code>average_rate_of_change:quad · band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find the average rate of change of }f(x)=-4x - 2\text{ on }[0,1].$</td>
+<td>$-4$</td>
+<td><code>average_rate_of_change:linear · band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find the average rate of change of }f(x)=3x^{2} - 3\text{ on }[2,6].$</td>
+<td>$24$</td>
+<td><code>average_rate_of_change:quad_const · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find the average rate of change of }f(x)=-4x\text{ on }[0,2].$</td>
+<td>$-4$</td>
+<td><code>average_rate_of_change:linear · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find the average rate of change of }f(x)=\frac{1}{x}\text{ on }[2,4].$</td>
+<td>$-\frac{1}{8}$</td>
+<td><code>average_rate_of_change:reciprocal · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find the average rate of change of }f(x)=2x^{2} - 3x - 1\text{ on }[1,5].$</td>
+<td>$9$</td>
+<td><code>average_rate_of_change:poly · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find the average rate of change of }f(x)=2x^{2} + 4\text{ on }[3,8].$</td>
+<td>$22$</td>
+<td><code>average_rate_of_change:quad_const · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find the average rate of change of }f(x)=x^{2} - 3x + 1\text{ on }[2,4].$</td>
+<td>$3$</td>
+<td><code>average_rate_of_change:poly · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find the average rate of change of }f(x)=-3x - 2\text{ on }[0,4].$</td>
+<td>$-3$</td>
+<td><code>average_rate_of_change:linear · band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Chain Rule</h2>
+<p><code>calc_diff_chain_rule</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>2</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_chain_rule:chain</code></td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>derivative_chain_rule:chain+power</code></td>
+<td>6</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(2x - 3\right)^{4}\right)$</td>
+<td>$4\left(2x - 3\right)^{3}\left(2\right)$</td>
+<td><code>derivative_chain_rule:chain+power · classes=algebraic; ups=use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(x + 3\right)^{2}\right)$</td>
+<td>$2\left(x + 3\right)$</td>
+<td><code>derivative_chain_rule:chain+power · classes=algebraic; ups=use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\left[\sqrt{x + 3}\right]$</td>
+<td>$\frac{1}{2\sqrt{x + 3}}$</td>
+<td><code>derivative_chain_rule:chain · classes=algebraic,roots; ups=extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\left[\left(x^{2} + 2\right)^{3}\right]$</td>
+<td>$3\left(x^{2} + 2\right)^{2}\left(2x\right)$</td>
+<td><code>derivative_chain_rule:chain+power · classes=algebraic; ups=extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[\sqrt{4x + 2}\right]$</td>
+<td>$\frac{4}{2\sqrt{4x + 2}}$</td>
+<td><code>derivative_chain_rule:chain · classes=algebraic,roots; ups=extra_term,higher_power,mix_classes,use_chain,use_product; chain=1</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[\sqrt{4x + 5}\right]$</td>
+<td>$\frac{4}{2\sqrt{4x + 5}}$</td>
+<td><code>derivative_chain_rule:chain · classes=algebraic,roots; ups=extra_term,higher_power,mix_classes,use_chain,use_product; chain=1</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find }\frac{d}{dx}\left(\sqrt{4x}\right)$</td>
+<td>$\frac{4}{2\sqrt{4x}}$</td>
+<td><code>derivative_chain_rule:chain · classes=algebraic,roots; ups=chain_depth_2,class_roots,extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[\left(\left(x^{2} + 3\right)^{2}\right)^{2}\right]$</td>
+<td>$2\left(\left(x^{2} + 3\right)^{2}\right)\left(2\left(x^{2} + 3\right)\left(2x\right)\right)$</td>
+<td><code>derivative_chain_rule:chain+power · classes=algebraic; ups=chain_depth_2,class_roots,extra_term,higher_power,use_chain; chain=2</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[\left(\left(2x^{2} - 3\right)^{4}\right)^{3}\right]$</td>
+<td>$3\left(\left(2x^{2} - 3\right)^{4}\right)^{2}\left(4\left(2x^{2} - 3\right)^{3}\left(4x\right)\right)$</td>
+<td><code>derivative_chain_rule:chain+power · classes=algebraic; ups=chain_depth_2,class_roots,extra_term,higher_power,mix_classes; chain=2</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[\sqrt{4x + 7}\right]$</td>
+<td>$\frac{4}{2\sqrt{4x + 7}}$</td>
+<td><code>derivative_chain_rule:chain · classes=algebraic,roots; ups=chain_depth_2,class_roots,extra_term,higher_power,mix_classes; chain=1</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(\left(3x^{2} + 8\right)^{3}\right)^{2}\right)$</td>
+<td>$2\left(\left(3x^{2} + 8\right)^{3}\right)\left(3\left(3x^{2} + 8\right)^{2}\left(6x\right)\right)$</td>
+<td><code>derivative_chain_rule:chain+power · classes=algebraic; ups=chain_depth_2,class_roots,extra_term,higher_power,mix_classes; chain=2</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\sqrt{9x + 2}\right]$</td>
+<td>$\frac{9}{2\sqrt{9x + 2}}$</td>
+<td><code>derivative_chain_rule:chain · classes=algebraic,roots; ups=chain_depth_2,class_roots,extra_term,higher_power,mix_classes; chain=1</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Definition of the derivative</h2>
+<p><code>calc_diff_definition_of_the_derivative</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>6</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>definition_of_derivative:limit_x</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:linear_coef</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:cube</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:named</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:limit_h</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>definition_of_derivative:poly</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\lim_{x\to 2}\frac{x^{2}-4}{x-2}$</td>
+<td>$4$</td>
+<td><code>definition_of_derivative:limit_x · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\lim_{x\to 1}\frac{x^{2}-1}{x-1}$</td>
+<td>$2$</td>
+<td><code>definition_of_derivative:limit_x · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\lim_{h\to 0}\frac{2(2+h)^{2}-8}{h}$</td>
+<td>$8$</td>
+<td><code>definition_of_derivative:linear_coef · band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Use the definition to find }f'(1)\text{ for }f(x)=3x^{2}.$</td>
+<td>$6$</td>
+<td><code>definition_of_derivative:named · band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Use the definition to find }f'(5)\text{ for }f(x)=1 + x^{2}.$</td>
+<td>$10$</td>
+<td><code>definition_of_derivative:poly · band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Use the definition to find }f'(1)\text{ for }f(x)=4x^{2}.$</td>
+<td>$8$</td>
+<td><code>definition_of_derivative:named · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\lim_{h\to 0}\frac{(1+h)^{2}-1}{h}$</td>
+<td>$2$</td>
+<td><code>definition_of_derivative:limit_h · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\lim_{h\to 0}\frac{(5+h)^{3}-125}{h}$</td>
+<td>$75$</td>
+<td><code>definition_of_derivative:cube · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\lim_{h\to 0}\frac{4(3+h)^{2}-36}{h}$</td>
+<td>$24$</td>
+<td><code>definition_of_derivative:linear_coef · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\lim_{h\to 0}\frac{(2+h)^{3}-8}{h}$</td>
+<td>$12$</td>
+<td><code>definition_of_derivative:cube · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\lim_{h\to 0}\frac{3(1+h)^{2}-3}{h}$</td>
+<td>$6$</td>
+<td><code>definition_of_derivative:linear_coef · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\lim_{x\to 3}\frac{x^{2}-9}{x-3}$</td>
+<td>$6$</td>
+<td><code>definition_of_derivative:limit_x · band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Higher order derivatives</h2>
+<p><code>calc_diff_higher_order_derivatives</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>5</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_higher_order:poly3_second</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:poly4_third</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:eval</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:exp</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_higher_order:exp_k</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Find }f''(x)\text{ for }f(x)=2x^{3} + x^{2} - 3x - 3.$</td>
+<td>$12x + 2$</td>
+<td><code>derivative_higher_order:poly3_second · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find }f''(x)\text{ for }f(x)=x^{3} + 2x^{2} - 3x.$</td>
+<td>$6x + 4$</td>
+<td><code>derivative_higher_order:poly3_second · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find }f''(x)\text{ for }f(x)=-4 + 2x + 5x^{2} + 2x^{3}.$</td>
+<td>$12x + 10$</td>
+<td><code>derivative_higher_order:poly3_second · band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find }f''(x)\text{ for }f(x)=x^{3} + 3x^{2} + 5x - 1.$</td>
+<td>$6x + 6$</td>
+<td><code>derivative_higher_order:poly3_second · band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find }f'''(x)\text{ for }f(x)=4x^{4} + x^{3} + 4x^{2} - 2x + 1.$</td>
+<td>$96x + 6$</td>
+<td><code>derivative_higher_order:poly4_third · band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find }f'''(x)\text{ for }f(x)=x^{4} + x^{3} + 3x^{2} + 3x + 1.$</td>
+<td>$24x + 6$</td>
+<td><code>derivative_higher_order:poly4_third · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find }\frac{d^{2}}{dx^{2}}e^{2x}.$</td>
+<td>$4e^{2x}$</td>
+<td><code>derivative_higher_order:exp_k · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find }f'''(x)\text{ for }f(x)=3x^{4} - 4x^{3} + 6x^{2} + 4x - 1.$</td>
+<td>$72x - 24$</td>
+<td><code>derivative_higher_order:poly4_third · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d^{2}}{dx^{2}}e^{x}.$</td>
+<td>$e^{x}$</td>
+<td><code>derivative_higher_order:exp · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }f''(x)\text{ for }f(x)=3x^{3} - 6x^{2} - 4x + 2.$</td>
+<td>$18x - 12$</td>
+<td><code>derivative_higher_order:poly3_second · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }f''(2)\text{ for }f(x)=4x^{3} - x^{2} + 3x - 4.$</td>
+<td>$46$</td>
+<td><code>derivative_higher_order:eval · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }f'''(x)\text{ for }f(x)=-7 - 3x + x^{2} - 2x^{3} + 4x^{4}.$</td>
+<td>$96x - 12$</td>
+<td><code>derivative_higher_order:poly4_third · band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Implicit</h2>
+<p><code>calc_diff_implicit</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>5</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_implicit:trig</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:circle</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:ellipse</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:line_prod</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_implicit:cubes</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Differentiate implicitly: }x^{2}+y^{2}=3.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=-\frac{x}{y}$</td>
+<td><code>derivative_implicit:circle · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Differentiate implicitly: }x^{2}+y^{2}=2.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=-\frac{x}{y}$</td>
+<td><code>derivative_implicit:circle · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Differentiate implicitly: }x^{2}+y^{2}=3.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=-\frac{x}{y}$</td>
+<td><code>derivative_implicit:circle · band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Differentiate implicitly: }xy=3.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=-\frac{y}{x}$</td>
+<td><code>derivative_implicit:line_prod · band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Differentiate implicitly: }x^{3}+y^{3}=3.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=-\frac{x^{2}}{y^{2}}$</td>
+<td><code>derivative_implicit:cubes · band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Differentiate implicitly: }\sin(x)+\cos(y)=0.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=\frac{\cos(x)}{\sin(y)}$</td>
+<td><code>derivative_implicit:trig · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Differentiate implicitly: }xy=4.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=-\frac{y}{x}$</td>
+<td><code>derivative_implicit:line_prod · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Differentiate implicitly: }\sin(x)+\cos(y)=0.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=\frac{\cos(x)}{\sin(y)}$</td>
+<td><code>derivative_implicit:trig · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Differentiate implicitly: }\sin(x)+\cos(y)=0.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=\frac{\cos(x)}{\sin(y)}$</td>
+<td><code>derivative_implicit:trig · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Differentiate implicitly: }5x^{2}+y^{2}=1.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=-\frac{10x}{y}$</td>
+<td><code>derivative_implicit:ellipse · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Differentiate implicitly: }\sin(x)+\cos(y)=0.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=\frac{\cos(x)}{\sin(y)}$</td>
+<td><code>derivative_implicit:trig · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Differentiate implicitly: }3x^{2}+y^{2}=2.\text{ Solve for }\frac{dy}{dx}.$</td>
+<td>$\frac{dy}{dx}=-\frac{6x}{y}$</td>
+<td><code>derivative_implicit:ellipse · band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Instantaneous rates of change</h2>
+<p><code>calc_diff_instantaneous_rates_of_change</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>7</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>instantaneous_rate_of_change:power</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:cubic</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:exp</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:poly</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:reciprocal</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:sqrt</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>instantaneous_rate_of_change:trig</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=x^{2}\text{ at }x=1.$</td>
+<td>$2$</td>
+<td><code>instantaneous_rate_of_change:power · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=x^{2}\text{ at }x=2.$</td>
+<td>$4$</td>
+<td><code>instantaneous_rate_of_change:power · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=x^{2} - 1\text{ at }x=1.$</td>
+<td>$2$</td>
+<td><code>instantaneous_rate_of_change:poly · band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=-1 + 2x^{2}\text{ at }x=1.$</td>
+<td>$4$</td>
+<td><code>instantaneous_rate_of_change:poly · band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=-x + 2x^{3}\text{ at }x=2.$</td>
+<td>$23$</td>
+<td><code>instantaneous_rate_of_change:cubic · band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=e^{3x}\text{ at }x=0.$</td>
+<td>$3$</td>
+<td><code>instantaneous_rate_of_change:exp · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=\cos(x)\text{ at }x=0.$</td>
+<td>$0$</td>
+<td><code>instantaneous_rate_of_change:trig · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=x^{3} - x\text{ at }x=4.$</td>
+<td>$47$</td>
+<td><code>instantaneous_rate_of_change:cubic · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=e^{3x}\text{ at }x=0.$</td>
+<td>$3$</td>
+<td><code>instantaneous_rate_of_change:exp · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=x^{1/2}\text{ at }x=1.$</td>
+<td>$\frac{1}{2}$</td>
+<td><code>instantaneous_rate_of_change:sqrt · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=x^{-1}\text{ at }x=3.$</td>
+<td>$-\frac{1}{9}$</td>
+<td><code>instantaneous_rate_of_change:reciprocal · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find the instantaneous rate of change of }f(x)=x^{4}\text{ at }x=4.$</td>
+<td>$256$</td>
+<td><code>instantaneous_rate_of_change:power · band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Inverse functions</h2>
+<p><code>calc_diff_inverse_functions</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>7</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_inverse_functions:linear</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:cubic</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:exp</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:ln</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:power_med</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_functions:table</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$f(x)=x^{2};\quad f'(2)=4.\quad\text{Find }(f^{-1})'(4).$</td>
+<td>$\frac{1}{4}$</td>
+<td><code>derivative_inverse_functions:power · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$f(x)=x^{2};\quad f'(2)=4.\quad\text{Find }(f^{-1})'(4).$</td>
+<td>$\frac{1}{4}$</td>
+<td><code>derivative_inverse_functions:power · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$f(x)=2x - 3.\quad\text{Find }(f^{-1})'(x).$</td>
+<td>$\frac{1}{2}$</td>
+<td><code>derivative_inverse_functions:linear · band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$f(x)=2x - 3.\quad\text{Find }(f^{-1})'(x).$</td>
+<td>$\frac{1}{2}$</td>
+<td><code>derivative_inverse_functions:linear · band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$f(2)=2,\ f'(2)=6.\quad\text{Find }(f^{-1})'(2).$</td>
+<td>$\frac{1}{6}$</td>
+<td><code>derivative_inverse_functions:table · band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$f(x)=e^{x};\quad f(0)=1,\ f'(0)=1.\quad\text{Find }(f^{-1})'(1).$</td>
+<td>$1$</td>
+<td><code>derivative_inverse_functions:exp · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$f(x)=\ln(x);\quad f(e)=1,\ f'(e)=\frac{1}{e}.\quad\text{Find }(f^{-1})'(1).$</td>
+<td>$e$</td>
+<td><code>derivative_inverse_functions:ln · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$f(x)=3x + 2.\quad\text{Find }(f^{-1})'(x).$</td>
+<td>$\frac{1}{3}$</td>
+<td><code>derivative_inverse_functions:linear · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$f(x)=x^{3}+x;\quad f'(2)=13.\quad\text{Find }(f^{-1})'(10).$</td>
+<td>$\frac{1}{13}$</td>
+<td><code>derivative_inverse_functions:cubic · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$f(x)=e^{x};\quad f(0)=1,\ f'(0)=1.\quad\text{Find }(f^{-1})'(1).$</td>
+<td>$1$</td>
+<td><code>derivative_inverse_functions:exp · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$f(x)=x^{3}+x;\quad f'(2)=13.\quad\text{Find }(f^{-1})'(10).$</td>
+<td>$\frac{1}{13}$</td>
+<td><code>derivative_inverse_functions:cubic · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$f(x)=x^{3};\quad f'(2)=12.\quad\text{Find }(f^{-1})'(8).$</td>
+<td>$\frac{1}{12}$</td>
+<td><code>derivative_inverse_functions:power_med · band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Inverse trigonometric</h2>
+<p><code>calc_diff_inverse_trigonometric</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>3</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_inverse_trig:chain</code></td>
+<td>9</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_trig:power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_inverse_trig:chain+power</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[\arctan(x)\right]$</td>
+<td>$\frac{1}{1+x^{2}}$</td>
+<td><code>derivative_inverse_trig:power · classes=invtrig; band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find }\frac{d}{dx}\left(\arctan(x)\right)$</td>
+<td>$\frac{1}{1+x^{2}}$</td>
+<td><code>derivative_inverse_trig:power · classes=invtrig; band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find }\frac{d}{dx}\left(\arccos(2x)\right)$</td>
+<td>$-\frac{2}{\sqrt{1-(2x)^{2}}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\left[\arctan(5x)\right]$</td>
+<td>$\frac{5}{1+(5x)^{2}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[\arccos(2x)\right]$</td>
+<td>$-\frac{2}{\sqrt{1-(2x)^{2}}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=chain_depth_2,extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find }\frac{d}{dx}\left(\arctan(2x)\right)$</td>
+<td>$\frac{2}{1+(2x)^{2}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=chain_depth_2,extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[\arctan(3x)\right]$</td>
+<td>$\frac{3}{1+(3x)^{2}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=chain_depth_2,class_invtrig,extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[\left(\left(x^{2} + 3\right)^{4}\right)^{3}\right]$</td>
+<td>$3\left(\left(x^{2} + 3\right)^{4}\right)^{2}\left(4\left(x^{2} + 3\right)^{3}\left(2x\right)\right)$</td>
+<td><code>derivative_inverse_trig:chain+power · classes=algebraic; ups=chain_depth_2,class_invtrig,extra_term,higher_power,use_chain; chain=2</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d}{dx}\left(\arcsin(5x)\right)$</td>
+<td>$\frac{5}{\sqrt{1-(5x)^{2}}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=chain_depth_2,class_invtrig,extra_term,higher_power,mix_classes; chain=1</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[\arctan(3x)\right]$</td>
+<td>$\frac{3}{1+(3x)^{2}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=chain_depth_2,class_invtrig,extra_term,higher_power,mix_classes; chain=1</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\arctan(2x)\right]$</td>
+<td>$\frac{2}{1+(2x)^{2}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=chain_depth_2,class_invtrig,extra_term,higher_power,mix_classes; chain=1</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\arctan(5x)\right]$</td>
+<td>$\frac{5}{1+(5x)^{2}}$</td>
+<td><code>derivative_inverse_trig:chain · classes=algebraic,invtrig; ups=chain_depth_2,class_invtrig,extra_term,higher_power,mix_classes; chain=1</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Logarithmic</h2>
+<p><code>calc_diff_logarithmic</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>3</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_logarithmic:power</code></td>
+<td>7</td>
+</tr>
+<tr>
+<td><code>derivative_logarithmic:root</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_logarithmic:product_powers</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Use logarithmic differentiation to find }\frac{d}{dx}\left[x^{3}\right].$</td>
+<td>$3x^{2}$</td>
+<td><code>derivative_logarithmic:power · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Use logarithmic differentiation to find }\frac{d}{dx}\left[x^{3}\right].$</td>
+<td>$3x^{2}$</td>
+<td><code>derivative_logarithmic:power · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Use logarithmic differentiation to find }\frac{d}{dx}\left[x^{4}\right].$</td>
+<td>$4x^{3}$</td>
+<td><code>derivative_logarithmic:power · band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Use logarithmic differentiation to find }\frac{d}{dx}\left[x^{4}\right].$</td>
+<td>$4x^{3}$</td>
+<td><code>derivative_logarithmic:power · band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Use logarithmic differentiation: }y=\sqrt{x(x+1)}.\ \text{Find }y'.$</td>
+<td>$\sqrt{x(x+1)}\cdot\frac{1}{2}\left(\frac{1}{x}+\frac{1}{x+1}\right)$</td>
+<td><code>derivative_logarithmic:root · band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Use logarithmic differentiation: }y=\sqrt{x(x+1)}.\ \text{Find }y'.$</td>
+<td>$\sqrt{x(x+1)}\cdot\frac{1}{2}\left(\frac{1}{x}+\frac{1}{x+1}\right)$</td>
+<td><code>derivative_logarithmic:root · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Use logarithmic differentiation to find }\frac{d}{dx}\left[x^{4}\right].$</td>
+<td>$4x^{3}$</td>
+<td><code>derivative_logarithmic:power · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Use logarithmic differentiation: }y=x^{4}(x+1)^{4}.\ \text{Find }y'.$</td>
+<td>$x^{4}(x+1)^{4}\left(\frac{4}{x}+\frac{4}{x+1}\right)$</td>
+<td><code>derivative_logarithmic:product_powers · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Use logarithmic differentiation: }y=\sqrt{x(x+1)}.\ \text{Find }y'.$</td>
+<td>$\sqrt{x(x+1)}\cdot\frac{1}{2}\left(\frac{1}{x}+\frac{1}{x+1}\right)$</td>
+<td><code>derivative_logarithmic:root · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Use logarithmic differentiation: }y=\sqrt{x(x+1)}.\ \text{Find }y'.$</td>
+<td>$\sqrt{x(x+1)}\cdot\frac{1}{2}\left(\frac{1}{x}+\frac{1}{x+1}\right)$</td>
+<td><code>derivative_logarithmic:root · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Use logarithmic differentiation to find }\frac{d}{dx}\left[x^{5}\right].$</td>
+<td>$5x^{4}$</td>
+<td><code>derivative_logarithmic:power · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Use logarithmic differentiation to find }\frac{d}{dx}\left[x^{4}\right].$</td>
+<td>$4x^{3}$</td>
+<td><code>derivative_logarithmic:power · band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Natural logarithms and exponentials</h2>
+<p><code>calc_diff_natural_logarithms_and_exponentials</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>6</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_ln_exp:chain+power+product</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:power+product</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:chain+power+product+sum</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:chain</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>derivative_ln_exp:chain+power</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Find }\frac{d}{dx}\left(e^{x}\right)$</td>
+<td>$e^{x}$</td>
+<td><code>derivative_ln_exp:power · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find }\frac{d}{dx}\left(e^{x}\right)$</td>
+<td>$e^{x}$</td>
+<td><code>derivative_ln_exp:power · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\left[\left(3x^{2} - 2\right)^{3}\right]$</td>
+<td>$3\left(3x^{2} - 2\right)^{2}\left(6x\right)$</td>
+<td><code>derivative_ln_exp:chain+power · classes=algebraic; ups=extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find }\frac{d}{dx}\left(\ln\left\</td>
+<td>2x + 3\right\</td>
+<td>\right)$</td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[\left(\ln\left\</td>
+<td>4x + 2\right\</td>
+<td>\right)\left(-3x^{5}\right)\right]$</td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(e^{x}\right)\left(2x^{5}\right)\right)$</td>
+<td>$\left(e^{x}\right)\left(2x^{5}\right)+\left(e^{x}\right)\left(10x^{4}\right)$</td>
+<td><code>derivative_ln_exp:power+product · classes=algebraic,exp; ups=extra_term,higher_power,mix_classes,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(4x^{5}\right)\left(\ln\left\</td>
+<td>3x + 3\right\</td>
+<td>\right)\right)$</td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(\ln(x)\right)\left(5x^{5}\right)\right)$</td>
+<td>$\left(\frac{1}{x}\right)\left(5x^{5}\right)+\left(\ln(x)\right)\left(25x^{4}\right)$</td>
+<td><code>derivative_ln_exp:power+product · classes=algebraic,log; ups=chain_depth_2,extra_term,higher_power,mix_classes,use_chain; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[\left(3x^{3} - 5x^{2} + 7x - 1\right)\left(\ln\left\</td>
+<td>4x + 4\right\</td>
+<td>\right)\right]$</td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[\left(\ln\left\</td>
+<td>5x + 6\right\</td>
+<td>\right)\left(2x^{3} - 4x^{2} + 3x + 6\right)\right]$</td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(-7x^{2}\right)\left(\ln(x)\right)\right)$</td>
+<td>$\left(-14x\right)\left(\ln(x)\right)+\left(-7x^{2}\right)\left(\frac{1}{x}\right)$</td>
+<td><code>derivative_ln_exp:power+product · classes=algebraic,log; ups=chain_depth_2,class_exp,class_log,extra_term,higher_power; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\left(-x^{2}\right)\left(e^{x + 3}\right)\right]$</td>
+<td>$\left(-2x\right)\left(e^{x + 3}\right)+\left(-x^{2}\right)\left(1e^{x + 3}\right)$</td>
+<td><code>derivative_ln_exp:chain+power+product · classes=algebraic,exp; ups=chain_depth_2,class_exp,class_log,extra_term,higher_power; chain=1</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Other base logarithms and exponentials</h2>
+<p><code>calc_diff_other_base_logarithms_and_exponentials</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>6</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_other_base:log_x</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:a_kx</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:a_x</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:log_linear</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:log_power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_other_base:change_order</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\log_{2}(x)$</td>
+<td>$\frac{1}{x\ln(2)}$</td>
+<td><code>derivative_other_base:log_x · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[3^{x}\right]$</td>
+<td>$3^{x}\ln(3)$</td>
+<td><code>derivative_other_base:a_x · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\log_{3}(x)$</td>
+<td>$\frac{1}{x\ln(3)}$</td>
+<td><code>derivative_other_base:log_x · band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\log_{2}(x - 1)$</td>
+<td>$\frac{1}{x - 1\ln(2)}$</td>
+<td><code>derivative_other_base:log_linear · band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[3^{x}\right]$</td>
+<td>$3^{x}\ln(3)$</td>
+<td><code>derivative_other_base:a_x · band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}4^{4x}$</td>
+<td>$44^{4x}\ln(4)$</td>
+<td><code>derivative_other_base:a_kx · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[3\log_{2}(x)\right]$</td>
+<td>$\frac{3}{x\ln(2)}$</td>
+<td><code>derivative_other_base:log_power · band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\log_{3}(x)$</td>
+<td>$\frac{1}{x\ln(3)}$</td>
+<td><code>derivative_other_base:log_x · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[x\cdot 5^{x}\right]$</td>
+<td>$5^{x}+x5^{x}\ln(5)$</td>
+<td><code>derivative_other_base:change_order · band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}2^{2x}$</td>
+<td>$22^{2x}\ln(2)$</td>
+<td><code>derivative_other_base:a_kx · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\log_{3}(x^{3})\right]$</td>
+<td>$\frac{3}{x\ln(3)}$</td>
+<td><code>derivative_other_base:log_power · band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\log_{3}(x + 2)$</td>
+<td>$\frac{1}{x + 2\ln(3)}$</td>
+<td><code>derivative_other_base:log_linear · band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Power Rule</h2>
+<p><code>calc_diff_power_rule</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>2</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_power_rule:power+sum</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:power</code></td>
+<td>4</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[-2x^{3}\right]$</td>
+<td>$-6x^{2}$</td>
+<td><code>derivative_power_rule:power · classes=algebraic; band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find }\frac{d}{dx}\left(2x^{2}\right)$</td>
+<td>$4x$</td>
+<td><code>derivative_power_rule:power · classes=algebraic; band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find }\frac{d}{dx}\left(3x^{2} - x\right)$</td>
+<td>$6x - 1$</td>
+<td><code>derivative_power_rule:power+sum · classes=algebraic; ups=class_roots,extra_term,higher_power; band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\left[x^{3/2}\right]$</td>
+<td>$\frac{3}{2}x^{1/2}$</td>
+<td><code>derivative_power_rule:power · classes=algebraic,roots; ups=class_roots,extra_term,higher_power; band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[2x^{3} + 5x^{2} - 2x + 4\right]$</td>
+<td>$6x^{2} + 10x - 2$</td>
+<td><code>derivative_power_rule:power+sum · classes=algebraic; ups=class_roots,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[x^{1/2}\right]$</td>
+<td>$\frac{1}{2}x^{-1/2}$</td>
+<td><code>derivative_power_rule:power · classes=algebraic,roots; ups=class_roots,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find }\frac{d}{dx}\left(x^{2} - 4x + 1\right)$</td>
+<td>$2x - 4$</td>
+<td><code>derivative_power_rule:power+sum · classes=algebraic; ups=class_roots,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[2x^{3} + 5x^{2} + x + 2\right]$</td>
+<td>$6x^{2} + 10x + 1$</td>
+<td><code>derivative_power_rule:power+sum · classes=algebraic; ups=class_roots,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[x^{3} - x^{2} - x - 1\right]$</td>
+<td>$3x^{2} - 2x - 1$</td>
+<td><code>derivative_power_rule:power+sum · classes=algebraic; ups=class_roots,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d}{dx}\left(x^{3} - 4x^{2} + 3x - 4\right)$</td>
+<td>$3x^{2} - 8x + 3$</td>
+<td><code>derivative_power_rule:power+sum · classes=algebraic; ups=class_roots,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }\frac{d}{dx}\left(3x^{2} + 2x - 3\right)$</td>
+<td>$6x + 2$</td>
+<td><code>derivative_power_rule:power+sum · classes=algebraic; ups=class_roots,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[2x^{3} - 2x^{2} + 7x + 4\right]$</td>
+<td>$6x^{2} - 4x + 7$</td>
+<td><code>derivative_power_rule:power+sum · classes=algebraic; ups=class_roots,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Product Rule</h2>
+<p><code>calc_diff_product_rule</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>2</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_product_rule:power+product+sum</code></td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>derivative_product_rule:power+product</code></td>
+<td>2</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[\left(-x^{3}\right)\left(2x^{4}\right)\right]$</td>
+<td>$\left(-3x^{2}\right)\left(2x^{4}\right)+\left(-x^{3}\right)\left(8x^{3}\right)$</td>
+<td><code>derivative_product_rule:power+product · classes=algebraic; ups=use_product; band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[\left(-3x^{4}\right)\left(-x^{4}\right)\right]$</td>
+<td>$\left(-12x^{3}\right)\left(-x^{4}\right)+\left(-3x^{4}\right)\left(-4x^{3}\right)$</td>
+<td><code>derivative_product_rule:power+product · classes=algebraic; ups=use_product; band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\left[\left(3x^{3} - 2x^{2} + x - 1\right)\left(x^{4}\right)\right]$</td>
+<td>$\left(9x^{2} - 4x + 1\right)\left(x^{4}\right)+\left(3x^{3} - 2x^{2} + x - 1\right)\left(4x^{3}\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=extra_term,higher_power,use_chain,use_product; band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\left[\left(-3x^{5}\right)\left(x^{3} + x^{2} - 4x + 5\right)\right]$</td>
+<td>$\left(-15x^{4}\right)\left(x^{3} + x^{2} - 4x + 5\right)+\left(-3x^{5}\right)\left(3x^{2} + 2x - 4\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=extra_term,higher_power,use_chain,use_product; band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(-4x^{3}\right)\left(x^{2} - 5x + 5\right)\right)$</td>
+<td>$\left(-12x^{2}\right)\left(x^{2} - 5x + 5\right)+\left(-4x^{3}\right)\left(2x - 5\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[\left(2x^{3} + 4x^{2} - x - 1\right)\left(-2x^{6}\right)\right]$</td>
+<td>$\left(6x^{2} + 8x - 1\right)\left(-2x^{6}\right)+\left(2x^{3} + 4x^{2} - x - 1\right)\left(-12x^{5}\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[\left(4x^{6}\right)\left(2x^{3} + 4x^{2} - 5x + 4\right)\right]$</td>
+<td>$\left(24x^{5}\right)\left(2x^{3} + 4x^{2} - 5x + 4\right)+\left(4x^{6}\right)\left(6x^{2} + 8x - 5\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[\left(-x^{6}\right)\left(3x^{3} + 6x^{2} - 2\right)\right]$</td>
+<td>$\left(-6x^{5}\right)\left(3x^{3} + 6x^{2} - 2\right)+\left(-x^{6}\right)\left(9x^{2} + 12x\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(3x^{3} + 2x^{2} - 7x + 7\right)\left(2x^{4}\right)\right)$</td>
+<td>$\left(9x^{2} + 4x - 7\right)\left(2x^{4}\right)+\left(3x^{3} + 2x^{2} - 7x + 7\right)\left(8x^{3}\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[\left(-3x^{3}\right)\left(x^{2} - 2x - 6\right)\right]$</td>
+<td>$\left(-9x^{2}\right)\left(x^{2} - 2x - 6\right)+\left(-3x^{3}\right)\left(2x - 2\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(x^{3} + 5x^{2} - 5x + 4\right)\left(-5x^{3}\right)\right)$</td>
+<td>$\left(3x^{2} + 10x - 5\right)\left(-5x^{3}\right)+\left(x^{3} + 5x^{2} - 5x + 4\right)\left(-15x^{2}\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\left(3x^{3} - 8x^{2} - 5x + 2\right)\left(-7x^{5}\right)\right]$</td>
+<td>$\left(9x^{2} - 16x - 5\right)\left(-7x^{5}\right)+\left(3x^{3} - 8x^{2} - 5x + 2\right)\left(-35x^{4}\right)$</td>
+<td><code>derivative_product_rule:power+product+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Quotient Rule</h2>
+<p><code>calc_diff_quotient_rule</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>2</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_quotient_rule:power+quotient+sum</code></td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>derivative_quotient_rule:power+quotient</code></td>
+<td>2</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[\frac{-3x^{2}}{2x - 3}\right]$</td>
+<td>$\frac{\left(-6x\right)\left(2x - 3\right)-\left(-3x^{2}\right)\left(2\right)}{\left(2x - 3\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient · classes=algebraic; ups=use_quotient; band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[\frac{2x^{3}}{3x - 1}\right]$</td>
+<td>$\frac{\left(6x^{2}\right)\left(3x - 1\right)-\left(2x^{3}\right)\left(3\right)}{\left(3x - 1\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient · classes=algebraic; ups=use_quotient; band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{x^{3} + x^{2} - 3x + 2}{4x - 2}\right)$</td>
+<td>$\frac{\left(3x^{2} + 2x - 3\right)\left(4x - 2\right)-\left(x^{3} + x^{2} - 3x + 2\right)\left(4\right)}{\left(4x - 2\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=extra_term,higher_power,use_chain,use_quotient; band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{2x^{3} + 3x^{2} - 4x}{x + 5}\right)$</td>
+<td>$\frac{\left(6x^{2} + 6x - 4\right)\left(x + 5\right)-\left(2x^{3} + 3x^{2} - 4x\right)\left(1\right)}{\left(x + 5\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=extra_term,higher_power,use_chain,use_quotient; band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{x^{3} - x^{2} + 1}{3x + 5}\right)$</td>
+<td>$\frac{\left(3x^{2} - 2x\right)\left(3x + 5\right)-\left(x^{3} - x^{2} + 1\right)\left(3\right)}{\left(3x + 5\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=extra_term,higher_power,use_chain,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[\frac{3x^{2} - x + 1}{5x + 5}\right]$</td>
+<td>$\frac{\left(6x - 1\right)\left(5x + 5\right)-\left(3x^{2} - x + 1\right)\left(5\right)}{\left(5x + 5\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=extra_term,higher_power,use_chain,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{x^{3} - 5x^{2} - 2x + 3}{5x + 5}\right)$</td>
+<td>$\frac{\left(3x^{2} - 10x - 2\right)\left(5x + 5\right)-\left(x^{3} - 5x^{2} - 2x + 3\right)\left(5\right)}{\left(5x + 5\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{2x^{3} - 3x^{2} - x - 5}{2x - 2}\right)$</td>
+<td>$\frac{\left(6x^{2} - 6x - 1\right)\left(2x - 2\right)-\left(2x^{3} - 3x^{2} - x - 5\right)\left(2\right)}{\left(2x - 2\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{2x^{2} + 6x + 1}{4x + 7}\right)$</td>
+<td>$\frac{\left(4x + 6\right)\left(4x + 7\right)-\left(2x^{2} + 6x + 1\right)\left(4\right)}{\left(4x + 7\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[\frac{3x^{3} - 3x^{2} - 5x - 4}{2x - 2}\right]$</td>
+<td>$\frac{\left(9x^{2} - 6x - 5\right)\left(2x - 2\right)-\left(3x^{3} - 3x^{2} - 5x - 4\right)\left(2\right)}{\left(2x - 2\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\frac{3x^{2} - 3x - 8}{8x + 3}\right]$</td>
+<td>$\frac{\left(6x - 3\right)\left(8x + 3\right)-\left(3x^{2} - 3x - 8\right)\left(8\right)}{\left(8x + 3\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\frac{x^{3} + 5x^{2} + 7x + 7}{7x - 5}\right]$</td>
+<td>$\frac{\left(3x^{2} + 10x + 7\right)\left(7x - 5\right)-\left(x^{3} + 5x^{2} + 7x + 7\right)\left(7\right)}{\left(7x - 5\right)^{2}}$</td>
+<td><code>derivative_quotient_rule:power+quotient+sum · classes=algebraic; ups=chain_depth_2,extra_term,higher_power,use_chain,use_quotient; band=hard</code></td>
+</tr>
+</tbody></table>
+<h2>c1: Trigonometric</h2>
+<p><code>calc_diff_trigonometric</code></p>
+<h3>Structures in this type</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>5</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_trigonometric:power+quotient+sum</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:chain</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:chain+power+quotient</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_trigonometric:power+quotient</code></td>
+<td>2</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[\tan(x)\right]$</td>
+<td>$\sec^{2}(x)$</td>
+<td><code>derivative_trigonometric:power · band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[\cos(x)\right]$</td>
+<td>$-\sin(x)$</td>
+<td><code>derivative_trigonometric:power · band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find }\frac{d}{dx}\left(\cos(3x)\right)$</td>
+<td>$-3\sin(3x)$</td>
+<td><code>derivative_trigonometric:chain · classes=algebraic,trig; ups=extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\frac{d}{dx}\left[\tan(4x)\right]$</td>
+<td>$4\sec^{2}(4x)$</td>
+<td><code>derivative_trigonometric:chain · classes=algebraic,trig; ups=extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{x^{3} + x^{2} - 2x + 3}{5x + 1}\right)$</td>
+<td>$\frac{\left(3x^{2} + 2x - 2\right)\left(5x + 1\right)-\left(x^{3} + x^{2} - 2x + 3\right)\left(5\right)}{\left(5x + 1\right)^{2}}$</td>
+<td><code>derivative_trigonometric:power+quotient+sum · classes=algebraic; ups=extra_term,higher_power,use_product,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\frac{d}{dx}\left[\frac{\cos(x)}{3x - 4}\right]$</td>
+<td>$\frac{\left(-\sin(x)\right)\left(3x - 4\right)-\left(\cos(x)\right)\left(3\right)}{\left(3x - 4\right)^{2}}$</td>
+<td><code>derivative_trigonometric:power+quotient · classes=algebraic,trig; ups=extra_term,higher_power,use_product,use_quotient; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[\frac{3x^{3} - 5x^{2} - 4x - 3}{3x - 4}\right]$</td>
+<td>$\frac{\left(9x^{2} - 10x - 4\right)\left(3x - 4\right)-\left(3x^{3} - 5x^{2} - 4x - 3\right)\left(3\right)}{\left(3x - 4\right)^{2}}$</td>
+<td><code>derivative_trigonometric:power+quotient+sum · classes=algebraic; ups=class_trig,extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\frac{d}{dx}\left[\frac{2x^{3} + 5x^{2} - 2x - 5}{2x + 2}\right]$</td>
+<td>$\frac{\left(6x^{2} + 10x - 2\right)\left(2x + 2\right)-\left(2x^{3} + 5x^{2} - 2x - 5\right)\left(2\right)}{\left(2x + 2\right)^{2}}$</td>
+<td><code>derivative_trigonometric:power+quotient+sum · classes=algebraic; ups=class_trig,extra_term,higher_power,use_chain,use_product; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{d}{dx}\left[\frac{\cos(2x)}{3x + 2}\right]$</td>
+<td>$\frac{\left(-2\sin(2x)\right)\left(3x + 2\right)-\left(\cos(2x)\right)\left(3\right)}{\left(3x + 2\right)^{2}}$</td>
+<td><code>derivative_trigonometric:chain+power+quotient · classes=algebraic,trig; ups=chain_depth_2,class_trig,extra_term,higher_power,use_chain; chain=1</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{2x^{3} + 7x^{2} + 3x + 3}{2x + 3}\right)$</td>
+<td>$\frac{\left(6x^{2} + 14x + 3\right)\left(2x + 3\right)-\left(2x^{3} + 7x^{2} + 3x + 3\right)\left(2\right)}{\left(2x + 3\right)^{2}}$</td>
+<td><code>derivative_trigonometric:power+quotient+sum · classes=algebraic; ups=chain_depth_2,class_trig,extra_term,higher_power,use_chain; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }\frac{d}{dx}\left(\frac{\sin(4x)}{-x^{6}}\right)$</td>
+<td>$\frac{\left(4\cos(4x)\right)\left(-x^{6}\right)-\left(\sin(4x)\right)\left(-6x^{5}\right)}{\left(-x^{6}\right)^{2}}$</td>
+<td><code>derivative_trigonometric:chain+power+quotient · classes=algebraic,trig; ups=chain_depth_2,class_trig,extra_term,higher_power,mix_classes; chain=1</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[\frac{-4x^{4}}{\tan(x)}\right]$</td>
+<td>$\frac{\left(-16x^{3}\right)\left(\tan(x)\right)-\left(-4x^{4}\right)\left(\sec^{2}(x)\right)}{\left(\tan(x)\right)^{2}}$</td>
+<td><code>derivative_trigonometric:power+quotient · classes=algebraic,trig; ups=chain_depth_2,class_trig,extra_term,higher_power,mix_classes; band=hard</code></td>
+</tr>
+</tbody></table>
+</body></html>

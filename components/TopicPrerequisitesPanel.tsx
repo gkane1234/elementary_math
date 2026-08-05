@@ -14,6 +14,7 @@ import {
   type PrerequisiteRef,
 } from "@/lib/prerequisites";
 import type { QuestionTypeInfo } from "@/lib/types";
+import { formatTopicLabel } from "@/lib/topic-labels";
 
 type TopicPrerequisitesPanelProps = {
   types: QuestionTypeInfo[];
@@ -39,7 +40,11 @@ function resolveEntry(
     const course = courses.find((c) => c.id === browseSelection.courseId);
     const chapter = course?.chapters.find((c) => c.id === browseSelection.chapterId);
     const topic = chapter?.topics.find((t) => t.id === browseSelection.topicId);
-    const label = [course?.name, chapter?.name, topic?.name].filter(Boolean).join(" › ");
+    const topicLabel =
+      topic?.typeId != null
+        ? formatTopicLabel(topic.typeId, topic.name)
+        : topic?.name;
+    const label = [course?.name, chapter?.name, topicLabel].filter(Boolean).join(" › ");
     return {
       entry: getPrerequisitesForSelection(browseSelection),
       label: label || "Selected chapter",
@@ -57,7 +62,10 @@ function resolveEntry(
 
   const course = courses.find((c) => c.id === mapped.courseId);
   const chapter = course?.chapters.find((c) => c.id === mapped.chapterId);
-  const label = [course?.name, chapter?.name, mapped.topic.name].filter(Boolean).join(" › ");
+  const topicLabel = mapped.topic.typeId
+    ? formatTopicLabel(mapped.topic.typeId, mapped.topic.name)
+    : mapped.topic.name;
+  const label = [course?.name, chapter?.name, topicLabel].filter(Boolean).join(" › ");
   return {
     entry: getPrerequisiteEntry(mapped.courseId, mapped.chapterId),
     label,

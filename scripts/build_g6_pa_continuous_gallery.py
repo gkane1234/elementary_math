@@ -5,6 +5,7 @@ D = 1000 (unreasonable / unbounded scaling) via the worksheet generate
 settings path. Output:
 
   scripts/output/topic_fit/g6_pa_continuous/gallery.html
+  scripts/output/topic_fit/g6_pa_continuous/gallery.md
 
 Usage:
   $env:PYTHONPATH='.'
@@ -25,6 +26,7 @@ import question_engine.types  # noqa: F401
 from question_engine.api.handler import _resolve_generation_settings
 from question_engine.core.base import QUESTION_TYPES
 from question_engine.generators import GENERATORS
+from question_engine.topic_labels import format_topic_label
 
 OUT = ROOT / "scripts" / "output" / "topic_fit" / "g6_pa_continuous"
 # Classroom ladder + one extreme unbounded sample.
@@ -121,16 +123,14 @@ def _d_heading(d: int) -> str:
     return f"D = {d}"
 
 
-def _append_samples(
-    parts: list[str],
+def _collect_samples(
     *,
     tid: str,
     gen,
     d: int,
     count: int,
     failures: list[str],
-) -> None:
-    parts.append(f"<h3>{_d_heading(d)}</h3>")
+) -> list[dict]:
     try:
         settings = _resolve_generation_settings(
             tid,
@@ -145,32 +145,91 @@ def _append_samples(
     except Exception as exc:  # noqa: BLE001 — gallery should continue
         msg = f"{tid} D={d}: {exc}"
         failures.append(msg)
-        parts.append(f"<p class='err'>{html.escape(msg)}</p>")
-        return
+        return [{"error": msg, "difficulty": d}]
+    rows: list[dict] = []
     for i, q in enumerate(qs):
         prompt = q.prompt_latex or q.prompt_text or ""
         answer = q.answer_latex or q.answer_text or ""
-        # Extreme D can produce huge integers; keep HTML/KaTeX usable.
         if d >= EXTREME_D and len(prompt) > 400:
             prompt = prompt[:400] + "\\ldots"
         if d >= EXTREME_D and len(answer) > 200:
             answer = answer[:200] + "\\ldots"
+        svg = (q.metadata or {}).get("diagram_svg")
+        rows.append(
+            {
+                "difficulty": d,
+                "index": i,
+                "prompt": prompt,
+                "answer": answer,
+                "diagram_svg": svg
+                if isinstance(svg, str) and svg.lstrip().startswith("<svg")
+                else None,
+            }
+        )
+    return rows
+
+
+def _append_html_samples(parts: list[str], tid: str, rows: list[dict]) -> None:
+    if not rows:
+        return
+    d = rows[0]["difficulty"]
+    parts.append(f"<h3>{_d_heading(d)}</h3>")
+    if rows[0].get("error"):
+        parts.append(f"<p class='err'>{html.escape(rows[0]['error'])}</p>")
+        return
+    for row in rows:
         card_cls = "card extreme-card" if d == EXTREME_D else "card"
         parts.append(f"<div class='{card_cls}'>")
         label = f"D={d}"
         if d == EXTREME_D:
             label += " · extreme / unreasonable"
         parts.append(
-            f"<div class='meta'>#{i + 1} · topic=<code>{html.escape(tid)}</code> · "
+            f"<div class='meta'>#{row['index'] + 1} · topic=<code>{html.escape(tid)}</code> · "
             f"{html.escape(label)}</div>"
         )
-        parts.append(f"<div>$${html.escape(prompt)}$$</div>")
-        svg = (q.metadata or {}).get("diagram_svg")
-        if isinstance(svg, str) and svg.lstrip().startswith("<svg"):
-            parts.append(f"<div class='meta'>stimulus</div>{svg}")
-        if answer:
-            parts.append(f"<div class='ans'>→ $${html.escape(answer)}$$</div>")
+        parts.append(f"<div>$${html.escape(row['prompt'])}$$</div>")
+        if row.get("diagram_svg"):
+            parts.append(f"<div class='meta'>stimulus</div>{row['diagram_svg']}")
+        if row.get("answer"):
+            parts.append(f"<div class='ans'>→ $${html.escape(row['answer'])}$$</div>")
         parts.append("</div>")
+
+
+def _build_md(sections: list[tuple[str, str, list[dict]]]) -> str:
+    lines = [
+        "# G6 / PA number-lane continuous difficulty",
+        "",
+        "Open **[gallery.html](gallery.html)** in a browser for KaTeX-rendered math.",
+        "",
+        f"{len(TOPICS)} topics · {N} examples at each of D = "
+        f"{', '.join(str(d) for d in DIFFS)} · {N_EXTREME} at D = {EXTREME_D}.",
+        "",
+    ]
+    for tid, title, all_rows in sections:
+        lines.append(f"## {format_topic_label(tid, title)}")
+        lines.append("")
+        lines.append(f"`{tid}`")
+        lines.append("")
+        note = STRUCTURAL_EXTREME_NOTES.get(tid)
+        if note:
+            lines.append(f"_{note}_")
+            lines.append("")
+        lines.append("| D | # | Prompt | Answer |")
+        lines.append("|--:|--:|--------|--------|")
+        for row in all_rows:
+            d = row["difficulty"]
+            if row.get("error"):
+                lines.append(f"| {d} | — | ERROR: {row['error']} | — |")
+                continue
+            pl = (row.get("prompt") or "").replace("|", "\\|")
+            al = (row.get("answer") or "").replace("|", "\\|")
+            lines.append(
+                f"| {d} | {row['index'] + 1} | ${pl}$ | ${al}$ |"
+                if al
+                else f"| {d} | {row['index'] + 1} | ${pl}$ | — |"
+            )
+        lines.append("")
+    return "\n".join(lines)
 
 
 def main() -> None:
@@ -198,12 +257,15 @@ def main() -> None:
         "<nav class='toc'><strong>Topics:</strong><br/>",
     ]
     for tid, title in TOPICS:
-        parts.append(f"<a href='#{html.escape(tid)}'>{html.escape(title)}</a>")
+        label = format_topic_label(tid, title)
+        parts.append(f"<a href='#{html.escape(tid)}'>{html.escape(label)}</a>")
     parts.append("</nav>")
 
     failures: list[str] = []
+    md_sections: list[tuple[str, str, list[dict]]] = []
     for tid, title in TOPICS:
-        parts.append(f"<h2 id='{html.escape(tid)}'>{html.escape(title)}</h2>")
+        label = format_topic_label(tid, title)
+        parts.append(f"<h2 id='{html.escape(tid)}'>{html.escape(label)}</h2>")
         parts.append(f"<p class='meta'><code>{html.escape(tid)}</code></p>")
         note = STRUCTURAL_EXTREME_NOTES.get(tid)
         if note:
@@ -214,19 +276,21 @@ def main() -> None:
             msg = f"No generator for {tid}"
             failures.append(msg)
             parts.append(f"<p class='err'>{html.escape(msg)}</p>")
+            md_sections.append((tid, title, [{"error": msg, "difficulty": -1, "index": 0}]))
             continue
+        all_rows: list[dict] = []
         for d in DIFFS:
-            _append_samples(
-                parts, tid=tid, gen=gen, d=d, count=N, failures=failures
+            rows = _collect_samples(
+                tid=tid, gen=gen, d=d, count=N, failures=failures
             )
-        _append_samples(
-            parts,
-            tid=tid,
-            gen=gen,
-            d=EXTREME_D,
-            count=N_EXTREME,
-            failures=failures,
+            all_rows.extend(rows)
+            _append_html_samples(parts, tid, rows)
+        rows = _collect_samples(
+            tid=tid, gen=gen, d=EXTREME_D, count=N_EXTREME, failures=failures
         )
+        all_rows.extend(rows)
+        _append_html_samples(parts, tid, rows)
+        md_sections.append((tid, title, all_rows))
 
     if failures:
         parts.append("<h2>Failures</h2><ul>")
@@ -237,7 +301,10 @@ def main() -> None:
     parts.append("</body></html>")
     path = OUT / "gallery.html"
     path.write_text("\n".join(parts), encoding="utf-8")
+    md_path = OUT / "gallery.md"
+    md_path.write_text(_build_md(md_sections), encoding="utf-8")
     print(f"Wrote {path} ({len(TOPICS)} topics, {len(failures)} failures)")
+    print(f"Wrote {md_path}")
     if failures:
         for msg in failures[:20]:
             print(" FAIL", msg)

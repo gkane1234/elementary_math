@@ -1004,6 +1004,9 @@ class DiscreteRelationsFramework(QuestionFramework):
         self._last_plane_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import apply_relations_continuous_knobs
+
+        settings = apply_relations_continuous_knobs(settings)
         m = _random_slope(settings)
         b = _random_intercept(settings)
         row_count = int(settings.get("table_row_count", settings.get("min_terms", 3)))
@@ -1051,6 +1054,9 @@ class ContinuousRelationsFramework(QuestionFramework):
         self._last_plane_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import apply_relations_continuous_knobs
+
+        settings = apply_relations_continuous_knobs(settings)
         m = _random_slope(settings)
         b = _random_intercept(settings)
         x = _random_coord(settings)

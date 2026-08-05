@@ -1,0 +1,933 @@
+{
+  "book": "precalculus-2e",
+  "slug": "4-8-fitting-exponential-models-to-data",
+  "title": "4.8 Fitting Exponential Models to Data",
+  "source_url": "https://openstax.org/books/precalculus-2e/pages/4-8-fitting-exponential-models-to-data",
+  "local_path": "textbooks/openstax/html/precalculus-2e/4-8-fitting-exponential-models-to-data.html",
+  "objectives": [
+    "Build an exponential model from data.",
+    "Build a logarithmic model from data.",
+    "Build a logistic model from data."
+  ],
+  "headings": [
+    "4.8 Fitting Exponential Models to Data",
+    "Learning Objectives",
+    "Building an Exponential Model from Data",
+    "Exponential Regression",
+    "How To",
+    "Example 1",
+    "Try It #1",
+    "Q&A",
+    "Building a Logarithmic Model from Data",
+    "Logarithmic Regression",
+    "How To",
+    "Example 2",
+    "Try It #2",
+    "Building a Logistic Model from Data",
+    "Logistic Regression",
+    "How To",
+    "Example 3",
+    "Try It #3",
+    "Media",
+    "4.8 Section Exercises",
+    "Footnotes"
+  ],
+  "items": [
+    {
+      "item_id": "Example_04_08_01",
+      "kind": "example",
+      "title": "Example 1",
+      "position": 1,
+      "nearest_heading": "How To",
+      "prompt_text": "Using Exponential Regression to Fit a Model to Data In 2007, a university study was published investigating the crash risk of alcohol impaired driving. Data from 2,871 crashes were used to measure the association of a person\u2019s blood alcohol level (BAC) with the risk of being in an accident. Table 1 shows results from the study 9 . The relative risk is a measure of how many times more likely a person is to crash. So, for example, a person with a BAC of 0.09 is 3.54 times as likely to crash as a person who has not been drinking alcohol. BAC 0 0.01 0.03 0.05 0.07 0.09 Relative Risk of Crashing 1 1.03 1.06 1.38 2.09 3.54 BAC 0.11 0.13 0.15 0.17 0.19 0.21 Relative Risk of Crashing 6.41 12.6 22.1 39.05 65.32 99.78 Table 1 Let $x$ represent the BAC level, and let $y$ represent the corresponding relative risk. Use exponential regression to fit a model to these data. After 6 drinks, a person weighing 160 pounds will have a BAC of about $0.16.$ How many times more likely is a person with this weight to crash if they drive after having a 6-pack of beer? Round to the nearest hundredth.",
+      "prompt_latex_bits": [
+        "x",
+        "y",
+        "0.16."
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_04_08_01",
+      "notes": ""
+    },
+    {
+      "item_id": "ti_04_08_01",
+      "kind": "other_exercise",
+      "title": "Try It #1",
+      "position": 2,
+      "nearest_heading": "Try It #1",
+      "prompt_text": "Table 2 shows a recent graduate\u2019s credit card balance each month after graduation. Month 1 2 3 4 5 6 7 8 Debt ($) 620.00 761.88 899.80 1039.93 1270.63 1589.04 1851.31 2154.92 Table 2 \u24d0 Use exponential regression to fit a model to these data. \u24d1 If spending continues at this rate, what will the graduate\u2019s credit card debt be one year after graduating?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "ti_04_08_01",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_04_08_02",
+      "kind": "example",
+      "title": "Example 2",
+      "position": 3,
+      "nearest_heading": "How To",
+      "prompt_text": "Using Logarithmic Regression to Fit a Model to Data Due to advances in medicine and higher standards of living, life expectancy has been increasing in most developed countries since the beginning of the 20th century. Table 3 shows the average life expectancies, in years, of Americans from 1900\u20132010 10 . Year 1900 1910 1920 1930 1940 1950 Life Expectancy(Years) 47.3 50.0 54.1 59.7 62.9 68.2 Year 1960 1970 1980 1990 2000 2010 Life Expectancy(Years) 69.7 70.8 73.7 75.4 76.8 78.7 Table 3 \u24d0 Let $x$ represent time in decades starting with $x = 1$ for the year 1900, $x = 2$ for the year 1910, and so on. Let $y$ represent the corresponding life expectancy. Use logarithmic regression to fit a model to these data. \u24d1 Use the model to predict the average American life expectancy for the year 2030.",
+      "prompt_latex_bits": [
+        "x",
+        "x = 1",
+        "x = 2",
+        "y"
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_04_08_02",
+      "notes": ""
+    },
+    {
+      "item_id": "ti_04_08_02",
+      "kind": "other_exercise",
+      "title": "Try It #2",
+      "position": 4,
+      "nearest_heading": "Try It #2",
+      "prompt_text": "Sales of a video game released in the year 2000 took off at first, but then steadily slowed as time moved on. Table 4 shows the number of games sold, in thousands, from the years 2000\u20132010. Year 2000 2001 2002 2003 2004 2005 Number Sold (thousands) 142 149 154 155 159 161 Year 2006 2007 2008 2009 2010 - Number Sold (thousands) 163 164 164 166 167 - Table 4 \u24d0 Let $x$ represent time in years starting with $x = 1$ for the year 2000. Let $y$ represent the number of games sold in thousands. Use logarithmic regression to fit a model to these data. \u24d1 If games continue to sell at this rate, how many games will sell in 2015? Round to the nearest thousand.",
+      "prompt_latex_bits": [
+        "x",
+        "x = 1",
+        "y"
+      ],
+      "has_solution": false,
+      "source_anchor": "ti_04_08_02",
+      "notes": ""
+    },
+    {
+      "item_id": "Example_04_08_03",
+      "kind": "example",
+      "title": "Example 3",
+      "position": 5,
+      "nearest_heading": "How To",
+      "prompt_text": "Using Logistic Regression to Fit a Model to Data Mobile telephone service has increased rapidly in America since the mid 1990s. Today, almost all residents have cellular service. Table 5 shows the percentage of Americans with cellular service between the years 1995 and 2012 11 . Year Americans with Cellular Service (%) Year Americans with Cellular Service (%) 1995 12.69 2004 62.852 1996 16.35 2005 68.63 1997 20.29 2006 76.64 1998 25.08 2007 82.47 1999 30.81 2008 85.68 2000 38.75 2009 89.14 2001 45.00 2010 91.86 2002 49.16 2011 95.28 2003 55.15 2012 98.17 Table 5 \u24d0 Let $x$ represent time in years starting with $x = 0$ for the year 1995. Let $y$ represent the corresponding percentage of residents with cellular service. Use logistic regression to fit a model to these data. \u24d1 Use the model to calculate the percentage of Americans with cell service in the year 2013. Round to the nearest tenth of a percent. \u24d2 Discuss the value returned for the upper limit, $c .$ What does this tell you about the model? What would the limiting value be if the model were exact?",
+      "prompt_latex_bits": [
+        "x",
+        "x = 0",
+        "y",
+        "c ."
+      ],
+      "has_solution": true,
+      "source_anchor": "Example_04_08_03",
+      "notes": ""
+    },
+    {
+      "item_id": "ti_04_08_03",
+      "kind": "other_exercise",
+      "title": "Try It #3",
+      "position": 6,
+      "nearest_heading": "Try It #3",
+      "prompt_text": "Table 6 shows the population, in thousands, of harbor seals in the Wadden Sea over the years 1997 to 2012. Year Seal Population (Thousands) Year Seal Population (Thousands) 1997 3.493 2005 19.590 1998 5.282 2006 21.955 1999 6.357 2007 22.862 2000 9.201 2008 23.869 2001 11.224 2009 24.243 2002 12.964 2010 24.344 2003 16.226 2011 24.919 2004 18.137 2012 25.108 Table 6 \u24d0 Let $x$ represent time in years starting with $x = 0$ for the year 1997. Let $y$ represent the number of seals in thousands. Use logistic regression to fit a model to these data. \u24d1 Use the model to predict the seal population for the year 2020. \u24d2 To the nearest whole number, what is the limiting value of this model?",
+      "prompt_latex_bits": [
+        "x",
+        "x = 0",
+        "y"
+      ],
+      "has_solution": false,
+      "source_anchor": "ti_04_08_03",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1402840",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 7,
+      "nearest_heading": "Verbal",
+      "prompt_text": "1 . What situations are best modeled by a logistic equation? Give an example, and state a case for why the example is a good fit.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1402840",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1692586",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 8,
+      "nearest_heading": "Verbal",
+      "prompt_text": "2 . What is a carrying capacity? What kind of model has a carrying capacity built into its formula? Why does this make sense?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1692586",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1447042",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 9,
+      "nearest_heading": "Verbal",
+      "prompt_text": "3 . What is regression analysis? Describe the process of performing regression analysis on a graphing utility.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1447042",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1562322",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 10,
+      "nearest_heading": "Verbal",
+      "prompt_text": "4 . What might a scatterplot of data points look like if it were best described by a logarithmic model?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1562322",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1638051",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 11,
+      "nearest_heading": "Verbal",
+      "prompt_text": "5 . What does the y -intercept on the graph of a logistic equation correspond to for a population modeled by that equation?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1638051",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1670879",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 12,
+      "nearest_heading": "Graphical",
+      "prompt_text": "6 . $y = 10.209 e^{- 0.294 x}$",
+      "prompt_latex_bits": [
+        "y = 10.209 e^{- 0.294 x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1670879",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1701699",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 13,
+      "nearest_heading": "Graphical",
+      "prompt_text": "7 . $y = 5.598 - 1.912 ln (x)$",
+      "prompt_latex_bits": [
+        "y = 5.598 - 1.912 ln (x)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1701699",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1519709",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 14,
+      "nearest_heading": "Graphical",
+      "prompt_text": "8 . $y = 2.104 (1.479)^{x}$",
+      "prompt_latex_bits": [
+        "y = 2.104 (1.479)^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1519709",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1693326",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Graphical",
+      "prompt_text": "9 . $y = 4.607 + 2.733 ln (x)$",
+      "prompt_latex_bits": [
+        "y = 4.607 + 2.733 ln (x)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1693326",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1410055",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Graphical",
+      "prompt_text": "10 . $y = \\frac{14.005}{1 + 2.79 e^{- 0.812 x}}$",
+      "prompt_latex_bits": [
+        "y = \\frac{14.005}{1 + 2.79 e^{- 0.812 x}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1410055",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1522155",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Numeric",
+      "prompt_text": "11 . To the nearest whole number, what is the initial value of a population modeled by the logistic equation $P (t) = \\frac{175}{1 + 6.995 e^{- 0.68 t}} ?$ What is the carrying capacity?",
+      "prompt_latex_bits": [
+        "P (t) = \\frac{175}{1 + 6.995 e^{- 0.68 t}} ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1522155",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1346082",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Numeric",
+      "prompt_text": "12 . Rewrite the exponential model $A (t) = 1550 (1.085)^{x}$ as an equivalent model with base $e .$ Express the exponent to four significant digits.",
+      "prompt_latex_bits": [
+        "A (t) = 1550 (1.085)^{x}",
+        "e ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1346082",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1697446",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Numeric",
+      "prompt_text": "13 . A logarithmic model is given by the equation $h (p) = 67.682 - 5.792 ln (p) .$ To the nearest hundredth, for what value of $p$ does $h (p) = 62 ?$",
+      "prompt_latex_bits": [
+        "h (p) = 67.682 - 5.792 ln (p) .",
+        "p",
+        "h (p) = 62 ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1697446",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1405194",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Numeric",
+      "prompt_text": "14 . A logistic model is given by the equation $P (t) = \\frac{90}{1 + 5 e^{- 0.42 t}} .$ To the nearest hundredth, for what value of t does $P (t) = 45 ?$",
+      "prompt_latex_bits": [
+        "P (t) = \\frac{90}{1 + 5 e^{- 0.42 t}} .",
+        "P (t) = 45 ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1405194",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1439754",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Numeric",
+      "prompt_text": "15 . What is the y -intercept on the graph of the logistic model given in the previous exercise?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1439754",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1246586",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Technology",
+      "prompt_text": "16 . Graph the population model to show the population over a span of $3$ years.",
+      "prompt_latex_bits": [
+        "3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1246586",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1408601",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Technology",
+      "prompt_text": "17 . What was the initial population of koi?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1408601",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1535423",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Technology",
+      "prompt_text": "18 . How many koi will the pond have after one and a half years?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1535423",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1678378",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Technology",
+      "prompt_text": "19 . How many months will it take before there are $20$ koi in the pond?",
+      "prompt_latex_bits": [
+        "20"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1678378",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1582861",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Technology",
+      "prompt_text": "20 . Use the intersect feature to approximate the number of months it will take before the population of the pond reaches half its carrying capacity.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1582861",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1658971",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Technology",
+      "prompt_text": "21 . Graph the population model to show the population over a span of $10$ years.",
+      "prompt_latex_bits": [
+        "10"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1658971",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1701908",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Technology",
+      "prompt_text": "22 . What was the initial population of wolves transported to the habitat?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1701908",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1505494",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Technology",
+      "prompt_text": "23 . How many wolves will the habitat have after $3$ years?",
+      "prompt_latex_bits": [
+        "3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1505494",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1271453",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Technology",
+      "prompt_text": "24 . How many years will it take before there are $100$ wolves in the habitat?",
+      "prompt_latex_bits": [
+        "100"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1271453",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1601914",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Technology",
+      "prompt_text": "25 . Use the intersect feature to approximate the number of years it will take before the population of the habitat reaches half its carrying capacity.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1601914",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1432918",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Technology",
+      "prompt_text": "26 . Use a graphing calculator to create a scatter diagram of the data.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1432918",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1514386",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Technology",
+      "prompt_text": "27 . Use the regression feature to find an exponential function that best fits the data in the table.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1514386",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1586463",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Technology",
+      "prompt_text": "28 . Write the exponential function as an exponential equation with base $e .$",
+      "prompt_latex_bits": [
+        "e ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1586463",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1447084",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Technology",
+      "prompt_text": "29 . Graph the exponential equation on the scatter diagram.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1447084",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1447005",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Technology",
+      "prompt_text": "30 . Use the intersect feature to find the value of $x$ for which $f (x) = 4000.$",
+      "prompt_latex_bits": [
+        "x",
+        "f (x) = 4000."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1447005",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1407921",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Technology",
+      "prompt_text": "31 . Use a graphing calculator to create a scatter diagram of the data.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1407921",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1671727",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Technology",
+      "prompt_text": "32 . Use the regression feature to find an exponential function that best fits the data in the table.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1671727",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1652039",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Technology",
+      "prompt_text": "33 . Write the exponential function as an exponential equation with base $e .$",
+      "prompt_latex_bits": [
+        "e ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1652039",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1590772",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Technology",
+      "prompt_text": "34 . Graph the exponential equation on the scatter diagram.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1590772",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1606195",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Technology",
+      "prompt_text": "35 . Use the intersect feature to find the value of $x$ for which $f (x) = 250.$",
+      "prompt_latex_bits": [
+        "x",
+        "f (x) = 250."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1606195",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1371063",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Technology",
+      "prompt_text": "36 . Use a graphing calculator to create a scatter diagram of the data.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1371063",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1650282",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Technology",
+      "prompt_text": "37 . Use the LOGarithm option of the REGression feature to find a logarithmic function of the form $y = a + b ln (x)$ that best fits the data in the table.",
+      "prompt_latex_bits": [
+        "y = a + b ln (x)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1650282",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1432678",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Technology",
+      "prompt_text": "38 . Use the logarithmic function to find the value of the function when $x = 10.$",
+      "prompt_latex_bits": [
+        "x = 10."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1432678",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1392056",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Technology",
+      "prompt_text": "39 . Graph the logarithmic equation on the scatter diagram.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1392056",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1649251",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Technology",
+      "prompt_text": "40 . Use the intersect feature to find the value of $x$ for which $f (x) = 7.$",
+      "prompt_latex_bits": [
+        "x",
+        "f (x) = 7."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1649251",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1432065",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Technology",
+      "prompt_text": "41 . Use a graphing calculator to create a scatter diagram of the data.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1432065",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1426060",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Technology",
+      "prompt_text": "42 . Use the LOG arithm option of the REG ression feature to find a logarithmic function of the form $y = a + b ln (x)$ that best fits the data in the table.",
+      "prompt_latex_bits": [
+        "y = a + b ln (x)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1426060",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1424700",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Technology",
+      "prompt_text": "43 . Use the logarithmic function to find the value of the function when $x = 10.$",
+      "prompt_latex_bits": [
+        "x = 10."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1424700",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1649327",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Technology",
+      "prompt_text": "44 . Graph the logarithmic equation on the scatter diagram.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1649327",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1451593",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Technology",
+      "prompt_text": "45 . Use the intersect feature to find the value of $x$ for which $f (x) = 8.$",
+      "prompt_latex_bits": [
+        "x",
+        "f (x) = 8."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1451593",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1656649",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Technology",
+      "prompt_text": "46 . Use a graphing calculator to create a scatter diagram of the data.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1656649",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1423807",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Technology",
+      "prompt_text": "47 . Use the LOGISTIC regression option to find a logistic growth model of the form $y = \\frac{c}{1 + a e^{- b x}}$ that best fits the data in the table.",
+      "prompt_latex_bits": [
+        "y = \\frac{c}{1 + a e^{- b x}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1423807",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1405629",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Technology",
+      "prompt_text": "48 . Graph the logistic equation on the scatter diagram.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1405629",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1535974",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Technology",
+      "prompt_text": "49 . To the nearest whole number, what is the predicted carrying capacity of the model?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1535974",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1508707",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Technology",
+      "prompt_text": "50 . Use the intersect feature to find the value of $x$ for which the model reaches half its carrying capacity.",
+      "prompt_latex_bits": [
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1508707",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1440074",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Technology",
+      "prompt_text": "51 . Use a graphing calculator to create a scatter diagram of the data.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1440074",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1520217",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Technology",
+      "prompt_text": "52 . Use the LOGISTIC regression option to find a logistic growth model of the form $y = \\frac{c}{1 + a e^{- b x}}$ that best fits the data in the table.",
+      "prompt_latex_bits": [
+        "y = \\frac{c}{1 + a e^{- b x}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1520217",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1705222",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Technology",
+      "prompt_text": "53 . Graph the logistic equation on the scatter diagram.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1705222",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1531111",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Technology",
+      "prompt_text": "54 . To the nearest whole number, what is the predicted carrying capacity of the model?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1531111",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1406372",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Technology",
+      "prompt_text": "55 . Use the intersect feature to find the value of $x$ for which the model reaches half its carrying capacity.",
+      "prompt_latex_bits": [
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1406372",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1583102",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Extensions",
+      "prompt_text": "56 . Recall that the general form of a logistic equation for a population is given by $P (t) = \\frac{c}{1 + a e^{- b t}} ,$ such that the initial population at time $t = 0$ is $P (0) = P_{0} .$ Show algebraically that $\\frac{c - P (t)}{P (t)} = \\frac{c - P_{0}}{P_{0}} e^{- b t} .$",
+      "prompt_latex_bits": [
+        "P (t) = \\frac{c}{1 + a e^{- b t}} ,",
+        "t = 0",
+        "P (0) = P_{0} .",
+        "\\frac{c - P (t)}{P (t)} = \\frac{c - P_{0}}{P_{0}} e^{- b t} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1583102",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1435401",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Extensions",
+      "prompt_text": "57 . Use a graphing utility to find an exponential regression formula $f (x)$ and a logarithmic regression formula $g (x)$ for the points $(1.5 , 1.5)$ and $\\left(\\right. 8.5 , \\text{8}.\\text{5} \\left.\\right) .$ Round all numbers to 6 decimal places. Graph the points and both formulas along with the line $y = x$ on the same axis. Make a conjecture about the relationship of the regression formulas.",
+      "prompt_latex_bits": [
+        "f (x)",
+        "g (x)",
+        "(1.5 , 1.5)",
+        "\\left(\\right. 8.5 , \\text{8}.\\text{5} \\left.\\right) .",
+        "y = x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1435401",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1583256",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Extensions",
+      "prompt_text": "58 . Verify the conjecture made in the previous exercise. Round all numbers to six decimal places when necessary.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1583256",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1700899",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Extensions",
+      "prompt_text": "59 . Find the inverse function $f^{- 1} (x)$ for the logistic function $f (x) = \\frac{c}{1 + a e^{- b x}} .$ Show all steps.",
+      "prompt_latex_bits": [
+        "f^{- 1} (x)",
+        "f (x) = \\frac{c}{1 + a e^{- b x}} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1700899",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1631452",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Extensions",
+      "prompt_text": "60 . Use the result from the previous exercise to graph the logistic model $P (t) = \\frac{20}{1 + 4 e^{- 0.5 t}}$ along with its inverse on the same axis. What are the intercepts and asymptotes of each function?",
+      "prompt_latex_bits": [
+        "P (t) = \\frac{20}{1 + 4 e^{- 0.5 t}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1631452",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:26.098316+00:00",
+  "stage": "1_inventory"
+}

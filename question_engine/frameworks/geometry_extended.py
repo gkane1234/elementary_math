@@ -14,6 +14,7 @@ from .geometry import (
     _ANGLE_LABELS,
     _TRIANGLE_LABELS,
     _angle_symbol,
+    _area_side_bounds,
     _bounds,
     _diagram_enabled,
     _figure_metadata,
@@ -23,6 +24,8 @@ from .geometry import (
     _random_angle,
     _random_radius,
     _random_side,
+    _sample_pair_for_half,
+    _want_half_product_area,
 )
 from ..diagrams import (
     adjacent_angles_figure,
@@ -32,10 +35,13 @@ from ..diagrams import (
     kite_figure,
     parallel_lines_transversal_figure,
     parallelogram_figure,
+    rectangle_figure,
+    rhombus_figure,
     right_triangle_figure,
     segment_figure,
     supplementary_angles_figure,
     trapezoid_figure,
+    triangle_base_height_figure,
     triangle_figure,
     vertical_angles_figure,
 )
@@ -43,10 +49,40 @@ from ..generators.utils import random_int_range
 
 
 def _difficulty_tier(settings: dict) -> str:
-    tier = str(settings.get("difficulty_tier") or "medium").strip().lower()
-    if tier in {"easy", "medium", "hard"}:
-        return tier
-    return "medium"
+    from .difficulty_budget import settings_difficulty_band
+
+    return settings_difficulty_band(settings, default=8.0)
+
+
+def _sample_trapezoid_dims(settings: dict) -> tuple[int, int, int]:
+    """Bases + height with continuous half-area / base-gap effort."""
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    want_half = _want_half_product_area(settings)
+    lo, hi = _area_side_bounds(settings)
+    for _ in range(100):
+        b1 = random.randint(lo, hi)
+        if d < 5:
+            span = 2
+            b2 = random.randint(max(lo, b1 - span), min(hi, b1 + span))
+            if b2 == b1 and hi > lo:
+                b2 = b1 + 1 if b1 < hi else b1 - 1
+        elif d < 12:
+            span = max(3, (hi - lo) // 2)
+            b2 = random.randint(max(lo, b1 - span), min(hi, b1 + span))
+        else:
+            # Force a clear base gap (extra add-then-halve work).
+            min_gap = max(3, int(2 + d / 5))
+            candidates = [x for x in range(lo, hi + 1) if abs(x - b1) >= min_gap]
+            if not candidates:
+                candidates = list(range(lo, hi + 1))
+            b2 = random.choice(candidates)
+        h = random.randint(lo, hi)
+        odd = ((b1 + b2) * h) % 2 == 1
+        if odd == want_half:
+            return b1, b2, h
+    return random.randint(lo, hi), random.randint(lo, hi), random.randint(lo, hi)
 
 
 def _coef_bound(settings: dict, default: int = 4) -> int:
@@ -83,20 +119,44 @@ class AngleAdditionFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import (
+            apply_geometry_continuous_knobs,
+            geometry_angle_structure_from_continuous,
+        )
+
+        settings = apply_geometry_continuous_knobs(settings)
         symbol = _angle_symbol(settings)
+        structure = geometry_angle_structure_from_continuous(settings)
         tier = _difficulty_tier(settings)
 
-        if tier == "easy":
+        if structure is not None:
+            n = random.randint(structure["piece_min"], structure["piece_max"])
+            mode_map = {
+                "sum": "find_total",
+                "subtract": "find_part",
+                "sum_span": "find_span",
+                "subtract_span": "find_span",
+                "crowded_sum": "find_span",
+            }
+            mode = mode_map.get(random.choice(list(structure["modes"])), "find_total")
+            cap = int(structure["total_cap"])
+            hardish = structure["difficulty"] >= 10.0
+        elif tier == "easy":
             n = 2
             mode = random.choice(["find_total", "find_part"])
+            cap = 160
+            hardish = False
         elif tier == "medium":
             n = random.choice([2, 3])
             mode = random.choice(["find_total", "find_part", "find_span"])
+            cap = 165
+            hardish = False
         else:
             n = random.choice([3, 4])
             mode = random.choice(["find_span", "find_part", "find_span", "find_total"])
+            cap = 175
+            hardish = True
 
-        cap = 160 if tier == "easy" else 175
         pieces: list[int] = []
         for _attempt in range(12):
             pieces = []
@@ -168,7 +228,7 @@ class AngleAdditionFramework(GeometryFramework):
             answer_val = sum(pieces[ask_start:ask_end])
             piece_marks = [f"{p}\u00b0" for p in pieces]
             span_marks = [(ask_start, ask_end, "?")]
-            if tier == "hard" and ask_end - ask_start < n and random.random() < 0.55:
+            if hardish and ask_end - ask_start < n and random.random() < 0.55:
                 span_marks.append((0, n, f"{sum(pieces)}\u00b0"))
             prompt = (
                 f"\\text{{Use the diagram to find }} "
@@ -218,11 +278,15 @@ class SegmentAdditionFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from ..diagrams.figure_families import sample_figure_from_settings
+
         unit = _measurement_unit(settings)
         a_len = _random_side(settings)
         b_len = _random_side(settings)
         total = a_len + b_len
         p, q, r = random.sample(_ANGLE_LABELS, 3)
+        # Diversity: number-line family params (tick density / range) vary with D.
+        sample = sample_figure_from_settings("number_line", settings)
         if random.choice([True, False]):
             prompt = (
                 f"\\text{{Point }} {q} \\text{{ is on }} \\overline{{{p}{r}}}.\\ "
@@ -243,6 +307,7 @@ class SegmentAdditionFramework(GeometryFramework):
             "figure": segment_figure(float(total), labels=(p, r), unit=unit),
             "labels": [p, r],
             "length": total,
+            "figure_sample": sample,
         }
         return prompt, "segment addition", answer
 
@@ -253,13 +318,21 @@ class SegmentAdditionFramework(GeometryFramework):
         last = self._last
         if not last:
             return {}
-        return _figure_metadata(
+        meta = _figure_metadata(
             settings,
             figure_type="composite",
             labels=last["labels"],
             dimensions={"length": float(last["length"])},
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
+        sample = last.get("figure_sample")
+        if sample is not None and hasattr(sample, "to_metadata_extras"):
+            # Keep segment SVG; attach family complexity metadata only.
+            extras = sample.to_metadata_extras()
+            extras.pop("diagram_svg", None)
+            meta.update(extras)
+            meta["figure_family"] = "number_line"
+        return meta
 
 
 class AngleRelationshipsFramework(GeometryFramework):
@@ -270,13 +343,22 @@ class AngleRelationshipsFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from ..diagrams.figure_families import sample_figure_from_settings
+
         symbol = _angle_symbol(settings)
         kind = random.choice(["complementary", "supplementary", "vertical"])
         if kind == "complementary":
-            angle = random.randint(15, 75)
+            sample = sample_figure_from_settings("complementary_angles", settings)
+            angle = int(round(float(sample.params["given_deg"])))
             other = 90 - angle
             labels = tuple(random.sample(_ANGLE_LABELS, 4))
-            fig = complementary_angles_figure(float(angle), labels=labels)
+            fig = complementary_angles_figure(
+                float(angle),
+                labels=labels,
+                rotation_deg=float(sample.params.get("rotation_deg", 0.0)),
+                reflect=bool(sample.params.get("reflect", False)),
+                unknown_on=str(sample.params.get("unknown_on", "second")),
+            )
             prompt = (
                 f"\\text{{The diagram shows complementary angles. "
                 f"Find the measure of the unmarked angle.}}"
@@ -284,10 +366,16 @@ class AngleRelationshipsFramework(GeometryFramework):
             answer = f"{other}{symbol}"
             meta_labels = list(labels)
         elif kind == "supplementary":
-            angle = random.randint(25, 155)
+            sample = sample_figure_from_settings("supplementary_angles", settings)
+            angle = int(round(float(sample.params["given_deg"])))
             other = 180 - angle
             labels = tuple(random.sample(_ANGLE_LABELS, 4))
-            fig = supplementary_angles_figure(float(angle), labels=labels)
+            fig = supplementary_angles_figure(
+                float(angle),
+                labels=labels,
+                rotation_deg=float(sample.params.get("rotation_deg", 0.0)),
+                reflect=bool(sample.params.get("reflect", False)),
+            )
             prompt = (
                 f"\\text{{The diagram shows supplementary angles on a straight line. "
                 f"Find the measure of the unmarked angle.}}"
@@ -295,11 +383,16 @@ class AngleRelationshipsFramework(GeometryFramework):
             answer = f"{other}{symbol}"
             meta_labels = list(labels)
         else:
-            angle = random.randint(25, 155)
+            sample = sample_figure_from_settings("vertical_angles", settings)
+            angle = int(round(float(sample.params["given_deg"])))
             if abs(angle - 90) < 8:
                 angle = 70 if angle < 90 else 110
             labels5 = tuple(random.sample(_ANGLE_LABELS, 5))
-            fig = vertical_angles_figure(float(angle), labels=labels5)
+            fig = vertical_angles_figure(
+                float(angle),
+                labels=labels5,
+                rotation_deg=float(sample.params.get("rotation_deg", 0.0)),
+            )
             prompt = (
                 f"\\text{{The diagram shows vertical angles formed by intersecting lines. "
                 f"Find the measure of the unmarked angle.}}"
@@ -311,6 +404,7 @@ class AngleRelationshipsFramework(GeometryFramework):
             "labels": meta_labels,
             "angle": angle,
             "kind": kind,
+            "figure_sample": sample,
         }
         return prompt, f"angle relationship {kind}", answer
 
@@ -321,13 +415,17 @@ class AngleRelationshipsFramework(GeometryFramework):
         last = self._last
         if not last:
             return {}
-        return _figure_metadata(
+        meta = _figure_metadata(
             settings,
             figure_type="composite",
             labels=last["labels"],
             dimensions={"angle_deg": float(last["angle"])},
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
+        sample = last.get("figure_sample")
+        if sample is not None:
+            meta.update(sample.to_metadata_extras())
+        return meta
 
 
 class AlgebraFindingAnglesFramework(GeometryFramework):
@@ -743,11 +841,12 @@ class ParallelTransversalFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from ..diagrams.figure_families import sample_figure_from_settings
+
         symbol = _angle_symbol(settings)
-        angle = random.randint(35, 145)
-        relation = random.choice(
-            ["corresponding", "alternate interior", "same-side interior"]
-        )
+        sample = sample_figure_from_settings("parallel_transversal", settings, build=True)
+        angle = int(round(float(sample.params.get("angle_deg", random.randint(35, 145)))))
+        relation = str(sample.params.get("relation", "corresponding"))
         if relation == "same-side interior":
             answer_val = 180 - angle
         else:
@@ -758,9 +857,16 @@ class ParallelTransversalFramework(GeometryFramework):
             f"\\text{{Find the {relation} angle.}}"
         )
         answer = f"{answer_val}{symbol}"
+        fig = sample.figure or parallel_lines_transversal_figure(
+            float(angle),
+            show_measure=True,
+            relation=relation,
+            reflect=bool(sample.params.get("reflect", False)),
+        )
         self._last = {
-            "figure": parallel_lines_transversal_figure(float(angle), show_measure=True),
+            "figure": fig,
             "angle": angle,
+            "figure_sample": sample,
         }
         return prompt, f"parallel transversal {relation}", answer
 
@@ -771,13 +877,17 @@ class ParallelTransversalFramework(GeometryFramework):
         last = self._last
         if not last:
             return {}
-        return _figure_metadata(
+        meta = _figure_metadata(
             settings,
             figure_type="composite",
             labels=["P"],
             dimensions={"angle_deg": float(last["angle"])},
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
+        sample = last.get("figure_sample")
+        if sample is not None and hasattr(sample, "to_metadata_extras"):
+            meta.update(sample.to_metadata_extras())
+        return meta
 
 
 class TriangleInequalityFramework(GeometryFramework):
@@ -923,25 +1033,74 @@ class PolygonInteriorAngleFramework(GeometryFramework):
 
 
 class ParallelogramAreaFramework(GeometryFramework):
-    """Area of a parallelogram."""
+    """Area of a parallelogram.
+
+    Continuous effort: side bounds from D; ``understanding`` topics shift toward
+    missing base/height given area (formula inversion), not just larger sides.
+    """
 
     def __init__(self) -> None:
         super().__init__(figure_type="parallelogram")
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
         unit = _measurement_unit(settings)
-        base = _random_side(settings)
-        height = _random_side(settings)
+        topic = str(settings.get("_topic_id") or "")
+        understanding = "understanding" in topic or str(
+            settings.get("area_task") or ""
+        ) in {"understand_formula", "missing_dimension"}
+        d = settings_difficulty(settings, default=0.0)
+        base, height = _sample_pair_for_half(settings)
         area = base * height
-        prompt = "\\text{{Find the area of the parallelogram.}}"
-        answer = f"{area}\\text{{ {unit}}}^2"
+
+        # Understanding leaf: mid/high D asks for missing dimension via A=bh.
+        missing_p = 0.0
+        if understanding:
+            if d < 5:
+                missing_p = 0.15
+            elif d < 12:
+                missing_p = 0.45
+            elif d < 18:
+                missing_p = 0.7
+            else:
+                missing_p = 0.9
+        find_missing = understanding and random.random() < missing_p
+
+        if find_missing:
+            if random.random() < 0.5:
+                prompt = (
+                    f"\\text{{A parallelogram has area }} {area}\\text{{ {unit}}}^2"
+                    f"\\text{{ and base }} {base}\\text{{ {unit}. "
+                    f"Find the height.}}"
+                )
+                answer = f"{height}\\text{{ {unit}}}"
+                tag = f"parallelogram missing height A={area} b={base}"
+                mode = "missing_height"
+            else:
+                prompt = (
+                    f"\\text{{A parallelogram has area }} {area}\\text{{ {unit}}}^2"
+                    f"\\text{{ and height }} {height}\\text{{ {unit}. "
+                    f"Find the base.}}"
+                )
+                answer = f"{base}\\text{{ {unit}}}"
+                tag = f"parallelogram missing base A={area} h={height}"
+                mode = "missing_base"
+        else:
+            prompt = "\\text{Find the area of the parallelogram.}"
+            answer = f"{area}\\text{{ {unit}}}^2"
+            tag = f"parallelogram area {base}x{height}"
+            mode = "find_area"
+
         self._last = {
             "figure": parallelogram_figure(float(base), float(height), unit=unit),
             "base": base,
             "height": height,
+            "mode": mode,
+            "area": area,
         }
-        return prompt, f"parallelogram area {base}x{height}", answer
+        return prompt, tag, answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}
@@ -954,7 +1113,11 @@ class ParallelogramAreaFramework(GeometryFramework):
             settings,
             figure_type="parallelogram",
             labels=["A", "B", "C", "D"],
-            dimensions={"base": float(last["base"]), "height": float(last["height"])},
+            dimensions={
+                "base": float(last["base"]),
+                "height": float(last["height"]),
+                "mode": last.get("mode", "find_area"),
+            },
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
 
@@ -968,11 +1131,9 @@ class TrapezoidAreaFramework(GeometryFramework):
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         unit = _measurement_unit(settings)
-        b1 = _random_side(settings)
-        b2 = _random_side(settings)
-        h = _random_side(settings)
+        b1, b2, h = _sample_trapezoid_dims(settings)
         area = (b1 + b2) * h / 2
-        prompt = "\\text{{Find the area of the trapezoid.}}"
+        prompt = "\\text{Find the area of the trapezoid.}"
         answer = f"{area:g}\\text{{ {unit}}}^2"
         self._last = {
             "figure": trapezoid_figure(float(b1), float(b2), float(h), unit=unit),
@@ -980,7 +1141,7 @@ class TrapezoidAreaFramework(GeometryFramework):
             "b2": b2,
             "h": h,
         }
-        return prompt, f"trapezoid area", answer
+        return prompt, f"trapezoid area b1={b1} b2={b2} h={h}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}
@@ -1011,17 +1172,16 @@ class KiteAreaFramework(GeometryFramework):
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         unit = _measurement_unit(settings)
-        d1 = _random_side(settings)
-        d2 = _random_side(settings)
+        d1, d2 = _sample_pair_for_half(settings)
         area = d1 * d2 / 2
-        prompt = "\\text{{Find the area of the kite.}}"
+        prompt = "\\text{Find the area of the kite.}"
         answer = f"{area:g}\\text{{ {unit}}}^2"
         self._last = {
             "figure": kite_figure(float(d1), float(d2), unit=unit),
             "d1": d1,
             "d2": d2,
         }
-        return prompt, "kite area", answer
+        return prompt, f"kite area d1={d1} d2={d2}", answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}
@@ -1037,6 +1197,271 @@ class KiteAreaFramework(GeometryFramework):
             dimensions={"d1": float(last["d1"]), "d2": float(last["d2"])},
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
+
+
+class RhombusAreaFramework(GeometryFramework):
+    """Area of a rhombus via base×height (low D) or diagonals (higher D)."""
+
+    def __init__(self) -> None:
+        super().__init__(figure_type="parallelogram")
+        self._last: dict[str, Any] = {}
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import apply_geometry_continuous_knobs
+        from .difficulty_budget import settings_difficulty
+
+        local = apply_geometry_continuous_knobs(settings)
+        unit = _measurement_unit(local)
+        d = settings_difficulty(local, default=8.0)
+        use_diagonals = d >= 8.0 and (d >= 14.0 or random.random() < min(0.7, (d - 8.0) / 10.0))
+
+        if use_diagonals:
+            d1, d2 = _sample_pair_for_half(local)
+            # Prefer even product so area is a clean half-integer or int.
+            area = d1 * d2 / 2
+            prompt = (
+                rf"\text{{A rhombus has diagonals of length }}{d1}\text{{ {unit}}}"
+                rf"\text{{ and }}{d2}\text{{ {unit}. Find the area.}}"
+            )
+            answer = f"{area:g}\\text{{ {unit}}}^2"
+            # Diagram still uses side/height approximation from diagonal halves.
+            half1, half2 = d1 / 2.0, d2 / 2.0
+            side = max(1.0, (half1 * half1 + half2 * half2) ** 0.5)
+            height = max(1.0, min(side - 0.1, (d1 * d2) / (2.0 * side)))
+            self._last = {
+                "figure": rhombus_figure(float(side), float(height), unit=unit),
+                "mode": "diagonals",
+                "d1": d1,
+                "d2": d2,
+            }
+            return prompt, f"rhombus area d1={d1} d2={d2}", answer
+
+        side, height = _sample_pair_for_half(local)
+        if height >= side:
+            height = max(1, side - 1)
+        area = side * height
+        prompt = "\\text{Find the area of the rhombus.}"
+        answer = f"{area}\\text{{ {unit}}}^2"
+        self._last = {
+            "figure": rhombus_figure(float(side), float(height), unit=unit),
+            "mode": "base_height",
+            "side": side,
+            "height": height,
+        }
+        return prompt, f"rhombus area s={side} h={height}", answer
+
+    def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {}
+
+    def build_question_metadata(self, settings: dict, **_: Any) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
+        dims: dict[str, Any] = {"mode": last.get("mode", "base_height")}
+        if last.get("mode") == "diagonals":
+            dims["d1"] = float(last["d1"])
+            dims["d2"] = float(last["d2"])
+        else:
+            dims["side"] = float(last["side"])
+            dims["height"] = float(last["height"])
+        return _figure_metadata(
+            settings,
+            figure_type="parallelogram",
+            labels=["A", "B", "C", "D"],
+            dimensions=dims,
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
+        )
+
+
+class PlaneFiguresAreaFramework(GeometryFramework):
+    """Weighted mix of plane-figure area prompts (triangle and/or quads).
+
+    Thin catalog wiring for ``geo_triangles_and_quadrilaterals_area`` and
+    ``geo_quadrilateral_area`` — reuses existing figure builders rather than
+    new formula families.
+    """
+
+    def __init__(self, *, include_triangle: bool = True) -> None:
+        super().__init__(figure_type="composite")
+        self.include_triangle = include_triangle
+        self._last: dict[str, Any] = {}
+
+    def _shape_menu(self, settings: dict) -> list[str]:
+        tier = _difficulty_tier(settings)
+        quads_easy = ["square", "rectangle", "parallelogram"]
+        quads_rich = quads_easy + ["rhombus", "trapezoid", "kite"]
+        if self.include_triangle:
+            # Weight triangle so mixed worksheets stay ~1/3 triangles.
+            if tier == "easy":
+                return ["triangle", "triangle"] + quads_easy
+            return ["triangle", "triangle", "triangle"] + quads_rich
+        if tier == "easy":
+            return list(quads_easy)
+        return list(quads_rich)
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        unit = _measurement_unit(settings)
+        kind = random.choice(self._shape_menu(settings))
+
+        if kind == "triangle":
+            from ..diagrams.figure_families import sample_figure_from_settings
+
+            base, height = _sample_pair_for_half(settings)
+            area = base * height / 2
+            sample = sample_figure_from_settings("triangle_area", settings)
+            layout = str(sample.params.get("layout") or "right")
+            fig = triangle_base_height_figure(
+                float(base),
+                float(height),
+                layout=layout,  # type: ignore[arg-type]
+                unit=unit,
+                kind="triangle_area",
+                foot_fraction=sample.params.get("foot_fraction"),
+            )
+            self._last = {
+                "figure": fig,
+                "figure_type": "triangle",
+                "labels": ["A", "B", "C"],
+                "figure_sample": sample,
+                "dims": {"base": base, "height": height, "layout": layout},
+            }
+            return (
+                r"\text{Find the area of the triangle.}",
+                f"triangle area b={base} h={height}",
+                f"{area:g}\\text{{ {unit}}}^2",
+            )
+
+        if kind == "square":
+            side, _ = _sample_pair_for_half(settings)
+            area = side * side
+            fig = rectangle_figure(float(side), float(side), unit=unit, kind="square")
+            self._last = {
+                "figure": fig,
+                "figure_type": "square",
+                "labels": ["A", "B", "C", "D"],
+                "dims": {"side": side},
+            }
+            return (
+                r"\text{Find the area of the square.}",
+                f"square area s={side}",
+                f"{area}\\text{{ {unit}}}^2",
+            )
+
+        if kind == "rectangle":
+            width, height = _sample_pair_for_half(settings)
+            while width == height:
+                width, height = _sample_pair_for_half(settings)
+            area = width * height
+            fig = rectangle_figure(float(width), float(height), unit=unit)
+            self._last = {
+                "figure": fig,
+                "figure_type": "rectangle",
+                "labels": ["A", "B", "C", "D"],
+                "dims": {"width": width, "height": height},
+            }
+            return (
+                r"\text{Find the area of the rectangle.}",
+                f"rectangle area {width}x{height}",
+                f"{area}\\text{{ {unit}}}^2",
+            )
+
+        if kind == "parallelogram":
+            from ..diagrams.figure_families import sample_figure_from_settings
+
+            base, height = _sample_pair_for_half(settings)
+            area = base * height
+            sample = sample_figure_from_settings("parallelogram", settings)
+            fig = parallelogram_figure(
+                float(base),
+                float(height),
+                unit=unit,
+                skew_ratio=float(sample.params.get("skew_ratio", 0.35)),
+            )
+            self._last = {
+                "figure": fig,
+                "figure_type": "parallelogram",
+                "labels": ["A", "B", "C", "D"],
+                "figure_sample": sample,
+                "dims": {"base": base, "height": height},
+            }
+            return (
+                r"\text{Find the area of the parallelogram.}",
+                f"parallelogram area {base}x{height}",
+                f"{area}\\text{{ {unit}}}^2",
+            )
+
+        if kind == "rhombus":
+            side, height = _sample_pair_for_half(settings)
+            if height >= side:
+                height = max(1, side - 1)
+            area = side * height
+            fig = rhombus_figure(float(side), float(height), unit=unit)
+            self._last = {
+                "figure": fig,
+                "figure_type": "rhombus",
+                "labels": ["A", "B", "C", "D"],
+                "dims": {"side": side, "height": height},
+            }
+            return (
+                r"\text{Find the area of the rhombus.}",
+                f"rhombus area s={side} h={height}",
+                f"{area}\\text{{ {unit}}}^2",
+            )
+
+        if kind == "trapezoid":
+            from ..diagrams.figure_families import sample_figure_from_settings
+
+            b1, b2, h = _sample_trapezoid_dims(settings)
+            area = (b1 + b2) * h / 2
+            sample = sample_figure_from_settings("trapezoid", settings)
+            fig = trapezoid_figure(float(b1), float(b2), float(h), unit=unit)
+            self._last = {
+                "figure": fig,
+                "figure_type": "trapezoid",
+                "labels": ["A", "B", "C", "D"],
+                "figure_sample": sample,
+                "dims": {"base1": b1, "base2": b2, "height": h},
+            }
+            return (
+                r"\text{Find the area of the trapezoid.}",
+                f"trapezoid area b1={b1} b2={b2} h={h}",
+                f"{area:g}\\text{{ {unit}}}^2",
+            )
+
+        # kite
+        d1, d2 = _sample_pair_for_half(settings)
+        area = d1 * d2 / 2
+        fig = kite_figure(float(d1), float(d2), unit=unit)
+        self._last = {
+            "figure": fig,
+            "figure_type": "kite",
+            "labels": ["A", "B", "C", "D"],
+            "dims": {"d1": d1, "d2": d2},
+        }
+        return (
+            r"\text{Find the area of the kite.}",
+            f"kite area d1={d1} d2={d2}",
+            f"{area:g}\\text{{ {unit}}}^2",
+        )
+
+    def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {}
+
+    def build_question_metadata(self, settings: dict, **_: Any) -> dict[str, Any]:
+        last = self._last
+        if not last:
+            return {}
+        meta = _figure_metadata(
+            settings,
+            figure_type=str(last.get("figure_type") or "composite"),
+            labels=list(last.get("labels") or []),
+            dimensions={k: float(v) if isinstance(v, (int, float)) else v for k, v in (last.get("dims") or {}).items()},
+            diagram=last.get("figure") if _diagram_enabled(settings) else None,
+        )
+        sample = last.get("figure_sample")
+        if sample is not None:
+            meta.update(sample.to_metadata_extras())
+        return meta
 
 
 class CentralArcAngleFramework(GeometryFramework):
@@ -1174,11 +1599,36 @@ class SolidVolumeSurfaceFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import apply_geometry_continuous_knobs
+        from .difficulty_budget import settings_difficulty
+
+        settings = apply_geometry_continuous_knobs(settings)
         unit = _measurement_unit(settings)
-        shape = random.choice(["cube", "rectangular prism", "cylinder"])
+        d = settings_difficulty(settings, default=8.0)
+        raw_shapes = settings.get("solid_shapes")
+        if isinstance(raw_shapes, (list, tuple)) and raw_shapes:
+            shape = random.choice([str(s) for s in raw_shapes])
+        elif str(settings.get("solid_shape") or "").strip():
+            shape = str(settings.get("solid_shape")).strip()
+        else:
+            shape = random.choice(["cube", "rectangular prism", "cylinder"])
+
+        # Surface area is slightly more steps than volume for cubes/prisms.
+        if d < 5:
+            ask_volume_p = 0.8
+        elif d < 12:
+            ask_volume_p = 0.55
+        elif d < 18:
+            ask_volume_p = 0.4
+        else:
+            ask_volume_p = 0.3
+        ask_volume = random.random() < ask_volume_p
+
         if shape == "cube":
-            s = _random_side(settings)
-            if random.choice([True, False]):
+            lo, hi = _area_side_bounds(settings)
+            # Cubes stay classroom-sized; high D grows modestly for arithmetic.
+            s = random.randint(lo, min(hi, max(lo + 1, int(6 + 0.55 * d))))
+            if ask_volume:
                 prompt = (
                     f"\\text{{Find the volume of a cube with side }} "
                     f"{format_with_unit(s, unit)}."
@@ -1192,7 +1642,7 @@ class SolidVolumeSurfaceFramework(GeometryFramework):
                 answer = format_with_unit(6 * s * s, unit, power=2)
         elif shape == "rectangular prism":
             l, w, h = _random_side(settings), _random_side(settings), _random_side(settings)
-            if random.choice([True, False]):
+            if ask_volume:
                 prompt = (
                     f"\\text{{Find the volume of a }} {l}\\times{w}\\times{h}"
                     f"{unit_latex(unit)} \\text{{ rectangular prism.}}"
@@ -1206,7 +1656,7 @@ class SolidVolumeSurfaceFramework(GeometryFramework):
                 )
                 answer = format_with_unit(sa, unit, power=2)
         else:
-            r = random.randint(2, 10)
+            r = random.randint(2, max(3, min(12, int(3 + 0.3 * d))))
             h = _random_side(settings)
             prompt = (
                 f"\\text{{Find the volume of a cylinder with radius }} "
@@ -1363,9 +1813,22 @@ class GeometricTransformationsFramework(QuestionFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import (
+            apply_geometry_continuous_knobs,
+            geometry_proof_structure_from_continuous,
+        )
         from ..diagrams.grade6_figures import coordinate_transform_svg
 
+        settings = apply_geometry_continuous_knobs(settings)
+        structure = geometry_proof_structure_from_continuous(settings)
         tier = _difficulty_tier(settings)
+        if structure is not None:
+            if structure["allow_composition"] or structure["allow_dilation"]:
+                tier = "hard"
+            elif structure["difficulty"] >= 4.0:
+                tier = "medium"
+            else:
+                tier = "easy"
         lo, hi = _bounds(settings, "coord_min", "coord_max", -6, 6)
         pre_lo = max(lo, -4)
         pre_hi = min(hi, 4)
@@ -1625,10 +2088,17 @@ class RemainingGeometryFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import (
+            apply_geometry_continuous_knobs,
+            geometry_proof_structure_from_continuous,
+        )
+
+        settings = apply_geometry_continuous_knobs(settings)
         unit = _measurement_unit(settings)
         symbol = _angle_symbol(settings)
         labels = ["A", "B", "C"]
         mode = self.mode
+        proof_structure = geometry_proof_structure_from_continuous(settings)
 
         if mode == "notation":
             a, b = random.sample(_ANGLE_LABELS, 2)
@@ -1636,7 +2106,19 @@ class RemainingGeometryFramework(GeometryFramework):
             return f"\\text{{Name the segment shown.}}", f"segment {a}{b}", f"\\overline{{{a}{b}}}"
         if mode == "congruence":
             sides = random.choice([(5, 6, 7), (4, 4, 6), (3, 4, 5)])
-            self._last = {"figure": triangle_figure(labels, (55, 60, 65)), "labels": labels}
+            from ..diagrams.figure_families import sample_figure_from_settings
+
+            sample = sample_figure_from_settings("triangle_angles", settings)
+            self._last = {
+                "figure": triangle_figure(
+                    labels,
+                    sample.params["angles"],
+                    rotation_deg=float(sample.params.get("rotation_deg", 0.0)),
+                    reflect=bool(sample.params.get("reflect", False)),
+                ),
+                "labels": labels,
+                "figure_sample": sample,
+            }
             return (
                 f"\\triangle ABC\\text{{ has side lengths }} {sides[0]}, {sides[1]}, {sides[2]}"
                 f"\\text{{ and }}\\triangle DEF\\text{{ has corresponding side lengths }}"
@@ -1645,56 +2127,81 @@ class RemainingGeometryFramework(GeometryFramework):
                 "yes",
             )
         if mode == "congruence_proof":
-            self._last = {"figure": triangle_figure(labels, (50, 60, 70)), "labels": labels}
-            tier = str(settings.get("difficulty_tier") or "medium").lower()
+            from ..diagrams.figure_families import sample_figure_from_settings
+
+            sample = sample_figure_from_settings("triangle_angles", settings)
+            self._last = {
+                "figure": triangle_figure(
+                    labels,
+                    sample.params["angles"],
+                    rotation_deg=float(sample.params.get("rotation_deg", 0.0)),
+                    reflect=bool(sample.params.get("reflect", False)),
+                ),
+                "labels": labels,
+                "figure_sample": sample,
+            }
+            theorem_prompts = {
+                "SSS": (
+                    r"\text{Two triangles have three pairs of corresponding congruent sides. "
+                    r"Which congruence theorem proves the triangles congruent?}",
+                    "SSS",
+                ),
+                "SAS": (
+                    r"\text{Two triangles have two pairs of congruent sides and the "
+                    r"included angles congruent. Which congruence theorem applies?}",
+                    "SAS",
+                ),
+                "ASA": (
+                    r"\text{Two triangles have two pairs of congruent angles and the "
+                    r"included sides congruent. Which congruence theorem applies?}",
+                    "ASA",
+                ),
+                "AAS": (
+                    r"\text{Two triangles have }\angle A\cong\angle D,\ "
+                    r"\angle B\cong\angle E,\text{ and }"
+                    r"\overline{BC}\cong\overline{EF}.\text{ Which congruence theorem applies?}",
+                    "AAS",
+                ),
+                "HL": (
+                    r"\text{In right }\triangle ABC\text{ and right }\triangle DEF,"
+                    r"\ \overline{AC}\cong\overline{DF}\text{ (hypotenuses) and }"
+                    r"\overline{BC}\cong\overline{EF}\text{ (a leg). "
+                    r"Which congruence theorem applies?}",
+                    "HL",
+                ),
+            }
+            if proof_structure is not None:
+                theorem = random.choice(list(proof_structure["theorems"]))
+                prompt, answer = theorem_prompts[theorem]
+                return prompt, "congruence theorem", answer
+            tier = _difficulty_tier(settings)
             if tier == "hard":
-                prompts = [
-                    (
-                        r"\text{In right }\triangle ABC\text{ and right }\triangle DEF,"
-                        r"\ \overline{AC}\cong\overline{DF}\text{ (hypotenuses) and }"
-                        r"\overline{BC}\cong\overline{EF}\text{ (a leg). "
-                        r"Which congruence theorem applies?}",
-                        "HL",
-                    ),
-                    (
-                        r"\text{Two triangles have }\angle A\cong\angle D,\ "
-                        r"\overline{AB}\cong\overline{DE},\text{ and }"
-                        r"\angle B\cong\angle E.\text{ Which congruence theorem applies?}",
-                        "ASA",
-                    ),
-                    (
-                        r"\text{Two triangles have }\angle A\cong\angle D,\ "
-                        r"\angle B\cong\angle E,\text{ and }"
-                        r"\overline{BC}\cong\overline{EF}.\text{ Which congruence theorem applies?}",
-                        "AAS",
-                    ),
-                ]
-                prompt, answer = random.choice(prompts)
+                prompt, answer = random.choice(
+                    [theorem_prompts[t] for t in ("ASA", "AAS", "HL")]
+                )
                 return prompt, "congruence theorem", answer
             if tier == "medium":
-                prompts = [
-                    (
-                        r"\text{Two triangles have two pairs of congruent sides and the "
-                        r"included angles congruent. Which congruence theorem applies?}",
-                        "SAS",
-                    ),
-                    (
-                        r"\text{Two triangles have two pairs of congruent angles and the "
-                        r"included sides congruent. Which congruence theorem applies?}",
-                        "ASA",
-                    ),
-                ]
-                prompt, answer = random.choice(prompts)
+                prompt, answer = random.choice(
+                    [theorem_prompts[t] for t in ("SAS", "ASA")]
+                )
                 return prompt, "congruence theorem", answer
-            return (
-                r"\text{Two triangles have three pairs of corresponding congruent sides. "
-                r"Which congruence theorem proves the triangles congruent?}",
-                "congruence theorem",
-                "SSS",
-            )
+            prompt, answer = theorem_prompts["SSS"]
+            return prompt, "congruence theorem", answer
         if mode == "midsegment":
+            from ..diagrams.figure_families import sample_figure_from_settings
+
             base = _random_side(settings)
-            self._last = {"figure": triangle_figure(labels, (50, 60, 70)), "labels": labels}
+            sample = sample_figure_from_settings("triangle_angles", settings)
+            self._last = {
+                "figure": triangle_figure(
+                    labels,
+                    sample.params["angles"],
+                    rotation_deg=float(sample.params.get("rotation_deg", 0.0)),
+                    reflect=bool(sample.params.get("reflect", False)),
+                ),
+                "labels": labels,
+                "figure_sample": sample,
+            }
             return (
                 f"\\text{{A midsegment of a triangle is parallel to a side of length }} {base}\\text{{ {unit}}}. "
                 "\\text{Find the length of the midsegment.}",
@@ -1749,7 +2256,12 @@ class RemainingGeometryFramework(GeometryFramework):
         if mode == "similar_polygons":
             from ..diagrams import similar_figures_pair_figure
 
-            scale = random.choice([2, 3, 4])
+            if proof_structure is not None:
+                scale_lo = int(proof_structure["similarity_ratio_min"])
+                scale_hi = max(scale_lo, int(proof_structure["similarity_ratio_max"]))
+                scale = random.randint(scale_lo, scale_hi)
+            else:
+                scale = random.choice([2, 3, 4])
             side = _random_side(settings)
             other = _random_side(settings)
             while other == side:
@@ -1832,7 +2344,13 @@ class RemainingGeometryFramework(GeometryFramework):
                 answer,
             )
         if mode == "proportional_parts":
-            small, ratio = _random_side(settings), random.choice([2, 3, 4])
+            if proof_structure is not None:
+                ratio_lo = int(proof_structure["similarity_ratio_min"])
+                ratio_hi = max(ratio_lo, int(proof_structure["similarity_ratio_max"]))
+                ratio = random.randint(ratio_lo, ratio_hi)
+            else:
+                ratio = random.choice([2, 3, 4])
+            small = _random_side(settings)
             self._last = {"figure": triangle_figure(labels, (50, 60, 70)), "labels": labels}
             return (
                 f"\\text{{A segment parallel to one side of a triangle creates similar triangles. "
@@ -1845,8 +2363,11 @@ class RemainingGeometryFramework(GeometryFramework):
             r = _random_radius(settings)
             self._last = {"figure": circle_figure(r, unit=unit), "labels": ["O", "A"]}
             # Vary by difficulty: conceptual vs numeric chord-distance relations.
-            tier = str(settings.get("difficulty_tier") or "medium").lower()
-            if tier == "hard":
+            if proof_structure is not None:
+                band = proof_structure["band"]
+            else:
+                band = _difficulty_tier(settings)
+            if band == "hard":
                 # Perpendicular from center to chord: half-chord / radius → distance
                 half = random.choice([3, 4, 5, 6, 8, 9])
                 # Choose radius so distance is a Pythagorean integer when possible
@@ -1864,7 +2385,7 @@ class RemainingGeometryFramework(GeometryFramework):
                     "chord distance from center",
                     f"{dist}\\text{{ {unit}}}",
                 )
-            if tier == "medium":
+            if band == "medium":
                 return (
                     rf"\text{{A diameter of a circle is }}{2 * r}\text{{ {unit}. }} "
                     rf"\text{{A chord of length }}{r}\text{{ {unit} }} "
@@ -1881,10 +2402,15 @@ class RemainingGeometryFramework(GeometryFramework):
         if mode == "tangents":
             r = _random_radius(settings)
             self._last = {"figure": circle_figure(r, unit=unit), "labels": ["O", "A"]}
-            tier = str(settings.get("difficulty_tier") or "medium").lower()
-            if tier == "hard":
+            if proof_structure is not None:
+                band = proof_structure["band"]
+            else:
+                band = _difficulty_tier(settings)
+            if band == "hard":
                 # Two tangents from external point are equal
-                a = random.randint(5, 12)
+                a_lo = max(5, int(settings.get("side_min", 5)))
+                a_hi = max(a_lo + 1, int(settings.get("side_max", 12)))
+                a = random.randint(a_lo, min(a_hi, 20))
                 return (
                     rf"\text{{Two tangent segments from an external point to a circle "
                     rf"measure }}{a}\text{{ {unit} }} "
@@ -1892,7 +2418,7 @@ class RemainingGeometryFramework(GeometryFramework):
                     "two tangents theorem",
                     f"{a}\\text{{ {unit}}}",
                 )
-            if tier == "medium":
+            if band == "medium":
                 return (
                     rf"\text{{A tangent segment and a radius meet at the point of tangency. "
                     rf"If the radius is }}{r}\text{{ {unit} }} "
@@ -1951,21 +2477,58 @@ class RemainingGeometryFramework(GeometryFramework):
                 "do not call RemainingGeometryFramework('transformations')."
             )
 
+        # Construction modes: figure dimensions climb with continuous geometry knobs.
+        angle_lo = int(settings.get("angle_min", 20))
+        angle_hi = max(angle_lo + 10, int(settings.get("angle_max", 120)))
+        construct_angle = random.randrange(angle_lo, angle_hi + 1, 5) if angle_hi > angle_lo else 60
+        if construct_angle <= 0:
+            construct_angle = 60
+        construct_r = _random_radius(settings)
+        tri_angles = (50, 60, 70)
+        if proof_structure is not None and proof_structure["difficulty"] >= 10.0:
+            a = random.randint(40, 70)
+            b_hi = max(40, 100 - a)
+            b = random.randint(40, b_hi) if b_hi >= 40 else 40
+            c = 180 - a - b
+            if c >= 20:
+                tri_angles = (a, b, c)
+
         construction_answers = {
-            "construction_segments": ("segment congruent to the given segment", segment_figure(1, show_length=False)),
-            "construction_perpendicular": ("a perpendicular line", angle_figure("A", "B", "C", 90, show_measure=False)),
-            "construction_angles": ("an angle congruent to the given angle", angle_figure("A", "B", "C", 60, show_measure=False)),
-            "construction_triangles": ("a triangle congruent to the given triangle", triangle_figure(labels, (50, 60, 70))),
-            "construction_medians": ("a median", triangle_figure(labels, (50, 60, 70))),
-            "construction_altitudes": ("an altitude", triangle_figure(labels, (50, 60, 70))),
-            "construction_bisectors": ("an angle bisector", angle_figure("A", "B", "C", 60, show_measure=False)),
-            "construction_circles": ("a circle with the given center and radius", circle_figure(5, unit=unit)),
+            "construction_segments": (
+                "segment congruent to the given segment",
+                segment_figure(max(1, int(settings.get("side_min", 3))), show_length=False),
+            ),
+            "construction_perpendicular": (
+                "a perpendicular line",
+                angle_figure("A", "B", "C", 90, show_measure=False),
+            ),
+            "construction_angles": (
+                "an angle congruent to the given angle",
+                angle_figure("A", "B", "C", construct_angle, show_measure=False),
+            ),
+            "construction_triangles": (
+                "a triangle congruent to the given triangle",
+                triangle_figure(labels, tri_angles),
+            ),
+            "construction_medians": ("a median", triangle_figure(labels, tri_angles)),
+            "construction_altitudes": ("an altitude", triangle_figure(labels, tri_angles)),
+            "construction_bisectors": (
+                "an angle bisector",
+                angle_figure("A", "B", "C", construct_angle, show_measure=False),
+            ),
+            "construction_circles": (
+                "a circle with the given center and radius",
+                circle_figure(construct_r, unit=unit),
+            ),
         }
         if mode == "construction_circles":
-            tier = str(settings.get("difficulty_tier") or "medium").lower()
-            r = _random_radius(settings)
+            if proof_structure is not None:
+                band = proof_structure["band"]
+            else:
+                band = _difficulty_tier(settings)
+            r = construct_r
             self._last = {"figure": circle_figure(r, unit=unit), "labels": ["O", "A"]}
-            if tier == "hard":
+            if band == "hard":
                 return (
                     rf"\text{{Using compass and straightedge, you copy a segment of length }}"
                     rf"{r}\text{{ {unit} }} "
@@ -1973,7 +2536,7 @@ class RemainingGeometryFramework(GeometryFramework):
                     "construction circles",
                     r"\text{a circle with center }O\text{ and radius }" + f"{r}\\text{{ {unit}}}",
                 )
-            if tier == "medium":
+            if band == "medium":
                 return (
                     r"\text{Which construction step creates all points at a fixed distance "
                     r"from a given center?}",
@@ -2004,10 +2567,16 @@ class RemainingGeometryFramework(GeometryFramework):
         fig = last.get("figure")
         if fig is None:
             return {}
-        return _figure_metadata(
+        meta = _figure_metadata(
             settings,
             figure_type="composite",
             labels=last["labels"],
             dimensions={},
             diagram=fig if _diagram_enabled(settings) else None,
         )
+        sample = last.get("figure_sample")
+        if sample is not None:
+            meta.update(sample.to_metadata_extras())
+            if sample.diagram_spec.get("diagram_svg") and "diagram_svg" not in meta:
+                meta["diagram_svg"] = sample.diagram_spec["diagram_svg"]
+        return meta

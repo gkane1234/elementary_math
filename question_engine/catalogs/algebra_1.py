@@ -473,6 +473,14 @@ CATALOG: tuple = (
         instruction_text="Multiply.",
     ),
     entry(
+        "polynomial_long_division",
+        "Dividing",
+        "Algebra 1 — Polynomials",
+        generator="polynomial_long_division",
+        instruction_latex=r"\text{Divide using polynomial long division.}",
+        instruction_text="Divide using polynomial long division.",
+    ),
+    entry(
         "polynomial_factoring_common_factor",
         "Common factor only",
         "Algebra 1 — Polynomials",
@@ -606,6 +614,14 @@ CATALOG: tuple = (
         generator="radical_midpoint_formula",
         instruction_latex=r"\text{Find the midpoint.}",
         instruction_text="Find the midpoint.",
+    ),
+    entry(
+        "radical_simplification",
+        "Simplifying single radicals",
+        "Algebra 1 — Radical Expressions",
+        generator="radical_simplification",
+        instruction_latex=r"\text{Simplify.}",
+        instruction_text="Simplify.",
     ),
     entry(
         "radical_add_subtract",

@@ -157,7 +157,32 @@ def main() -> None:
 
     html_path = OUT / "gallery.html"
     html_path.write_text(_html_page(sections), encoding="utf-8")
+
+    md_lines = [
+        "# Compositional polynomial simplify",
+        "",
+        "Open **[gallery.html](gallery.html)** in a browser for KaTeX-rendered math.",
+        "",
+        f"Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
+        "",
+    ]
+    for tid, title, by_d in sections:
+        md_lines.append(f"## {title}")
+        md_lines.append("")
+        md_lines.append(f"`{tid}`")
+        md_lines.append("")
+        md_lines.append("| D | Prompt | Answer |")
+        md_lines.append("|--:|--------|--------|")
+        for d in DIFFICULTIES:
+            for row in by_d.get(d, []):
+                pl = (row.get("prompt") or "").replace("|", "\\|")
+                al = (row.get("answer") or "").replace("|", "\\|")
+                md_lines.append(f"| {d} | ${pl}$ | ${al}$ |")
+        md_lines.append("")
+    md_path = OUT / "gallery.md"
+    md_path.write_text("\n".join(md_lines), encoding="utf-8")
     print(f"Wrote {html_path}")
+    print(f"Wrote {md_path}")
 
 
 if __name__ == "__main__":

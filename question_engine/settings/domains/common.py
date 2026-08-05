@@ -38,6 +38,44 @@ def continuous_difficulty_settings(
     ]
 
 
+def dual_difficulty_settings(
+    *,
+    default_conceptual: int = 6,
+    default_spec: int = 0,
+) -> list[SettingField]:
+    """Independent conceptual + Spec difficulty (Calc algebraic leaves).
+
+    ``difficulty`` stays as a sync alias for conceptual so older call sites and
+    ML join keys keep working. Spec is unbounded (no SettingField.max).
+    """
+    return [
+        SettingField(
+            "conceptual_difficulty",
+            "Conceptual difficulty",
+            "int",
+            default_conceptual,
+            min=0,
+            group="difficulty",
+        ),
+        SettingField(
+            "spec_difficulty",
+            "Spec difficulty",
+            "int",
+            default_spec,
+            min=0,
+            group="difficulty",
+        ),
+        SettingField(
+            "difficulty",
+            "Difficulty",
+            "int",
+            default_conceptual,
+            min=0,
+            group="difficulty",
+        ),
+    ]
+
+
 def primitive_layered_settings(
     *,
     primitive_ids: list[str],

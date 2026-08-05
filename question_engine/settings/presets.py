@@ -30,10 +30,11 @@ PresetValues = dict[str, Any]
 TierPresets = dict[DifficultyTier, PresetValues]
 
 # Shared enrichment knobs applied when a profile has no more specific entry.
+# Include coarse continuous D so EMH-only clients still seed the numeric field.
 _COMMON_TERMS: TierPresets = {
-    "easy": {"min_terms": 2, "max_terms": 3},
-    "medium": {"min_terms": 2, "max_terms": 4},
-    "hard": {"min_terms": 3, "max_terms": 6},
+    "easy": {"min_terms": 2, "max_terms": 3, "difficulty": 3},
+    "medium": {"min_terms": 2, "max_terms": 4, "difficulty": 8},
+    "hard": {"min_terms": 3, "max_terms": 6, "difficulty": 14},
 }
 
 PROFILE_DIFFICULTY_PRESETS: dict[str, TierPresets] = {

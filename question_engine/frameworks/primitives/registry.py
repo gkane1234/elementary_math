@@ -290,7 +290,17 @@ def build_context(
     ``d_max`` is an optional explicit ceiling; omit it so user-entered difficulty
     is not crushed to a soft UI guidance value.
     """
-    rng = rng or random.Random()
+    if rng is None:
+        raw_seed = settings.get("seed")
+        if raw_seed is not None:
+            try:
+                base = int(raw_seed)
+                idx = int(settings.get("_batch_index") or 0)
+                rng = random.Random(base + idx * 1009)
+            except (TypeError, ValueError):
+                rng = random.Random()
+        else:
+            rng = random.Random()
     topic_d = settings_difficulty(settings, default=0.0)
     caps_raw = dict(settings.get("prereq_caps") or {})
     # Flat UI keys: prereq_cap_numbers, prereq_cap_ooo, ...

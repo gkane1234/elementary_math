@@ -1,0 +1,94 @@
+{
+  "catalog_id": "basic_power_integrals",
+  "title": "OpenStax basic power / rewrite antiderivatives",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "calculus-volume-1",
+      "slug": "4-10-antiderivatives",
+      "title": "4.10 Antiderivatives",
+      "url": "https://openstax.org/books/calculus-volume-1/pages/4-10-antiderivatives",
+      "stage1": "scripts/output/example_mining/calculus-volume-1/stage1/4-10-antiderivatives.json"
+    },
+    "related": [
+      {
+        "book": "calculus-volume-1",
+        "slug": "5-4-integration-formulas-and-the-net-change-theorem"
+      }
+    ]
+  },
+  "forms": [
+    {
+      "form_id": "poly_sum",
+      "description": "∫ Σ c_k x^k dx",
+      "strategy": "power_rule",
+      "constraints": { "kind": "poly" },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": [],
+      "example_item_ids": [],
+      "openstax_case": "§4.10 power rule"
+    },
+    {
+      "form_id": "sqrt_x",
+      "description": "∫ √x dx",
+      "strategy": "power_rule_root",
+      "constraints": { "kind": "sqrt" },
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": [],
+      "example_item_ids": [],
+      "openstax_case": "§4.10 / §5.4 roots"
+    },
+    {
+      "form_id": "one_over_sqrt_x",
+      "description": "∫ 1/√x dx",
+      "strategy": "power_rule_root",
+      "constraints": { "kind": "one_over_sqrt" },
+      "d_min": 2,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": [],
+      "example_item_ids": [],
+      "openstax_case": "§4.10"
+    },
+    {
+      "form_id": "x_sqrt_x",
+      "description": "∫ x√x dx = ∫ x^{3/2}",
+      "strategy": "power_rule_root",
+      "constraints": { "kind": "x_sqrt" },
+      "d_min": 4,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": [],
+      "example_item_ids": [],
+      "openstax_case": "§4.10"
+    },
+    {
+      "form_id": "neg_power",
+      "description": "∫ k/x^n dx, n≥2",
+      "strategy": "power_rule_neg",
+      "constraints": { "kind": "neg_power" },
+      "d_min": 4,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": [],
+      "example_item_ids": [],
+      "openstax_case": "§4.10 negative powers ≠ −1"
+    },
+    {
+      "form_id": "rewrite_over_x",
+      "description": "∫ (x² + c∛x)/x — rewrite then power",
+      "strategy": "rewrite_split",
+      "constraints": { "kind": "rewrite_over_x" },
+      "d_min": 6,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": [],
+      "example_item_ids": [],
+      "openstax_case": "§4.10 rewrite"
+    }
+  ]
+}

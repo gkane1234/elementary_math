@@ -13,6 +13,9 @@ Writes under scripts/output/topic_fit/:
 
 Each folder gets gallery.html (KaTeX), gallery.md, samples.json.
 
+Sampling uses the live continuous-D generate path
+(``question_engine.api.handler._generate_for_type``), not legacy flat builders.
+
 Also re-runs variable lane audit via build_variable_lane_audit.
 
 Usage:
@@ -33,10 +36,23 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from question_engine.api.handler import _generate_for_type
 from question_engine.generators import GENERATORS
+
+import importlib.util
+
+_katex_spec = importlib.util.spec_from_file_location(
+    "topic_fit_katex", ROOT / "scripts" / "topic_fit_katex.py"
+)
+_katex_mod = importlib.util.module_from_spec(_katex_spec)
+assert _katex_spec.loader is not None
+_katex_spec.loader.exec_module(_katex_mod)
+katex_head_html = _katex_mod.katex_head_html
 
 OUT_ROOT = ROOT / "scripts" / "output" / "topic_fit"
 DIFFICULTIES = (0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0)
+# Live worksheet D grid (matches by_topic galleries / UI soft ladder).
+LIVE_DIFFICULTIES = (0.0, 5.0, 10.0, 15.0, 20.0, 25.0)
 # Wide range so evaluate / expand / multi-step log growth is visible.
 EVALUATE_DIFFICULTIES = (0.0, 1.0, 2.0, 3.0, 5.0, 8.0, 10.0, 14.0, 18.0, 22.0, 24.0)
 EXPAND_DIFFICULTIES = EVALUATE_DIFFICULTIES
@@ -50,53 +66,79 @@ CONSTRAINT_VARIANTS: dict[str, dict[str, Any]] = {
 }
 
 
-def _base_settings(d: float, extra: dict[str, Any]) -> dict[str, Any]:
+def _base_settings(d: float, extra: dict[str, Any], *, type_id: str, index_base: int = 0) -> dict[str, Any]:
     return {
         "count": N_PER,
         "include_answer_key": True,
         "difficulty": d,
+        "seed": 40 + int(d) * 13 + (hash(type_id) % 997) + index_base,
         **extra,
     }
 
 
+def _row_from_question(
+    q: Any,
+    *,
+    vname: str,
+    vsettings: dict[str, Any],
+    d: float,
+    index: int,
+) -> dict[str, Any]:
+    meta = q.metadata or {}
+    return {
+        "constraint_set": vname,
+        "constraints": vsettings,
+        "difficulty": d,
+        "index": index,
+        "prompt_latex": q.prompt_latex,
+        "prompt_text": q.prompt_text,
+        "answer_latex": q.answer_latex,
+        "spend": meta.get("spend"),
+        "upgrades": meta.get("upgrades"),
+        "n_terms": meta.get("n_terms"),
+        "n_parens": meta.get("n_parens"),
+        "nest_depth": meta.get("nest_depth"),
+        "n_ops": meta.get("n_ops"),
+        "n_groups": meta.get("n_groups"),
+        "n_lone": meta.get("n_lone"),
+        "nested": meta.get("nested"),
+        "op_pool": meta.get("op_pool"),
+        "steps": meta.get("steps"),
+        "flipped": meta.get("flipped"),
+        "shape_id": meta.get("shape_id"),
+        "primitive_engine": meta.get("primitive_engine"),
+        "sample_log": meta.get("sample_log"),
+    }
+
+
 def _sample_generator(
-    gen_key: str,
+    type_id: str,
     *,
     difficulties: tuple[float, ...] = DIFFICULTIES,
     variants: dict[str, dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
-    gen = GENERATORS[gen_key]
+    """Sample via the live generate path (QUESTION_TYPES / ``_generate_for_type``).
+
+    Falls back to ``GENERATORS[type_id]`` only if the type is not registered
+    (should not happen for Layer-1 audits).
+    """
+    import question_engine.types  # noqa: F401 — register catalog types
+    from question_engine.core.base import QUESTION_TYPES
+
     variants = variants or CONSTRAINT_VARIANTS
     rows: list[dict[str, Any]] = []
     for vname, vsettings in variants.items():
         for d in difficulties:
-            qs = gen(gen_key, _base_settings(d, vsettings))
+            settings = _base_settings(d, vsettings, type_id=type_id)
+            if type_id in QUESTION_TYPES:
+                qs = _generate_for_type(type_id, settings)
+            else:
+                qs = GENERATORS[type_id](type_id, settings)
             for i, q in enumerate(qs):
-                meta = q.metadata or {}
                 rows.append(
-                    {
-                        "constraint_set": vname,
-                        "constraints": vsettings,
-                        "difficulty": d,
-                        "index": i,
-                        "prompt_latex": q.prompt_latex,
-                        "prompt_text": q.prompt_text,
-                        "answer_latex": q.answer_latex,
-                        "spend": meta.get("spend"),
-                        "upgrades": meta.get("upgrades"),
-                        "n_terms": meta.get("n_terms"),
-                        "n_parens": meta.get("n_parens"),
-                        "nest_depth": meta.get("nest_depth"),
-                        "n_ops": meta.get("n_ops"),
-                        "n_groups": meta.get("n_groups"),
-                        "n_lone": meta.get("n_lone"),
-                        "nested": meta.get("nested"),
-                        "op_pool": meta.get("op_pool"),
-                        "steps": meta.get("steps"),
-                        "flipped": meta.get("flipped"),
-                        "primitive_engine": meta.get("primitive_engine"),
-                        "sample_log": meta.get("sample_log"),
-                    }
+                    _row_from_question(
+                        q, vname=vname, vsettings=vsettings, d=d, index=i
+                    )
                 )
     return rows
 
@@ -111,11 +153,13 @@ def _build_html(
     rows: list[dict[str, Any]],
     *,
     d_notes: list[tuple[str, str]] | None = None,
+    html_path: Path | None = None,
 ) -> str:
     by_variant: dict[str, list[dict]] = {}
     for r in rows:
         by_variant.setdefault(r["constraint_set"], []).append(r)
 
+    katex = katex_head_html(html_path) if html_path is not None else katex_head_html(depth=1)
     parts = [
         "<!DOCTYPE html>",
         '<html lang="en"><head><meta charset="utf-8"/>',
@@ -140,13 +184,7 @@ def _build_html(
     .notes th, .notes td { border: 1px solid #ccc; padding: 0.3rem 0.5rem; }
         """,
         "</style>",
-        '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>',
-        '<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>',
-        (
-            '<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" '
-            "onload=\"renderMathInElement(document.body,{delimiters:["
-            "{left:'$',right:'$',display:false},{left:'$$',right:'$$',display:true}]})\"></script>"
-        ),
+        katex.rstrip("\n"),
         "</head><body>",
         f"<h1>{_html_escape(title)}</h1>",
         f'<p class="lede">{lede}</p>',
@@ -227,7 +265,15 @@ def _build_html(
 
 
 def _build_md(title: str, lede: str, rows: list[dict[str, Any]]) -> str:
-    lines = [f"# {title}", "", lede, ""]
+    lines = [
+        f"# {title}",
+        "",
+        "Open **[gallery.html](gallery.html)** in a browser for KaTeX-rendered math "
+        "(markdown preview leaves `$...$` as raw LaTeX).",
+        "",
+        lede,
+        "",
+    ]
     by_variant: dict[str, list[dict]] = {}
     for r in rows:
         by_variant.setdefault(r["constraint_set"], []).append(r)
@@ -261,8 +307,10 @@ def write_audit(
         json.dumps(rows, indent=2, default=str), encoding="utf-8"
     )
     (out / "gallery.md").write_text(_build_md(title, lede, rows), encoding="utf-8")
-    (out / "gallery.html").write_text(
-        _build_html(title, lede, rows, d_notes=d_notes), encoding="utf-8"
+    html_path = out / "gallery.html"
+    html_path.write_text(
+        _build_html(title, lede, rows, d_notes=d_notes, html_path=html_path),
+        encoding="utf-8",
     )
     return out
 
@@ -274,21 +322,25 @@ def main() -> None:
         write_audit(
             "ooo_audit",
             "Order of operations audit",
-            "Shared expression-structure engine (numeric mode). Leaf count / nesting "
-            "grow with D; association (left/right/balanced/chain) and paren placement "
-            "vary across seeds. Optional small squares when D ≥ 3.",
+            "Samples via the <strong>live continuous-D API path</strong> "
+            "(<code>QUESTION_TYPES</code> → <code>_generate_for_type</code> → "
+            "<code>primitive_g6.order_of_operations</code> → "
+            "<code>build_context</code> + <code>sample_ooo_expression</code>). "
+            "Budget spend / sample_log / upgrades / n_ops appear in metadata. "
+            "Addend count and product/quotient mix grow with D; exponents unlock "
+            "via shared expression_structure knobs. Never emits a bare number.",
             _sample_generator(
                 "order_of_operations",
-                difficulties=EVALUATE_DIFFICULTIES,
+                difficulties=LIVE_DIFFICULTIES,
                 variants={
                     "default": {"integers_only": True},
                     "friendly": {"integers_only": True, "number_profile": "friendly_wholes"},
                 },
             ),
             d_notes=[
-                ("0–1.5", "1–2 leaves; +/− primarily"),
-                ("1.5–4", "more ops; × unlocks; varied paren association"),
-                ("4+", "deeper nests; occasional squares; richer trees"),
+                ("0–5", ">=2 addends; at least one product/quotient; +/- join"),
+                ("5–15", "more addends; richer product/quotient mix; grouping starts"),
+                ("15–25", "longer chains; exponents unlock; more grouping / nest"),
             ],
         )
     )

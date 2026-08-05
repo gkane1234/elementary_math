@@ -51,7 +51,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Limits",
         "calc_limits_at_jump_discontinuities_and_kinks",
         "At jump discontinuities and kinks",
-        generator="limit_direct_evaluation",
+        generator="limit_jump",
         instruction_text="Find the limit.",
     ),
     _calc(
@@ -65,7 +65,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Limits",
         "calc_limits_at_essential_discontinuities",
         "At essential discontinuities",
-        generator="limit_removable", instruction_text="Find the limit.",
+        generator="limit_essential",
+        instruction_text="Find the limit.",
     ),
     _calc(
         "Limits",
@@ -79,7 +80,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Continuity",
         "calc_continuity_determining_and_classifying",
         "Determining and classifying",
-        generator="limit_direct_evaluation",
+        generator="limit_continuity",
         instruction_text="Determine and classify continuity.",
     ),
     # Differentiation
@@ -137,6 +138,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "calc_diff_chain_rule",
         "Chain Rule",
         generator="derivative_chain_rule",
+        instruction_text="Differentiate.",
+    ),
+    _calc(
+        "Differentiation",
+        "calc_diff_general",
+        "General derivatives",
+        generator="derivative_general",
         instruction_text="Differentiate.",
     ),
     _calc(
@@ -279,6 +287,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     ),
     _calc(
         "Applications of Differentiation",
+        "calc_app_diff_linear_approximations",
+        "Linear approximations",
+        generator="linear_approximation",
+        instruction_text="Find the linear approximation.",
+    ),
+    _calc(
+        "Applications of Differentiation",
         "calc_app_diff_newtons_method",
         "Newton's Method",
         instruction_text="Use Newton's Method.",
@@ -342,13 +357,15 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     _calc(
         "Indefinite Integration",
         "calc_indef_int_trigonometric_with_substitution",
-        "Trigonometric with substitution",
-        instruction_text="Integrate.",
+        "Trigonometric substitution",
+        generator="integral_trig_substitution",
+        instruction_text="Integrate using a trigonometric substitution.",
     ),
     _calc(
         "Indefinite Integration",
         "calc_indef_int_inverse_trigonometric_with_substitution",
         "Inverse trigonometric with substitution",
+        generator="integral_invtrig_substitution",
         instruction_text="Integrate.",
     ),
     _calc(
@@ -356,6 +373,20 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "calc_indef_int_integration_by_parts",
         "Integration by parts",
         generator="integration_by_parts",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_partial_fractions",
+        "Partial fractions",
+        generator="integral_partial_fractions",
+        instruction_text="Integrate.",
+    ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_multi_trick",
+        "Multi-technique (u-sub then PFD)",
+        generator="integral_multi_trick",
         instruction_text="Integrate.",
     ),
     # Definite Integration

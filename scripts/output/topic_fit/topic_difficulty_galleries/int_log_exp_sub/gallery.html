@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Integrals — log/exp with substitution — conceptual × Spec gallery</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+/* If katex.css fails to load, MathML text duplicates the HTML render
+   (looks like "Find ddx … Find d/dx …"). Match KaTeX's sr-only clip. */
+.katex .katex-mathml {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+</style>
+<link rel="stylesheet" href="../../_assets/katex/katex.min.css"/>
+<script defer src="../../_assets/katex/katex.min.js"></script>
+<script defer src="../../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>Integrals — log/exp with substitution</h1>
+<p><strong>type_id:</strong> <code>calc_indef_int_logarithmic_rule_and_exponentials_with_substitution</code> · <strong>leaf:</strong> <code>integral_substitution</code> Conceptual max (full allow_* kit): <strong>25</strong> Conceptual axis: 0, 4, 8, 12, 16, 20, 25 Spec axis (presentation dress, unbounded): 0, 4, 8, 16, 32 Allows: <code>allow_exp</code>, <code>allow_log</code>, <code>allow_trig</code> <strong>Generated:</strong> 2026-08-05 19:09 UTC</p>
+<p>Open <a href="gallery.html">gallery.html</a> in a browser for KaTeX.</p>
+<p>True <strong>2D grid</strong>: rows = conceptual (calculus method/form), columns = Spec (algebra presentation: cancel bait / cancel pairs — same answer after simplify). Spec does not change the calculus method or raise the underlying degree.</p>
+<h2>Grid (prompt)</h2>
+<table><thead><tr>
+<th>C \ S</th>
+<th><strong>S=0</strong></th>
+<th><strong>S=4</strong></th>
+<th><strong>S=8</strong></th>
+<th><strong>S=16</strong></th>
+<th><strong>S=32</strong></th>
+</tr></thead><tbody>
+<tr>
+<td><strong>C=0</strong></td>
+<td>$\int 3e^{3x + 6}\,dx$</td>
+<td>$\int  \frac{3\left(x-2\right)3e^{3x + 6}}{3\left(x-2\right)}\,dx$</td>
+<td>$\int  \left(\left(-\left(-3e^{3x + 6}\right)\right)+1\right)-1\,dx$</td>
+<td>$\int  \frac{-\left(1-x\right)\left(\left(\left(3e^{3x + 6}+\left(-x+3\right)-\left(-x+3\right)\right)+5\right)-5\right)}{-\left(1-x\right)}\,dx$</td>
+<td>$\int  -\left(-\frac{4\left(x-1\right)\left(3e^{3x + 6}+3-3\right)}{4\left(x-1\right)}\right)\,dx$</td>
+</tr>
+<tr>
+<td><strong>C=4</strong></td>
+<td>$\int \frac{3}{3x + 1}\,dx$</td>
+<td>$\int  \left(\frac{3}{3x + 1}+5\right)-5\,dx$</td>
+<td>$\int  \left(\left(-\left(-\frac{3}{3x + 1}\right)\right)+6\right)-6\,dx$</td>
+<td>$\int  -\left(-\left(\left(\frac{3}{3x + 1}+2\right)-2\right)+\left(x+1\right)-\left(x+1\right)\right)\,dx$</td>
+<td>$\int  \left(\left(\frac{-\left(2-x\right)\frac{3}{3x + 1}}{-\left(2-x\right)}+4\right)-4\right)+6-6\,dx$</td>
+</tr>
+<tr>
+<td><strong>C=8</strong></td>
+<td>$\int \frac{3}{3x + 6}\,dx$</td>
+<td>$\int  \frac{-\left(1+x\right)\frac{3}{3x + 6}}{-\left(1+x\right)}\,dx$</td>
+<td>$\int  -\left(-\left(\frac{3}{3x + 6}+\left(x-1\right)-\left(x-1\right)\right)\right)\,dx$</td>
+<td>$\int  -\left(-\left(\left(\frac{3}{3x + 6}+\left(-2x+2\right)-\left(-2x+2\right)\right)+\left(-2x\right)\right)-\left(-2x\right)\right)\,dx$</td>
+<td>$\int  \left(\frac{3\left(x-1\right)\frac{3}{3x + 6}}{3\left(x-1\right)}+\left(x+1\right)\right)-\left(x+1\right)+4-4\,dx$</td>
+</tr>
+<tr>
+<td><strong>C=12</strong></td>
+<td>$\int 4e^{4x - 3}\,dx$</td>
+<td>$\int  -\left(-4e^{4x - 3}\right)\,dx$</td>
+<td>$\int  \frac{\left(x-3\right)\left(\left(4e^{4x - 3}+6\right)-6\right)}{x-3}\,dx$</td>
+<td>$\int  \left(4e^{4x - 3}+5-5\right)+\left(2x\right)-\left(2x\right)+\left(-x+3\right)-\left(-x+3\right)\,dx$</td>
+<td>$\int  \frac{3\left(x-2\right)\left(\left(\left(4e^{4x - 3}+2\right)-2\right)+3-3\right)}{3\left(x-2\right)}\,dx$</td>
+</tr>
+<tr>
+<td><strong>C=16</strong></td>
+<td>$\int 2e^{2x + 5}\,dx$</td>
+<td>$\int  \frac{\left(x-3\right)2e^{2x + 5}}{x-3}\,dx$</td>
+<td>$\int  \frac{2\left(x-3\right)\left(2e^{2x + 5}+\left(-x+1\right)\right)-\left(-x+1\right)}{2\left(x-3\right)}\,dx$</td>
+<td>$\int  \left(\left(\frac{4\left(x+2\right)2e^{2x + 5}}{4\left(x+2\right)}+\left(x-2\right)\right)-\left(x-2\right)+\left(-2x-2\right)\right)-\left(-2x-2\right)\,dx$</td>
+<td>$\int  \left(\left(-\left(-\left(2e^{2x + 5}+\left(2x\right)-\left(2x\right)\right)\right)\right)+6\right)-6\,dx$</td>
+</tr>
+<tr>
+<td><strong>C=20</strong></td>
+<td>$\int 3e^{3x - 2}\,dx$</td>
+<td>$\int  3e^{3x - 2}+\left(2x-2\right)-\left(2x-2\right)\,dx$</td>
+<td>$\int  \frac{3\left(x+1\right)3e^{3x - 2}}{3\left(x+1\right)}+3-3\,dx$</td>
+<td>$\int  \left(-\left(-\frac{-\left(3+x\right)3e^{3x - 2}}{-\left(3+x\right)}\right)\right)+6-6\,dx$</td>
+<td>$\int  \left(\left(\frac{-\left(1-x\right)3e^{3x - 2}}{-\left(1-x\right)}+2\right)-2\right)+6-6\,dx$</td>
+</tr>
+<tr>
+<td><strong>C=25</strong></td>
+<td>$\int \frac{2}{2x + 1}\,dx$</td>
+<td>$\int  -\left(-\frac{2}{2x + 1}\right)\,dx$</td>
+<td>$\int  \left(-\left(-\frac{2}{2x + 1}\right)\right)+6-6\,dx$</td>
+<td>$\int  -\left(-\left(\left(\left(\frac{2}{2x + 1}+5\right)-5\right)+\left(3x-2\right)\right)-\left(3x-2\right)\right)\,dx$</td>
+<td>$\int  \left(\frac{-\left(1+x\right)\left(\left(\frac{2}{2x + 1}+2\right)-2\right)}{-\left(1+x\right)}+\left(3x+3\right)\right)-\left(3x+3\right)\,dx$</td>
+</tr>
+</tbody></table>
+<h2>Grid (answer)</h2>
+<table><thead><tr>
+<th>C \ S</th>
+<th><strong>S=0</strong></th>
+<th><strong>S=4</strong></th>
+<th><strong>S=8</strong></th>
+<th><strong>S=16</strong></th>
+<th><strong>S=32</strong></th>
+</tr></thead><tbody>
+<tr>
+<td><strong>C=0</strong></td>
+<td>$e^{3x + 6}+C$</td>
+<td>$e^{3x + 6}+C$</td>
+<td>$e^{3x + 6}+C$</td>
+<td>$e^{3x + 6}+C$</td>
+<td>$e^{3x + 6}+C$</td>
+</tr>
+<tr>
+<td><strong>C=4</strong></td>
+<td>$\ln|3x + 1|+C$</td>
+<td>$\ln|3x + 1|+C$</td>
+<td>$\ln|3x + 1|+C$</td>
+<td>$\ln|3x + 1|+C$</td>
+<td>$\ln|3x + 1|+C$</td>
+</tr>
+<tr>
+<td><strong>C=8</strong></td>
+<td>$\ln|3x + 6|+C$</td>
+<td>$\ln|3x + 6|+C$</td>
+<td>$\ln|3x + 6|+C$</td>
+<td>$\ln|3x + 6|+C$</td>
+<td>$\ln|3x + 6|+C$</td>
+</tr>
+<tr>
+<td><strong>C=12</strong></td>
+<td>$e^{4x - 3}+C$</td>
+<td>$e^{4x - 3}+C$</td>
+<td>$e^{4x - 3}+C$</td>
+<td>$e^{4x - 3}+C$</td>
+<td>$e^{4x - 3}+C$</td>
+</tr>
+<tr>
+<td><strong>C=16</strong></td>
+<td>$e^{2x + 5}+C$</td>
+<td>$e^{2x + 5}+C$</td>
+<td>$e^{2x + 5}+C$</td>
+<td>$e^{2x + 5}+C$</td>
+<td>$e^{2x + 5}+C$</td>
+</tr>
+<tr>
+<td><strong>C=20</strong></td>
+<td>$e^{3x - 2}+C$</td>
+<td>$e^{3x - 2}+C$</td>
+<td>$e^{3x - 2}+C$</td>
+<td>$e^{3x - 2}+C$</td>
+<td>$e^{3x - 2}+C$</td>
+</tr>
+<tr>
+<td><strong>C=25</strong></td>
+<td>$\ln|2x + 1|+C$</td>
+<td>$\ln|2x + 1|+C$</td>
+<td>$\ln|2x + 1|+C$</td>
+<td>$\ln|2x + 1|+C$</td>
+<td>$\ln|2x + 1|+C$</td>
+</tr>
+</tbody></table>
+<h2>Cell detail</h2>
+<h3>C=0 · S=0</h3>
+<ul>
+<li>Prompt: $\int 3e^{3x + 6}\,dx$</li>
+<li>Answer: $e^{3x + 6}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=0 · S=0 · amax=25</li>
+</ul>
+<h3>C=0 · S=4</h3>
+<ul>
+<li>Prompt: $\int  \frac{3\left(x-2\right)3e^{3x + 6}}{3\left(x-2\right)}\,dx$</li>
+<li>Answer: $e^{3x + 6}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code> · <code>prereq:cancel_quot_bait</code></li>
+<li>Flags: C=0 · S=4 · amax=25</li>
+</ul>
+<h3>C=0 · S=8</h3>
+<ul>
+<li>Prompt: $\int  \left(\left(-\left(-3e^{3x + 6}\right)\right)+1\right)-1\,dx$</li>
+<li>Answer: $e^{3x + 6}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=0 · S=8 · amax=25</li>
+</ul>
+<h3>C=0 · S=16</h3>
+<ul>
+<li>Prompt: $\int  \frac{-\left(1-x\right)\left(\left(\left(3e^{3x + 6}+\left(-x+3\right)-\left(-x+3\right)\right)+5\right)-5\right)}{-\left(1-x\right)}\,dx$</li>
+<li>Answer: $e^{3x + 6}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_linear</code> · <code>effort:add_cancel_const</code> · <code>prereq:cancel_quot_bait</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=0 · S=16 · amax=25</li>
+</ul>
+<h3>C=0 · S=32</h3>
+<ul>
+<li>Prompt: $\int  -\left(-\frac{4\left(x-1\right)\left(3e^{3x + 6}+3-3\right)}{4\left(x-1\right)}\right)\,dx$</li>
+<li>Answer: $e^{3x + 6}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_const</code> · <code>prereq:cancel_quot_bait</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=0 · S=32 · amax=25</li>
+</ul>
+<h3>C=4 · S=0</h3>
+<ul>
+<li>Prompt: $\int \frac{3}{3x + 1}\,dx$</li>
+<li>Answer: $\ln|3x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=4 · S=0 · amax=25 · shortfall=0.5</li>
+</ul>
+<h3>C=4 · S=4</h3>
+<ul>
+<li>Prompt: $\int  \left(\frac{3}{3x + 1}+5\right)-5\,dx$</li>
+<li>Answer: $\ln|3x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code> · <code>effort:add_cancel_const</code></li>
+<li>Flags: C=4 · S=4 · amax=25</li>
+</ul>
+<h3>C=4 · S=8</h3>
+<ul>
+<li>Prompt: $\int  \left(\left(-\left(-\frac{3}{3x + 1}\right)\right)+6\right)-6\,dx$</li>
+<li>Answer: $\ln|3x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=4 · S=8 · amax=25</li>
+</ul>
+<h3>C=4 · S=16</h3>
+<ul>
+<li>Prompt: $\int  -\left(-\left(\left(\frac{3}{3x + 1}+2\right)-2\right)+\left(x+1\right)-\left(x+1\right)\right)\,dx$</li>
+<li>Answer: $\ln|3x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_const</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=4 · S=16 · amax=25</li>
+</ul>
+<h3>C=4 · S=32</h3>
+<ul>
+<li>Prompt: $\int  \left(\left(\frac{-\left(2-x\right)\frac{3}{3x + 1}}{-\left(2-x\right)}+4\right)-4\right)+6-6\,dx$</li>
+<li>Answer: $\ln|3x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=4 · S=32 · amax=25</li>
+</ul>
+<h3>C=8 · S=0</h3>
+<ul>
+<li>Prompt: $\int \frac{3}{3x + 6}\,dx$</li>
+<li>Answer: $\ln|3x + 6|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=8 · S=0 · amax=25 · shortfall=4.5</li>
+</ul>
+<h3>C=8 · S=4</h3>
+<ul>
+<li>Prompt: $\int  \frac{-\left(1+x\right)\frac{3}{3x + 6}}{-\left(1+x\right)}\,dx$</li>
+<li>Answer: $\ln|3x + 6|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code> · <code>prereq:cancel_quot_bait</code></li>
+<li>Flags: C=8 · S=4 · amax=25 · shortfall=3.5</li>
+</ul>
+<h3>C=8 · S=8</h3>
+<ul>
+<li>Prompt: $\int  -\left(-\left(\frac{3}{3x + 6}+\left(x-1\right)-\left(x-1\right)\right)\right)\,dx$</li>
+<li>Answer: $\ln|3x + 6|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=8 · S=8 · amax=25 · shortfall=2.5</li>
+</ul>
+<h3>C=8 · S=16</h3>
+<ul>
+<li>Prompt: $\int  -\left(-\left(\left(\frac{3}{3x + 6}+\left(-2x+2\right)-\left(-2x+2\right)\right)+\left(-2x\right)\right)-\left(-2x\right)\right)\,dx$</li>
+<li>Answer: $\ln|3x + 6|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=8 · S=16 · amax=25 · shortfall=1.5</li>
+</ul>
+<h3>C=8 · S=32</h3>
+<ul>
+<li>Prompt: $\int  \left(\frac{3\left(x-1\right)\frac{3}{3x + 6}}{3\left(x-1\right)}+\left(x+1\right)\right)-\left(x+1\right)+4-4\,dx$</li>
+<li>Answer: $\ln|3x + 6|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>effort:add_cancel_linear</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=8 · S=32 · amax=25 · shortfall=1.5</li>
+</ul>
+<h3>C=12 · S=0</h3>
+<ul>
+<li>Prompt: $\int 4e^{4x - 3}\,dx$</li>
+<li>Answer: $e^{4x - 3}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=12 · S=0 · amax=25 · shortfall=8.5</li>
+</ul>
+<h3>C=12 · S=4</h3>
+<ul>
+<li>Prompt: $\int  -\left(-4e^{4x - 3}\right)\,dx$</li>
+<li>Answer: $e^{4x - 3}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code> · <code>effort:double_neg</code></li>
+<li>Flags: C=12 · S=4 · amax=25 · shortfall=7.5</li>
+</ul>
+<h3>C=12 · S=8</h3>
+<ul>
+<li>Prompt: $\int  \frac{\left(x-3\right)\left(\left(4e^{4x - 3}+6\right)-6\right)}{x-3}\,dx$</li>
+<li>Answer: $e^{4x - 3}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_const</code> · <code>prereq:cancel_quot_bait</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=12 · S=8 · amax=25 · shortfall=6.5</li>
+</ul>
+<h3>C=12 · S=16</h3>
+<ul>
+<li>Prompt: $\int  \left(4e^{4x - 3}+5-5\right)+\left(2x\right)-\left(2x\right)+\left(-x+3\right)-\left(-x+3\right)\,dx$</li>
+<li>Answer: $e^{4x - 3}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_const</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=12 · S=16 · amax=25 · shortfall=5.5</li>
+</ul>
+<h3>C=12 · S=32</h3>
+<ul>
+<li>Prompt: $\int  \frac{3\left(x-2\right)\left(\left(\left(4e^{4x - 3}+2\right)-2\right)+3-3\right)}{3\left(x-2\right)}\,dx$</li>
+<li>Answer: $e^{4x - 3}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_const</code> · <code>prereq:cancel_quot_bait</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=12 · S=32 · amax=25 · shortfall=5.5</li>
+</ul>
+<h3>C=16 · S=0</h3>
+<ul>
+<li>Prompt: $\int 2e^{2x + 5}\,dx$</li>
+<li>Answer: $e^{2x + 5}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=16 · S=0 · amax=25 · shortfall=12.5</li>
+</ul>
+<h3>C=16 · S=4</h3>
+<ul>
+<li>Prompt: $\int  \frac{\left(x-3\right)2e^{2x + 5}}{x-3}\,dx$</li>
+<li>Answer: $e^{2x + 5}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code> · <code>prereq:cancel_quot_bait</code></li>
+<li>Flags: C=16 · S=4 · amax=25 · shortfall=11.5</li>
+</ul>
+<h3>C=16 · S=8</h3>
+<ul>
+<li>Prompt: $\int  \frac{2\left(x-3\right)\left(2e^{2x + 5}+\left(-x+1\right)\right)-\left(-x+1\right)}{2\left(x-3\right)}\,dx$</li>
+<li>Answer: $e^{2x + 5}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_linear</code> · <code>prereq:cancel_quot_bait</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=16 · S=8 · amax=25 · shortfall=10.5</li>
+</ul>
+<h3>C=16 · S=16</h3>
+<ul>
+<li>Prompt: $\int  \left(\left(\frac{4\left(x+2\right)2e^{2x + 5}}{4\left(x+2\right)}+\left(x-2\right)\right)-\left(x-2\right)+\left(-2x-2\right)\right)-\left(-2x-2\right)\,dx$</li>
+<li>Answer: $e^{2x + 5}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=16 · S=16 · amax=25 · shortfall=9.5</li>
+</ul>
+<h3>C=16 · S=32</h3>
+<ul>
+<li>Prompt: $\int  \left(\left(-\left(-\left(2e^{2x + 5}+\left(2x\right)-\left(2x\right)\right)\right)\right)+6\right)-6\,dx$</li>
+<li>Answer: $e^{2x + 5}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=16 · S=32 · amax=25 · shortfall=9.5</li>
+</ul>
+<h3>C=20 · S=0</h3>
+<ul>
+<li>Prompt: $\int 3e^{3x - 2}\,dx$</li>
+<li>Answer: $e^{3x - 2}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=20 · S=0 · amax=25 · shortfall=16.5</li>
+</ul>
+<h3>C=20 · S=4</h3>
+<ul>
+<li>Prompt: $\int  3e^{3x - 2}+\left(2x-2\right)-\left(2x-2\right)\,dx$</li>
+<li>Answer: $e^{3x - 2}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code> · <code>effort:add_cancel_linear</code></li>
+<li>Flags: C=20 · S=4 · amax=25 · shortfall=15.5</li>
+</ul>
+<h3>C=20 · S=8</h3>
+<ul>
+<li>Prompt: $\int  \frac{3\left(x+1\right)3e^{3x - 2}}{3\left(x+1\right)}+3-3\,dx$</li>
+<li>Answer: $e^{3x - 2}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=20 · S=8 · amax=25 · shortfall=14.5</li>
+</ul>
+<h3>C=20 · S=16</h3>
+<ul>
+<li>Prompt: $\int  \left(-\left(-\frac{-\left(3+x\right)3e^{3x - 2}}{-\left(3+x\right)}\right)\right)+6-6\,dx$</li>
+<li>Answer: $e^{3x - 2}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=20 · S=16 · amax=25 · shortfall=13.5</li>
+</ul>
+<h3>C=20 · S=32</h3>
+<ul>
+<li>Prompt: $\int  \left(\left(\frac{-\left(1-x\right)3e^{3x - 2}}{-\left(1-x\right)}+2\right)-2\right)+6-6\,dx$</li>
+<li>Answer: $e^{3x - 2}+C$</li>
+<li>From: <code>form:exp_of_poly</code> · <code>conceptual:u_sub</code> · <code>prereq:cancel_quot_bait</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=20 · S=32 · amax=25 · shortfall=13.5</li>
+</ul>
+<h3>C=25 · S=0</h3>
+<ul>
+<li>Prompt: $\int \frac{2}{2x + 1}\,dx$</li>
+<li>Answer: $\ln|2x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=25 · S=0 · amax=25 · shortfall=21.5</li>
+</ul>
+<h3>C=25 · S=4</h3>
+<ul>
+<li>Prompt: $\int  -\left(-\frac{2}{2x + 1}\right)\,dx$</li>
+<li>Answer: $\ln|2x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code> · <code>effort:double_neg</code></li>
+<li>Flags: C=25 · S=4 · amax=25 · shortfall=20.5</li>
+</ul>
+<h3>C=25 · S=8</h3>
+<ul>
+<li>Prompt: $\int  \left(-\left(-\frac{2}{2x + 1}\right)\right)+6-6\,dx$</li>
+<li>Answer: $\ln|2x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=25 · S=8 · amax=25 · shortfall=19.5</li>
+</ul>
+<h3>C=25 · S=16</h3>
+<ul>
+<li>Prompt: $\int  -\left(-\left(\left(\left(\frac{2}{2x + 1}+5\right)-5\right)+\left(3x-2\right)\right)-\left(3x-2\right)\right)\,dx$</li>
+<li>Answer: $\ln|2x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_const</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=25 · S=16 · amax=25 · shortfall=18.5</li>
+</ul>
+<h3>C=25 · S=32</h3>
+<ul>
+<li>Prompt: $\int  \left(\frac{-\left(1+x\right)\left(\left(\frac{2}{2x + 1}+2\right)-2\right)}{-\left(1+x\right)}+\left(3x+3\right)\right)-\left(3x+3\right)\,dx$</li>
+<li>Answer: $\ln|2x + 1|+C$</li>
+<li>From: <code>form:du_over_u_linear</code> · <code>conceptual:u_sub</code> · <code>effort:add_cancel_const</code> · <code>prereq:cancel_quot_bait</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=25 · S=32 · amax=25 · shortfall=18.5</li>
+</ul>
+</body></html>

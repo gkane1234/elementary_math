@@ -1,0 +1,201 @@
+{
+  "catalog_id": "u_substitution",
+  "title": "OpenStax u-substitution — explicit form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "calculus-volume-1",
+      "slug": "5-5-substitution",
+      "title": "5.5 Substitution",
+      "url": "https://openstax.org/books/calculus-volume-1/pages/5-5-substitution",
+      "stage1": "scripts/output/example_mining/calculus-volume-1/stage1/5-5-substitution.json"
+    },
+    "related": [
+      {
+        "book": "calculus-volume-2",
+        "slug": "1-5-substitution",
+        "note": "Vol.2 reprise of substitution"
+      },
+      {
+        "book": "calculus-volume-1",
+        "slug": "5-6-integrals-involving-exponential-and-logarithmic-functions",
+        "note": "e^{g}g' and ln|g|·g'/g forms"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "Forms enumerate textbook-visible u-sub patterns: power of linear/quadratic, du/u, exp-of-trig, trig-of-u, arctan chain, alteration.",
+    "Sampler selects form_id by D-weighted weights among generation_status=implemented entries."
+  ],
+  "forms": [
+    {
+      "form_id": "power_linear_du",
+      "description": "∫ a(ax+b)^n dx — visible constant du factor",
+      "strategy": "u_equals_linear",
+      "constraints": { "inner": "poly_linear", "outer": "power", "du_visible": true },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": ["fs-id1170573385785"],
+      "openstax_case": "Example 5.30 — ∫ 6x(3x²+4)^4 (related power-of-poly)"
+    },
+    {
+      "form_id": "power_quad_x_du",
+      "description": "∫ (x²+c)^n · 2x dx (or without 2 absorbed)",
+      "strategy": "u_equals_quad",
+      "constraints": { "inner": "poly_quad", "outer": "power" },
+      "d_min": 4,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": ["fs-id1170573430304", "fs-id1170571334083"],
+      "openstax_case": "Checkpoint 5.25 / Example 5.31 — quadratic inner"
+    },
+    {
+      "form_id": "root_quad_x_du",
+      "description": "∫ x √(x²±c) dx — alteration / root of quadratic",
+      "strategy": "u_equals_quad_root",
+      "constraints": { "inner": "poly_quad", "outer": "root" },
+      "d_min": 6,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": ["fs-id1170571334083"],
+      "openstax_case": "Example 5.31 — ∫ z√(z²−5) dz"
+    },
+    {
+      "form_id": "du_over_u_linear",
+      "description": "∫ a/(ax+b) dx → ln|ax+b|",
+      "strategy": "du_over_u",
+      "constraints": { "inner": "poly_linear", "outer": "ln" },
+      "d_min": 2,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 / §5.6 ln|g| forms"
+    },
+    {
+      "form_id": "du_over_u_trig",
+      "description": "∫ sin/cos^n or cos/sin^n — u = cos or sin",
+      "strategy": "trig_power_u_sub",
+      "constraints": { "inner": "trig", "outer": "power_or_ln" },
+      "d_min": 6,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["u_sub", "trig"],
+      "example_item_ids": ["fs-id1170573573975", "fs-id1170573733746"],
+      "openstax_case": "Example 5.32 / Checkpoint 5.27 — trig substitution warmup"
+    },
+    {
+      "form_id": "exp_of_trig",
+      "description": "∫ e^{sin x} cos x dx (or e^{cos} sin)",
+      "strategy": "exp_composite_trig",
+      "constraints": { "inner": "trig", "outer": "exp" },
+      "d_min": 8,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 composite e^{g} g'"
+    },
+    {
+      "form_id": "exp_of_poly",
+      "description": "∫ e^{ax+b} · a dx",
+      "strategy": "exp_linear",
+      "constraints": { "inner": "poly_linear", "outer": "exp" },
+      "d_min": 4,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 exponential substitution"
+    },
+    {
+      "form_id": "trig_of_linear",
+      "description": "∫ cos(ax+b)·a or sin(ax+b)·a",
+      "strategy": "trig_of_u",
+      "constraints": { "inner": "poly_linear", "outer": "trig" },
+      "d_min": 4,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["u_sub", "trig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 trig of linear inner"
+    },
+    {
+      "form_id": "arctan_of_linear",
+      "description": "∫ a/(1+(ax+b)²) dx → arctan(ax+b)",
+      "strategy": "arctan_chain",
+      "constraints": { "inner": "poly_linear", "outer": "invtrig" },
+      "d_min": 10,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": ["u_sub", "invtrig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.7 invtrig via substitution"
+    },
+    {
+      "form_id": "ln_squared_chain",
+      "description": "∫ (ln|g|/g)·g' → (1/2)(ln|g|)²",
+      "strategy": "ln_squared",
+      "constraints": { "inner": "poly", "outer": "ln_power" },
+      "d_min": 12,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 higher log-chain"
+    },
+    {
+      "form_id": "alteration_linear_over_root",
+      "description": "∫ x/√(x−a) style alteration (rewrite then u-sub)",
+      "strategy": "alteration",
+      "constraints": { "kind": "alteration_root" },
+      "d_min": 10,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": ["fs-id1170573426799"],
+      "openstax_case": "Example 5.33 — ∫ x/√(x−1) dx"
+    },
+    {
+      "form_id": "nested_trig_exp",
+      "description": "∫ e^{sin(kx)} cos(kx) with k≠1",
+      "strategy": "exp_composite_trig_scaled",
+      "constraints": { "inner": "trig_scaled", "outer": "exp" },
+      "d_min": 14,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["u_sub"],
+      "example_item_ids": [],
+      "openstax_case": "Scaled composite e^{g} g'"
+    },
+    {
+      "form_id": "sec2_of_u",
+      "description": "∫ sec²(g)·g' → tan(g)",
+      "strategy": "sec2_chain",
+      "constraints": { "outer": "sec2" },
+      "d_min": 8,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["u_sub", "trig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 sec² chain"
+    },
+    {
+      "form_id": "composite_ln_of_trig",
+      "description": "∫ cot = cos/sin → ln|sin| (trig du/u)",
+      "strategy": "du_over_u_trig_basic",
+      "constraints": { "kind": "cot_or_tan_rewrite" },
+      "d_min": 8,
+      "d_weight": 1.3,
+      "generation_status": "stub",
+      "tricks": ["u_sub", "trig"],
+      "example_item_ids": [],
+      "openstax_case": "Related §3.2 / §5.5 rewrite-then-u",
+      "gap_reason": "Covered partly by trig_integrals basic_tan; dedicated cot form not yet separate"
+    }
+  ]
+}

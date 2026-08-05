@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>g6: Numeric expressions and the order of operations</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+
+</style>
+<link rel="stylesheet" href="../../_assets/katex/katex.min.css"/>
+<script defer src="../../_assets/katex/katex.min.js"></script>
+<script defer src="../../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>g6: Numeric expressions and the order of operations</h1>
+<p><code>g6_numeric_expressions_and_order_of_operations</code> — continuous difficulty samples for topic-fit / ramp review.</p>
+<p>Samples via the <strong>live continuous-D API path</strong> (<code>QUESTION_TYPES</code> / <code>_generate_for_type</code> / seed / <code>include_answer_key</code>).</p>
+<p>Open <a href="gallery.html">gallery.html</a> in a browser for <strong>KaTeX-rendered math</strong> (markdown preview leaves <code>$...$</code> as raw LaTeX).</p>
+<p>Difficulties: 0, 5, 10, 15, 20, 25 · 2 sample(s) each.</p>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Engine / spend</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$3 \times 2 - 2 \times 2$</td>
+<td>$2$</td>
+<td>ooo; numbers=0.0, variable=0.0, ooo=0.0; n_ops=3; ups=flat_ooo,product,product_absorb</td>
+</tr>
+<tr>
+<td>0</td>
+<td>$2 \times 3 - 5$</td>
+<td>$1$</td>
+<td>ooo; numbers=0.0, variable=0.0, ooo=0.0; n_ops=2; ups=flat_ooo,product,absorb</td>
+</tr>
+<tr>
+<td>5</td>
+<td>$3 \times 2 - 2 \times 3 + 2$</td>
+<td>$2$</td>
+<td>ooo; numbers=0.704, variable=1.009, ooo=3.287; n_ops=4; ups=flat_ooo,product,product,absorb</td>
+</tr>
+<tr>
+<td>5</td>
+<td>$6 \div 2 - 1 - 2$</td>
+<td>$0$</td>
+<td>ooo; numbers=0.336, variable=1.648, ooo=3.016; n_ops=3; ups=flat_ooo,quotient,plain,absorb</td>
+</tr>
+<tr>
+<td>10</td>
+<td>$3 \times 2 + 2 \times 3 + 3 \times 3 + 2 \times 2 - 27$</td>
+<td>$-2$</td>
+<td>ooo; numbers=0.243, variable=0.674, ooo=9.083; n_ops=8; ups=flat_ooo,product,product,product</td>
+</tr>
+<tr>
+<td>10</td>
+<td>$2 + 3 \times 3 - 3 \times 5 - \left(3 - 2\right) \times 2 + 2 \times 4$</td>
+<td>$2$</td>
+<td>ooo; numbers=4.526, variable=2.881, ooo=2.593; n_ops=8; ups=flat_ooo,plain,product,product</td>
+</tr>
+<tr>
+<td>15</td>
+<td>$3 \times 3^{3} + 4 \times 4^{3} + 16 \div 4 + 9 \div 3 - 3 \times 2 - 4 \times 3 - 328$</td>
+<td>$-2$</td>
+<td>ooo; numbers=1.649, variable=5.313, ooo=8.038; n_ops=14; ups=flat_ooo,product_power,product_power,quotient</td>
+</tr>
+<tr>
+<td>15</td>
+<td>$2 - 18 \div 6 - 3 \times 3 + 2 \times 3 - \left(4 - 2\right) \times 3 - 3 \times 3 + 2 \times 8$</td>
+<td>$-3$</td>
+<td>ooo; numbers=1.229, variable=1.139, ooo=12.632; n_ops=12; ups=flat_ooo,plain,quotient,product</td>
+</tr>
+<tr>
+<td>20</td>
+<td>$3 \times 4^{3} + 4 \times 3 - \left(4 - 3\right) \times 5 + 1 + 25 \div 5 - 3 \times 5 - 2^{2} \times 2 - 185$</td>
+<td>$-3$</td>
+<td>ooo; numbers=2.271, variable=1.254, ooo=16.475; n_ops=15; ups=flat_ooo,product_power,product,group_sub</td>
+</tr>
+<tr>
+<td>20</td>
+<td>$2 \times 3 + \left(3 - 2\right) \times 2 + 3 \times 3 - 3 \times 3 - 2 \times 2 + 15 \div 5 - 3 \times 2^{2} + 2 \times 2 - 2$</td>
+<td>$-3$</td>
+<td>ooo; numbers=0.094, variable=0.349, ooo=19.557; n_ops=17; ups=flat_ooo,product,group_sub,product</td>
+</tr>
+<tr>
+<td>25</td>
+<td>$2 \times 2^{2} - 4^{2} + 12 \div 6 + \left(3 - 2\right) \times 3^{3} - 3 \times 2^{3} - 8 \div 4 - 3 \times 3 - 2 \times 3 + 3^{3} \times 3^{2} - 223$</td>
+<td>$0$</td>
+<td>ooo; numbers=0.741, variable=2.416, ooo=21.843; n_ops=23; ups=flat_ooo,product_power,power,quotient</td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\left(3 + 2\right) \times 2 + 2 \times 2 + \left(2 + 3\right) \times 3^{3} + \left(2 + 3\right) \times 2 - 10 \div 5 - 3 \times 3 - 2^{2} \times 3 - 4 \div 2 - 1 - 133$</td>
+<td>$0$</td>
+<td>ooo; numbers=0.037, variable=9.556, ooo=15.407; n_ops=19; ups=flat_ooo,group_add,product,group_add_power</td>
+</tr>
+</tbody></table>
+</body></html>

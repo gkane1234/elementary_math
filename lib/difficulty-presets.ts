@@ -1,6 +1,7 @@
 /**
- * Difficulty-tier presets that update domain settings when Easy / Medium / Hard
- * is selected in the topic settings UI.
+ * Difficulty-tier presets that update domain settings when a legacy
+ * `difficulty_tier` value is applied (internal / API bridge).
+ * Live UI uses continuous `difficulty` and hides the tier control when present.
  *
  * Structure mirrors `question_engine/settings/presets.py`:
  *   PROFILE_DIFFICULTY_PRESETS[profile][tier] = { settingKey: value }

@@ -1,0 +1,117 @@
+{
+  "catalog_id": "precalculus_trig_equations",
+  "title": "OpenStax Precalculus 2e §7.5 Solving Trigonometric Equations — form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "precalculus-2e",
+      "slug": "7-5-solving-trigonometric-equations",
+      "title": "7.5 Solving Trigonometric Equations",
+      "url": "https://openstax.org/books/precalculus-2e/pages/7-5-solving-trigonometric-equations",
+      "stage1": "scripts/output/example_mining/precalculus-2e/stage1/7-5-solving-trigonometric-equations.json"
+    }
+  },
+  "taxonomy_notes": [
+    "§7.5 objectives: linear sin/cos; single trig function; quadratic-in-trig; fundamental-identity factoring; multiple angles."
+  ],
+  "forms": [
+    {
+      "form_id": "linear_sin_cos",
+      "description": "Solve sin θ = k or cos θ = k (unit-circle exact)",
+      "strategy": "linear_trig",
+      "constraints": { "kind": "linear_value", "fns": ["sin", "cos"] },
+      "d_min": 0,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["trig_equation"],
+      "leaves": ["pc_simple_trig_equations", "pc_equations_and_multiple_angle_identities"],
+      "wired_generators": ["simple_trig_equations"],
+      "example_item_ids": ["Example_07_05_01", "Example_07_05_02"],
+      "openstax_case": "§7.5 Example 1–2 — linear sin/cos"
+    },
+    {
+      "form_id": "linear_scaled",
+      "description": "Solve a cos θ + b = c (isolate then unit circle)",
+      "strategy": "linear_scaled",
+      "constraints": { "kind": "linear_scaled" },
+      "d_min": 6,
+      "d_weight": 1.6,
+      "generation_status": "stub",
+      "tricks": ["trig_equation"],
+      "leaves": ["pc_simple_trig_equations", "pc_equations_and_multiple_angle_identities"],
+      "wired_generators": ["simple_trig_equations"],
+      "example_item_ids": ["Example_07_05_03", "ti_07_05_01"],
+      "openstax_case": "§7.5 Example 3 — linear form with coefficients"
+    },
+    {
+      "form_id": "quadratic_in_trig",
+      "description": "Quadratic in sin/cos (e.g. 2sin²θ − 1 = 0)",
+      "strategy": "quadratic_trig",
+      "constraints": { "kind": "quadratic", "choice": "factor" },
+      "d_min": 6,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig_equation", "factor"],
+      "leaves": ["pc_equations_with_factoring_and_fundamental_identities", "pc_equations_and_multiple_angle_identities"],
+      "wired_generators": ["trig_factoring_equations"],
+      "example_item_ids": ["Example_07_05_04"],
+      "openstax_case": "§7.5 Example 4 — quadratic in trig"
+    },
+    {
+      "form_id": "factor_fundamental",
+      "description": "Factor using fundamental identities (e.g. 2sinθ cosθ = 0)",
+      "strategy": "factor_identity",
+      "constraints": { "kind": "factor", "choice": "sin2" },
+      "d_min": 8,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig_equation", "identity"],
+      "leaves": ["pc_equations_with_factoring_and_fundamental_identities"],
+      "wired_generators": ["trig_factoring_equations"],
+      "example_item_ids": [],
+      "openstax_case": "§7.5 factoring with fundamental identities"
+    },
+    {
+      "form_id": "double_angle_equation",
+      "description": "Solve cos(2θ)=0 / sin(2θ)=0 style",
+      "strategy": "multiple_angle",
+      "constraints": { "kind": "double_angle", "choice": "cos2" },
+      "d_min": 8,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["trig_equation", "double_angle"],
+      "leaves": ["pc_equations_and_multiple_angle_identities", "pc_equations_with_factoring_and_fundamental_identities"],
+      "wired_generators": ["trig_factoring_equations"],
+      "example_item_ids": [],
+      "openstax_case": "§7.5 multiple-angle equations"
+    },
+    {
+      "form_id": "single_trig_other",
+      "description": "Solve csc θ = k / sec / tan on an interval",
+      "strategy": "reciprocal_trig_eq",
+      "constraints": { "kind": "reciprocal_fn" },
+      "d_min": 10,
+      "d_weight": 1.2,
+      "generation_status": "stub",
+      "tricks": ["trig_equation"],
+      "leaves": ["pc_equations_and_multiple_angle_identities"],
+      "wired_generators": ["simple_trig_equations"],
+      "example_item_ids": ["Example_07_05_05"],
+      "openstax_case": "§7.5 Example 5 — cosecant equation"
+    },
+    {
+      "form_id": "calculator_approx",
+      "description": "Trig equations requiring calculator approximations",
+      "strategy": "calculator",
+      "constraints": { "kind": "numeric" },
+      "d_min": 12,
+      "d_weight": 0.5,
+      "generation_status": "deferred",
+      "tricks": ["trig_equation"],
+      "leaves": [],
+      "wired_generators": [],
+      "example_item_ids": [],
+      "openstax_case": "§7.5 calculator solutions"
+    }
+  ]
+}

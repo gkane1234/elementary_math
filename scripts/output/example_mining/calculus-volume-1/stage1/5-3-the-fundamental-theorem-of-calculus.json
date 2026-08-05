@@ -1,0 +1,1182 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "5-3-the-fundamental-theorem-of-calculus",
+  "title": "5.3 The Fundamental Theorem of Calculus",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/5-3-the-fundamental-theorem-of-calculus",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/5-3-the-fundamental-theorem-of-calculus.html",
+  "objectives": [
+    "5.3.1 Describe the meaning of the Mean Value Theorem for Integrals.",
+    "5.3.2 State the meaning of the Fundamental Theorem of Calculus, Part 1.",
+    "5.3.3 Use the Fundamental Theorem of Calculus, Part 1, to evaluate derivatives of integrals.",
+    "5.3.4 State the meaning of the Fundamental Theorem of Calculus, Part 2.",
+    "5.3.5 Use the Fundamental Theorem of Calculus, Part 2, to evaluate definite integrals.",
+    "5.3.6 Explain the relationship between differentiation and integration."
+  ],
+  "headings": [
+    "5.3 The Fundamental Theorem of Calculus",
+    "Learning Objectives",
+    "Media",
+    "The Mean Value Theorem for Integrals",
+    "Theorem 5.3",
+    "Example 5.15",
+    "Checkpoint 5.14",
+    "Example 5.16",
+    "Checkpoint 5.15",
+    "Fundamental Theorem of Calculus Part 1: Integrals and Antiderivatives",
+    "Theorem 5.4",
+    "Example 5.17",
+    "Checkpoint 5.16",
+    "Example 5.18",
+    "Checkpoint 5.17",
+    "Example 5.19",
+    "Checkpoint 5.18",
+    "Fundamental Theorem of Calculus, Part 2: The Evaluation Theorem",
+    "Theorem 5.5",
+    "Example 5.20",
+    "Example 5.21",
+    "Checkpoint 5.19",
+    "Example 5.22",
+    "Checkpoint 5.20",
+    "Student Project",
+    "Section 5.3 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1170572141909",
+      "kind": "example",
+      "title": "Example 5.15",
+      "position": 1,
+      "nearest_heading": "Proof",
+      "prompt_text": "Finding the Average Value of a Function Find the average value of the function $f (x) = 8 - 2 x$ over the interval $\\left[\\right. 0 , 4 \\left]\\right.$ and find c such that $f (c)$ equals the average value of the function over $\\left[\\right. 0 , 4 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = 8 - 2 x",
+        "\\left[\\right. 0 , 4 \\left]\\right.",
+        "f (c)",
+        "\\left[\\right. 0 , 4 \\left]\\right. ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572141909",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572332976",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.14",
+      "position": 2,
+      "nearest_heading": "Finding the Average Value of a Function",
+      "prompt_text": "Find the average value of the function $f (x) = \\frac{x}{2}$ over the interval $\\left[\\right. 0 , 6 \\left]\\right.$ and find c such that $f (c)$ equals the average value of the function over $\\left[\\right. 0 , 6 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{x}{2}",
+        "\\left[\\right. 0 , 6 \\left]\\right.",
+        "f (c)",
+        "\\left[\\right. 0 , 6 \\left]\\right. ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572332976",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572451873",
+      "kind": "example",
+      "title": "Example 5.16",
+      "position": 3,
+      "nearest_heading": "Finding the Average Value of a Function",
+      "prompt_text": "Finding the Point Where a Function Takes on Its Average Value Given $\\int_{0}^{3} x^{2} d x = 9 ,$ find c such that $f (c)$ equals the average value of $f (x) = x^{2}$ over $\\left[\\right. 0 , 3 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{3} x^{2} d x = 9 ,",
+        "f (c)",
+        "f (x) = x^{2}",
+        "\\left[\\right. 0 , 3 \\left]\\right. ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572451873",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571569107",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.15",
+      "position": 4,
+      "nearest_heading": "Finding the Point Where a Function Takes on Its Average Value",
+      "prompt_text": "Given $\\int_{0}^{3} \\left(\\right. 2 x^{2} - 1 \\left.\\right) d x = 15 ,$ find c such that $f (c)$ equals the average value of $f (x) = 2 x^{2} - 1$ over $\\left[\\right. 0 , 3 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{3} \\left(\\right. 2 x^{2} - 1 \\left.\\right) d x = 15 ,",
+        "f (c)",
+        "f (x) = 2 x^{2} - 1",
+        "\\left[\\right. 0 , 3 \\left]\\right. ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571569107",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572601345",
+      "kind": "example",
+      "title": "Example 5.17",
+      "position": 5,
+      "nearest_heading": "Proof",
+      "prompt_text": "Finding a Derivative with the Fundamental Theorem of Calculus Use the Fundamental Theorem of Calculus, Part 1 to find the derivative of $g (x) = \\int_{1}^{x} \\frac{1}{t^{3} + 1} d t .$",
+      "prompt_latex_bits": [
+        "g (x) = \\int_{1}^{x} \\frac{1}{t^{3} + 1} d t ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572601345",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572099777",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.16",
+      "position": 6,
+      "nearest_heading": "Finding a Derivative with the Fundamental Theorem of Calculus",
+      "prompt_text": "Use the Fundamental Theorem of Calculus, Part 1 to find the derivative of $g (r) = \\int_{0}^{r} \\sqrt{x^{2} + 4} d x .$",
+      "prompt_latex_bits": [
+        "g (r) = \\int_{0}^{r} \\sqrt{x^{2} + 4} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572099777",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572134770",
+      "kind": "example",
+      "title": "Example 5.18",
+      "position": 7,
+      "nearest_heading": "Finding a Derivative with the Fundamental Theorem of Calculus",
+      "prompt_text": "Using the Fundamental Theorem and the Chain Rule to Calculate Derivatives Let $F (x) = \\int_{1}^{\\sqrt{x}} \\sin t d t .$ Find $F^{'} ( x \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "F (x) = \\int_{1}^{\\sqrt{x}} \\sin t d t .",
+        "F^{'} ( x \\left.\\right) ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572134770",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571710606",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.17",
+      "position": 8,
+      "nearest_heading": "Using the Fundamental Theorem and the Chain Rule to Calculate Derivatives",
+      "prompt_text": "Let $F (x) = \\int_{1}^{x^{3}} \\cos t d t .$ Find $F^{'} ( x \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "F (x) = \\int_{1}^{x^{3}} \\cos t d t .",
+        "F^{'} ( x \\left.\\right) ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571710606",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572228878",
+      "kind": "example",
+      "title": "Example 5.19",
+      "position": 9,
+      "nearest_heading": "Using the Fundamental Theorem and the Chain Rule to Calculate Derivatives",
+      "prompt_text": "Using the Fundamental Theorem of Calculus with Two Variable Limits of Integration Let $F (x) = \\int_{x}^{2 x} t^{3} d t .$ Find $F^{'} ( x \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "F (x) = \\int_{x}^{2 x} t^{3} d t .",
+        "F^{'} ( x \\left.\\right) ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572228878",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572177853",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.18",
+      "position": 10,
+      "nearest_heading": "Using the Fundamental Theorem of Calculus with Two Variable Limits of Integration",
+      "prompt_text": "Let $F (x) = \\int_{x}^{x^{2}} \\cos t d t .$ Find $F^{'} ( x \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "F (x) = \\int_{x}^{x^{2}} \\cos t d t .",
+        "F^{'} ( x \\left.\\right) ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572177853",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571678911",
+      "kind": "example",
+      "title": "Example 5.20",
+      "position": 11,
+      "nearest_heading": "Proof",
+      "prompt_text": "Evaluating an Integral with the Fundamental Theorem of Calculus Use The Fundamental Theorem of Calculus, Part 2 to evaluate $\\int_{\u22122}^{2} \\left(\\right. t^{2} - 4 \\left.\\right) d t .$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{2} \\left(\\right. t^{2} - 4 \\left.\\right) d t .",
+        "C = 0 ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571678911",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571561288",
+      "kind": "example",
+      "title": "Example 5.21",
+      "position": 12,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Evaluating a Definite Integral Using the Fundamental Theorem of Calculus, Part 2 Evaluate the following integral using the Fundamental Theorem of Calculus, Part 2: $\\int_{1}^{9} \\frac{x - 1}{\\sqrt{x}} d x .$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{9} \\frac{x - 1}{\\sqrt{x}} d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571561288",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571609442",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.19",
+      "position": 13,
+      "nearest_heading": "Evaluating a Definite Integral Using the Fundamental Theorem of Calculus, Part 2",
+      "prompt_text": "Use The Fundamental Theorem of Calculus, Part 2 to evaluate $\\int_{1}^{2} x^{\u22124} d x .$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{2} x^{\u22124} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571609442",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571597325",
+      "kind": "example",
+      "title": "Example 5.22",
+      "position": 14,
+      "nearest_heading": "Evaluating a Definite Integral Using the Fundamental Theorem of Calculus, Part 2",
+      "prompt_text": "A Roller-Skating Race James and Kathy are racing on roller skates. They race along a long, straight track, and whoever has gone the farthest after 5 sec wins a prize. If James can skate at a velocity of $f (t) = 5 + 2 t$ ft/sec and Kathy can skate at a velocity of $g (t) = 10 + \\cos \\left(\\right. \\frac{\\pi}{2} t \\left.\\right)$ ft/sec, who is going to win the race?",
+      "prompt_latex_bits": [
+        "f (t) = 5 + 2 t",
+        "g (t) = 10 + \\cos \\left(\\right. \\frac{\\pi}{2} t \\left.\\right)"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571597325",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572368412",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.20",
+      "position": 15,
+      "nearest_heading": "A Roller-Skating Race",
+      "prompt_text": "Suppose James and Kathy have a rematch, but this time the official stops the contest after only 3 sec. Does this change the outcome?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572368412",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572338456",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "144 . Consider two athletes running at variable speeds $v_{1} (t)$ and $v_{2} (t) .$ The runners start and finish a race at exactly the same time. Explain why the two runners must be going the same speed at some point.",
+      "prompt_latex_bits": [
+        "v_{1} (t)",
+        "v_{2} (t) ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572338456",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572420068",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "145 . Two mountain climbers start their climb at base camp, taking two different routes, one steeper than the other, and arrive at the peak at exactly the same time. Is it necessarily true that, at some point, both climbers increased in altitude at the same rate?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572420068",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572420086",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "146 . To get on a certain toll road a driver has to take a card that lists the mile entrance point. The card also has a timestamp. When going to pay the toll at the exit, the driver is surprised to receive a speeding ticket along with the toll. Explain how this can happen.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572420086",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572420106",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "147 . Set $F (x) = \\int_{1}^{x} (1 - t) d t .$ Find $F^{'} ( 2 \\left.\\right)$ and the average value of $F^{\u2032}$ over $\\left[\\right. 1 , 2 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "F (x) = \\int_{1}^{x} (1 - t) d t .",
+        "F^{'} ( 2 \\left.\\right)",
+        "F^{\u2032}",
+        "\\left[\\right. 1 , 2 \\left]\\right. ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572420106",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572379507",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "148 . $\\frac{d}{d x} \\int_{1}^{x} e^{\u2212 t^{2}} d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{1}^{x} e^{\u2212 t^{2}} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572379507",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572368653",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "149 . $\\frac{d}{d x} \\int_{1}^{x} e^{\\cos t} d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{1}^{x} e^{\\cos t} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572368653",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571599636",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "150 . $\\frac{d}{d x} \\int_{3}^{x} \\sqrt{9 - y^{2}} d y$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{3}^{x} \\sqrt{9 - y^{2}} d y"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571599636",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572551781",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "151 . $\\frac{d}{d x} \\int_{3}^{x} \\frac{d s}{\\sqrt{16 - s^{2}}}$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{3}^{x} \\frac{d s}{\\sqrt{16 - s^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572551781",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572376458",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "152 . $\\frac{d}{d x} \\int_{x}^{2 x} t d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{x}^{2 x} t d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572376458",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572376509",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "153 . $\\frac{d}{d x} \\int_{0}^{\\sqrt{x}} t d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{0}^{\\sqrt{x}} t d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572376509",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572163891",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "154 . $\\frac{d}{d x} \\int_{0}^{\\sin x} \\sqrt{1 - t^{2}} d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{0}^{\\sin x} \\sqrt{1 - t^{2}} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572163891",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571599727",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "155 . $\\frac{d}{d x} \\int_{\\cos x}^{1} \\sqrt{1 - t^{2}} d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{\\cos x}^{1} \\sqrt{1 - t^{2}} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571599727",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572217460",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "156 . $\\frac{d}{d x} \\int_{1}^{\\sqrt{x}} \\frac{t^{2}}{1 + t^{4}} d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{1}^{\\sqrt{x}} \\frac{t^{2}}{1 + t^{4}} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572217460",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572621645",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "157 . $\\frac{d}{d x} \\int_{1}^{x^{2}} \\frac{\\sqrt{t}}{1 + t} d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{1}^{x^{2}} \\frac{\\sqrt{t}}{1 + t} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572621645",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571812234",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "158 . $\\frac{d}{d x} \\int_{0}^{\\ln x} e^{t} d t$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{0}^{\\ln x} e^{t} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571812234",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571547591",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "159 . $\\frac{d}{d x} \\int_{1}^{e^{x}} \\ln u^{2} d u$",
+      "prompt_latex_bits": [
+        "\\frac{d}{d x} \\int_{1}^{e^{x}} \\ln u^{2} d u"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571547591",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571711375",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "160 . The graph of $y = \\int_{0}^{x} f (t) d t ,$ where f is a piecewise constant function, is shown here. Over which intervals is f positive? Over which intervals is it negative? Over which intervals, if any, is it equal to zero? What are the maximum and minimum values of f ? What is the average value of f ?",
+      "prompt_latex_bits": [
+        "y = \\int_{0}^{x} f (t) d t ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571711375",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572622509",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "161 . The graph of $y = \\int_{0}^{x} f (t) d t ,$ where f is a piecewise constant function, is shown here. Over which intervals is f positive? Over which intervals is it negative? Over which intervals, if any, is it equal to zero? What are the maximum and minimum values of f ? What is the average value of f ?",
+      "prompt_latex_bits": [
+        "y = \\int_{0}^{x} f (t) d t ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572622509",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572274790",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "162 . The graph of $y = \\int_{0}^{x} \u2113 (t) d t ,$ where \u2113 is a piecewise linear function, is shown here. Over which intervals is \u2113 positive? Over which intervals is it negative? Over which, if any, is it zero? Over which intervals is \u2113 increasing? Over which is it decreasing? Over which, if any, is it constant? What is the average value of \u2113 ?",
+      "prompt_latex_bits": [
+        "y = \\int_{0}^{x} \u2113 (t) d t ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572274790",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572233935",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "163 . The graph of $y = \\int_{0}^{x} \u2113 (t) d t ,$ where \u2113 is a piecewise linear function, is shown here. Over which intervals is \u2113 positive? Over which intervals is it negative? Over which, if any, is it zero? Over which intervals is \u2113 increasing? Over which is it decreasing? Over which intervals, if any, is it constant? What is the average value of \u2113 ?",
+      "prompt_latex_bits": [
+        "y = \\int_{0}^{x} \u2113 (t) d t ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572233935",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572098854",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "164 . [T] $y = x^{2}$ over $\\left[\\right. 0 , 4 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = x^{2}",
+        "\\left[\\right. 0 , 4 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572098854",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572344231",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "165 . [T] $y = x^{3} + 6 x^{2} + x - 5$ over $\\left[\\right. \u22124 , 2 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = x^{3} + 6 x^{2} + x - 5",
+        "\\left[\\right. \u22124 , 2 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572344231",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572626556",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "166 . [T] $y = \\sqrt{x^{3}}$ over $\\left[\\right. 0 , 6 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = \\sqrt{x^{3}}",
+        "\\left[\\right. 0 , 6 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572626556",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571699110",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "167 . [T] $y = \\sqrt{x} + x^{2}$ over $\\left[\\right. 1 , 9 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = \\sqrt{x} + x^{2}",
+        "\\left[\\right. 1 , 9 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571699110",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572444394",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "168 . [T] $\\int \\left(\\right. \\cos x - \\sin x \\left.\\right) d x$ over $\\left[\\right. 0 , \\pi \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\int \\left(\\right. \\cos x - \\sin x \\left.\\right) d x",
+        "\\left[\\right. 0 , \\pi \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572444394",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572293458",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "169 . [T] $\\int \\frac{4}{x^{2}} d x$ over $\\left[\\right. 1 , 4 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\int \\frac{4}{x^{2}} d x",
+        "\\left[\\right. 1 , 4 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572293458",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571613579",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "170 . $\\int_{\u22121}^{2} \\left(\\right. x^{2} - 3 x \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{\u22121}^{2} \\left(\\right. x^{2} - 3 x \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571613579",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571769554",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "171 . $\\int_{\u22122}^{3} \\left(\\right. x^{2} + 3 x - 5 \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{3} \\left(\\right. x^{2} + 3 x - 5 \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571769554",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572628481",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "172 . $\\int_{\u22122}^{3} (t + 2) (t - 3) d t$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{3} (t + 2) (t - 3) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572628481",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572543704",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "173 . $\\int_{2}^{3} \\left(\\right. t^{2} - 9 \\left.\\right) \\left(\\right. 4 - t^{2} \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int_{2}^{3} \\left(\\right. t^{2} - 9 \\left.\\right) \\left(\\right. 4 - t^{2} \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572543704",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572184318",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "174 . $\\int_{1}^{2} x^{9} d x$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{2} x^{9} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572184318",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571653421",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "175 . $\\int_{0}^{1} x^{99} d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} x^{99} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571653421",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572480544",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "176 . $\\int_{4}^{8} \\left(\\right. 4 t^{5 / 2} - 3 t^{3 / 2} \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int_{4}^{8} \\left(\\right. 4 t^{5 / 2} - 3 t^{3 / 2} \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572480544",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571597447",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "177 . $\\int_{1 / 4}^{4} \\left(\\right. x^{2} - \\frac{1}{x^{2}} \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{1 / 4}^{4} \\left(\\right. x^{2} - \\frac{1}{x^{2}} \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571597447",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572373391",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "178 . $\\int_{1}^{2} \\frac{2}{x^{3}} d x$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{2} \\frac{2}{x^{3}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572373391",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571733976",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "179 . $\\int_{1}^{4} \\frac{1}{2 \\sqrt{x}} d x$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{4} \\frac{1}{2 \\sqrt{x}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571733976",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571649924",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "180 . $\\int_{1}^{4} \\frac{2 - \\sqrt{t}}{t^{2}} d t$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{4} \\frac{2 - \\sqrt{t}}{t^{2}} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571649924",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571660199",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "181 . $\\int_{1}^{16} \\frac{d t}{t^{1 / 4}}$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{16} \\frac{d t}{t^{1 / 4}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571660199",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572274959",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "182 . $\\int_{0}^{2 \\pi} \\cos \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{2 \\pi} \\cos \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572274959",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572510072",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "183 . $\\int_{0}^{\\pi / 2} \\sin \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi / 2} \\sin \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572510072",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571712546",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "184 . $\\int_{0}^{\\pi / 4} \\sec^{2} \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi / 4} \\sec^{2} \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571712546",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572419248",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "185 . $\\int_{0}^{\\pi / 4} \\sec \\theta \\tan \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi / 4} \\sec \\theta \\tan \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572419248",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572443628",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "186 . $\\int_{\\pi / 3}^{\\pi / 4} \\csc \\theta \\cot \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{\\pi / 3}^{\\pi / 4} \\csc \\theta \\cot \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572443628",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571678801",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "187 . $\\int_{\\pi / 4}^{\\pi / 2} \\csc^{2} \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{\\pi / 4}^{\\pi / 2} \\csc^{2} \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571678801",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572601259",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "188 . $\\int_{1}^{2} \\left(\\right. \\frac{1}{t^{2}} - \\frac{1}{t^{3}} \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{2} \\left(\\right. \\frac{1}{t^{2}} - \\frac{1}{t^{3}} \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572601259",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571679844",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "189 . $\\int_{\u22122}^{\u22121} \\left(\\right. \\frac{1}{t^{2}} - \\frac{1}{t^{3}} \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{\u22121} \\left(\\right. \\frac{1}{t^{2}} - \\frac{1}{t^{3}} \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571679844",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572415152",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "190 . $\\int_{a}^{x} t^{2} d t$",
+      "prompt_latex_bits": [
+        "\\int_{a}^{x} t^{2} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572415152",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571638193",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "191 . $\\int_{1}^{x} e^{t} d t$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{x} e^{t} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571638193",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571638254",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "192 . $\\int_{0}^{x} \\cos t d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{x} \\cos t d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571638254",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571810891",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "193 . $\\int_{\u2212 x}^{x} \\sin t d t$",
+      "prompt_latex_bits": [
+        "\\int_{\u2212 x}^{x} \\sin t d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571810891",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571697158",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "194 . $\\int_{\u22122}^{3} \\left|\\right. x \\left|\\right. d x$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{3} \\left|\\right. x \\left|\\right. d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571697158",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571539146",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 67,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "195 . $\\int_{\u22122}^{4} \\left|\\right. t^{2} - 2 t - 3 \\left|\\right. d t$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{4} \\left|\\right. t^{2} - 2 t - 3 \\left|\\right. d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571539146",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572456358",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 68,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "196 . $\\int_{0}^{\\pi} \\left|\\right. \\cos t \\left|\\right. d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi} \\left|\\right. \\cos t \\left|\\right. d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572456358",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571580976",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 69,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "197 . $\\int_{\u2212 \\pi / 2}^{\\pi / 2} \\left|\\right. \\sin t \\left|\\right. d t$",
+      "prompt_latex_bits": [
+        "\\int_{\u2212 \\pi / 2}^{\\pi / 2} \\left|\\right. \\sin t \\left|\\right. d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571580976",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572396566",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 70,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "198 . Suppose that the number of hours of daylight on a given day in Seattle is modeled by the function $\u22123.75 \\cos \\left(\\right. \\frac{\\pi t}{6} \\left.\\right) + 12.25 ,$ with t given in months and $t = 0$ corresponding to the winter solstice. What is the average number of daylight hours in a year? At which times t 1 and t 2 , where $0 \\leq t_{1} < t_{2} < 12 ,$ do the number of daylight hours equal the average number? Write an integral that expresses the total number of daylight hours in Seattle between $t_{1}$ and $t_{2} .$ Compute the mean hours of daylight in Seattle between $t_{1}$ and $t_{2} ,$ where $0 \\leq t_{1} < t_{2} < 12 ,$ and then between $t_{2}$ and $t_{1} ,$ and show that the average of the two is equal to the average day length.",
+      "prompt_latex_bits": [
+        "\u22123.75 \\cos \\left(\\right. \\frac{\\pi t}{6} \\left.\\right) + 12.25 ,",
+        "t = 0",
+        "0 \\leq t_{1} < t_{2} < 12 ,",
+        "t_{1}",
+        "t_{2} .",
+        "t_{1}",
+        "t_{2} ,",
+        "0 \\leq t_{1} < t_{2} < 12 ,",
+        "t_{2}",
+        "t_{1} ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572396566",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572373685",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 71,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "199 . Suppose the rate of gasoline consumption over the course of a year in the United States can be modeled by a sinusoidal function of the form $\\left(\\right. 11.21 - \\cos \\left(\\right. \\frac{\\pi t}{6} \\left.\\right) \\left.\\right) \\times 10^{9}$ gal/mo. What is the average monthly consumption, and for which values of t is the rate at time t equal to the average rate? What is the number of gallons of gasoline consumed in the United States in a year? Write an integral that expresses the average monthly U.S. gas consumption during the part of the year between the beginning of April $(t = 3)$ and the end of September $\\left(\\right. t = 9 ).$",
+      "prompt_latex_bits": [
+        "\\left(\\right. 11.21 - \\cos \\left(\\right. \\frac{\\pi t}{6} \\left.\\right) \\left.\\right) \\times 10^{9}",
+        "(t = 3)",
+        "\\left(\\right. t = 9 )."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572373685",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572168742",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 72,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "200 . Explain why, if f is continuous over $\\left[\\right. a , b \\left]\\right. ,$ there is at least one point $c \\in \\left[\\right. a , b \\left]\\right.$ such that $f (c) = \\frac{1}{b - a} \\int_{a}^{b} f (t) d t .$",
+      "prompt_latex_bits": [
+        "\\left[\\right. a , b \\left]\\right. ,",
+        "c \\in \\left[\\right. a , b \\left]\\right.",
+        "f (c) = \\frac{1}{b - a} \\int_{a}^{b} f (t) d t ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572168742",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572629224",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 73,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "201 . Explain why, if f is continuous over $\\left[\\right. a , b \\left]\\right.$ and is not equal to a constant, there is at least one point $M \\in \\left[\\right. a , b \\left]\\right.$ such that $f (M) > \\frac{1}{b - a} \\int_{a}^{b} f (t) d t$ and at least one point $m \\in \\left[\\right. a , b \\left]\\right.$ such that $f (m) < \\frac{1}{b - a} \\int_{a}^{b} f (t) d t .$",
+      "prompt_latex_bits": [
+        "\\left[\\right. a , b \\left]\\right.",
+        "M \\in \\left[\\right. a , b \\left]\\right.",
+        "f (M) > \\frac{1}{b - a} \\int_{a}^{b} f (t) d t",
+        "m \\in \\left[\\right. a , b \\left]\\right.",
+        "f (m) < \\frac{1}{b - a} \\int_{a}^{b} f (t) d t ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572629224",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572379048",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 74,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "202 . Kepler\u2019s first law states that the planets move in elliptical orbits with the Sun at one focus. The closest point of a planetary orbit to the Sun is called the perihelion (for Earth, it currently occurs around January 3) and the farthest point is called the aphelion (for Earth, it currently occurs around July 4). Kepler\u2019s second law states that planets sweep out equal areas of their elliptical orbits in equal times. Thus, the two arcs indicated in the following figure are swept out in equal times. At what time of year is Earth moving fastest in its orbit? When is it moving slowest?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572379048",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571571954",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 75,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "203 . A point on an ellipse with major axis length 2 a and minor axis length 2 b has the coordinates $\\left(\\right. a \\cos \\theta , b \\sin \\theta \\left.\\right) , 0 \\leq \\theta \\leq 2 \\pi .$ Show that the distance from this point to the focus at $(\u2212 c , 0)$ is $d \\left(\\right. \\theta \\left.\\right) = a + c \\cos \\theta ,$ where $c = \\sqrt{a^{2} - b^{2}} .$ Use these coordinates to show that the average distance $\\overset{\u2013}{d}$ from a point on the ellipse to the focus at $(\u2212 c , 0) ,$ with respect to angle \u03b8 , is a .",
+      "prompt_latex_bits": [
+        "\\left(\\right. a \\cos \\theta , b \\sin \\theta \\left.\\right) , 0 \\leq \\theta \\leq 2 \\pi .",
+        "(\u2212 c , 0)",
+        "d \\left(\\right. \\theta \\left.\\right) = a + c \\cos \\theta ,",
+        "c = \\sqrt{a^{2} - b^{2}} .",
+        "\\overset{\u2013}{d}",
+        "(\u2212 c , 0) ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571571954",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571613749",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 76,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "204 . As implied earlier, according to Kepler\u2019s laws, Earth\u2019s orbit is an ellipse with the Sun at one focus. The perihelion for Earth\u2019s orbit around the Sun is 147,098,290 km and the aphelion is 152,098,232 km. By placing the major axis along the x -axis, find the average distance from Earth to the Sun. The classic definition of an astronomical unit (AU) is the distance from Earth to the Sun, and its value was computed as the average of the perihelion and aphelion distances. Is this definition justified?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571613749",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572346991",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 77,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "205 . The force of gravitational attraction between the Sun and a planet is $F \\left(\\right. \\theta \\left.\\right) = \\frac{G m M}{r^{2} \\left(\\right. \\theta \\left.\\right)} ,$ where m is the mass of the planet, M is the mass of the Sun, G is a universal constant, and $r \\left(\\right. \\theta \\left.\\right)$ is the distance between the Sun and the planet when the planet is at an angle \u03b8 with the major axis of its orbit. Assuming that M , m , and the ellipse parameters a and b (half-lengths of the major and minor axes) are given, set up\u2014but do not evaluate\u2014an integral that expresses in terms of $G , m , M , a , b$ the average gravitational force between the Sun and the planet.",
+      "prompt_latex_bits": [
+        "F \\left(\\right. \\theta \\left.\\right) = \\frac{G m M}{r^{2} \\left(\\right. \\theta \\left.\\right)} ,",
+        "r \\left(\\right. \\theta \\left.\\right)",
+        "G , m , M , a , b"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572346991",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572329950",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 78,
+      "nearest_heading": "Section 5.3 Exercises",
+      "prompt_text": "206 . The displacement from rest of a mass attached to a spring satisfies the simple harmonic motion equation $x (t) = A \\cos \\left(\\right. \\omega t - \\phi \\left.\\right) ,$ where $\\phi$ is a phase constant, \u03c9 is the angular frequency, and A is the amplitude. Find the average velocity, the average speed (magnitude of velocity), the average displacement, and the average distance from rest (magnitude of displacement) of the mass.",
+      "prompt_latex_bits": [
+        "x (t) = A \\cos \\left(\\right. \\omega t - \\phi \\left.\\right) ,",
+        "\\phi"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572329950",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:39.153532+00:00",
+  "stage": "1_inventory"
+}

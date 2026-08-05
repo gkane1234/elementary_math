@@ -94,6 +94,13 @@ def _split_fixed_total(total: int, n: int, *, min_piece: int = 12) -> list[int]:
     return pieces
 
 
+def _geo_local(settings: dict) -> dict:
+    """Apply continuous geometry knobs when ``difficulty`` is set."""
+    from question_engine.settings.params import apply_geometry_continuous_knobs
+
+    return apply_geometry_continuous_knobs(settings)
+
+
 def _find_measure_from_diagram(
     settings: dict,
 ) -> tuple[str, str, str, dict[str, Any]]:
@@ -102,24 +109,42 @@ def _find_measure_from_diagram(
     Returns ``(prompt_latex, topic_tag, answer, last_state)``.
     """
     from ..diagrams import adjacent_angles_figure
+    from question_engine.settings.params import geometry_angle_structure_from_continuous
 
+    settings = _geo_local(settings)
+    structure = geometry_angle_structure_from_continuous(settings)
     tier = _difficulty_tier(settings)
     symbol = _angle_symbol(settings)
 
-    if tier == "easy":
+    if structure is not None:
+        n_pieces = random.randint(structure["piece_min"], structure["piece_max"])
+        mode = random.choice(list(structure["modes"]))
+        total_cap = int(structure["total_cap"])
+        hardish = structure["difficulty"] >= 10.0
+        easyish = structure["difficulty"] < 4.0
+    elif tier == "easy":
         n_pieces = 2
         mode = random.choice(["sum", "sum", "subtract"])
+        total_cap = 165
+        hardish = False
+        easyish = True
     elif tier == "medium":
         n_pieces = random.choice([2, 3, 3])
         mode = random.choice(["sum", "subtract", "sum_span"])
+        total_cap = 165
+        hardish = False
+        easyish = False
     else:
         n_pieces = random.choice([3, 4, 4])
         mode = random.choice(["sum_span", "subtract_span", "sum_span", "crowded_sum"])
+        total_cap = 175
+        hardish = True
+        easyish = False
 
     # Straight / right totals for subtract variants.
     shell = None
     if mode in {"subtract", "subtract_span"} and random.random() < (
-        0.45 if tier != "easy" else 0.35
+        0.45 if not easyish else 0.35
     ):
         shell = random.choice(["straight", "right"])
         if shell == "right":
@@ -130,9 +155,7 @@ def _find_measure_from_diagram(
     elif shell == "right":
         pieces = _split_fixed_total(90, n_pieces, min_piece=12)
     else:
-        pieces = _random_adjacent_pieces(
-            settings, n=n_pieces, total_cap=165 if tier != "hard" else 175
-        )
+        pieces = _random_adjacent_pieces(settings, n=n_pieces, total_cap=total_cap)
 
     n_pieces = len(pieces)
     tip_count = n_pieces + 1
@@ -162,7 +185,7 @@ def _find_measure_from_diagram(
     elif mode in {"sum_span", "crowded_sum"}:
         # Hard always combines 2+ pieces; prefer a proper sub-span when denser.
         min_w = 2 if n_pieces >= 2 else 1
-        if tier == "hard" and n_pieces >= 3 and random.random() < 0.7:
+        if hardish and n_pieces >= 3 and random.random() < 0.7:
             ask_start, ask_end = _pick_span(2)
             if ask_end - ask_start == n_pieces:
                 ask_start, ask_end = 0, n_pieces - 1  # leave one distractor piece
@@ -173,18 +196,18 @@ def _find_measure_from_diagram(
         answer_val = sum(pieces[ask_start:ask_end])
         piece_marks = [_piece_degree_label(p) for p in pieces]
         span_marks = [(ask_start, ask_end, "?")]
-        if tier == "hard" and ask_end - ask_start < n_pieces and random.random() < 0.55:
+        if hardish and ask_end - ask_start < n_pieces and random.random() < 0.55:
             span_marks.append((0, n_pieces, _piece_degree_label(sum(pieces))))
     else:
         # subtract / subtract_span: hide one piece (or a proper sub-span);
         # complementary pieces stay labeled so the figure is solvable.
-        if tier == "hard" or (
+        if hardish or (
             mode == "subtract_span" and n_pieces >= 3 and random.random() < 0.6
         ):
             # Leave at least one labeled piece outside the ask.
             max_width = max(1, n_pieces - 1)
             width = 2 if n_pieces >= 3 else 1
-            if max_width >= 2 and tier == "hard":
+            if max_width >= 2 and hardish:
                 width = random.randint(2, max_width)
             elif max_width >= 2 and random.random() < 0.5:
                 width = random.randint(2, max_width)
@@ -323,13 +346,70 @@ def _angle_symbol(settings: dict) -> str:
 
 
 def _random_angle(settings: dict) -> int:
-    return _random_in_bounds(settings, "angle_min", "angle_max", 10, 170)
+    return _random_in_bounds(_geo_local(settings), "angle_min", "angle_max", 10, 170)
 
 
 def _difficulty_tier(settings: dict) -> str:
-    return str(
-        settings.get("difficulty_tier") or settings.get("difficulty") or "medium"
-    ).strip().lower()
+    """EMH band from continuous ``difficulty`` when present, else legacy tier."""
+    from .difficulty_budget import settings_difficulty_band
+
+    return settings_difficulty_band(settings, default=8.0)
+
+
+def _area_side_bounds(settings: dict) -> tuple[int, int]:
+    """Modest continuous side bounds for area formulas (effort ≠ magnitude).
+
+    Explicit ``side_min`` / ``side_max`` still win when continuous difficulty is
+    absent; with continuous D we interpolate a classroom-readable range.
+    """
+    from .difficulty_budget import settings_difficulty
+
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        try:
+            d = float(settings["difficulty"])
+        except (TypeError, ValueError):
+            d = None
+        if d is not None:
+            lo = max(2, int(round(2 + 0.2 * d)))
+            hi = max(lo + 3, int(round(8 + 0.72 * d)))
+            return lo, min(hi, 36)
+    return _bounds(settings, "side_min", "side_max", 3, 20)
+
+
+def _want_half_product_area(settings: dict) -> bool:
+    """Whether area should be a half-integer (bh odd / (b1+b2)h odd)."""
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    if d < 4:
+        p = 0.05
+    elif d < 8:
+        p = 0.25
+    elif d < 12:
+        p = 0.45
+    elif d < 18:
+        p = 0.7
+    else:
+        p = 0.9
+    return random.random() < p
+
+
+def _sample_pair_for_half(
+    settings: dict,
+    *,
+    want_half: bool | None = None,
+) -> tuple[int, int]:
+    """Two positive integers whose product is odd iff ``want_half``."""
+    if want_half is None:
+        want_half = _want_half_product_area(settings)
+    lo, hi = _area_side_bounds(settings)
+    for _ in range(60):
+        a = random.randint(lo, hi)
+        b = random.randint(lo, hi)
+        odd = (a * b) % 2 == 1
+        if odd == want_half:
+            return a, b
+    return random.randint(lo, hi), random.randint(lo, hi)
 
 
 def _angle_task_mode(settings: dict) -> str:
@@ -348,7 +428,21 @@ def _angle_task_mode(settings: dict) -> str:
 
 
 def _random_draw_angle(settings: dict) -> int:
-    """Protractor-friendly measures on easier tiers (multiples of 5/10)."""
+    """Protractor-friendly measures; continuous D sets step, else EMH tier."""
+    from question_engine.settings.params import geometry_angle_structure_from_continuous
+
+    settings = _geo_local(settings)
+    structure = geometry_angle_structure_from_continuous(settings)
+    if structure is not None:
+        step = max(1, int(structure.get("protractor_step", 1)))
+        lo, hi = structure["angle_min"], structure["angle_max"]
+        if step <= 1:
+            return random.randint(max(1, lo), min(179, hi))
+        start = ((lo + step - 1) // step) * step
+        candidates = [n for n in range(start, hi + 1, step) if 1 <= n <= 179]
+        if not candidates:
+            return _random_angle(settings)
+        return random.choice(candidates)
     tier = _difficulty_tier(settings)
     if tier == "hard":
         return _random_angle(settings)
@@ -362,21 +456,21 @@ def _random_draw_angle(settings: dict) -> int:
 
 
 def _random_side(settings: dict) -> int:
-    return _random_in_bounds(settings, "side_min", "side_max", 3, 20)
+    return _random_in_bounds(_geo_local(settings), "side_min", "side_max", 3, 20)
 
 
 def _random_radius(settings: dict) -> int:
-    return _random_in_bounds(settings, "radius_min", "radius_max", 2, 15)
+    return _random_in_bounds(_geo_local(settings), "radius_min", "radius_max", 2, 15)
 
 
 def _random_similarity_ratio(settings: dict) -> int:
     return _random_in_bounds(
-        settings, "similarity_ratio_min", "similarity_ratio_max", 2, 5
+        _geo_local(settings), "similarity_ratio_min", "similarity_ratio_max", 2, 5
     )
 
 
 def _random_coord(settings: dict) -> int:
-    return _random_in_bounds(settings, "coord_min", "coord_max", -8, 8)
+    return _random_in_bounds(_geo_local(settings), "coord_min", "coord_max", -8, 8)
 
 
 def _pythagorean_triple(max_leg: int) -> tuple[int, int, int]:
@@ -558,6 +652,9 @@ class ClassifyingAnglesFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from ..diagrams.figure_families import sample_figure_from_settings
+
+        settings = _geo_local(settings)
         angle_min, angle_max = _bounds(settings, "angle_min", "angle_max", 10, 170)
         choices = list(range(max(1, angle_min), min(180, angle_max) + 1))
         if bool(settings.get("allow_right", True)):
@@ -565,6 +662,10 @@ class ClassifyingAnglesFramework(GeometryFramework):
         angle = random.choice(choices)
         vertex, p1, p2 = random.sample(_ANGLE_LABELS, 3)
         symbol = _angle_symbol(settings)
+        sample = sample_figure_from_settings(
+            "angle_rays", settings, measure_deg=float(angle), show_measure=True
+        )
+        base_deg = float(sample.params.get("base_deg", 15.0))
         prompt = (
             f"\\text{{Classify }} \\angle {p1}{vertex}{p2}"
             f"\\text{{ as acute, right, obtuse, or straight.}}"
@@ -576,8 +677,15 @@ class ClassifyingAnglesFramework(GeometryFramework):
             "p1": p1,
             "p2": p2,
             "figure": angle_figure(
-                p1, vertex, p2, float(angle), show_measure=True, kind="classifying_angle"
+                p1,
+                vertex,
+                p2,
+                float(angle),
+                show_measure=True,
+                kind="classifying_angle",
+                base_deg=base_deg,
             ),
+            "figure_sample": sample,
         }
         # Keep measure in prompt_text for answer-key context; diagram shows degrees.
         _ = symbol
@@ -597,13 +705,17 @@ class ClassifyingAnglesFramework(GeometryFramework):
         last = self._last
         if not last:
             return {}
-        return _figure_metadata(
+        meta = _figure_metadata(
             settings,
             figure_type="composite",
             labels=[last["p1"], last["vertex"], last["p2"]],
             dimensions={"angle_deg": float(last["angle"])},
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
+        sample = last.get("figure_sample")
+        if sample is not None:
+            meta.update(sample.to_metadata_extras())
+        return meta
 
 
 class SegmentLengthFramework(GeometryFramework):
@@ -719,20 +831,30 @@ class TriangleAngleSumFramework(GeometryFramework):
 
 
 def _triangle_area_layout(settings: dict) -> str:
-    """Pick right / interior-altitude / exterior-altitude by difficulty."""
-    tier = str(
-        settings.get("difficulty_tier") or settings.get("difficulty") or "medium"
-    ).strip().lower()
-    if tier == "easy":
-        # Easy stays mostly classic right triangles; occasional interior altitude.
-        choices = ("right", "interior")
-        weights = (0.8, 0.2)
-    elif tier == "hard":
-        choices = ("right", "interior", "exterior")
-        weights = (0.15, 0.45, 0.4)
+    """Pick right / interior-altitude / exterior-altitude by continuous difficulty.
+
+    Effort ladder (not side magnitude):
+    - low D: classic right triangles (legs = base/height)
+    - mid: interior altitude on an acute/oblique triangle
+    - high: exterior altitude to a base-line extension (obtuse)
+    """
+    forced = str(settings.get("triangle_layout") or "").strip().lower()
+    if forced in {"right", "interior", "exterior"}:
+        return forced
+
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    if d < 4:
+        choices, weights = ("right", "interior"), (0.92, 0.08)
+    elif d < 8:
+        choices, weights = ("right", "interior", "exterior"), (0.7, 0.25, 0.05)
+    elif d < 13:
+        choices, weights = ("right", "interior", "exterior"), (0.35, 0.5, 0.15)
+    elif d < 18:
+        choices, weights = ("right", "interior", "exterior"), (0.18, 0.42, 0.4)
     else:
-        choices = ("right", "interior", "exterior")
-        weights = (0.3, 0.5, 0.2)
+        choices, weights = ("right", "interior", "exterior"), (0.08, 0.32, 0.6)
     return random.choices(choices, weights=weights, k=1)[0]
 
 
@@ -749,16 +871,34 @@ class TriangleAreaFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
         unit = _measurement_unit(settings)
-        base = _random_side(settings)
-        height = _random_side(settings)
+        base, height = _sample_pair_for_half(settings)
         area = base * height / 2
         labels = list(_TRIANGLE_LABELS)
-        layout = _triangle_area_layout(settings)
-        prompt = (
-            f"\\text{{Find the area of }} \\triangle {''.join(labels)}."
-        )
-        answer = format_with_unit(f"{area:g}", unit, power=2)
+        from ..diagrams.figure_families import sample_figure_from_settings
+
+        sample = sample_figure_from_settings("triangle_area", settings)
+        layout = str(sample.params.get("layout") or _triangle_area_layout(settings))
+        topic = str(settings.get("_topic_id") or "")
+        understanding = "understanding" in topic or str(
+            settings.get("area_task") or ""
+        ) in {"understand_formula", "missing_dimension"}
+        d = settings_difficulty(settings, default=0.0)
+
+        missing_p = 0.0
+        if understanding:
+            if d < 5:
+                missing_p = 0.2
+            elif d < 12:
+                missing_p = 0.5
+            elif d < 18:
+                missing_p = 0.75
+            else:
+                missing_p = 0.92
+        find_missing = understanding and random.random() < missing_p
+
         fig = triangle_base_height_figure(
             float(base),
             float(height),
@@ -766,15 +906,48 @@ class TriangleAreaFramework(GeometryFramework):
             layout=layout,  # type: ignore[arg-type]
             unit=unit,
             kind="triangle_area",
+            foot_fraction=sample.params.get("foot_fraction"),
         )
+        if find_missing:
+            # Prefer integer answers: area may be half-integer — ask for the
+            # dimension that keeps the answer whole when possible.
+            area_g = f"{area:g}"
+            if random.random() < 0.5:
+                prompt = (
+                    f"\\text{{A triangle has area }} {area_g}\\text{{ {unit}}}^2"
+                    f"\\text{{ and base }} {base}\\text{{ {unit}. "
+                    f"Find the height.}}"
+                )
+                answer = format_with_unit(str(height), unit)
+                mode = "missing_height"
+            else:
+                prompt = (
+                    f"\\text{{A triangle has area }} {area_g}\\text{{ {unit}}}^2"
+                    f"\\text{{ and height }} {height}\\text{{ {unit}. "
+                    f"Find the base.}}"
+                )
+                answer = format_with_unit(str(base), unit)
+                mode = "missing_base"
+            tag = f"triangle {mode} A={area_g} layout={layout}"
+        else:
+            prompt = (
+                f"\\text{{Find the area of }} \\triangle {''.join(labels)}."
+            )
+            answer = format_with_unit(f"{area:g}", unit, power=2)
+            mode = "find_area"
+            tag = f"triangle area b={base} h={height} layout={layout}"
+
         self._last = {
             "base": base,
             "height": height,
             "labels": labels,
             "layout": layout,
             "figure": fig,
+            "mode": mode,
+            "area": area,
+            "figure_sample": sample,
         }
-        return prompt, f"triangle area b={base} h={height} layout={layout}", answer
+        return prompt, tag, answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}
@@ -790,13 +963,22 @@ class TriangleAreaFramework(GeometryFramework):
         last = self._last
         if not last:
             return {}
-        return _figure_metadata(
+        meta = _figure_metadata(
             settings,
             figure_type="triangle",
             labels=last["labels"],
-            dimensions={"base": float(last["base"]), "height": float(last["height"])},
+            dimensions={
+                "base": float(last["base"]),
+                "height": float(last["height"]),
+                "layout": last["layout"],
+                "mode": last.get("mode", "find_area"),
+            },
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
+        sample = last.get("figure_sample")
+        if sample is not None:
+            meta.update(sample.to_metadata_extras())
+        return meta
 
 
 class TrianglePerimeterFramework(GeometryFramework):
@@ -875,11 +1057,14 @@ class PythagoreanTheoremFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from ..diagrams.figure_families import sample_figure_from_settings
+
         unit = _measurement_unit(settings)
         _, side_max = _bounds(settings, "side_min", "side_max", 3, 20)
         a, b, c = _pythagorean_triple(side_max)
         labels = list(_TRIANGLE_LABELS)
-        missing = random.choice(["leg_a", "leg_b", "hypotenuse"])
+        sample = sample_figure_from_settings("right_triangle", settings)
+        missing = str(sample.params.get("missing") or random.choice(["leg_a", "leg_b", "hypotenuse"]))
         if missing == "leg_a":
             prompt = (
                 f"\\text{{In right }} \\triangle {''.join(labels)},\\ "
@@ -920,6 +1105,8 @@ class PythagoreanTheoremFramework(GeometryFramework):
             right_angle_at=labels[2],
             side_labels=side_labels,
             kind="pythagorean",
+            orientation_deg=float(sample.params.get("orientation_deg", 0.0)),
+            reflect=bool(sample.params.get("reflect", False)),
         )
         self._last = {
             "a": a,
@@ -927,6 +1114,7 @@ class PythagoreanTheoremFramework(GeometryFramework):
             "c": c,
             "labels": labels,
             "figure": fig,
+            "figure_sample": sample,
         }
         return prompt, "pythagorean theorem", answer
 
@@ -944,7 +1132,7 @@ class PythagoreanTheoremFramework(GeometryFramework):
         last = self._last
         if not last:
             return {}
-        return _figure_metadata(
+        meta = _figure_metadata(
             settings,
             figure_type="triangle",
             labels=last["labels"],
@@ -955,6 +1143,10 @@ class PythagoreanTheoremFramework(GeometryFramework):
             },
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
+        sample = last.get("figure_sample")
+        if sample is not None:
+            meta.update(sample.to_metadata_extras())
+        return meta
 
 
 class SimilarTrianglesFramework(GeometryFramework):
@@ -1097,11 +1289,14 @@ class CircleMeasureFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from ..diagrams.figure_families import sample_figure_from_settings
+
         unit = _measurement_unit(settings)
         radius = _random_radius(settings)
         quantity = self.circle_quantity
         if quantity == "either":
             quantity = random.choice(["circumference", "area"])
+        sample = sample_figure_from_settings("circle_radius", settings)
         if quantity == "circumference":
             prompt = (
                 f"\\text{{Find the circumference of a circle with radius }} "
@@ -1118,7 +1313,13 @@ class CircleMeasureFramework(GeometryFramework):
             "radius": radius,
             "unit": unit,
             "quantity": quantity,
-            "figure": circle_figure(float(radius), unit=unit),
+            "figure": circle_figure(
+                float(radius),
+                unit=unit,
+                radius_angle_deg=float(sample.params.get("radius_angle_deg", 0.0)),
+                show_diameter=bool(sample.params.get("show_diameter", False)),
+            ),
+            "figure_sample": sample,
         }
         return prompt, f"circle {quantity} r={radius}", answer
 
@@ -1136,13 +1337,17 @@ class CircleMeasureFramework(GeometryFramework):
         last = self._last
         if not last:
             return {}
-        return _figure_metadata(
+        meta = _figure_metadata(
             settings,
             figure_type="circle",
             labels=["O", "A"],
             dimensions={"radius": float(last["radius"])},
             diagram=last.get("figure") if _diagram_enabled(settings) else None,
         )
+        sample = last.get("figure_sample")
+        if sample is not None:
+            meta.update(sample.to_metadata_extras())
+        return meta
 
 
 class CoordinateDistanceFramework(GeometryFramework):

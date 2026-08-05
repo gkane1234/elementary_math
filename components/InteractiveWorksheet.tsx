@@ -12,6 +12,7 @@ import {
 } from "@/components/QuestionPrompt";
 import { QuestionContextMenu } from "@/components/QuestionContextMenu";
 import { QuestionSettingsModal } from "@/components/QuestionSettingsModal";
+import { WorksheetWatermark } from "@/components/WorksheetWatermark";
 import { columnStartNumber, distributeToColumns, insertAtIndex } from "@/lib/columns";
 import { regenerateQuestion } from "@/lib/api";
 import {
@@ -90,7 +91,7 @@ function QuestionItem({
   return (
     <div
       className={`question-item interactive-only${selected ? " selected" : ""}${dragging ? " dragging" : ""}${dropBefore ? " drop-before" : ""}${dropAfter ? " drop-after" : ""}`}
-      style={{ marginBottom: `${question.spacing * 2.25}rem` }}
+      style={{ marginBottom: `calc(${question.spacing * 2.25}rem * var(--ws-space-scale, 1))` }}
       draggable
       onClick={onSelect}
       onContextMenu={onContextMenu}
@@ -255,7 +256,11 @@ export function InteractiveWorksheet({
   };
 
   return (
-    <section className="panel preview" id="worksheet-preview">
+    <section
+      className={`panel preview${previewMode ? " is-preview-watermarked" : ""}`}
+      id="worksheet-preview"
+    >
+      {previewMode ? <WorksheetWatermark /> : null}
       <header className="worksheet-header">
         <h2>{worksheet.title}</h2>
         <p className="worksheet-meta">Name: ________________________________ Date: ____________</p>
@@ -330,52 +335,56 @@ export function InteractiveWorksheet({
         })}
       </div>
 
-      <div className="print-only instruction-groups">
-        {instructionGroups.map((group) => {
-          const columns = distributeToColumns(group.questions, columnCount);
-          return (
-            <div key={`print-group-${group.startIndex}`} className="instruction-group">
-              {shouldShowSectionHeader(group.instruction, headerInstruction) && group.instruction && (
-                <SectionInstruction content={group.instruction} />
-              )}
-              <div
-                className="question-columns"
-                data-columns={columns.length}
-                style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
-              >
-                {columns.map((columnQuestions, columnIndex) => (
-                  <ol
-                    key={`print-column-${group.startIndex}-${columnIndex}`}
-                    className="question-list"
-                    start={group.startIndex + columnStartNumber(columns, columnIndex)}
-                  >
-                    {columnQuestions.map((question) => {
-                      const index = worksheet.questions.findIndex((entry) => entry.id === question.id);
-                      const choices = getMultipleChoiceChoices(question.metadata);
-                      return (
-                        <li
-                          key={`print-${question.id}`}
-                          value={index + 1}
-                          style={{ marginBottom: `${question.spacing * 2.25}rem` }}
-                        >
-                          <QuestionPrompt content={question.prompt_latex} />
-                          <QuestionGraphFromMetadata metadata={question.metadata} />
-                          <QuestionDiagramFromMetadata metadata={question.metadata} />
-                          {choices ? (
-                            <MultipleChoiceOptions
-                              choices={choices}
-                              questionId={question.id}
-                            />
-                          ) : null}
-                        </li>
-                      );
-                    })}
-                  </ol>
-                ))}
+      <div className="print-only worksheet-print-preview-shell">
+        <div className="instruction-groups worksheet-print-measure">
+          {instructionGroups.map((group) => {
+            const columns = distributeToColumns(group.questions, columnCount);
+            return (
+              <div key={`print-group-${group.startIndex}`} className="instruction-group">
+                {shouldShowSectionHeader(group.instruction, headerInstruction) && group.instruction && (
+                  <SectionInstruction content={group.instruction} />
+                )}
+                <div
+                  className="question-columns"
+                  data-columns={columns.length}
+                  style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
+                >
+                  {columns.map((columnQuestions, columnIndex) => (
+                    <ol
+                      key={`print-column-${group.startIndex}-${columnIndex}`}
+                      className="question-list"
+                      start={group.startIndex + columnStartNumber(columns, columnIndex)}
+                    >
+                      {columnQuestions.map((question) => {
+                        const index = worksheet.questions.findIndex((entry) => entry.id === question.id);
+                        const choices = getMultipleChoiceChoices(question.metadata);
+                        return (
+                          <li
+                            key={`print-${question.id}`}
+                            value={index + 1}
+                            style={{
+                              marginBottom: `calc(${question.spacing * 2.25}rem * var(--ws-space-scale, 1))`,
+                            }}
+                          >
+                            <QuestionPrompt content={question.prompt_latex} />
+                            <QuestionGraphFromMetadata metadata={question.metadata} />
+                            <QuestionDiagramFromMetadata metadata={question.metadata} />
+                            {choices ? (
+                              <MultipleChoiceOptions
+                                choices={choices}
+                                questionId={question.id}
+                              />
+                            ) : null}
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {selectedQuestion && (

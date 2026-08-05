@@ -16,6 +16,7 @@ def test_generators_are_narrative_frameworks_not_equation_stubs():
     """Regression: primitive equation-with-fluff must not override these keys."""
     mix = GENERATORS["wp_mixture"]
     drt = GENERATORS["wp_distance_rate_time"]
+    work = GENERATORS["wp_work"]
     qs = mix("mixture_word_problems", {"count": 1, "difficulty": 5, "include_answer_key": True})
     text = qs[0].prompt_text
     assert "amounts satisfy" not in text
@@ -29,6 +30,34 @@ def test_generators_are_narrative_frameworks_not_equation_stubs():
     text2 = qs2[0].prompt_text
     assert "DRT gives" not in text2
     assert "amounts satisfy" not in text2
+
+    qs3 = work("work_word_problems", {"count": 1, "difficulty": 6, "include_answer_key": True})
+    text3 = qs3[0].prompt_text
+    assert "rates combine to" not in text3
+    assert "Find x" not in text3 and "Find y" not in text3
+    assert "finish" in text3 or "pipe" in text3 or "tank" in text3 or "alone" in text3
+
+    age = GENERATORS["wp_age"]("age_word_problems", {"count": 1, "difficulty": 6, "include_answer_key": True})
+    assert "Ages of" not in age[0].prompt_text and "satisfy" not in age[0].prompt_text
+    assert "older" in age[0].prompt_text.lower() or "years" in age[0].prompt_text.lower()
+
+    coin = GENERATORS["wp_coin"]("coin_word_problems", {"count": 1, "difficulty": 6, "include_answer_key": True})
+    assert "amounts that satisfy" not in coin[0].prompt_text
+    assert "quarter" in coin[0].prompt_text.lower() or "coin" in coin[0].prompt_text.lower()
+
+    cons = GENERATORS["wp_consecutive_integers"](
+        "consecutive_integers_word_problems",
+        {"count": 1, "difficulty": 6, "include_answer_key": True},
+    )
+    assert "satisfy $" not in cons[0].prompt_text and "satisfy $" not in (cons[0].prompt_latex or "")
+    assert "consecutive" in cons[0].prompt_text.lower()
+
+    pct = GENERATORS["wp_percent"](
+        "percent_word_problems",
+        {"count": 1, "difficulty": 6, "include_answer_key": True},
+    )
+    assert "reduces to" not in pct[0].prompt_text
+    assert "%" in pct[0].prompt_text or r"\%" in (pct[0].prompt_latex or "")
 
 
 def test_mixture_percent_is_weighted_average():

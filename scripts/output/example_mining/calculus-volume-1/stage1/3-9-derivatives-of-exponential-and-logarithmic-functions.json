@@ -1,0 +1,807 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "3-9-derivatives-of-exponential-and-logarithmic-functions",
+  "title": "3.9 Derivatives of Exponential and Logarithmic Functions",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/3-9-derivatives-of-exponential-and-logarithmic-functions",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/3-9-derivatives-of-exponential-and-logarithmic-functions.html",
+  "objectives": [
+    "3.9.1 Find the derivative of exponential functions.",
+    "3.9.2 Find the derivative of logarithmic functions.",
+    "3.9.3 Use logarithmic differentiation to determine the derivative of a function."
+  ],
+  "headings": [
+    "3.9 Derivatives of Exponential and Logarithmic Functions",
+    "Learning Objectives",
+    "Derivative of the Exponential Function",
+    "Theorem 3.14",
+    "Example 3.74",
+    "Example 3.75",
+    "Checkpoint 3.50",
+    "Example 3.76",
+    "Checkpoint 3.51",
+    "Derivative of the Logarithmic Function",
+    "Theorem 3.15",
+    "Example 3.77",
+    "Example 3.78",
+    "Checkpoint 3.52",
+    "Theorem 3.16",
+    "Example 3.79",
+    "Example 3.80",
+    "Checkpoint 3.53",
+    "Logarithmic Differentiation",
+    "Problem-Solving Strategy",
+    "Example 3.81",
+    "Example 3.82",
+    "Example 3.83",
+    "Checkpoint 3.54",
+    "Checkpoint 3.55",
+    "Section 3.9 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1169738223456",
+      "kind": "example",
+      "title": "Example 3.74",
+      "position": 1,
+      "nearest_heading": "Derivative of the Natural Exponential Function",
+      "prompt_text": "Derivative of an Exponential Function Find the derivative of $f (x) = e^{\\tan (2 x)} .$",
+      "prompt_latex_bits": [
+        "f (x) = e^{\\tan (2 x)} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169738223456",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737140879",
+      "kind": "example",
+      "title": "Example 3.75",
+      "position": 2,
+      "nearest_heading": "Derivative of an Exponential Function",
+      "prompt_text": "Combining Differentiation Rules Find the derivative of $y = \\frac{e^{x^{2}}}{x} .$",
+      "prompt_latex_bits": [
+        "y = \\frac{e^{x^{2}}}{x} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169737140879",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738152550",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.50",
+      "position": 3,
+      "nearest_heading": "Combining Differentiation Rules",
+      "prompt_text": "Find the derivative of $h (x) = x e^{2 x} .$",
+      "prompt_latex_bits": [
+        "h (x) = x e^{2 x} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738152550",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737949367",
+      "kind": "example",
+      "title": "Example 3.76",
+      "position": 4,
+      "nearest_heading": "Combining Differentiation Rules",
+      "prompt_text": "Applying the Natural Exponential Function A colony of mosquitoes has an initial population of 1000. After $t$ days, the population is given by $A (t) = 1000 e^{0.3 t} .$ Show that the ratio of the rate of change of the population, $A^{'} (t) ,$ to the population, $A (t)$ is constant.",
+      "prompt_latex_bits": [
+        "t",
+        "A (t) = 1000 e^{0.3 t} .",
+        "A^{'} (t) ,",
+        "A (t)"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169737949367",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738186819",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.51",
+      "position": 5,
+      "nearest_heading": "Applying the Natural Exponential Function",
+      "prompt_text": "If $A (t) = 1000 e^{0.3 t}$ describes the mosquito population after $t$ days, as in the preceding example, what is the rate of change of $A (t)$ after 4 days?",
+      "prompt_latex_bits": [
+        "A (t) = 1000 e^{0.3 t}",
+        "t",
+        "A (t)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738186819",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738211098",
+      "kind": "example",
+      "title": "Example 3.77",
+      "position": 6,
+      "nearest_heading": "Proof",
+      "prompt_text": "Taking a Derivative of a Natural Logarithm Find the derivative of $f (x) = \\ln \\left(\\right. x^{3} + 3 x - 4 \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "f (x) = \\ln \\left(\\right. x^{3} + 3 x - 4 \\left.\\right) ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169738211098",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738244488",
+      "kind": "example",
+      "title": "Example 3.78",
+      "position": 7,
+      "nearest_heading": "Taking a Derivative of a Natural Logarithm",
+      "prompt_text": "Using Properties of Logarithms in a Derivative Find the derivative of $f (x) = \\ln \\left(\\right. \\frac{x^{2} \\sin x}{2 x + 1} \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "f (x) = \\ln \\left(\\right. \\frac{x^{2} \\sin x}{2 x + 1} \\left.\\right) ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169738244488",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738219654",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.52",
+      "position": 8,
+      "nearest_heading": "Using Properties of Logarithms in a Derivative",
+      "prompt_text": "Differentiate: $f (x) = \\ln (3 x + 2)^{5} .$",
+      "prompt_latex_bits": [
+        "f (x) = \\ln (3 x + 2)^{5} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738219654",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737145066",
+      "kind": "example",
+      "title": "Example 3.79",
+      "position": 9,
+      "nearest_heading": "Proof",
+      "prompt_text": "Applying Derivative Formulas Find the derivative of $h (x) = \\frac{3^{x}}{3^{x} + 2} .$",
+      "prompt_latex_bits": [
+        "h (x) = \\frac{3^{x}}{3^{x} + 2} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169737145066",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738219393",
+      "kind": "example",
+      "title": "Example 3.80",
+      "position": 10,
+      "nearest_heading": "Applying Derivative Formulas",
+      "prompt_text": "Finding the Slope of a Tangent Line Find the slope of the line tangent to the graph of $y = \\log_{2} (3 x + 1)$ at $x = 1 .$",
+      "prompt_latex_bits": [
+        "y = \\log_{2} (3 x + 1)",
+        "x = 1 ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169738219393",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738240282",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.53",
+      "position": 11,
+      "nearest_heading": "Finding the Slope of a Tangent Line",
+      "prompt_text": "Find the slope for the line tangent to $y = 3^{x}$ at $x = 2 .$",
+      "prompt_latex_bits": [
+        "y = 3^{x}",
+        "x = 2 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738240282",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738238112",
+      "kind": "example",
+      "title": "Example 3.81",
+      "position": 12,
+      "nearest_heading": "Using Logarithmic Differentiation",
+      "prompt_text": "Using Logarithmic Differentiation Find the derivative of $y = \\left(\\right. 2 x^{4} + 1 \\left.\\right)^{\\tan x} .$",
+      "prompt_latex_bits": [
+        "y = \\left(\\right. 2 x^{4} + 1 \\left.\\right)^{\\tan x} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169738238112",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738068346",
+      "kind": "example",
+      "title": "Example 3.82",
+      "position": 13,
+      "nearest_heading": "Using Logarithmic Differentiation",
+      "prompt_text": "Using Logarithmic Differentiation Find the derivative of $y = \\frac{x \\sqrt{2 x + 1}}{e^{x} \\sin^{3} x} .$",
+      "prompt_latex_bits": [
+        "y = \\frac{x \\sqrt{2 x + 1}}{e^{x} \\sin^{3} x} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169738068346",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738228453",
+      "kind": "example",
+      "title": "Example 3.83",
+      "position": 14,
+      "nearest_heading": "Using Logarithmic Differentiation",
+      "prompt_text": "Extending the Power Rule Find the derivative of $y = x^{r}$ where $r$ is an arbitrary real number.",
+      "prompt_latex_bits": [
+        "y = x^{r}",
+        "r"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1169738228453",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737933509",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.54",
+      "position": 15,
+      "nearest_heading": "Extending the Power Rule",
+      "prompt_text": "Use logarithmic differentiation to find the derivative of $y = x^{x} .$",
+      "prompt_latex_bits": [
+        "y = x^{x} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169737933509",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737933594",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.55",
+      "position": 16,
+      "nearest_heading": "Extending the Power Rule",
+      "prompt_text": "Find the derivative of $y = \\left(\\right. \\tan x \\left.\\right)^{\\pi} .$",
+      "prompt_latex_bits": [
+        "y = \\left(\\right. \\tan x \\left.\\right)^{\\pi} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169737933594",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738235136",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "331 . $f (x) = x^{2} e^{x}$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} e^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738235136",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738235199",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "332 . $f (x) = \\frac{e^{\u2212 x}}{x}$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{e^{\u2212 x}}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738235199",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738085451",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "333 . $f (x) = e^{x^{3} \\ln x}$",
+      "prompt_latex_bits": [
+        "f (x) = e^{x^{3} \\ln x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738085451",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738085543",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "334 . $f (x) = \\sqrt{e^{2 x} + 2 x}$",
+      "prompt_latex_bits": [
+        "f (x) = \\sqrt{e^{2 x} + 2 x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738085543",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738240382",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "335 . $f (x) = \\frac{e^{x} - e^{\u2212 x}}{e^{x} + e^{\u2212 x}}$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{e^{x} - e^{\u2212 x}}{e^{x} + e^{\u2212 x}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738240382",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738240478",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "336 . $f (x) = \\frac{10^{x}}{\\ln 10}$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{10^{x}}{\\ln 10}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738240478",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738071335",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "337 . $f (x) = 2^{4 x} + 4 x^{2}$",
+      "prompt_latex_bits": [
+        "f (x) = 2^{4 x} + 4 x^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738071335",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738071412",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "338 . $f (x) = 3^{\\sin 3 \\text{x}}$",
+      "prompt_latex_bits": [
+        "f (x) = 3^{\\sin 3 \\text{x}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738071412",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738039846",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "339 . $f (x) = x^{\\pi} \\cdot \\pi^{x}$",
+      "prompt_latex_bits": [
+        "f (x) = x^{\\pi} \\cdot \\pi^{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738039846",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738039931",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "340 . $f (x) = \\ln \\left(\\right. 4 x^{3} + x \\left.\\right)$",
+      "prompt_latex_bits": [
+        "f (x) = \\ln \\left(\\right. 4 x^{3} + x \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738039931",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737904496",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "341 . $f (x) = \\ln \\sqrt{5 x - 7}$",
+      "prompt_latex_bits": [
+        "f (x) = \\ln \\sqrt{5 x - 7}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169737904496",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737904560",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "342 . $f (x) = x^{2} \\ln 9 x$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} \\ln 9 x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169737904560",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737904626",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "343 . $f (x) = \\log \\left(\\right. \\sec x \\left.\\right)$",
+      "prompt_latex_bits": [
+        "f (x) = \\log \\left(\\right. \\sec x \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169737904626",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738054394",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "344 . $f (x) = \\log_{7} \\left(\\right. 6 x^{4} + 3 \\left.\\right)^{5}$",
+      "prompt_latex_bits": [
+        "f (x) = \\log_{7} \\left(\\right. 6 x^{4} + 3 \\left.\\right)^{5}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738054394",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738054489",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "345 . $f (x) = 2^{x} \\cdot \\log_{3} 7^{x^{2} - 4}$",
+      "prompt_latex_bits": [
+        "f (x) = 2^{x} \\cdot \\log_{3} 7^{x^{2} - 4}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738054489",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738199906",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "346 . $y = x^{\\sqrt{x}}$",
+      "prompt_latex_bits": [
+        "y = x^{\\sqrt{x}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738199906",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738199977",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "347 . $y = \\left(\\right. \\sin 2 x \\left.\\right)^{4 x}$",
+      "prompt_latex_bits": [
+        "y = \\left(\\right. \\sin 2 x \\left.\\right)^{4 x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738199977",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738092208",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "348 . $y = \\left(\\right. \\ln x \\left.\\right)^{\\ln x}$",
+      "prompt_latex_bits": [
+        "y = \\left(\\right. \\ln x \\left.\\right)^{\\ln x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738092208",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738092313",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "349 . $y = x^{\\log_{2} x}$",
+      "prompt_latex_bits": [
+        "y = x^{\\log_{2} x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738092313",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738092392",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "350 . $y = \\left(\\right. x^{2} - 1 \\left.\\right)^{\\ln x}$",
+      "prompt_latex_bits": [
+        "y = \\left(\\right. x^{2} - 1 \\left.\\right)^{\\ln x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738092392",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738039194",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "351 . $y = x^{\\cot x}$",
+      "prompt_latex_bits": [
+        "y = x^{\\cot x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738039194",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738039285",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "352 . $y = \\frac{x + 11}{\\sqrt[3]{x^{2} - 4}}$",
+      "prompt_latex_bits": [
+        "y = \\frac{x + 11}{\\sqrt[3]{x^{2} - 4}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738039285",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738094022",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "353 . $y = x^{\u22121 / 2} \\left(\\right. x^{2} + 3 \\left.\\right)^{2 / 3} (3 x - 4)^{4}$",
+      "prompt_latex_bits": [
+        "y = x^{\u22121 / 2} \\left(\\right. x^{2} + 3 \\left.\\right)^{2 / 3} (3 x - 4)^{4}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738094022",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738209953",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "354 . [T] Find an equation of the tangent line to the graph of $f (x) = 4 x e^{\\left(\\right. x^{2} - 1 \\left.\\right)}$ at the point where $x = \u22121 .$ Graph both the function and the tangent line.",
+      "prompt_latex_bits": [
+        "f (x) = 4 x e^{\\left(\\right. x^{2} - 1 \\left.\\right)}",
+        "x = \u22121 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738209953",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738210057",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "355 . [T] Find an equation of the line that is normal to the graph of $f (x) = x \\cdot 5^{x}$ at the point where $x = 1 .$ Graph both the function and the normal line.",
+      "prompt_latex_bits": [
+        "f (x) = x \\cdot 5^{x}",
+        "x = 1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738210057",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738080322",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "356 . [T] Find an equation of the tangent line to the graph of $x^{3} - x \\ln y + y^{3} = 2 x + 5$ at the point (2, 1). ( Hint : Use implicit differentiation to find $\\frac{d y}{d x} . \\left.\\right)$ Graph both the curve and the tangent line.",
+      "prompt_latex_bits": [
+        "x^{3} - x \\ln y + y^{3} = 2 x + 5",
+        "\\frac{d y}{d x} . \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738080322",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738094644",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "357 . Consider the function $y = x^{1 / x}$ for $x > 0 .$ Determine the points on the graph where the tangent line is horizontal. Determine the points on the graph where $y^{'} > 0$ and those where $y^{'} < 0 .$",
+      "prompt_latex_bits": [
+        "y = x^{1 / x}",
+        "x > 0 .",
+        "y^{'} > 0",
+        "y^{'} < 0 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738094644",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738094772",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "358 . The formula $I (t) = \\frac{\\sin t}{e^{t}}$ is the formula for a decaying alternating current. Complete the following table with the appropriate values. $t$ $\\frac{\\sin t}{e^{t}}$ 0 (i) $\\frac{\\pi}{2}$ (ii) $\\pi$ (iii) $\\frac{3 \\pi}{2}$ (iv) $2 \\pi$ (v) $\\frac{5 \\pi}{2}$ (vi) $3 \\pi$ (vii) $\\frac{7 \\pi}{2}$ (viii) $4 \\pi$ (ix) Using only the values in the table, determine where the tangent line to the graph of $I (t)$ is horizontal.",
+      "prompt_latex_bits": [
+        "I (t) = \\frac{\\sin t}{e^{t}}",
+        "t",
+        "\\frac{\\sin t}{e^{t}}",
+        "\\frac{\\pi}{2}",
+        "\\pi",
+        "\\frac{3 \\pi}{2}",
+        "2 \\pi",
+        "\\frac{5 \\pi}{2}",
+        "3 \\pi",
+        "\\frac{7 \\pi}{2}",
+        "4 \\pi",
+        "I (t)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738094772",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738229480",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "359 . [T] The population of Toledo, Ohio, in 2000 was approximately 500,000. Assume the population is increasing at a rate of 5% per year. Write the exponential function that relates the total population as a function of $t .$ Use a. to determine the rate at which the population is increasing in $t$ years. Use b. to determine the rate at which the population is increasing in 10 years.",
+      "prompt_latex_bits": [
+        "t .",
+        "t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738229480",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738229590",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "360 . [T] An isotope of the element erbium has a half-life of approximately 12 hours. Initially there are 9 grams of the isotope present. Write the exponential function that relates the amount of substance remaining as a function of $t ,$ measured in hours. Use a. to determine the rate at which the substance is decaying in $t$ hours. Use b. to determine the rate of decay at $t = 4$ hours.",
+      "prompt_latex_bits": [
+        "t ,",
+        "t",
+        "t = 4"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738229590",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738220789",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "361 . [T] The number of cases of influenza in New York City from the beginning of 1960 to the beginning of 1964 is modeled by the function $N (t) = 5.3 e^{0.093 t^{2} - 0.87 t} , \\left(\\right. 0 \\leq t \\leq 4 \\left.\\right) ,$ where $N (t)$ gives the number of cases (in thousands) and t is measured in years, with $t = 0$ corresponding to the beginning of 1960. Show work that evaluates $N (0)$ and $N (4) .$ Briefly describe what these values indicate about the disease in New York City. Show work that evaluates $N^{'} (0)$ and $N^{'} (3) .$ Briefly describe what these values indicate about the disease in New York City.",
+      "prompt_latex_bits": [
+        "N (t) = 5.3 e^{0.093 t^{2} - 0.87 t} , \\left(\\right. 0 \\leq t \\leq 4 \\left.\\right) ,",
+        "N (t)",
+        "t = 0",
+        "N (0)",
+        "N (4) .",
+        "N^{'} (0)",
+        "N^{'} (3) ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738220789",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169737922901",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "362 . [T] The relative rate of change of a differentiable function $y = f (x)$ is given by $\\frac{100 \\cdot f^{'} (x)}{f (x)} \\% .$ One model for population growth is a Gompertz growth function, given by $P (x) = a e^{\u2212 b \\cdot e^{\u2212 c x}}$ where $a , b ,$ and $c$ are constants. Find the relative rate of change formula for the generic Gompertz function. Use a. to find the relative rate of change of a population in $x = 20$ months when $a = 204 , b = 0.0198 ,$ and $c = 0.15 .$ Briefly interpret what the result of b. means.",
+      "prompt_latex_bits": [
+        "y = f (x)",
+        "\\frac{100 \\cdot f^{'} (x)}{f (x)} \\% .",
+        "P (x) = a e^{\u2212 b \\cdot e^{\u2212 c x}}",
+        "a , b ,",
+        "c",
+        "x = 20",
+        "a = 204 , b = 0.0198 ,",
+        "c = 0.15 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169737922901",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738066609",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "363 . [T] Using a computer program or a calculator, fit a growth curve to the data of the form $p = a b^{t} .$",
+      "prompt_latex_bits": [
+        "p = a b^{t} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738066609",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738066665",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "364 . [T] Using the exponential best fit for the data, write a table containing the derivatives evaluated at each year.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738066665",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738071156",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "365 . [T] Using the exponential best fit for the data, write a table containing the second derivatives evaluated at each year.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738071156",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1169738040664",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 3.9 Exercises",
+      "prompt_text": "366 . [T] Using the tables of first and second derivatives and the best fit, answer the following questions: Will the model be accurate in predicting the future population of New York City? Why or why not? Estimate the population in 2010. Was the prediction correct from a.?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1169738040664",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:25.946733+00:00",
+  "stage": "1_inventory"
+}

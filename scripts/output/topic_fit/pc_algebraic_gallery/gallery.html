@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Precalculus algebraic gallery</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+
+</style>
+<link rel="stylesheet" href="../_assets/katex/katex.min.css"/>
+<script defer src="../_assets/katex/katex.min.js"></script>
+<script defer src="../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>Precalculus algebraic gallery</h1>
+<p>Generated: 2026-08-03T16:43:29.126164+00:00</p>
+<p>Live samples via <code>_generate_for_type</code> (D = 0, 3, 6, 8, 12, 16, 20, 25; 3 seeds each). No Easy/Medium/Hard labels — continuous <strong>D=</strong> only.</p>
+<p>Open <a href="gallery.html">gallery.html</a> in a browser for KaTeX (local <code>_assets/katex</code>).</p>
+<ul>
+<li>topics ok: <strong>8</strong> · skipped missing: <strong>0</strong></li>
+<li>samples ok: <strong>192</strong> · errors: <strong>0</strong></li>
+<li>metadata: <code>tricks_required</code>, <code>spec_snapshot</code> pack, form/shape when present</li>
+</ul>
+<h2>Structure inventory</h2>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>17</strong> · samples: <strong>192</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>(unlabeled)</code></td>
+<td>48</td>
+</tr>
+<tr>
+<td><code>exponential_equation_with_log:exp_needs_logarithm</code></td>
+<td>24</td>
+</tr>
+<tr>
+<td><code>partial_fraction_decomposition:pfd</code></td>
+<td>24</td>
+</tr>
+<tr>
+<td><code>exponential_equation_simple:exp_same_base</code></td>
+<td>16</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:power</code></td>
+<td>13</td>
+</tr>
+<tr>
+<td><code>function_operations:add</code></td>
+<td>11</td>
+</tr>
+<tr>
+<td><code>log_change_of_base:log_product_rule_expand</code></td>
+<td>9</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:power+sum</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>exponential_equation_simple:exp_rewrite_common_base</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>log_change_of_base:log_change_of_base</code></td>
+<td>7</td>
+</tr>
+<tr>
+<td><code>function_operations:quotient</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>log_change_of_base:log_quotient_rule_expand</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>function_operations:compose</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>log_change_of_base:log_power_rule_expand</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:chain+power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>function_operations:product</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>function_operations:subtract</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:chain+power+product</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h2>Topics</h2>
+<ul>
+<li><a href="#log_props">Precalc properties of logarithms</a> — <code>pc_properties_of_logarithms</code></li>
+<li><a href="#exp_equation">Precalc exponential equations (same base)</a> — <code>pc_exponential_equations_not_requiring_logarithms</code></li>
+<li><a href="#power_rule">Precalc intro-calc power rule (shared Spec with calc)</a> — <code>pc_power_rule_for_differentiation</code></li>
+<li><a href="#pfd">Precalc PFD (construct_pfd; reverse of rational add)</a> — <code>pc_partial_fraction_decomposition</code></li>
+<li><a href="#function_ops">Precalc function operations algebraic</a> — <code>pc_functions_operations</code></li>
+<li><a href="#rational_equations">Precalc rational equations</a> — <code>pc_rational_equations</code></li>
+<li><a href="#log_equation">Precalc simple log equations</a> — <code>pc_logarithmic_equations_simple</code></li>
+<li><a href="#exp_equation_log">Precalc exponential equations requiring logs</a> — <code>pc_exponential_equations_requiring_logarithms</code></li>
+</ul>
+<h2>Precalc properties of logarithms</h2>
+<p>&lt;a id=&quot;log_props&quot;&gt;&lt;/a&gt;</p>
+<p><code>pc_properties_of_logarithms</code> · pack <code>log_props</code> · topic label: pc: Properties of logarithms · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>4</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>log_change_of_base:log_product_rule_expand</code></td>
+<td>9</td>
+</tr>
+<tr>
+<td><code>log_change_of_base:log_change_of_base</code></td>
+<td>7</td>
+</tr>
+<tr>
+<td><code>log_change_of_base:log_quotient_rule_expand</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>log_change_of_base:log_power_rule_expand</code></td>
+<td>3</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Expand: } \log_{2}\left(32\right)$</td>
+<td>$\log_{2}(8)+\log_{2}(4)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Expand: } \log_{5}\left(24\right)$</td>
+<td>$\log_{5}(3)+\log_{5}(8)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Rewrite using change of base: } \log_{5}(3125)$</td>
+<td>$\frac{\log_{2}(3125)}{\log_{2}(5)}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_change_of_base · shape=log_change_of_base · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Expand: } \log_{5}\left(18\right)$</td>
+<td>$\log_{5}(6)+\log_{5}(3)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Expand: } \log_{3}\left(9^{4}\right)$</td>
+<td>$4\log_{3}(9)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_power_rule_expand · shape=log_power_rule_expand · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Expand: } \log_{2}\left(\frac{30}{5}\right)$</td>
+<td>$\log_{2}(30)-\log_{2}(5)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_quotient_rule_expand · shape=log_quotient_rule_expand · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Expand: } \log_{10}\left(\frac{24}{8}\right)$</td>
+<td>$\log_{10}(24)-\log_{10}(8)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_quotient_rule_expand · shape=log_quotient_rule_expand · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Expand: } \log_{7}\left(32\right)$</td>
+<td>$\log_{7}(8)+\log_{7}(4)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Expand: } \log_{9}\left(72\right)$</td>
+<td>$\log_{9}(9)+\log_{9}(8)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Rewrite using change of base: } \log_{2}(16)$</td>
+<td>$\frac{\log_{9}(16)}{\log_{9}(2)}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_change_of_base · shape=log_change_of_base · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Rewrite using change of base: } \log_{4}(256)$</td>
+<td>$\frac{\log_{8}(256)}{\log_{8}(4)}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_change_of_base · shape=log_change_of_base · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Expand: } \log_{2}\left(3^{5}\right)$</td>
+<td>$5\log_{2}(3)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_power_rule_expand · shape=log_power_rule_expand · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Expand: } \log_{9}\left(\frac{4}{2}\right)$</td>
+<td>$\log_{9}(4)-\log_{9}(2)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_quotient_rule_expand · shape=log_quotient_rule_expand · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Expand: } \log_{7}\left(48\right)$</td>
+<td>$\log_{7}(6)+\log_{7}(8)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Rewrite using change of base: } \log_{3}(27)$</td>
+<td>$\frac{\log_{2}(27)}{\log_{2}(3)}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_change_of_base · shape=log_change_of_base · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Expand: } \log_{9}\left(27\right)$</td>
+<td>$\log_{9}(3)+\log_{9}(9)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Rewrite using change of base: } \log_{5}(125)$</td>
+<td>$\frac{\log_{11}(125)}{\log_{11}(5)}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_change_of_base · shape=log_change_of_base · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Expand: } \log_{4}\left(\frac{8}{2}\right)$</td>
+<td>$\log_{4}(8)-\log_{4}(2)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_quotient_rule_expand · shape=log_quotient_rule_expand · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Expand: } \log_{12}\left(18\right)$</td>
+<td>$\log_{12}(6)+\log_{12}(3)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Expand: } \log_{7}\left(\frac{12}{6}\right)$</td>
+<td>$\log_{7}(12)-\log_{7}(6)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_quotient_rule_expand · shape=log_quotient_rule_expand · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Expand: } \log_{7}\left(6^{5}\right)$</td>
+<td>$5\log_{7}(6)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_power_rule_expand · shape=log_power_rule_expand · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Rewrite using change of base: } \log_{10}(100)$</td>
+<td>$\frac{\log_{2}(100)}{\log_{2}(10)}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_change_of_base · shape=log_change_of_base · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Expand: } \log_{2}\left(42\right)$</td>
+<td>$\log_{2}(7)+\log_{2}(6)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_product_rule_expand · shape=log_product_rule_expand · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Rewrite using change of base: } \log_{9}(59049)$</td>
+<td>$\frac{\log_{6}(59049)}{\log_{6}(9)}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_log_props · methods=log_props · form_id=log_change_of_base · shape=log_change_of_base · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>Precalc exponential equations (same base)</h2>
+<p>&lt;a id=&quot;exp_equation&quot;&gt;&lt;/a&gt;</p>
+<p><code>pc_exponential_equations_not_requiring_logarithms</code> · pack <code>exp_equation</code> · topic label: pc: Exponential equations not requiring logarithms · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>2</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>exponential_equation_simple:exp_same_base</code></td>
+<td>16</td>
+</tr>
+<tr>
+<td><code>exponential_equation_simple:exp_rewrite_common_base</code></td>
+<td>8</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$9^{x} = 27^{x - 1}$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_rewrite_common_base · shape=exp_rewrite_common_base · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$25^{x} = 5^{x + 2}$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_rewrite_common_base · shape=exp_rewrite_common_base · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$4^{x} = 4$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$3^{x} = 3$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$2^{x} = 8$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$3^{x} = 27$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$2^{x} = 2$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$4^{x} = 4$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$25^{x} = 5^{x + 2}$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_rewrite_common_base · shape=exp_rewrite_common_base · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$6^{x} = 1296$</td>
+<td>$x = 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$3^{x} = 81$</td>
+<td>$x = 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$2^{x} = 2$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$8^{x + 2} = 16^{x + 1}$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_rewrite_common_base · shape=exp_rewrite_common_base · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$2^{x} = 8$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$6^{x} = 36$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$8^{x} = 4096$</td>
+<td>$x = 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$3^{x} = 3$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$4^{x} = 16$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$4^{x} = 64$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$8^{x + 2} = 16^{x + 1}$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_rewrite_common_base · shape=exp_rewrite_common_base · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$8^{x + 2} = 16^{x + 1}$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_rewrite_common_base · shape=exp_rewrite_common_base · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$8^{x} = 262144$</td>
+<td>$x = 6$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_same_base · shape=exp_same_base · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$25^{x} = 5^{x + 2}$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_rewrite_common_base · shape=exp_rewrite_common_base · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$9^{x} = 27^{x - 1}$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=exp_equation · form_id=exp_rewrite_common_base · shape=exp_rewrite_common_base · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>Precalc intro-calc power rule (shared Spec with calc)</h2>
+<p>&lt;a id=&quot;power_rule&quot;&gt;&lt;/a&gt;</p>
+<p><code>pc_power_rule_for_differentiation</code> · pack <code>power_rule</code> · topic label: pc: Power rule for differentiation · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>4</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>derivative_power_rule:power</code></td>
+<td>13</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:power+sum</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:chain+power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>derivative_power_rule:chain+power+product</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Find }\frac{d}{dx}\left(2x^{4}\right)$</td>
+<td>$8x^{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_poly · shape=power · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find }\frac{d}{dx}\left(x^{2}\right)$</td>
+<td>$2x$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_poly · shape=power · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{d}{dx}\left[-x^{4}\right]$</td>
+<td>$-4x^{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_poly · shape=power · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Find }\frac{d}{dx}\left(2x^{3} + 3x^{2} - 1\right)$</td>
+<td>$6x^{2} + 6x$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power,sum · form_id=power_poly · shape=sum+power · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{d}{dx}\left[2x^{3} - 3x^{2} + 2x - 2\right]$</td>
+<td>$6x^{2} - 6x + 2$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power,sum · form_id=power_poly · shape=sum+power · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Find }\frac{d}{dx}\left(3x^{3} - 3x^{2} - x\right)$</td>
+<td>$9x^{2} - 6x - 1$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power,sum · form_id=power_poly · shape=sum+power · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Find }\frac{d}{dx}\left(x^{-\frac{3}{2}}\right)$</td>
+<td>$-\frac{3}{2}x^{-\frac{5}{2}}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_negative · shape=power · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{d}{dx}\left[x^{5}\right]$</td>
+<td>$5x^{4}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_root · shape=power · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Find }\frac{d}{dx}\left(2x^{2} + 3x\right)$</td>
+<td>$4x + 3$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power,sum · form_id=power_poly · shape=sum+power · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Find }\frac{d}{dx}\left(x^{-\frac{1}{2}}\right)$</td>
+<td>$-\frac{1}{2}x^{-\frac{3}{2}}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_poly · shape=power · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{d}{dx}\left[4x^{-5}\right]$</td>
+<td>$-20x^{-6}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_negative · shape=power · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Find }\frac{d}{dx}\left(x^{-\frac{3}{2}}\right)$</td>
+<td>$-\frac{3}{2}x^{-\frac{5}{2}}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_negative · shape=power · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{d^{2}}{dx^{2}}\left[3x^{3} - 5x^{2} + x + 2\right]$</td>
+<td>$18x - 10$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power,sum · form_id=power_poly · shape=sum+power · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Find }\frac{d}{dx}\left(\sqrt{\sqrt{3x}}\right)$</td>
+<td>$\frac{1}{2\sqrt{\sqrt{3x}}}\frac{1}{2\sqrt{3x}}\left(3\right)$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=chain,power · form_id=chain_power_linear · shape=fn:sqrt · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{d}{dx}\left[\sqrt{4x + 5}\sqrt{x}\right]$</td>
+<td>$4\frac{1}{2\sqrt{4x + 5}}\sqrt{x} + \frac{1}{2\sqrt{x}}\sqrt{4x + 5}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=chain,power,product · form_id=chain_power_linear · shape=fn:sqrt+product+sum · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{d^{2}}{dx^{2}}\left[2x^{2} - 3x - 4\right]$</td>
+<td>$4$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power,sum · form_id=power_root · shape=sum+power · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{d}{dx}\left[-4x^{3}\right]$</td>
+<td>$-12x^{2}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_negative · shape=power · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Find }\frac{d}{dx}\left(\left(x^{2} + 1\right)^{e}\right)$</td>
+<td>$e\left(x^{2} + 1\right)^{e-1}\left(2x\right)$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=chain,power · form_id=chain_power_linear · shape=sum+power · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d}{dx}\left(x^{-\frac{1}{2}}\right)$</td>
+<td>$-\frac{1}{2}x^{-\frac{3}{2}}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_root · shape=power · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d}{dx}\left(x^{\frac{2}{3}}\right)$</td>
+<td>$\frac{2}{3}x^{-\frac{1}{3}}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_poly · shape=power · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find }\frac{d}{dx}\left(3x^{3} + 3x^{2} - 2x - 3\right)$</td>
+<td>$9x^{2} + 6x - 2$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power,sum · form_id=power_poly · shape=sum+power · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{d}{dx}\left[x^{\frac{1}{2}}\right]$</td>
+<td>$\frac{1}{2}x^{-\frac{1}{2}}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_poly · shape=power · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }\frac{d}{dx}\left(2x^{\frac{7}{2}}\right)$</td>
+<td>$7x^{\frac{5}{2}}$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power · form_id=power_root · shape=power · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find }\frac{d}{dx}\left(2x^{2} - 5x - 3\right)$</td>
+<td>$4x - 5$</td>
+<td><code>—</code></td>
+<td><code>pack=power_rule · methods=power,sum · form_id=power_poly · shape=sum+power · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>Precalc PFD (construct_pfd; reverse of rational add)</h2>
+<p>&lt;a id=&quot;pfd&quot;&gt;&lt;/a&gt;</p>
+<p><code>pc_partial_fraction_decomposition</code> · pack <code>pfd</code> · topic label: pc: Partial fraction decomposition · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>1</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>partial_fraction_decomposition:pfd</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Decompose } \frac{2x - 1}{x^{2} - 3x + 2}$</td>
+<td>$\frac{-1}{x - 1}+\frac{3}{x - 2}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Decompose } \frac{-2x + 8}{x^{2} - 4x + 3}$</td>
+<td>$\frac{-3}{x - 1}+\frac{1}{x - 3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Decompose } \frac{x - 4}{x^{2} - 5x + 6}$</td>
+<td>$\frac{2}{x - 2}+\frac{-1}{x - 3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Decompose } \frac{-2}{x^{2} - x}$</td>
+<td>$\frac{2}{x}+\frac{-2}{x - 1}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Decompose } \frac{4x - 6}{x^{2} - 4x + 3}$</td>
+<td>$\frac{1}{x - 1}+\frac{3}{x - 3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Decompose } \frac{2x + 1}{x^{2} - x}$</td>
+<td>$\frac{3}{x - 1}+\frac{-1}{x}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Decompose } \frac{10x - 34}{2x^{2} - 16x + 30}$</td>
+<td>$\frac{4}{x - 5}+\frac{1}{x - 3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Decompose } \frac{12}{x^{2} - 3x}$</td>
+<td>$\frac{4}{x - 3}+\frac{-4}{x}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Decompose } \frac{9x - 16}{x^{2} - 4x}$</td>
+<td>$\frac{5}{x - 4}+\frac{4}{x}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Decompose } \frac{-9x - 6}{3x^{2} - 6x}$</td>
+<td>$\frac{1}{x}+\frac{-4}{x - 2}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Decompose } \frac{2x - 3}{x^{2} - 5x + 6}$</td>
+<td>$\frac{3}{x - 3}+\frac{-1}{x - 2}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Decompose } \frac{6x - 12}{2x^{2} - 6x}$</td>
+<td>$\frac{1}{x - 3}+\frac{2}{x}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Decompose } \frac{6x^{2} + 2x + 2}{2x^{3} - 4x^{2} + 2x - 4}$</td>
+<td>$\frac{3}{x - 2}+\frac{1}{x^{2} + 1}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_irreducible_quadratic · shape=nonrepeated_irreducible_quadratic · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Decompose } \frac{4x}{2x^{2} - 16x + 30}$</td>
+<td>$\frac{-3}{x - 3}+\frac{5}{x - 5}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_2 · shape=nonrepeated_linear_2 · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Decompose } \frac{6x^{2} - 2x - 18}{\left(x + 2\right)\left(x\right)\left(x - 3\right)}$</td>
+<td>$\frac{1}{x + 2}+\frac{3}{x}+\frac{2}{x - 3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_3 · shape=nonrepeated_linear_3 · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Decompose } \frac{x^{3} - 8x^{2} - 12x - 80}{\left(x - 2\right)\left(x + 2\right)\left(x^{2} + 4\right)}$</td>
+<td>$\frac{-4}{x - 2}+\frac{3}{x + 2}+\frac{2x + 6}{x^{2} + 4}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=mixed_linear_quadratic · shape=mixed_linear_quadratic · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Decompose } \frac{-3x^{2} + 7x - 83}{x^{3} - 5x^{2} + 16x - 80}$</td>
+<td>$\frac{-3}{x - 5}+\frac{7}{x^{2} + 16}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_irreducible_quadratic · shape=nonrepeated_irreducible_quadratic · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Decompose } \frac{27x^{2} - 414x + 675}{3\left(x - 9\right)\left(x - 1\right)\left(x - 3\right)}$</td>
+<td>$\frac{-6}{x - 9}+\frac{6}{x - 1}+\frac{9}{x - 3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_3 · shape=nonrepeated_linear_3 · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Decompose } \frac{12x^{2} - 15x - 36}{3\left(x - 2\right)\left(x\right)\left(x - 3\right)}$</td>
+<td>$\frac{3}{x - 2}+\frac{-2}{x}+\frac{3}{x - 3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_3 · shape=nonrepeated_linear_3 · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Decompose } \frac{3x^{2} - 7x + 43}{x^{3} + 3x^{2} + 4x + 12}$</td>
+<td>$\frac{7}{x + 3}+\frac{-4x + 5}{x^{2} + 4}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_irreducible_quadratic · shape=nonrepeated_irreducible_quadratic · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Decompose } \frac{7x^{2} - 44x + 60}{\left(x\right)\left(x - 4\right)\left(x - 3\right)}$</td>
+<td>$\frac{5}{x}+\frac{-1}{x - 4}+\frac{3}{x - 3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_linear_3 · shape=nonrepeated_linear_3 · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Decompose } \frac{66x^{2} + 12}{3x^{3} + 3x}$</td>
+<td>$\frac{4}{x}+\frac{18x}{x^{2} + 1}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=nonrepeated_irreducible_quadratic · shape=nonrepeated_irreducible_quadratic · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Decompose } \frac{x^{3} - 37x^{2} + 4x - 128}{\left(x - 4\right)\left(x + 4\right)\left(x^{2} + 4\right)}$</td>
+<td>$\frac{-4}{x - 4}+\frac{5}{x + 4}+\frac{-1}{x^{2} + 4}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=mixed_linear_quadratic · shape=mixed_linear_quadratic · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Decompose } \frac{16x^{3} - 84x^{2} + 274x + 10}{\left(x - 12\right)\left(x + 1\right)\left(x^{2} + 1\right)}$</td>
+<td>$\frac{10}{x - 12}+\frac{14}{x + 1}+\frac{-8x - 14}{x^{2} + 1}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_pfd · methods=partial_fractions,combine · form_id=mixed_linear_quadratic · shape=mixed_linear_quadratic · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>Precalc function operations algebraic</h2>
+<p>&lt;a id=&quot;function_ops&quot;&gt;&lt;/a&gt;</p>
+<p><code>pc_functions_operations</code> · pack <code>function_ops</code> · topic label: pc: Operations · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>5</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>function_operations:add</code></td>
+<td>11</td>
+</tr>
+<tr>
+<td><code>function_operations:quotient</code></td>
+<td>5</td>
+</tr>
+<tr>
+<td><code>function_operations:compose</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>function_operations:product</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>function_operations:subtract</code></td>
+<td>2</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{If } f(x) = 3x + 3 \text{ and } g(x) = 3x - 3, \text{ find } (f + g)(-4).$</td>
+<td>$-24$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{If } f(x) = 3x - 4 \text{ and } g(x) = 3x + 4, \text{ find } (f + g)(-3).$</td>
+<td>$-18$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{If } f(x) = 3x - 3 \text{ and } g(x) = -3x + 1, \text{ find } (f + g)(-3).$</td>
+<td>$-2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{If } f(x) = 3x + 3 \text{ and } g(x) = 3x - 4, \text{ find } (f + g)(3).$</td>
+<td>$17$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{If } f(x) = -3x + 0 \text{ and } g(x) = -3x - 2, \text{ find } (f - g)(-1).$</td>
+<td>$2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_difference · shape=algebraic_difference · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{If } f(x) = 3x + 4 \text{ and } g(x) = -3x - 1, \text{ find } (f + g)(-4).$</td>
+<td>$3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{If } f(x) = 6x + 4 \text{ and } g(x) = -6x + 0, \text{ find } (f + g)(3).$</td>
+<td>$4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{If } f(x) = -6x + 7 \text{ and } g(x) = -6x + 8, \text{ find } (f + g)(0).$</td>
+<td>$15$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{If } f(x) = 6x - 4 \text{ and } g(x) = -6x + 2, \text{ find } (f \cdot g)(-2).$</td>
+<td>$-224$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_product · shape=algebraic_product · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{If } f(x) = 6x + 5 \text{ and } g(x) = -6x + 3, \text{ find } \left(\frac{f}{g}\right)(3).$</td>
+<td>$\frac{-23}{15}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_quotient · shape=algebraic_quotient · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{If } f(x) = 6x + 6 \text{ and } g(x) = 6x + 2, \text{ find } \left(\frac{f}{g}\right)(4).$</td>
+<td>$\frac{15}{13}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_quotient · shape=algebraic_quotient · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{If } f(x) = -6x + 6 \text{ and } g(x) = 6x + 0, \text{ find } (f + g)(-2).$</td>
+<td>$6$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{If } f(x) = 8x - 4 \text{ and } g(x) = -8x - 2, \text{ find } (f \cdot g)(-7).$</td>
+<td>$-3240$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_product · shape=algebraic_product · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{If } f(x) = 8x - 1 \text{ and } g(x) = 8x + 8, \text{ find } (f + g)(6).$</td>
+<td>$103$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{If } f(x) = 8x - 8 \text{ and } g(x) = 8x - 4, \text{ find } (f \circ g)(6).$</td>
+<td>$344$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=compose_evaluate · shape=compose_evaluate · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{If } f(x) = 8x + 6 \text{ and } g(x) = -8x - 5, \text{ find } \left(\frac{f}{g}\right)(-2).$</td>
+<td>$\frac{-10}{11}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_quotient · shape=algebraic_quotient · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{If } f(x) = 8x + 3 \text{ and } g(x) = 8x + 0, \text{ find } \left(\frac{f}{g}\right)(-8).$</td>
+<td>$\frac{61}{64}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_quotient · shape=algebraic_quotient · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{If } f(x) = 8x + 2 \text{ and } g(x) = 8x - 2, \text{ find } (f \circ g)(4).$</td>
+<td>$242$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=compose_evaluate · shape=compose_evaluate · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{If } f(x) = -9x - 8 \text{ and } g(x) = 9x + 2, \text{ find } (f \circ g)(-8).$</td>
+<td>$622$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=compose_evaluate · shape=compose_evaluate · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{If } f(x) = -9x + 3 \text{ and } g(x) = -9x + 2, \text{ find } (f \circ g)(1).$</td>
+<td>$66$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=compose_evaluate · shape=compose_evaluate · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{If } f(x) = 9x - 5 \text{ and } g(x) = 9x - 5, \text{ find } (f - g)(-9).$</td>
+<td>$0$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_difference · shape=algebraic_difference · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{If } f(x) = -11x - 1 \text{ and } g(x) = -11x + 2, \text{ find } (f + g)(-10).$</td>
+<td>$221$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{If } f(x) = 11x - 4 \text{ and } g(x) = 11x + 11, \text{ find } \left(\frac{f}{g}\right)(-10).$</td>
+<td>$\frac{38}{33}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_quotient · shape=algebraic_quotient · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{If } f(x) = -11x + 4 \text{ and } g(x) = 11x - 6, \text{ find } (f + g)(-3).$</td>
+<td>$-2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_function_ops · methods=function_ops · form_id=algebraic_sum · shape=algebraic_sum · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>Precalc rational equations</h2>
+<p>&lt;a id=&quot;rational_equations&quot;&gt;&lt;/a&gt;</p>
+<p><code>pc_rational_equations</code> · pack <code>rational_equations</code> · topic label: pc: Rational equations · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>0</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>(unlabeled)</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{5}{x} = \frac{1}{4}$</td>
+<td>$x = 20$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{x + 5}{4} = \frac{12}{6}$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{5}{x} = \frac{5}{7}$</td>
+<td>$x = 7$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{12}{x} = \frac{3}{2}$</td>
+<td>$x = 8$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{x + 2}{8} = -1$</td>
+<td>$x = -10$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{x + 3}{5} = \frac{-2}{2}$</td>
+<td>$x = -8$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{6}{x - 8} - \frac{4}{x + 4} = -2$</td>
+<td>$x = -1 \text{ or } x = 4$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{-4}{x - 6} - \frac{15}{x - 5} = -4$</td>
+<td>$x = 10$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{-1}{x + 5} + \frac{3}{x + 7} = 4$</td>
+<td>$x = -6$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{3}{x - 9} - \frac{16}{x - 10} = 5$</td>
+<td>$x = 8$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{-6}{x + 3} - \frac{12}{x + 11} = -5$</td>
+<td>$x = -9$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{2}{x - 3} - \frac{4}{x - 4} = -3$</td>
+<td>$x = 5$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{-2}{x + 6} - \frac{10}{x + 3} = 3$</td>
+<td>$x = -8 \text{ or } x = -5$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{5}{x - 8} + \frac{18}{x + 2} = 4$</td>
+<td>$x = 10$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{6}{x + 6} + \frac{15}{x - 11} = 2$</td>
+<td>$x = -4$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{6}{x - 4} + \frac{20}{x + 8} = -1$</td>
+<td>$x = -32 \text{ or } x = 2$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{5}{x - 5} - \frac{12}{x + 1} = 1$</td>
+<td>$x = -10 \text{ or } x = 7$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{2}{x + 8} - \frac{17}{x - 8} = -1$</td>
+<td>$x = -9 \text{ or } x = 24$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{-5}{x + 4} - \frac{16}{x + 7} = -3$</td>
+<td>$x = -5 \text{ or } x = 1$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{-3}{x + 7} - \frac{14}{x + 1} = -5$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{-4}{x + 7} - \frac{6}{x + 9} = -2$</td>
+<td>$x = -8 \text{ or } x = -3$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{-4}{x + 1} - \frac{11}{x - 8} = 3$</td>
+<td>$x = -3 \text{ or } x = 5$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{4}{x + 5} + \frac{10}{x - 6} = 3$</td>
+<td>$x = -4$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{4}{x - 2} - \frac{18}{x + 11} = -3$</td>
+<td>$x = -2$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_equations · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>Precalc simple log equations</h2>
+<p>&lt;a id=&quot;log_equation&quot;&gt;&lt;/a&gt;</p>
+<p><code>pc_logarithmic_equations_simple</code> · pack <code>log_equation</code> · topic label: pc: Logarithmic equations, simple · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>0</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>(unlabeled)</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\log_{4}(x) = 5$</td>
+<td>$x = 1024$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\log_{2}(x) = 1$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\log_{5}(x) = 4$</td>
+<td>$x = 625$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\log_{5}(x) = 4$</td>
+<td>$x = 625$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\log_{5}(x) = 4$</td>
+<td>$x = 625$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\log_{5}(x) = 5$</td>
+<td>$x = 3125$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\log_{3}(x) = 4$</td>
+<td>$x = 81$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\log(x) = 4$</td>
+<td>$x = 10000$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\log_{8}(x) = 3$</td>
+<td>$x = 512$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\log_{6}(x) = 5$</td>
+<td>$x = 7776$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\log_{2}(x) = 1$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\log_{3}(x) = 4$</td>
+<td>$x = 81$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\log_{5}(x) = 4$</td>
+<td>$x = 625$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\log_{8}(x) = 5$</td>
+<td>$x = 32768$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\log_{2}(x) = 4$</td>
+<td>$x = 16$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\log(x) = 2$</td>
+<td>$x = 100$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\log_{8}(x) = 2$</td>
+<td>$x = 64$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\log_{2}(x) = 4$</td>
+<td>$x = 16$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\log_{3}(x) = 2$</td>
+<td>$x = 9$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\log_{11}(x) = 3$</td>
+<td>$x = 1331$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\log_{10}(x) = 4$</td>
+<td>$x = 10000$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\log_{11}(x) = 2$</td>
+<td>$x = 121$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\log_{10}(x) = 4$</td>
+<td>$x = 10000$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\log_{12}(x) = 3$</td>
+<td>$x = 1728$</td>
+<td><code>—</code></td>
+<td><code>pack=log_equation · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>Precalc exponential equations requiring logs</h2>
+<p>&lt;a id=&quot;exp_equation_log&quot;&gt;&lt;/a&gt;</p>
+<p><code>pc_exponential_equations_requiring_logarithms</code> · pack <code>exp_equation_log</code> · topic label: pc: Exponential equations requiring logarithms · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>1</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>exponential_equation_with_log:exp_needs_logarithm</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$4^{3x} = 64$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$3^{-x} = 0.037037037037037035$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$3^{-x} = 0.3333333333333333$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$4^{3x} = 64$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$4^{-x} = 0.0625$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$4^{x} = 64$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$2^{-x} = 0.125$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$5^{-3x} = 4.096e-09$</td>
+<td>$x = 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$3^{3x} = 27$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$6^{2x} = 36$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$6^{-5x} = 2.1268224907304786e-12$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$6^{x} = 216$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$5^{3x} = 125$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$6^{-4x} = 5.953741807651273e-07$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$10^{-3x} = 1e-09$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$5^{-6x} = 6.4e-05$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$6^{-10x} = 2.7351112277912534e-16$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$6^{7x} = 6140942214464815497216$</td>
+<td>$x = 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$3^{3x} = 729$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$7^{4x} = 2401$</td>
+<td>$x = 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$4^{-9x} = 8.077935669463161e-28$</td>
+<td>$x = 5$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$10^{13x} = 10000000000000000000000000000000000000000000000000000$</td>
+<td>$x = 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$9^{5x} = 205891132094649$</td>
+<td>$x = 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$8^{12x} = 4722366482869645213696$</td>
+<td>$x = 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_exp_equation · methods=take_log · form_id=exp_needs_logarithm · shape=exp_needs_logarithm · D=25</code></td>
+</tr>
+</tbody></table>
+</body></html>

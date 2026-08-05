@@ -1,0 +1,1528 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "5-2-the-definite-integral",
+  "title": "5.2 The Definite Integral",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/5-2-the-definite-integral",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/5-2-the-definite-integral.html",
+  "objectives": [
+    "5.2.1 State the definition of the definite integral.",
+    "5.2.2 Explain the terms integrand, limits of integration, and variable of integration.",
+    "5.2.3 Explain when a function is integrable.",
+    "5.2.4 Describe the relationship between the definite integral and net area.",
+    "5.2.5 Use geometry and the properties of definite integrals to evaluate them.",
+    "5.2.6 Calculate the average value of a function."
+  ],
+  "headings": [
+    "5.2 The Definite Integral",
+    "Learning Objectives",
+    "Definition and Notation",
+    "Definition",
+    "Theorem 5.1",
+    "Example 5.7",
+    "Checkpoint 5.7",
+    "Evaluating Definite Integrals",
+    "Example 5.8",
+    "Checkpoint 5.8",
+    "Area and the Definite Integral",
+    "Example 5.9",
+    "Checkpoint 5.9",
+    "Definition",
+    "Example 5.10",
+    "Checkpoint 5.10",
+    "Properties of the Definite Integral",
+    "Rule: Properties of the Definite Integral",
+    "Example 5.11",
+    "Checkpoint 5.11",
+    "Example 5.12",
+    "Checkpoint 5.12",
+    "Theorem 5.2",
+    "Example 5.13",
+    "Average Value of a Function",
+    "Definition",
+    "Example 5.14",
+    "Checkpoint 5.13",
+    "Section 5.2 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1170571648750",
+      "kind": "example",
+      "title": "Example 5.7",
+      "position": 1,
+      "nearest_heading": "Continuous Functions Are Integrable",
+      "prompt_text": "Evaluating an Integral Using the Definition Use the definition of the definite integral to evaluate $\\int_{0}^{2} x^{2} d x .$ Use a right-endpoint approximation to generate the Riemann sum.",
+      "prompt_latex_bits": [
+        "\\int_{0}^{2} x^{2} d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571648750",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572505534",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.7",
+      "position": 2,
+      "nearest_heading": "Evaluating an Integral Using the Definition",
+      "prompt_text": "Use the definition of the definite integral to evaluate $\\int_{0}^{3} (2 x - 1) d x .$ Use a right-endpoint approximation to generate the Riemann sum.",
+      "prompt_latex_bits": [
+        "\\int_{0}^{3} (2 x - 1) d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572505534",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571775733",
+      "kind": "example",
+      "title": "Example 5.8",
+      "position": 3,
+      "nearest_heading": "Evaluating Definite Integrals",
+      "prompt_text": "Using Geometric Formulas to Calculate Definite Integrals Use the formula for the area of a circle to evaluate $\\int_{3}^{6} \\sqrt{9 - (x - 3)^{2}} d x .$",
+      "prompt_latex_bits": [
+        "\\int_{3}^{6} \\sqrt{9 - (x - 3)^{2}} d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571775733",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572551856",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.8",
+      "position": 4,
+      "nearest_heading": "Using Geometric Formulas to Calculate Definite Integrals",
+      "prompt_text": "Use the formula for the area of a trapezoid to evaluate $\\int_{2}^{4} (2 x + 3) d x .$",
+      "prompt_latex_bits": [
+        "\\int_{2}^{4} (2 x + 3) d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572551856",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572449111",
+      "kind": "example",
+      "title": "Example 5.9",
+      "position": 5,
+      "nearest_heading": "Net Signed Area",
+      "prompt_text": "Finding the Net Signed Area Find the net signed area between the curve of the function $f (x) = 2 x$ and the x -axis over the interval $\\left[\\right. \u22123 , 3 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = 2 x",
+        "\\left[\\right. \u22123 , 3 \\left]\\right. .",
+        "A_{1} - A_{2} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572449111",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572338454",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.9",
+      "position": 6,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Find the net signed area of $f (x) = x - 2$ over the interval $\\left[\\right. 0 , 6 \\left]\\right. ,$ illustrated in the following image.",
+      "prompt_latex_bits": [
+        "f (x) = x - 2",
+        "\\left[\\right. 0 , 6 \\left]\\right. ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572338454",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572163843",
+      "kind": "example",
+      "title": "Example 5.10",
+      "position": 7,
+      "nearest_heading": "Definition",
+      "prompt_text": "Finding the Total Area Find the total area between $f (x) = x - 2$ and the x -axis over the interval $\\left[\\right. 0 , 6 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = x - 2",
+        "\\left[\\right. 0 , 6 \\left]\\right. ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572163843",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572621667",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.10",
+      "position": 8,
+      "nearest_heading": "Finding the Total Area",
+      "prompt_text": "Find the total area between the function $f (x) = 2 x$ and the x -axis over the interval $\\left[\\right. \u22123 , 3 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = 2 x",
+        "\\left[\\right. \u22123 , 3 \\left]\\right. ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572621667",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572274820",
+      "kind": "example",
+      "title": "Example 5.11",
+      "position": 9,
+      "nearest_heading": "Rule: Properties of the Definite Integral",
+      "prompt_text": "Using the Properties of the Definite Integral Use the properties of the definite integral to express the definite integral of $f (x) = \u22123 x^{3} + 2 x + 2$ over the interval $\\left[\\right. \u22122 , 1 \\left]\\right.$ as the sum of three definite integrals.",
+      "prompt_latex_bits": [
+        "f (x) = \u22123 x^{3} + 2 x + 2",
+        "\\left[\\right. \u22122 , 1 \\left]\\right."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572274820",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572307259",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.11",
+      "position": 10,
+      "nearest_heading": "Using the Properties of the Definite Integral",
+      "prompt_text": "Use the properties of the definite integral to express the definite integral of $f (x) = 6 x^{3} - 4 x^{2} + 2 x - 3$ over the interval $\\left[\\right. 1 , 3 \\left]\\right.$ as the sum of four definite integrals.",
+      "prompt_latex_bits": [
+        "f (x) = 6 x^{3} - 4 x^{2} + 2 x - 3",
+        "\\left[\\right. 1 , 3 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572307259",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572098842",
+      "kind": "example",
+      "title": "Example 5.12",
+      "position": 11,
+      "nearest_heading": "Using the Properties of the Definite Integral",
+      "prompt_text": "Using the Properties of the Definite Integral If it is known that $\\int_{0}^{8} f (x) d x = 10$ and $\\int_{0}^{5} f (x) d x = 5 ,$ find the value of $\\int_{5}^{8} f (x) d x .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{8} f (x) d x = 10",
+        "\\int_{0}^{5} f (x) d x = 5 ,",
+        "\\int_{5}^{8} f (x) d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170572098842",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572500594",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.12",
+      "position": 12,
+      "nearest_heading": "Using the Properties of the Definite Integral",
+      "prompt_text": "If it is known that $\\int_{1}^{5} f (x) d x = \u22123$ and $\\int_{2}^{5} f (x) d x = 4 ,$ find the value of $\\int_{1}^{2} f (x) d x .$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{5} f (x) d x = \u22123",
+        "\\int_{2}^{5} f (x) d x = 4 ,",
+        "\\int_{1}^{2} f (x) d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572500594",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571769594",
+      "kind": "example",
+      "title": "Example 5.13",
+      "position": 13,
+      "nearest_heading": "Comparison Theorem",
+      "prompt_text": "Comparing Two Functions over a Given Interval Compare $f (x) = \\sqrt{1 + x^{2}}$ and $g (x) = \\sqrt{1 + x}$ over the interval $\\left[\\right. 0 , 1 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = \\sqrt{1 + x^{2}}",
+        "g (x) = \\sqrt{1 + x}",
+        "\\left[\\right. 0 , 1 \\left]\\right. ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571769594",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571712593",
+      "kind": "example",
+      "title": "Example 5.14",
+      "position": 14,
+      "nearest_heading": "Definition",
+      "prompt_text": "Finding the Average Value of a Linear Function Find the average value of $f (x) = x + 1$ over the interval $\\left[\\right. 0 , 5 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = x + 1",
+        "\\left[\\right. 0 , 5 \\left]\\right. ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571712593",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571678845",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.13",
+      "position": 15,
+      "nearest_heading": "Finding the Average Value of a Linear Function",
+      "prompt_text": "Find the average value of $f (x) = 6 - 2 x$ over the interval $\\left[\\right. 0 , 3 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = 6 - 2 x",
+        "\\left[\\right. 0 , 3 \\left]\\right. ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571678845",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571539137",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "60 . $\\lim_{n \\to \\infty} \\sum_{i = 1}^{n} \\left(\\right. x_{i}^{\\star} \\left.\\right) \\Delta x$ over $\\left[\\right. 1 , 3 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\lim_{n \\to \\infty} \\sum_{i = 1}^{n} \\left(\\right. x_{i}^{\\star} \\left.\\right) \\Delta x",
+        "\\left[\\right. 1 , 3 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571539137",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571543213",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "61 . $\\lim_{n \\to \\infty} \\sum_{i = 1}^{n} \\left(\\right. 5 \\left(\\right. x_{i}^{\\star} \\left.\\right)^{2} - 3 \\left(\\right. x_{i}^{\\star} \\left.\\right)^{3} \\left.\\right) \\Delta x$ over $\\left[\\right. 0 , 2 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\lim_{n \\to \\infty} \\sum_{i = 1}^{n} \\left(\\right. 5 \\left(\\right. x_{i}^{\\star} \\left.\\right)^{2} - 3 \\left(\\right. x_{i}^{\\star} \\left.\\right)^{3} \\left.\\right) \\Delta x",
+        "\\left[\\right. 0 , 2 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571543213",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572456418",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "62 . $\\lim_{n \\to \\infty} \\sum_{i = 1}^{n} \\sin^{2} \\left(\\right. 2 \\pi x_{i}^{\\star} \\left.\\right) \\Delta x$ over $\\left[\\right. 0 , 1 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\lim_{n \\to \\infty} \\sum_{i = 1}^{n} \\sin^{2} \\left(\\right. 2 \\pi x_{i}^{\\star} \\left.\\right) \\Delta x",
+        "\\left[\\right. 0 , 1 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572456418",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571580956",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "63 . $\\lim_{n \\to \\infty} \\sum_{i = 1}^{n} \\cos^{2} \\left(\\right. 2 \\pi x_{i}^{\\star} \\left.\\right) \\Delta x$ over $\\left[\\right. 0 , 1 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\lim_{n \\to \\infty} \\sum_{i = 1}^{n} \\cos^{2} \\left(\\right. 2 \\pi x_{i}^{\\star} \\left.\\right) \\Delta x",
+        "\\left[\\right. 0 , 1 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571580956",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572386105",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "64 . $L_{n} = \\frac{1}{n} \\sum_{i = 1}^{n} \\frac{i - 1}{n}$",
+      "prompt_latex_bits": [
+        "L_{n} = \\frac{1}{n} \\sum_{i = 1}^{n} \\frac{i - 1}{n}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572386105",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572386182",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "65 . $R_{n} = \\frac{1}{n} \\sum_{i = 1}^{n} \\frac{i}{n}$",
+      "prompt_latex_bits": [
+        "R_{n} = \\frac{1}{n} \\sum_{i = 1}^{n} \\frac{i}{n}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572386182",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572643235",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "66 . $L_{n} = \\frac{2}{n} \\sum_{i = 1}^{n} \\left(\\right. 1 + 2 \\frac{i - 1}{n} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "L_{n} = \\frac{2}{n} \\sum_{i = 1}^{n} \\left(\\right. 1 + 2 \\frac{i - 1}{n} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572643235",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572373702",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "67 . $R_{n} = \\frac{3}{n} \\sum_{i = 1}^{n} \\left(\\right. 3 + 3 \\frac{i}{n} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "R_{n} = \\frac{3}{n} \\sum_{i = 1}^{n} \\left(\\right. 3 + 3 \\frac{i}{n} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572373702",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571710668",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "68 . $L_{n} = \\frac{2 \\pi}{n} \\sum_{i = 1}^{n} 2 \\pi \\frac{i - 1}{n} \\cos \\left(\\right. 2 \\pi \\frac{i - 1}{n} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "L_{n} = \\frac{2 \\pi}{n} \\sum_{i = 1}^{n} 2 \\pi \\frac{i - 1}{n} \\cos \\left(\\right. 2 \\pi \\frac{i - 1}{n} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571710668",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572399034",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "69 . $R_{n} = \\frac{1}{n} \\sum_{i = 1}^{n} \\left(\\right. 1 + \\frac{i}{n} \\left.\\right) \\log \\left(\\right. \\left(\\right. 1 + \\frac{i}{n} \\left.\\right)^{2} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "R_{n} = \\frac{1}{n} \\sum_{i = 1}^{n} \\left(\\right. 1 + \\frac{i}{n} \\left.\\right) \\log \\left(\\right. \\left(\\right. 1 + \\frac{i}{n} \\left.\\right)^{2} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572399034",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572168780",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "70 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572168780",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572629207",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "71 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572629207",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571689720",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "72 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571689720",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571689784",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "73 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571689784",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572378988",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "74 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572378988",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572379047",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "75 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572379047",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571571952",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "76 . $\\int_{0}^{3} (3 - x) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{3} (3 - x) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571571952",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571572008",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "77 . $\\int_{2}^{3} (3 - x) d x$",
+      "prompt_latex_bits": [
+        "\\int_{2}^{3} (3 - x) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571572008",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571777882",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "78 . $\\int_{\u22123}^{3} \\left(\\right. 3 - \\left|\\right. x \\left|\\right. \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{\u22123}^{3} \\left(\\right. 3 - \\left|\\right. x \\left|\\right. \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571777882",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571777935",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "79 . $\\int_{0}^{6} \\left(\\right. 3 - \\left|\\right. x - 3 \\left|\\right. \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{6} \\left(\\right. 3 - \\left|\\right. x - 3 \\left|\\right. \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571777935",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572569977",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "80 . $\\int_{\u22122}^{2} \\sqrt{4 - x^{2}} d x$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{2} \\sqrt{4 - x^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572569977",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572309994",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "81 . $\\int_{1}^{5} \\sqrt{4 - (x - 3)^{2}} d x$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{5} \\sqrt{4 - (x - 3)^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572309994",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571613706",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "82 . $\\int_{0}^{12} \\sqrt{36 - (x - 6)^{2}} d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{12} \\sqrt{36 - (x - 6)^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571613706",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571613789",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "83 . $\\int_{\u22122}^{3} \\left(\\right. 3 - \\left|\\right. x \\left|\\right. \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{3} \\left(\\right. 3 - \\left|\\right. x \\left|\\right. \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571613789",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572347038",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "84 . $\\left{\\right. (0 , 0) , (2 , 1) , (4 , 3) , (5 , 0) , (6 , 0) , (8 , 3) \\left.\\right}$ over $\\left[\\right. 0 , 8 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\left{\\right. (0 , 0) , (2 , 1) , (4 , 3) , (5 , 0) , (6 , 0) , (8 , 3) \\left.\\right}",
+        "\\left[\\right. 0 , 8 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572347038",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572329986",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "85 . $\\left{\\right. (0 , 2) , (1 , 0) , (3 , 5) , (5 , 5) , (6 , 2) , (8 , 0) \\left.\\right}$ over $\\left[\\right. 0 , 8 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\left{\\right. (0 , 2) , (1 , 0) , (3 , 5) , (5 , 5) , (6 , 2) , (8 , 0) \\left.\\right}",
+        "\\left[\\right. 0 , 8 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572329986",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572434956",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "86 . $\\left{\\right. (\u22124 , \u22124) , (\u22122 , 0) , (0 , \u22122) , (3 , 3) , (4 , 3) \\left.\\right}$ over $\\left[\\right. \u22124 , 4 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\left{\\right. (\u22124 , \u22124) , (\u22122 , 0) , (0 , \u22122) , (3 , 3) , (4 , 3) \\left.\\right}",
+        "\\left[\\right. \u22124 , 4 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572434956",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572627110",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "87 . $\\left{\\right. (\u22124 , 0) , (\u22122 , 2) , (0 , 0) , (1 , 2) , (3 , 2) , (4 , 0) \\left.\\right}$ over $\\left[\\right. \u22124 , 4 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\left{\\right. (\u22124 , 0) , (\u22122 , 2) , (0 , 0) , (1 , 2) , (3 , 2) , (4 , 0) \\left.\\right}",
+        "\\left[\\right. \u22124 , 4 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572627110",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571712837",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "88 . $\\int_{0}^{4} \\left(\\right. f (x) + g (x) \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{4} \\left(\\right. f (x) + g (x) \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571712837",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572129829",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "89 . $\\int_{2}^{4} \\left(\\right. f (x) + g (x) \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{2}^{4} \\left(\\right. f (x) + g (x) \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572129829",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572330196",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "90 . $\\int_{0}^{2} \\left(\\right. f (x) - g (x) \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{2} \\left(\\right. f (x) - g (x) \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572330196",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572129076",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "91 . $\\int_{2}^{4} \\left(\\right. f (x) - g (x) \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{2}^{4} \\left(\\right. f (x) - g (x) \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572129076",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572223527",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "92 . $\\int_{0}^{2} \\left(\\right. 3 f (x) - 4 g (x) \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{2} \\left(\\right. 3 f (x) - 4 g (x) \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572223527",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572309789",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "93 . $\\int_{2}^{4} \\left(\\right. 4 f (x) - 3 g (x) \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{2}^{4} \\left(\\right. 4 f (x) - 3 g (x) \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572309789",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571629002",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "94 . $\\int_{\u2212 \\pi}^{\\pi} \\frac{\\sin t}{1 + t^{2}} d t$ $( H i n t : \\sin (\u2212 t) = \u2212 \\sin (t) )$",
+      "prompt_latex_bits": [
+        "\\int_{\u2212 \\pi}^{\\pi} \\frac{\\sin t}{1 + t^{2}} d t",
+        "( H i n t : \\sin (\u2212 t) = \u2212 \\sin (t) )"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571629002",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572582635",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "95 . $\\int_{\u2212 \\sqrt{\\pi}}^{\\sqrt{\\pi}} \\frac{t}{1 + \\cos t} d t$",
+      "prompt_latex_bits": [
+        "\\int_{\u2212 \\sqrt{\\pi}}^{\\sqrt{\\pi}} \\frac{t}{1 + \\cos t} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572582635",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572351517",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "96 . $\\int_{1}^{3} (2 - x) d x$ ( Hint: Look at the graph of f .)",
+      "prompt_latex_bits": [
+        "\\int_{1}^{3} (2 - x) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572351517",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572351582",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "97 . $\\int_{2}^{4} (x - 3)^{3} d x$ ( Hint: Look at the graph of f .)",
+      "prompt_latex_bits": [
+        "\\int_{2}^{4} (x - 3)^{3} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572351582",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571610322",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "98 . $\\int_{0}^{1} \\left(\\right. 1 + x + x^{2} + x^{3} \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} \\left(\\right. 1 + x + x^{2} + x^{3} \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571610322",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572448446",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "99 . $\\int_{0}^{1} \\left(\\right. 1 - x + x^{2} - x^{3} \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} \\left(\\right. 1 - x + x^{2} - x^{3} \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572448446",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572368465",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "100 . $\\int_{0}^{1} (1 - x)^{2} d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} (1 - x)^{2} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572368465",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572306379",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "101 . $\\int_{0}^{1} (1 - 2 x)^{3} d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} (1 - 2 x)^{3} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572306379",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572503292",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "102 . $\\int_{0}^{1} \\left(\\right. 6 x - \\frac{4}{3} x^{2} \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} \\left(\\right. 6 x - \\frac{4}{3} x^{2} \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572503292",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572558040",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "103 . $\\int_{0}^{1} \\left(\\right. 7 - 5 x^{3} \\left.\\right) d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} \\left(\\right. 7 - 5 x^{3} \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572558040",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572558115",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "104 . Show that $\\int_{0}^{3} \\left(\\right. x^{2} - 6 x + 9 \\left.\\right) d x \\geq 0 .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{3} \\left(\\right. x^{2} - 6 x + 9 \\left.\\right) d x \\geq 0 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572558115",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571813996",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "105 . Show that $\\int_{\u22122}^{3} (x - 3) (x + 2) d x \\leq 0 .$",
+      "prompt_latex_bits": [
+        "\\int_{\u22122}^{3} (x - 3) (x + 2) d x \\leq 0 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571813996",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572307650",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "106 . Show that $\\int_{0}^{1} \\sqrt{1 + x^{3}} d x \\leq \\int_{0}^{1} \\sqrt{1 + x^{2}} d x .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} \\sqrt{1 + x^{3}} d x \\leq \\int_{0}^{1} \\sqrt{1 + x^{2}} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572307650",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572480470",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "107 . Show that $\\int_{1}^{2} \\sqrt{1 + x} d x \\leq \\int_{1}^{2} \\sqrt{1 + x^{2}} d x .$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{2} \\sqrt{1 + x} d x \\leq \\int_{1}^{2} \\sqrt{1 + x^{2}} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572480470",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572218470",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "108 . Show that $\\int_{0}^{\\pi / 2} \\sin t d t \\geq \\frac{\\pi}{4} .$ $( H i n t : \\sin t \\geq \\frac{2 t}{\\pi}$ over $\\left[\\right. 0 , \\frac{\\pi}{2} \\left]\\right. )$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi / 2} \\sin t d t \\geq \\frac{\\pi}{4} .",
+        "( H i n t : \\sin t \\geq \\frac{2 t}{\\pi}",
+        "\\left[\\right. 0 , \\frac{\\pi}{2} \\left]\\right. )"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572218470",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571712388",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "109 . Show that $\\int_{\u2212 \\pi / 4}^{\\pi / 4} \\cos t d t \\geq \\pi \\sqrt{2} / 4 .$",
+      "prompt_latex_bits": [
+        "\\int_{\u2212 \\pi / 4}^{\\pi / 4} \\cos t d t \\geq \\pi \\sqrt{2} / 4 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571712388",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571629714",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "110 . $f (x) = x^{2} , a = \u22121 , b = 1$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} , a = \u22121 , b = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571629714",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571542810",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 67,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "111 . $f (x) = x^{5} , a = \u22121 , b = 1$",
+      "prompt_latex_bits": [
+        "f (x) = x^{5} , a = \u22121 , b = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571542810",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571542882",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 68,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "112 . $f (x) = \\sqrt{4 - x^{2}} , a = 0 , b = 2$",
+      "prompt_latex_bits": [
+        "f (x) = \\sqrt{4 - x^{2}} , a = 0 , b = 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571542882",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571624145",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 69,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "113 . $f (x) = \\left(\\right. 3 - \\left|\\right. x \\left|\\right. \\left.\\right) , a = \u22123 , b = 3$",
+      "prompt_latex_bits": [
+        "f (x) = \\left(\\right. 3 - \\left|\\right. x \\left|\\right. \\left.\\right) , a = \u22123 , b = 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571624145",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571698194",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 70,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "114 . $f (x) = \\sin x , a = 0 , b = 2 \\pi$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin x , a = 0 , b = 2 \\pi"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571698194",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572309560",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 71,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "115 . $f (x) = \\cos x , a = 0 , b = 2 \\pi$",
+      "prompt_latex_bits": [
+        "f (x) = \\cos x , a = 0 , b = 2 \\pi"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572309560",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572309667",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 72,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "116 . [T] $y = \\ln (x)$ over the interval $\\left[\\right. 1 , 4 \\left]\\right. ;$ the exact solution is $\\frac{\\ln (256)}{3} - 3 .$",
+      "prompt_latex_bits": [
+        "y = \\ln (x)",
+        "\\left[\\right. 1 , 4 \\left]\\right. ;",
+        "\\frac{\\ln (256)}{3} - 3 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572309667",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572618038",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 73,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "117 . [T] $y = e^{x / 2}$ over the interval $\\left[\\right. 0 , 1 \\left]\\right. ;$ the exact solution is $2 \\left(\\right. \\sqrt{e} - 1 \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "y = e^{x / 2}",
+        "\\left[\\right. 0 , 1 \\left]\\right. ;",
+        "2 \\left(\\right. \\sqrt{e} - 1 \\left.\\right) ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572618038",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572554308",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 74,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "118 . [T] $y = \\tan x$ over the interval $\\left[\\right. 0 , \\frac{\\pi}{4} \\left]\\right. ;$ the exact solution is $\\frac{2 \\ln (2)}{\\pi} .$",
+      "prompt_latex_bits": [
+        "y = \\tan x",
+        "\\left[\\right. 0 , \\frac{\\pi}{4} \\left]\\right. ;",
+        "\\frac{2 \\ln (2)}{\\pi} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572554308",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571612043",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 75,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "119 . [T] $y = \\frac{x + 1}{\\sqrt{4 - x^{2}}}$ over the interval $\\left[\\right. \u22121 , 1 \\left]\\right. ;$ the exact solution is $\\frac{\\pi}{6} .$",
+      "prompt_latex_bits": [
+        "y = \\frac{x + 1}{\\sqrt{4 - x^{2}}}",
+        "\\left[\\right. \u22121 , 1 \\left]\\right. ;",
+        "\\frac{\\pi}{6} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571612043",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571817344",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 76,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "120 . [T] $y = x^{2} - 4$ over the interval $\\left[\\right. 0 , 2 \\left]\\right. ;$ the exact solution is $- \\frac{8}{3} .$",
+      "prompt_latex_bits": [
+        "y = x^{2} - 4",
+        "\\left[\\right. 0 , 2 \\left]\\right. ;",
+        "- \\frac{8}{3} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571817344",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572292381",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 77,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "121 . [T] $y = x e^{x^{2}}$ over the interval $\\left[\\right. 0 , 2 \\left]\\right. ;$ the exact solution is $\\frac{1}{4} \\left(\\right. e^{4} - 1 \\left.\\right) .$",
+      "prompt_latex_bits": [
+        "y = x e^{x^{2}}",
+        "\\left[\\right. 0 , 2 \\left]\\right. ;",
+        "\\frac{1}{4} \\left(\\right. e^{4} - 1 \\left.\\right) ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572292381",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572373579",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 78,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "122 . [T] $y = \\left(\\right. \\frac{1}{2} \\left.\\right)^{x}$ over the interval $\\left[\\right. 0 , 4 \\left]\\right. ;$ the exact solution is $\\frac{15}{64 \\ln (2)} .$",
+      "prompt_latex_bits": [
+        "y = \\left(\\right. \\frac{1}{2} \\left.\\right)^{x}",
+        "\\left[\\right. 0 , 4 \\left]\\right. ;",
+        "\\frac{15}{64 \\ln (2)} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572373579",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572380129",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 79,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "123 . [T] $y = x \\sin \\left(\\right. x^{2} \\left.\\right)$ over the interval $\\left[\\right. \u2212 \\pi , 0 \\left]\\right. ;$ the exact solution is $\\frac{\\cos \\left(\\right. \\pi^{2} \\left.\\right) - 1}{2 \\pi} .$",
+      "prompt_latex_bits": [
+        "y = x \\sin \\left(\\right. x^{2} \\left.\\right)",
+        "\\left[\\right. \u2212 \\pi , 0 \\left]\\right. ;",
+        "\\frac{\\cos \\left(\\right. \\pi^{2} \\left.\\right) - 1}{2 \\pi} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572380129",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572173066",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 80,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "124 . Suppose that $A = \\int_{0}^{2 \\pi} \\sin^{2} t d t$ and $B = \\int_{0}^{2 \\pi} \\cos^{2} t d t .$ Show that $A + B = 2 \\pi$ and $A = B .$",
+      "prompt_latex_bits": [
+        "A = \\int_{0}^{2 \\pi} \\sin^{2} t d t",
+        "B = \\int_{0}^{2 \\pi} \\cos^{2} t d t .",
+        "A + B = 2 \\pi",
+        "A = B ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572173066",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572572942",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 81,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "125 . Suppose that $A = \\int_{\u2212 \\pi / 4}^{\\pi / 4} \\sec^{2} t d t = \\pi$ and $B = \\int_{\u2212 \\pi / 4}^{\\pi / 4} \\tan^{2} t d t .$ Show that $A - B = \\frac{\\pi}{2} .$",
+      "prompt_latex_bits": [
+        "A = \\int_{\u2212 \\pi / 4}^{\\pi / 4} \\sec^{2} t d t = \\pi",
+        "B = \\int_{\u2212 \\pi / 4}^{\\pi / 4} \\tan^{2} t d t .",
+        "A - B = \\frac{\\pi}{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572572942",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571614677",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 82,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "126 . Show that the average value of $\\sin^{2} t$ over $\\left[\\right. 0 , 2 \\pi \\left]\\right.$ is equal to 1/2 Without further calculation, determine whether the average value of $\\sin^{2} t$ over $\\left[\\right. 0 , \\pi \\left]\\right.$ is also equal to 1/2.",
+      "prompt_latex_bits": [
+        "\\sin^{2} t",
+        "\\left[\\right. 0 , 2 \\pi \\left]\\right.",
+        "\\sin^{2} t",
+        "\\left[\\right. 0 , \\pi \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571614677",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572371990",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 83,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "127 . Show that the average value of $\\cos^{2} t$ over $\\left[\\right. 0 , 2 \\pi \\left]\\right.$ is equal to $1 / 2 .$ Without further calculation, determine whether the average value of $\\cos^{2} (t)$ over $\\left[\\right. 0 , \\pi \\left]\\right.$ is also equal to $1 / 2 .$",
+      "prompt_latex_bits": [
+        "\\cos^{2} t",
+        "\\left[\\right. 0 , 2 \\pi \\left]\\right.",
+        "1 / 2 .",
+        "\\cos^{2} (t)",
+        "\\left[\\right. 0 , \\pi \\left]\\right.",
+        "1 / 2 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572371990",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572560194",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 84,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "128 . Explain why the graphs of a quadratic function (parabola) $p (x)$ and a linear function $\u2113 (x)$ can intersect in at most two points. Suppose that $p (a) = \u2113 (a)$ and $p (b) = \u2113 (b) ,$ and that $\\int_{a}^{b} p (t) d t > \\int_{a}^{b} \u2113 (t) d t .$ Explain why $\\int_{c}^{d} p (t) > \\int_{c}^{d} \u2113 (t) d t$ whenever $a \\leq c < d \\leq b .$",
+      "prompt_latex_bits": [
+        "p (x)",
+        "\u2113 (x)",
+        "p (a) = \u2113 (a)",
+        "p (b) = \u2113 (b) ,",
+        "\\int_{a}^{b} p (t) d t > \\int_{a}^{b} \u2113 (t) d t .",
+        "\\int_{c}^{d} p (t) > \\int_{c}^{d} \u2113 (t) d t",
+        "a \\leq c < d \\leq b ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572560194",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572332686",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 85,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "129 . Suppose that parabola $p (x) = a x^{2} + b x + c$ opens downward $(a < 0)$ and has a vertex of $y = \\frac{\u2212 b}{2 a} > 0 .$ For which interval $\\left[\\right. A , B \\left]\\right.$ is $\\int_{A}^{B} \\left(\\right. a x^{2} + b x + c \\left.\\right) d x$ as large as possible?",
+      "prompt_latex_bits": [
+        "p (x) = a x^{2} + b x + c",
+        "(a < 0)",
+        "y = \\frac{\u2212 b}{2 a} > 0 .",
+        "\\left[\\right. A , B \\left]\\right.",
+        "\\int_{A}^{B} \\left(\\right. a x^{2} + b x + c \\left.\\right) d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572332686",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572274741",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 86,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "130 . Suppose $\\left[\\right. a , b \\left]\\right.$ can be subdivided into subintervals $a = a_{0} < a_{1} < a_{2} < \u22ef < a_{N} = b$ such that either $f \\geq 0$ over $\\left[\\right. a_{i - 1} , a_{i} \\left]\\right.$ or $f \\leq 0$ over $\\left[\\right. a_{i - 1} , a_{i} \\left]\\right. .$ Set $A_{i} = \\int_{a_{i - 1}}^{a_{i}} f (t) d t .$ Explain why $\\int_{a}^{b} f (t) d t = A_{1} + A_{2} + \u22ef + A_{N} .$ Then, explain why $\\left|\\right. \\int_{a}^{b} f (t) d t \\left|\\right. \\leq \\int_{a}^{b} \\left|\\right. f (t) \\left|\\right. d t .$",
+      "prompt_latex_bits": [
+        "\\left[\\right. a , b \\left]\\right.",
+        "a = a_{0} < a_{1} < a_{2} < \u22ef < a_{N} = b",
+        "f \\geq 0",
+        "\\left[\\right. a_{i - 1} , a_{i} \\left]\\right.",
+        "f \\leq 0",
+        "\\left[\\right. a_{i - 1} , a_{i} \\left]\\right. .",
+        "A_{i} = \\int_{a_{i - 1}}^{a_{i}} f (t) d t .",
+        "\\int_{a}^{b} f (t) d t = A_{1} + A_{2} + \u22ef + A_{N} .",
+        "\\left|\\right. \\int_{a}^{b} f (t) d t \\left|\\right. \\leq \\int_{a}^{b} \\left|\\right. f (t) \\left|\\right. d t ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572274741",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572330164",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 87,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "131 . Suppose f and g are continuous functions such that $\\int_{c}^{d} f (t) d t \\leq \\int_{c}^{d} g (t) d t$ for every subinterval $\\left[\\right. c , d \\left]\\right.$ of $\\left[\\right. a , b \\left]\\right. .$ Explain why $f (x) \\leq g (x)$ for all values of x .",
+      "prompt_latex_bits": [
+        "\\int_{c}^{d} f (t) d t \\leq \\int_{c}^{d} g (t) d t",
+        "\\left[\\right. c , d \\left]\\right.",
+        "\\left[\\right. a , b \\left]\\right. .",
+        "f (x) \\leq g (x)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572330164",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572557927",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 88,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "132 . Suppose the average value of f over $\\left[\\right. a , b \\left]\\right.$ is 1 and the average value of f over $\\left[\\right. b , c \\left]\\right.$ is 1 where $a < c < b .$ Show that the average value of f over $\\left[\\right. a , c \\left]\\right.$ is also 1.",
+      "prompt_latex_bits": [
+        "\\left[\\right. a , b \\left]\\right.",
+        "\\left[\\right. b , c \\left]\\right.",
+        "a < c < b .",
+        "\\left[\\right. a , c \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572557927",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572370993",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 89,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "133 . Suppose that $\\left[\\right. a , b \\left]\\right.$ can be partitioned. taking $a = a_{0} < a_{1} < \u22ef < a_{N} = b$ such that the average value of f over each subinterval $\\left[\\right. a_{i - 1} , a_{i} \\left]\\right. = 1$ is equal to 1 for each $i = 1 ,\\ldots, N .$ Explain why the average value of f over $\\left[\\right. a , b \\left]\\right.$ is also equal to 1.",
+      "prompt_latex_bits": [
+        "\\left[\\right. a , b \\left]\\right.",
+        "a = a_{0} < a_{1} < \u22ef < a_{N} = b",
+        "\\left[\\right. a_{i - 1} , a_{i} \\left]\\right. = 1",
+        "i = 1 ,\\ldots, N .",
+        "\\left[\\right. a , b \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572370993",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572353398",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 90,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "134 . Suppose that for each i such that $1 \\leq i \\leq N$ one has $\\int_{i - 1}^{i} f (t) d t = i .$ Show that $\\int_{0}^{N} f (t) d t = \\frac{N (N + 1)}{2} .$",
+      "prompt_latex_bits": [
+        "1 \\leq i \\leq N",
+        "\\int_{i - 1}^{i} f (t) d t = i .",
+        "\\int_{0}^{N} f (t) d t = \\frac{N (N + 1)}{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572353398",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572390661",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 91,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "135 . Suppose that for each i such that $1 \\leq i \\leq N$ one has $\\int_{i - 1}^{i} f (t) d t = i^{2} .$ Show that $\\int_{0}^{N} f (t) d t = \\frac{N (N + 1) (2 N + 1)}{6} .$",
+      "prompt_latex_bits": [
+        "1 \\leq i \\leq N",
+        "\\int_{i - 1}^{i} f (t) d t = i^{2} .",
+        "\\int_{0}^{N} f (t) d t = \\frac{N (N + 1) (2 N + 1)}{6} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572390661",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572447510",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 92,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "136 . [T] Compute the left and right Riemann sums L 10 and R 10 and their average $\\frac{L_{10} + R_{10}}{2}$ for $f (t) = t^{2}$ over $\\left[\\right. 0 , 1 \\left]\\right. .$ Given that $\\int_{0}^{1} t^{2} d t = 0. \\overset{\u2013}{33} ,$ to how many decimal places is $\\frac{L_{10} + R_{10}}{2}$ accurate?",
+      "prompt_latex_bits": [
+        "\\frac{L_{10} + R_{10}}{2}",
+        "f (t) = t^{2}",
+        "\\left[\\right. 0 , 1 \\left]\\right. .",
+        "\\int_{0}^{1} t^{2} d t = 0. \\overset{\u2013}{33} ,",
+        "\\frac{L_{10} + R_{10}}{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572447510",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572370440",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 93,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "137 . [T] Compute the left and right Riemann sums, L 10 and R 10 , and their average $\\frac{L_{10} + R_{10}}{2}$ for $f (t) = \\left(\\right. 4 - t^{2} \\left.\\right)$ over $\\left[\\right. 1 , 2 \\left]\\right. .$ Given that $\\int_{1}^{2} \\left(\\right. 4 - t^{2} \\left.\\right) d t = 1. \\overset{\u2013}{66} ,$ to how many decimal places is $\\frac{L_{10} + R_{10}}{2}$ accurate?",
+      "prompt_latex_bits": [
+        "\\frac{L_{10} + R_{10}}{2}",
+        "f (t) = \\left(\\right. 4 - t^{2} \\left.\\right)",
+        "\\left[\\right. 1 , 2 \\left]\\right. .",
+        "\\int_{1}^{2} \\left(\\right. 4 - t^{2} \\left.\\right) d t = 1. \\overset{\u2013}{66} ,",
+        "\\frac{L_{10} + R_{10}}{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572370440",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571543427",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 94,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "138 . If $\\int_{1}^{5} \\sqrt{1 + t^{4}} d t = 41.7133.. . ,$ what is $\\int_{1}^{5} \\sqrt{1 + u^{4}} d u ?$",
+      "prompt_latex_bits": [
+        "\\int_{1}^{5} \\sqrt{1 + t^{4}} d t = 41.7133.. . ,",
+        "\\int_{1}^{5} \\sqrt{1 + u^{4}} d u ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571543427",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572367459",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 95,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "139 . Estimate $\\int_{0}^{1} t d t$ using the left and right endpoint sums, each with a single rectangle. How does the average of these left and right endpoint sums compare with the actual value $\\int_{0}^{1} t d t ?$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} t d t",
+        "\\int_{0}^{1} t d t ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572367459",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571838062",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 96,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "140 . Estimate $\\int_{0}^{1} t d t$ by comparison with the area of a single rectangle with height equal to the value of t at the midpoint $t = \\frac{1}{2} .$ How does this midpoint estimate compare with the actual value $\\int_{0}^{1} t d t ?$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} t d t",
+        "t = \\frac{1}{2} .",
+        "\\int_{0}^{1} t d t ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571838062",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571838156",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 97,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "141 . From the graph of $\\sin \\left(\\right. 2 \\pi x \\left.\\right)$ shown: Explain why $\\int_{0}^{1} \\sin \\left(\\right. 2 \\pi t \\left.\\right) d t = 0 .$ Explain why, in general, $\\int_{a}^{a + 1} \\sin \\left(\\right. 2 \\pi t \\left.\\right) d t = 0$ for any value of a .",
+      "prompt_latex_bits": [
+        "\\sin \\left(\\right. 2 \\pi x \\left.\\right)",
+        "\\int_{0}^{1} \\sin \\left(\\right. 2 \\pi t \\left.\\right) d t = 0 .",
+        "\\int_{a}^{a + 1} \\sin \\left(\\right. 2 \\pi t \\left.\\right) d t = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571838156",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572643334",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 98,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "142 . If f is 1-periodic $\\left(\\right. f (t + 1) = f (t) \\left.\\right) ,$ odd, and integrable over $\\left[\\right. 0 , 1 \\left]\\right. ,$ is it always true that $\\int_{0}^{1} f (t) d t = 0 ?$",
+      "prompt_latex_bits": [
+        "\\left(\\right. f (t + 1) = f (t) \\left.\\right) ,",
+        "\\left[\\right. 0 , 1 \\left]\\right. ,",
+        "\\int_{0}^{1} f (t) d t = 0 ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572643334",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170572350688",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 99,
+      "nearest_heading": "Section 5.2 Exercises",
+      "prompt_text": "143 . If f is 1-periodic and $\\int_{0}^{1} f (t) d t = A ,$ is it necessarily true that $\\int_{a}^{1 + a} f (t) d t = A$ for all A ?",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} f (t) d t = A ,",
+        "\\int_{a}^{1 + a} f (t) d t = A"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170572350688",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:38.140654+00:00",
+  "stage": "1_inventory"
+}

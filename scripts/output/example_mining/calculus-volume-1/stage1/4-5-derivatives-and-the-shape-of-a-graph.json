@@ -1,0 +1,953 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "4-5-derivatives-and-the-shape-of-a-graph",
+  "title": "4.5 Derivatives and the Shape of a Graph",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/4-5-derivatives-and-the-shape-of-a-graph",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/4-5-derivatives-and-the-shape-of-a-graph.html",
+  "objectives": [
+    "4.5.1 Explain how the sign of the first derivative affects the shape of a function\u2019s graph.",
+    "4.5.2 State the first derivative test for critical points.",
+    "4.5.3 Use concavity and inflection points to explain how the sign of the second derivative affects the shape of a function\u2019s graph.",
+    "4.5.4 Explain the concavity test for a function over an open interval.",
+    "4.5.5 Explain the relationship between a function and its first and second derivatives.",
+    "4.5.6 State the second derivative test for local extrema."
+  ],
+  "headings": [
+    "4.5 Derivatives and the Shape of a Graph",
+    "Learning Objectives",
+    "The First Derivative Test",
+    "Theorem 4.9",
+    "Problem-Solving Strategy",
+    "Example 4.17",
+    "Checkpoint 4.16",
+    "Example 4.18",
+    "Checkpoint 4.17",
+    "Concavity and Points of Inflection",
+    "Definition",
+    "Theorem 4.10",
+    "Definition",
+    "Example 4.19",
+    "Checkpoint 4.18",
+    "The Second Derivative Test",
+    "Theorem 4.11",
+    "Example 4.20",
+    "Checkpoint 4.19",
+    "Section 4.5 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1165043423022",
+      "kind": "example",
+      "title": "Example 4.17",
+      "position": 1,
+      "nearest_heading": "Using the First Derivative Test",
+      "prompt_text": "Using the First Derivative Test to Find Local Extrema Use the first derivative test to find the location of all local extrema for $f (x) = x^{3} - 3 x^{2} - 9 x - 1 .$ Use a graphing utility to confirm your results.",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - 3 x^{2} - 9 x - 1 ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043423022",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043122322",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.16",
+      "position": 2,
+      "nearest_heading": "Using the First Derivative Test to Find Local Extrema",
+      "prompt_text": "Use the first derivative test to locate all local extrema for $f (x) = \u2212 x^{3} + \\frac{3}{2} x^{2} + 18 x .$",
+      "prompt_latex_bits": [
+        "f (x) = \u2212 x^{3} + \\frac{3}{2} x^{2} + 18 x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043122322",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043312782",
+      "kind": "example",
+      "title": "Example 4.18",
+      "position": 3,
+      "nearest_heading": "Using the First Derivative Test to Find Local Extrema",
+      "prompt_text": "Using the First Derivative Test Use the first derivative test to find the location of all local extrema for $f (x) = 5 x^{1 / 3} - x^{5 / 3} .$ Use a graphing utility to confirm your results.",
+      "prompt_latex_bits": [
+        "f (x) = 5 x^{1 / 3} - x^{5 / 3} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043312782",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043262496",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.17",
+      "position": 4,
+      "nearest_heading": "Using the First Derivative Test",
+      "prompt_text": "Use the first derivative test to find all local extrema for $f (x) = \\sqrt[3]{x - 1} .$",
+      "prompt_latex_bits": [
+        "f (x) = \\sqrt[3]{x - 1} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043262496",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042558993",
+      "kind": "example",
+      "title": "Example 4.19",
+      "position": 5,
+      "nearest_heading": "Definition",
+      "prompt_text": "Testing for Concavity For the function $f (x) = x^{3} - 6 x^{2} + 9 x + 30 ,$ determine all intervals where $f$ is concave up and all intervals where $f$ is concave down. List all inflection points for $f .$ Use a graphing utility to confirm your results.",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - 6 x^{2} + 9 x + 30 ,",
+        "f",
+        "f",
+        "f ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042558993",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043321424",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.18",
+      "position": 6,
+      "nearest_heading": "Testing for Concavity",
+      "prompt_text": "For $f (x) = \u2212 x^{3} + \\frac{3}{2} x^{2} + 18 x ,$ find all intervals where $f$ is concave up and all intervals where $f$ is concave down.",
+      "prompt_latex_bits": [
+        "f (x) = \u2212 x^{3} + \\frac{3}{2} x^{2} + 18 x ,",
+        "f",
+        "f"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043321424",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710827",
+      "kind": "example",
+      "title": "Example 4.20",
+      "position": 7,
+      "nearest_heading": "Second Derivative Test",
+      "prompt_text": "Using the Second Derivative Test Use the second derivative to find the location of all local extrema for $f (x) = x^{5} - 5 x^{3} .$",
+      "prompt_latex_bits": [
+        "f (x) = x^{5} - 5 x^{3} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042710827",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042373292",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.19",
+      "position": 8,
+      "nearest_heading": "Using the Second Derivative Test",
+      "prompt_text": "Consider the function $f (x) = x^{3} - \\left(\\right. \\frac{3}{2} \\left.\\right) x^{2} - 18 x .$ The points $c = 3 , \u22122$ satisfy $f^{'} (c) = 0 .$ Use the second derivative test to determine whether $f$ has a local maximum or local minimum at those points.",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - \\left(\\right. \\frac{3}{2} \\left.\\right) x^{2} - 18 x .",
+        "c = 3 , \u22122",
+        "f^{'} (c) = 0 .",
+        "f"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042373292",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043390976",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 9,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "194 . If $c$ is a critical point of $f (x) ,$ when is there no local maximum or minimum at $c ?$ Explain.",
+      "prompt_latex_bits": [
+        "c",
+        "f (x) ,",
+        "c ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043390976",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042474277",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 10,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "195 . For the function $y = x^{3} ,$ is $x = 0$ both an inflection point and a local maximum/minimum?",
+      "prompt_latex_bits": [
+        "y = x^{3} ,",
+        "x = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042474277",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043251844",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 11,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "196 . For the function $y = x^{3} ,$ is $x = 0$ an inflection point?",
+      "prompt_latex_bits": [
+        "y = x^{3} ,",
+        "x = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043251844",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043286677",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 12,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "197 . Is it possible for a point $c$ to be both an inflection point and a local extremum of a twice differentiable function?",
+      "prompt_latex_bits": [
+        "c"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043286677",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043348571",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 13,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "198 . Why do you need continuity for the first derivative test? Come up with an example.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043348571",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043348587",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 14,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "199 . Explain whether a concave-down function has to cross $y = 0$ for some value of $x .$",
+      "prompt_latex_bits": [
+        "y = 0",
+        "x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043348587",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043327512",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "200 . Explain whether a polynomial of degree $2$ can have an inflection point.",
+      "prompt_latex_bits": [
+        "2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043327512",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042970465",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "201 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042970465",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043428273",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "202 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043428273",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043395896",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "203 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043395896",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043281857",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "204 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043281857",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043183805",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "205 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043183805",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042373730",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "206 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042373730",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042373655",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "207 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042373655",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043323823",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "208 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043323823",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042331804",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "209 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042331804",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043108776",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "210 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043108776",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043395336",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "211 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043395336",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043312627",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "212 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043312627",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043431030",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "213 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043431030",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043348481",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "214 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043348481",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042364601",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "215 .",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042364601",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042708286",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "216 . $f (x) > 0 , f^{'} (x) > 0$ over $x > 1 , \u22123 < x < 0 , f^{'} (x) = 0$ over $0 < x < 1$",
+      "prompt_latex_bits": [
+        "f (x) > 0 , f^{'} (x) > 0",
+        "x > 1 , \u22123 < x < 0 , f^{'} (x) = 0",
+        "0 < x < 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042708286",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042364310",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "217 . $f^{'} (x) > 0$ over $x > 2 , \u22123 < x < \u22121 , f^{'} (x) < 0$ over $\u22121 < x < 2 , f^{''} (x) < 0$ for all $x$",
+      "prompt_latex_bits": [
+        "f^{'} (x) > 0",
+        "x > 2 , \u22123 < x < \u22121 , f^{'} (x) < 0",
+        "\u22121 < x < 2 , f^{''} (x) < 0",
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042364310",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042705932",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "218 . $f^{''} (x) < 0$ over $\u22121 < x < 1 , f^{''} (x) > 0 , \u22123 < x < \u22121 , 1 < x < 3 ,$ local maximum at $x = 0 ,$ local minima at $x = \\pm 2$",
+      "prompt_latex_bits": [
+        "f^{''} (x) < 0",
+        "\u22121 < x < 1 , f^{''} (x) > 0 , \u22123 < x < \u22121 , 1 < x < 3 ,",
+        "x = 0 ,",
+        "x = \\pm 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042705932",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042333449",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "219 . There is a local maximum at $x = 2 ,$ local minimum at $x = 1 ,$ and the graph is neither concave up nor concave down.",
+      "prompt_latex_bits": [
+        "x = 2 ,",
+        "x = 1 ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042333449",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042418832",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "220 . There are local maxima at $x = \\pm 1 ,$ the function is concave up for all $x ,$ and the function remains positive for all $x .$",
+      "prompt_latex_bits": [
+        "x = \\pm 1 ,",
+        "x ,",
+        "x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042418832",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042709552",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "221 . $f (x) = \\sin x + \\sin^{3} x$ over $\u2212 \\pi < x < \\pi$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin x + \\sin^{3} x",
+        "\u2212 \\pi < x < \\pi"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042709552",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043327552",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "222 . $f (x) = x^{2} + \\cos x$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} + \\cos x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043327552",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042705948",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "223 . $f (x) = x^{3} - 4 x^{2} + x + 2$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - 4 x^{2} + x + 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042705948",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043253476",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "224 . $f (x) = x^{2} - 6 x$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} - 6 x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043253476",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043430810",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "225 . $f (x) = x^{3} - 6 x^{2}$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} - 6 x^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043430810",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042369583",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "226 . $f (x) = x^{4} - 6 x^{3}$",
+      "prompt_latex_bits": [
+        "f (x) = x^{4} - 6 x^{3}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042369583",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710974",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "227 . $f (x) = x^{11} - 6 x^{10}$",
+      "prompt_latex_bits": [
+        "f (x) = x^{11} - 6 x^{10}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710974",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042327371",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "228 . $f (x) = x + x^{2} - x^{3}$",
+      "prompt_latex_bits": [
+        "f (x) = x + x^{2} - x^{3}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042327371",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043424018",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "229 . $f (x) = x^{2} + x + 1$",
+      "prompt_latex_bits": [
+        "f (x) = x^{2} + x + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043424018",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710942",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "230 . $f (x) = x^{3} + x^{4}$",
+      "prompt_latex_bits": [
+        "f (x) = x^{3} + x^{4}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710942",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043430751",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "231 . [T] $f (x) = \\sin \\left(\\right. \\pi x \\left.\\right) - \\cos \\left(\\right. \\pi x \\left.\\right)$ over $x = \\left[\\right. \u22121 , 1 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin \\left(\\right. \\pi x \\left.\\right) - \\cos \\left(\\right. \\pi x \\left.\\right)",
+        "x = \\left[\\right. \u22121 , 1 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043430751",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043174067",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "232 . [T] $f (x) = x + \\sin (2 x)$ over $x = \\left[\\right. - \\frac{\\pi}{2} , \\frac{\\pi}{2} \\left]\\right.$",
+      "prompt_latex_bits": [
+        "f (x) = x + \\sin (2 x)",
+        "x = \\left[\\right. - \\frac{\\pi}{2} , \\frac{\\pi}{2} \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043174067",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042315743",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "233 . [T] $f (x) = \\sin x + \\tan x$ over $\\left(\\right. - \\frac{\\pi}{2} , \\frac{\\pi}{2} \\left.\\right)$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin x + \\tan x",
+        "\\left(\\right. - \\frac{\\pi}{2} , \\frac{\\pi}{2} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042315743",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042323656",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "234 . [T] $f (x) = (x - 2)^{2} (x - 4)^{2}$",
+      "prompt_latex_bits": [
+        "f (x) = (x - 2)^{2} (x - 4)^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042323656",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042327441",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "235 . [T] $f (x) = \\frac{1}{1 - x} , x \\neq 1$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{1}{1 - x} , x \\neq 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042327441",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042708214",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "236 . [T] $f (x) = \\frac{\\sin x}{x}$ over $x =$ $\\left[\\right. 2 \\pi , 0 \\left.\\right) \\cup \\left(\\right. 0 , 2 \\pi \\left]\\right.$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{\\sin x}{x}",
+        "x =",
+        "\\left[\\right. 2 \\pi , 0 \\left.\\right) \\cup \\left(\\right. 0 , 2 \\pi \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042708214",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043395208",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "237 . $f (x) = \\sin (x) e^{x}$ over $x = \\left[\\right. \u2212 \\pi , \\pi \\left]\\right.$",
+      "prompt_latex_bits": [
+        "f (x) = \\sin (x) e^{x}",
+        "x = \\left[\\right. \u2212 \\pi , \\pi \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043395208",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042374784",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "238 . $f (x) = \\left(\\right. \\ln x \\left.\\right) \\sqrt{x} , x > 0$",
+      "prompt_latex_bits": [
+        "f (x) = \\left(\\right. \\ln x \\left.\\right) \\sqrt{x} , x > 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042374784",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042320285",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "239 . $f (x) = \\frac{1}{4} \\sqrt{x} + \\frac{1}{x} , x > 0$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{1}{4} \\sqrt{x} + \\frac{1}{x} , x > 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042320285",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042364146",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "240 . $f (x) = \\frac{e^{x}}{x} , x \\neq 0$",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{e^{x}}{x} , x \\neq 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042364146",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043248713",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "241 . The population is growing more slowly. Here $f$ is the population.",
+      "prompt_latex_bits": [
+        "f"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043248713",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042638526",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "242 . A bike accelerates faster, but a car goes faster. Here $f =$ Bike\u2019s position minus Car\u2019s position.",
+      "prompt_latex_bits": [
+        "f ="
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042638526",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042708313",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "243 . The airplane lands smoothly. Here $f$ is the plane\u2019s altitude.",
+      "prompt_latex_bits": [
+        "f"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042708313",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042708364",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "244 . A company tracks labor costs over the course of a year. On July 1, costs are at their peak. Here $f$ represents the cost of labor.",
+      "prompt_latex_bits": [
+        "f"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042708364",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043390836",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "245 . The economy is picking up speed. Here $f$ is a measure of the economy, such as GDP.",
+      "prompt_latex_bits": [
+        "f"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043390836",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043219135",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "246 . $f (x) = 0$ for some $1 \\leq x \\leq 3$",
+      "prompt_latex_bits": [
+        "f (x) = 0",
+        "1 \\leq x \\leq 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043219135",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043173868",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "247 . $f^{''} (x) = 0$ for some $1 \\leq x \\leq 3$",
+      "prompt_latex_bits": [
+        "f^{''} (x) = 0",
+        "1 \\leq x \\leq 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043173868",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042707190",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "248 . There is no absolute maximum at $x = 3$",
+      "prompt_latex_bits": [
+        "x = 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042707190",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042707227",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "249 . If $f (x)$ has three roots, then it has $1$ inflection point.",
+      "prompt_latex_bits": [
+        "f (x)",
+        "1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042707227",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043427346",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 4.5 Exercises",
+      "prompt_text": "250 . If $f (x)$ has one inflection point, then it has three real roots.",
+      "prompt_latex_bits": [
+        "f (x)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043427346",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:29.298627+00:00",
+  "stage": "1_inventory"
+}

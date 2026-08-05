@@ -103,9 +103,14 @@ def _trig_evaluate(topic: str, settings: dict) -> list[Question]:
 
 def _simple_trig_equations(topic: str, settings: dict) -> list[Question]:
     """Solve basic unit-circle trig equations like sin(x) = 1/2."""
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = trigonometry_params_from_settings(settings)
+    use_pc = str(topic).startswith("pc_")
+    difficulty = float(settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
 
     # Exact unit-circle solutions in [0, 360) for common RHS values.
     solutions: dict[tuple[str, str], list[int]] = {
@@ -141,17 +146,50 @@ def _simple_trig_equations(topic: str, settings: dict) -> list[Question]:
         return rf"{deg}^\circ"
 
     def build() -> tuple[str, str, str | None]:
+        form_stamp: dict[str, Any] = {}
+        if use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import select_pc_form
+
+            _form, form_stamp = select_pc_form(
+                "precalculus_trig_equations",
+                d=difficulty,
+                leaf_id=str(topic or ""),
+            )
         fn, rhs = random.choice(keys)
         degs = solutions[(fn, rhs)]
         prompt = f"\\{fn}(x) = {rhs}"
         if include_answer_key:
-            answers = ", ".join(_angle_latex(d) for d in degs)
+            answers = ", ".join(_angle_latex(deg) for deg in degs)
             answer = rf"x = {answers}"
         else:
             answer = None
+        last["meta"] = {
+            "primitive_engine": "simple_trig_equations",
+            "mode": "linear_value",
+            "function_classes": ["trig", "algebraic"],
+            "methods_used": ["trig_equation"],
+            **form_stamp,
+        }
         return prompt, "trig equation", answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_trig_equation",
+            generator="simple_trig_equations",
+            methods_used=["trig_equation"],
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder if use_pc else None,
+        settings=settings,
+    )
 
 
 def _trig_unit_circle(topic: str, settings: dict) -> list[Question]:
@@ -184,42 +222,89 @@ def _trig_unit_circle(topic: str, settings: dict) -> list[Question]:
 
 
 def _trig_basic_identities(topic: str, settings: dict) -> list[Question]:
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = trigonometry_params_from_settings(settings)
+    use_pc = str(topic).startswith("pc_")
+    d = float(settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
 
-    identities: list[tuple[str, str]] = []
-    if params.allow_pythagorean_identities:
-        identities.extend(
-            [
-                (r"\sin^2 \theta + \cos^2 \theta", "1"),
-                (r"\sec^2 \theta - \tan^2 \theta", "1"),
-                (r"1 + \cot^2 \theta", r"\csc^2 \theta"),
-            ]
-        )
-    if params.allow_reciprocal_identities:
-        identities.extend(
-            [
-                (r"\tan \theta", r"\frac{\sin \theta}{\cos \theta}"),
-                (r"\cot \theta", r"\frac{\cos \theta}{\sin \theta}"),
-                (r"\sec \theta", r"\frac{1}{\cos \theta}"),
-                (r"\csc \theta", r"\frac{1}{\sin \theta}"),
-            ]
-        )
-    if not identities:
-        identities = [(r"\sin^2 \theta + \cos^2 \theta", "1")]
+    pythagorean = [
+        (r"\sin^2 \theta + \cos^2 \theta", "1"),
+        (r"\sec^2 \theta - \tan^2 \theta", "1"),
+        (r"1 + \cot^2 \theta", r"\csc^2 \theta"),
+    ]
+    reciprocal = [
+        (r"\tan \theta", r"\frac{\sin \theta}{\cos \theta}"),
+        (r"\cot \theta", r"\frac{\cos \theta}{\sin \theta}"),
+        (r"\sec \theta", r"\frac{1}{\cos \theta}"),
+        (r"\csc \theta", r"\frac{1}{\sin \theta}"),
+    ]
 
     def build() -> tuple[str, str, str | None]:
-        lhs, rhs = random.choice(identities)
+        form_stamp: dict[str, Any] = {}
+        family = "pythagorean"
+        if use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import (
+                pc_form_constraints,
+                select_pc_form,
+            )
+
+            form, form_stamp = select_pc_form(
+                "precalculus_trig_identities",
+                d=d,
+                leaf_id=str(topic or ""),
+            )
+            family = str(pc_form_constraints(form).get("family") or "pythagorean")
+        elif params.allow_pythagorean_identities and params.allow_reciprocal_identities:
+            family = random.choice(["pythagorean", "reciprocal"])
+        elif params.allow_reciprocal_identities:
+            family = "reciprocal"
+
+        if family == "reciprocal" and (
+            params.allow_reciprocal_identities or use_pc
+        ):
+            pool = reciprocal
+        elif params.allow_pythagorean_identities or use_pc:
+            pool = pythagorean
+        else:
+            pool = pythagorean
+        lhs, rhs = random.choice(pool)
         if random.choice([True, False]):
             prompt = f"\\text{{Simplify: }} {lhs}"
             answer = rhs if include_answer_key else None
         else:
             prompt = f"\\text{{Rewrite using a fundamental identity: }} {lhs} = {rhs}"
             answer = lhs if include_answer_key else None
+        last["meta"] = {
+            "primitive_engine": "trig_basic_identities",
+            "mode": family,
+            "function_classes": ["trig", "algebraic"],
+            "methods_used": ["trig_identity", family],
+            **form_stamp,
+        }
         return prompt, "trig identity", answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_trig_identity",
+            generator="trig_basic_identities",
+            methods_used=["trig_identity"],
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder if use_pc else None,
+        settings=settings,
+    )
 
 
 def _random_log_base(params) -> tuple[int | str, str]:
@@ -276,37 +361,160 @@ def _log_evaluate(topic: str, settings: dict) -> list[Question]:
 
 
 def _log_change_of_base(topic: str, settings: dict) -> list[Question]:
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = logarithm_params_from_settings(settings)
+    use_pc = str(topic).startswith("pc_")
+    use_a2 = str(topic).startswith("a2_")
+    d = float(settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        base = random.randint(params.base_min, params.base_max)
-        exponent = random.randint(2, 5)
-        argument = base**exponent
-        new_base = random.randint(params.base_min, params.base_max)
-        while new_base == base:
-            new_base = random.randint(params.base_min, params.base_max)
-        prompt = (
-            f"\\text{{Rewrite using change of base: }} "
-            f"\\log_{{{base}}}({argument})"
-        )
-        answer = (
-            rf"\frac{{\log_{{{new_base}}}({argument})}}{{\log_{{{new_base}}}({base})}}"
-            if include_answer_key
-            else None
-        )
-        return prompt, "change of base", answer
+        form_stamp: dict[str, Any] = {}
+        rule = "change_of_base"
+        if use_a2:
+            from question_engine.frameworks.primitives.openstax_a2 import (
+                a2_form_constraints,
+                select_a2_form,
+            )
 
-    return _make_questions(topic, count, include_answer_key, build)
+            form, form_stamp = select_a2_form(
+                "algebra2_exp_log",
+                d=d,
+                leaf_id=str(topic or ""),
+            )
+            kind = str(a2_form_constraints(form).get("kind") or "properties")
+            if kind == "change_of_base":
+                rule = "change_of_base"
+            else:
+                rule = random.choice(["product", "quotient", "power"])
+        elif use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import (
+                pc_form_constraints,
+                select_pc_form,
+            )
+
+            form, form_stamp = select_pc_form(
+                "precalculus_exp_log",
+                d=d,
+                leaf_id=str(topic or ""),
+            )
+            rule = str(pc_form_constraints(form).get("rule") or "change_of_base")
+
+        base = random.randint(params.base_min, params.base_max)
+        if rule == "product":
+            m = random.randint(2, 9)
+            n = random.randint(2, 9)
+            prompt = (
+                f"\\text{{Expand: }} \\log_{{{base}}}\\left({m * n}\\right)"
+            )
+            answer = (
+                rf"\log_{{{base}}}({m})+\log_{{{base}}}({n})"
+                if include_answer_key
+                else None
+            )
+            mode = "product"
+            methods = ["log_product"]
+        elif rule == "quotient":
+            n = random.randint(2, 8)
+            m = n * random.randint(2, 6)
+            prompt = (
+                f"\\text{{Expand: }} \\log_{{{base}}}\\left(\\frac{{{m}}}{{{n}}}\\right)"
+            )
+            answer = (
+                rf"\log_{{{base}}}({m})-\log_{{{base}}}({n})"
+                if include_answer_key
+                else None
+            )
+            mode = "quotient"
+            methods = ["log_quotient"]
+        elif rule == "power":
+            arg = random.randint(2, 9)
+            p = random.randint(2, 5)
+            prompt = (
+                f"\\text{{Expand: }} \\log_{{{base}}}\\left({arg}^{{{p}}}\\right)"
+            )
+            answer = (
+                rf"{p}\log_{{{base}}}({arg})" if include_answer_key else None
+            )
+            mode = "power"
+            methods = ["log_power"]
+        else:
+            exponent = random.randint(2, 5)
+            argument = base**exponent
+            new_base = random.randint(params.base_min, params.base_max)
+            while new_base == base:
+                new_base = random.randint(params.base_min, params.base_max)
+            prompt = (
+                f"\\text{{Rewrite using change of base: }} "
+                f"\\log_{{{base}}}({argument})"
+            )
+            answer = (
+                rf"\frac{{\log_{{{new_base}}}({argument})}}{{\log_{{{new_base}}}({base})}}"
+                if include_answer_key
+                else None
+            )
+            mode = "change_of_base"
+            methods = ["change_of_base"]
+        last["meta"] = {
+            "primitive_engine": "log_change_of_base",
+            "mode": mode,
+            "log_base_min": params.base_min,
+            "log_base_max": params.base_max,
+            "function_classes": ["log", "algebraic"],
+            "methods_used": methods,
+            **form_stamp,
+        }
+        return prompt, mode, answer
+
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_log_props",
+            generator="log_change_of_base",
+            methods_used=["log_props"],
+            knobs={
+                "log_base_min": params.base_min,
+                "log_base_max": params.base_max,
+                "allow_natural_log": getattr(params, "allow_natural_log", False),
+                "allow_common_log": getattr(params, "allow_common_log", False),
+            },
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _log_equation_simple(topic: str, settings: dict) -> list[Question]:
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = logarithm_params_from_settings(settings)
+    use_a2 = str(topic).startswith("a2_")
+    d = float(settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
+        form_stamp: dict[str, Any] = {}
+        if use_a2:
+            from question_engine.frameworks.primitives.openstax_a2 import select_a2_form
+
+            _, form_stamp = select_a2_form(
+                "algebra2_exp_log",
+                d=d,
+                leaf_id=str(topic or ""),
+            )
         base_key, base_label = _random_log_base(params)
         exponent = random.randint(1, 5)
         if isinstance(base_key, int):
@@ -318,42 +526,195 @@ def _log_equation_simple(topic: str, settings: dict) -> list[Question]:
         log_latex = _log_base_latex(base_key, base_label)
         prompt = f"{log_latex}(x) = {exponent}"
         answer = f"x = {solution}" if include_answer_key else None
+        last["meta"] = {
+            "primitive_engine": "log_equation_simple",
+            "mode": "basic_log_eq",
+            **form_stamp,
+        }
         return prompt, "log equation", answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_log_equation",
+            generator="log_equation_simple",
+            methods_used=["log_equation"],
+            answer=answer,
+            course_tag="a2" if use_a2 else "pc",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder if use_a2 else None,
+        settings=settings,
+    )
 
 
 def _exponential_equation_simple(topic: str, settings: dict) -> list[Question]:
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = exponential_params_from_settings(settings)
+    use_pc = str(topic).startswith("pc_")
+    use_a2 = str(topic).startswith("a2_")
+    d = float(settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        base = random.randint(params.base_min, params.base_max)
-        exponent = random.randint(params.exponent_min, params.exponent_max)
-        rhs = base**exponent
-        prompt = f"{base}^{{x}} = {rhs}"
-        answer = f"x = {exponent}" if include_answer_key else None
+        form_stamp: dict[str, Any] = {}
+        kind = "same_base"
+        if use_a2:
+            from question_engine.frameworks.primitives.openstax_a2 import (
+                a2_form_constraints,
+                select_a2_form,
+            )
+
+            form, form_stamp = select_a2_form(
+                "algebra2_exp_log",
+                d=d,
+                leaf_id=str(topic or ""),
+            )
+            kind = str(a2_form_constraints(form).get("kind") or "same_base")
+        elif use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import (
+                pc_form_constraints,
+                select_pc_form,
+            )
+
+            form, form_stamp = select_pc_form(
+                "precalculus_exp_log",
+                d=d,
+                leaf_id=str(topic or ""),
+            )
+            kind = str(pc_form_constraints(form).get("kind") or "same_base")
+
+        if kind == "rewrite_common_base":
+            # Textbook-style rewrite-to-common-base (OpenStax §4.6 Ex. 2)
+            pair = random.choice(
+                [
+                    ("4^{x} = 8^{x - 1}", 3),
+                    ("8^{x + 2} = 16^{x + 1}", 2),
+                    ("9^{x} = 27^{x - 1}", 3),
+                    ("25^{x} = 5^{x + 2}", 1),
+                ]
+            )
+            prompt, sol = pair
+            answer = f"x = {sol}" if include_answer_key else None
+            mode = "rewrite_common_base"
+            methods = ["rewrite_common_base"]
+        else:
+            base = random.randint(params.base_min, params.base_max)
+            exponent = random.randint(params.exponent_min, params.exponent_max)
+            rhs = base**exponent
+            prompt = f"{base}^{{x}} = {rhs}"
+            answer = f"x = {exponent}" if include_answer_key else None
+            mode = "same_base"
+            methods = ["same_base"]
+        last["meta"] = {
+            "primitive_engine": "exponential_equation_simple",
+            "mode": mode,
+            "base_min": params.base_min,
+            "base_max": params.base_max,
+            "exponent_min": params.exponent_min,
+            "exponent_max": params.exponent_max,
+            "function_classes": ["exp", "algebraic"],
+            "methods_used": methods,
+            **form_stamp,
+        }
         return prompt, "exponential equation", answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_exp_equation",
+            generator="exponential_equation_simple",
+            methods_used=["exp_equation"],
+            knobs={
+                "base_min": params.base_min,
+                "base_max": params.base_max,
+                "exponent_min": params.exponent_min,
+                "exponent_max": params.exponent_max,
+            },
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _exponential_equation_with_log(topic: str, settings: dict) -> list[Question]:
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = exponential_params_from_settings(settings)
+    use_pc = str(topic).startswith("pc_")
+    use_a2 = str(topic).startswith("a2_")
+    d = float(settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
+        form_stamp: dict[str, Any] = {}
+        if use_a2:
+            from question_engine.frameworks.primitives.openstax_a2 import select_a2_form
+
+            _, form_stamp = select_a2_form(
+                "algebra2_exp_log",
+                d=d,
+                leaf_id=str(topic or ""),
+            )
+        elif use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import select_pc_form
+
+            _form, form_stamp = select_pc_form(
+                "precalculus_exp_log",
+                d=d,
+                leaf_id=str(topic or ""),
+            )
         base = random.randint(params.base_min, params.base_max)
         coef = random_int_range(params.coef_min, params.coef_max, exclude={0})
         exponent = random.randint(params.exponent_min, params.exponent_max)
         rhs = base ** (coef * exponent)
         prompt = f"{base}^{{{format_monomial_latex(coef) or '0'}}} = {rhs}"
         answer = f"x = {exponent}" if include_answer_key else None
+        last["meta"] = {
+            "primitive_engine": "exponential_equation_with_log",
+            "mode": "needs_log",
+            "function_classes": ["exp", "log", "algebraic"],
+            "methods_used": ["take_log"],
+            **form_stamp,
+        }
         return prompt, "exponential equation with log", answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_exp_equation",
+            generator="exponential_equation_with_log",
+            methods_used=["take_log"],
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder if (use_pc or use_a2) else None,
+        settings=settings,
+    )
 
 
 def _sequence_arithmetic_nth_term(topic: str, settings: dict) -> list[Question]:
@@ -409,22 +770,28 @@ def _sequence_arithmetic_geometric_mean(topic: str, settings: dict) -> list[Ques
     """Find the arithmetic or geometric mean between two numbers."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    params = sequence_params_from_settings(settings)
 
     def build() -> tuple[str, str, str | None]:
         use_geo = random.choice([True, False])
         if use_geo:
-            a = random.randint(1, 8)
-            r = random.choice([2, 3, 4, 5])
+            a = random.randint(1, max(2, abs(params.first_term_max)))
+            lo, hi = params.common_ratio_min, params.common_ratio_max
+            if not params.allow_negative_ratio:
+                lo, hi = max(2, lo), max(2, hi)
+            r = random.randint(lo, hi)
+            while r in (0, 1, -1):
+                r = random.randint(lo, hi)
             c = a * r * r
             prompt = (
                 rf"\text{{Find the geometric mean of }} {a} \text{{ and }} {c}."
             )
-            answer = str(a * r)
+            answer = str(abs(a * r))
         else:
-            a = random.randint(-10, 10)
-            c = random.randint(-10, 10)
+            a = random.randint(params.first_term_min, params.first_term_max)
+            c = random.randint(params.first_term_min, params.first_term_max)
             while c == a:
-                c = random.randint(-10, 10)
+                c = random.randint(params.first_term_min, params.first_term_max)
             prompt = (
                 rf"\text{{Find the arithmetic mean of }} {a} \text{{ and }} {c}."
             )
@@ -482,88 +849,295 @@ def _sequence_geometric_series(topic: str, settings: dict) -> list[Question]:
 def _trig_sum_difference(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+    from question_engine.settings.params import apply_trigonometry_continuous_knobs
+
+    local = apply_trigonometry_continuous_knobs(settings)
+    use_pc = str(topic).startswith("pc_")
+    difficulty = float(local.get("difficulty") or settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
+    pool = [
+        (r"\sin(\alpha+\beta)", r"\sin\alpha\cos\beta+\cos\alpha\sin\beta"),
+        (r"\sin(\alpha-\beta)", r"\sin\alpha\cos\beta-\cos\alpha\sin\beta"),
+        (r"\cos(\alpha+\beta)", r"\cos\alpha\cos\beta-\sin\alpha\sin\beta"),
+        (r"\cos(\alpha-\beta)", r"\cos\alpha\cos\beta+\sin\alpha\sin\beta"),
+    ]
+    if bool(local.get("allow_tan", False)) or _continuous_d_absent(settings):
+        pool.append(
+            (
+                r"\tan(\alpha+\beta)",
+                r"\frac{\tan\alpha+\tan\beta}{1-\tan\alpha\tan\beta}",
+            )
+        )
 
     def build() -> tuple[str, str, str | None]:
-        choice = random.choice(
-            [
-                (r"\sin(\alpha+\beta)", r"\sin\alpha\cos\beta+\cos\alpha\sin\beta"),
-                (r"\sin(\alpha-\beta)", r"\sin\alpha\cos\beta-\cos\alpha\sin\beta"),
-                (r"\cos(\alpha+\beta)", r"\cos\alpha\cos\beta-\sin\alpha\sin\beta"),
-                (r"\cos(\alpha-\beta)", r"\cos\alpha\cos\beta+\sin\alpha\sin\beta"),
-                (r"\tan(\alpha+\beta)", r"\frac{\tan\alpha+\tan\beta}{1-\tan\alpha\tan\beta}"),
-            ]
-        )
+        form_stamp: dict[str, Any] = {}
+        if use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import select_pc_form
+
+            _form, form_stamp = select_pc_form(
+                "precalculus_trig_identities",
+                d=difficulty,
+                leaf_id=str(topic or ""),
+            )
+        choice = random.choice(pool)
         prompt = rf"\text{{Expand }}{choice[0]}."
+        last["meta"] = {
+            "primitive_engine": "trig_sum_difference",
+            "mode": "sum_difference",
+            "function_classes": ["trig", "algebraic"],
+            "methods_used": ["sum_difference"],
+            **form_stamp,
+        }
         return prompt, "sum/difference identity", choice[1] if keyed else None
 
-    return _make_questions(topic, count, keyed, build, settings=settings)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_trig_identity",
+            generator="trig_sum_difference",
+            methods_used=["sum_difference"],
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        keyed,
+        build,
+        metadata_builder=metadata_builder if use_pc else None,
+        settings=settings,
+    )
+
+
+def _continuous_d_absent(settings: dict) -> bool:
+    return "difficulty" not in settings or settings["difficulty"] is None
 
 
 def _trig_multiple_angle(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+    from question_engine.settings.params import apply_trigonometry_continuous_knobs
+
+    local = apply_trigonometry_continuous_knobs(settings)
+    use_pc = str(topic).startswith("pc_")
+    difficulty = float(local.get("difficulty") or settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
+    pool = [
+        (r"\sin(2\theta)", r"2\sin\theta\cos\theta"),
+        (r"\cos(2\theta)", r"\cos^2\theta-\sin^2\theta"),
+    ]
+    if bool(local.get("allow_tan", False)) or _continuous_d_absent(settings):
+        pool.append(
+            (r"\tan(2\theta)", r"\frac{2\tan\theta}{1-\tan^2\theta}")
+        )
+    if bool(local.get("allow_double_angle_identities", True)) or _continuous_d_absent(
+        settings
+    ):
+        pool.append((r"\sin\theta\cos\theta", r"\frac{1}{2}\sin(2\theta)"))
 
     def build() -> tuple[str, str, str | None]:
-        choice = random.choice(
-            [
-                (r"\sin(2\theta)", r"2\sin\theta\cos\theta"),
-                (r"\cos(2\theta)", r"\cos^2\theta-\sin^2\theta"),
-                (r"\tan(2\theta)", r"\frac{2\tan\theta}{1-\tan^2\theta}"),
-                (r"\sin\theta\cos\theta", r"\frac{1}{2}\sin(2\theta)"),
-            ]
-        )
+        form_stamp: dict[str, Any] = {}
+        if use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import select_pc_form
+
+            _form, form_stamp = select_pc_form(
+                "precalculus_trig_identities",
+                d=difficulty,
+                leaf_id=str(topic or ""),
+            )
+        choice = random.choice(pool)
         prompt = rf"\text{{Rewrite }}{choice[0]}\text{{ using a double-angle identity.}}"
+        last["meta"] = {
+            "primitive_engine": "trig_multiple_angle",
+            "mode": "double_angle",
+            "function_classes": ["trig", "algebraic"],
+            "methods_used": ["double_angle"],
+            **form_stamp,
+        }
         return prompt, "multiple-angle identity", choice[1] if keyed else None
 
-    return _make_questions(topic, count, keyed, build, settings=settings)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_trig_identity",
+            generator="trig_multiple_angle",
+            methods_used=["double_angle"],
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        keyed,
+        build,
+        metadata_builder=metadata_builder if use_pc else None,
+        settings=settings,
+    )
 
 
 def _trig_product_to_sum(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+    from question_engine.settings.params import apply_trigonometry_continuous_knobs
+
+    local = apply_trigonometry_continuous_knobs(settings)
+    use_pc = str(topic).startswith("pc_")
+    difficulty = float(local.get("difficulty") or settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
+    # At low continuous D, product-to-sum is locked; fall back to a single
+    # sin·cos identity so the generator still produces valid prompts.
+    full_pool = [
+        (
+            r"\sin A\cos B",
+            r"\frac{1}{2}\left[\sin(A+B)+\sin(A-B)\right]",
+        ),
+        (
+            r"\cos A\cos B",
+            r"\frac{1}{2}\left[\cos(A+B)+\cos(A-B)\right]",
+        ),
+        (
+            r"\sin A\sin B",
+            r"\frac{1}{2}\left[\cos(A-B)-\cos(A+B)\right]",
+        ),
+    ]
+    if _continuous_d_absent(settings) or bool(
+        local.get("allow_product_to_sum_identities", True)
+    ):
+        pool = full_pool
+    else:
+        pool = [full_pool[0]]
 
     def build() -> tuple[str, str, str | None]:
-        choice = random.choice(
-            [
-                (
-                    r"\sin A\cos B",
-                    r"\frac{1}{2}\left[\sin(A+B)+\sin(A-B)\right]",
-                ),
-                (
-                    r"\cos A\cos B",
-                    r"\frac{1}{2}\left[\cos(A+B)+\cos(A-B)\right]",
-                ),
-                (
-                    r"\sin A\sin B",
-                    r"\frac{1}{2}\left[\cos(A-B)-\cos(A+B)\right]",
-                ),
-            ]
-        )
+        form_stamp: dict[str, Any] = {}
+        if use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import select_pc_form
+
+            _form, form_stamp = select_pc_form(
+                "precalculus_trig_identities",
+                d=difficulty,
+                leaf_id=str(topic or ""),
+            )
+        choice = random.choice(pool)
         prompt = rf"\text{{Rewrite }}{choice[0]}\text{{ as a sum.}}"
+        last["meta"] = {
+            "primitive_engine": "trig_product_to_sum",
+            "mode": "product_to_sum",
+            "function_classes": ["trig", "algebraic"],
+            "methods_used": ["product_to_sum"],
+            **form_stamp,
+        }
         return prompt, "product-to-sum", choice[1] if keyed else None
 
-    return _make_questions(topic, count, keyed, build, settings=settings)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_trig_identity",
+            generator="trig_product_to_sum",
+            methods_used=["product_to_sum"],
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        keyed,
+        build,
+        metadata_builder=metadata_builder if use_pc else None,
+        settings=settings,
+    )
 
 
 def _trig_factoring_equations(topic: str, settings: dict) -> list[Question]:
     """Simple trig equations that factor with fundamental identities."""
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    use_pc = str(topic).startswith("pc_")
+    difficulty = float(settings.get("difficulty") or 6)
+    last: dict[str, Any] = {"meta": {}}
+
+    templates = {
+        "sin2": (
+            r"\text{Solve }2\sin\theta\cos\theta=0\text{ for }0\le\theta<2\pi.",
+            r"\theta=0,\frac{\pi}{2},\pi,\frac{3\pi}{2}",
+            "factor_fundamental",
+        ),
+        "cos2": (
+            r"\text{Solve }\cos(2\theta)=0\text{ for }0\le\theta<\pi.",
+            r"\theta=\frac{\pi}{4},\frac{3\pi}{4}",
+            "double_angle_equation",
+        ),
+        "factor": (
+            r"\text{Solve }2\sin^2\theta-\sin\theta=0\text{ for }0\le\theta<2\pi.",
+            r"\theta=0,\frac{\pi}{6},\pi,\frac{5\pi}{6}",
+            "quadratic_in_trig",
+        ),
+    }
 
     def build() -> tuple[str, str, str | None]:
-        choice = random.choice(["sin2", "cos2", "factor"])
-        if choice == "sin2":
-            prompt = r"\text{Solve }2\sin\theta\cos\theta=0\text{ for }0\le\theta<2\pi."
-            answer = r"\theta=0,\frac{\pi}{2},\pi,\frac{3\pi}{2}"
-        elif choice == "cos2":
-            prompt = r"\text{Solve }\cos(2\theta)=0\text{ for }0\le\theta<\pi."
-            answer = r"\theta=\frac{\pi}{4},\frac{3\pi}{4}"
+        form_stamp: dict[str, Any] = {}
+        choice = "factor"
+        if use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import (
+                pc_form_constraints,
+                select_pc_form,
+            )
+
+            form, form_stamp = select_pc_form(
+                "precalculus_trig_equations",
+                d=difficulty,
+                leaf_id=str(topic or ""),
+            )
+            cons = pc_form_constraints(form)
+            choice = str(cons.get("choice") or form.get("form_id") or "factor")
+            if choice not in templates:
+                # Map form_id → template key
+                fid = str(form.get("form_id") or "")
+                if "double" in fid:
+                    choice = "cos2"
+                elif "quadratic" in fid:
+                    choice = "factor"
+                elif "factor" in fid:
+                    choice = "sin2"
+                else:
+                    choice = random.choice(list(templates))
         else:
-            prompt = r"\text{Solve }2\sin^2\theta-\sin\theta=0\text{ for }0\le\theta<2\pi."
-            answer = r"\theta=0,\frac{\pi}{6},\pi,\frac{5\pi}{6}"
+            choice = random.choice(list(templates))
+        prompt, answer, mode = templates[choice]
+        last["meta"] = {
+            "primitive_engine": "trig_factoring_equations",
+            "mode": mode,
+            "function_classes": ["trig", "algebraic"],
+            "methods_used": ["trig_equation", mode],
+            **form_stamp,
+        }
         return prompt, "trig factoring equation", answer if keyed else None
 
-    return _make_questions(topic, count, keyed, build, settings=settings)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_trig_equation",
+            generator="trig_factoring_equations",
+            methods_used=["trig_equation"],
+            answer=answer,
+            course_tag="pc" if use_pc else "a2",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        keyed,
+        build,
+        metadata_builder=metadata_builder if use_pc else None,
+        settings=settings,
+    )
 
 
 def _vector_3d_basics(topic: str, settings: dict) -> list[Question]:
@@ -660,13 +1234,53 @@ def _precalc_foundations(topic: str, settings: dict) -> list[Question]:
                 rf"\text{{minimum }}0\text{{ at }}x=0;\ \text{{increasing on }}(0,\infty)",
             )
         elif "piecewise" in topic:
-            c = random.randint(-3, 4)
-            x0 = random.randint(-2, 3)
-            prompt, value = (
-                rf"f(x)=\begin{{cases}}x+{c},&x<0\\{c},&x\ge0\end{{cases}}."
-                rf"\quad\text{{Evaluate }}f({x0}).",
-                str(x0 + c if x0 < 0 else c),
-            )
+            from question_engine.settings.params import piecewise_structure_from_continuous
+
+            structure = piecewise_structure_from_continuous(settings)
+            if structure is None:
+                c = random.randint(-3, 4)
+                x0 = random.randint(-2, 3)
+                prompt, value = (
+                    rf"f(x)=\begin{{cases}}x+{c},&x<0\\{c},&x\ge0\end{{cases}}."
+                    rf"\quad\text{{Evaluate }}f({x0}).",
+                    str(x0 + c if x0 < 0 else c),
+                )
+            else:
+                span = int(structure["coef_span"])
+                bp_span = int(structure["breakpoint_span"])
+                c = random.randint(-span, span)
+                bp = random.randint(-bp_span, bp_span)
+                x0 = random.randint(-bp_span - 1, bp_span + 1)
+                if structure["piece_count"] >= 3:
+                    c2 = random.randint(-span, span)
+                    left = bp - 1
+                    right = bp + 1
+                    use_linear_right = bool(structure["allow_quadratic_piece"])
+                    right_expr = rf"{c2}x" if use_linear_right else str(c2)
+                    if x0 < left:
+                        value = str(x0 + c)
+                    elif x0 < right:
+                        value = str(c)
+                    else:
+                        value = str(c2 * x0 if use_linear_right else c2)
+                    prompt = (
+                        rf"f(x)=\begin{{cases}}x+{c},&x<{left}\\{c},&"
+                        rf"{left}\le x<{right}\\{right_expr},&x\ge{right}\end{{cases}}."
+                        rf"\quad\text{{Evaluate }}f({x0})."
+                    )
+                elif structure["allow_quadratic_piece"] and random.random() < 0.5:
+                    a = random.randint(1, max(1, span // 2))
+                    value = str(a * x0 * x0 + c if x0 < bp else c)
+                    prompt = (
+                        rf"f(x)=\begin{{cases}}{a}x^2+{c},&x<{bp}\\{c},&x\ge{bp}"
+                        rf"\end{{cases}}.\quad\text{{Evaluate }}f({x0})."
+                    )
+                else:
+                    value = str(x0 + c if x0 < bp else c)
+                    prompt = (
+                        rf"f(x)=\begin{{cases}}x+{c},&x<{bp}\\{c},&x\ge{bp}"
+                        rf"\end{{cases}}.\quad\text{{Evaluate }}f({x0})."
+                    )
         elif "continuity" in topic:
             c = random.randint(-3, 4)
             prompt, value = (

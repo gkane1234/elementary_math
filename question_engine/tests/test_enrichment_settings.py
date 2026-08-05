@@ -109,6 +109,7 @@ def test_rational_expression_force_lcd():
 def test_common_enrichment_in_schema():
     schema = schema_for_generator("one_step_equations")
     keys = {field.key for field in schema}
+    assert "difficulty" in keys
     assert "difficulty_tier" in keys
     assert "answer_format" in keys
     assert "multiple_choice" in keys
@@ -123,6 +124,7 @@ def test_common_enrichment_in_schema():
 def test_common_enrichment_profile_resolves():
     schema = resolve_type_settings(TypeSettingConfig(setting_profile="common_enrichment"))
     keys = {field.key for field in schema}
+    assert "difficulty" in keys
     assert "multiple_choice" in keys
     assert "show_work_lines" in keys
     assert "min_terms" not in keys

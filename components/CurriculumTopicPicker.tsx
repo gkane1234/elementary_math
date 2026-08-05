@@ -17,6 +17,7 @@ import {
   getPrerequisitesForSelection,
 } from "@/lib/prerequisites";
 import { formatQuestionTypeLabel } from "@/lib/question-type-groups";
+import { formatTopicLabel } from "@/lib/topic-labels";
 import type { QuestionTypeInfo } from "@/lib/types";
 
 type CurriculumTopicPickerProps = {
@@ -450,7 +451,11 @@ export function CurriculumTopicPicker({
                         {isSelected ? "✓" : ""}
                       </span>
                       <span className="curriculum-topic-row-main">
-                        <span className="curriculum-topic-row-name">{entry.topic.name}</span>
+                        <span className="curriculum-topic-row-name">
+                          {entry.topic.typeId
+                            ? formatTopicLabel(entry.topic.typeId, entry.topic.name)
+                            : entry.topic.name}
+                        </span>
                       </span>
                       <span
                         className={`topic-status-badge${

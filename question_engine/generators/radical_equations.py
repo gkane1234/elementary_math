@@ -543,19 +543,68 @@ def _try_build(form: str, settings: dict) -> tuple[str, str, str | None] | None:
 
 def generate_radical_equations(topic: str, settings: dict) -> list:
     """Generate radical-equation questions for *topic*."""
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    last: dict = {"meta": {}}
+    use_catalog = str(topic or "").startswith("a2_")
 
     def build() -> tuple[str, str, str | None]:
+        form_meta: dict = {}
+        catalog_form = None
+        if use_catalog:
+            import random as _random
+
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+            from question_engine.frameworks.primitives.openstax_a2 import select_a2_form
+
+            d = float(settings_difficulty(settings))
+            form, form_meta = select_a2_form(
+                "algebra2_radicals",
+                d=d,
+                rng=_random.Random(settings.get("seed")),
+                leaf_id=str(topic or ""),
+            )
+            catalog_form = (form.get("constraints") or {}).get("engine_form")
         for _ in range(80):
-            form = _choose_form(settings)
+            form = catalog_form or _choose_form(settings)
             built = _try_build(form, settings)
             if built is not None:
-                return built
+                prompt, text, answer = built
+                last["meta"] = {
+                    "primitive_engine": "radical_equations",
+                    "mode": form,
+                    "engine_form": form,
+                    **form_meta,
+                }
+                return prompt, text, answer
         # Absolute fallback: √(x + 3) = 2 → x = 1
         var = str(settings.get("variable", "x"))
         prompt = format_equation_latex(_sqrt_linear(1, 3, variable=var), "2")
         answer = _format_answer([1], [], {**settings, "include_answer_key": include_answer_key}, variable=var)
+        last["meta"] = {
+            "primitive_engine": "radical_equations",
+            "mode": "light_prep",
+            **form_meta,
+        }
         return prompt, prompt, answer
 
-    return _make_questions(topic, count, include_answer_key, build, settings=settings)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_radical_equations",
+            generator="radical_equations",
+            methods_used=["radical_equations"],
+            answer=answer,
+            course_tag="a2" if use_catalog else "a1",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )

@@ -79,3 +79,56 @@ export function formatPdfPrice(cents: number): string {
     currency: "USD",
   }).format(cents / 100);
 }
+
+export async function createSubscriptionCheckout(): Promise<string> {
+  const response = await fetch("/api/stripe/subscribe", {
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+    throw new Error(payload?.error ?? "Failed to start subscription checkout");
+  }
+
+  const data = (await response.json()) as CheckoutResponse;
+  if (!data.url) {
+    throw new Error("Subscription checkout did not return a redirect URL");
+  }
+
+  return data.url;
+}
+
+export async function openBillingPortal(): Promise<string> {
+  const response = await fetch("/api/stripe/portal", {
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+    throw new Error(payload?.error ?? "Failed to open billing portal");
+  }
+
+  const data = (await response.json()) as CheckoutResponse;
+  if (!data.url) {
+    throw new Error("Billing portal did not return a redirect URL");
+  }
+
+  return data.url;
+}
+
+export type EntitlementResponse = {
+  entitled: boolean;
+  signedIn: boolean;
+  authConfigured: boolean;
+  status: string | null;
+  currentPeriodEnd?: string | null;
+  reason?: string;
+};
+
+export async function fetchEntitlement(): Promise<EntitlementResponse> {
+  const response = await fetch("/api/me/entitlement", { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error("Failed to load subscription status");
+  }
+  return response.json() as Promise<EntitlementResponse>;
+}

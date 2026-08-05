@@ -60,6 +60,7 @@ from .linear import (
 )
 from .number import (
     ComparingRatesFramework,
+    ComparingRatiosFramework,
     ConvertingUnitsFramework,
     DecimalArithmeticFramework,
     DistributiveFramework,
@@ -67,6 +68,7 @@ from .number import (
     NumberFramework,
     NumberParams,
     OrderOfOperationsFramework,
+    PartPartWholeRatioFramework,
     PercentFramework,
     ProportionFramework,
     RationalFramework,
@@ -122,6 +124,8 @@ __all__ = [
     "PercentFramework",
     "RationalFramework",
     "RatioFramework",
+    "PartPartWholeRatioFramework",
+    "ComparingRatiosFramework",
     "UnitRateFramework",
     "ComparingRatesFramework",
     "ConvertingUnitsFramework",

@@ -1,0 +1,997 @@
+{
+  "book": "calculus-volume-2",
+  "slug": "3-3-trigonometric-substitution",
+  "title": "3.3 Trigonometric Substitution",
+  "source_url": "https://openstax.org/books/calculus-volume-2/pages/3-3-trigonometric-substitution",
+  "local_path": "textbooks/openstax/html/calculus-volume-2/3-3-trigonometric-substitution.html",
+  "objectives": [
+    "3.3.1 Solve integration problems involving the square root of a sum or difference of two squares."
+  ],
+  "headings": [
+    "3.3 Trigonometric Substitution",
+    "Learning Objectives",
+    "Integrals Involving a 2 \u2212 x 2 a 2 \u2212 x 2",
+    "Problem-Solving Strategy",
+    "Example 3.21",
+    "Example 3.22",
+    "Example 3.23",
+    "Checkpoint 3.14",
+    "Integrating Expressions Involving a 2 + x 2 a 2 + x 2",
+    "Problem-Solving Strategy",
+    "Example 3.24",
+    "Example 3.25",
+    "Example 3.26",
+    "Checkpoint 3.15",
+    "Integrating Expressions Involving x 2 \u2212 a 2 x 2 \u2212 a 2",
+    "Problem-Solving Strategy",
+    "Example 3.27",
+    "Checkpoint 3.16",
+    "Section 3.3 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1165041837235",
+      "kind": "example",
+      "title": "Example 3.21",
+      "position": 1,
+      "nearest_heading": "Integrating Expressions Involving a 2 \u2212 x 2 a 2 \u2212 x 2",
+      "prompt_text": "Integrating an Expression Involving $\\sqrt{a^{2} - x^{2}}$ Evaluate $\\int^{\u200b} \\sqrt{9 - x^{2}} d x .$",
+      "prompt_latex_bits": [
+        "\\sqrt{a^{2} - x^{2}}",
+        "\\int^{\u200b} \\sqrt{9 - x^{2}} d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165041837235",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042229562",
+      "kind": "example",
+      "title": "Example 3.22",
+      "position": 2,
+      "nearest_heading": "Integrating an Expression Involving a 2 \u2212 x 2 a 2 \u2212 x 2",
+      "prompt_text": "Integrating an Expression Involving $\\sqrt{a^{2} - x^{2}}$ Evaluate $\\int \\frac{\\sqrt{4 - x^{2}}}{x} d x .$",
+      "prompt_latex_bits": [
+        "\\sqrt{a^{2} - x^{2}}",
+        "\\int \\frac{\\sqrt{4 - x^{2}}}{x} d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042229562",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042092098",
+      "kind": "example",
+      "title": "Example 3.23",
+      "position": 3,
+      "nearest_heading": "Integrating an Expression Involving a 2 \u2212 x 2 a 2 \u2212 x 2",
+      "prompt_text": "Integrating an Expression Involving $\\sqrt{a^{2} - x^{2}}$ Two Ways Evaluate $\\int^{\u200b} x^{3} \\sqrt{1 - x^{2}} d x$ two ways: first by using the substitution $u = 1 - x^{2}$ and then by using a trigonometric substitution.",
+      "prompt_latex_bits": [
+        "\\sqrt{a^{2} - x^{2}}",
+        "\\int^{\u200b} x^{3} \\sqrt{1 - x^{2}} d x",
+        "u = 1 - x^{2}"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042092098",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042094001",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.14",
+      "position": 4,
+      "nearest_heading": "Integrating an Expression Involving a 2 \u2212 x 2 a 2 \u2212 x 2 Two Ways",
+      "prompt_text": "Rewrite the integral $\\int \\frac{x^{3}}{\\sqrt{25 - x^{2}}} d x$ using the appropriate trigonometric substitution (do not evaluate the integral).",
+      "prompt_latex_bits": [
+        "\\int \\frac{x^{3}}{\\sqrt{25 - x^{2}}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042094001",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042089656",
+      "kind": "example",
+      "title": "Example 3.24",
+      "position": 5,
+      "nearest_heading": "Integrating Expressions Involving a 2 + x 2 a 2 + x 2",
+      "prompt_text": "Integrating an Expression Involving $\\sqrt{a^{2} + x^{2}}$ Evaluate $\\int \\frac{d x}{\\sqrt{1 + x^{2}}}$ and check the solution by differentiating.",
+      "prompt_latex_bits": [
+        "\\sqrt{a^{2} + x^{2}}",
+        "\\int \\frac{d x}{\\sqrt{1 + x^{2}}}"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042089656",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042301696",
+      "kind": "example",
+      "title": "Example 3.25",
+      "position": 6,
+      "nearest_heading": "Integrating an Expression Involving a 2 + x 2 a 2 + x 2",
+      "prompt_text": "Evaluating $\\int \\frac{d x}{\\sqrt{1 + x^{2}}}$ Using a Different Substitution Use the substitution $x = \\text{sinh} \\theta$ to evaluate $\\int \\frac{d x}{\\sqrt{1 + x^{2}}} .$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\sqrt{1 + x^{2}}}",
+        "x = \\text{sinh} \\theta",
+        "\\int \\frac{d x}{\\sqrt{1 + x^{2}}} .",
+        "x = \\tan \\theta .",
+        "y = \\text{sinh}^{\u22121} x .",
+        "\\text{sinh} y = x .",
+        "\\frac{e^{y} - e^{\u2212 y}}{2} = x .",
+        "2 e^{y}",
+        "e^{2 y} - 2 x e^{y} - 1 = 0 .",
+        "e^{y} :",
+        "e^{y} = \\frac{2 x \\pm \\sqrt{4 x^{2} + 4}}{2} .",
+        "e^{y} = x \\pm \\sqrt{x^{2} + 1} .",
+        "x - \\sqrt{x^{2} + 1} < 0 ,",
+        "e^{y} = x + \\sqrt{x^{2} + 1} .",
+        "y = \\ln \\left(\\right. x + \\sqrt{x^{2} + 1} \\left.\\right) .",
+        "\\text{sinh}^{\u22121} x = \\ln \\left(\\right. x + \\sqrt{x^{2} + 1} \\left.\\right) .",
+        "x + \\sqrt{x^{2} + 1} > 0 ,",
+        "\\ln \\left(\\right. x + \\sqrt{x^{2} + 1} \\left.\\right) = \\ln \\left|\\right. \\sqrt{1 + x^{2}} + x \\left|\\right. ,"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042301696",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040639551",
+      "kind": "example",
+      "title": "Example 3.26",
+      "position": 7,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Finding an Arc Length Find the length of the curve $y = x^{2}$ over the interval $\\left[\\right. 0 , \\frac{1}{2} \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "y = x^{2}",
+        "\\left[\\right. 0 , \\frac{1}{2} \\left]\\right. ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165040639551",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042041805",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.15",
+      "position": 8,
+      "nearest_heading": "Finding an Arc Length",
+      "prompt_text": "Rewrite $\\int^{\u200b} x^{3} \\sqrt{x^{2} + 4} d x$ by using a substitution involving $\\tan \\theta .$",
+      "prompt_latex_bits": [
+        "\\int^{\u200b} x^{3} \\sqrt{x^{2} + 4} d x",
+        "\\tan \\theta ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042041805",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041831016",
+      "kind": "example",
+      "title": "Example 3.27",
+      "position": 9,
+      "nearest_heading": "Integrals Involving x 2 \u2212 a 2 x 2 \u2212 a 2",
+      "prompt_text": "Finding the Area of a Region Find the area of the region between the graph of $f (x) = \\sqrt{x^{2} - 9}$ and the x -axis over the interval $\\left[\\right. 3 , 5 \\left]\\right. .$",
+      "prompt_latex_bits": [
+        "f (x) = \\sqrt{x^{2} - 9}",
+        "\\left[\\right. 3 , 5 \\left]\\right. ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165041831016",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041757006",
+      "kind": "checkpoint",
+      "title": "Checkpoint 3.16",
+      "position": 10,
+      "nearest_heading": "Finding the Area of a Region",
+      "prompt_text": "Evaluate $\\int \\frac{d x}{\\sqrt{x^{2} - 4}} .$ Assume that $x > 2 .$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\sqrt{x^{2} - 4}} .",
+        "x > 2 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041757006",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041889374",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 11,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "126 . $4 - 4 \\sin^{2} \\theta$",
+      "prompt_latex_bits": [
+        "4 - 4 \\sin^{2} \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041889374",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041926600",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 12,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "127 . $9 \\sec^{2} \\theta - 9$",
+      "prompt_latex_bits": [
+        "9 \\sec^{2} \\theta - 9"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041926600",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041817317",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 13,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "128 . $a^{2} + a^{2} \\tan^{2} \\theta$",
+      "prompt_latex_bits": [
+        "a^{2} + a^{2} \\tan^{2} \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041817317",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041822391",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 14,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "129 . $a^{2} + a^{2} \\text{sinh}^{2} \\theta$",
+      "prompt_latex_bits": [
+        "a^{2} + a^{2} \\text{sinh}^{2} \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041822391",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040795173",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "130 . $16 \\text{cosh}^{2} \\theta - 16$",
+      "prompt_latex_bits": [
+        "16 \\text{cosh}^{2} \\theta - 16"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040795173",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042028245",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "131 . $4 x^{2} - 4 x + 1$",
+      "prompt_latex_bits": [
+        "4 x^{2} - 4 x + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042028245",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040775290",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "132 . $2 x^{2} - 8 x + 3$",
+      "prompt_latex_bits": [
+        "2 x^{2} - 8 x + 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040775290",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042088594",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "133 . $\u2212 x^{2} - 2 x + 4$",
+      "prompt_latex_bits": [
+        "\u2212 x^{2} - 2 x + 4"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042088594",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041887563",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "134 . $\\int \\frac{d x}{\\sqrt{4 - x^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\sqrt{4 - x^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041887563",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042018113",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "135 . $\\int \\frac{d x}{\\sqrt{x^{2} - a^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\sqrt{x^{2} - a^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042018113",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042137580",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "136 . $\\int \\sqrt{4 - x^{2}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\sqrt{4 - x^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042137580",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042311909",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "137 . $\\int \\frac{d x}{\\sqrt{1 + 9 x^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\sqrt{1 + 9 x^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042311909",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042107314",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "138 . $\\int \\frac{x^{2} d x}{\\sqrt{1 - x^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x^{2} d x}{\\sqrt{1 - x^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042107314",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040646186",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "139 . $\\int \\frac{d x}{x^{2} \\sqrt{1 - x^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{x^{2} \\sqrt{1 - x^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040646186",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040777086",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "140 . $\\int \\frac{d x}{\\left(\\left(\\right. 1 + x^{2} \\left.\\right)\\right)^{2}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\left(\\left(\\right. 1 + x^{2} \\left.\\right)\\right)^{2}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040777086",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041826993",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "141 . $\\int \\sqrt{x^{2} + 9} d x$",
+      "prompt_latex_bits": [
+        "\\int \\sqrt{x^{2} + 9} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041826993",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042029592",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "142 . $\\int \\frac{\\sqrt{x^{2} - 25}}{x} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\sqrt{x^{2} - 25}}{x} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042029592",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040775694",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "143 . $\\int \\frac{\\theta^{3} d \\theta}{\\sqrt{9 - \\theta^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\theta^{3} d \\theta}{\\sqrt{9 - \\theta^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040775694",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040778476",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "144 . $\\int \\frac{d x}{\\sqrt{x^{6} - x^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\sqrt{x^{6} - x^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040778476",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040768885",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "145 . $\\int \\sqrt{x^{6} - x^{8}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\sqrt{x^{6} - x^{8}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040768885",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041980058",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "146 . $\\int \\frac{d x}{\\left(\\right. 1 + x^{2} \\left.\\right)^{3 / 2}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\left(\\right. 1 + x^{2} \\left.\\right)^{3 / 2}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041980058",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041962860",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "147 . $\\int \\frac{d x}{\\left(\\right. x^{2} - 9 \\left.\\right)^{3 / 2}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\left(\\right. x^{2} - 9 \\left.\\right)^{3 / 2}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041962860",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041893004",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "148 . $\\int \\frac{\\sqrt{1 + x^{2}} d x}{x}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\sqrt{1 + x^{2}} d x}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041893004",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041932696",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "149 . $\\int \\frac{x^{2} d x}{\\sqrt{x^{2} - 1}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x^{2} d x}{\\sqrt{x^{2} - 1}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041932696",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040668879",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "150 . $\\int \\frac{x^{2} d x}{x^{2} + 4}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x^{2} d x}{x^{2} + 4}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040668879",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042247082",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "151 . $\\int \\frac{d x}{x^{2} \\sqrt{x^{2} + 1}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{x^{2} \\sqrt{x^{2} + 1}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042247082",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042035538",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "152 . $\\int \\frac{x^{2} d x}{\\sqrt{1 + x^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x^{2} d x}{\\sqrt{1 + x^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042035538",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040669735",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "153 . $\\int \\left(\\left(\\right. 1 - x^{2} \\left.\\right)\\right)^{3 / 2} d x$",
+      "prompt_latex_bits": [
+        "\\int \\left(\\left(\\right. 1 - x^{2} \\left.\\right)\\right)^{3 / 2} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040669735",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042235467",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "154 . $\\int \\frac{d x}{\\sqrt{x^{2} - 1}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\sqrt{x^{2} - 1}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042235467",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040668400",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "155 . $\\int \\frac{d x}{x \\sqrt{1 - x^{2}}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{x \\sqrt{1 - x^{2}}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040668400",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040763980",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "156 . $\\int \\sqrt{x^{2} - 1} d x$",
+      "prompt_latex_bits": [
+        "\\int \\sqrt{x^{2} - 1} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040763980",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040762399",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "157 . $\\int \\frac{\\sqrt{x^{2} - 1}}{x^{2}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\sqrt{x^{2} - 1}}{x^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040762399",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041955009",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "158 . $\\int \\frac{d x}{1 - x^{2}}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{1 - x^{2}}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041955009",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042033113",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "159 . $\\int \\frac{\\sqrt{1 + x^{2}}}{x^{2}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\sqrt{1 + x^{2}}}{x^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042033113",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042281395",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "160 . $\\int \\frac{1}{x^{2} - 6 x} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{1}{x^{2} - 6 x} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042281395",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042040096",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "161 . $\\int \\frac{1}{x^{2} + 2 x + 1} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{1}{x^{2} + 2 x + 1} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042040096",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040793868",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "162 . $\\int \\frac{1}{\\sqrt{\u2212 x^{2} + 2 x + 8}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{1}{\\sqrt{\u2212 x^{2} + 2 x + 8}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040793868",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040730904",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "163 . $\\int \\frac{1}{\\sqrt{\u2212 x^{2} + 10 x}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{1}{\\sqrt{\u2212 x^{2} + 10 x}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040730904",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042038809",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "164 . $\\int \\frac{1}{\\sqrt{x^{2} + 4 x - 12}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{1}{\\sqrt{x^{2} + 4 x - 12}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042038809",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040775633",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "165 . Evaluate the integral without using calculus: $\\int_{\u22123}^{3} \\sqrt{9 - x^{2}} d x .$",
+      "prompt_latex_bits": [
+        "\\int_{\u22123}^{3} \\sqrt{9 - x^{2}} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040775633",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042280347",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "166 . Find the area enclosed by the ellipse $\\frac{x^{2}}{4} + \\frac{y^{2}}{9} = 1 .$",
+      "prompt_latex_bits": [
+        "\\frac{x^{2}}{4} + \\frac{y^{2}}{9} = 1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042280347",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040693506",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "167 . Evaluate the integral $\\int \\frac{d x}{\\sqrt{1 - x^{2}}}$ using two different substitutions. First, let $x = \\cos \\theta$ and evaluate using trigonometric substitution. Second, let $x = \\sin \\theta$ and use trigonometric substitution. Are the answers the same?",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{\\sqrt{1 - x^{2}}}",
+        "x = \\cos \\theta",
+        "x = \\sin \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040693506",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042262087",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "168 . Evaluate the integral $\\int \\frac{d x}{x \\sqrt{x^{2} - 1}}$ using the substitution $x = \\sec \\theta .$ Next, evaluate the same integral using the substitution $x = \\csc \\theta .$ Show that the results are equivalent.",
+      "prompt_latex_bits": [
+        "\\int \\frac{d x}{x \\sqrt{x^{2} - 1}}",
+        "x = \\sec \\theta .",
+        "x = \\csc \\theta ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042262087",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042040456",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "169 . Evaluate the integral $\\int \\frac{x}{x^{2} + 1} d x$ using the form $\\int \\frac{1}{u} d u .$ Next, evaluate the same integral using $x = \\tan \\theta .$ Are the results the same?",
+      "prompt_latex_bits": [
+        "\\int \\frac{x}{x^{2} + 1} d x",
+        "\\int \\frac{1}{u} d u .",
+        "x = \\tan \\theta ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042040456",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040796150",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "170 . State the method of integration you would use to evaluate the integral $\\int x \\sqrt{x^{2} + 1} d x .$ Why did you choose this method?",
+      "prompt_latex_bits": [
+        "\\int x \\sqrt{x^{2} + 1} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040796150",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040720673",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "171 . State the method of integration you would use to evaluate the integral $\\int x^{2} \\sqrt{x^{2} - 1} d x .$ Why did you choose this method?",
+      "prompt_latex_bits": [
+        "\\int x^{2} \\sqrt{x^{2} - 1} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040720673",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041825199",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "172 . Evaluate $\\int_{\u22121}^{1} \\frac{x d x}{x^{2} + 1}$",
+      "prompt_latex_bits": [
+        "\\int_{\u22121}^{1} \\frac{x d x}{x^{2} + 1}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041825199",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040795699",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "173 . Find the length of the arc of the curve over the specified interval: $y = \\ln x , \\left[\\right. 1 , 5 \\left]\\right. .$ Round the answer to three decimal places.",
+      "prompt_latex_bits": [
+        "y = \\ln x , \\left[\\right. 1 , 5 \\left]\\right. ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040795699",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041908973",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "174 . Find the surface area of the solid generated by revolving the region bounded by the graphs of $y = x^{2} , y = 0 , x = 0 , \\text{and} x = \\sqrt{2}$ about the x -axis. (Round the answer to three decimal places).",
+      "prompt_latex_bits": [
+        "y = x^{2} , y = 0 , x = 0 , \\text{and} x = \\sqrt{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041908973",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040745060",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "175 . The region bounded by the graph of $f (x) = \\frac{1}{1 + x^{2}}$ and the x -axis between $x = 0$ and $x = 1$ is revolved about the x- axis. Find the volume of the solid that is generated.",
+      "prompt_latex_bits": [
+        "f (x) = \\frac{1}{1 + x^{2}}",
+        "x = 0",
+        "x = 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040745060",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042312716",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "176 . $\\left(\\right. x^{2} + 36 \\left.\\right) \\frac{d y}{d x} = 1 , y (6) = 0$",
+      "prompt_latex_bits": [
+        "\\left(\\right. x^{2} + 36 \\left.\\right) \\frac{d y}{d x} = 1 , y (6) = 0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042312716",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042093493",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "177 . $\\left(\\right. 64 - x^{2} \\left.\\right) \\frac{d y}{d x} = 1 , y (0) = 3$",
+      "prompt_latex_bits": [
+        "\\left(\\right. 64 - x^{2} \\left.\\right) \\frac{d y}{d x} = 1 , y (0) = 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042093493",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165040643855",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "178 . Find the area bounded by $y = \\frac{2}{\\sqrt{64 - 4 x^{2}}} , x = 0 , y = 0 , \\text{and} x = 2 .$",
+      "prompt_latex_bits": [
+        "y = \\frac{2}{\\sqrt{64 - 4 x^{2}}} , x = 0 , y = 0 , \\text{and} x = 2 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165040643855",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042236343",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "179 . An oil storage tank can be described as the volume generated by revolving the area bounded by $y = \\frac{16}{\\sqrt{64 + x^{2}}} , x = 0 , y = 0 , x = 2$ about the x -axis. Find the volume of the tank (in cubic meters).",
+      "prompt_latex_bits": [
+        "y = \\frac{16}{\\sqrt{64 + x^{2}}} , x = 0 , y = 0 , x = 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042236343",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042050284",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "180 . During each cycle, the velocity v (in feet per second) of a robotic welding device is given by $v = 2 t - \\frac{14}{4 + t^{2}} ,$ where t is time in seconds. Find the expression for the displacement s (in feet) as a function of t if $s = 0$ when $t = 0 .$",
+      "prompt_latex_bits": [
+        "v = 2 t - \\frac{14}{4 + t^{2}} ,",
+        "s = 0",
+        "t = 0 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042050284",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165041975788",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Section 3.3 Exercises",
+      "prompt_text": "181 . Find the length of the curve $y = \\sqrt{16 - x^{2}}$ between $x = 0$ and $x = 2 .$",
+      "prompt_latex_bits": [
+        "y = \\sqrt{16 - x^{2}}",
+        "x = 0",
+        "x = 2 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165041975788",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-08-03T16:19:59.952138+00:00",
+  "stage": "1_inventory"
+}

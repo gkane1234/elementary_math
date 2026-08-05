@@ -1,0 +1,2344 @@
+{
+  "pack_id": "int_log_exp_sub",
+  "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+  "leaf": "integral_substitution",
+  "approx_max_conceptual_d": 25.0,
+  "conceptual_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "spec_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    16.0,
+    32.0
+  ],
+  "allows": {
+    "allow_trig": true,
+    "allow_exp": true,
+    "allow_log": true
+  },
+  "rows": [
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 0.0,
+      "seed": 130,
+      "prompt_latex": "\\int 3e^{3x + 6}\\,dx",
+      "answer_latex": "e^{3x + 6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x + 6}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 4.0,
+      "seed": 130,
+      "prompt_latex": "\\int  \\frac{3\\left(x-2\\right)3e^{3x + 6}}{3\\left(x-2\\right)}\\,dx",
+      "answer_latex": "e^{3x + 6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x + 6}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 8.0,
+      "seed": 130,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-3e^{3x + 6}\\right)\\right)+1\\right)-1\\,dx",
+      "answer_latex": "e^{3x + 6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x + 6}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 16.0,
+      "seed": 130,
+      "prompt_latex": "\\int  \\frac{-\\left(1-x\\right)\\left(\\left(\\left(3e^{3x + 6}+\\left(-x+3\\right)-\\left(-x+3\\right)\\right)+5\\right)-5\\right)}{-\\left(1-x\\right)}\\,dx",
+      "answer_latex": "e^{3x + 6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x + 6}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 32.0,
+      "seed": 130,
+      "prompt_latex": "\\int  -\\left(-\\frac{4\\left(x-1\\right)\\left(3e^{3x + 6}+3-3\\right)}{4\\left(x-1\\right)}\\right)\\,dx",
+      "answer_latex": "e^{3x + 6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x + 6}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 0.0,
+      "seed": 198,
+      "prompt_latex": "\\int \\frac{3}{3x + 1}\\,dx",
+      "answer_latex": "\\ln|3x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 1|+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 4.0,
+      "seed": 198,
+      "prompt_latex": "\\int  \\left(\\frac{3}{3x + 1}+5\\right)-5\\,dx",
+      "answer_latex": "\\ln|3x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 1|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 8.0,
+      "seed": 198,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-\\frac{3}{3x + 1}\\right)\\right)+6\\right)-6\\,dx",
+      "answer_latex": "\\ln|3x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 1|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 16.0,
+      "seed": 198,
+      "prompt_latex": "\\int  -\\left(-\\left(\\left(\\frac{3}{3x + 1}+2\\right)-2\\right)+\\left(x+1\\right)-\\left(x+1\\right)\\right)\\,dx",
+      "answer_latex": "\\ln|3x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 1|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 32.0,
+      "seed": 198,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{-\\left(2-x\\right)\\frac{3}{3x + 1}}{-\\left(2-x\\right)}+4\\right)-4\\right)+6-6\\,dx",
+      "answer_latex": "\\ln|3x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 1|+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 0.0,
+      "seed": 266,
+      "prompt_latex": "\\int \\frac{3}{3x + 6}\\,dx",
+      "answer_latex": "\\ln|3x + 6|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 6|+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 4.0,
+      "seed": 266,
+      "prompt_latex": "\\int  \\frac{-\\left(1+x\\right)\\frac{3}{3x + 6}}{-\\left(1+x\\right)}\\,dx",
+      "answer_latex": "\\ln|3x + 6|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 6|+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 8.0,
+      "seed": 266,
+      "prompt_latex": "\\int  -\\left(-\\left(\\frac{3}{3x + 6}+\\left(x-1\\right)-\\left(x-1\\right)\\right)\\right)\\,dx",
+      "answer_latex": "\\ln|3x + 6|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 6|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 16.0,
+      "seed": 266,
+      "prompt_latex": "\\int  -\\left(-\\left(\\left(\\frac{3}{3x + 6}+\\left(-2x+2\\right)-\\left(-2x+2\\right)\\right)+\\left(-2x\\right)\\right)-\\left(-2x\\right)\\right)\\,dx",
+      "answer_latex": "\\ln|3x + 6|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 6|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 32.0,
+      "seed": 266,
+      "prompt_latex": "\\int  \\left(\\frac{3\\left(x-1\\right)\\frac{3}{3x + 6}}{3\\left(x-1\\right)}+\\left(x+1\\right)\\right)-\\left(x+1\\right)+4-4\\,dx",
+      "answer_latex": "\\ln|3x + 6|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|3x + 6|+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 0.0,
+      "seed": 334,
+      "prompt_latex": "\\int 4e^{4x - 3}\\,dx",
+      "answer_latex": "e^{4x - 3}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{4x - 3}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 4.0,
+      "seed": 334,
+      "prompt_latex": "\\int  -\\left(-4e^{4x - 3}\\right)\\,dx",
+      "answer_latex": "e^{4x - 3}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{4x - 3}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 8.0,
+      "seed": 334,
+      "prompt_latex": "\\int  \\frac{\\left(x-3\\right)\\left(\\left(4e^{4x - 3}+6\\right)-6\\right)}{x-3}\\,dx",
+      "answer_latex": "e^{4x - 3}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{4x - 3}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 16.0,
+      "seed": 334,
+      "prompt_latex": "\\int  \\left(4e^{4x - 3}+5-5\\right)+\\left(2x\\right)-\\left(2x\\right)+\\left(-x+3\\right)-\\left(-x+3\\right)\\,dx",
+      "answer_latex": "e^{4x - 3}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{4x - 3}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 32.0,
+      "seed": 334,
+      "prompt_latex": "\\int  \\frac{3\\left(x-2\\right)\\left(\\left(\\left(4e^{4x - 3}+2\\right)-2\\right)+3-3\\right)}{3\\left(x-2\\right)}\\,dx",
+      "answer_latex": "e^{4x - 3}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{4x - 3}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 0.0,
+      "seed": 402,
+      "prompt_latex": "\\int 2e^{2x + 5}\\,dx",
+      "answer_latex": "e^{2x + 5}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{2x + 5}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 4.0,
+      "seed": 402,
+      "prompt_latex": "\\int  \\frac{\\left(x-3\\right)2e^{2x + 5}}{x-3}\\,dx",
+      "answer_latex": "e^{2x + 5}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{2x + 5}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 8.0,
+      "seed": 402,
+      "prompt_latex": "\\int  \\frac{2\\left(x-3\\right)\\left(2e^{2x + 5}+\\left(-x+1\\right)\\right)-\\left(-x+1\\right)}{2\\left(x-3\\right)}\\,dx",
+      "answer_latex": "e^{2x + 5}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{2x + 5}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 16.0,
+      "seed": 402,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{4\\left(x+2\\right)2e^{2x + 5}}{4\\left(x+2\\right)}+\\left(x-2\\right)\\right)-\\left(x-2\\right)+\\left(-2x-2\\right)\\right)-\\left(-2x-2\\right)\\,dx",
+      "answer_latex": "e^{2x + 5}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{2x + 5}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 32.0,
+      "seed": 402,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-\\left(2e^{2x + 5}+\\left(2x\\right)-\\left(2x\\right)\\right)\\right)\\right)+6\\right)-6\\,dx",
+      "answer_latex": "e^{2x + 5}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{2x + 5}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 0.0,
+      "seed": 470,
+      "prompt_latex": "\\int 3e^{3x - 2}\\,dx",
+      "answer_latex": "e^{3x - 2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x - 2}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 4.0,
+      "seed": 470,
+      "prompt_latex": "\\int  3e^{3x - 2}+\\left(2x-2\\right)-\\left(2x-2\\right)\\,dx",
+      "answer_latex": "e^{3x - 2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x - 2}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 8.0,
+      "seed": 470,
+      "prompt_latex": "\\int  \\frac{3\\left(x+1\\right)3e^{3x - 2}}{3\\left(x+1\\right)}+3-3\\,dx",
+      "answer_latex": "e^{3x - 2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x - 2}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 16.0,
+      "seed": 470,
+      "prompt_latex": "\\int  \\left(-\\left(-\\frac{-\\left(3+x\\right)3e^{3x - 2}}{-\\left(3+x\\right)}\\right)\\right)+6-6\\,dx",
+      "answer_latex": "e^{3x - 2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x - 2}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 32.0,
+      "seed": 470,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{-\\left(1-x\\right)3e^{3x - 2}}{-\\left(1-x\\right)}+2\\right)-2\\right)+6-6\\,dx",
+      "answer_latex": "e^{3x - 2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "exp_of_poly",
+          "detail": "catalog/skeleton exp_of_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "e^{3x - 2}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 0.0,
+      "seed": 555,
+      "prompt_latex": "\\int \\frac{2}{2x + 1}\\,dx",
+      "answer_latex": "\\ln|2x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|2x + 1|+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 4.0,
+      "seed": 555,
+      "prompt_latex": "\\int  -\\left(-\\frac{2}{2x + 1}\\right)\\,dx",
+      "answer_latex": "\\ln|2x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|2x + 1|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 8.0,
+      "seed": 555,
+      "prompt_latex": "\\int  \\left(-\\left(-\\frac{2}{2x + 1}\\right)\\right)+6-6\\,dx",
+      "answer_latex": "\\ln|2x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|2x + 1|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 16.0,
+      "seed": 555,
+      "prompt_latex": "\\int  -\\left(-\\left(\\left(\\left(\\frac{2}{2x + 1}+5\\right)-5\\right)+\\left(3x-2\\right)\\right)-\\left(3x-2\\right)\\right)\\,dx",
+      "answer_latex": "\\ln|2x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|2x + 1|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 32.0,
+      "seed": 555,
+      "prompt_latex": "\\int  \\left(\\frac{-\\left(1+x\\right)\\left(\\left(\\frac{2}{2x + 1}+2\\right)-2\\right)}{-\\left(1+x\\right)}+\\left(3x+3\\right)\\right)-\\left(3x+3\\right)\\,dx",
+      "answer_latex": "\\ln|2x + 1|+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "du_over_u_linear",
+          "detail": "catalog/skeleton du_over_u_linear"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "u_sub",
+          "detail": "method u_sub"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\ln|2x + 1|+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 32.0
+    }
+  ]
+}

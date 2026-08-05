@@ -58,6 +58,7 @@ _OPPOSITE = OppositeFramework()
 _COMPARE = CompareOrderFramework(mode="compare")
 _ORDER = CompareOrderFramework(mode="order")
 _FRAC_DECIMAL = FractionDecimalConvertFramework()
+_FRAC_DECIMAL_PERCENT = FractionDecimalConvertFramework(include_percent=True)
 _DIVISIBILITY = DivisibilityFramework()
 _INTRO_PERCENTS = IntroductionToPercentsFramework()
 _G6_VISUALS = {
@@ -97,6 +98,8 @@ def g6_fraction_multiply(topic: str, settings: dict) -> list[Question]:
 
 
 def g6_fraction_divide(topic: str, settings: dict) -> list[Question]:
+    # Grade 6 dividing fractions stays non-negative; effort is cancel structure.
+    settings = {**settings, "allow_negative": False}
     return _framework_generator(_FRAC_DIVIDE, topic, settings)
 
 
@@ -178,7 +181,9 @@ def g6_ordering_numbers(topic: str, settings: dict) -> list[Question]:
 
 
 def g6_relating_percents_fractions_and_decimals(topic: str, settings: dict) -> list[Question]:
-    return _framework_generator(_FRAC_DECIMAL, topic, settings)
+    # Force F↔D↔P (include percent) — this topic is not fraction↔decimal only.
+    settings = {**settings, "include_percent_conversions": True}
+    return _framework_generator(_FRAC_DECIMAL_PERCENT, topic, settings)
 
 
 def g6_introduction_to_percents(topic: str, settings: dict) -> list[Question]:

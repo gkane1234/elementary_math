@@ -200,18 +200,31 @@ class CancelPlan:
 
 @dataclass(frozen=True)
 class PartialFractionTerm:
-    """A/(x - r) or (Bx + C)/(x^2 + …) — linear dens first."""
+    """Partial-fraction summand.
 
-    numerator: Fraction  # constant A for linear den
-    root: Fraction  # pole at x = root → factor (x - root)
+    - ``kind="linear"``: ``A/(x - root)`` (``numerator`` = A).
+    - ``kind="quadratic"``: ``(lin_coef·x + numerator)/(x² + quad_a2)`` with
+      ``quad_a2 > 0`` irreducible — integrates to ln and/or arctan (OpenStax).
+    """
+
+    numerator: Fraction  # A (linear) or C in Bx+C (quadratic)
+    root: Fraction = Fraction(0)  # pole for linear dens
     multiplicity: int = 1
+    kind: str = "linear"  # "linear" | "quadratic"
+    lin_coef: Fraction = Fraction(0)  # B in Bx+C
+    quad_a2: Fraction = Fraction(1)  # a² in x²+a² (must be >0)
 
     def as_dict(self) -> dict[str, Any]:
-        return {
+        out: dict[str, Any] = {
             "A": str(self.numerator),
             "root": str(self.root),
             "multiplicity": self.multiplicity,
+            "kind": self.kind,
         }
+        if self.kind == "quadratic":
+            out["lin_coef"] = str(self.lin_coef)
+            out["quad_a2"] = str(self.quad_a2)
+        return out
 
 
 @dataclass(frozen=True)
@@ -226,6 +239,7 @@ class PartialFractionTarget:
             "kind": "partial_fractions",
             "terms": [t.as_dict() for t in self.terms],
             "level": self.level,
+            "has_quadratic": any(t.kind == "quadratic" for t in self.terms),
         }
 
 
@@ -731,7 +745,11 @@ def construct_numeric(
     budget = inflator_budget(eff)
     recurse_tags: list[str] = []
 
-    steps = budget  # D=0 → plain number; never force an inflator just because D>0
+    # Top-level OOO surfaces must never be a bare number (D=0 seed-only). Nested
+    # disguise children may stay plain leaves.
+    steps = budget
+    if _depth == 0:
+        steps = max(1, budget)
     for _ in range(steps):
         choice = ctx.rng.choice(
             ["split_add", "split_sub", "scale_div", "parens_sum", "mul_add"]
@@ -2122,19 +2140,80 @@ def seed_partial_fraction_target(
     *,
     n_terms: int | None = None,
     d: float = 0.0,
+    allow_quadratic: bool | None = None,
 ) -> PartialFractionTarget:
+    """Seed Σ Aᵢ/(x−rᵢ) and optionally one irreducible quadratic term.
+
+    OpenStax-style: at mid+ D include ``(Bx+C)/(x²+a²)`` so ∫ yields arctan.
+    ``allow_quadratic`` defaults on when ``d >= 8``.
+    """
     n = n_terms if n_terms is not None else (2 if d < 8 else 3)
     n = max(2, min(4, n))
+    want_quad = (
+        bool(allow_quadratic)
+        if allow_quadratic is not None
+        else (d >= 8.0 and ctx.rng.random() < (0.55 if d < 14 else 0.75))
+    )
     roots: list[Fraction] = []
     terms: list[PartialFractionTerm] = []
-    while len(terms) < n:
+    # Reserve one slot for quadratic when requested
+    n_linear = n - 1 if want_quad else n
+    n_linear = max(1, n_linear) if want_quad else n
+    while len(terms) < n_linear:
         r = sample_integerish(ctx, exclude_zero=False).value
         if r in roots:
             continue
         roots.append(r)
         a = sample_integerish(ctx, exclude_zero=True).value
-        terms.append(PartialFractionTerm(numerator=a, root=r, multiplicity=1))
+        terms.append(PartialFractionTerm(numerator=a, root=r, multiplicity=1, kind="linear"))
+    if want_quad:
+        # Irreducible x² + a² with a ∈ {1,2,3}; Bx+C with C often nonzero for arctan
+        a_int = ctx.rng.choice([1, 2, 3] if d < 14 else [1, 2, 3, 4])
+        a2 = Fraction(a_int * a_int)
+        # Bias toward pure C/(x²+a²) (arctan) and occasional Bx/(x²+a²) (ln)
+        mode = ctx.rng.choice(["arctan", "arctan", "ln", "mixed"])
+        if mode == "arctan":
+            b_lin, c_num = Fraction(0), sample_integerish(ctx, exclude_zero=True).value
+        elif mode == "ln":
+            b_lin, c_num = sample_integerish(ctx, exclude_zero=True).value, Fraction(0)
+        else:
+            b_lin = sample_integerish(ctx, exclude_zero=True).value
+            c_num = sample_integerish(ctx, exclude_zero=True).value
+        terms.append(
+            PartialFractionTerm(
+                numerator=c_num,
+                root=Fraction(0),
+                multiplicity=1,
+                kind="quadratic",
+                lin_coef=b_lin,
+                quad_a2=a2,
+            )
+        )
     return PartialFractionTarget(terms=tuple(terms))
+
+
+def _poly_from_quadratic_a2(a2: Fraction) -> dict[int, Fraction]:
+    """Monic irreducible x² + a²."""
+    return {2: Fraction(1), 0: Fraction(a2)}
+
+
+def _den_poly_for_pf_term(t: PartialFractionTerm) -> dict[int, Fraction]:
+    if t.kind == "quadratic":
+        return _poly_from_quadratic_a2(Fraction(t.quad_a2))
+    return _poly_from_linear(t.root)
+
+
+def _num_poly_for_pf_term(t: PartialFractionTerm) -> dict[int, Fraction]:
+    if t.kind == "quadratic":
+        out: dict[int, Fraction] = {}
+        if Fraction(t.lin_coef) != 0:
+            out[1] = Fraction(t.lin_coef)
+        if Fraction(t.numerator) != 0:
+            out[0] = Fraction(t.numerator)
+        if not out:
+            out[0] = Fraction(1)
+        return out
+    return {0: Fraction(t.numerator)}
 
 
 def construct_pfd(
@@ -2144,13 +2223,15 @@ def construct_pfd(
     var: SampledVariable | None = None,
     target: PartialFractionTarget | None = None,
 ) -> SurfaceExpression:
-    """L4: seed partial fractions (answer), combine to a single rational (prompt)."""
+    """L4: seed partial fractions (answer), combine to a single rational (prompt).
+
+    Supports linear factors and irreducible ``x²+a²`` (arctan/ln after ∫).
+    """
     eff = float(d if d is not None else max(ctx.topic_d, 0.0))
     v = var or ctx.sample_variable()
     tgt = target or seed_partial_fraction_target(ctx, d=eff)
 
-    # Combine Σ A_i/(x - r_i)
-    dens = [_poly_from_linear(t.root) for t in tgt.terms]
+    dens = [_den_poly_for_pf_term(t) for t in tgt.terms]
     lcd = {0: Fraction(1)}
     for den in dens:
         lcd = _poly_mul(lcd, den)
@@ -2161,13 +2242,12 @@ def construct_pfd(
         for j, den in enumerate(dens):
             if j != i:
                 cofactor = _poly_mul(cofactor, den)
-        combined_num = _poly_add(combined_num, _poly_scale(cofactor, t.numerator))
+        piece_num = _poly_mul(cofactor, _num_poly_for_pf_term(t))
+        combined_num = _poly_add(combined_num, piece_num)
 
-    # Optional L1-ish inflate: multiply num and den by a constant k
     applied = ["seed_pf", "combine_lcd"]
     from question_engine.frameworks.primitives.difficulty_knobs import fget
 
-    # Dens stay a factor product for display; combined num is a sum (not factored).
     den_factors = list(dens)
     scale_k = Fraction(1)
     if inflator_budget(eff) >= 1 and ctx.rng.random() < fget(
@@ -2178,11 +2258,9 @@ def construct_pfd(
         lcd = _poly_scale(lcd, scale_k)
         applied.append("scale_num_den")
 
-    # Numerator is generally not a clean factor product after combining; den is.
     if scale_k != 1:
         den_factors = [{0: scale_k}] + den_factors
 
-    # Student prompt may nest related L1 blocks into the combined rational.
     prompt_l, prompt_t, recurse_tags = _disguise_rational_fraction(
         ctx,
         combined_num,
@@ -2194,13 +2272,13 @@ def construct_pfd(
         den_factors=den_factors,
     )
 
-    # Answer latex: clean sum of A/(x-r) (no disguise — answer key stays readable)
     ans_parts_l: list[str] = []
     ans_parts_t: list[str] = []
     for i, t in enumerate(tgt.terms):
-        den_l, den_t = _render_poly_dict(_poly_from_linear(t.root), v)
-        piece_l = rf"\frac{{{num_latex(t.numerator)}}}{{{den_l}}}"
-        piece_t = f"({num_latex(t.numerator)})/({den_t})"
+        den_l, den_t = _render_poly_dict(_den_poly_for_pf_term(t), v)
+        num_l, num_t = _render_poly_dict(_num_poly_for_pf_term(t), v)
+        piece_l = rf"\frac{{{num_l}}}{{{den_l}}}"
+        piece_t = f"({num_t})/({den_t})"
         if i == 0:
             ans_parts_l.append(piece_l)
             ans_parts_t.append(piece_t)
@@ -2224,6 +2302,7 @@ def construct_pfd(
             "constructive": True,
             "mode": "pfd",
             "n_terms": len(tgt.terms),
+            "has_quadratic": any(t.kind == "quadratic" for t in tgt.terms),
             "pf_target": tgt.as_dict(),
             "recurse_hits": sum(1 for t in recurse_tags if t.startswith("recurse:")),
         },

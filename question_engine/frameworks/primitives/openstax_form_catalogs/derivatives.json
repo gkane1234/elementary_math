@@ -1,0 +1,325 @@
+{
+  "catalog_id": "derivatives",
+  "title": "OpenStax differentiation rules — Calc Vol.1 Ch.3 form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "calculus-volume-1",
+      "slug": "3-3-differentiation-rules",
+      "title": "3.3 Differentiation Rules",
+      "url": "https://openstax.org/books/calculus-volume-1/pages/3-3-differentiation-rules",
+      "stage1": "scripts/output/example_mining/calculus-volume-1/stage1/3-3-differentiation-rules.json"
+    },
+    "related": [
+      { "book": "calculus-volume-1", "slug": "3-5-derivatives-of-trigonometric-functions" },
+      { "book": "calculus-volume-1", "slug": "3-6-the-chain-rule" },
+      { "book": "calculus-volume-1", "slug": "3-7-derivatives-of-inverse-functions" },
+      { "book": "calculus-volume-1", "slug": "3-9-derivatives-of-exponential-and-logarithmic-functions" }
+    ]
+  },
+  "taxonomy_notes": [
+    "Forms map to ExpressionSpec packs / force flags. generator_keys filter which leaf selects each form.",
+    "shape_id from AST still emitted; form_id is the textbook case label."
+  ],
+  "forms": [
+    {
+      "form_id": "power_poly",
+      "description": "Power rule on Σ c x^k",
+      "strategy": "power_rule",
+      "generator_keys": ["derivative_power_rule", "derivative_higher_order"],
+      "d_min": 0,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3 power"
+    },
+    {
+      "form_id": "power_root",
+      "description": "Power rule with √x / fractional exponents",
+      "strategy": "power_rule",
+      "generator_keys": ["derivative_power_rule"],
+      "d_min": 4,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3 roots"
+    },
+    {
+      "form_id": "power_negative",
+      "description": "Negative integer powers",
+      "strategy": "power_rule",
+      "generator_keys": ["derivative_power_rule"],
+      "d_min": 6,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3"
+    },
+    {
+      "form_id": "product_two_poly",
+      "description": "Product of two polynomials",
+      "strategy": "product_rule",
+      "generator_keys": ["derivative_product_rule", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3 product"
+    },
+    {
+      "form_id": "product_poly_trig",
+      "description": "Poly × trig product",
+      "strategy": "product_rule",
+      "generator_keys": ["derivative_product_rule", "derivative_trigonometric", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3 / §3.5"
+    },
+    {
+      "form_id": "product_poly_exp",
+      "description": "Poly × exp product",
+      "strategy": "product_rule",
+      "generator_keys": ["derivative_product_rule", "derivative_ln_exp", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.9"
+    },
+    {
+      "form_id": "quotient_poly",
+      "description": "Quotient of polynomials",
+      "strategy": "quotient_rule",
+      "generator_keys": ["derivative_quotient_rule", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3 quotient"
+    },
+    {
+      "form_id": "quotient_trig_poly",
+      "description": "Trig / poly quotient (e.g. sin(x)/(x+1))",
+      "strategy": "quotient_rule",
+      "generator_keys": ["derivative_quotient_rule", "derivative_trigonometric", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.5"
+    },
+    {
+      "form_id": "quotient_exp_poly",
+      "description": "Exp / poly quotient (e.g. e^x/(x^2+1))",
+      "strategy": "quotient_rule",
+      "generator_keys": ["derivative_quotient_rule", "derivative_ln_exp", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.9"
+    },
+    {
+      "form_id": "quotient_log_poly",
+      "description": "Log / poly or log / trig quotient (e.g. ln(x)/cos(x))",
+      "strategy": "quotient_rule",
+      "generator_keys": ["derivative_quotient_rule", "derivative_ln_exp", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.9"
+    },
+    {
+      "form_id": "quotient_mixed_special",
+      "description": "Mixed special-function quotient (trig/exp/log sides)",
+      "strategy": "quotient_rule",
+      "generator_keys": ["derivative_quotient_rule", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.5 / §3.9"
+    },
+    {
+      "form_id": "chain_power_linear",
+      "description": "(ax+b)^n chain",
+      "strategy": "chain_rule",
+      "generator_keys": ["derivative_chain_rule", "derivative_power_rule", "derivative_general"],
+      "d_min": 2,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.6"
+    },
+    {
+      "form_id": "chain_trig_poly",
+      "description": "sin/cos of polynomial",
+      "strategy": "chain_rule",
+      "generator_keys": ["derivative_chain_rule", "derivative_trigonometric", "derivative_general"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.6 / §3.5"
+    },
+    {
+      "form_id": "chain_nested",
+      "description": "Nested chain depth ≥2",
+      "strategy": "chain_rule",
+      "generator_keys": ["derivative_chain_rule", "derivative_general"],
+      "d_min": 12,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.6 nested"
+    },
+    {
+      "form_id": "trig_basic",
+      "description": "d/dx sin, cos, tan, sec table",
+      "strategy": "trig_table",
+      "generator_keys": ["derivative_trigonometric"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.5"
+    },
+    {
+      "form_id": "trig_product_chain",
+      "description": "Trig product or chained trig",
+      "strategy": "trig_advanced",
+      "generator_keys": ["derivative_trigonometric"],
+      "d_min": 8,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.5"
+    },
+    {
+      "form_id": "ln_basic",
+      "description": "d/dx ln|x| / ln|g|",
+      "strategy": "log_rule",
+      "generator_keys": ["derivative_ln_exp"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.9"
+    },
+    {
+      "form_id": "exp_basic",
+      "description": "d/dx e^x / e^{g}",
+      "strategy": "exp_rule",
+      "generator_keys": ["derivative_ln_exp"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.9"
+    },
+    {
+      "form_id": "ln_exp_product",
+      "description": "Product/chain mixing ln and exp",
+      "strategy": "ln_exp_mix",
+      "generator_keys": ["derivative_ln_exp"],
+      "d_min": 10,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.9"
+    },
+    {
+      "form_id": "invtrig_arcsin",
+      "description": "d/dx arcsin",
+      "strategy": "invtrig",
+      "generator_keys": ["derivative_inverse_trig"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.7"
+    },
+    {
+      "form_id": "invtrig_arctan",
+      "description": "d/dx arctan",
+      "strategy": "invtrig",
+      "generator_keys": ["derivative_inverse_trig"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.7"
+    },
+    {
+      "form_id": "invtrig_chained",
+      "description": "arcsinx/arctan of composite",
+      "strategy": "invtrig_chain",
+      "generator_keys": ["derivative_inverse_trig"],
+      "d_min": 8,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.7"
+    },
+    {
+      "form_id": "higher_order_2",
+      "description": "Second derivative",
+      "strategy": "higher_order",
+      "generator_keys": ["derivative_higher_order"],
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3 higher-order"
+    },
+    {
+      "form_id": "higher_order_3",
+      "description": "Third derivative",
+      "strategy": "higher_order",
+      "generator_keys": ["derivative_higher_order"],
+      "d_min": 10,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3"
+    },
+    {
+      "form_id": "general_mixed",
+      "description": "General mix of product/chain/specials",
+      "strategy": "general",
+      "generator_keys": ["derivative_general"],
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§3.3–3.9 combined"
+    },
+    {
+      "form_id": "implicit_basic",
+      "description": "Implicit differentiation",
+      "strategy": "implicit",
+      "generator_keys": ["derivative_implicit"],
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "stub",
+      "example_item_ids": [],
+      "openstax_case": "§3.8",
+      "gap_reason": "Implicit sampler not yet catalog-routed"
+    },
+    {
+      "form_id": "logarithmic_diff",
+      "description": "Logarithmic differentiation",
+      "strategy": "logarithmic",
+      "generator_keys": ["derivative_logarithmic"],
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "stub",
+      "example_item_ids": [],
+      "openstax_case": "§3.9 log diff",
+      "gap_reason": "Logarithmic-diff leaf not yet catalog-routed"
+    }
+  ]
+}

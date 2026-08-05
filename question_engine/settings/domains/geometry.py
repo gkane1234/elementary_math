@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from ...core.models import SettingField
+from .common import continuous_difficulty_settings
 
 
 def geometry_metadata_settings() -> list[SettingField]:
@@ -247,6 +248,7 @@ def proof_difficulty_settings() -> list[SettingField]:
 def geometry_settings() -> list[SettingField]:
     """Backward-compatible base geometry settings."""
     return [
+        *continuous_difficulty_settings(default_d=6),
         *geometry_metadata_settings(),
         *measurement_unit_settings(),
         *side_length_settings(),

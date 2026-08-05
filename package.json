@@ -9,11 +9,13 @@
     "lint": "next lint",
     "dev:api": "python -m question_engine.dev_server",
     "setup:stripe": "powershell -ExecutionPolicy Bypass -File scripts/setup-stripe.ps1",
+    "setup:subscription-price": "npx --yes tsx scripts/create-subscription-price.ts",
     "stripe:listen": "powershell -ExecutionPolicy Bypass -File scripts/stripe-listen.ps1"
   },
   "dependencies": {
     "katex": "^0.16.22",
     "next": "^15.3.4",
+    "next-auth": "^5.0.0-beta.32",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "stripe": "^22.3.0"

@@ -8,7 +8,9 @@ Usage:
 
 Writes under scripts/output/topic_fit/<run_id>/:
   samples.jsonl  — one row per generated question
-  gallery.md     — compact E/M/H prompts per type
+  gallery.md     — compact E/M/H prompts per type (+ structure inventory)
+  gallery.html   — KaTeX-rendered sibling of gallery.md
+  structure_inventory.json — counts of live structure/family labels
   auto_flags.json — heuristic pre-flags (not a substitute for judgment)
 """
 
@@ -26,16 +28,29 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 import question_engine.types  # noqa: F401
-from question_engine.core.base import QUESTION_TYPES
+from question_engine.api.handler import _generate_for_type
 from question_engine.qa.topic_fit import (
     FAMILIES,
     evaluate_topic_fit,
     resolve_type_ids,
 )
-from question_engine.settings.presets import apply_difficulty_presets
 
 OUT_ROOT = ROOT / "scripts" / "output" / "topic_fit"
 DEFAULT_TIERS = ("easy", "medium", "hard")
+
+import importlib.util
+
+_struct_spec = importlib.util.spec_from_file_location(
+    "topic_fit_structure",
+    ROOT / "scripts" / "topic_fit_structure.py",
+)
+_struct_mod = importlib.util.module_from_spec(_struct_spec)
+assert _struct_spec.loader is not None
+_struct_spec.loader.exec_module(_struct_mod)
+extract_structure_meta = _struct_mod.extract_structure_meta
+format_structure_cell = _struct_mod.format_structure_cell
+inventory_counts = _struct_mod.inventory_counts
+inventory_markdown = _struct_mod.inventory_markdown
 
 
 def _meta_flags(meta: dict | None) -> dict:
@@ -46,26 +61,32 @@ def _meta_flags(meta: dict | None) -> dict:
         "has_diagram": bool(m.get("diagram_svg") or m.get("diagram_spec")),
         "has_number_line": bool(m.get("number_line_spec") or m.get("answer_number_line_spec")),
         "has_choices": bool(m.get("choices")),
+        # Present when sampled via live ``_generate_for_type`` annotation.
+        "has_generation_settings": bool(m.get("generation_settings")),
+        "has_structure": bool(
+            m.get("family")
+            or m.get("structure_id")
+            or m.get("shape_id")
+            or m.get("function_classes")
+            or m.get("methods_used")
+            or m.get("upgrades")
+        ),
     }
 
 
 def generate_for_entry(entry, tiers: tuple[str, ...], n: int) -> list[dict]:
-    qt = QUESTION_TYPES[entry.id]
-    profile = getattr(qt, "setting_profile", None)
+    """Sample via live ``_generate_for_type`` (same path as WorksheetGenerator API)."""
     rows: list[dict] = []
     for tier in tiers:
         for i in range(n):
-            settings = apply_difficulty_presets(
-                {
-                    "count": 1,
-                    "difficulty_tier": tier,
-                    "include_answer_key": True,
-                    "include_diagram": True,
-                    "include_graph_metadata": True,
-                },
-                type_id=entry.id,
-                setting_profile=profile,
-            )
+            # Presets / profile defaults applied inside ``_resolve_generation_settings``.
+            settings = {
+                "count": 1,
+                "difficulty_tier": tier,
+                "include_answer_key": True,
+                "include_diagram": True,
+                "include_graph_metadata": True,
+            }
             row: dict = {
                 "type_id": entry.id,
                 "name": entry.name or entry.id,
@@ -78,9 +99,10 @@ def generate_for_entry(entry, tiers: tuple[str, ...], n: int) -> list[dict]:
                 "answer_latex": "",
                 "error": None,
                 "metadata_flags": {},
+                "generation_settings": None,
             }
             try:
-                qs = qt.generate(settings)
+                qs = _generate_for_type(entry.id, settings)
                 if not qs:
                     row["error"] = "empty"
                     rows.append(row)
@@ -93,6 +115,16 @@ def generate_for_entry(entry, tiers: tuple[str, ...], n: int) -> list[dict]:
                 # Included for incidental context only — not used by auto topic-fit flags.
                 row["answer_latex"] = (q.answer_latex or "").strip()
                 row["metadata_flags"] = _meta_flags(meta)
+                row["generation_settings"] = meta.get("generation_settings")
+                row["structure"] = extract_structure_meta(meta)
+                row["family"] = meta.get("family")
+                row["structure_id"] = meta.get("structure_id")
+                row["function_classes"] = meta.get("function_classes")
+                row["methods_used"] = meta.get("methods_used")
+                row["upgrades"] = meta.get("upgrades") or meta.get("upgrades_applied")
+                row["shape_id"] = meta.get("shape_id")
+                row["variant"] = meta.get("variant")
+                row["band"] = meta.get("band")
             except Exception as exc:  # noqa: BLE001
                 row["error"] = str(exc)
             rows.append(row)
@@ -116,6 +148,7 @@ def write_gallery(path: Path, rows: list[dict], flags: list[dict]) -> None:
         "Review prompts for **topic / method / difficulty shape** — not answer correctness.",
         "",
     ]
+    lines.extend(inventory_markdown(rows, heading="## Structure inventory (all types)"))
     for tid, type_rows in by_type.items():
         name = type_rows[0].get("name") or tid
         gen = type_rows[0].get("generator") or ""
@@ -130,6 +163,7 @@ def write_gallery(path: Path, rows: list[dict], flags: list[dict]) -> None:
         if fr.get("notes"):
             lines.append(f"- auto notes: {', '.join(fr['notes'])}")
         lines.append("")
+        lines.extend(inventory_markdown(type_rows, heading="### Structures in this type"))
         for tier in ("easy", "medium", "hard"):
             tier_rows = [r for r in type_rows if r["tier"] == tier]
             if not tier_rows:
@@ -141,7 +175,27 @@ def write_gallery(path: Path, rows: list[dict], flags: list[dict]) -> None:
                     lines.append(f"- ERROR: {r['error']}")
                     continue
                 prompt = r.get("prompt_latex") or r.get("prompt_text") or ""
-                lines.append(f"- `{_clip(prompt)}`")
+                # Prefer full LaTeX for gallery.html KaTeX; clip only in display text path.
+                # Must use $...$ (not backticks): KaTeX ignores <code> and bare TeX.
+                if r.get("prompt_latex"):
+                    body = prompt.strip()
+                    if body.startswith("$") and body.endswith("$"):
+                        lines.append(f"- {body}")
+                    else:
+                        lines.append(f"- ${body}$")
+                else:
+                    lines.append(f"- `{_clip(prompt)}`")
+                # Prefer continuous D from generation settings / structure over EMH band.
+                d_raw = None
+                gs = r.get("generation_settings")
+                if isinstance(gs, dict) and gs.get("difficulty") is not None:
+                    d_raw = gs.get("difficulty")
+                struct = r.get("structure") if isinstance(r.get("structure"), dict) else {}
+                if d_raw is None and isinstance(struct, dict):
+                    d_raw = struct.get("difficulty")
+                st = format_structure_cell(r.get("structure"), difficulty=d_raw)
+                if st and st != "—":
+                    lines.append(f"  - structure: `{st}`")
             lines.append("")
     path.write_text("\n".join(lines), encoding="utf-8")
 
@@ -276,12 +330,51 @@ def main() -> int:
     gallery_path = out_dir / "gallery.md"
     write_gallery(gallery_path, all_rows, flags)
 
+    counts = inventory_counts(all_rows)
+    (out_dir / "structure_inventory.json").write_text(
+        json.dumps(
+            {
+                "sample_count": len([r for r in all_rows if not r.get("error")]),
+                "distinct_structures": [
+                    {"structure": label, "count": n}
+                    for label, n in counts
+                    if label != "(unlabeled)"
+                ],
+                "unlabeled_count": next(
+                    (n for label, n in counts if label == "(unlabeled)"), 0
+                ),
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    import importlib.util as _ilu
+
+    _spec = _ilu.spec_from_file_location(
+        "render_topic_fit_gallery_html",
+        ROOT / "scripts" / "render_topic_fit_gallery_html.py",
+    )
+    _mod = _ilu.module_from_spec(_spec)
+    assert _spec.loader is not None
+    _spec.loader.exec_module(_mod)
+    html_path = out_dir / "gallery.html"
+    html_path.write_text(
+        _mod.wrap_gallery_html(
+            gallery_path.read_text(encoding="utf-8"),
+            html_path=html_path,
+        ),
+        encoding="utf-8",
+    )
+
     fail_n = sum(1 for f in flags if f["status"] == "FAIL")
     note_n = sum(1 for f in flags if f["status"] == "NOTE")
     pass_n = sum(1 for f in flags if f["status"] == "PASS")
     print(f"Wrote {out_dir}")
     print(f"  types={len(entries)} samples={len(all_rows)} PASS={pass_n} NOTE={note_n} FAIL={fail_n}")
-    print(f"  {samples_path.name}  {gallery_path.name}  {flags_path.name}")
+    print(f"  {samples_path.name}  {gallery_path.name}  {html_path.name}  {flags_path.name}")
     return 0
 
 

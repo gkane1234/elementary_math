@@ -10,6 +10,7 @@ knobs — OOO only passes ``allow_exponents`` and difficulty into that API.
 from __future__ import annotations
 
 import math
+import re
 from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any
@@ -337,6 +338,20 @@ def _absorb_product(last: Fraction, rng) -> tuple[int, Fraction, str, str, str] 
     return None
 
 
+def _expression_has_binary_op(latex: str, text: str) -> bool:
+    """True if the stem shows a binary + − × ÷ (not merely a unary minus / power)."""
+    if any(tok in latex for tok in ("\\times", "\\div", "\\cdot", "\\frac", "+")):
+        return True
+    if any(tok in text for tok in ("*", "/", "+")):
+        return True
+    # Binary minus: left operand then '-' then (possibly signed) right operand.
+    if re.search(r"[\d\)\}]\s*-\s*-?[\d\(\{\\a-zA-Z]", latex):
+        return True
+    if re.search(r"[\d\)\}]\s*-\s*-?[\d\(\{a-zA-Z]", text):
+        return True
+    return False
+
+
 def build_flat_ooo(
     ctx: PrimitiveContext,
     *,
@@ -465,10 +480,28 @@ def sample_ooo_expression(
     if "with_exponents" in str(leaf):
         require = True
     allow_exp = True if require else exponents_unlocked(topic)
-    return build_flat_ooo(
-        ctx,
-        d=eff,
-        allow_exponents=allow_exp,
-        exp_d=topic,
-        require_exponents=require,
+    for _ in range(12):
+        expr = build_flat_ooo(
+            ctx,
+            d=eff,
+            allow_exponents=allow_exp,
+            exp_d=topic,
+            require_exponents=require,
+        )
+        if _expression_has_binary_op(expr.latex, expr.text):
+            return expr
+    # Last resort: force a trivial binary product-difference.
+    a = Fraction(ctx.rng.randint(2, 5))
+    b = Fraction(ctx.rng.randint(2, 5))
+    c = Fraction(ctx.rng.randint(1, 9))
+    val = a * b - c
+    return OooExpression(
+        latex=f"{num_latex(a)} \\times {num_latex(b)} - {num_latex(c)}",
+        text=f"{num_latex(a)}*{num_latex(b)} - {num_latex(c)}",
+        value=val,
+        upgrades=("fallback_binary",),
+        effective_d=eff,
+        shape_id="ooo:fallback_binary",
+        n_ops=2,
+        nest_depth=0,
     )

@@ -1,0 +1,1977 @@
+{
+  "pack_id": "int_power",
+  "type_id": "calc_indef_int_power_rule",
+  "leaf": "integral_power_rule",
+  "approx_max_conceptual_d": 25.0,
+  "conceptual_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "spec_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    16.0,
+    32.0
+  ],
+  "allows": {
+    "allow_roots": true
+  },
+  "rows": [
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 0.0,
+      "seed": 742,
+      "prompt_latex": "\\int 3x \\, dx",
+      "answer_latex": "\\frac{3}{2}x^{2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{3}{2}x^{2}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 4.0,
+      "seed": 742,
+      "prompt_latex": "\\int  \\frac{3\\left(x-1\\right)3x}{3\\left(x-1\\right)}\\, dx",
+      "answer_latex": "\\frac{3}{2}x^{2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{3}{2}x^{2}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 8.0,
+      "seed": 742,
+      "prompt_latex": "\\int  -\\left(-\\left(2x + x\\right)\\right)\\, dx",
+      "answer_latex": "\\frac{3}{2}x^{2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{3}{2}x^{2}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "poly_inflate",
+          "detail": "poly-core compose inflate (pure poly islands only)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 16.0,
+      "seed": 742,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{2\\left(x-1\\right)3x}{2\\left(x-1\\right)}+\\left(-x+2\\right)\\right)-\\left(-x+2\\right)+\\left(2x-1\\right)\\right)-\\left(2x-1\\right)\\, dx",
+      "answer_latex": "\\frac{3}{2}x^{2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{3}{2}x^{2}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 32.0,
+      "seed": 742,
+      "prompt_latex": "\\int  \\frac{\\left(x-2\\right)\\left(\\left(3x+2-2\\right)+\\left(x\\right)\\right)-\\left(x\\right)}{x-2}\\, dx",
+      "answer_latex": "\\frac{3}{2}x^{2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{3}{2}x^{2}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 0.0,
+      "seed": 810,
+      "prompt_latex": "\\int \\sqrt{x}\\,dx",
+      "answer_latex": "\\frac{2}{3}x^{\\frac{3}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "sqrt_x",
+          "detail": "catalog/skeleton sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{3}x^{\\frac{3}{2}}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 4.0,
+      "seed": 810,
+      "prompt_latex": "\\int  \\left(\\sqrt{x}+2\\right)-2\\,dx",
+      "answer_latex": "\\frac{2}{3}x^{\\frac{3}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "sqrt_x",
+          "detail": "catalog/skeleton sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{3}x^{\\frac{3}{2}}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 8.0,
+      "seed": 810,
+      "prompt_latex": "\\int  \\left(\\left(\\left(\\sqrt{x}+4\\right)-4\\right)+1\\right)-1\\,dx",
+      "answer_latex": "\\frac{2}{3}x^{\\frac{3}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "sqrt_x",
+          "detail": "catalog/skeleton sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{3}x^{\\frac{3}{2}}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 16.0,
+      "seed": 810,
+      "prompt_latex": "\\int  \\left(-\\left(-\\frac{-\\left(3-x\\right)\\sqrt{x}}{-\\left(3-x\\right)}\\right)\\right)+1-1\\,dx",
+      "answer_latex": "\\frac{2}{3}x^{\\frac{3}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "sqrt_x",
+          "detail": "catalog/skeleton sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{3}x^{\\frac{3}{2}}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 32.0,
+      "seed": 810,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-\\frac{2\\left(x-1\\right)\\sqrt{x}}{2\\left(x-1\\right)}\\right)\\right)+1\\right)-1\\,dx",
+      "answer_latex": "\\frac{2}{3}x^{\\frac{3}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "sqrt_x",
+          "detail": "catalog/skeleton sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{3}x^{\\frac{3}{2}}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 0.0,
+      "seed": 878,
+      "prompt_latex": "\\int \\frac{1}{\\sqrt{x}}\\,dx",
+      "answer_latex": "2\\sqrt{x}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "one_over_sqrt_x",
+          "detail": "catalog/skeleton one_over_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\sqrt{x}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 4.0,
+      "seed": 878,
+      "prompt_latex": "\\int  -\\left(-\\frac{1}{\\sqrt{x}}\\right)\\,dx",
+      "answer_latex": "2\\sqrt{x}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "one_over_sqrt_x",
+          "detail": "catalog/skeleton one_over_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\sqrt{x}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 8.0,
+      "seed": 878,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-\\frac{1}{\\sqrt{x}}\\right)\\right)+1\\right)-1\\,dx",
+      "answer_latex": "2\\sqrt{x}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "one_over_sqrt_x",
+          "detail": "catalog/skeleton one_over_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\sqrt{x}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 16.0,
+      "seed": 878,
+      "prompt_latex": "\\int  \\left(\\left(\\left(\\left(-\\left(-\\frac{1}{\\sqrt{x}}\\right)\\right)+3\\right)-3\\right)+6\\right)-6\\,dx",
+      "answer_latex": "2\\sqrt{x}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "one_over_sqrt_x",
+          "detail": "catalog/skeleton one_over_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\sqrt{x}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 32.0,
+      "seed": 878,
+      "prompt_latex": "\\int  -\\left(-\\frac{3\\left(x-1\\right)\\left(\\frac{1}{\\sqrt{x}}+\\left(-2x-1\\right)\\right)-\\left(-2x-1\\right)}{3\\left(x-1\\right)}\\right)\\,dx",
+      "answer_latex": "2\\sqrt{x}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "one_over_sqrt_x",
+          "detail": "catalog/skeleton one_over_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\sqrt{x}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 0.0,
+      "seed": 946,
+      "prompt_latex": "\\int -3x^{5} \\, dx",
+      "answer_latex": "-\\frac{1}{2}x^{6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{6}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 4.0,
+      "seed": 946,
+      "prompt_latex": "\\int  3\\left(-x^{5}\\right)\\, dx",
+      "answer_latex": "-\\frac{1}{2}x^{6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{6}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "poly_inflate",
+          "detail": "poly-core compose inflate (pure poly islands only)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 8.0,
+      "seed": 946,
+      "prompt_latex": "\\int  -\\left(-\\left(\\left(-3x^{5}\\right)+6-6\\right)\\right)\\, dx",
+      "answer_latex": "-\\frac{1}{2}x^{6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{6}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 16.0,
+      "seed": 946,
+      "prompt_latex": "\\int  \\frac{\\left(x-3\\right)\\left(\\left(\\left(\\left(\\left(-3x^{5}\\right)+6\\right)-6\\right)+3\\right)-3\\right)}{x-3}\\, dx",
+      "answer_latex": "-\\frac{1}{2}x^{6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{6}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 32.0,
+      "seed": 946,
+      "prompt_latex": "\\int  -\\left(-\\frac{-\\left(2-x\\right)\\left(3\\left(-x^{5}\\right)\\right)}{-\\left(2-x\\right)}\\right)\\, dx",
+      "answer_latex": "-\\frac{1}{2}x^{6}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "poly_sum",
+          "detail": "catalog/skeleton poly_sum"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{6}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "poly_inflate",
+          "detail": "poly-core compose inflate (pure poly islands only)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 0.0,
+      "seed": 1014,
+      "prompt_latex": "\\int \\frac{4}{x^{2}}\\,dx",
+      "answer_latex": "-4x^{-1}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4x^{-1}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 4.0,
+      "seed": 1014,
+      "prompt_latex": "\\int  \\frac{4\\left(x-2\\right)\\frac{4}{x^{2}}}{4\\left(x-2\\right)}\\,dx",
+      "answer_latex": "-4x^{-1}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4x^{-1}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 8.0,
+      "seed": 1014,
+      "prompt_latex": "\\int  -\\left(-\\left(\\left(\\frac{4}{x^{2}}+4\\right)-4\\right)\\right)\\,dx",
+      "answer_latex": "-4x^{-1}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4x^{-1}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 16.0,
+      "seed": 1014,
+      "prompt_latex": "\\int  \\left(\\frac{4\\left(x+2\\right)\\frac{4}{x^{2}}}{4\\left(x+2\\right)}+\\left(-x\\right)-\\left(-x\\right)\\right)+1-1\\,dx",
+      "answer_latex": "-4x^{-1}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4x^{-1}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 32.0,
+      "seed": 1014,
+      "prompt_latex": "\\int  \\left(\\left(-\\left(-\\frac{4}{x^{2}}\\right)\\right)+6-6\\right)+\\left(x+1\\right)-\\left(x+1\\right)\\,dx",
+      "answer_latex": "-4x^{-1}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4x^{-1}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 0.0,
+      "seed": 1082,
+      "prompt_latex": "\\int \\frac{1}{x^{3}}\\,dx",
+      "answer_latex": "-\\frac{1}{2}x^{-2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{-2}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 4.0,
+      "seed": 1082,
+      "prompt_latex": "\\int  -\\left(-\\frac{1}{x^{3}}\\right)\\,dx",
+      "answer_latex": "-\\frac{1}{2}x^{-2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{-2}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 8.0,
+      "seed": 1082,
+      "prompt_latex": "\\int  -\\left(-\\left(\\left(\\frac{1}{x^{3}}+3\\right)-3\\right)\\right)\\,dx",
+      "answer_latex": "-\\frac{1}{2}x^{-2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{-2}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 16.0,
+      "seed": 1082,
+      "prompt_latex": "\\int  \\left(\\left(\\left(\\left(\\frac{1}{x^{3}}+3\\right)-3\\right)+\\left(-2x+2\\right)\\right)-\\left(-2x+2\\right)+5\\right)-5\\,dx",
+      "answer_latex": "-\\frac{1}{2}x^{-2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{-2}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 32.0,
+      "seed": 1082,
+      "prompt_latex": "\\int  \\left(\\left(\\frac{2\\left(x-1\\right)\\frac{1}{x^{3}}}{2\\left(x-1\\right)}+2\\right)-2\\right)+\\left(2x+2\\right)-\\left(2x+2\\right)\\,dx",
+      "answer_latex": "-\\frac{1}{2}x^{-2}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "neg_power",
+          "detail": "catalog/skeleton neg_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{2}x^{-2}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 0.0,
+      "seed": 1167,
+      "prompt_latex": "\\int x\\sqrt{x}\\,dx",
+      "answer_latex": "\\frac{2}{5}x^{\\frac{5}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "x_sqrt_x",
+          "detail": "catalog/skeleton x_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{5}x^{\\frac{5}{2}}+C"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 4.0,
+      "seed": 1167,
+      "prompt_latex": "\\int  \\frac{\\left(x-2\\right)x\\sqrt{x}}{x-2}\\,dx",
+      "answer_latex": "\\frac{2}{5}x^{\\frac{5}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "x_sqrt_x",
+          "detail": "catalog/skeleton x_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{5}x^{\\frac{5}{2}}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 8.0,
+      "seed": 1167,
+      "prompt_latex": "\\int  -\\left(-\\frac{\\left(x+3\\right)x\\sqrt{x}}{x+3}\\right)\\,dx",
+      "answer_latex": "\\frac{2}{5}x^{\\frac{5}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "x_sqrt_x",
+          "detail": "catalog/skeleton x_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{5}x^{\\frac{5}{2}}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 16.0,
+      "seed": 1167,
+      "prompt_latex": "\\int  -\\left(-\\left(\\frac{4\\left(x-3\\right)x\\sqrt{x}}{4\\left(x-3\\right)}+\\left(2x+3\\right)-\\left(2x+3\\right)\\right)\\right)\\,dx",
+      "answer_latex": "\\frac{2}{5}x^{\\frac{5}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "x_sqrt_x",
+          "detail": "catalog/skeleton x_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{5}x^{\\frac{5}{2}}+C"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 32.0,
+      "seed": 1167,
+      "prompt_latex": "\\int  \\frac{-\\left(3+x\\right)\\left(x\\sqrt{x}+5-5\\right)}{-\\left(3+x\\right)}+6-6\\,dx",
+      "answer_latex": "\\frac{2}{5}x^{\\frac{5}{2}}+C",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "x_sqrt_x",
+          "detail": "catalog/skeleton x_sqrt_x"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "power",
+          "detail": "method power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "roots",
+          "detail": "allow_roots enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\frac{2}{5}x^{\\frac{5}{2}}+C"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 32.0
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "catalog_id": "precalculus_trig_identities",
+  "title": "OpenStax Precalculus 2e §7.1–7.4 Trig identities (algebraic) — form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "precalculus-2e",
+      "slug": "7-1-simplifying-and-verifying-trigonometric-identities",
+      "title": "7.1 Simplifying and Verifying Trigonometric Identities",
+      "url": "https://openstax.org/books/precalculus-2e/pages/7-1-simplifying-and-verifying-trigonometric-identities",
+      "stage1": "scripts/output/example_mining/precalculus-2e/stage1/7-1-simplifying-and-verifying-trigonometric-identities.json"
+    },
+    "related": [
+      {
+        "book": "precalculus-2e",
+        "slug": "7-2-sum-and-difference-identities",
+        "stage1": "scripts/output/example_mining/precalculus-2e/stage1/7-2-sum-and-difference-identities.json"
+      },
+      {
+        "book": "precalculus-2e",
+        "slug": "7-3-double-angle-half-angle-and-reduction-formulas",
+        "stage1": "scripts/output/example_mining/precalculus-2e/stage1/7-3-double-angle-half-angle-and-reduction-formulas.json"
+      },
+      {
+        "book": "precalculus-2e",
+        "slug": "7-4-sum-to-product-and-product-to-sum-formulas",
+        "stage1": "scripts/output/example_mining/precalculus-2e/stage1/7-4-sum-to-product-and-product-to-sum-formulas.json"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "§7.1 fundamental / reciprocal / Pythagorean simplify & verify.",
+    "§7.2–7.4 sum-difference, double-angle, product-to-sum (sum-to-product still a curriculum gap)."
+  ],
+  "forms": [
+    {
+      "form_id": "pythagorean_basic",
+      "description": "Simplify sin²+cos² / sec²−tan² / 1+cot² forms",
+      "strategy": "pythagorean",
+      "constraints": { "family": "pythagorean" },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig_identity"],
+      "leaves": ["pc_fundamental_identities"],
+      "wired_generators": ["trig_basic_identities"],
+      "example_item_ids": ["Example_07_01_04"],
+      "openstax_case": "§7.1 Pythagorean identities"
+    },
+    {
+      "form_id": "reciprocal_quotient",
+      "description": "Rewrite tan/cot/sec/csc via sin/cos",
+      "strategy": "reciprocal",
+      "constraints": { "family": "reciprocal" },
+      "d_min": 0,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["trig_identity"],
+      "leaves": ["pc_fundamental_identities"],
+      "wired_generators": ["trig_basic_identities"],
+      "example_item_ids": ["Example_07_01_01", "Example_07_01_02"],
+      "openstax_case": "§7.1 reciprocal / quotient identities"
+    },
+    {
+      "form_id": "verify_fundamental",
+      "description": "Verify LHS = RHS using fundamental identities",
+      "strategy": "verify",
+      "constraints": { "family": "verify" },
+      "d_min": 8,
+      "d_weight": 1.2,
+      "generation_status": "stub",
+      "tricks": ["trig_identity", "verify"],
+      "leaves": ["pc_fundamental_identities"],
+      "wired_generators": ["trig_basic_identities"],
+      "example_item_ids": ["Example_07_01_02", "ti_07_01_01"],
+      "openstax_case": "§7.1 verify identity (LHS=RHS)"
+    },
+    {
+      "form_id": "sum_difference_expand",
+      "description": "Expand sin/cos/tan(α±β)",
+      "strategy": "sum_difference",
+      "constraints": { "family": "sum_difference" },
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig_identity"],
+      "leaves": ["pc_sum_and_difference_identities"],
+      "wired_generators": ["trig_sum_difference"],
+      "example_item_ids": [],
+      "openstax_case": "§7.2 sum and difference identities"
+    },
+    {
+      "form_id": "double_angle",
+      "description": "Rewrite sin(2θ) / cos(2θ) / tan(2θ)",
+      "strategy": "double_angle",
+      "constraints": { "family": "double_angle" },
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig_identity"],
+      "leaves": ["pc_multiple_angle_identities"],
+      "wired_generators": ["trig_multiple_angle"],
+      "example_item_ids": [],
+      "openstax_case": "§7.3 double-angle formulas"
+    },
+    {
+      "form_id": "product_to_sum",
+      "description": "Rewrite sin A cos B etc. as a sum",
+      "strategy": "product_to_sum",
+      "constraints": { "family": "product_to_sum" },
+      "d_min": 8,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["trig_identity"],
+      "leaves": ["pc_product_to_sum_identities"],
+      "wired_generators": ["trig_product_to_sum"],
+      "example_item_ids": [],
+      "openstax_case": "§7.4 product-to-sum formulas"
+    },
+    {
+      "form_id": "sum_to_product",
+      "description": "Rewrite sin A ± sin B as a product",
+      "strategy": "sum_to_product",
+      "constraints": { "family": "sum_to_product" },
+      "d_min": 10,
+      "d_weight": 1.2,
+      "generation_status": "stub",
+      "tricks": ["trig_identity"],
+      "leaves": ["pc_product_to_sum_identities"],
+      "wired_generators": ["trig_product_to_sum"],
+      "example_item_ids": [],
+      "openstax_case": "§7.4 sum-to-product (curriculum gap)"
+    },
+    {
+      "form_id": "half_angle",
+      "description": "Half-angle / power-reduction formulas",
+      "strategy": "half_angle",
+      "constraints": { "family": "half_angle" },
+      "d_min": 12,
+      "d_weight": 1.0,
+      "generation_status": "deferred",
+      "tricks": ["trig_identity"],
+      "leaves": ["pc_multiple_angle_identities"],
+      "wired_generators": ["trig_multiple_angle"],
+      "example_item_ids": [],
+      "openstax_case": "§7.3 half-angle and reduction"
+    }
+  ]
+}

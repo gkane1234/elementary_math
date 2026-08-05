@@ -70,7 +70,9 @@ def _number_line_bounds(settings: dict, *values: float) -> tuple[float, float, f
     for value in values:
         half = max(half, abs(float(value)) + padding)
     tick = float(settings.get("number_line_tick_interval", 1))
-    return -half, half, max(tick, 1.0)
+    if tick <= 0:
+        tick = 1.0
+    return -half, half, tick
 
 
 def _number_line_show_zero(settings: dict) -> bool:
@@ -593,6 +595,73 @@ class GraphLinearEquationFramework(QuestionFramework):
         return coordinate_plane_metadata(self._last_spec, settings, prompt="blank")
 
 
+def _continuous_inequality_boundary(settings: dict) -> tuple[float | int, str]:
+    """Pick boundary + inequality symbol with effort rising in continuous D.
+
+    Effort levers (not magnitude alone):
+    - inclusive vs strict
+    - negative / zero boundaries
+    - awkward non-benchmark integers
+    - half-integer boundaries at high D
+    """
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=0.0)
+    if d < 4:
+        symbol = random.choice(["<", ">"])
+        boundary: float | int = random.randint(1, 6)
+    elif d < 9:
+        symbol = random.choice(["<", ">", r"\leq", r"\geq"])
+        boundary = random.choice([random.randint(-5, -1), random.randint(1, 8)])
+    elif d < 15:
+        symbol = random.choice(["<", ">", r"\leq", r"\geq"])
+        # Prefer non-nice values and allow 0.
+        pool = [n for n in range(-9, 10) if n not in (0, 1, -1, 5, -5)]
+        boundary = random.choice(pool or list(range(-8, 9)))
+    elif d < 20:
+        symbol = random.choice([r"\leq", r"\geq", "<", ">"])
+        pool = [n for n in range(-14, 15) if abs(n) not in (0, 1, 2, 5, 10)]
+        boundary = random.choice(pool or list(range(-12, 13)))
+        if random.random() < 0.35:
+            boundary = random.choice([-13, -11, -7, 7, 11, 13, 0])
+    else:
+        symbol = random.choice([r"\leq", r"\geq", "<", ">"])
+        # Half-integers: open/closed on a non-integer mark is more graphing care.
+        if random.random() < 0.55:
+            halfs = [-13.5, -9.5, -7.5, -3.5, -0.5, 0.5, 2.5, 4.5, 7.5, 11.5]
+            boundary = random.choice(halfs)
+        else:
+            pool = [n for n in range(-16, 17) if abs(n) not in (0, 1, 2, 5, 10)]
+            boundary = random.choice(pool or list(range(-14, 15)))
+    return boundary, symbol
+
+
+def _format_inequality_boundary(boundary: float | int) -> str:
+    from fractions import Fraction
+
+    bf = Fraction(boundary).limit_denominator(4)
+    if bf.denominator == 1:
+        return str(bf.numerator)
+    return rf"\frac{{{bf.numerator}}}{{{bf.denominator}}}"
+
+
+def _inequality_word_phrase(symbol: str, boundary: float | int) -> str:
+    """English phrase that students rewrite as a symbolic inequality."""
+    label = _format_inequality_boundary(boundary)
+    # Prefer plain text for word phrases when integer.
+    if isinstance(boundary, int) or float(boundary).is_integer():
+        label = str(int(boundary))
+    elif abs(float(boundary) * 2 - round(float(boundary) * 2)) < 1e-9:
+        label = f"{float(boundary):g}"
+    if symbol in (">",):
+        return f"a number x is greater than {label}"
+    if symbol in ("<",):
+        return f"a number x is less than {label}"
+    if symbol in (r"\geq", ">=", "≥"):
+        return f"a number x is at least {label}"
+    return f"a number x is at most {label}"
+
+
 class GraphInequalityFramework(QuestionFramework):
     instruction_latex = r"\text{Graph the following inequalities.}"
     instruction_text = "Graph the following inequalities."
@@ -607,18 +676,41 @@ class GraphInequalityFramework(QuestionFramework):
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         dimension = _graph_dimension(settings, self.default_dimension)
-        symbol = _pick_inequality_symbol()
+        topic = str(settings.get("_topic_id") or "")
+        write_and_graph = (
+            "writing_and_graphing" in topic
+            or str(settings.get("inequality_prompt_mode") or "") == "write_and_graph"
+        )
 
         if dimension == "number_line":
-            lo_bound, hi_bound = _bounds(settings, "number_line_min", "number_line_max", -8, 8)
-            # Keep the marked value strictly inside the visible window.
-            inner_lo = lo_bound + 1 if hi_bound - lo_bound > 2 else lo_bound
-            inner_hi = hi_bound - 1 if hi_bound - lo_bound > 2 else hi_bound
-            if inner_lo > inner_hi:
-                inner_lo, inner_hi = lo_bound, hi_bound
-            boundary = random.randint(inner_lo, inner_hi)
-            prompt = f"x {symbol} {boundary}"
-            answer = f"x {symbol} {boundary}"
+            from .difficulty_budget import settings_difficulty
+
+            d = settings_difficulty(settings, default=0.0)
+            boundary, symbol = _continuous_inequality_boundary(settings)
+            boundary_tex = _format_inequality_boundary(boundary)
+            # Writing topic: low D graphs given symbols; higher D write-from-words then graph.
+            if write_and_graph:
+                if d >= 18:
+                    use_words = True
+                elif d >= 8:
+                    use_words = random.random() < min(0.95, 0.4 + 0.035 * d)
+                else:
+                    use_words = False
+            else:
+                use_words = False
+            if use_words:
+                phrase = _inequality_word_phrase(symbol, boundary)
+                prompt = (
+                    f"\\text{{Write an inequality for: {phrase}. "
+                    f"Then graph it on the number line.}}"
+                )
+                prompt_text = (
+                    f"Write an inequality for: {phrase}. Then graph it on the number line."
+                )
+            else:
+                prompt = f"x {symbol} {boundary_tex}"
+                prompt_text = f"Graph inequality (number line): x {symbol} {boundary_tex}"
+            answer = f"x {symbol} {boundary_tex}"
             direction, inclusive = symbol_to_direction(symbol)
             lo, hi, tick = _number_line_bounds(settings, float(boundary))
             self._last_number_line = NumberLineSpec(
@@ -631,8 +723,9 @@ class GraphInequalityFramework(QuestionFramework):
                 show_zero=_number_line_show_zero(settings),
             )
             self._last_plane = None
-            return prompt, "Graph inequality (number line)", answer
+            return prompt, prompt_text, answer
 
+        symbol = _pick_inequality_symbol()
         m = _random_slope(settings)
         b = _random_intercept(settings)
         rhs = _slope_intercept_latex(m, b).replace("y = ", "")
@@ -668,6 +761,9 @@ class GraphAbsoluteValueFramework(QuestionFramework):
         self._last_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import apply_graph_transform_continuous_knobs
+
+        settings = apply_graph_transform_continuous_knobs(settings)
         allow_h = bool(settings.get("allow_shift_h", True))
         allow_k = bool(settings.get("allow_shift_k", False))
         allow_stretch = bool(settings.get("allow_stretch", False))
@@ -1219,6 +1315,9 @@ def _sample_quadratic_graph(settings: dict) -> tuple[str, float, float, float, s
       medium — mix vertex / standard / factored; light messy sometimes
       hard   — often messy (needs algebra); fractional a; wider ranges
     """
+    from question_engine.settings.params import apply_quadratic_graph_continuous_knobs
+
+    settings = apply_quadratic_graph_continuous_knobs(settings)
     tier = str(settings.get("difficulty_tier", "")).strip().lower()
     if tier in {"easy", "medium", "hard"}:
         complexity = tier
@@ -1652,19 +1751,86 @@ class NumberLinePlotFramework(QuestionFramework):
 
     def __init__(self) -> None:
         self._last_value: float | None = None
+        self._last_tick: float = 1.0
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        value = random.randint(-10, 10)
-        prompt = str(value)
+        from fractions import Fraction
+
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_cont else 0.0
+
+        # Effort ladder: positive ints → signed ints → halves → quarters.
+        # Magnitude stays modest; locating non-integer / negative points is the work.
+        if not has_cont:
+            value: float = float(random.randint(-10, 10))
+            tick = 1.0
+            prompt = str(int(value))
+            answer = str(int(value))
+        elif d < 4.0:
+            value = float(random.randint(0, 8))
+            tick = 1.0
+            prompt = str(int(value))
+            answer = str(int(value))
+        elif d < 10.0:
+            hi = 6 + int(d / 2)
+            value = float(random.randint(-hi, hi))
+            tick = 1.0
+            prompt = str(int(value))
+            answer = str(int(value))
+        elif d < 16.0:
+            # Halves — bias away from whole integers so D10–15 isn't int-like.
+            hi = 8
+            k = random.randint(-hi * 2, hi * 2)
+            if k % 2 == 0:
+                k += 1 if k < hi * 2 else -1
+            value = k / 2.0
+            tick = 0.5
+            frac = Fraction(value).limit_denominator(2)
+            prompt = (
+                f"-\\frac{{{abs(frac.numerator)}}}{{{frac.denominator}}}"
+                if frac < 0
+                else f"\\frac{{{frac.numerator}}}{{{frac.denominator}}}"
+            )
+            answer = prompt
+        else:
+            # Quarters / denser ticks — prefer non-halves at high D.
+            hi = 6 + int(min(4, d / 8))
+            k = random.randint(-hi * 4, hi * 4)
+            if k % 4 == 0:
+                k += random.choice([1, 3, -1, -3])
+            elif k % 2 == 0 and d >= 22 and random.random() < 0.6:
+                k += 1
+            value = k / 4.0
+            tick = 0.5 if d < 22 else 0.25
+            frac = Fraction(value).limit_denominator(4)
+            if frac.denominator == 1:
+                prompt = str(frac.numerator)
+                answer = prompt
+            else:
+                prompt = (
+                    f"-\\frac{{{abs(frac.numerator)}}}{{{frac.denominator}}}"
+                    if frac < 0
+                    else f"\\frac{{{frac.numerator}}}{{{frac.denominator}}}"
+                )
+                answer = prompt
+
         self._last_value = float(value)
-        return prompt, str(value), str(value)
+        self._last_tick = float(tick)
+        return prompt, f"plot {value}", answer
 
     def build_question_metadata(
         self, settings: dict, *, prompt_latex: str, prompt_text: str, answer: str | None,
     ) -> dict[str, Any]:
         if not include_graph_metadata(settings) or self._last_value is None:
             return {}
-        lo, hi, tick = _number_line_bounds(settings, self._last_value)
+        merged = {**settings, "number_line_tick_interval": self._last_tick}
+        # Tighten window slightly for small-range positives.
+        if self._last_value >= 0 and abs(self._last_value) <= 8 and self._last_tick >= 1:
+            merged.setdefault("number_line_min", -2)
+            merged.setdefault("number_line_max", 10)
+        lo, hi, tick = _number_line_bounds(merged, self._last_value)
         spec = NumberLineSpec(
             min_value=lo,
             max_value=hi,
@@ -1940,6 +2106,9 @@ class SolvePolynomialByGraphingFramework(QuestionFramework):
         self._last_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import apply_solve_by_graphing_continuous_knobs
+
+        settings = apply_solve_by_graphing_continuous_knobs(settings)
         prompt, answer, coeffs, roots, expr = _sample_solve_by_graphing(settings)
         # Feature points: roots on the x-axis and a couple of curve samples for bounds.
         features: list[tuple[float, float]] = [(float(r), 0.0) for r in roots]
@@ -2023,6 +2192,9 @@ class GraphRadicalFramework(QuestionFramework):
         self._last_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import apply_graph_transform_continuous_knobs
+
+        settings = apply_graph_transform_continuous_knobs(settings)
         allow_h = bool(settings.get("allow_shift_h", True))
         allow_k = bool(settings.get("allow_shift_k", False))
         allow_stretch = bool(settings.get("allow_stretch", False))
@@ -2186,6 +2358,9 @@ class GraphRationalFramework(QuestionFramework):
         self._last_spec: CoordinatePlaneSpec | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.settings.params import apply_graph_transform_continuous_knobs
+
+        settings = apply_graph_transform_continuous_knobs(settings)
         allow_h = bool(settings.get("allow_shift_h", True))
         allow_k = bool(settings.get("allow_shift_k", False))
         allow_stretch = bool(settings.get("allow_stretch", False))

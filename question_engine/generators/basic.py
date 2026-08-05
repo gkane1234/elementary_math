@@ -2,7 +2,7 @@ import math
 import random
 import uuid
 from fractions import Fraction
-from typing import Callable
+from typing import Any, Callable
 
 from packages.polynomial_core import (
     Polynomial,
@@ -91,12 +91,21 @@ def _writing_linear_equations(topic: str, settings: dict) -> list[Question]:
 
 
 def _direct_inverse_variation(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_variation_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_variation_continuous_knobs(settings)
+    k_min = int(local.get("variation_constant_min", 2))
+    k_max = int(local.get("variation_constant_max", 12))
+    direct_w = int(local.get("direct_variation_weight", 50))
+    inverse_w = int(local.get("inverse_variation_weight", 50))
+    total_w = max(1, direct_w + inverse_w)
 
     def build() -> tuple[str, str, str | None]:
-        k = random.randint(2, 12)
-        if random.choice([True, False]):
+        k = random.randint(k_min, max(k_min, k_max))
+        use_direct = random.randint(1, total_w) <= direct_w
+        if use_direct:
             prompt = f"\\text{{Write a direct variation equation with }} k = {k}."
             answer = format_slope_intercept_latex(k, 0) if include_answer_key else None
         else:
@@ -126,11 +135,14 @@ def _systems(topic: str, settings: dict, method: str) -> list[Question]:
 
 
 def _exponential_growth_decay(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_growth_decay_continuous_knobs
+
     count = int(settings.get("count", 5))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_growth_decay_continuous_knobs(settings)
 
     def build() -> tuple[str, str, str | None]:
-        prompt, kind, answer_value = _build_exponential_growth_decay(settings)
+        prompt, kind, answer_value = _build_exponential_growth_decay(local)
         answer = answer_value if include_answer_key else None
         return prompt, kind, answer
 
@@ -1406,16 +1418,20 @@ def _build_unsimplified_radical_expression(
 
 
 def _radical_add_subtract_modes(settings: dict) -> list[str]:
+    from question_engine.frameworks.difficulty_budget import settings_difficulty_band
+    from question_engine.settings.params import apply_radical_expression_continuous_knobs
+
+    local = apply_radical_expression_continuous_knobs(settings)
     modes: list[str] = []
-    if bool(settings.get("allow_like_radicals", True)):
+    if bool(local.get("allow_like_radicals", True)):
         modes.append("like")
-    if bool(settings.get("allow_unsimplified_radicals", False)):
+    if bool(local.get("allow_unsimplified_radicals", False)):
         modes.append("unsimplified")
-    if bool(settings.get("allow_coeff_unsimplified", False)):
+    if bool(local.get("allow_coeff_unsimplified", False)):
         modes.append("coeff_unsimplified")
     if not modes:
-        # Fall back by difficulty tier when form flags are absent.
-        tier = str(settings.get("difficulty_tier", "easy")).strip().lower()
+        # Fall back by difficulty band when form flags are absent.
+        tier = settings_difficulty_band(local, default=3.0)
         if tier == "hard":
             return ["coeff_unsimplified"]
         if tier == "medium":
@@ -1425,39 +1441,103 @@ def _radical_add_subtract_modes(settings: dict) -> list[str]:
 
 
 def _radical_add_subtract(topic: str, settings: dict) -> list[Question]:
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+    from question_engine.settings.params import apply_radical_expression_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    ops = allowed_rational_operations(settings)
+    local = apply_radical_expression_continuous_knobs(settings)
+    ops = allowed_rational_operations(local)
+    last: dict[str, Any] = {"meta": {}}
+    use_a2_catalog = str(topic or "").startswith("a2_")
 
     def build() -> tuple[str, str, str | None]:
-        mode = random.choice(_radical_add_subtract_modes(settings))
+        form_meta: dict[str, Any] = {}
+        mode = None
+        if use_a2_catalog:
+            import random as _random
+
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+            from question_engine.frameworks.primitives.openstax_a2 import select_a2_form
+
+            d = float(settings_difficulty(local))
+            form, form_meta = select_a2_form(
+                "algebra2_radicals",
+                d=d,
+                rng=_random.Random(local.get("seed")),
+                leaf_id=str(topic or ""),
+            )
+            mode = (form.get("constraints") or {}).get("mode")
+        if mode not in ("like", "unsimplified", "coeff_unsimplified"):
+            mode = random.choice(_radical_add_subtract_modes(local))
         if mode == "like":
-            prompt, text, total, base = _build_like_radical_expression(settings, ops)
+            prompt, text, total, base = _build_like_radical_expression(local, ops)
         elif mode == "coeff_unsimplified":
             prompt, text, total, base = _build_unsimplified_radical_expression(
-                settings, ops, with_outer_coeffs=True
+                local, ops, with_outer_coeffs=True
             )
         else:
             prompt, text, total, base = _build_unsimplified_radical_expression(
-                settings, ops, with_outer_coeffs=False
+                local, ops, with_outer_coeffs=False
             )
         answer = square_root_latex(total, base) if include_answer_key else None
+        last["meta"] = {
+            "primitive_engine": "radical_add_subtract",
+            "mode": mode,
+            "coef_min": local.get("coef_min"),
+            "coef_max": local.get("coef_max"),
+            "min_terms": local.get("min_terms"),
+            "max_terms": local.get("max_terms"),
+            "n_terms": local.get("max_terms"),
+            "function_classes": ["algebraic", "roots"],
+            "methods_used": ["radical_combine"],
+            **form_meta,
+        }
         return prompt, text, answer
 
-    return _make_questions(topic, count, include_answer_key, build, settings=settings)
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_radical_add",
+            generator="radical_add_subtract",
+            methods_used=["radical_combine"],
+            knobs={
+                "coef_min": local.get("coef_min"),
+                "coef_max": local.get("coef_max"),
+                "min_terms": local.get("min_terms"),
+                "max_terms": local.get("max_terms"),
+                "allow_like_radicals": local.get("allow_like_radicals"),
+                "allow_unsimplified_radicals": local.get("allow_unsimplified_radicals"),
+            },
+            answer=answer,
+            course_tag="a2" if use_a2_catalog else "a1",
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=local,
+    )
 
 
 def _radical_multiply_modes(settings: dict) -> list[str]:
+    from question_engine.frameworks.difficulty_budget import settings_difficulty_band
+    from question_engine.settings.params import apply_radical_expression_continuous_knobs
+
+    local = apply_radical_expression_continuous_knobs(settings)
     modes: list[str] = []
-    if bool(settings.get("allow_simple_product", True)):
+    if bool(local.get("allow_simple_product", True)):
         modes.append("simple")
-    if bool(settings.get("allow_coeff_product", False)):
+    if bool(local.get("allow_coeff_product", False)):
         modes.append("coeff")
-    if bool(settings.get("allow_binomial_product", False)):
+    if bool(local.get("allow_binomial_product", False)):
         modes.append("binomial")
     if modes:
         return modes
-    tier = str(settings.get("difficulty_tier", "easy")).strip().lower()
+    tier = settings_difficulty_band(local, default=3.0)
     if tier == "hard":
         return ["binomial"]
     if tier == "medium":
@@ -1538,18 +1618,21 @@ def _build_binomial_radical_product(settings: dict) -> tuple[str, str, str]:
 def _radical_multiply(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import apply_radical_expression_continuous_knobs
+
+    local = apply_radical_expression_continuous_knobs(settings)
 
     def build() -> tuple[str, str, str | None]:
-        mode = random.choice(_radical_multiply_modes(settings))
+        mode = random.choice(_radical_multiply_modes(local))
         if mode == "coeff":
-            prompt, text, answer = _build_coeff_radical_product(settings)
+            prompt, text, answer = _build_coeff_radical_product(local)
         elif mode == "binomial":
-            prompt, text, answer = _build_binomial_radical_product(settings)
+            prompt, text, answer = _build_binomial_radical_product(local)
         else:
-            prompt, text, answer = _build_simple_radical_product(settings)
+            prompt, text, answer = _build_simple_radical_product(local)
         return prompt, text, answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build, settings=settings)
+    return _make_questions(topic, count, include_answer_key, build, settings=local)
 
 
 def _radical_quotient_prompt(a: int, n: int, b: int, m: int) -> str:
@@ -1670,15 +1753,19 @@ def _build_rationalize_radical_quotient(settings: dict) -> tuple[str, str, str]:
 
 
 def _radical_divide_modes(settings: dict) -> list[str]:
+    from question_engine.frameworks.difficulty_budget import settings_difficulty_band
+    from question_engine.settings.params import apply_radical_expression_continuous_knobs
+
+    local = apply_radical_expression_continuous_knobs(settings)
     modes: list[str] = []
-    if bool(settings.get("allow_reduced_quotients", True)):
+    if bool(local.get("allow_reduced_quotients", True)):
         modes.append("reduced")
-    if bool(settings.get("allow_simplify_quotients", False)):
+    if bool(local.get("allow_simplify_quotients", False)):
         modes.append("simplify")
-    if bool(settings.get("allow_rationalize_divide", False)):
+    if bool(local.get("allow_rationalize_divide", False)):
         modes.append("rationalize")
     if not modes:
-        tier = str(settings.get("difficulty_tier", "easy")).strip().lower()
+        tier = settings_difficulty_band(local, default=3.0)
         if tier == "hard":
             return ["rationalize"]
         if tier == "medium":
@@ -1690,18 +1777,21 @@ def _radical_divide_modes(settings: dict) -> list[str]:
 def _radical_divide(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import apply_radical_expression_continuous_knobs
+
+    local = apply_radical_expression_continuous_knobs(settings)
 
     def build() -> tuple[str, str, str | None]:
-        mode = random.choice(_radical_divide_modes(settings))
+        mode = random.choice(_radical_divide_modes(local))
         if mode == "simplify":
-            prompt, text, answer = _build_simplify_radical_quotient(settings)
+            prompt, text, answer = _build_simplify_radical_quotient(local)
         elif mode == "rationalize":
-            prompt, text, answer = _build_rationalize_radical_quotient(settings)
+            prompt, text, answer = _build_rationalize_radical_quotient(local)
         else:
-            prompt, text, answer = _build_reduced_radical_quotient(settings)
+            prompt, text, answer = _build_reduced_radical_quotient(local)
         return prompt, text, answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build, settings=settings)
+    return _make_questions(topic, count, include_answer_key, build, settings=local)
 
 
 def _radical_equations(topic: str, settings: dict) -> list[Question]:

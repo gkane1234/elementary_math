@@ -8,14 +8,7 @@ from __future__ import annotations
 
 REQUIRES_DIAGRAM_TYPE_IDS: frozenset[str] = frozenset(
     {
-        # Grade 6 decimal / percent “with diagrams” topics still lack true
-        # place-value / area / percent-bar models (wired stand-ins are plain
-        # arithmetic).
-        "g6_decimal_addition_with_diagrams",
-        "g6_decimal_subtraction_with_diagrams",
-        "g6_decimal_multiplication_with_area_diagrams",
-        "g6_solving_percent_problems_with_diagrams",
-        # Box-plot “drawing” still uses the interpret-basics stand-in.
+        # Box-plot “drawing” still uses the interpret-basics stand-in (no student-draw UI).
         "g6_drawing_box_plots",
         "scatter_plots",
         # Tip-to-tail vector diagram UI.

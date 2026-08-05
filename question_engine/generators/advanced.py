@@ -11,15 +11,21 @@ from .utils import _make_questions, format_monomial_latex, format_polynomial_lat
 
 
 def _law_of_sines(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_triangle_laws_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_triangle_laws_continuous_knobs(settings)
+    side_min = int(local.get("triangle_side_min", 5))
+    side_max = int(local.get("triangle_side_max", 20))
+    angle_choices = tuple(local.get("triangle_angle_choices", (30, 40, 45, 50, 60, 70)))
 
     def build() -> tuple[str, str, str | None]:
-        angle_a = random.choice([30, 40, 45, 50, 60, 70])
-        angle_b = random.choice([30, 40, 45, 50, 60, 70])
+        angle_a = random.choice(angle_choices)
+        angle_b = random.choice(angle_choices)
         while angle_a + angle_b >= 170:
-            angle_b = random.choice([30, 40, 45, 50, 60, 70])
-        side_a = random.randint(5, 20)
+            angle_b = random.choice(angle_choices)
+        side_a = random.randint(side_min, side_max)
         # sin B / b = sin A / a  => b = a * sin B / sin A
         b = side_a * math.sin(math.radians(angle_b)) / math.sin(math.radians(angle_a))
         prompt = (
@@ -34,13 +40,21 @@ def _law_of_sines(topic: str, settings: dict) -> list[Question]:
 
 
 def _law_of_cosines(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_triangle_laws_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_triangle_laws_continuous_knobs(settings)
+    side_min = int(local.get("triangle_side_min", 5))
+    side_max = int(local.get("triangle_side_max", 15))
+    angle_choices = list(local.get("triangle_angle_choices", (40, 50, 60, 70, 80, 100, 120)))
+    if not bool(local.get("allow_obtuse", True)):
+        angle_choices = [a for a in angle_choices if a < 90] or [40, 50, 60, 70]
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(5, 15)
-        b = random.randint(5, 15)
-        angle_c = random.choice([40, 50, 60, 70, 80, 100, 120])
+        a = random.randint(side_min, side_max)
+        b = random.randint(side_min, side_max)
+        angle_c = random.choice(angle_choices)
         c2 = a * a + b * b - 2 * a * b * math.cos(math.radians(angle_c))
         c = math.sqrt(max(c2, 0.01))
         prompt = (
@@ -54,12 +68,18 @@ def _law_of_cosines(topic: str, settings: dict) -> list[Question]:
 
 
 def _binomial_theorem(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_polynomial_theory_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_polynomial_theory_continuous_knobs(settings)
+    n_lo = int(local.get("binomial_n_min", 3))
+    n_hi = int(local.get("binomial_n_max", 6))
+    a_max = int(local.get("binomial_a_max", 4))
 
     def build() -> tuple[str, str, str | None]:
-        n = random.randint(3, 6)
-        a = random.randint(1, 4)
+        n = random.randint(max(3, n_lo), max(3, n_hi))
+        a = random.randint(1, max(1, a_max))
         k = random.randint(1, n - 1)
         # Coefficient of x^k in (a+x)^n is C(n,k) * a^(n-k)
         from math import comb
@@ -76,14 +96,20 @@ def _binomial_theorem(topic: str, settings: dict) -> list[Question]:
 
 
 def _remainder_theorem(topic: str, settings: dict) -> list[Question]:
+    from question_engine.settings.params import apply_polynomial_theory_continuous_knobs
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    local = apply_polynomial_theory_continuous_knobs(settings)
+    coef_lo = int(local.get("poly_theory_coef_min", -6))
+    coef_hi = int(local.get("poly_theory_coef_max", 6))
+    span = int(local.get("root_span", 5))
 
     def build() -> tuple[str, str, str | None]:
         # p(x) = x^2 + bx + c, divide by (x - a), remainder p(a)
-        b = random_int_range(-6, 6, exclude={0})
-        c = random_int_range(-8, 8, exclude={0})
-        a = random_int_range(-5, 5, exclude={0})
+        b = random_int_range(coef_lo, coef_hi, exclude={0})
+        c = random_int_range(coef_lo, coef_hi, exclude={0})
+        a = random_int_range(-span, span, exclude={0})
         rem = a * a + b * a + c
         prompt = (
             f"\\text{{Find the remainder when }} {format_polynomial_latex([1, b, c])} "
@@ -98,32 +124,45 @@ def _remainder_theorem(topic: str, settings: dict) -> list[Question]:
 def _compound_interest(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    difficulty = str(
-        settings.get("difficulty") or settings.get("difficulty_tier") or "medium"
-    )
+    from question_engine.frameworks.difficulty_budget import settings_difficulty_band
+    from question_engine.settings.params import compound_interest_structure_from_continuous
+
+    structure = compound_interest_structure_from_continuous(settings)
+    if structure is None:
+        band = settings_difficulty_band(settings, default=8.0)
+        structure = {
+            "band": band,
+            "principals": {
+                "easy": (500, 1000, 1500, 2000),
+                "medium": (1000, 1500, 2000, 2500),
+                "hard": (1000, 2000, 2500, 5000, 8000),
+            }[band],
+            "rates": {
+                "easy": (3, 4, 5, 6, 8),
+                "medium": (3, 4, 5, 6, 8),
+                "hard": (3, 4, 5, 6, 7, 8, 9, 12),
+            }[band],
+            "t_min": {"easy": 2, "medium": 2, "hard": 4}[band],
+            "t_max": {"easy": 4, "medium": 6, "hard": 10}[band],
+            "n_choices": {
+                "easy": (1,),
+                "medium": (1, 2, 4),
+                "hard": (2, 4, 12),
+            }[band],
+            "allow_interest_question": band != "easy",
+        }
 
     def build() -> tuple[str, str, str | None]:
-        if difficulty == "easy":
-            p = random.choice([500, 1000, 1500, 2000])
-            r = random.choice([3, 4, 5, 6, 8])
-            t = random.randint(2, 4)
-            n = 1
-        elif difficulty == "hard":
-            p = random.choice([1000, 2000, 2500, 5000, 8000])
-            r = random.choice([3, 4, 5, 6, 7, 8, 9, 12])
-            t = random.randint(4, 10)
-            n = random.choice([2, 4, 12])
-        else:
-            p = random.choice([1000, 1500, 2000, 2500])
-            r = random.choice([3, 4, 5, 6, 8])
-            t = random.randint(2, 6)
-            n = random.choice([1, 2, 4])
+        p = random.choice(structure["principals"])
+        r = random.choice(structure["rates"])
+        t = random.randint(int(structure["t_min"]), int(structure["t_max"]))
+        n = random.choice(structure["n_choices"])
 
         amount = p * (1 + r / (100 * n)) ** (n * t)
         interest = amount - p
         years = "year" if t == 1 else "years"
         freq = {1: "annually", 2: "semiannually", 4: "quarterly", 12: "monthly"}[n]
-        find_interest = difficulty != "easy" and random.random() < 0.4
+        find_interest = bool(structure.get("allow_interest_question")) and random.random() < 0.4
 
         if n == 1:
             core = (
@@ -153,12 +192,41 @@ def _compound_interest(topic: str, settings: dict) -> list[Question]:
     return _make_questions(topic, count, include_answer_key, build)
 
 
+def _writing_numeric_complexity_from_continuous(settings: dict) -> tuple[str, int] | None:
+    """Map continuous difficulty → (expression_complexity, num_max).
+
+    Returns None when continuous ``difficulty`` is absent so EMH presets win.
+    """
+    if "difficulty" not in settings or settings["difficulty"] is None:
+        return None
+    try:
+        d = float(settings["difficulty"])
+    except (TypeError, ValueError):
+        return None
+    if d < 3.0:
+        return "simple", 10
+    if d < 8.0:
+        return "simple" if random.random() < 0.5 else "standard", 12
+    if d < 14.0:
+        return "standard", 15
+    if d < 20.0:
+        return "standard" if random.random() < 0.4 else "advanced", 18
+    return "advanced", 20
+
+
 def _writing_numeric_expressions(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    complexity = str(settings.get("expression_complexity", "standard"))
-    lo = max(1, int(settings.get("num_min", 2)))
-    hi = max(lo, int(settings.get("num_max", 20)))
+    local = dict(settings)
+    mapped = _writing_numeric_complexity_from_continuous(local)
+    if mapped is not None:
+        complexity, num_hi = mapped
+        local["expression_complexity"] = complexity
+        local.setdefault("num_min", 2)
+        local["num_max"] = max(int(local.get("num_min", 2)), num_hi)
+    complexity = str(local.get("expression_complexity", "standard"))
+    lo = max(1, int(local.get("num_min", 2)))
+    hi = max(lo, int(local.get("num_max", 20)))
 
     def _n(cap: int | None = None) -> int:
         upper = min(hi, cap) if cap is not None else hi
@@ -332,18 +400,9 @@ def _writing_numeric_expressions(topic: str, settings: dict) -> list[Question]:
 
 
 def _decimal_divide(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
+    from ..frameworks.number import DecimalDivideByDecimalFramework
 
-    def build() -> tuple[str, str, str | None]:
-        divisor = random.choice([0.2, 0.25, 0.5, 1.5, 2.5])
-        quotient = random.randint(2, 12)
-        dividend = round(divisor * quotient, 2)
-        prompt = f"{dividend} \\div {divisor}"
-        answer = str(quotient) if include_answer_key else None
-        return prompt, "decimal division", answer
-
-    return _make_questions(topic, count, include_answer_key, build)
+    return DecimalDivideByDecimalFramework().generate_batch(topic, settings)
 
 
 def _vector_basics(topic: str, settings: dict) -> list[Question]:
@@ -371,6 +430,50 @@ def _vector_basics(topic: str, settings: dict) -> list[Question]:
             mag = math.sqrt(a1 * a1 + a2 * a2)
             answer = f"{mag:.3g}" if mag != int(mag) else str(int(mag))
         return prompt, f"vector {op}", answer if include_answer_key else None
+
+    return _make_questions(topic, count, include_answer_key, build)
+
+
+def _vector_diagrams(topic: str, settings: dict) -> list[Question]:
+    """Tip-to-tail / resultant from described vector diagrams (text until UI)."""
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+
+    def build() -> tuple[str, str, str | None]:
+        a1, a2 = random.randint(-6, 6), random.randint(-6, 6)
+        b1, b2 = random.randint(-6, 6), random.randint(-6, 6)
+        while a1 == 0 and a2 == 0:
+            a1, a2 = random.randint(-6, 6), random.randint(-6, 6)
+        while b1 == 0 and b2 == 0:
+            b1, b2 = random.randint(-6, 6), random.randint(-6, 6)
+        mode = random.choice(["resultant", "resultant_mag", "opposite"])
+        if mode == "resultant":
+            prompt = (
+                f"\\text{{The diagram shows }} \\langle {a1}, {a2} \\rangle "
+                f"\\text{{ tip-to-tail with }} \\langle {b1}, {b2} \\rangle. "
+                f"\\text{{Find the resultant vector.}}"
+            )
+            answer = f"\\langle {a1 + b1}, {a2 + b2} \\rangle"
+            topic_key = "vector diagram resultant"
+        elif mode == "resultant_mag":
+            rx, ry = a1 + b1, a2 + b2
+            mag = math.sqrt(rx * rx + ry * ry)
+            prompt = (
+                f"\\text{{On the tip-to-tail diagram, }} \\langle {a1}, {a2} \\rangle "
+                f"\\text{{ is followed by }} \\langle {b1}, {b2} \\rangle. "
+                f"\\text{{Find the magnitude of the resultant.}}"
+            )
+            answer = f"{mag:.3g}" if mag != int(mag) else str(int(mag))
+            topic_key = "vector diagram magnitude"
+        else:
+            prompt = (
+                f"\\text{{The diagram shows vector }} \\mathbf{{u}} = "
+                f"\\langle {a1}, {a2} \\rangle.\\ "
+                f"\\text{{Find the opposite vector }} -\\mathbf{{u}}."
+            )
+            answer = f"\\langle {-a1}, {-a2} \\rangle"
+            topic_key = "vector diagram opposite"
+        return prompt, topic_key, answer if include_answer_key else None
 
     return _make_questions(topic, count, include_answer_key, build)
 
@@ -428,22 +531,73 @@ def _limit_removable(topic: str, settings: dict) -> list[Question]:
 
 
 def _related_rates_simple(topic: str, settings: dict) -> list[Question]:
-    """Simple related rates: expanding circle / similar."""
+    """Simple related rates: expanding circle / sphere / cone."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import calc_application_structure_from_continuous
+
+    structure = calc_application_structure_from_continuous(settings)
 
     def build() -> tuple[str, str, str | None]:
-        r = random.randint(2, 10)
-        drdt = random.randint(1, 5)
-        # dA/dt = 2 pi r dr/dt
-        prompt = (
-            f"\\text{{The radius of a circle increases at }} {drdt}\\text{{ cm/s. "
-            f"How fast is the area increasing when }} r = {r}\\text{{ cm?}}"
-        )
-        answer = f"{2 * r * drdt}\\pi" if include_answer_key else None
-        return prompt, "related rates circle", answer
+        if structure is None:
+            r = random.randint(2, 10)
+            drdt = random.randint(1, 5)
+            prompt = (
+                f"\\text{{The radius of a circle increases at }} {drdt}\\text{{ cm/s. "
+                f"How fast is the area increasing when }} r = {r}\\text{{ cm?}}"
+            )
+            answer = f"{2 * r * drdt}\\pi" if include_answer_key else None
+            return prompt, "related rates circle", answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+        r = random.randint(2, max(3, int(structure["radius_max"])))
+        drdt = random.randint(1, max(1, int(structure["rate_max"])))
+        shape = random.choice(list(structure["related_shapes"]))
+        if shape == "sphere":
+            # dV/dt = 4 π r^2 dr/dt
+            prompt = (
+                f"\\text{{The radius of a sphere increases at }} {drdt}\\text{{ cm/s. "
+                f"How fast is the volume increasing when }} r = {r}\\text{{ cm?}}"
+            )
+            answer = f"{4 * r * r * drdt}\\pi"
+            label = "related rates sphere"
+        elif shape == "cone":
+            # Fixed height = 3r style: V = (1/3)π r^2 h with h=3r → V=π r^3
+            # dV/dt = 3 π r^2 dr/dt
+            prompt = (
+                f"\\text{{A cone keeps }} h=3r\\text{{ while the radius increases at }} "
+                f"{drdt}\\text{{ cm/s. How fast is the volume increasing when }} "
+                f"r = {r}\\text{{ cm?}}"
+            )
+            answer = f"{3 * r * r * drdt}\\pi"
+            label = "related rates cone"
+        else:
+            prompt = (
+                f"\\text{{The radius of a circle increases at }} {drdt}\\text{{ cm/s. "
+                f"How fast is the area increasing when }} r = {r}\\text{{ cm?}}"
+            )
+            answer = f"{2 * r * drdt}\\pi"
+            label = "related rates circle"
+        return prompt, label, answer if include_answer_key else None
+
+    def _sketch_meta(prompt_latex: str, prompt_text: str, answer: str | None) -> dict:
+        from question_engine.diagrams.figure_families import sample_figure_from_settings
+
+        sample = sample_figure_from_settings(
+            "function_sketch",
+            settings,
+            features=["curve", "related_rates_circle", "related_rates_ladder"],
+            curve_kind="parabola",
+        )
+        return sample.to_metadata_extras()
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=_sketch_meta,
+        settings=settings,
+    )
 
 
 def _derivative_ln_exp(topic: str, settings: dict) -> list[Question]:
@@ -550,6 +704,7 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "writing_numeric_expressions": _writing_numeric_expressions,
     "g6_decimal_divide": _decimal_divide,
     "vector_basics": _vector_basics,
+    "vector_diagrams": _vector_diagrams,
     "dot_product": _dot_product,
     "polar_coordinates": _polar_coordinates,
     "limit_removable": _limit_removable,

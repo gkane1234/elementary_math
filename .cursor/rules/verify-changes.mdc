@@ -12,3 +12,5 @@ Whenever the user asks for a code or behavior change:
 3. Prefer checking the live path the user actually uses when relevant (e.g. `question_engine` generate API / worksheet generators), not only unit tests.
 4. If verification fails, fix it and re-verify.
 5. Briefly say what you checked and the result.
+6. Verification includes checking we did not fake metrics (no padded `difficulty_costs` / cosmetic cost rows to look like a target was met).
+7. If you cannot meet a difficulty/target via real generator structure and do not know how, stop and ask the user — do not ship handwavy or accounting-only "fixes" to pass verification (see `no-fake-metrics`).

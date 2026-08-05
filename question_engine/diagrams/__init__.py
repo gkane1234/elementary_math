@@ -40,6 +40,16 @@ from .builders import (
 )
 from .charts import box_plot_svg, dot_plot_svg, histogram_svg
 from .figure import GeometryFigure
+from .figure_families import (
+    FIGURE_FAMILIES,
+    TYPE_ID_FAMILY,
+    FigureFamily,
+    FigureSample,
+    apply_batch_seed,
+    family_for_type,
+    sample_figure,
+    sample_figure_from_settings,
+)
 from .primitives import (
     AngleMark,
     Arc,
@@ -89,4 +99,12 @@ __all__ = [
     "dot_plot_svg",
     "histogram_svg",
     "box_plot_svg",
+    "FIGURE_FAMILIES",
+    "TYPE_ID_FAMILY",
+    "FigureFamily",
+    "FigureSample",
+    "apply_batch_seed",
+    "family_for_type",
+    "sample_figure",
+    "sample_figure_from_settings",
 ]

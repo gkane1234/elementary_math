@@ -489,7 +489,7 @@ export const CURRICULUM: CurriculumLevel[] = [
           { id: "polynomials_naming", name: "Naming", type_id: "polynomial_naming" },
           { id: "polynomials_adding_and_subtracting", name: "Adding and subtracting", type_id: "polynomial_add_subtract" },
           { id: "polynomials_simplifying", name: "Simplifying", type_id: "simplify_polynomials" },
-          { id: "polynomials_dividing", name: "Dividing", type_id: "radical_divide" },
+          { id: "polynomials_dividing", name: "Dividing", type_id: "polynomial_long_division" },
           { id: "polynomials_multiplying", name: "Multiplying", type_id: "polynomial_multiply" },
         ],
       },

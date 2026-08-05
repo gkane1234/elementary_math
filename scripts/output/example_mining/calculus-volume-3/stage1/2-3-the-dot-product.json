@@ -1,0 +1,1290 @@
+{
+  "book": "calculus-volume-3",
+  "slug": "2-3-the-dot-product",
+  "title": "2.3 The Dot Product",
+  "source_url": "https://openstax.org/books/calculus-volume-3/pages/2-3-the-dot-product",
+  "local_path": "textbooks/openstax/html/calculus-volume-3/2-3-the-dot-product.html",
+  "objectives": [
+    "2.3.1 Calculate the dot product of two given vectors.",
+    "2.3.2 Determine whether two given vectors are perpendicular.",
+    "2.3.3 Find the direction cosines of a given vector.",
+    "2.3.4 Explain what is meant by the vector projection of one vector onto another vector, and describe how to compute it.",
+    "2.3.5 Calculate the work done by a given force."
+  ],
+  "headings": [
+    "2.3 The Dot Product",
+    "Learning Objectives",
+    "The Dot Product and Its Properties",
+    "Definition",
+    "Example 2.21",
+    "Checkpoint 2.21",
+    "Theorem 2.3",
+    "Example 2.22",
+    "Checkpoint 2.22",
+    "Using the Dot Product to Find the Angle between Two Vectors",
+    "Theorem 2.4",
+    "Example 2.23",
+    "Checkpoint 2.23",
+    "Theorem 2.5",
+    "Example 2.24",
+    "Checkpoint 2.24",
+    "Example 2.25",
+    "Checkpoint 2.25",
+    "Definition",
+    "Example 2.26",
+    "Checkpoint 2.26",
+    "Projections",
+    "Definition",
+    "Example 2.27",
+    "Example 2.28",
+    "Checkpoint 2.27",
+    "Example 2.29",
+    "Checkpoint 2.28",
+    "Work",
+    "Definition",
+    "Example 2.30",
+    "Checkpoint 2.29",
+    "Section 2.3 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1163723341367",
+      "kind": "example",
+      "title": "Example 2.21",
+      "position": 1,
+      "nearest_heading": "Definition",
+      "prompt_text": "Calculating Dot Products Find the dot product of $\\text{u} = \\langle 3 , 5 , 2 \\rangle$ and $\\text{v} = \\langle \u22121 , 3 , 0 \\rangle .$ Find the scalar product of $\\text{p} = 10 \\text{i} - 4 \\text{j} + 7 \\text{k}$ and $\\text{q} = \u22122 \\text{i} + \\text{j} + 6 \\text{k} .$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 3 , 5 , 2 \\rangle",
+        "\\text{v} = \\langle \u22121 , 3 , 0 \\rangle .",
+        "\\text{p} = 10 \\text{i} - 4 \\text{j} + 7 \\text{k}",
+        "\\text{q} = \u22122 \\text{i} + \\text{j} + 6 \\text{k} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163723341367",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723759808",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.21",
+      "position": 2,
+      "nearest_heading": "Calculating Dot Products",
+      "prompt_text": "Find $\\text{u} \\cdot \\text{v} ,$ where $\\text{u} = \\langle 2 , 9 , \u22121 \\rangle$ and $\\text{v} = \\langle \u22123 , 1 , \u22124 \\rangle .$",
+      "prompt_latex_bits": [
+        "\\text{u} \\cdot \\text{v} ,",
+        "\\text{u} = \\langle 2 , 9 , \u22121 \\rangle",
+        "\\text{v} = \\langle \u22123 , 1 , \u22124 \\rangle ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723759808",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723089891",
+      "kind": "example",
+      "title": "Example 2.22",
+      "position": 3,
+      "nearest_heading": "Proof",
+      "prompt_text": "Using Properties of the Dot Product Let $\\text{a} = \\langle 1 , 2 , \u22123 \\rangle ,$ $\\text{b} = \\langle 0 , 2 , 4 \\rangle ,$ and $\\text{c} = \\langle 5 , \u22121 , 3 \\rangle .$ Find each of the following products. $\\left(\\right. \\text{a} \\cdot \\text{b} \\left.\\right) \\text{c}$ $\\text{a} \\cdot \\left(\\right. 2 \\text{c} \\left.\\right)$ $\\parallel \\text{b} \\parallel^{2}$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle 1 , 2 , \u22123 \\rangle ,",
+        "\\text{b} = \\langle 0 , 2 , 4 \\rangle ,",
+        "\\text{c} = \\langle 5 , \u22121 , 3 \\rangle .",
+        "\\left(\\right. \\text{a} \\cdot \\text{b} \\left.\\right) \\text{c}",
+        "\\text{a} \\cdot \\left(\\right. 2 \\text{c} \\left.\\right)",
+        "\\parallel \\text{b} \\parallel^{2}"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163723089891",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723289018",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.22",
+      "position": 4,
+      "nearest_heading": "Using Properties of the Dot Product",
+      "prompt_text": "Find the following products for $\\text{p} = \\langle 7 , 0 , 2 \\rangle ,$ $\\text{q} = \\langle \u22122 , 2 , \u22122 \\rangle ,$ and $\\text{r} = \\langle 0 , 2 , \u22123 \\rangle .$ $\\left(\\right. \\text{r} \\cdot \\text{p} \\left.\\right) \\text{q}$ $\\parallel \\text{p} \\parallel^{2}$",
+      "prompt_latex_bits": [
+        "\\text{p} = \\langle 7 , 0 , 2 \\rangle ,",
+        "\\text{q} = \\langle \u22122 , 2 , \u22122 \\rangle ,",
+        "\\text{r} = \\langle 0 , 2 , \u22123 \\rangle .",
+        "\\left(\\right. \\text{r} \\cdot \\text{p} \\left.\\right) \\text{q}",
+        "\\parallel \\text{p} \\parallel^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723289018",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724080388",
+      "kind": "example",
+      "title": "Example 2.23",
+      "position": 5,
+      "nearest_heading": "Proof",
+      "prompt_text": "Finding the Angle between Two Vectors Find the measure of the angle between each pair of vectors. i + j + k and 2 i \u2013 j \u2013 3 k $\\langle 2 , 5 , 6 \\rangle$ and $\\langle \u22122 , \u22124 , 4 \\rangle$",
+      "prompt_latex_bits": [
+        "\\langle 2 , 5 , 6 \\rangle",
+        "\\langle \u22122 , \u22124 , 4 \\rangle"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163724080388",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723077680",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.23",
+      "position": 6,
+      "nearest_heading": "Finding the Angle between Two Vectors",
+      "prompt_text": "Find the measure of the angle, in radians, formed by vectors $\\text{a} = \\langle 1 , 2 , 0 \\rangle$ and $\\text{b} = \\langle 2 , 4 , 1 \\rangle .$ Round to the nearest hundredth.",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle 1 , 2 , 0 \\rangle",
+        "\\text{b} = \\langle 2 , 4 , 1 \\rangle ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723077680",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724056700",
+      "kind": "example",
+      "title": "Example 2.24",
+      "position": 7,
+      "nearest_heading": "Proof",
+      "prompt_text": "Identifying Orthogonal Vectors Determine whether $\\text{p} = \\langle 1 , 0 , 5 \\rangle$ and $\\text{q} = \\langle 10 , 3 , \u22122 \\rangle$ are orthogonal vectors.",
+      "prompt_latex_bits": [
+        "\\text{p} = \\langle 1 , 0 , 5 \\rangle",
+        "\\text{q} = \\langle 10 , 3 , \u22122 \\rangle"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163724056700",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723145063",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.24",
+      "position": 8,
+      "nearest_heading": "Identifying Orthogonal Vectors",
+      "prompt_text": "For which value of x is $\\text{p} = \\langle 2 , 8 , \u22121 \\rangle$ orthogonal to $\\text{q} = \\langle x , \u22121 , 2 \\rangle ?$",
+      "prompt_latex_bits": [
+        "\\text{p} = \\langle 2 , 8 , \u22121 \\rangle",
+        "\\text{q} = \\langle x , \u22121 , 2 \\rangle ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723145063",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723093504",
+      "kind": "example",
+      "title": "Example 2.25",
+      "position": 9,
+      "nearest_heading": "Identifying Orthogonal Vectors",
+      "prompt_text": "Measuring the Angle Formed by Two Vectors Let $\\text{v} = \\langle 2 , 3 , 3 \\rangle .$ Find the measures of the angles formed by the following vectors. $\\textbf{v}$ and i $\\textbf{v}$ and j $\\textbf{v}$ and k",
+      "prompt_latex_bits": [
+        "\\text{v} = \\langle 2 , 3 , 3 \\rangle .",
+        "\\textbf{v}",
+        "\\textbf{v}",
+        "\\textbf{v}"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163723093504",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724081635",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.25",
+      "position": 10,
+      "nearest_heading": "Measuring the Angle Formed by Two Vectors",
+      "prompt_text": "Let $\\text{v} = \\langle 3 , \u22125 , 1 \\rangle .$ Find the measure of the angles formed by each pair of vectors. $\\textbf{v}$ and i $\\textbf{v}$ and j $\\textbf{v}$ and k",
+      "prompt_latex_bits": [
+        "\\text{v} = \\langle 3 , \u22125 , 1 \\rangle .",
+        "\\textbf{v}",
+        "\\textbf{v}",
+        "\\textbf{v}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724081635",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724036556",
+      "kind": "example",
+      "title": "Example 2.26",
+      "position": 11,
+      "nearest_heading": "Definition",
+      "prompt_text": "Using Vectors in an Economic Context AAA Party Supply Store sells invitations, party favors, decorations, and food service items such as paper plates and napkins. When AAA buys its inventory, it pays 25\u00a2 per package for invitations and party favors. Decorations cost AAA 50\u00a2 each, and food service items cost 20\u00a2 per package. AAA sells invitations for $2.50 per package and party favors for $1.50 per package. Decorations sell for $4.50 each and food service items for $1.25 per package. During the month of May, AAA Party Supply Store sells 1258 invitations, 342 party favors, 2426 decorations, and 1354 food service items. Use vectors and dot products to calculate how much money AAA made in sales during the month of May. How much did the store make in profit?",
+      "prompt_latex_bits": [],
+      "has_solution": true,
+      "source_anchor": "fs-id1163724036556",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723326737",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.26",
+      "position": 12,
+      "nearest_heading": "Using Vectors in an Economic Context",
+      "prompt_text": "On June 1, AAA Party Supply Store decided to increase the price they charge for party favors to $2 per package. They also changed suppliers for their invitations, and are now able to purchase invitations for only 10\u00a2 per package. All their other costs and prices remain the same. If AAA sells 1408 invitations, 147 party favors, 2112 decorations, and 1894 food service items in the month of June, use vectors and dot products to calculate their total sales and profit for June.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723326737",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724035299",
+      "kind": "example",
+      "title": "Example 2.27",
+      "position": 13,
+      "nearest_heading": "Definition",
+      "prompt_text": "Finding Projections Find the projection of $\\textbf{v}$ onto u. $\\text{v} = \\langle 3 , 5 , 1 \\rangle$ and $\\text{u} = \\langle \u22121 , 4 , 3 \\rangle$ $\\text{v} = 3 \\text{i} - 2 \\text{j}$ and $\\text{u} = \\text{i} + 6 \\text{j}$",
+      "prompt_latex_bits": [
+        "\\textbf{v}",
+        "\\text{v} = \\langle 3 , 5 , 1 \\rangle",
+        "\\text{u} = \\langle \u22121 , 4 , 3 \\rangle",
+        "\\text{v} = 3 \\text{i} - 2 \\text{j}",
+        "\\text{u} = \\text{i} + 6 \\text{j}"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163724035299",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724138271",
+      "kind": "example",
+      "title": "Example 2.28",
+      "position": 14,
+      "nearest_heading": "Finding Projections",
+      "prompt_text": "Resolving Vectors into Components Express $\\text{v} = \\langle 8 , \u22123 , \u22123 \\rangle$ as a sum of orthogonal vectors such that one of the vectors has the same direction as $\\text{u} = \\langle 2 , 3 , 2 \\rangle .$",
+      "prompt_latex_bits": [
+        "\\text{v} = \\langle 8 , \u22123 , \u22123 \\rangle",
+        "\\text{u} = \\langle 2 , 3 , 2 \\rangle ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163724138271",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723128135",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.27",
+      "position": 15,
+      "nearest_heading": "Resolving Vectors into Components",
+      "prompt_text": "Express $\\text{v} = 5 \\text{i} - \\text{j}$ as a sum of orthogonal vectors such that one of the vectors has the same direction as $\\text{u} = 4 \\text{i} + 2 \\text{j} .$",
+      "prompt_latex_bits": [
+        "\\text{v} = 5 \\text{i} - \\text{j}",
+        "\\text{u} = 4 \\text{i} + 2 \\text{j} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723128135",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724164466",
+      "kind": "example",
+      "title": "Example 2.29",
+      "position": 16,
+      "nearest_heading": "Resolving Vectors into Components",
+      "prompt_text": "Scalar Projection of Velocity A container ship leaves port traveling $15 \u00b0$ north of east. Its engine generates a speed of 20 knots along that path (see the following figure). In addition, the ocean current moves the ship northeast at a speed of 2 knots. Considering both the engine and the current, how fast is the ship moving in the direction $15 \u00b0$ north of east? Round the answer to two decimal places.",
+      "prompt_latex_bits": [
+        "15 \u00b0",
+        "15 \u00b0"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163724164466",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724087490",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.28",
+      "position": 17,
+      "nearest_heading": "Scalar Projection of Velocity",
+      "prompt_text": "Repeat the previous example, but assume the ocean current is moving southeast instead of northeast, as shown in the following figure.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724087490",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723110347",
+      "kind": "example",
+      "title": "Example 2.30",
+      "position": 18,
+      "nearest_heading": "Definition",
+      "prompt_text": "Calculating Work A conveyor belt generates a force $\\text{F} = 5 \\text{i} - 3 \\text{j} + \\text{k}$ that moves a suitcase from point $(1 , 1 , 1)$ to point $(9 , 4 , 7)$ along a straight line. Find the work done by the conveyor belt. The distance is measured in meters and the force is measured in newtons.",
+      "prompt_latex_bits": [
+        "\\text{F} = 5 \\text{i} - 3 \\text{j} + \\text{k}",
+        "(1 , 1 , 1)",
+        "(9 , 4 , 7)"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1163723110347",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723268294",
+      "kind": "checkpoint",
+      "title": "Checkpoint 2.29",
+      "position": 19,
+      "nearest_heading": "Calculating Work",
+      "prompt_text": "A constant force of 30 lb is applied at an angle of 60\u00b0 to pull a handcart 10 ft across the ground ( Figure 2.52 ). What is the work done by this force? Figure 2.52",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723268294",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723222093",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "123 . $\\text{u} = \\langle 3 , 0 \\rangle ,$ $\\text{v} = \\langle 2 , 2 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 3 , 0 \\rangle ,",
+        "\\text{v} = \\langle 2 , 2 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723222093",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723222150",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "124 . $\\text{u} = \\langle 3 , \u22124 \\rangle ,$ $\\text{v} = \\langle 4 , 3 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 3 , \u22124 \\rangle ,",
+        "\\text{v} = \\langle 4 , 3 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723222150",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723222206",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "125 . $\\text{u} = \\langle 2 , 2 , \u22121 \\rangle ,$ $\\text{v} = \\langle \u22121 , 2 , 2 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 2 , 2 , \u22121 \\rangle ,",
+        "\\text{v} = \\langle \u22121 , 2 , 2 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723222206",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723222271",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "126 . $\\text{u} = \\langle 4 , 5 , \u22126 \\rangle ,$ $\\text{v} = \\langle 0 , \u22122 , \u22123 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 4 , 5 , \u22126 \\rangle ,",
+        "\\text{v} = \\langle 0 , \u22122 , \u22123 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723222271",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723981530",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "127 . $\\text{a} = \\langle 2 , 0 , \u22123 \\rangle ,$ $\\textbf{b} = \\langle \u22124 , \u22127 , 1 \\rangle ,$ $\\textbf{c} = \\langle 1 , 1 , \u22121 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle 2 , 0 , \u22123 \\rangle ,",
+        "\\textbf{b} = \\langle \u22124 , \u22127 , 1 \\rangle ,",
+        "\\textbf{c} = \\langle 1 , 1 , \u22121 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723981530",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724080791",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "128 . $\\text{a} = \\langle 0 , 1 , 2 \\rangle ,$ $\\textbf{b} = \\langle \u22121 , 0 , 1 \\rangle ,$ $\\textbf{c} = \\langle 1 , 0 , \u22121 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle 0 , 1 , 2 \\rangle ,",
+        "\\textbf{b} = \\langle \u22121 , 0 , 1 \\rangle ,",
+        "\\textbf{c} = \\langle 1 , 0 , \u22121 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724080791",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724072554",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "129 . $\\text{a} = \\text{i} + \\text{j} ,$ $\\textbf{b} = \\text{i} - \\text{k} ,$ $\\textbf{c} = \\text{i} - 2 \\text{k}$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\text{i} + \\text{j} ,",
+        "\\textbf{b} = \\text{i} - \\text{k} ,",
+        "\\textbf{c} = \\text{i} - 2 \\text{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724072554",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724072686",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "130 . $\\text{a} = \\text{i} - \\text{j} + \\text{k} ,$ $\\textbf{b} = \\text{j} + 3 \\text{k} ,$ $\\textbf{c} = \u2212 \\text{i} + 2 \\textbf{j} - 4 \\text{k}$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\text{i} - \\text{j} + \\text{k} ,",
+        "\\textbf{b} = \\text{j} + 3 \\text{k} ,",
+        "\\textbf{c} = \u2212 \\text{i} + 2 \\textbf{j} - 4 \\text{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724072686",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723236608",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "131 . [T] $\\text{a} = \\langle 3 , \u22121 \\rangle ,$ $\\textbf{b} = \\langle \u22124 , 0 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle 3 , \u22121 \\rangle ,",
+        "\\textbf{b} = \\langle \u22124 , 0 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723236608",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724018909",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "132 . [T] $\\text{a} = \\langle 2 , 1 \\rangle ,$ $\\textbf{b} = \\langle \u22121 , 3 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle 2 , 1 \\rangle ,",
+        "\\textbf{b} = \\langle \u22121 , 3 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724018909",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724018983",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "133 . $\\text{u} = 3 \\text{i} ,$ $\\text{v} = 4 \\text{i} + 4 \\text{j}$",
+      "prompt_latex_bits": [
+        "\\text{u} = 3 \\text{i} ,",
+        "\\text{v} = 4 \\text{i} + 4 \\text{j}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724018983",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724081871",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "134 . $\\text{u} = 5 \\textbf{i} ,$ $\\text{v} = \u22126 \\text{i} + 6 \\text{j}$",
+      "prompt_latex_bits": [
+        "\\text{u} = 5 \\textbf{i} ,",
+        "\\text{v} = \u22126 \\text{i} + 6 \\text{j}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724081871",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724081966",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "135 . $\\text{a} = \\langle 3 , \u22121 , 2 \\rangle ,$ $\\textbf{b} = \\langle 1 , \u22121 , \u22122 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle 3 , \u22121 , 2 \\rangle ,",
+        "\\textbf{b} = \\langle 1 , \u22121 , \u22122 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724081966",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724082042",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "136 . $\\text{a} = \\langle 0 , \u22121 , \u22123 \\rangle ,$ $\\textbf{b} = \\langle 2 , 3 , \u22121 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle 0 , \u22121 , \u22123 \\rangle ,",
+        "\\textbf{b} = \\langle 2 , 3 , \u22121 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724082042",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723295767",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "137 . $\\text{a} = \\text{i} + \\text{j} ,$ $\\textbf{b} = \\text{j} - \\textbf{k}$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\text{i} + \\text{j} ,",
+        "\\textbf{b} = \\text{j} - \\textbf{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723295767",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723295820",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "138 . $\\text{a} = \\text{i} - 2 \\textbf{j} + \\text{k} ,$ $\\textbf{b} = \\text{i} + \\text{j} - 2 \\text{k}$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\text{i} - 2 \\textbf{j} + \\text{k} ,",
+        "\\textbf{b} = \\text{i} + \\text{j} - 2 \\text{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723295820",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723295888",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "139 . [T] $\\text{a} = 3 \\text{i} - \\text{j} - 2 \\text{k} ,$ $\\textbf{b} = \\text{v} + \\textbf{w} ,$ where $\\text{v} = \u22122 \\text{i} - 3 \\text{j} + 2 \\text{k}$ and $\\text{w} = \\text{i} + 2 \\text{k}$",
+      "prompt_latex_bits": [
+        "\\text{a} = 3 \\text{i} - \\text{j} - 2 \\text{k} ,",
+        "\\textbf{b} = \\text{v} + \\textbf{w} ,",
+        "\\text{v} = \u22122 \\text{i} - 3 \\text{j} + 2 \\text{k}",
+        "\\text{w} = \\text{i} + 2 \\text{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723295888",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723338487",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "140 . [T] $\\text{a} = 3 \\text{i} - \\text{j} + 2 \\text{k} ,$ $\\textbf{b} = \\text{v} - \\textbf{w} ,$ where $\\text{v} = 2 \\text{i} + \\text{j} + 4 \\text{k}$ and $\\text{w} = 6 \\text{i} + \\text{j} + 2 \\text{k}$",
+      "prompt_latex_bits": [
+        "\\text{a} = 3 \\text{i} - \\text{j} + 2 \\text{k} ,",
+        "\\textbf{b} = \\text{v} - \\textbf{w} ,",
+        "\\text{v} = 2 \\text{i} + \\text{j} + 4 \\text{k}",
+        "\\text{w} = 6 \\text{i} + \\text{j} + 2 \\text{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723338487",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724043502",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "141 . $\\text{a} = \\langle x , y \\rangle ,$ $\\textbf{b} = \\langle \u2212 y , x \\rangle ,$ where x and y are nonzero real numbers",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle x , y \\rangle ,",
+        "\\textbf{b} = \\langle \u2212 y , x \\rangle ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724043502",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724043575",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "142 . $\\text{a} = \\langle x , x \\rangle ,$ $\\textbf{b} = \\langle \u2212 y , y \\rangle ,$ where x and y are nonzero real numbers",
+      "prompt_latex_bits": [
+        "\\text{a} = \\langle x , x \\rangle ,",
+        "\\textbf{b} = \\langle \u2212 y , y \\rangle ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724043575",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724074641",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "143 . $\\text{a} = 3 \\text{i} - \\text{j} - 2 \\text{k} ,$ $\\textbf{b} = \u22122 \\text{i} - 3 \\textbf{j} + \\textbf{k}$",
+      "prompt_latex_bits": [
+        "\\text{a} = 3 \\text{i} - \\text{j} - 2 \\text{k} ,",
+        "\\textbf{b} = \u22122 \\text{i} - 3 \\textbf{j} + \\textbf{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724074641",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724074700",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "144 . $\\text{a} = \\text{i} - \\text{j} ,$ $\\textbf{b} = 7 \\text{i} + 2 \\textbf{j} - \\textbf{k}$",
+      "prompt_latex_bits": [
+        "\\text{a} = \\text{i} - \\text{j} ,",
+        "\\textbf{b} = 7 \\text{i} + 2 \\textbf{j} - \\textbf{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724074700",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724074750",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "145 . Find all two-dimensional vectors a orthogonal to vector $\\textbf{b} = \\langle 3 , 4 \\rangle .$ Express the answer in component form.",
+      "prompt_latex_bits": [
+        "\\textbf{b} = \\langle 3 , 4 \\rangle ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724074750",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724074836",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "146 . Find all two-dimensional vectors a orthogonal to vector $\\textbf{b} = \\langle 5 , \u22126 \\rangle .$ Express the answer by using standard unit vectors.",
+      "prompt_latex_bits": [
+        "\\textbf{b} = \\langle 5 , \u22126 \\rangle ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724074836",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724049590",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "147 . Determine all three-dimensional vectors $\\textbf{u}$ orthogonal to vector $\\text{v} = \\langle 1 , 1 , 0 \\rangle .$ Express the answer by using standard unit vectors.",
+      "prompt_latex_bits": [
+        "\\textbf{u}",
+        "\\text{v} = \\langle 1 , 1 , 0 \\rangle ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724049590",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724049692",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "148 . Determine all three-dimensional vectors $\\textbf{u}$ orthogonal to vector $\\text{v} = \\text{i} - \\text{j} - \\textbf{k} .$ Express the answer in component form.",
+      "prompt_latex_bits": [
+        "\\textbf{u}",
+        "\\text{v} = \\text{i} - \\text{j} - \\textbf{k} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724049692",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723295563",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "149 . Determine the real number $\\alpha$ such that vectors $\\text{a} = 2 \\text{i} + 3 \\textbf{j}$ and $\\textbf{b} = 9 \\text{i} + \\alpha \\textbf{j}$ are orthogonal.",
+      "prompt_latex_bits": [
+        "\\alpha",
+        "\\text{a} = 2 \\text{i} + 3 \\textbf{j}",
+        "\\textbf{b} = 9 \\text{i} + \\alpha \\textbf{j}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723295563",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723295627",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "150 . Determine the real number $\\alpha$ such that vectors $\\text{a} = \u22123 \\text{i} + 2 \\textbf{j}$ and $\\textbf{b} = 2 \\text{i} + \\alpha \\textbf{j}$ are orthogonal.",
+      "prompt_latex_bits": [
+        "\\alpha",
+        "\\text{a} = \u22123 \\text{i} + 2 \\textbf{j}",
+        "\\textbf{b} = 2 \\text{i} + \\alpha \\textbf{j}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723295627",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723295694",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "151 . [T] Consider the points $P (4 , 5)$ and $Q (5 , \u22127) .$ Determine vectors $\\overset{\\to}{O P}$ and $\\overset{\\to}{O Q} .$ Express the answer by using standard unit vectors. Determine the measure of angle O in triangle OPQ . Express the answer in degrees rounded to two decimal places.",
+      "prompt_latex_bits": [
+        "P (4 , 5)",
+        "Q (5 , \u22127) .",
+        "\\overset{\\to}{O P}",
+        "\\overset{\\to}{O Q} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723295694",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723093342",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "152 . [T] Consider points $A (1 , 1) ,$ $B (2 , \u22127) ,$ and $C (6 , 3) .$ Determine vectors $\\overset{\\to}{B A}$ and $\\overset{\\to}{B C} .$ Express the answer in component form. Determine the measure of angle B in triangle ABC . Express the answer in degrees rounded to two decimal places.",
+      "prompt_latex_bits": [
+        "A (1 , 1) ,",
+        "B (2 , \u22127) ,",
+        "C (6 , 3) .",
+        "\\overset{\\to}{B A}",
+        "\\overset{\\to}{B C} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723093342",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724066122",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "153 . Determine the measure of angle A in triangle ABC , where $A (1 , 1 , 8) ,$ $B (4 , \u22123 , \u22124) ,$ and $C (\u22123 , 1 , 5) .$ Express your answer in degrees rounded to two decimal places.",
+      "prompt_latex_bits": [
+        "A (1 , 1 , 8) ,",
+        "B (4 , \u22123 , \u22124) ,",
+        "C (\u22123 , 1 , 5) ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724066122",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724050252",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "154 . Consider points $P (3 , 7 , \u22122)$ and $Q (1 , 1 , \u22123) .$ Determine the angle between vectors $\\overset{\\to}{O P}$ and $\\overset{\\to}{O Q} .$ Express the answer in degrees rounded to two decimal places.",
+      "prompt_latex_bits": [
+        "P (3 , 7 , \u22122)",
+        "Q (1 , 1 , \u22123) .",
+        "\\overset{\\to}{O P}",
+        "\\overset{\\to}{O Q} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724050252",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724050364",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "155 . $\\text{u} = \\langle 3 , 7 , \u22122 \\rangle ,$ $\\text{v} = \\langle 5 , \u22123 , \u22123 \\rangle ,$ $\\text{w} = \\langle 0 , 1 , \u22121 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 3 , 7 , \u22122 \\rangle ,",
+        "\\text{v} = \\langle 5 , \u22123 , \u22123 \\rangle ,",
+        "\\text{w} = \\langle 0 , 1 , \u22121 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724050364",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723183767",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "156 . $\\text{u} = \\text{i} - \\text{k} ,$ $\\text{v} = 5 \\textbf{j} - 5 \\text{k} ,$ $\\text{w} = 10 \\textbf{j}$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\text{i} - \\text{k} ,",
+        "\\text{v} = 5 \\textbf{j} - 5 \\text{k} ,",
+        "\\text{w} = 10 \\textbf{j}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723183767",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723183834",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "157 . Use vectors to show that a parallelogram with equal diagonals is a rectangle.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723183834",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723183843",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "158 . Use vectors to show that the diagonals of a rhombus are perpendicular.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723183843",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723183853",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "159 . Show that $\\text{u} \\cdot \\left(\\right. \\text{v} + \\text{w} \\left.\\right) = \\text{u} \\cdot \\text{v} + \\text{u} \\cdot \\text{w}$ is true for any vectors $\\textbf{u}$ , $\\textbf{v}$ , and $\\textbf{w}$ .",
+      "prompt_latex_bits": [
+        "\\text{u} \\cdot \\left(\\right. \\text{v} + \\text{w} \\left.\\right) = \\text{u} \\cdot \\text{v} + \\text{u} \\cdot \\text{w}",
+        "\\textbf{u}",
+        "\\textbf{v}",
+        "\\textbf{w}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723183853",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723789662",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "160 . Verify the identity $\\text{u} \\cdot \\left(\\right. \\text{v} + \\text{w} \\left.\\right) = \\text{u} \\cdot \\text{v} + \\text{u} \\cdot \\text{w}$ for vectors $\\text{u} = \\langle 1 , 0 , 4 \\rangle ,$ $\\text{v} = \\langle \u22122 , 3 , 5 \\rangle ,$ and $\\text{w} = \\langle 4 , \u22122 , 6 \\rangle .$",
+      "prompt_latex_bits": [
+        "\\text{u} \\cdot \\left(\\right. \\text{v} + \\text{w} \\left.\\right) = \\text{u} \\cdot \\text{v} + \\text{u} \\cdot \\text{w}",
+        "\\text{u} = \\langle 1 , 0 , 4 \\rangle ,",
+        "\\text{v} = \\langle \u22122 , 3 , 5 \\rangle ,",
+        "\\text{w} = \\langle 4 , \u22122 , 6 \\rangle ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723789662",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723298913",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "161 . $\\text{u} = \\langle 2 , 2 , 1 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 2 , 2 , 1 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723298913",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723299049",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "162 . $\\text{u} = \\text{i} - 2 \\text{j} + 2 \\text{k}$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\text{i} - 2 \\text{j} + 2 \\text{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723299049",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723279490",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "163 . $\\text{u} = \\langle \u22121 , 5 , 2 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle \u22121 , 5 , 2 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723279490",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724057663",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "164 . $\\text{u} = \\langle 2 , 3 , 4 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 2 , 3 , 4 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724057663",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724057804",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "165 . Consider $\\text{u} = \\langle a , b , c \\rangle$ a nonzero three-dimensional vector. Let $\\cos \\alpha ,$ $\\cos \\beta ,$ and $\\cos \\gamma$ be the direction cosines of $\\textbf{u}$ . Show that $\\cos^{2} \\alpha + \\cos^{2} \\beta + \\cos^{2} \\gamma = 1 .$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle a , b , c \\rangle",
+        "\\cos \\alpha ,",
+        "\\cos \\beta ,",
+        "\\cos \\gamma",
+        "\\textbf{u}",
+        "\\cos^{2} \\alpha + \\cos^{2} \\beta + \\cos^{2} \\gamma = 1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724057804",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723073050",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "166 . Determine the direction cosines of vector $\\text{u} = \\text{i} + 2 \\text{j} + 2 \\text{k}$ and show they satisfy $\\cos^{2} \\alpha + \\cos^{2} \\beta + \\cos^{2} \\gamma = 1 .$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\text{i} + 2 \\text{j} + 2 \\text{k}",
+        "\\cos^{2} \\alpha + \\cos^{2} \\beta + \\cos^{2} \\gamma = 1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723073050",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723339482",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "167 . $\\text{u} = 5 \\text{i} + 2 \\text{j} ,$ $\\text{v} = 2 \\text{i} + 3 \\text{j}$",
+      "prompt_latex_bits": [
+        "\\text{u} = 5 \\text{i} + 2 \\text{j} ,",
+        "\\text{v} = 2 \\text{i} + 3 \\text{j}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723339482",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724138520",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "168 . $\\text{u} = \\langle \u22124 , 7 \\rangle ,$ $\\text{v} = \\langle 3 , 5 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle \u22124 , 7 \\rangle ,",
+        "\\text{v} = \\langle 3 , 5 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724138520",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724138634",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "169 . $\\text{u} = 3 \\text{i} + 2 \\text{k} ,$ $\\text{v} = 2 \\textbf{j} + 4 \\text{k}$",
+      "prompt_latex_bits": [
+        "\\text{u} = 3 \\text{i} + 2 \\text{k} ,",
+        "\\text{v} = 2 \\textbf{j} + 4 \\text{k}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724138634",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723171314",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 67,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "170 . $\\text{u} = \\langle 4 , 4 , 0 \\rangle ,$ $\\text{v} = \\langle 0 , 4 , 1 \\rangle$",
+      "prompt_latex_bits": [
+        "\\text{u} = \\langle 4 , 4 , 0 \\rangle ,",
+        "\\text{v} = \\langle 0 , 4 , 1 \\rangle"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723171314",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723171424",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 68,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "171 . Consider the vectors $\\text{u} = 4 \\text{i} - 3 \\text{j}$ and $\\text{v} = 3 \\text{i} + 2 \\text{j} .$ Find the component form of vector $\\text{w} = \\text{proj}_{\\textbf{u}} \\textbf{v}$ that represents the projection of $\\textbf{v}$ onto $\\textbf{u}$ . Write the decomposition $\\text{v} = \\textbf{w} + \\textbf{q}$ of vector $\\textbf{v}$ into the orthogonal components $\\textbf{w}$ and $\\textbf{q}$ , where $\\textbf{w}$ is the projection of $\\textbf{v}$ onto $\\textbf{u}$ and $\\textbf{q}$ is a vector orthogonal to the direction of $\\textbf{u}$ .",
+      "prompt_latex_bits": [
+        "\\text{u} = 4 \\text{i} - 3 \\text{j}",
+        "\\text{v} = 3 \\text{i} + 2 \\text{j} .",
+        "\\text{w} = \\text{proj}_{\\textbf{u}} \\textbf{v}",
+        "\\textbf{v}",
+        "\\textbf{u}",
+        "\\text{v} = \\textbf{w} + \\textbf{q}",
+        "\\textbf{v}",
+        "\\textbf{w}",
+        "\\textbf{q}",
+        "\\textbf{w}",
+        "\\textbf{v}",
+        "\\textbf{u}",
+        "\\textbf{q}",
+        "\\textbf{u}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723171424",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723995085",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 69,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "172 . Consider vectors $\\text{u} = 2 \\text{i} + 4 \\textbf{j}$ and $\\text{v} = 4 \\textbf{j} + 2 \\text{k} .$ Find the component form of vector $\\text{w} = \\text{proj}_{\\textbf{u}} \\textbf{v}$ that represents the projection of $\\textbf{v}$ onto $\\textbf{u}$ . Write the decomposition $\\text{v} = \\textbf{w} + \\textbf{q}$ of vector $\\textbf{v}$ into the orthogonal components $\\textbf{w}$ and $\\textbf{q}$ , where $\\textbf{w}$ is the projection of $\\textbf{v}$ onto $\\textbf{u}$ and $\\textbf{q}$ is a vector orthogonal to the direction of $\\textbf{u}$ .",
+      "prompt_latex_bits": [
+        "\\text{u} = 2 \\text{i} + 4 \\textbf{j}",
+        "\\text{v} = 4 \\textbf{j} + 2 \\text{k} .",
+        "\\text{w} = \\text{proj}_{\\textbf{u}} \\textbf{v}",
+        "\\textbf{v}",
+        "\\textbf{u}",
+        "\\text{v} = \\textbf{w} + \\textbf{q}",
+        "\\textbf{v}",
+        "\\textbf{w}",
+        "\\textbf{q}",
+        "\\textbf{w}",
+        "\\textbf{v}",
+        "\\textbf{u}",
+        "\\textbf{q}",
+        "\\textbf{u}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723995085",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723113251",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 70,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "173 . A methane molecule has a carbon atom situated at the origin and four hydrogen atoms located at points $P (1 , 1 , \u22121) , Q (1 , \u22121 , 1) , R (\u22121 , 1 , 1) , \\text{and} S (\u22121 , \u22121 , \u22121)$ (see figure). Find the distance between the hydrogen atoms located at P and R . Find the angle between vectors $\\overset{\\to}{O S}$ and $\\overset{\\to}{O R}$ that connect the carbon atom with the hydrogen atoms located at S and R , which is also called the bond angle . Express the answer in degrees rounded to two decimal places.",
+      "prompt_latex_bits": [
+        "P (1 , 1 , \u22121) , Q (1 , \u22121 , 1) , R (\u22121 , 1 , 1) , \\text{and} S (\u22121 , \u22121 , \u22121)",
+        "\\overset{\\to}{O S}",
+        "\\overset{\\to}{O R}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723113251",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723139918",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 71,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "174 . [T] Find the vectors that join the center of a clock to the hours 1:00, 2:00, and 3:00. Assume the clock is circular with a radius of 1 unit.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723139918",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723140007",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 72,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "175 . Find the work done by force $\\text{F} = \\langle 5 , 6 , \u22122 \\rangle$ (measured in Newtons) that moves a particle from point $P (3 , \u22121 , 0)$ to point $Q (2 , 3 , 1)$ along a straight line (the distance is measured in meters).",
+      "prompt_latex_bits": [
+        "\\text{F} = \\langle 5 , 6 , \u22122 \\rangle",
+        "P (3 , \u22121 , 0)",
+        "Q (2 , 3 , 1)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723140007",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723326803",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 73,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "176 . [T] A sled is pulled by exerting a force of 100 N on a rope that makes an angle of $25 \u00b0$ with the horizontal. Find the work done in pulling the sled 40 m. (Round the answer to one decimal place.)",
+      "prompt_latex_bits": [
+        "25 \u00b0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723326803",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723326842",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 74,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "177 . [T] A father is pulling his son on a sled at an angle of $20 \u00b0$ with the horizontal with a force of 25 lb (see the following image). He pulls the sled in a straight path of 50 ft. How much work was done by the man pulling the sled? (Round the answer to the nearest integer.)",
+      "prompt_latex_bits": [
+        "20 \u00b0"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723326842",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723326897",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 75,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "178 . [T] A car is towed using a force of 1600 N. The rope used to pull the car makes an angle of 25\u00b0 with the horizontal. Find the work done in towing the car 2 km. Express the answer in joules $\\left(\\right. 1 \\text{J} = 1 \\text{N} \\cdot \\text{m} \\left.\\right)$ rounded to the nearest integer.",
+      "prompt_latex_bits": [
+        "\\left(\\right. 1 \\text{J} = 1 \\text{N} \\cdot \\text{m} \\left.\\right)"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723326897",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723326938",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 76,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "179 . [T] A boat sails north aided by a wind blowing in a direction of $\\text{N3} 0 \u00b0 \\text{E}$ with a magnitude of 500 lb. How much work is performed by the wind as the boat moves 100 ft? (Round the answer to two decimal places.)",
+      "prompt_latex_bits": [
+        "\\text{N3} 0 \u00b0 \\text{E}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723326938",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724053853",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 77,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "180 . Vector $\\text{p} = \\langle 150 , 225 , 375 \\rangle$ represents the price of certain models of bicycles sold by a bicycle shop. Vector $\\text{n} = \\langle 10 , 7 , 9 \\rangle$ represents the number of bicycles sold of each model, respectively. Compute the dot product $\\text{p} \\cdot \\text{n}$ and state its meaning.",
+      "prompt_latex_bits": [
+        "\\text{p} = \\langle 150 , 225 , 375 \\rangle",
+        "\\text{n} = \\langle 10 , 7 , 9 \\rangle",
+        "\\text{p} \\cdot \\text{n}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724053853",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163724053972",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 78,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "181 . [T] Two forces $\\text{F}_{1}$ and $\\text{F}_{2}$ are represented by vectors with initial points that are at the origin. The first force has a magnitude of 20 lb and the terminal point of the vector is point $P (1 , 1 , 0) .$ The second force has a magnitude of 40 lb and the terminal point of its vector is point $Q (0 , 1 , 1) .$ Let F be the resultant force of forces $\\text{F}_{1}$ and $\\text{F}_{2} .$ Find the magnitude of F . (Round the answer to one decimal place.) Find the direction angles of F . (Express the answer in degrees rounded to one decimal place.)",
+      "prompt_latex_bits": [
+        "\\text{F}_{1}",
+        "\\text{F}_{2}",
+        "P (1 , 1 , 0) .",
+        "Q (0 , 1 , 1) .",
+        "\\text{F}_{1}",
+        "\\text{F}_{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163724053972",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1163723090903",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 79,
+      "nearest_heading": "Section 2.3 Exercises",
+      "prompt_text": "182 . [T] Consider $\\textbf{r} (t) = \\langle \\cos t , \\sin t , 2 t \\rangle$ the position vector of a particle at time $t \\in \\left[\\right. 0 , 30 \\left]\\right. ,$ where the components of r are expressed in centimeters and time in seconds. Let $\\overset{\\to}{O P}$ be the position vector of the particle after 1 sec. Show that all vectors $\\overset{\\to}{P Q} ,$ where $Q (x , y , z)$ is an arbitrary point, orthogonal to the instantaneous velocity vector $\\text{v} (1)$ of the particle after 1 sec, can be expressed as $\\overset{\\to}{P Q} = \\langle x - \\cos 1 , y - \\sin 1 , z - 2 \\rangle ,$ where $x \\sin 1 - y \\cos 1 - 2 z + 4 = 0 .$ The set of point Q describes a plane called the normal plane to the path of the particle at point P . Use a CAS to visualize the instantaneous velocity vector and the normal plane at point P along with the path of the particle.",
+      "prompt_latex_bits": [
+        "\\textbf{r} (t) = \\langle \\cos t , \\sin t , 2 t \\rangle",
+        "t \\in \\left[\\right. 0 , 30 \\left]\\right. ,",
+        "\\overset{\\to}{O P}",
+        "\\overset{\\to}{P Q} ,",
+        "Q (x , y , z)",
+        "\\text{v} (1)",
+        "\\overset{\\to}{P Q} = \\langle x - \\cos 1 , y - \\sin 1 , z - 2 \\rangle ,",
+        "x \\sin 1 - y \\cos 1 - 2 z + 4 = 0 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1163723090903",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:31.567085+00:00",
+  "stage": "1_inventory"
+}

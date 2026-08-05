@@ -191,8 +191,18 @@ def _build(ctx: PrimitiveContext, ids: set[str], eff: float) -> LinearInequality
 
 
 def _one_step(ctx, ids, eff, var, boundary, op, prefer_md) -> LinearInequality:
-    op_pool = ["add", "sub", "mul", "div"] if prefer_md else ["add", "sub"]
-    kind = ctx.rng.choice(["mul", "div"] if prefer_md and ctx.rng.random() < 0.5 else op_pool)
+    # Continuous effort: at higher effective D, prefer mul/div and force flips.
+    if prefer_md and eff >= 12:
+        op_pool = ["mul", "div"]
+        kind = ctx.rng.choice(op_pool)
+    elif prefer_md and eff >= 6:
+        op_pool = ["add", "sub", "mul", "div"]
+        kind = ctx.rng.choice(["mul", "div"] if ctx.rng.random() < 0.65 else op_pool)
+    elif prefer_md:
+        op_pool = ["add", "sub", "mul", "div"]
+        kind = ctx.rng.choice(["mul", "div"] if ctx.rng.random() < 0.5 else op_pool)
+    else:
+        kind = ctx.rng.choice(["add", "sub"])
     flipped = False
     sol_op = op
 
@@ -228,8 +238,15 @@ def _one_step(ctx, ids, eff, var, boundary, op, prefer_md) -> LinearInequality:
     elif kind == "mul":
         a = sample_integerish(ctx, exclude_zero=True)
         a_v = _maybe_neg(ctx, ids, a.value)
+        # High D: force a negative coefficient more often (direction flip).
+        if "negative_coeff" in ids and eff >= 14 and ctx.rng.random() < 0.7:
+            a_v = -abs(a_v) if a_v != 0 else Fraction(-2)
         if a_v == 0 or abs(a_v) == 1:
             a_v = Fraction(-2 if a_v < 0 else 2)
+        # Grow |coeff| modestly with effort (not pure magnitude bloat).
+        if eff >= 18 and abs(a_v) < 3:
+            mag = ctx.rng.choice([3, 4, 5, 6])
+            a_v = Fraction(mag if a_v > 0 else -mag)
         rhs = a_v * boundary
         left_l = coeff_times_var(a_v, var.latex)
         left_t = coeff_times_var(a_v, var.name)
@@ -244,6 +261,12 @@ def _one_step(ctx, ids, eff, var, boundary, op, prefer_md) -> LinearInequality:
         a_v = _maybe_neg(ctx, ids, a_v)
         if a_v == 0:
             a_v = Fraction(2)
+        if "negative_coeff" in ids and eff >= 14 and ctx.rng.random() < 0.55:
+            a_v = -abs(a_v)
+        if abs(a_v) == 1:
+            a_v = Fraction(2 if a_v > 0 else -2)
+        if eff >= 18 and abs(a_v) <= 2:
+            a_v = Fraction(ctx.rng.choice([3, 4, 5, 6]) * (1 if a_v > 0 else -1))
         rhs = boundary / a_v
         latex = f"\\frac{{{var.latex}}}{{{num_latex(a_v)}}} {op} {num_latex(rhs)}"
         text = f"({var.name})/({num_latex(a_v)}) {_OP_TEXT[op]} {num_latex(rhs)}"

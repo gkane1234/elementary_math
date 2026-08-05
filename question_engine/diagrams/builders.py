@@ -42,6 +42,62 @@ def _unit(dx: float, dy: float) -> tuple[float, float]:
     return dx / length, dy / length
 
 
+def _rotate_xy(
+    x: float,
+    y: float,
+    deg: float,
+    *,
+    ox: float = 0.0,
+    oy: float = 0.0,
+) -> tuple[float, float]:
+    """Rotate ``(x, y)`` about ``(ox, oy)`` by ``deg`` degrees."""
+    if abs(deg) < 1e-9:
+        return x, y
+    rad = math.radians(deg)
+    c, s = math.cos(rad), math.sin(rad)
+    dx, dy = x - ox, y - oy
+    return ox + dx * c - dy * s, oy + dx * s + dy * c
+
+
+def _transform_xy(
+    x: float,
+    y: float,
+    *,
+    rotation_deg: float = 0.0,
+    reflect: bool = False,
+    ox: float = 0.0,
+    oy: float = 0.0,
+) -> tuple[float, float]:
+    """Optional reflect across vertical through origin, then rotate about ``(ox, oy)``."""
+    if reflect:
+        x = 2 * ox - x
+    return _rotate_xy(x, y, rotation_deg, ox=ox, oy=oy)
+
+
+def _apply_point_transform(
+    fig: GeometryFigure,
+    *,
+    rotation_deg: float = 0.0,
+    reflect: bool = False,
+    ox: float = 0.0,
+    oy: float = 0.0,
+) -> None:
+    """In-place rotate/reflect all points (and free Labels) on ``fig``."""
+    if abs(rotation_deg) < 1e-9 and not reflect:
+        return
+    for p in fig.points.values():
+        nx, ny = _transform_xy(
+            p.x, p.y, rotation_deg=rotation_deg, reflect=reflect, ox=ox, oy=oy
+        )
+        p.x, p.y = nx, ny
+    for el in fig.elements:
+        if isinstance(el, Label):
+            nx, ny = _transform_xy(
+                el.x, el.y, rotation_deg=rotation_deg, reflect=reflect, ox=ox, oy=oy
+            )
+            el.x, el.y = nx, ny
+
+
 def _outward_normal(
     p1: tuple[float, float],
     p2: tuple[float, float],
@@ -108,15 +164,23 @@ def angle_figure(
     *,
     show_measure: bool = True,
     kind: str = "angle",
+    base_deg: float | None = None,
 ) -> GeometryFigure:
-    """Two rays forming an angle; optional measure label on the arc."""
+    """Two rays forming an angle; optional measure label on the arc.
+
+    ``base_deg`` rotates the whole angle (first ray direction). When omitted,
+    uses a small upward bias for readable framing.
+    """
     # Place vertex at origin; ray1 along +x; ray2 at measure_deg
     fig = GeometryFigure(kind=kind)
     v = Point(vertex_label, 0.0, 0.0, label=vertex_label, label_dx=-0.28, label_dy=-0.22)
     # Keep rays long enough to read
     length = 2.4
-    # Bias obtuse angles upward for nicer framing
-    base = 15.0 if measure_deg <= 90 else 5.0
+    # Bias obtuse angles upward for nicer framing unless caller sets orientation.
+    if base_deg is None:
+        base = 15.0 if measure_deg <= 90 else 5.0
+    else:
+        base = float(base_deg)
     a1 = math.radians(base)
     a2 = math.radians(base + measure_deg)
     p1 = Point(
@@ -302,6 +366,8 @@ def triangle_figure(
     side_labels: dict[str, str] | None = None,
     right_angle_at: str | None = None,
     kind: str = "triangle",
+    rotation_deg: float = 0.0,
+    reflect: bool = False,
 ) -> GeometryFigure:
     """Triangle with vertex labels and angle marks (``?`` for missing)."""
     a_lbl, b_lbl, c_lbl = labels[0], labels[1], labels[2]
@@ -356,6 +422,7 @@ def triangle_figure(
                 continue
             fig.add(_side_length_label(pts[p], pts[q], center, text))
 
+    _apply_point_transform(fig, rotation_deg=rotation_deg, reflect=reflect)
     return fig
 
 
@@ -487,34 +554,47 @@ def circle_figure(
     show_radius_length: bool = True,
     unit: str = "cm",
     kind: str = "circle",
+    radius_angle_deg: float = 0.0,
+    show_diameter: bool = False,
 ) -> GeometryFigure:
-    """Circle with center and a drawn radius segment."""
+    """Circle with center and a drawn radius segment.
+
+    ``radius_angle_deg`` places the radius endpoint (0° = +x). When
+    ``show_diameter`` is True, draws a full diameter through the center.
+    """
     # Draw at a comfortable visual size; label shows the true radius value
     draw_r = 1.8
     fig = GeometryFigure(kind=kind)
     fig.add_point(
         Point(center_label, 0.0, 0.0, label=center_label, label_dx=-0.28, label_dy=-0.2)
     )
+    rad = math.radians(float(radius_angle_deg))
+    ax = draw_r * math.cos(rad)
+    ay = draw_r * math.sin(rad)
     fig.add_point(
         Point(
             radius_point_label,
-            draw_r,
-            0.0,
+            ax,
+            ay,
             label=radius_point_label,
-            label_dx=0.25,
-            label_dy=0.0,
+            label_dx=0.25 * math.cos(rad),
+            label_dy=0.25 * math.sin(rad),
         )
     )
     fig.add(
         CirclePrim(center=center_label, radius=draw_r),
         Segment(center_label, radius_point_label),
     )
+    if show_diameter:
+        opp = "_opp"
+        fig.add_point(Point(opp, -ax, -ay, label=None, show_dot=False))
+        fig.add(Segment(opp, radius_point_label))
     if show_radius_length:
-        # Midpoint of radius OA, offset perpendicular (above the segment).
+        # Midpoint of radius OA, offset perpendicular.
         fig.add(
             _side_length_label(
                 (0.0, 0.0),
-                (draw_r, 0.0),
+                (ax, ay),
                 (0.0, 0.0),
                 format_measurement_text(int(radius), unit),
             )
@@ -618,11 +698,14 @@ def right_triangle_figure(
     side_labels: dict[str, str] | None = None,
     angle_labels: dict[str, str] | None = None,
     kind: str = "right_triangle",
+    orientation_deg: float = 0.0,
+    reflect: bool = False,
 ) -> GeometryFigure:
     """Right triangle with right angle at ``right_angle_at`` (default C).
 
     Layout places the right angle at the origin when ``right_angle_at`` is C:
     C=(0,0), B=(leg_a,0), A=(0,leg_b) after visual scaling.
+    ``orientation_deg`` / ``reflect`` diversify silhouette across a worksheet.
     """
     a_lbl, b_lbl, c_lbl = labels
     # Visual scale
@@ -671,6 +754,7 @@ def right_triangle_figure(
                     label=text,
                 )
             )
+    _apply_point_transform(fig, rotation_deg=orientation_deg, reflect=reflect)
     return fig
 
 
@@ -783,13 +867,19 @@ def parallelogram_figure(
 ) -> GeometryFigure:
     """Parallelogram with base along x and vertical height.
 
-    When ``skew_ratio`` is None, uses a fixed slant so the figure is clearly
-    not a rectangle. Pass a computed ratio for equal-side rhombus silhouettes.
+    When ``skew_ratio`` is None, samples a slant (and lean direction) so
+    consecutive worksheet items are not clones. Pass a computed ratio for
+    equal-side rhombus silhouettes.
     """
     a, b, c, d = labels
     scale = 3.0 / max(base, height, 1e-6)
     w, h = base * scale, height * scale
-    skew = (skew_ratio if skew_ratio is not None else 0.35) * w
+    if skew_ratio is None:
+        skew = (0.22 + random.random() * 0.38) * w
+        if random.random() < 0.5:
+            skew = -skew
+    else:
+        skew = float(skew_ratio) * w
     pts = {a: (0.0, 0.0), b: (w, 0.0), c: (w + skew, h), d: (skew, h)}
     fig = polygon_figure(
         [(a, 0, 0), (b, w, 0), (c, w + skew, h), (d, skew, h)],
@@ -944,6 +1034,9 @@ def complementary_angles_figure(
     unknown_label: str = "?",
     labels: tuple[str, str, str, str] | None = None,
     kind: str = "complementary_angles",
+    rotation_deg: float = 0.0,
+    reflect: bool = False,
+    unknown_on: str = "second",
 ) -> GeometryFigure:
     """Right angle split by a ray into complementary pair (given + unknown)."""
     given = float(given_deg)
@@ -974,6 +1067,11 @@ def complementary_angles_figure(
     given_text = _angle_label_text(
         given if given_label is None else given_label, show=True
     )
+    # unknown_on: "first" = AOB is ?, "second" = BOC is ? (default textbook layout).
+    if unknown_on == "first":
+        first_label, second_label = unknown_label, given_text
+    else:
+        first_label, second_label = given_text, unknown_label
     fig.add(
         Segment(v_lbl, a_lbl),
         Segment(v_lbl, b_lbl),
@@ -984,16 +1082,17 @@ def complementary_angles_figure(
             ray1=a_lbl,
             ray2=b_lbl,
             radius=0.7,
-            label=given_text,
+            label=first_label,
         ),
         AngleMark(
             vertex=v_lbl,
             ray1=b_lbl,
             ray2=c_lbl,
             radius=0.5,
-            label=unknown_label,
+            label=second_label,
         ),
     )
+    _apply_point_transform(fig, rotation_deg=rotation_deg, reflect=reflect)
     return fig
 
 
@@ -1004,6 +1103,8 @@ def supplementary_angles_figure(
     unknown_label: str = "?",
     labels: tuple[str, str, str, str] | None = None,
     kind: str = "supplementary_angles",
+    rotation_deg: float = 0.0,
+    reflect: bool = False,
 ) -> GeometryFigure:
     """Straight line with a ray forming a supplementary (adjacent) pair."""
     given = float(given_deg)
@@ -1053,6 +1154,7 @@ def supplementary_angles_figure(
             label=unknown_label,
         ),
     )
+    _apply_point_transform(fig, rotation_deg=rotation_deg, reflect=reflect)
     return fig
 
 
@@ -1063,6 +1165,7 @@ def vertical_angles_figure(
     unknown_label: str = "?",
     labels: tuple[str, str, str, str, str] | None = None,
     kind: str = "vertical_angles",
+    rotation_deg: float = 0.0,
 ) -> GeometryFigure:
     """Two intersecting lines; mark a given angle and its vertical partner."""
     given = float(given_deg)
@@ -1127,6 +1230,7 @@ def vertical_angles_figure(
             label=unknown_label,
         ),
     )
+    _apply_point_transform(fig, rotation_deg=rotation_deg)
     return fig
 
 
@@ -1137,6 +1241,7 @@ def parallel_lines_transversal_figure(
     relation: str = "corresponding",
     unknown_label: str = "?",
     kind: str = "parallel_transversal",
+    reflect: bool = False,
 ) -> GeometryFigure:
     """Two horizontal parallels cut by a transversal; mark given + asked angles.
 
@@ -1224,4 +1329,6 @@ def parallel_lines_transversal_figure(
                 label=unknown_label,
             )
         )
+    if reflect:
+        _apply_point_transform(fig, reflect=True)
     return fig

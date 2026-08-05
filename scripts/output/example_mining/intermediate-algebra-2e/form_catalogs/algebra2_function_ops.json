@@ -1,0 +1,109 @@
+{
+  "catalog_id": "algebra2_function_ops",
+  "title": "OpenStax Intermediate Algebra 2e — composite & inverse functions (Ch 10.1)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "intermediate-algebra-2e",
+      "slug": "10-1-finding-composite-and-inverse-functions",
+      "title": "10.1 Finding Composite and Inverse Functions",
+      "url": "https://openstax.org/books/intermediate-algebra-2e/pages/10-1-finding-composite-and-inverse-functions",
+      "stage1": "scripts/output/example_mining/intermediate-algebra-2e/stage1/10-1-finding-composite-and-inverse-functions.json"
+    },
+    "related": [
+      {
+        "book": "intermediate-algebra-2e",
+        "note": "A2 curriculum also lists General Functions operations (f±g) under Relations & Functions / General Functions"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "Forms enumerate (f±g), (f·g), (f∘g), evaluate, and inverse as Intermediate Algebra §10.1 + A2 general-functions ops."
+  ],
+  "forms": [
+    {
+      "form_id": "fn_add",
+      "description": "(f+g)(x) evaluation",
+      "strategy": "add_functions",
+      "constraints": { "op": "+", "method": "add" },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_general_functions_operations"],
+      "example_item_ids": [],
+      "openstax_case": "Function operations — sum (A2 General Functions / §10.1 prep)"
+    },
+    {
+      "form_id": "fn_subtract",
+      "description": "(f−g)(x) evaluation",
+      "strategy": "subtract_functions",
+      "constraints": { "op": "-", "method": "subtract" },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_general_functions_operations"],
+      "example_item_ids": [],
+      "openstax_case": "Function operations — difference"
+    },
+    {
+      "form_id": "fn_product",
+      "description": "(f·g)(x) evaluation",
+      "strategy": "multiply_functions",
+      "constraints": { "op": "*", "method": "product" },
+      "d_min": 6,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_general_functions_operations"],
+      "example_item_ids": [],
+      "openstax_case": "Function operations — product"
+    },
+    {
+      "form_id": "fn_compose",
+      "description": "(f∘g)(x) evaluation",
+      "strategy": "compose",
+      "constraints": { "op": "compose", "method": "compose" },
+      "d_min": 10,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "leaves": ["a2_general_functions_operations"],
+      "example_item_ids": [],
+      "openstax_case": "§10.1 Find and evaluate composite functions"
+    },
+    {
+      "form_id": "fn_evaluate",
+      "description": "Evaluate f(a) for linear/quadratic f",
+      "strategy": "evaluate",
+      "constraints": { "kind": "evaluate" },
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "leaves": ["a2_general_functions_evaluating"],
+      "example_item_ids": [],
+      "openstax_case": "Evaluate a function (A2 General Functions)"
+    },
+    {
+      "form_id": "fn_inverse",
+      "description": "Find inverse of a linear function",
+      "strategy": "inverse",
+      "constraints": { "kind": "inverse" },
+      "d_min": 4,
+      "d_weight": 1.6,
+      "generation_status": "stub",
+      "leaves": ["a2_general_functions_inverses"],
+      "example_item_ids": [],
+      "openstax_case": "§10.1 Find the inverse of a function"
+    },
+    {
+      "form_id": "fn_one_to_one",
+      "description": "Determine whether a function is one-to-one",
+      "strategy": "horizontal_line_test",
+      "constraints": { "kind": "one_to_one" },
+      "d_min": 2,
+      "d_weight": 1.0,
+      "generation_status": "deferred",
+      "leaves": [],
+      "example_item_ids": [],
+      "openstax_case": "§10.1 Determine whether a function is one-to-one — no A2 leaf"
+    }
+  ]
+}

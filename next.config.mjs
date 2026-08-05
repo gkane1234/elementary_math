@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
-    if (process.env.NODE_ENV !== "development") {
+    // Local Next (dev or `next start`) proxies to the Python question engine.
+    // On Vercel, generation is handled by the platform separately.
+    if (process.env.VERCEL) {
       return [];
     }
 

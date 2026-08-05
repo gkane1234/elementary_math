@@ -1,0 +1,86 @@
+{
+  "course": "pre_algebra",
+  "date": "2026-07-28",
+  "catalog_count": 47,
+  "first_tranche_count": 13,
+  "second_tranche_count": 20,
+  "scorers_total": 33,
+  "summary": {
+    "verified_ramp": 13,
+    "second_tranche_scorers": 20,
+    "weak_ramp": 0,
+    "failed_ramp": 0,
+    "blocked": 1,
+    "total_first_tranche": 13,
+    "forward_retrain_expanded": "pending"
+  },
+  "forward_model": {
+    "path": "scripts/output/ml/pa_forward_effort_model.json",
+    "model_kind": "gbr",
+    "n_train": 936,
+    "n_test": 234,
+    "rmse": 1.4459215148151427,
+    "pearson_r": 0.9523054130255134,
+    "note": "Trained on first tranche only; expanded retrain pending"
+  },
+  "export": {
+    "path": "scripts/output/ml/pa_first_tranche.jsonl",
+    "n_rows": 1170,
+    "n_labeled": 1170,
+    "n_errors": 0,
+    "n_per": 15,
+    "diffs": [0.0, 5.0, 10.0, 15.0, 20.0, 25.0]
+  },
+  "export_expanded": {
+    "path": "scripts/output/ml/pa_expanded_tranche.jsonl",
+    "n_rows": 297,
+    "n_labeled": 297,
+    "n_errors": 0,
+    "n_per": 3,
+    "diffs": [0.0, 12.0, 25.0],
+    "n_types": 33,
+    "note": "Smoke export; full n_per=15 sweep + forward retrain still pending"
+  },
+  "export_a1_stub": {
+    "path": "scripts/output/ml/a1_continuous_stub.jsonl",
+    "n_rows": 144,
+    "n_labeled": 0,
+    "n_errors": 0,
+    "n_types": 24
+  },
+  "mine_index": "scripts/output/example_mining/prealgebra-2e/stage1/INDEX.md",
+  "inverse_pilot": {
+    "path": "scripts/output/ml/pa_inverse_difficulty.json",
+    "type_id": "pa_simplifying_fractions"
+  },
+  "second_tranche": [
+    "pa_fractions_add_like",
+    "pa_fractions_subtract_like",
+    "pa_fractions_add_unlike",
+    "pa_fractions_subtract_unlike",
+    "pa_fractions_multiply",
+    "pa_fractions_divide",
+    "pa_equations_one_step_word_problems",
+    "pa_equations_two_step_word_problems",
+    "pa_equations_multi_step_equations",
+    "pa_multi_step_inequalities",
+    "pa_checking_for_a_proportion",
+    "pa_proportions_word_problems",
+    "pa_slope",
+    "pa_writing_linear_equations",
+    "pa_graphing_systems_of_equations",
+    "pa_systems_substitution",
+    "pa_systems_word_problems",
+    "pa_polynomials_simplifying",
+    "pa_polynomials_adding_and_subtracting",
+    "pa_polynomials_multiplying"
+  ],
+  "blocked": [
+    {
+      "type_id": "pa_markup_discount_and_tax",
+      "bucket": "already_continuous",
+      "status": "blocked",
+      "note": "wp_percent emits equation stubs — not markup/discount/tax WPs"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { formatTopicLabel } from "./topic-labels";
 import type { QuestionTypeInfo } from "./types";
 
 export type QuestionTypeGroup = {
@@ -29,8 +30,5 @@ export function groupQuestionTypes(types: QuestionTypeInfo[]): QuestionTypeGroup
 }
 
 export function formatQuestionTypeLabel(type: QuestionTypeInfo): string {
-  if (type.subcategory) {
-    return type.name;
-  }
-  return type.name;
+  return formatTopicLabel(type.id, type.name, { category: type.category });
 }

@@ -2,6 +2,8 @@ from .basic import GENERATORS as _BASIC_GENERATORS
 from .calculus import GENERATORS as _CALCULUS_GENERATORS
 from .calculus_pilot import GENERATORS as _CALCULUS_PILOT_GENERATORS
 from .calculus_derivative_rules import GENERATORS as _CALCULUS_DERIV_RULES_GENERATORS
+from .calculus_limits import GENERATORS as _CALCULUS_LIMITS_GENERATORS
+from .calculus_integrals import GENERATORS as _CALCULUS_INTEGRALS_GENERATORS
 from .equations import GENERATORS as _EQUATION_GENERATORS
 from .geometry import GENERATORS as _GEOMETRY_GENERATORS
 from .grade6 import GENERATORS as _GRADE6_GENERATORS
@@ -41,6 +43,9 @@ GENERATORS = {
     **_GRADE_LEVEL_GENERATORS,
     # Last so enriched derivative-rule builders override thin calc/advanced keys.
     **_CALCULUS_DERIV_RULES_GENERATORS,
+    # Spec limits / integrals (override thin calc/advanced/pilot keys).
+    **_CALCULUS_LIMITS_GENERATORS,
+    **_CALCULUS_INTEGRALS_GENERATORS,
     # Primitive-layered G6 / early algebra overrides (experiment/difficulty-slider).
     **_PRIMITIVE_G6_GENERATORS,
     # Linear finish: abs / compound / proportions / forms / systems / WP.

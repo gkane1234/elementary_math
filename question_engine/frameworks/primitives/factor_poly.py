@@ -40,6 +40,7 @@ class FactorPolyItem:
     effective_d: float
     poly_coeffs: dict[int, Fraction] | None = None
     factor_coeffs: tuple[dict[int, Fraction], ...] = ()
+    form_id: str | None = None
 
 
 def _topic_d(ctx: PrimitiveContext, eff: float) -> float:
@@ -53,24 +54,34 @@ def _knobs() -> dict[str, Any]:
     return section("quadratic_factoring") or {}
 
 
-def sample_quadratic_factoring(ctx: PrimitiveContext) -> FactorPolyItem:
+def sample_quadratic_factoring(
+    ctx: PrimitiveContext,
+    *,
+    leading: Literal["monic", "nonmonic", "auto"] = "auto",
+    form_id: str | None = None,
+) -> FactorPolyItem:
     eff = ctx.effective_d(PRIM_FACTOR_POLY)
     for _ in range(20):
         try:
-            return _quadratic(ctx, eff)
+            return _quadratic(ctx, eff, leading=leading, form_id=form_id)
         except (NicenessError, ValueError):
             continue
-    return _quadratic(ctx, eff)
+    return _quadratic(ctx, eff, leading=leading, form_id=form_id)
 
 
-def sample_special_factoring(ctx: PrimitiveContext) -> FactorPolyItem:
+def sample_special_factoring(
+    ctx: PrimitiveContext,
+    *,
+    pattern: Literal["diff_squares", "perfect_square", "auto"] = "auto",
+    form_id: str | None = None,
+) -> FactorPolyItem:
     eff = ctx.effective_d(PRIM_FACTOR_POLY)
     for _ in range(16):
         try:
-            return _special(ctx, eff)
+            return _special(ctx, eff, pattern=pattern, form_id=form_id)
         except (NicenessError, ValueError):
             continue
-    return _special(ctx, eff)
+    return _special(ctx, eff, pattern=pattern, form_id=form_id)
 
 
 def sample_factoring_grouping(ctx: PrimitiveContext) -> FactorPolyItem:
@@ -114,6 +125,89 @@ def sample_factoring_all_techniques(ctx: PrimitiveContext) -> FactorPolyItem:
         except (NicenessError, ValueError):
             continue
     return _all_techniques(ctx, eff)
+
+
+def _with_form_id(item: FactorPolyItem, form_id: str | None) -> FactorPolyItem:
+    if not form_id or item.form_id == form_id:
+        return item
+    return FactorPolyItem(
+        latex=item.latex,
+        text=item.text,
+        factored_latex=item.factored_latex,
+        factored_text=item.factored_text,
+        method=item.method,
+        degree=item.degree,
+        upgrades=item.upgrades,
+        effective_d=item.effective_d,
+        poly_coeffs=item.poly_coeffs,
+        factor_coeffs=item.factor_coeffs,
+        form_id=form_id,
+    )
+
+
+def sample_factoring_from_catalog(
+    ctx: PrimitiveContext,
+    *,
+    catalog_name: str = "algebra1_factoring",
+    leaf_id: str | None = None,
+) -> FactorPolyItem:
+    """D-weighted OpenStax form selection → dispatch to an existing factor sampler."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        forms_for_leaf,
+        load_form_catalog,
+        select_form_id,
+    )
+
+    leaf = leaf_id or str(getattr(ctx, "leaf_id", "") or "")
+    catalog = load_form_catalog(catalog_name)
+    forms = forms_for_leaf(catalog, leaf)
+    if not forms:
+        forms = forms_for_leaf(catalog, "")
+    d = _topic_d(ctx, ctx.effective_d(PRIM_FACTOR_POLY))
+    form = select_form_id(forms, d=d, rng=ctx.rng)
+    form_id = str(form["form_id"])
+    return _dispatch_factoring_form(ctx, form_id)
+
+
+def _dispatch_factoring_form(ctx: PrimitiveContext, form_id: str) -> FactorPolyItem:
+    """Map catalog ``form_id`` onto concrete factor samplers."""
+    eff = ctx.effective_d(PRIM_FACTOR_POLY)
+    for _ in range(20):
+        try:
+            if form_id == "gcf_monomial":
+                return _with_form_id(_gcf_as_factor_poly(ctx), form_id)
+            if form_id == "factor_by_grouping":
+                return _with_form_id(_grouping(ctx, eff), form_id)
+            if form_id == "trinomial_x2_bx_c":
+                return _quadratic(ctx, eff, leading="monic", form_id=form_id)
+            if form_id == "trinomial_ax2_bx_c":
+                return _quadratic(ctx, eff, leading="nonmonic", form_id=form_id)
+            if form_id == "difference_of_squares":
+                return _special(ctx, eff, pattern="diff_squares", form_id=form_id)
+            if form_id == "perfect_square_trinomial":
+                return _special(ctx, eff, pattern="perfect_square", form_id=form_id)
+            if form_id == "gcf_then_pattern":
+                # Prefer a trinomial/special that carries a numeric GCF.
+                kn = _knobs()
+                gcf_from = float(kn.get("gcf_from_d", 12.0))
+                forced_d = max(_topic_d(ctx, eff), gcf_from)
+                item = _quadratic(
+                    ctx,
+                    forced_d,
+                    leading="auto",
+                    form_id=form_id,
+                    force_gcf=True,
+                )
+                return item
+            if form_id == "quadratic_equation_factor":
+                return _with_form_id(sample_quadratic_equation_by_factoring(ctx), form_id)
+            if form_id == "sum_diff_cubes":
+                return _with_form_id(_sum_diff_cubes(ctx, eff), form_id)
+            # Fallback: general mixer
+            return _with_form_id(_all_techniques(ctx, eff), form_id)
+        except (NicenessError, ValueError):
+            continue
+    return _with_form_id(_all_techniques(ctx, eff), form_id)
 
 
 def _small_pos(ctx: PrimitiveContext, *, hi: int) -> int:
@@ -224,7 +318,14 @@ def _present_expanded(
     return plain_l, plain_t, ()
 
 
-def _quadratic(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
+def _quadratic(
+    ctx: PrimitiveContext,
+    eff: float,
+    *,
+    leading: Literal["monic", "nonmonic", "auto"] = "auto",
+    form_id: str | None = None,
+    force_gcf: bool = False,
+) -> FactorPolyItem:
     """Factors-first ``(px+q)(rx+s)`` → expand → optional unsimplify."""
     if ctx.policy.max_degree < 2:
         raise ValueError("quadratic factoring requires max_degree≥2")
@@ -245,28 +346,37 @@ def _quadratic(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
     const_hi_mid = int(kn.get("const_hi_mid", 6))
     const_hi_hard = int(kn.get("const_hi_hard", 9))
 
-    if d < 3.0:
-        p = r = 1
-        q = _small_pos(ctx, hi=const_hi_easy)
-        s = _small_pos(ctx, hi=const_hi_easy)
-        if q == s and ctx.rng.random() < 0.5:
-            s = q + 1 if q < const_hi_easy else max(1, q - 1)
-        method = "monic_simple"
-    elif d < 6.0:
-        p = r = 1
-        q = _small_pos(ctx, hi=const_hi_easy)
-        s = _small_pos(ctx, hi=const_hi_easy)
-        # Exactly one negative constant.
-        if ctx.rng.random() < 0.5:
-            q = -q
+    want_nonmonic = leading == "nonmonic" or (
+        leading == "auto" and d >= nonmonic_from
+    )
+    if leading == "monic":
+        want_nonmonic = False
+
+    if not want_nonmonic:
+        if d < 3.0:
+            p = r = 1
+            q = _small_pos(ctx, hi=const_hi_easy)
+            s = _small_pos(ctx, hi=const_hi_easy)
+            if q == s and ctx.rng.random() < 0.5:
+                s = q + 1 if q < const_hi_easy else max(1, q - 1)
+            method = "monic_simple"
+        elif d < 6.0:
+            p = r = 1
+            q = _small_pos(ctx, hi=const_hi_easy)
+            s = _small_pos(ctx, hi=const_hi_easy)
+            # Exactly one negative constant.
+            if ctx.rng.random() < 0.5:
+                q = -q
+            else:
+                s = -s
+            method = "monic_one_negative"
         else:
-            s = -s
-        method = "monic_one_negative"
-    elif d < nonmonic_from:
-        p = r = 1
-        q = _signed_small(ctx, hi=const_hi_mid, allow_neg=True)
-        s = _signed_small(ctx, hi=const_hi_mid, allow_neg=True)
-        method = "monic_signed"
+            p = r = 1
+            q = _signed_small(ctx, hi=const_hi_mid, allow_neg=True)
+            s = _signed_small(ctx, hi=const_hi_mid, allow_neg=True)
+            method = "monic_signed"
+        if form_id is None:
+            form_id = "trinomial_x2_bx_c"
     else:
         # Non-monic: small positive leading coeffs
         p = _small_pos(ctx, hi=3)
@@ -277,9 +387,14 @@ def _quadratic(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
                 p = 1
             else:
                 r = 1
+        # Ensure at least one leading > 1 when forcing nonmonic
+        if p == 1 and r == 1:
+            p = 2
         q = _signed_small(ctx, hi=const_hi_hard, allow_neg=True)
         s = _signed_small(ctx, hi=const_hi_hard, allow_neg=True)
         method = "ac_method"
+        if form_id is None:
+            form_id = "trinomial_ax2_bx_c"
 
     # Avoid zero constants → bare px factors (unless intentional later).
     if q == 0:
@@ -292,10 +407,13 @@ def _quadratic(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
     product = multiply_coeffs(left, right)
 
     gcf: Fraction | None = None
-    if d >= gcf_from and ctx.rng.random() < float(kn.get("gcf_chance", 0.3)):
+    gcf_chance = float(kn.get("gcf_chance", 0.3))
+    if force_gcf or (d >= gcf_from and ctx.rng.random() < gcf_chance):
         g = Fraction(ctx.rng.choice([2, 3, 4, 5]))
         product = scale_coeffs(product, g)
         gcf = g
+        if form_id == "gcf_then_pattern" or force_gcf:
+            form_id = form_id or "gcf_then_pattern"
 
     factors, gcf = _complete_factors([left, right], gcf)
     used = poly_degree(product)
@@ -316,10 +434,17 @@ def _quadratic(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
         effective_d=d,
         poly_coeffs=dict(product),
         factor_coeffs=tuple(dict(f) for f in factors),
+        form_id=form_id,
     )
 
 
-def _special(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
+def _special(
+    ctx: PrimitiveContext,
+    eff: float,
+    *,
+    pattern: Literal["diff_squares", "perfect_square", "auto"] = "auto",
+    form_id: str | None = None,
+) -> FactorPolyItem:
     if ctx.policy.max_degree < 2:
         raise ValueError("special factoring requires max_degree≥2")
     ctx.policy.assert_degree(2, where="polynomial_factoring_special_cases")
@@ -337,12 +462,15 @@ def _special(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
         "perfect_square",
     ]
     # Very low D: prefer difference of squares (often introduced first)
-    if d < 3.0:
-        pattern: Literal["diff_squares", "perfect_square"] = "diff_squares"
+    if pattern == "auto":
+        if d < 3.0:
+            chosen: Literal["diff_squares", "perfect_square"] = "diff_squares"
+        else:
+            chosen = ctx.rng.choice(patterns)
     else:
-        pattern = ctx.rng.choice(patterns)
+        chosen = pattern
 
-    if pattern == "diff_squares":
+    if chosen == "diff_squares":
         left = {1: Fraction(lead), 0: Fraction(a)}
         right = {1: Fraction(lead), 0: Fraction(-a)}
         product = multiply_coeffs(left, right)
@@ -350,6 +478,8 @@ def _special(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
         fact_l, fact_t = _format_factors(factors, var, gcf=gcf)
         method = "difference_of_squares"
         facs = tuple(dict(f) for f in factors)
+        if form_id is None:
+            form_id = "difference_of_squares"
     else:
         sign = 1 if d < 4.0 or ctx.rng.random() < 0.5 else -1
         inner = {1: Fraction(lead), 0: Fraction(sign * a)}
@@ -364,6 +494,8 @@ def _special(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
             fact_l, fact_t = _format_factors(factors, var, gcf=gcf)
         method = "perfect_square"
         facs = tuple(dict(f) for f in factors)
+        if form_id is None:
+            form_id = "perfect_square_trinomial"
 
     used = poly_degree(product)
     latex, text, u_tags = _present_expanded(ctx, product, var, d=d)
@@ -379,6 +511,7 @@ def _special(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
         effective_d=d,
         poly_coeffs=dict(product),
         factor_coeffs=facs,
+        form_id=form_id,
     )
 
 
@@ -666,4 +799,5 @@ def sample_quadratic_equation_by_factoring(ctx: PrimitiveContext) -> FactorPolyI
         effective_d=item.effective_d,
         poly_coeffs=item.poly_coeffs,
         factor_coeffs=item.factor_coeffs,
+        form_id=item.form_id or "quadratic_equation_factor",
     )

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>D → variable lane audit</title>
+<style>
+    :root { color-scheme: light; }
+    body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+           color: #1a1a1a; background: #faf9f7; }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+    .lede { max-width: 52rem; color: #444; }
+    .code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+    .samples { font-family: "Cambria Math", "Times New Roman", serif; font-size: 1.15rem; }
+    table.compare { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+    table.compare th, table.compare td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+    table.compare th { background: #e8e6e1; }
+    .pill { display: inline-block; background: #eef2f7; border: 1px solid #c5d0de;
+            border-radius: 3px; padding: 0.05rem 0.35rem; margin: 0.1rem; font-size: 0.8rem; }
+    .thresholds { border-collapse: collapse; font-size: 0.9rem; margin-bottom: 1rem; }
+    .thresholds th, .thresholds td { border: 1px solid #ccc; padding: 0.3rem 0.5rem; }
+    </style>
+<link rel="stylesheet" href="../../_assets/katex/katex.min.css"/>
+<script defer src="../../_assets/katex/katex.min.js"></script>
+<script defer src="../../_assets/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$',right:'$',display:false},{left:'$$',right:'$$',display:true}]})"></script>
+</head><body>
+<h1>Difficulty → variable lane selection</h1>
+<p class="lede">Topic <strong>difficulty D</strong> plus <strong>constraints</strong> choose the variable lane; samples below are letters drawn inside that lane.</p>
+<h2>Unlock thresholds</h2>
+<table class="thresholds"><thead><tr><th>Lane</th><th>min D</th><th>Summary</th></tr></thead><tbody>
+<tr><td class="code">only_x</td><td>0</td><td>Always the letter x.</td></tr>
+<tr><td class="code">xyz</td><td>3</td><td>Classic Cartesian / multi-variable intro letters.</td></tr>
+<tr><td class="code">abctuvwxyz</td><td>6</td><td>School set: a–c, h, k, m–n, p–z (no d–g, i–j, l, o).</td></tr>
+<tr><td class="code">whole_alphabet</td><td>10</td><td>Any lowercase Latin letter a–z.</td></tr>
+<tr><td class="code">greek</td><td>12</td><td>Common Greek variables (α β γ δ θ λ μ … ω); not π/ε/ι.</td></tr>
+</tbody></table>
+<h2>default</h2>
+<p class="code">{}</p>
+<table class="compare"><thead><tr>
+<th>D</th><th>Eligible</th><th>Selected counts</th><th>Sample letters</th>
+</tr></thead><tbody>
+<tr><td>0</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>2</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>4</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×8</td><td class="samples">$x$, $x$, $x$, $z$, $y$, $z$, $y$, $x$</td></tr>
+<tr><td>6</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×8</td><td class="samples">$b$, $u$, $r$, $n$, $c$, $z$, $p$, $v$</td></tr>
+<tr><td>8</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×6, <span class="code">xyz</span>×2</td><td class="samples">$p$, $s$, $r$, $z$, $y$, $q$, $x$, $a$</td></tr>
+<tr><td>10</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span> <span class="pill code">whole_alphabet</span></td><td><span class="code">whole_alphabet</span>×6, <span class="code">abctuvwxyz</span>×2</td><td class="samples">$u$, $x$, $m$, $a$, $w$, $e$, $i$, $b$</td></tr>
+<tr><td>12</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span> <span class="pill code">whole_alphabet</span> <span class="pill code">greek</span></td><td><span class="code">greek</span>×5, <span class="code">whole_alphabet</span>×3</td><td class="samples">$f$, $\beta$, $\rho$, $f$, $\mu$, $n$, $\rho$, $\tau$</td></tr>
+<tr><td>14</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span> <span class="pill code">whole_alphabet</span> <span class="pill code">greek</span></td><td><span class="code">whole_alphabet</span>×5, <span class="code">abctuvwxyz</span>×2, <span class="code">greek</span>×1</td><td class="samples">$q$, $o$, $q$, $\xi$, $c$, $e$, $n$, $k$</td></tr>
+</tbody></table>
+<h2>only_x (only_x)</h2>
+<p class="code">{&quot;only_x&quot;: true}</p>
+<table class="compare"><thead><tr>
+<th>D</th><th>Eligible</th><th>Selected counts</th><th>Sample letters</th>
+</tr></thead><tbody>
+<tr><td>0</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>2</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>4</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>6</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>8</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>10</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>12</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>14</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+</tbody></table>
+<h2>no_greek (no greek)</h2>
+<p class="code">{&quot;allow_greek&quot;: false}</p>
+<table class="compare"><thead><tr>
+<th>D</th><th>Eligible</th><th>Selected counts</th><th>Sample letters</th>
+</tr></thead><tbody>
+<tr><td>0</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>2</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>4</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×8</td><td class="samples">$z$, $y$, $x$, $x$, $z$, $x$, $z$, $y$</td></tr>
+<tr><td>6</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×6, <span class="code">xyz</span>×2</td><td class="samples">$t$, $h$, $r$, $s$, $t$, $x$, $y$, $m$</td></tr>
+<tr><td>8</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×6, <span class="code">only_x</span>×1, <span class="code">xyz</span>×1</td><td class="samples">$x$, $z$, $y$, $t$, $k$, $q$, $r$, $k$</td></tr>
+<tr><td>10</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span> <span class="pill code">whole_alphabet</span></td><td><span class="code">whole_alphabet</span>×6, <span class="code">only_x</span>×1, <span class="code">abctuvwxyz</span>×1</td><td class="samples">$v$, $z$, $q$, $h$, $w$, $x$, $w$, $o$</td></tr>
+<tr><td>12</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span> <span class="pill code">whole_alphabet</span></td><td><span class="code">whole_alphabet</span>×7, <span class="code">abctuvwxyz</span>×1</td><td class="samples">$v$, $h$, $a$, $l$, $x$, $b$, $e$, $k$</td></tr>
+<tr><td>14</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span> <span class="pill code">whole_alphabet</span></td><td><span class="code">whole_alphabet</span>×5, <span class="code">abctuvwxyz</span>×3</td><td class="samples">$y$, $c$, $u$, $f$, $i$, $x$, $a$, $p$</td></tr>
+</tbody></table>
+<h2>max_xyz (max=xyz)</h2>
+<p class="code">{&quot;max_variable_lane&quot;: &quot;xyz&quot;}</p>
+<table class="compare"><thead><tr>
+<th>D</th><th>Eligible</th><th>Selected counts</th><th>Sample letters</th>
+</tr></thead><tbody>
+<tr><td>0</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>2</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>4</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×7, <span class="code">only_x</span>×1</td><td class="samples">$z$, $x$, $z$, $x$, $x$, $x$, $z$, $z$</td></tr>
+<tr><td>6</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×8</td><td class="samples">$y$, $y$, $z$, $z$, $z$, $z$, $z$, $z$</td></tr>
+<tr><td>8</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×8</td><td class="samples">$x$, $z$, $z$, $z$, $y$, $z$, $y$, $x$</td></tr>
+<tr><td>10</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×8</td><td class="samples">$z$, $x$, $y$, $x$, $y$, $z$, $y$, $z$</td></tr>
+<tr><td>12</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×8</td><td class="samples">$z$, $y$, $z$, $y$, $x$, $y$, $z$, $x$</td></tr>
+<tr><td>14</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×8</td><td class="samples">$y$, $y$, $z$, $z$, $z$, $x$, $y$, $z$</td></tr>
+</tbody></table>
+<h2>max_common (max=abctuvwxyz)</h2>
+<p class="code">{&quot;max_variable_lane&quot;: &quot;abctuvwxyz&quot;}</p>
+<table class="compare"><thead><tr>
+<th>D</th><th>Eligible</th><th>Selected counts</th><th>Sample letters</th>
+</tr></thead><tbody>
+<tr><td>0</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>2</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>4</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span></td><td><span class="code">xyz</span>×7, <span class="code">only_x</span>×1</td><td class="samples">$x$, $x$, $y$, $x$, $y$, $x$, $y$, $z$</td></tr>
+<tr><td>6</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×7, <span class="code">xyz</span>×1</td><td class="samples">$k$, $p$, $h$, $n$, $h$, $m$, $a$, $x$</td></tr>
+<tr><td>8</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×8</td><td class="samples">$w$, $m$, $s$, $c$, $m$, $a$, $h$, $u$</td></tr>
+<tr><td>10</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×6, <span class="code">xyz</span>×2</td><td class="samples">$b$, $h$, $v$, $s$, $y$, $y$, $a$, $n$</td></tr>
+<tr><td>12</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×7, <span class="code">xyz</span>×1</td><td class="samples">$r$, $z$, $p$, $r$, $b$, $x$, $w$, $k$</td></tr>
+<tr><td>14</td><td><span class="pill code">only_x</span> <span class="pill code">xyz</span> <span class="pill code">abctuvwxyz</span></td><td><span class="code">abctuvwxyz</span>×7, <span class="code">xyz</span>×1</td><td class="samples">$u$, $s$, $c$, $t$, $z$, $t$, $b$, $v$</td></tr>
+</tbody></table>
+<h2>legacy_no_other_letters (only_x)</h2>
+<p class="code">{&quot;allow_other_letters&quot;: false}</p>
+<table class="compare"><thead><tr>
+<th>D</th><th>Eligible</th><th>Selected counts</th><th>Sample letters</th>
+</tr></thead><tbody>
+<tr><td>0</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>2</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>4</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>6</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>8</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>10</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>12</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+<tr><td>14</td><td><span class="pill code">only_x</span></td><td><span class="code">only_x</span>×8</td><td class="samples">$x$, $x$, $x$, $x$, $x$, $x$, $x$, $x$</td></tr>
+</tbody></table>
+</body></html>

@@ -36,6 +36,8 @@ class QuestionFramework(ABC):
         return {}
 
     def generate_batch(self, topic_id: str, settings: dict) -> list[Question]:
+        # Expose catalog leaf id so shared frameworks can mode-split by topic.
+        settings = {**settings, "_topic_id": topic_id}
         count = int(settings.get("count", 10))
         include_answer_key = bool(settings.get("include_answer_key", False))
         base_metadata = self.build_metadata(settings)
@@ -63,6 +65,7 @@ class QuestionFramework(ABC):
             builder,
             metadata=base_metadata,
             metadata_builder=metadata_builder,
+            settings=settings,
         )
 
     @staticmethod

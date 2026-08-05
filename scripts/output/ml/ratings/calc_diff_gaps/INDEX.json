@@ -1,0 +1,70 @@
+{
+  "campaign": "calc_diff_gaps",
+  "n_rows": 9,
+  "n_ok": 9,
+  "n_errors": 0,
+  "difficulties": [
+    0.0,
+    3.0,
+    6.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "by_pack": {
+    "other_base": 3,
+    "logarithmic": 3,
+    "implicit": 3
+  },
+  "by_difficulty": {
+    "0.0": 3,
+    "12.0": 3,
+    "25.0": 3
+  },
+  "packs": [
+    {
+      "pack": "other_base",
+      "type_id": "calc_diff_other_base_logarithms_and_exponentials",
+      "generator": "derivative_other_base",
+      "n_per_d": 4,
+      "openstax": "3.9 other-base a^x / log_a (structured pack)"
+    },
+    {
+      "pack": "logarithmic",
+      "type_id": "calc_diff_logarithmic",
+      "generator": "derivative_logarithmic",
+      "n_per_d": 4,
+      "openstax": "logarithmic differentiation (structured pack)"
+    },
+    {
+      "pack": "implicit",
+      "type_id": "calc_diff_implicit",
+      "generator": "derivative_implicit",
+      "n_per_d": 4,
+      "openstax": "implicit differentiation (structured pack)"
+    }
+  ],
+  "rating_schema": {
+    "rating_1_to_5": "int 1..5 or null",
+    "minutes": "float minutes or null",
+    "notes": "optional string"
+  },
+  "join_keys": [
+    "rating_id",
+    "type_id",
+    "generator",
+    "seed",
+    "difficulty",
+    "theta_full",
+    "spec_snapshot"
+  ],
+  "elapsed_s": 0.01,
+  "paths": {
+    "jsonl": "items.jsonl",
+    "json": "items.json",
+    "rater": "rater.html",
+    "coverage": "COVERAGE.md"
+  }
+}

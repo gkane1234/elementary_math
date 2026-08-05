@@ -1,0 +1,145 @@
+{
+  "catalog_id": "algebra2_radicals",
+  "title": "OpenStax Intermediate Algebra 2e — radicals & rational exponents (Ch 8)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "intermediate-algebra-2e",
+      "chapters": ["8"],
+      "title": "Roots and Rational Exponents",
+      "url": "https://openstax.org/books/intermediate-algebra-2e/pages/8-introduction",
+      "stage1": "scripts/output/example_mining/intermediate-algebra-2e/stage1/"
+    }
+  },
+  "taxonomy_notes": [
+    "Forms mirror §§8.1–8.6 learning objectives.",
+    "Radical-equation forms map onto existing generator form keys (light_prep / isolate / two_radicals)."
+  ],
+  "forms": [
+    {
+      "form_id": "simplify_perfect_square_factor",
+      "description": "Simplify √n by extracting perfect-square factors",
+      "strategy": "product_property",
+      "constraints": { "kind": "simplify_numeric", "require_simplifiable": true },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_radical_functions_and_rational_exponents_simplifying_radicals"],
+      "example_item_ids": [],
+      "openstax_case": "§8.2 Use the Product Property to simplify"
+    },
+    {
+      "form_id": "add_like_radicals",
+      "description": "Add/subtract like radical expressions",
+      "strategy": "combine_like",
+      "constraints": { "mode": "like" },
+      "d_min": 0,
+      "d_max": 10,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_radical_functions_and_rational_exponents_adding_and_subtracting_radical_expressions"],
+      "example_item_ids": [],
+      "openstax_case": "§8.4 Add and subtract radical expressions"
+    },
+    {
+      "form_id": "add_unsimplified_radicals",
+      "description": "Add radicals that must be simplified first",
+      "strategy": "simplify_then_combine",
+      "constraints": { "mode": "unsimplified" },
+      "d_min": 6,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_radical_functions_and_rational_exponents_adding_and_subtracting_radical_expressions"],
+      "example_item_ids": [],
+      "openstax_case": "§8.4 Add after simplifying"
+    },
+    {
+      "form_id": "multiply_radicals",
+      "description": "Multiply radical expressions",
+      "strategy": "product_property_multiply",
+      "constraints": { "kind": "multiply" },
+      "d_min": 2,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "leaves": ["a2_radical_functions_and_rational_exponents_multiplying_radical_expressions"],
+      "example_item_ids": [],
+      "openstax_case": "§8.4 Multiply radical expressions"
+    },
+    {
+      "form_id": "radical_eq_isolate",
+      "description": "Solve √(linear) = constant / light prep before square",
+      "strategy": "isolate_square",
+      "constraints": { "engine_form": "light_prep" },
+      "d_min": 0,
+      "d_max": 12,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_radical_functions_and_rational_exponents_radical_equations"],
+      "example_item_ids": [],
+      "openstax_case": "§8.6 Solve radical equations"
+    },
+    {
+      "form_id": "radical_eq_equals_linear",
+      "description": "√(expr) = linear — check extraneous",
+      "strategy": "square_check_extraneous",
+      "constraints": { "engine_form": "radical_equals_linear" },
+      "d_min": 6,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "leaves": ["a2_radical_functions_and_rational_exponents_radical_equations"],
+      "example_item_ids": [],
+      "openstax_case": "§8.6 Isolate and square; extraneous roots"
+    },
+    {
+      "form_id": "radical_eq_two_radicals",
+      "description": "Equation with two radicals (square twice)",
+      "strategy": "two_radicals",
+      "constraints": { "engine_form": "two_radicals" },
+      "d_min": 12,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": ["a2_radical_functions_and_rational_exponents_radical_equations"],
+      "example_item_ids": [],
+      "openstax_case": "§8.6 Solve radical equations with two radicals"
+    },
+    {
+      "form_id": "rationalize_one_term",
+      "description": "Rationalize a one-term denominator",
+      "strategy": "rationalize_monomial",
+      "constraints": { "kind": "rationalize_one" },
+      "d_min": 4,
+      "d_weight": 1.4,
+      "generation_status": "stub",
+      "leaves": ["a2_radical_functions_and_rational_exponents_dividing_radical_expressions"],
+      "example_item_ids": [],
+      "openstax_case": "§8.5 Rationalize a one-term denominator"
+    },
+    {
+      "form_id": "rationalize_two_term",
+      "description": "Rationalize a two-term denominator (conjugate)",
+      "strategy": "rationalize_conjugate",
+      "constraints": { "kind": "rationalize_two" },
+      "d_min": 8,
+      "d_weight": 1.2,
+      "generation_status": "stub",
+      "leaves": ["a2_radical_functions_and_rational_exponents_dividing_radical_expressions"],
+      "example_item_ids": [],
+      "openstax_case": "§8.5 Rationalize a two-term denominator"
+    },
+    {
+      "form_id": "rational_exponents_simplify",
+      "description": "Simplify a^{m/n} / convert radical ↔ rational exponent",
+      "strategy": "rational_exponent_props",
+      "constraints": { "kind": "rational_exp" },
+      "d_min": 4,
+      "d_weight": 1.4,
+      "generation_status": "stub",
+      "leaves": [
+        "a2_radical_functions_and_rational_exponents_connecting_radical_expressions_and_rational_exponents",
+        "a2_radical_functions_and_rational_exponents_evaluating_rational_exponent_expressions"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§8.3 Simplify rational exponents"
+    }
+  ]
+}

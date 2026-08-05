@@ -1,0 +1,147 @@
+{
+  "catalog_id": "algebra1_polynomials",
+  "title": "OpenStax Elementary Algebra 2e — polynomial operations form taxonomy (Ch. 6)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "elementary-algebra-2e",
+      "slug": "6-3-multiply-polynomials",
+      "title": "6.3 Multiply Polynomials",
+      "url": "https://openstax.org/books/elementary-algebra-2e/pages/6-3-multiply-polynomials",
+      "stage1": "scripts/output/example_mining/elementary-algebra-2e/stage1/6-3-multiply-polynomials.json"
+    },
+    "related": [
+      { "book": "elementary-algebra-2e", "slug": "6-1-add-and-subtract-polynomials" },
+      { "book": "elementary-algebra-2e", "slug": "6-2-use-multiplication-properties-of-exponents" },
+      { "book": "elementary-algebra-2e", "slug": "6-4-special-products" },
+      { "book": "elementary-algebra-2e", "slug": "6-5-divide-monomials" },
+      { "book": "elementary-algebra-2e", "slug": "6-6-divide-polynomials" },
+      { "book": "elementary-algebra-2e", "slug": "6-7-integer-exponents-and-scientific-notation" }
+    ]
+  },
+  "taxonomy_notes": [
+    "Algebraic poly ops only — no graphing.",
+    "Catalog taxonomy ready; leaf catalog-sampling not yet wired."
+  ],
+  "wired_type_ids": [],
+  "forms": [
+    {
+      "form_id": "poly_add_subtract",
+      "description": "Add or subtract polynomials (combine like terms)",
+      "strategy": "like_terms",
+      "constraints": { "op": ["add", "sub"] },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["like_terms"],
+      "example_item_ids": ["fs-id1169596297065", "fs-id1169596396655"],
+      "openstax_case": "§6.1",
+      "leaves": ["polynomial_add_subtract", "simplify_polynomials"]
+    },
+    {
+      "form_id": "exponent_product_rules",
+      "description": "Multiply monomials via exponent product / power rules",
+      "strategy": "exponent_laws",
+      "constraints": { "kind": "monomial_product" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["exponents"],
+      "example_item_ids": [],
+      "openstax_case": "§6.2",
+      "leaves": ["properties_of_exponents"]
+    },
+    {
+      "form_id": "mono_times_poly",
+      "description": "Monomial × polynomial distribute",
+      "strategy": "distribute",
+      "constraints": { "left": "monomial", "right": "poly" },
+      "d_min": 0,
+      "d_max": 10,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["distribute"],
+      "example_item_ids": ["fs-id1169596273441"],
+      "openstax_case": "§6.3",
+      "leaves": ["polynomial_multiply"]
+    },
+    {
+      "form_id": "binomial_times_binomial",
+      "description": "FOIL / (ax+b)(cx+d)",
+      "strategy": "foil",
+      "constraints": { "left": "binomial", "right": "binomial" },
+      "d_min": 3,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["foil"],
+      "example_item_ids": ["fs-id1169596397391", "fs-id1169596319379"],
+      "openstax_case": "§6.3",
+      "leaves": ["polynomial_multiply"]
+    },
+    {
+      "form_id": "special_product_square",
+      "description": "(a±b)² expand",
+      "strategy": "special_square",
+      "constraints": { "pattern": "perfect_square" },
+      "d_min": 2,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": ["special_products"],
+      "example_item_ids": ["fs-id1169596316193", "fs-id1169596365341"],
+      "openstax_case": "§6.4",
+      "leaves": ["polynomial_multiply_special"]
+    },
+    {
+      "form_id": "special_product_diff_squares",
+      "description": "(a−b)(a+b) → a²−b²",
+      "strategy": "diff_squares_expand",
+      "constraints": { "pattern": "diff_squares" },
+      "d_min": 2,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["special_products"],
+      "example_item_ids": ["fs-id1169596402057"],
+      "openstax_case": "§6.4",
+      "leaves": ["polynomial_multiply_special"]
+    },
+    {
+      "form_id": "divide_monomials",
+      "description": "Quotient of monomials (OpenStax separates from long division)",
+      "strategy": "monomial_quotient",
+      "constraints": { "kind": "monomial_div" },
+      "d_min": 2,
+      "d_weight": 1.0,
+      "generation_status": "stub",
+      "tricks": ["exponents"],
+      "example_item_ids": [],
+      "openstax_case": "§6.5 — partial via properties_of_exponents",
+      "leaves": ["properties_of_exponents"]
+    },
+    {
+      "form_id": "polynomial_long_division",
+      "description": "Divide polynomials (long division)",
+      "strategy": "long_division",
+      "constraints": { "kind": "poly_div" },
+      "d_min": 8,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["long_division"],
+      "example_item_ids": [],
+      "openstax_case": "§6.6",
+      "leaves": ["polynomial_long_division"]
+    },
+    {
+      "form_id": "integer_exponents_sci_notation",
+      "description": "Negative exponents / scientific notation",
+      "strategy": "sci_notation",
+      "constraints": { "kind": "sci" },
+      "d_min": 4,
+      "d_weight": 0.9,
+      "generation_status": "implemented",
+      "tricks": ["exponents"],
+      "example_item_ids": [],
+      "openstax_case": "§6.7",
+      "leaves": ["properties_of_exponents", "scientific_notation_write", "scientific_notation_operations"]
+    }
+  ]
+}

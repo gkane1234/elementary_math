@@ -216,15 +216,17 @@ def _build_hard(settings: dict) -> tuple[str, str, str | None] | None:
 
 
 def _choose_builder(settings: dict):
-    tier = str(settings.get("difficulty_tier", "easy")).strip().lower()
-    if tier == "hard":
+    from question_engine.frameworks.difficulty_budget import settings_difficulty_band
+    from question_engine.settings.params import complex_fraction_structure_from_continuous
+
+    structure = complex_fraction_structure_from_continuous(settings)
+    if structure is not None:
+        tier = str(structure["band"])
+    else:
+        tier = settings_difficulty_band(settings, default=3.0)
+    if tier == "hard" or bool(settings.get("allow_complex_hard", False)):
         return _build_hard
-    if tier == "medium":
-        return _build_medium
-    # Allow explicit form overrides.
-    if bool(settings.get("allow_complex_hard", False)):
-        return _build_hard
-    if bool(settings.get("allow_complex_medium", False)):
+    if tier == "medium" or bool(settings.get("allow_complex_medium", False)):
         return _build_medium
     return _build_easy
 

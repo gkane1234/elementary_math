@@ -108,18 +108,23 @@ def _resolve_generation_settings(type_id: str, settings: dict[str, Any]) -> dict
     profile = resolve_setting_profile_for_type(type_id)
     question_type = QUESTION_TYPES.get(type_id)
     merged = dict(settings)
+    defaults: dict[str, Any] | None = None
     if question_type is not None:
         config = getattr(question_type, "_setting_config", None)
         if profile is None:
             profile = getattr(question_type, "setting_profile", None)
             if profile is None and config is not None:
                 profile = getattr(config, "setting_profile", None)
-        # Schema defaults (e.g. include_graph_metadata) apply when the client
-        # omits them — explicit request settings still win.
+        # Schema defaults fill gaps after presets (below). Do not merge them
+        # before apply_difficulty_presets — that would freeze easy-form toggles
+        # and block continuous-D / EMH form ladders.
         defaults = getattr(config, "setting_defaults", None) if config is not None else None
-        if defaults:
-            merged = {**defaults, **merged}
-    return apply_difficulty_presets(merged, type_id=type_id, setting_profile=profile)
+    # Request settings win over presets; presets fill request gaps.
+    resolved = apply_difficulty_presets(merged, type_id=type_id, setting_profile=profile)
+    # Schema defaults (e.g. include_graph_metadata) only when still omitted.
+    if defaults:
+        resolved = {**defaults, **resolved}
+    return resolved
 
 
 def _annotate_questions(
@@ -160,12 +165,45 @@ def handle_generate(body: dict[str, Any]) -> tuple[int, dict[str, str], str]:
         return _json_response(500, {"error": str(error) or "Generation failed"})
 
 
+def _expand_progressive(
+    progressive: dict[str, Any],
+    worksheet_settings: dict[str, Any],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Build count=1 sections with a global D ramp from a ``progressive`` payload."""
+    from question_engine.progressive import build_progressive_sections, parse_progressive_body
+
+    built = build_progressive_sections(**parse_progressive_body(progressive))
+    snapshot = dict(worksheet_settings)
+    snapshot["progressive"] = built["plan"]
+    return built["sections"], snapshot
+
+
 def _handle_generate_body(
     title: str,
     worksheet_settings: dict[str, Any],
     sections: Any,
     body: dict[str, Any],
 ) -> tuple[int, dict[str, str], str]:
+    progressive = body.get("progressive")
+    if progressive and isinstance(progressive, dict):
+        try:
+            sections, worksheet_settings = _expand_progressive(progressive, worksheet_settings)
+        except ValueError as error:
+            return _json_response(400, {"error": str(error)})
+
+        # Plan-only: return sections/topics without generating questions.
+        if progressive.get("plan_only"):
+            return _json_response(
+                200,
+                {
+                    "title": title,
+                    "questions": [],
+                    "settings_snapshot": worksheet_settings,
+                    "progressive": worksheet_settings.get("progressive"),
+                    "sections": sections,
+                },
+            )
+
     if sections:
         all_questions: list[Question] = []
         for section in sections:
@@ -191,11 +229,17 @@ def _handle_generate_body(
             settings_snapshot=worksheet_settings,
             columns=columns,
         )
-        return _json_response(200, question_set.to_dict())
+        payload = question_set.to_dict()
+        progressive_plan = worksheet_settings.get("progressive")
+        if progressive_plan:
+            payload["progressive"] = progressive_plan
+            # Echo the expanded count=1 sections so clients can mirror the plan.
+            payload["sections"] = sections
+        return _json_response(200, payload)
 
     type_id = body.get("type_id")
     if not type_id:
-        return _json_response(400, {"error": "type_id or sections is required"})
+        return _json_response(400, {"error": "type_id, sections, or progressive is required"})
 
     question_type = QUESTION_TYPES.get(type_id)
     if question_type is None:

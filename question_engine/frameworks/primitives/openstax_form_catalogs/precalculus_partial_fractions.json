@@ -1,0 +1,114 @@
+{
+  "catalog_id": "precalculus_partial_fractions",
+  "title": "OpenStax Precalculus 2e §9.4 Partial Fractions — form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "precalculus-2e",
+      "slug": "9-4-partial-fractions",
+      "title": "9.4 Partial Fractions",
+      "url": "https://openstax.org/books/precalculus-2e/pages/9-4-partial-fractions",
+      "stage1": null,
+      "note": "Section not in stage-1 mine (chs 1,4–7 only); taxonomy from OpenStax §9.4 headings"
+    },
+    "related": [
+      {
+        "book": "calculus-volume-2",
+        "slug": "3-4-partial-fractions",
+        "note": "Calc integral PFD uses sibling catalog partial_fractions.json; PC leaf shares construct_pfd"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "OpenStax enumerates four Q(x) cases: nonrepeated linear; repeated linear; nonrepeated irreducible quadratic; repeated irreducible quadratic.",
+    "PC generator pc_partial_fraction_decomposition wraps construct_pfd (distinct linears + optional irreducible x²+a²).",
+    "Repeated-factor cases are catalogued as stubs until constructive spine supports multiplicity > 1."
+  ],
+  "forms": [
+    {
+      "form_id": "nonrepeated_linear_2",
+      "description": "P/Q with exactly two distinct linear factors",
+      "strategy": "pfd_distinct_linear",
+      "constraints": { "n_linear": 2, "quadratic": false, "repeated": false },
+      "d_min": 0,
+      "d_max": 14,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["partial_fractions"],
+      "leaves": ["pc_partial_fraction_decomposition"],
+      "wired_generators": ["partial_fraction_decomposition"],
+      "example_item_ids": [],
+      "openstax_case": "§9.4 Example 1 — nonrepeated linear factors"
+    },
+    {
+      "form_id": "nonrepeated_linear_3",
+      "description": "P/Q with three distinct linear factors",
+      "strategy": "pfd_distinct_linear",
+      "constraints": { "n_linear": 3, "quadratic": false, "repeated": false },
+      "d_min": 8,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["partial_fractions"],
+      "leaves": ["pc_partial_fraction_decomposition"],
+      "wired_generators": ["partial_fraction_decomposition"],
+      "example_item_ids": [],
+      "openstax_case": "§9.4 nonrepeated linear (3 factors)"
+    },
+    {
+      "form_id": "nonrepeated_irreducible_quadratic",
+      "description": "Q has a nonrepeated irreducible quadratic (plus optional linear)",
+      "strategy": "pfd_irreducible_quad",
+      "constraints": { "n_linear": 1, "quadratic": true, "repeated": false },
+      "d_min": 8,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["partial_fractions"],
+      "leaves": ["pc_partial_fraction_decomposition"],
+      "wired_generators": ["partial_fraction_decomposition"],
+      "example_item_ids": [],
+      "openstax_case": "§9.4 Example 3 — nonrepeated irreducible quadratic"
+    },
+    {
+      "form_id": "mixed_linear_quadratic",
+      "description": "Two+ linears with one irreducible quadratic",
+      "strategy": "pfd_mixed",
+      "constraints": { "n_linear": 2, "quadratic": true, "repeated": false },
+      "d_min": 12,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["partial_fractions"],
+      "leaves": ["pc_partial_fraction_decomposition"],
+      "wired_generators": ["partial_fraction_decomposition"],
+      "example_item_ids": [],
+      "openstax_case": "§9.4 mixed linear + irreducible quadratic"
+    },
+    {
+      "form_id": "repeated_linear",
+      "description": "Q has a repeated linear factor (x−a)^k, k≥2",
+      "strategy": "pfd_repeated_linear",
+      "constraints": { "repeated": "linear", "multiplicity_min": 2 },
+      "d_min": 10,
+      "d_weight": 1.2,
+      "generation_status": "stub",
+      "tricks": ["partial_fractions"],
+      "leaves": ["pc_partial_fraction_decomposition"],
+      "wired_generators": ["partial_fraction_decomposition"],
+      "example_item_ids": [],
+      "openstax_case": "§9.4 Example 2 — repeated linear factors"
+    },
+    {
+      "form_id": "repeated_irreducible_quadratic",
+      "description": "Q has a repeated irreducible quadratic factor",
+      "strategy": "pfd_repeated_quad",
+      "constraints": { "repeated": "quadratic", "multiplicity_min": 2 },
+      "d_min": 16,
+      "d_weight": 0.8,
+      "generation_status": "deferred",
+      "tricks": ["partial_fractions"],
+      "leaves": ["pc_partial_fraction_decomposition"],
+      "wired_generators": ["partial_fraction_decomposition"],
+      "example_item_ids": [],
+      "openstax_case": "§9.4 Example 4 — repeated irreducible quadratic"
+    }
+  ]
+}

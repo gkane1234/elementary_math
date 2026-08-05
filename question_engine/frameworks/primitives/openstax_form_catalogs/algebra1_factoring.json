@@ -1,0 +1,185 @@
+{
+  "catalog_id": "algebra1_factoring",
+  "title": "OpenStax Elementary Algebra 2e — factoring form taxonomy (Ch. 7)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "elementary-algebra-2e",
+      "slug": "7-5-general-strategy-for-factoring-polynomials",
+      "title": "7.5 General Strategy for Factoring Polynomials",
+      "url": "https://openstax.org/books/elementary-algebra-2e/pages/7-5-general-strategy-for-factoring-polynomials",
+      "stage1": "scripts/output/example_mining/elementary-algebra-2e/stage1/7-5-general-strategy-for-factoring-polynomials.json"
+    },
+    "related": [
+      {
+        "book": "elementary-algebra-2e",
+        "slug": "7-1-greatest-common-factor-and-factor-by-grouping",
+        "note": "GCF + grouping"
+      },
+      {
+        "book": "elementary-algebra-2e",
+        "slug": "7-2-factor-trinomials-of-the-form-x2-bx-c",
+        "note": "Monic trinomials"
+      },
+      {
+        "book": "elementary-algebra-2e",
+        "slug": "7-3-factor-trinomials-of-the-form-ax2-bx-c",
+        "note": "Non-monic / ac method"
+      },
+      {
+        "book": "elementary-algebra-2e",
+        "slug": "7-4-factor-special-products",
+        "note": "Difference of squares + perfect-square trinomials"
+      },
+      {
+        "book": "elementary-algebra-2e",
+        "slug": "7-6-quadratic-equations",
+        "note": "Solve by factoring (zero product)"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "Forms mirror OpenStax Elementary Algebra 2e Ch. 7 decision tree: GCF first, then by term count (binomial special / trinomial monic or ax²+bx+c / grouping).",
+    "Stage-1 mining is inventory only — this catalog is the explicit taxonomy layer.",
+    "Sampler selects form_id by D-weighted weights among generation_status=implemented entries."
+  ],
+  "wired_type_ids": [
+    "polynomial_factoring_general_strategy",
+    "quadratic_factoring",
+    "polynomial_factoring_special_cases"
+  ],
+  "forms": [
+    {
+      "form_id": "gcf_monomial",
+      "description": "Factor out a monomial GCF; residual may remain unfactored (OpenStax §7.1)",
+      "strategy": "factor_gcf",
+      "constraints": { "kind": "gcf_monomial", "term_count_min": 2 },
+      "d_min": 0,
+      "d_max": 14,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["gcf"],
+      "example_item_ids": ["fs-id1168345255661", "fs-id1168345342784", "fs-id1168341863655"],
+      "openstax_case": "§7.1 Example 7.1–7.3 — find / factor GCF",
+      "leaves": ["polynomial_factoring_common_factor", "polynomial_factoring_general_strategy"]
+    },
+    {
+      "form_id": "factor_by_grouping",
+      "description": "Four-term polynomial factors by grouping (OpenStax §7.1)",
+      "strategy": "grouping",
+      "constraints": { "kind": "grouping", "term_count": 4 },
+      "d_min": 3,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["grouping"],
+      "example_item_ids": ["fs-id1168345688810"],
+      "openstax_case": "§7.1 factor by grouping",
+      "leaves": ["polynomial_factoring_grouping", "polynomial_factoring_general_strategy"]
+    },
+    {
+      "form_id": "trinomial_x2_bx_c",
+      "description": "Factor monic trinomial x² + bx + c (OpenStax §7.2)",
+      "strategy": "trial_factors",
+      "constraints": { "kind": "trinomial", "leading": "monic", "degree": 2 },
+      "d_min": 0,
+      "d_max": 12,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": ["factor_pairs"],
+      "example_item_ids": ["fs-id1168344333319", "fs-id1168344523984", "fs-id1168344083254"],
+      "openstax_case": "§7.2 Example 7.17–7.19",
+      "leaves": ["quadratic_factoring", "polynomial_factoring_general_strategy"]
+    },
+    {
+      "form_id": "trinomial_ax2_bx_c",
+      "description": "Factor non-monic ax² + bx + c via trial / ac method (OpenStax §7.3)",
+      "strategy": "ac_method",
+      "constraints": { "kind": "trinomial", "leading": "nonmonic", "degree": 2 },
+      "d_min": 6,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["ac_method"],
+      "example_item_ids": ["fs-id1168345435723", "fs-id1168345330140", "fs-id1168345274691"],
+      "openstax_case": "§7.3 Example 7.29+",
+      "leaves": ["quadratic_factoring", "polynomial_factoring_general_strategy"]
+    },
+    {
+      "form_id": "trinomial_x2_bxy_cy2",
+      "description": "Factor x² + bxy + cy² (two-variable monic trinomial, OpenStax §7.2)",
+      "strategy": "trial_factors_two_var",
+      "constraints": { "kind": "trinomial", "vars": 2 },
+      "d_min": 8,
+      "d_weight": 1.0,
+      "generation_status": "stub",
+      "tricks": ["factor_pairs"],
+      "example_item_ids": [],
+      "openstax_case": "§7.2 Factor Trinomials of the Form x² + bxy + cy²",
+      "leaves": ["quadratic_factoring"]
+    },
+    {
+      "form_id": "difference_of_squares",
+      "description": "Factor a² − b² (OpenStax §7.4)",
+      "strategy": "difference_of_squares",
+      "constraints": { "kind": "binomial", "pattern": "diff_squares" },
+      "d_min": 0,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": ["special_products"],
+      "example_item_ids": ["fs-id1168345414926", "fs-id1168345273788"],
+      "openstax_case": "§7.4 difference of squares",
+      "leaves": ["polynomial_factoring_special_cases", "polynomial_factoring_general_strategy"]
+    },
+    {
+      "form_id": "perfect_square_trinomial",
+      "description": "Factor a² ± 2ab + b² (OpenStax §7.4)",
+      "strategy": "perfect_square",
+      "constraints": { "kind": "trinomial", "pattern": "perfect_square" },
+      "d_min": 2,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": ["special_products"],
+      "example_item_ids": ["fs-id1168345390064", "fs-id1168345251566"],
+      "openstax_case": "§7.4 perfect-square trinomials",
+      "leaves": ["polynomial_factoring_special_cases", "polynomial_factoring_general_strategy"]
+    },
+    {
+      "form_id": "sum_diff_cubes",
+      "description": "Factor a³ ± b³ (OpenStax Intermediate / A2; light in Elem Alg §7.4)",
+      "strategy": "sum_diff_cubes",
+      "constraints": { "kind": "binomial", "pattern": "cubes", "degree": 3 },
+      "d_min": 10,
+      "d_weight": 0.8,
+      "generation_status": "deferred",
+      "tricks": ["special_products"],
+      "example_item_ids": [],
+      "openstax_case": "Cubes primarily A2 leaf polynomial_factoring_sum_diff_cubes",
+      "leaves": ["polynomial_factoring_sum_diff_cubes"]
+    },
+    {
+      "form_id": "gcf_then_pattern",
+      "description": "GCF first, then residual special/trinomial pattern (general strategy Hard)",
+      "strategy": "gcf_then_pattern",
+      "constraints": { "kind": "multi_step", "require_gcf": true },
+      "d_min": 10,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["gcf", "factor_pairs"],
+      "example_item_ids": ["fs-id1168343047249", "fs-id1168343113466"],
+      "openstax_case": "§7.5 general strategy — GCF then second pattern",
+      "leaves": ["polynomial_factoring_general_strategy"]
+    },
+    {
+      "form_id": "quadratic_equation_factor",
+      "description": "Solve ax²+bx+c=0 by factoring / zero-product (OpenStax §7.6)",
+      "strategy": "zero_product",
+      "constraints": { "kind": "equation", "degree": 2 },
+      "d_min": 4,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["factor", "zero_product"],
+      "example_item_ids": ["fs-id1168341961578", "fs-id1168345549988"],
+      "openstax_case": "§7.6 quadratic equations by factoring",
+      "leaves": ["quadratic_factoring_equations"]
+    }
+  ]
+}

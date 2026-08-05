@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>c1: Slope, tangent, and normal lines</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+
+</style>
+<link rel="stylesheet" href="../_assets/katex/katex.min.css"/>
+<script defer src="../_assets/katex/katex.min.js"></script>
+<script defer src="../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>c1: Slope, tangent, and normal lines</h1>
+<p><code>calc_app_diff_slope_tangent_and_normal_lines</code> — continuous difficulty samples for topic-fit / ramp review.</p>
+<p>Samples via the <strong>live continuous-D API path</strong> (<code>QUESTION_TYPES</code> → <code>_generate_for_type</code>).</p>
+<p>Open <a href="gallery.html">gallery.html</a> in a browser for <strong>KaTeX-rendered math</strong> (markdown preview leaves <code>$...$</code> as raw LaTeX).</p>
+<ul>
+<li>generator: ``</li>
+<li>difficulties: 0, 5, 10, 15, 20, 25 · 2 sample(s) each</li>
+<li>generated: 2026-07-29T16:29:55.990780+00:00</li>
+</ul>
+<h3>Structure inventory</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>6</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>tangent_normal_line:poly_mono</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>tangent_normal_line:poly_quad</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>tangent_normal_line:trig</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>tangent_normal_line:poly_cubic</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>tangent_normal_line:reciprocal</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>tangent_normal_line:trig_chain</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Find the tangent line to }y=x^{2}\text{ at }x=3.$</td>
+<td>$y-9=6\left(x-3\right)$</td>
+<td><code>tangent_normal_line:poly_mono · var=tangent; band=easy</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Find the tangent line to }y=x^{2}\text{ at }x=3.$</td>
+<td>$y-9=6\left(x-3\right)$</td>
+<td><code>tangent_normal_line:poly_mono · var=tangent; band=easy</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find the tangent line to }y=2x^{2} + x - 3\text{ at }x=3.$</td>
+<td>$y-18=13\left(x-3\right)$</td>
+<td><code>tangent_normal_line:poly_quad · var=tangent; ups=allow_roots; band=medium</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{Find the tangent line to }y=-2 + 2x + x^{2}\text{ at }x=1.$</td>
+<td>$y-1=4\left(x-1\right)$</td>
+<td><code>tangent_normal_line:poly_quad · var=tangent; ups=allow_roots; band=medium</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find the normal line to }y=x^{3} - 2x\text{ at }x=2.$</td>
+<td>$y-4=-\frac{1}{10}\left(x-2\right)$</td>
+<td><code>tangent_normal_line:poly_cubic · var=normal; ups=allow_trig,allow_exp,allow_roots,allow_invtrig; band=hard</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{Find the normal line to }y=x^{2} + x + 1\text{ at }x=1.$</td>
+<td>$y-3=-\frac{1}{3}\left(x-1\right)$</td>
+<td><code>tangent_normal_line:poly_quad · var=normal; ups=allow_trig,allow_exp,allow_roots,allow_invtrig; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find the tangent line to }y=\sin(x)\text{ at }x=0.$</td>
+<td>$y-0=1\left(x-0\right)$</td>
+<td><code>tangent_normal_line:trig · var=tangent; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots; band=hard</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{Find the tangent line to }y=\frac{1}{x}\text{ at }x=4.$</td>
+<td>$y-\frac{1}{4}=-\frac{1}{16}\left(x-4\right)$</td>
+<td><code>tangent_normal_line:reciprocal · var=tangent; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find the tangent line to }y=\cos(4x)\text{ at }x=0.$</td>
+<td>$y=1$</td>
+<td><code>tangent_normal_line:trig_chain · var=tangent; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots; band=hard</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Find the tangent line to }y=\sin(x)\text{ at }x=0.$</td>
+<td>$y-0=1\left(x-0\right)$</td>
+<td><code>tangent_normal_line:trig · var=tangent; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find the tangent line to }y=\cos(x)\text{ at }x=0.$</td>
+<td>$y=1$</td>
+<td><code>tangent_normal_line:trig · var=tangent; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots; band=hard</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Find the tangent line to }y=x^{4}\text{ at }x=2.$</td>
+<td>$y-16=32\left(x-2\right)$</td>
+<td><code>tangent_normal_line:poly_mono · var=tangent; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots; band=hard</code></td>
+</tr>
+</tbody></table>
+</body></html>

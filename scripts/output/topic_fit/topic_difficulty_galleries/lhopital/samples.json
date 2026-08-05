@@ -1,0 +1,2530 @@
+{
+  "pack_id": "lhopital",
+  "type_id": "calc_app_diff_lhopitals_rule",
+  "leaf": "lhopitals_rule",
+  "approx_max_conceptual_d": 25.0,
+  "conceptual_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "spec_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    16.0,
+    32.0
+  ],
+  "allows": {
+    "allow_trig": true,
+    "allow_exp": true,
+    "allow_log": true,
+    "allow_invtrig": true
+  },
+  "rows": [
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 0.0,
+      "seed": 92,
+      "prompt_latex": "\\lim_{x \\to 1} \\frac{x^{2}-1}{x-1}",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 4.0,
+      "seed": 92,
+      "prompt_latex": "\\lim_{x \\to 1} -\\left(-\\frac{x^{2}-1}{x-1}\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 8.0,
+      "seed": 92,
+      "prompt_latex": "\\lim_{x \\to 1} -\\left(-\\left(\\left(\\frac{x^{2}-1}{x-1}+1\\right)-1\\right)\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 16.0,
+      "seed": 92,
+      "prompt_latex": "\\lim_{x \\to 1} \\left(\\left(\\left(\\left(\\frac{x^{2}-1}{x-1}+\\left(x-2\\right)\\right)-\\left(x-2\\right)+1\\right)-1\\right)+\\left(x\\right)\\right)-\\left(x\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 32.0,
+      "seed": 92,
+      "prompt_latex": "\\lim_{x \\to 1} -\\left(-\\left(\\left(\\left(\\frac{x^{2}-1}{x-1}+3-3\\right)+2\\right)-2\\right)\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 0.0,
+      "seed": 160,
+      "prompt_latex": "\\lim_{x \\to 0} \\frac{\\sin(5x)}{x}",
+      "answer_latex": "5",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 4.0,
+      "seed": 160,
+      "prompt_latex": "\\lim_{x \\to 0} -\\left(-\\frac{\\sin(5x)}{x}\\right)",
+      "answer_latex": "5",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 8.0,
+      "seed": 160,
+      "prompt_latex": "\\lim_{x \\to 0} -\\left(-\\left(\\frac{\\sin(5x)}{x}+3-3\\right)\\right)",
+      "answer_latex": "5",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 16.0,
+      "seed": 160,
+      "prompt_latex": "\\lim_{x \\to 0} \\left(\\left(\\left(-\\left(-\\frac{\\sin(5x)}{x}\\right)\\right)+\\left(-2x+2\\right)\\right)-\\left(-2x+2\\right)+3\\right)-3",
+      "answer_latex": "5",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 32.0,
+      "seed": 160,
+      "prompt_latex": "\\lim_{x \\to 0} \\left(\\left(-\\left(-\\left(\\frac{\\sin(5x)}{x}+1-1\\right)\\right)\\right)+\\left(x-1\\right)\\right)-\\left(x-1\\right)",
+      "answer_latex": "5",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 0.0,
+      "seed": 228,
+      "prompt_latex": "\\lim_{x \\to 1} \\frac{x^{2}-1}{x-1}",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 4.0,
+      "seed": 228,
+      "prompt_latex": "\\lim_{x \\to 1} -\\left(-\\frac{x^{2}-1}{x-1}\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 8.0,
+      "seed": 228,
+      "prompt_latex": "\\lim_{x \\to 1} \\left(\\left(\\frac{x^{2}-1}{x-1}+\\left(-x\\right)-\\left(-x\\right)\\right)+6\\right)-6",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 16.0,
+      "seed": 228,
+      "prompt_latex": "\\lim_{x \\to 1} \\left(\\left(\\left(\\frac{x^{2}-1}{x-1}+\\left(-2x-1\\right)\\right)-\\left(-2x-1\\right)+6-6\\right)+\\left(-x+1\\right)\\right)-\\left(-x+1\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 32.0,
+      "seed": 228,
+      "prompt_latex": "\\lim_{x \\to 1} \\left(\\left(\\left(\\left(\\frac{x^{2}-1}{x-1}+\\left(-2x+1\\right)\\right)-\\left(-2x+1\\right)+4\\right)-4\\right)+\\left(3x+3\\right)\\right)-\\left(3x+3\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_poly",
+          "detail": "catalog/skeleton lhopital_0_0_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 0.0,
+      "seed": 296,
+      "prompt_latex": "\\lim_{x \\to 0^{+}} \\left(\\frac{1}{x}-\\frac{1}{\\sin(x)}\\right)",
+      "answer_latex": "-\\frac{1}{6}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_minus_inf",
+          "detail": "catalog/skeleton lhopital_inf_minus_inf"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{6}"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 4.0,
+      "seed": 296,
+      "prompt_latex": "\\lim_{x \\to 0^{+}} -\\left(-\\left(\\frac{1}{x}-\\frac{1}{\\sin(x)}\\right)\\right)",
+      "answer_latex": "-\\frac{1}{6}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_minus_inf",
+          "detail": "catalog/skeleton lhopital_inf_minus_inf"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{6}"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 8.0,
+      "seed": 296,
+      "prompt_latex": "\\lim_{x \\to 0^{+}} \\left(\\left(-\\left(-\\left(\\frac{1}{x}-\\frac{1}{\\sin(x)}\\right)\\right)\\right)+\\left(x-1\\right)\\right)-\\left(x-1\\right)",
+      "answer_latex": "-\\frac{1}{6}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_minus_inf",
+          "detail": "catalog/skeleton lhopital_inf_minus_inf"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{6}"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 16.0,
+      "seed": 296,
+      "prompt_latex": "\\lim_{x \\to 0^{+}} -\\left(-\\left(\\left(\\frac{1}{x}-\\frac{1}{\\sin(x)}\\right)+\\left(2x-2\\right)-\\left(2x-2\\right)+\\left(2x+2\\right)\\right)-\\left(2x+2\\right)\\right)",
+      "answer_latex": "-\\frac{1}{6}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_minus_inf",
+          "detail": "catalog/skeleton lhopital_inf_minus_inf"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{6}"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 32.0,
+      "seed": 296,
+      "prompt_latex": "\\lim_{x \\to 0^{+}} -\\left(-\\left(\\left(\\left(\\frac{1}{x}-\\frac{1}{\\sin(x)}\\right)+1\\right)-1\\right)+\\left(-2x-1\\right)-\\left(-2x-1\\right)\\right)",
+      "answer_latex": "-\\frac{1}{6}",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_minus_inf",
+          "detail": "catalog/skeleton lhopital_inf_minus_inf"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-\\frac{1}{6}"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 0.0,
+      "seed": 364,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\frac{6x^{2}-1}{3x^{2}+1}",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_inf_poly",
+          "detail": "catalog/skeleton lhopital_inf_inf_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 4.0,
+      "seed": 364,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\frac{6x^{2}-1}{3x^{2}+1}+1-1",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_inf_poly",
+          "detail": "catalog/skeleton lhopital_inf_inf_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 8.0,
+      "seed": 364,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\left(\\frac{6x^{2}-1}{3x^{2}+1}+6-6\\right)+\\left(x-1\\right)-\\left(x-1\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_inf_poly",
+          "detail": "catalog/skeleton lhopital_inf_inf_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 16.0,
+      "seed": 364,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\left(\\left(-\\left(-\\frac{6x^{2}-1}{3x^{2}+1}\\right)\\right)+\\left(3x\\right)\\right)-\\left(3x\\right)+5-5",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_inf_poly",
+          "detail": "catalog/skeleton lhopital_inf_inf_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 32.0,
+      "seed": 364,
+      "prompt_latex": "\\lim_{x \\to \\infty} -\\left(-\\left(\\left(\\left(\\frac{6x^{2}-1}{3x^{2}+1}+1\\right)-1\\right)+\\left(-2x\\right)\\right)-\\left(-2x\\right)\\right)",
+      "answer_latex": "2",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_inf_inf_poly",
+          "detail": "catalog/skeleton lhopital_inf_inf_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 0.0,
+      "seed": 432,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\left(\\frac{1}{x}\\right)^{x}",
+      "answer_latex": "0",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_inf_power",
+          "detail": "catalog/skeleton lhopital_0_inf_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 4.0,
+      "seed": 432,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\left(\\frac{1}{x}\\right)^{x}+\\left(2x\\right)-\\left(2x\\right)",
+      "answer_latex": "0",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_inf_power",
+          "detail": "catalog/skeleton lhopital_0_inf_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 8.0,
+      "seed": 432,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\left(\\left(\\left(\\frac{1}{x}\\right)^{x}+6-6\\right)+3\\right)-3",
+      "answer_latex": "0",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_inf_power",
+          "detail": "catalog/skeleton lhopital_0_inf_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 16.0,
+      "seed": 432,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\left(-\\left(-\\left(\\frac{1}{x}\\right)^{x}+\\left(-x+1\\right)-\\left(-x+1\\right)\\right)\\right)+3-3",
+      "answer_latex": "0",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_inf_power",
+          "detail": "catalog/skeleton lhopital_0_inf_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 32.0,
+      "seed": 432,
+      "prompt_latex": "\\lim_{x \\to \\infty} \\left(\\left(\\left(\\left(\\frac{1}{x}\\right)^{x}+4\\right)-4\\right)+\\left(x+1\\right)\\right)-\\left(x+1\\right)+6-6",
+      "answer_latex": "0",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_inf_power",
+          "detail": "catalog/skeleton lhopital_0_inf_power"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 0.0,
+      "seed": 517,
+      "prompt_latex": "\\lim_{x \\to 0} \\frac{\\sin(3x)}{x}",
+      "answer_latex": "3",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 4.0,
+      "seed": 517,
+      "prompt_latex": "\\lim_{x \\to 0} \\left(\\frac{\\sin(3x)}{x}+6\\right)-6",
+      "answer_latex": "3",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 8.0,
+      "seed": 517,
+      "prompt_latex": "\\lim_{x \\to 0} -\\left(-\\left(\\frac{\\sin(3x)}{x}+\\left(-2x+2\\right)\\right)-\\left(-2x+2\\right)\\right)",
+      "answer_latex": "3",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 16.0,
+      "seed": 517,
+      "prompt_latex": "\\lim_{x \\to 0} \\left(\\left(-\\left(-\\frac{\\sin(3x)}{x}\\right)\\right)+\\left(2x-2\\right)\\right)-\\left(2x-2\\right)+\\left(3x+1\\right)-\\left(3x+1\\right)",
+      "answer_latex": "3",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 32.0,
+      "seed": 517,
+      "prompt_latex": "\\lim_{x \\to 0} \\left(\\left(\\left(\\left(-\\left(-\\frac{\\sin(3x)}{x}\\right)\\right)+4\\right)-4\\right)+5\\right)-5",
+      "answer_latex": "3",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "lhopital_0_0_trig",
+          "detail": "catalog/skeleton lhopital_0_0_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "lhopital",
+          "detail": "method lhopital"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "exp",
+          "detail": "allow_exp enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "log",
+          "detail": "allow_log enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "invtrig",
+          "detail": "allow_invtrig enabled"
+        },
+        {
+          "kind": "allow",
+          "tag": "one_sided",
+          "detail": "allow_one_sided enabled"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 32.0
+    }
+  ]
+}

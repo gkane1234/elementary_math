@@ -62,6 +62,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     ),
     # Equations and Inequalities
     _a2("Equations and Inequalities", "a2_equations_and_inequalities_multi_step_equations", "Multi-step equations", generator="multi_step_equations", instruction_latex="\\text{Solve for } x.", instruction_text="Solve for x."),
+    _a2(
+        "Equations and Inequalities",
+        "a2_equations_and_inequalities_literal_equations",
+        "Literal equations",
+        generator="literal_equations",
+        instruction_latex="\\text{Solve for the indicated variable.}",
+        instruction_text="Solve for the indicated variable.",
+    ),
     _a2("Equations and Inequalities", "a2_equations_and_inequalities_work_word_problems", "Work word problems", generator="wp_work", instruction_latex="\\text{Solve the problem.}", instruction_text="Solve the problem.", count_default=5),
     _a2("Equations and Inequalities", "a2_equations_and_inequalities_distance_rate_time_word_problems", "Distance, rate, time word problems", generator="wp_distance_rate_time", instruction_latex="\\text{Solve the problem.}", instruction_text="Solve the problem.", count_default=5),
     _a2("Equations and Inequalities", "a2_equations_and_inequalities_mixture_word_problems", "Mixture word problems", generator="wp_mixture", instruction_latex="\\text{Solve the problem.}", instruction_text="Solve the problem.", count_default=5),

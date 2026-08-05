@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Algebra 1 algebraic gallery</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+
+</style>
+<link rel="stylesheet" href="../_assets/katex/katex.min.css"/>
+<script defer src="../_assets/katex/katex.min.js"></script>
+<script defer src="../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>Algebra 1 algebraic gallery</h1>
+<p>Generated: 2026-08-02T17:31:48.704220+00:00</p>
+<p>Live samples via <code>_generate_for_type</code> (D = 0, 3, 6, 8, 12, 16, 20, 25; 3 seeds each). No Easy/Medium/Hard labels — continuous <strong>D=</strong> only.</p>
+<p>Open <a href="gallery.html">gallery.html</a> in a browser for KaTeX (local <code>_assets/katex</code>).</p>
+<ul>
+<li>topics ok: <strong>8</strong> · skipped missing: <strong>0</strong></li>
+<li>samples ok: <strong>192</strong> · errors: <strong>0</strong></li>
+<li>metadata: <code>tricks_required</code>, <code>spec_snapshot</code> pack, form/shape when present</li>
+</ul>
+<h2>Structure inventory</h2>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>7</strong> · samples: <strong>192</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>(unlabeled)</code></td>
+<td>72</td>
+</tr>
+<tr>
+<td><code>construct_poly:construct_poly</code></td>
+<td>24</td>
+</tr>
+<tr>
+<td><code>factor_gcf:factor_gcf</code></td>
+<td>24</td>
+</tr>
+<tr>
+<td><code>radical_add_subtract:structured_radical_add</code></td>
+<td>24</td>
+</tr>
+<tr>
+<td><code>polynomial_add_subtract:+</code></td>
+<td>14</td>
+</tr>
+<tr>
+<td><code>polynomial_multiply:distribute</code></td>
+<td>12</td>
+</tr>
+<tr>
+<td><code>polynomial_multiply:foil</code></td>
+<td>12</td>
+</tr>
+<tr>
+<td><code>polynomial_add_subtract:-</code></td>
+<td>10</td>
+</tr>
+</tbody></table>
+<h2>Topics</h2>
+<ul>
+<li><a href="#poly_simplify">A1 simplify polynomials</a> — <code>simplify_polynomials</code></li>
+<li><a href="#poly_multiply">A1 multiply polynomials</a> — <code>polynomial_multiply</code></li>
+<li><a href="#poly_add_subtract">A1 add/subtract polynomials</a> — <code>polynomial_add_subtract</code></li>
+<li><a href="#quadratic_factoring">A1 quadratic factoring</a> — <code>quadratic_factoring</code></li>
+<li><a href="#factor_gcf">A1 factor GCF</a> — <code>polynomial_factoring_common_factor</code></li>
+<li><a href="#rational_simplify">A1 simplify rational expressions</a> — <code>rational_simplification</code></li>
+<li><a href="#rational_add">A1 add/subtract rational expressions</a> — <code>rational_expression_simplification</code></li>
+<li><a href="#radical_add">A1 add/subtract radicals</a> — <code>radical_add_subtract</code></li>
+</ul>
+<h2>A1 simplify polynomials</h2>
+<p>&lt;a id=&quot;poly_simplify&quot;&gt;&lt;/a&gt;</p>
+<p><code>simplify_polynomials</code> · pack <code>poly_simplify</code> · topic label: a1: Simplifying polynomials · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>1</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>construct_poly:construct_poly</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$3x^{2} + 3x - 2$</td>
+<td>$3x^{2} + 3x - 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$2x^{2} + 2$</td>
+<td>$2x^{2} + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$1 + 3x^{2}$</td>
+<td>$3x^{2} + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$2\left(x^{2} + x\right)$</td>
+<td>$2x^{2} + 2x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$-3x^{2} - 2 - 1$</td>
+<td>$-3x^{2} - 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$3 + 2x^{2}$</td>
+<td>$2x^{2} + 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$3 + 3x^{3} - x^{3} - x$</td>
+<td>$2x^{3} - x + 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$2x - 3x^{3}$</td>
+<td>$-3x^{3} + 2x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$-x^{2} + 2x^{2} + 1 + x^{3}$</td>
+<td>$x^{3} + x^{2} + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$x^{2} + 1 - 2x^{2} + 2x^{3}$</td>
+<td>$2x^{3} - x^{2} + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$-3x^{2} + x + 2x^{2} + 2x^{3}$</td>
+<td>$2x^{3} - x^{2} + x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$3x + 2x^{3} - x^{3} - 1$</td>
+<td>$x^{3} + 3x - 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$5x^{4} - 3x^{4}$</td>
+<td>$2x^{4}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$3y^{4} + 4 - 3y + 7y$</td>
+<td>$3y^{4} + 4y + 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$x^{3} + 4x + 4 - 3x^{4} + 4x^{4}$</td>
+<td>$x^{4} + x^{3} + 4x + 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$5\left(t^{4} + 2\right) - 4t^{4} + 3t^{3} + 6t^{2} - 11$</td>
+<td>$t^{4} + 3t^{3} + 6t^{2} - 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$-5y^{4} + y^{3} - 6y^{2} + 5y + 3y^{4}$</td>
+<td>$-2y^{4} + y^{3} - 6y^{2} + 5y$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$7 - 1 - x + 8x + 9x^{3} + 7x^{4}$</td>
+<td>$7x^{4} + 9x^{3} + 7x + 6$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$c + 3c^{4} - 2c^{4} + c^{4} + 2c^{3} + 3c^{2}$</td>
+<td>$2c^{4} + 2c^{3} + 3c^{2} + c$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$-x^{4} + 4x^{4}$</td>
+<td>$3x^{4}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$2\left(x^{4} + 1\right)$</td>
+<td>$2x^{4} + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$-3z^{3} + z^{2} + 3z + 4 + 2z^{3} + 2\left(2z^{4} - 1\right)$</td>
+<td>$4z^{4} - z^{3} + z^{2} + 3z + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$2x^{3} + 5x^{4} - x^{2} - 3x - 1 - 2x^{4}$</td>
+<td>$3x^{4} + 2x^{3} - x^{2} - 3x - 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\phi^{3} - 3\phi^{2} + 4 + 22\phi^{4} + 4\phi$</td>
+<td>$4\phi^{4} + \phi^{3} - 3\phi^{2} + 4\phi + 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_construct_poly · methods=algebraic · form=construct_poly · shape=construct_poly · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>A1 multiply polynomials</h2>
+<p>&lt;a id=&quot;poly_multiply&quot;&gt;&lt;/a&gt;</p>
+<p><code>polynomial_multiply</code> · pack <code>poly_multiply</code> · topic label: a1: Multiplying · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>2</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>polynomial_multiply:distribute</code></td>
+<td>12</td>
+</tr>
+<tr>
+<td><code>polynomial_multiply:foil</code></td>
+<td>12</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Multiply: } \left(2x\right)\left(x + 3\right)$</td>
+<td>$2x^{2} + 6x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Multiply: } \left(x\right)\left(2x - 1\right)$</td>
+<td>$2x^{2} - x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Multiply: } \left(x\right)\left(x + 2\right)$</td>
+<td>$x^{2} + 2x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Multiply: } \left(2x + 1\right)\left(2x\right)$</td>
+<td>$4x^{2} + 2x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Multiply: } \left(3x + 1\right)\left(x + 1\right)$</td>
+<td>$3x^{2} + 4x + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Multiply: } \left(3x + 3\right)\left(2x\right)$</td>
+<td>$6x^{2} + 6x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Multiply: } \left(3x^{2} + 4\right)\left(4x + 3\right)$</td>
+<td>$12x^{3} + 9x^{2} + 16x + 12$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Multiply: } \left(2x^{2} + 1\right)\left(-x + 1\right)$</td>
+<td>$-2x^{3} + 2x^{2} - x + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Multiply: } \left(z + 3\right)\left(2z\right)$</td>
+<td>$2z^{2} + 6z$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Multiply: } \left(x^{2} + x + 1\right)\left(3x\right)$</td>
+<td>$3x^{3} + 3x^{2} + 3x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Multiply: } \left(2x + 2\right)\left(x^{2} + 3\right)$</td>
+<td>$2x^{3} + 2x^{2} + 6x + 6$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Multiply: } \left(-x - 4\right)\left(2x^{2} + 2\right)$</td>
+<td>$-2x^{3} - 8x^{2} - 2x - 8$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Multiply: } \left(x^{2} - 2\right)\left(3x + 4\right)$</td>
+<td>$3x^{3} + 4x^{2} - 6x - 8$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Multiply: } \left(2x + 2\right)\left(x^{2} + 3\right)$</td>
+<td>$2x^{3} + 2x^{2} + 6x + 6$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Multiply: } \left(2x + 1\right)\left(-2x + 2\right)$</td>
+<td>$-4x^{2} + 2x + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Multiply: } \left(x^{2} - 1\right)\left(x + 3\right)$</td>
+<td>$x^{3} + 3x^{2} - x - 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Multiply: } \left(-2c^{2} + 3\right)\left(-3c + 4\right)$</td>
+<td>$6c^{3} - 8c^{2} - 9c + 12$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Multiply: } \left(x + 2\right)\left(4x + 4\right)$</td>
+<td>$4x^{2} + 12x + 8$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Multiply: } \left(\gamma + 6\right)\left(6\gamma + 4\right)$</td>
+<td>$6\gamma^{2} + 40\gamma + 24$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Multiply: } \left(3r^{2} + 3\right)\left(r^{2} - r + 1\right)$</td>
+<td>$3r^{4} - 3r^{3} + 6r^{2} - 3r + 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Multiply: } \left(x^{3}\right)\left(3x + 4\right)$</td>
+<td>$3x^{4} + 4x^{3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Multiply: } \left(3x^{2} + 3\right)\left(4x^{2} + 2\right)$</td>
+<td>$12x^{4} + 18x^{2} + 6$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=foil · shape=foil · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Multiply: } \left(4k^{2} + 2k + 3\right)\left(4k^{2}\right)$</td>
+<td>$16k^{4} + 8k^{3} + 12k^{2}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Multiply: } \left(v + 7\right)\left(7v^{2} + 6v + 5\right)$</td>
+<td>$7v^{3} + 55v^{2} + 47v + 35$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_multiply · methods=product · form=distribute · shape=distribute · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>A1 add/subtract polynomials</h2>
+<p>&lt;a id=&quot;poly_add_subtract&quot;&gt;&lt;/a&gt;</p>
+<p><code>polynomial_add_subtract</code> · pack <code>poly_add_subtract</code> · topic label: a1: Adding and subtracting · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>2</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>polynomial_add_subtract:+</code></td>
+<td>14</td>
+</tr>
+<tr>
+<td><code>polynomial_add_subtract:-</code></td>
+<td>10</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Simplify: } \left(3x^{2} - 1\right) + \left(3x^{2} - 1\right)$</td>
+<td>$6x^{2} - 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Simplify: } \left(x^{2} + 3\right) + \left(2x^{2} + 1\right)$</td>
+<td>$3x^{2} + 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Simplify: } \left(2x^{2} + 3\right) + \left(3x + 1\right)$</td>
+<td>$2x^{2} + 3x + 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Simplify: } \left(x^{2} - x\right) + \left(3x^{2} + 2\right)$</td>
+<td>$4x^{2} - x + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Simplify: } \left(3x^{2} + 3\right) - \left(x^{2} + 1\right)$</td>
+<td>$2x^{2} + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Simplify: } \left(-2x^{2} - 1\right) - \left(x^{2} + 3\right)$</td>
+<td>$-3x^{2} - 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Simplify: } \left(3x^{2} + 3\right) - \left(x^{2} + 2\right)$</td>
+<td>$2x^{2} + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Simplify: } \left(3x^{3} - 3x + 1\right) + \left(x^{2} + 2x\right)$</td>
+<td>$3x^{3} + x^{2} - x + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Simplify: } \left(3x^{2} + 1\right) - \left(2x^{2} + 2\right)$</td>
+<td>$x^{2} - 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Simplify: } \left(2x^{3} + 3x^{2} + 2x\right) + \left(-3x^{3} + 2\right)$</td>
+<td>$-x^{3} + 3x^{2} + 2x + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Simplify: } \left(3x^{3} + x^{2}\right) + \left(3x^{3} + 3x\right)$</td>
+<td>$6x^{3} + x^{2} + 3x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Simplify: } \left(3x^{3} - 2x^{2} - x\right) + \left(3x^{3} + 1\right)$</td>
+<td>$6x^{3} - 2x^{2} - x + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Simplify: } \left(2z^{3} + 3z^{2} + 2z\right) - \left(z^{3} - 3z^{2}\right)$</td>
+<td>$z^{3} + 6z^{2} + 2z$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Simplify: } \left(y^{3} + y + 3\right) - \left(-y^{2} + 1\right)$</td>
+<td>$y^{3} + y^{2} + y + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Simplify: } \left(x^{3} + 2x^{2} + x\right) + \left(4x^{3} + 1\right)$</td>
+<td>$5x^{3} + 2x^{2} + x + 1$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Simplify: } \left(x^{4} + 3x^{3} + 2x + 2\right) - \left(4x^{4} + 4x^{2} + 2\right)$</td>
+<td>$-3x^{4} + 3x^{3} - 4x^{2} + 2x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Simplify: } \left(-x^{4} - 3x^{3} + 2x^{2} + x\right) + \left(3x^{4} + 3x^{3} - 2\right)$</td>
+<td>$2x^{4} + 2x^{2} + x - 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Simplify: } \left(2z^{3} + 2z^{2} - 3z + 3\right) + \left(3z^{2} + 2z - 1\right)$</td>
+<td>$2z^{3} + 5z^{2} - z + 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Simplify: } \left(6q^{2} + 3\right) - \left(11q^{2} - 11\right)$</td>
+<td>$-5q^{2} + 14$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Simplify: } \left(-y^{4} + 2y^{3} + y^{2} - 2\right) - \left(3y^{4} + 2y^{2} + 1\right)$</td>
+<td>$-4y^{4} + 2y^{3} - y^{2} - 3$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Simplify: } \left(5y^{3} - 2y^{2} + 6y + 2\right) - \left(2y^{3} - 6y^{2} + 2\right)$</td>
+<td>$3y^{3} + 4y^{2} + 6y$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=- · shape=- · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Simplify: } \left(-2x^{4} - 6x^{2} - 5x + 1\right) + \left(x^{4} + 2x - 1\right)$</td>
+<td>$-x^{4} - 6x^{2} - 3x$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Simplify: } \left(2v^{4} + 2v^{2} + v + 3\right) + \left(4v^{4} - 3v^{2} + 1\right)$</td>
+<td>$6v^{4} - v^{2} + v + 4$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Simplify: } \left(7h^{3} + 6h^{2} + 4\right) + \left(3h^{2} - 6\right)$</td>
+<td>$7h^{3} + 9h^{2} - 2$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_polynomial_add_subtract · methods=algebraic · form=+ · shape=+ · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>A1 quadratic factoring</h2>
+<p>&lt;a id=&quot;quadratic_factoring&quot;&gt;&lt;/a&gt;</p>
+<p><code>quadratic_factoring</code> · pack <code>quadratic_factoring</code> · topic label: a1: Quadratic expressions · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>0</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>(unlabeled)</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$x^{2}+7x+12$</td>
+<td>$(x+4)(x+3)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$x^{2}+5x+4$</td>
+<td>$(x+4)(x+1)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$x^{2}-5x+6$</td>
+<td>$(x-2)(x-3)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$x^{2}-7x+12$</td>
+<td>$(x-3)(x-4)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$x^{2}+2x$</td>
+<td>$(x+2)(x)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$x^{2}-4x$</td>
+<td>$(x)(x-4)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$6x^{2}+66x+108$</td>
+<td>$(6x+12)(x+9)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$3x^{2}+45x+150$</td>
+<td>$(3x+15)(x+10)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$2x^{2}-4x-70$</td>
+<td>$(2x+10)(x-7)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$4x^{2}-16x+16$</td>
+<td>$(4x-8)(x-2)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$4x^{2}+4x-24$</td>
+<td>$(4x+12)(x-2)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$5x^{2}-30x-35$</td>
+<td>$(5x+5)(x-7)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$9x^{2}-25$</td>
+<td>$(3x+5)(3x-5)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$4x^{2}-144$</td>
+<td>$(2x-12)(2x+12)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$9x^{2}-144$</td>
+<td>$(3x-12)(3x+12)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$6x^{2}+6x-120$</td>
+<td>$(6x+30)(x-4)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$9x^{2}-42x+49$</td>
+<td>$(3x-7)(3x-7)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$4x^{2}-56x+196$</td>
+<td>$(2x-14)(2x-14)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$9x^{2}-16$</td>
+<td>$(3x+4)(3x-4)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$5x^{2}+30x+40$</td>
+<td>$(5x+20)(x+2)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$2x^{2}+24x+54$</td>
+<td>$(2x+6)(x+9)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$16x^{2}-36$</td>
+<td>$(4x-6)(4x+6)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$6x^{2}-144x+810$</td>
+<td>$(6x-54)(x-15)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$5x^{2}-5x-10$</td>
+<td>$(5x-10)(x+1)$</td>
+<td><code>—</code></td>
+<td><code>pack=quadratic_factoring · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>A1 factor GCF</h2>
+<p>&lt;a id=&quot;factor_gcf&quot;&gt;&lt;/a&gt;</p>
+<p><code>polynomial_factoring_common_factor</code> · pack <code>factor_gcf</code> · topic label: a1: Common factor only · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>1</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>factor_gcf:factor_gcf</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{Factor: } 6x + 3$</td>
+<td>$3\left(2x + 1\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Factor: } 3x + 6$</td>
+<td>$3\left(x + 2\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{Factor: } 6x + 3$</td>
+<td>$3\left(2x + 1\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Factor: } 4 + 4x + 2x^{2}$</td>
+<td>$2\left(x^{2} + 2x + 2\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Factor: } 3 + 3x$</td>
+<td>$3\left(x + 1\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\text{Factor: } 2x + 4x^{2} + 4$</td>
+<td>$2\left(2x^{2} + x + 2\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Factor: } 7x^{2} + 21x$</td>
+<td>$7x\left(x + 3\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Factor: } -4x^{2} - 6 + 4x$</td>
+<td>$2\left(-2x^{2} + 2x - 3\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\text{Factor: } 12x + 4x^{2} - 8$</td>
+<td>$4\left(x^{2} + 3x - 2\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Factor: } 2u + 2$</td>
+<td>$2\left(u + 1\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Factor: } 30x + 6x^{2}$</td>
+<td>$6x\left(x + 5\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\text{Factor: } 16x^{2} + 64x$</td>
+<td>$8x\left(2x + 8\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Factor: } 54x^{2} + 36x$</td>
+<td>$9x\left(6x + 4\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Factor: } 4y - 8y^{2} + 2$</td>
+<td>$2\left(-4y^{2} + 2y + 1\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\text{Factor: } 36x^{2} + 36x$</td>
+<td>$9x\left(4x + 4\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Factor: } 26x + 14x^{2}$</td>
+<td>$2x\left(7x + 13\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Factor: } 12x^{2}$</td>
+<td>$12x\left(x\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\text{Factor: } 96x + 24x^{2}$</td>
+<td>$12x\left(2x + 8\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Factor: } 10x^{2} + 65x$</td>
+<td>$5x\left(2x + 13\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Factor: } 18x + 15x^{2}$</td>
+<td>$3x\left(5x + 6\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{Factor: } 56x + 35x^{2}$</td>
+<td>$7x\left(5x + 8\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Factor: } 6\phi^{2} + 36\phi$</td>
+<td>$6\phi\left(\phi + 6\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Factor: } -30x + 50x^{2}$</td>
+<td>$10x\left(5x - 3\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{Factor: } 63x^{2} - 18x$</td>
+<td>$9x\left(7x - 2\right)$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_factor_gcf · methods=factor · form=factor_gcf · shape=factor_gcf · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>A1 simplify rational expressions</h2>
+<p>&lt;a id=&quot;rational_simplify&quot;&gt;&lt;/a&gt;</p>
+<p><code>rational_simplification</code> · pack <code>rational_simplify</code> · topic label: a1: Simplifying and excluded values · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>0</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>(unlabeled)</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{x+3}{x^{2}+4x+3}$</td>
+<td>$\frac{1}{x+1},\; x \neq -3$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{2x-10}{2x^{2}-18x+40}$</td>
+<td>$\frac{1}{x-4},\; x \neq 5$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{5x+20}{5x+20}$</td>
+<td>$1,\; x \neq -4$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{5x^{2}-30x+40}{5x^{2}-45x+100}$</td>
+<td>$\frac{x-2}{x-5},\; x \neq 4$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{x^{2}+x}{x^{2}+4x}$</td>
+<td>$\frac{x+1}{x+4},\; x \neq 0$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{x}{x}$</td>
+<td>$1,\; x \neq 0$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{x^{3}-7x^{2}+7x+15}{x^{2}+x-30}$</td>
+<td>$\frac{x^{2}-2x-3}{x+6},\; x \neq 5$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{x^{2}+5x+4}{x^{3}+10x^{2}+27x+18}$</td>
+<td>$\frac{x+4}{x^{2}+9x+18},\; x \neq -1$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{x^{3}+5x^{2}-9x-45}{x^{3}-x^{2}-22x+40}$</td>
+<td>$\frac{x^{2}-9}{x^{2}-6x+8},\; x \neq -5$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{x^{3}-4x}{x^{3}-4x^{2}-5x}$</td>
+<td>$\frac{x^{2}-4}{x^{2}-4x-5},\; x \neq 0$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{x^{2}-1}{x^{2}-2x-3}$</td>
+<td>$\frac{x-1}{x-3},\; x \neq -1$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{x^{3}-2x^{2}-25x+50}{x^{3}-2x^{2}-9x+18}$</td>
+<td>$\frac{x^{2}-25}{x^{2}-9},\; x \neq 2$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{x^{3}-7x^{2}+10x}{x^{3}+3x^{2}-10x}$</td>
+<td>$\frac{x-5}{x+5},\; x \neq 0, 2$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{x^{3}+x^{2}-30x-72}{2x^{4}+16x^{3}+34x^{2}-4x-48}$</td>
+<td>$\frac{x-6}{2x^{2}+2x-4},\; x \neq -4, -3$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{2x^{3}+18x^{2}+52x+48}{8x^{4}+48x^{3}+56x^{2}-48x-64}$</td>
+<td>$\frac{x+3}{4x^{2}-4},\; x \neq -4, -2$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{3x^{3}+6x^{2}-75x-150}{x^{2}-3x-10}$</td>
+<td>$3x+15,\; x \neq -2, 5$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{x^{3}-2x^{2}-5x+6}{x^{2}-x-6}$</td>
+<td>$x-1,\; x \neq -2, 3$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{2x^{4}-2x^{3}-48x^{2}+8x+160}{x^{3}-x^{2}-20x}$</td>
+<td>$\frac{2x^{2}-8}{x},\; x \neq -4, 5$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{3x^{4}+9x^{3}-24x^{2}-36x+48}{x^{2}+6x+8}$</td>
+<td>$3x^{2}-9x+6,\; x \neq -4, -2$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{x^{3}-4x^{2}-4x+16}{x^{2}-4}$</td>
+<td>$x-4,\; x \neq -2, 2$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{6x^{4}-12x^{3}-126x^{2}-108x}{6x^{4}-36x^{3}-96x^{2}+576x}$</td>
+<td>$\frac{x^{2}+4x+3}{x^{2}-16},\; x \neq 0, 6$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{x^{3}-13x^{2}+54x-72}{2x^{3}-20x^{2}+54x-36}$</td>
+<td>$\frac{x-4}{2x-2},\; x \neq 3, 6$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{4x^{4}-12x^{3}-32x^{2}+48x+64}{2x^{2}-6x-8}$</td>
+<td>$2x^{2}-8,\; x \neq -1, 4$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{4x^{4}-40x^{3}-4x^{2}+1000x-2400}{2x^{2}-22x+60}$</td>
+<td>$2x^{2}+2x-40,\; x \neq 5, 6$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_simplify · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>A1 add/subtract rational expressions</h2>
+<p>&lt;a id=&quot;rational_add&quot;&gt;&lt;/a&gt;</p>
+<p><code>rational_expression_simplification</code> · pack <code>rational_add</code> · topic label: a1: Adding and subtracting rational expressions · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>0</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>(unlabeled)</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\frac{-1}{x+1} + \frac{-1}{x+1}$</td>
+<td>$\frac{-2}{x+1}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{2}{x-3} + \frac{1}{3x-9}$</td>
+<td>$\frac{7}{3x-9}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\frac{-4}{3x-12} + \frac{-3}{x-4}$</td>
+<td>$\frac{-13}{3x-12}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{-3}{x+3} + \frac{2}{x+3}$</td>
+<td>$\frac{-1}{x+3}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{2}{x+4} + \frac{-4}{x+4}$</td>
+<td>$\frac{-2}{x+4}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\frac{2}{x+1} + \frac{1}{x+1}$</td>
+<td>$\frac{3}{x+1}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{-48x^{2}-4x+40}{(4x+5)(4x-1)(4x-3)} + \frac{3}{4x-1}$</td>
+<td>$\frac{5}{(4x+5)(4x-3)},\; x \neq \frac{1}{4}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{-16x-7}{12x^{2}+13x+3} + \frac{1}{3x+1}$</td>
+<td>$\frac{-4}{4x+3},\; x \neq -\frac{1}{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\frac{-60x^{2}+29x+59}{(2x-3)(3x+2)(4x-5)} + \frac{5}{2x-3}$</td>
+<td>$\frac{-3}{(3x+2)(4x-5)},\; x \neq \frac{3}{2}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{-3}{3x-4} + \frac{15x-21}{6x^{2}-17x+12}$</td>
+<td>$\frac{3}{2x-3},\; x \neq \frac{4}{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{-18x^{2}-12x-12}{(3x-2)(2x+1)(3x+2)} + \frac{3}{3x-2}$</td>
+<td>$\frac{3}{(2x+1)(3x+2)},\; x \neq \frac{2}{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\frac{-3}{4x+3} + \frac{-3x-12}{12x^{2}+5x-3}$</td>
+<td>$\frac{-3}{3x-1},\; x \neq -\frac{3}{4}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{-33x^{2}+6x+6}{(4x+3)(3x-1)(2x-1)} + \frac{3x-3}{8x^{2}+2x-3}$</td>
+<td>$\frac{-3}{3x-1},\; x \neq -\frac{3}{4}, \frac{1}{2}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{-3}{4x+3} + \frac{-11x-18}{12x^{2}+5x-3}$</td>
+<td>$\frac{-5}{3x-1},\; x \neq -\frac{3}{4}, \frac{5}{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\frac{2}{6x^{2}+11x-10} + \frac{10x^{2}+57x-40}{(2x-5)(3x-2)(2x+5)(2x-1)}$</td>
+<td>$\frac{3}{(2x-5)(2x-1)},\; x \neq -\frac{5}{2}, \frac{2}{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{-5}{12x^{2}-5x-3} + \frac{-36x^{2}+113x-87}{(3x+1)(4x-3)(2x-5)} + \frac{4x^{2}+x+2}{(3x+1)(4x-3)(2x-5)}$</td>
+<td>$\frac{-4}{3x+1},\; x \neq \frac{3}{4}, \frac{5}{2}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{x+1}{12x^{2}+35x+25} + \frac{-4x^{2}+16x+30}{(3x+5)(4x+5)(4x-5)}$</td>
+<td>$\frac{5}{(4x+5)(4x-5)},\; x \neq -\frac{5}{3}, -\frac{1}{2}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\frac{54x^{2}+89x-5}{(2x+1)(2x+5)(4x-1)(3x+2)(3x-5)} + \frac{-5}{(2x+5)(4x-1)(3x-5)}$</td>
+<td>$\frac{3}{(2x+1)(3x+2)(3x-5)},\; x \neq -\frac{5}{2}, \frac{1}{4}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{-4}{(4x+1)(3x+5)(4x-3)(3x+1)(2x-5)(3x-4)} + \frac{-36x^{2}-21x+2}{(4x+1)(3x+5)(4x-3)(3x+1)(2x-5)(3x-4)} + \frac{-3}{(4x+1)(3x+5)(4x-3)(3x+1)(2x-5)(3x-4)} + \frac{2}{(4x+1)(3x+5)(4x-3)(3x+1)(2x-5)(3x-4)}$</td>
+<td>$\frac{-3}{(3x+5)(4x-3)(2x-5)(3x-4)},\; x \neq -\frac{1}{3}, -\frac{1}{4}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{-4}{2x+5} + \frac{-5}{3x+5} + \frac{-5}{4x+3} + \frac{26x+37}{8x^{2}+26x+15}$</td>
+<td>$\frac{-5}{3x+5},\; x \neq -\frac{5}{2}, -\frac{3}{4}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\frac{7x-23}{12x^{2}-23x+5} + \frac{2}{3x-5}$</td>
+<td>$\frac{5}{4x-1},\; x \neq -\frac{5}{3}, \frac{5}{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{36x^{2}+7x-8}{(4x+1)(4x-1)(3x+2)} + \frac{2}{12x^{2}+5x-2}$</td>
+<td>$\frac{3}{4x+1},\; x \neq -\frac{2}{3}, \frac{1}{4}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{2x-17}{8x^{2}+18x-5} + \frac{-2}{2x+5}$</td>
+<td>$\frac{-3}{4x-1},\; x \neq -\frac{5}{2}, \frac{3}{4}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\frac{5x-3}{(3x-4)(4x+5)(3x+2)(3x-2)(2x+1)} + \frac{-2x^{2}-8x-9}{(3x-4)(4x+5)(3x+2)(4x+1)(3x-2)(2x+1)}$</td>
+<td>$\frac{3}{(4x+5)(3x+2)(4x+1)(3x-2)},\; x \neq -\frac{1}{2}, \frac{4}{3}$</td>
+<td><code>—</code></td>
+<td><code>pack=rational_add · D=25</code></td>
+</tr>
+</tbody></table>
+<h2>A1 add/subtract radicals</h2>
+<p>&lt;a id=&quot;radical_add&quot;&gt;&lt;/a&gt;</p>
+<p><code>radical_add_subtract</code> · pack <code>radical_add</code> · topic label: a1: Adding and subtracting · ok 24/24</p>
+<h3>Structures in this topic</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>1</strong> · samples: <strong>24</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>radical_add_subtract:structured_radical_add</code></td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>tricks</th>
+<th>Metadata</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$2\sqrt{14} - \sqrt{14}$</td>
+<td>$\sqrt{14}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\sqrt{5} + 2\sqrt{5}$</td>
+<td>$3\sqrt{5}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$2\sqrt{3} + 4\sqrt{3}$</td>
+<td>$6\sqrt{3}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=0</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$4\sqrt{13} - 5\sqrt{13}$</td>
+<td>$-\sqrt{13}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$2\sqrt{14} + 2\sqrt{14}$</td>
+<td>$4\sqrt{14}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=3</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>$\sqrt{15} + 2\sqrt{15}$</td>
+<td>$3\sqrt{15}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=3</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\sqrt{99} + \sqrt{176}$</td>
+<td>$7\sqrt{11}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\sqrt{2} - 2\sqrt{2}$</td>
+<td>$-\sqrt{2}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=6</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>$\sqrt{6} - 2\sqrt{6}$</td>
+<td>$-\sqrt{6}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=6</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$4\sqrt{245} + \sqrt{245} - \sqrt{245}$</td>
+<td>$28\sqrt{5}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\sqrt{112} + \sqrt{28} - \sqrt{63}$</td>
+<td>$3\sqrt{7}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=8</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>$\sqrt{72} + \sqrt{98} - \sqrt{72}$</td>
+<td>$7\sqrt{2}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=8</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$5\sqrt{160} - \sqrt{490} + 2\sqrt{160}$</td>
+<td>$21\sqrt{10}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$\sqrt{112} - \sqrt{7} - \sqrt{112}$</td>
+<td>$-\sqrt{7}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=12</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>$5\sqrt{125} - 6\sqrt{20} - 6\sqrt{20}$</td>
+<td>$\sqrt{5}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=12</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$5\sqrt{44} - \sqrt{44} - 8\sqrt{176}$</td>
+<td>$-24\sqrt{11}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$\sqrt{112} + 5\sqrt{112} - 8\sqrt{63} + 2\sqrt{63}$</td>
+<td>$6\sqrt{7}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=16</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>$7\sqrt{175} + 2\sqrt{112} + 3\sqrt{28} - 7\sqrt{252}$</td>
+<td>$7\sqrt{7}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=16</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\sqrt{60} + 7\sqrt{240} + \sqrt{135}$</td>
+<td>$33\sqrt{15}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$5\sqrt{135} - 7\sqrt{240} + 7\sqrt{60} - \sqrt{540} - \sqrt{135}$</td>
+<td>$-8\sqrt{15}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=20</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$2\sqrt{275} + \sqrt{44} - 2\sqrt{396} + 2\sqrt{176} - 8\sqrt{396}$</td>
+<td>$-40\sqrt{11}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=20</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$8\sqrt{45} - 4\sqrt{125} - 6\sqrt{125}$</td>
+<td>$-26\sqrt{5}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$10\sqrt{468} - \sqrt{208} + 8\sqrt{468} - \sqrt{468}$</td>
+<td>$98\sqrt{13}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=25</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$10\sqrt{135} + \sqrt{240} + 9\sqrt{60}$</td>
+<td>$52\sqrt{15}$</td>
+<td><code>—</code></td>
+<td><code>spec_pack=structured_radical_add · methods=radical_combine · form=structured_radical_add · shape=structured_radical_add · D=25</code></td>
+</tr>
+</tbody></table>
+</body></html>

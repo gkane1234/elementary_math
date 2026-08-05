@@ -24,6 +24,14 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.site-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .site-header h1 {
   margin: 0 0 0.25rem;
 }
@@ -31,6 +39,49 @@ body {
 .site-header p {
   margin: 0;
   color: #4b5563;
+}
+
+.auth-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.auth-user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 0.25rem;
+}
+
+.auth-avatar {
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.auth-name {
+  font-size: 0.9rem;
+  color: #374151;
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #065f46;
+  background: #d1fae5;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+}
+
+.auth-hint {
+  font-size: 0.85rem;
+  color: #6b7280;
 }
 
 .layout {
@@ -152,12 +203,24 @@ body {
   width: 100%;
 }
 
-.panel {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1.25rem;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+.progressive-controls {
+  margin: 0.25rem 0 1rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.progressive-controls .primary {
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.progressive-controls .field-bool-row {
+  margin-bottom: 0.5rem;
+}
+
+.progressive-controls .field-bool-row > .field {
+  flex: 1 1 0;
+  margin-bottom: 0;
 }
 
 .settings-form-panel {
@@ -356,6 +419,44 @@ button:disabled {
   color: #92400e;
 }
 
+.panel.preview.is-preview-watermarked {
+  position: relative;
+  overflow: hidden;
+}
+
+.worksheet-preview-watermark {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.worksheet-preview-watermark__pattern {
+  position: absolute;
+  inset: -40%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(9rem, 1fr));
+  gap: 2.75rem 1.5rem;
+  align-content: start;
+  justify-items: center;
+  transform: rotate(-28deg);
+  opacity: 0.14;
+}
+
+.worksheet-preview-watermark__tile {
+  display: block;
+  white-space: nowrap;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1f2937;
+  line-height: 1;
+}
+
 .payment-status {
   max-width: 560px;
   margin: 0 auto;
@@ -420,7 +521,7 @@ button:disabled {
 .instruction-groups {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: calc(1.25rem * var(--ws-gap-scale, 1));
   width: 100%;
 }
 
@@ -431,7 +532,7 @@ button:disabled {
 
 .question-columns {
   display: grid;
-  gap: 2rem;
+  gap: calc(2rem * var(--ws-gap-scale, 1));
   align-items: start;
   width: 100%;
 }
@@ -444,7 +545,7 @@ button:disabled {
 .question-grid {
   display: grid;
   grid-auto-flow: row;
-  gap: 1.25rem 2rem;
+  gap: calc(1.25rem * var(--ws-gap-scale, 1)) calc(2rem * var(--ws-gap-scale, 1));
   align-items: start;
   width: 100%;
 }
@@ -467,7 +568,7 @@ button:disabled {
 }
 
 .question-list li {
-  margin-bottom: 2.25rem;
+  margin-bottom: calc(2.25rem * var(--ws-space-scale, 1));
   min-width: 0;
   max-width: 100%;
   overflow-wrap: break-word;
@@ -1650,7 +1751,10 @@ button:disabled {
   .interactive-only,
   .selection-toolbar,
   .context-menu,
-  .context-backdrop {
+  .context-backdrop,
+  .debug-fab,
+  .modal-root,
+  .worksheet-page-break-overlay {
     display: none !important;
   }
 
@@ -1672,13 +1776,34 @@ button:disabled {
     padding: 0;
   }
 
+  #worksheet-preview {
+    font-size: calc(1rem * var(--ws-font-scale, 1));
+  }
+
+  /* Keep preview watermark visible on print/PDF of unpaid worksheets. */
+  .panel.preview.is-preview-watermarked {
+    overflow: visible;
+  }
+
+  .worksheet-preview-watermark {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .worksheet-preview-watermark__pattern {
+    opacity: 0.18;
+  }
+
   .page-break {
     break-before: page;
     page-break-before: always;
   }
 
   .question-columns {
-    gap: 1.5rem;
+    gap: calc(1.5rem * var(--ws-gap-scale, 1));
     width: 100%;
   }
 
@@ -1695,7 +1820,7 @@ button:disabled {
   }
 
   .question-list li {
-    margin-bottom: 2rem;
+    margin-bottom: calc(2rem * var(--ws-space-scale, 1));
     overflow-wrap: break-word;
     word-break: break-word;
   }
@@ -1742,6 +1867,128 @@ button:disabled {
   .mc-choice-letter {
     min-width: 1.25rem;
   }
+}
+
+/* Worksheet page-break preview + fit-to-N-pages (see lib/worksheet-page-layout.ts) */
+#worksheet-preview {
+  --ws-space-scale: 1;
+  --ws-font-scale: 1;
+  --ws-gap-scale: 1;
+  --ws-margin-scale: 1;
+  --ws-page-content-height: 960px;
+  --ws-page-margin: 0.5in;
+  position: relative;
+}
+
+.worksheet-page-layout-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 0.35rem 0 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.worksheet-page-layout-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #4b5563;
+  line-height: 1.35;
+}
+
+.worksheet-page-layout-root {
+  position: relative;
+  min-width: 0;
+}
+
+@media screen {
+  /* Keep print layout measurable (and optionally visible) for page-fit / breaks. */
+  #worksheet-preview .worksheet-print-preview-shell.print-only {
+    display: block !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #worksheet-preview .worksheet-print-measure {
+    position: relative;
+    font-size: calc(1rem * var(--ws-font-scale, 1));
+  }
+
+  #worksheet-preview:not([data-show-page-breaks="true"]) .worksheet-print-preview-shell.print-only {
+    position: absolute;
+    left: -12000px;
+    top: 0;
+    width: 7.5in;
+    max-width: 7.5in;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  #worksheet-preview[data-show-page-breaks="true"] .worksheet-print-preview-shell.print-only {
+    margin-top: 1.25rem;
+    padding: calc(0.5in * var(--ws-margin-scale, 1));
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: #ffffff;
+  }
+
+  #worksheet-preview[data-show-page-breaks="true"] .worksheet-print-preview-shell.print-only::before {
+    content: "Print page layout";
+    display: block;
+    margin: 0 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+
+  #worksheet-preview[data-show-page-breaks="true"] .worksheet-print-measure {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--ws-page-content-height) - 2px),
+      #94a3b8 calc(var(--ws-page-content-height) - 2px),
+      #94a3b8 var(--ws-page-content-height)
+    );
+  }
+
+  #worksheet-preview[data-show-page-breaks="true"] .question-grid {
+    font-size: calc(1rem * var(--ws-font-scale, 1));
+  }
+}
+
+.worksheet-page-break-overlay {
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.worksheet-page-break-marker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 2px dashed #2563eb;
+  transform: translateY(-1px);
+}
+
+.worksheet-page-break-marker span {
+  position: absolute;
+  top: -0.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  color: #1d4ed8;
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 /* Difficulty knobs debug FAB + panel */
@@ -1847,4 +2094,266 @@ button:disabled {
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
+}
+
+/* —— Example worksheet gallery —— */
+.site-nav {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.65rem;
+}
+
+.site-nav a {
+  color: #1d4ed8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.site-nav a:hover {
+  text-decoration: underline;
+}
+
+.gallery-page {
+  max-width: 1100px;
+}
+
+.gallery-kicker {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.gallery-kicker a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.gallery-heading {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+}
+
+.gallery-lede {
+  margin: 0 0 1.25rem;
+  color: #4b5563;
+  max-width: 46rem;
+}
+
+.gallery-mapping {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.gallery-mapping h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.gallery-mapping-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.75rem;
+}
+
+.gallery-mapping-table th,
+.gallery-mapping-table td {
+  text-align: left;
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.92rem;
+}
+
+.gallery-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.gallery-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+.gallery-filters select {
+  min-width: 12rem;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.15rem;
+}
+
+.gallery-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.1rem 1.15rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.gallery-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.gallery-card-title {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.gallery-card-meta {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.gallery-card-desc {
+  margin: 0;
+  color: #374151;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.gallery-card-topics,
+.gallery-card-ramp {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.gallery-label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #9ca3af;
+  margin-bottom: 0.1rem;
+}
+
+.gallery-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.gallery-card-actions .button,
+.gallery-card-actions a.button,
+.gallery-detail-side .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  border: 1px solid #1d4ed8;
+  background: #1d4ed8;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gallery-card-actions .button.secondary,
+.gallery-card-actions a.button.secondary,
+.gallery-detail-side .button.secondary {
+  background: #fff;
+  color: #1d4ed8;
+}
+
+.gallery-card-actions .button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gallery-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.gallery-badge-range {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.gallery-badge--intro {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.gallery-badge--gentle {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.gallery-badge--moderate {
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.gallery-badge--steep {
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.gallery-badge--intense {
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.gallery-detail-header {
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 280px);
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.gallery-detail-side {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.gallery-plan {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.gallery-plan p {
+  margin: 0.35rem 0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 800px) {
+  .gallery-detail-header {
+    grid-template-columns: 1fr;
+  }
 }

@@ -3,6 +3,7 @@
 import { useState, type DragEvent, type MouseEvent } from "react";
 import type { QuestionTypeInfo, TopicSection } from "@/lib/types";
 import { moveSection } from "@/lib/sections";
+import { formatTopicLabel } from "@/lib/topic-labels";
 
 type TopicSectionListProps = {
   sections: TopicSection[];
@@ -107,7 +108,11 @@ export function TopicSectionList({
                 className="topic-section-label"
                 onClick={() => onEditSection(section)}
               >
-                <strong>{type?.name ?? section.type_id}</strong>
+                <strong>
+                  {formatTopicLabel(section.type_id, type?.name, {
+                    category: type?.category,
+                  })}
+                </strong>
               </button>
               <span className="topic-section-count" title="Question count">
                 {section.count}
@@ -219,7 +224,10 @@ export function WorksheetPlanOutline({
             <li key={section.id}>
               <span className="plan-step-index">{index + 1}.</span>
               <span>
-                {type?.name ?? section.type_id} × {section.count}
+                {formatTopicLabel(section.type_id, type?.name, {
+                  category: type?.category,
+                })}{" "}
+                × {section.count}
               </span>
             </li>
           );

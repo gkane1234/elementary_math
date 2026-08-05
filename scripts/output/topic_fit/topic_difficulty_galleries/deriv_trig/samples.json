@@ -1,0 +1,1967 @@
+{
+  "pack_id": "deriv_trig",
+  "type_id": "calc_diff_trigonometric",
+  "leaf": "derivative_trigonometric",
+  "approx_max_conceptual_d": 25.0,
+  "conceptual_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "spec_ladder": [
+    0.0,
+    4.0,
+    8.0,
+    16.0,
+    32.0
+  ],
+  "allows": {
+    "allow_trig": true
+  },
+  "rows": [
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 0.0,
+      "seed": 525,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\sin(2x)\\right]",
+      "answer_latex": "2\\cos(2x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 4.0,
+      "seed": 525,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\frac{2\\left(x-1\\right)\\sin(2x)}{2\\left(x-1\\right)}\\right]",
+      "answer_latex": "2\\cos(2x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 8.0,
+      "seed": 525,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(\\frac{\\left(x-3\\right)\\sin(2x)}{x-3}+\\left(-2x-2\\right)\\right)-\\left(-2x-2\\right)\\right]",
+      "answer_latex": "2\\cos(2x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 16.0,
+      "seed": 525,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(\\sin(2x)+\\left(-2x-1\\right)\\right)-\\left(-2x-1\\right)+\\left(2x+3\\right)-\\left(2x+3\\right)+\\left(3x+3\\right)-\\left(3x+3\\right)\\right]",
+      "answer_latex": "2\\cos(2x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 0.0,
+      "spec_difficulty": 32.0,
+      "seed": 525,
+      "prompt_latex": "\\frac{d}{dx}\\left[-\\left(-\\left(\\left(\\left(\\sin(2x)+5\\right)-5\\right)+1-1\\right)\\right)\\right]",
+      "answer_latex": "2\\cos(2x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\cos(2x)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 0.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 0.0,
+      "seed": 593,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\sin(4x)\\right]",
+      "answer_latex": "4\\cos(4x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\cos(4x)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 4.0,
+      "seed": 593,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\sin(4x)+2-2\\right]",
+      "answer_latex": "4\\cos(4x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\cos(4x)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 8.0,
+      "seed": 593,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\frac{\\left(x-2\\right)\\left(\\sin(4x)+\\left(-x+3\\right)\\right)-\\left(-x+3\\right)}{x-2}\\right]",
+      "answer_latex": "4\\cos(4x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\cos(4x)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 16.0,
+      "seed": 593,
+      "prompt_latex": "\\frac{d}{dx}\\left[-\\left(-\\frac{-\\left(3-x\\right)\\left(\\sin(4x)+\\left(3x-1\\right)\\right)-\\left(3x-1\\right)}{-\\left(3-x\\right)}\\right)\\right]",
+      "answer_latex": "4\\cos(4x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\cos(4x)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 4.0,
+      "spec_difficulty": 32.0,
+      "seed": 593,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(\\left(\\frac{-\\left(1-x\\right)\\sin(4x)}{-\\left(1-x\\right)}+5\\right)-5\\right)+4-4\\right]",
+      "answer_latex": "4\\cos(4x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "4\\cos(4x)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 4.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 0.0,
+      "seed": 661,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\cos^{3}(3x)\\sin(2x)\\right)",
+      "answer_latex": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos^{3}(3x)\\left(2\\cos(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 4.0,
+      "seed": 661,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(-\\left(-\\cos^{3}(3x)\\sin(2x)\\right)\\right)",
+      "answer_latex": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos^{3}(3x)\\left(2\\cos(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 8.0,
+      "seed": 661,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\frac{\\left(x+1\\right)\\left(\\cos^{3}(3x)\\sin(2x)+\\left(-x-2\\right)\\right)-\\left(-x-2\\right)}{x+1}\\right)",
+      "answer_latex": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos^{3}(3x)\\left(2\\cos(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 16.0,
+      "seed": 661,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(-\\left(-\\left(\\frac{-\\left(2+x\\right)\\cos^{3}(3x)\\sin(2x)}{-\\left(2+x\\right)}+\\left(3x+1\\right)-\\left(3x+1\\right)\\right)\\right)\\right)",
+      "answer_latex": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos^{3}(3x)\\left(2\\cos(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 8.0,
+      "spec_difficulty": 32.0,
+      "seed": 661,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\frac{\\left(x+3\\right)\\cos^{3}(3x)\\sin(2x)}{x+3}+\\left(-2x\\right)\\right)-\\left(-2x\\right)+\\left(-2x+1\\right)-\\left(-2x+1\\right)\\right)",
+      "answer_latex": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos^{3}(3x)\\left(2\\cos(2x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "\\left(-9\\cos^{2}(3x)\\sin(3x)\\right)\\sin(2x)+\\cos"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 8.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 0.0,
+      "seed": 729,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\tan^{2}(x)\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 4.0,
+      "seed": 729,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\tan^{2}(x)+\\left(x-2\\right)\\right)-\\left(x-2\\right)\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 8.0,
+      "seed": 729,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\frac{4\\left(x+1\\right)\\tan^{2}(x)}{4\\left(x+1\\right)}+\\left(2x+2\\right)-\\left(2x+2\\right)\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 16.0,
+      "seed": 729,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(-\\left(-\\left(\\tan^{2}(x)+\\left(x+1\\right)\\right)-\\left(x+1\\right)\\right)\\right)+3-3\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 12.0,
+      "spec_difficulty": 32.0,
+      "seed": 729,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(-\\left(-\\left(\\left(\\tan^{2}(x)+4\\right)-4\\right)\\right)\\right)+4-4\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "chain_trig_poly",
+          "detail": "catalog/skeleton chain_trig_poly"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 12.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 0.0,
+      "seed": 797,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\sin^{3}(4x)\\right)",
+      "answer_latex": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 4.0,
+      "seed": 797,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\frac{-\\left(1-x\\right)\\sin^{3}(4x)}{-\\left(1-x\\right)}\\right)",
+      "answer_latex": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 8.0,
+      "seed": 797,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\frac{\\left(x-1\\right)\\left(-\\left(-\\sin^{3}(4x)\\right)\\right)}{x-1}\\right)",
+      "answer_latex": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 16.0,
+      "seed": 797,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(-\\left(-\\frac{3\\left(x+3\\right)\\sin^{3}(4x)}{3\\left(x+3\\right)}\\right)\\right)+3-3\\right)",
+      "answer_latex": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 16.0,
+      "spec_difficulty": 32.0,
+      "seed": 797,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\sin^{3}(4x)+\\left(-2x+2\\right)-\\left(-2x+2\\right)\\right)+\\left(2x-2\\right)-\\left(2x-2\\right)+1-1\\right)",
+      "answer_latex": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "3\\left(\\sin(4x)\\right)^{2}\\left(4\\cos(4x)\\right)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 16.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 0.0,
+      "seed": 865,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)\\sin\\left(\\cos(3x)\\right)\\right)",
+      "answer_latex": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))\\sin\\left(\\left(4x + 2\\right)\\right)\\sin\\left(\\cos(3x)\\right) - 3\\cos\\left(\\cos(3x)\\right)\\sin(3x)\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 4.0,
+      "seed": 865,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(-\\left(-\\left(\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)\\sin\\left(\\cos(3x)\\right)\\right)\\right)\\right)",
+      "answer_latex": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))\\sin\\left(\\left(4x + 2\\right)\\right)\\sin\\left(\\cos(3x)\\right) - 3\\cos\\left(\\cos(3x)\\right)\\sin(3x)\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 8.0,
+      "seed": 865,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\left(-\\left(-\\left(\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)\\sin\\left(\\cos(3x)\\right)\\right)\\right)\\right)+\\left(2x+1\\right)\\right)-\\left(2x+1\\right)\\right)",
+      "answer_latex": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))\\sin\\left(\\left(4x + 2\\right)\\right)\\sin\\left(\\cos(3x)\\right) - 3\\cos\\left(\\cos(3x)\\right)\\sin(3x)\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 16.0,
+      "seed": 865,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(\\left(\\left(\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)\\sin\\left(\\cos(3x)\\right)\\right)+\\left(2x-1\\right)\\right)-\\left(2x-1\\right)+5-5\\right)+2-2\\right)",
+      "answer_latex": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))\\sin\\left(\\left(4x + 2\\right)\\right)\\sin\\left(\\cos(3x)\\right) - 3\\cos\\left(\\cos(3x)\\right)\\sin(3x)\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 20.0,
+      "spec_difficulty": 32.0,
+      "seed": 865,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\left(-\\left(-\\left(\\left(\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)\\sin\\left(\\cos(3x)\\right)\\right)+\\left(-x+3\\right)\\right)-\\left(-x+3\\right)\\right)\\right)+\\left(x-1\\right)-\\left(x-1\\right)\\right)",
+      "answer_latex": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))\\sin\\left(\\left(4x + 2\\right)\\right)\\sin\\left(\\cos(3x)\\right) - 3\\cos\\left(\\cos(3x)\\right)\\sin(3x)\\tan\\left(\\cos\\left(\\left(4x + 2\\right)\\right)\\right)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "trig_basic",
+          "detail": "catalog/skeleton trig_basic"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power+product",
+          "detail": "method chain+power+product"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "-4\\sec^{2}(\\cos\\left(\\left(4x + 2\\right)\\right))"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "double_neg",
+          "detail": "double negation (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 20.0,
+      "spec_difficulty_meta": 32.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 0.0,
+      "seed": 950,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\tan^{2}(x)\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 0.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 4.0,
+      "seed": 950,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\tan^{2}(x)+4-4\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 4.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 8.0,
+      "seed": 950,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\frac{4\\left(x+2\\right)\\tan^{2}(x)}{4\\left(x+2\\right)}+\\left(-x+1\\right)-\\left(-x+1\\right)\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 8.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 16.0,
+      "seed": 950,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\frac{\\left(x+3\\right)\\left(\\tan^{2}(x)+\\left(x+1\\right)\\right)-\\left(x+1\\right)}{x+3}+\\left(x-1\\right)\\right)-\\left(x-1\\right)\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "prereq",
+          "tag": "cancel_quot_bait",
+          "detail": "cancel common factor (same after simplify)"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 16.0
+    },
+    {
+      "conceptual_difficulty": 25.0,
+      "spec_difficulty": 32.0,
+      "seed": 950,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(\\left(\\left(\\left(\\tan^{2}(x)+\\left(2x+3\\right)-\\left(2x+3\\right)\\right)+4\\right)-4\\right)+\\left(-2x\\right)\\right)-\\left(-2x\\right)\\right]",
+      "answer_latex": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan^{2}(x)",
+      "error": null,
+      "difficulty_sources": [
+        {
+          "kind": "form",
+          "tag": "product_poly_trig",
+          "detail": "catalog/skeleton product_poly_trig"
+        },
+        {
+          "kind": "conceptual",
+          "tag": "chain+power",
+          "detail": "method chain+power"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "allow",
+          "tag": "trig",
+          "detail": "allow_trig enabled"
+        },
+        {
+          "kind": "answer",
+          "tag": "unkind_or_messy",
+          "detail": "2\\left(\\sec^{2}(x)\\right)^{2} + 4\\sec^{2}(x)\\tan"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_const",
+          "detail": "add/subtract canceling constant"
+        },
+        {
+          "kind": "effort",
+          "tag": "add_cancel_linear",
+          "detail": "add/subtract canceling linear"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_answer_preserved",
+          "detail": "Spec dress keeps undressed calculus answer"
+        },
+        {
+          "kind": "effort",
+          "tag": "spec_high",
+          "detail": "Spec difficulty 32 (unbounded axis)"
+        }
+      ],
+      "approx_max_d": 25.0,
+      "difficulty_clamped": false,
+      "conceptual_difficulty_meta": 25.0,
+      "spec_difficulty_meta": 32.0
+    }
+  ]
+}

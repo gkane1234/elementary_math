@@ -113,17 +113,26 @@ def _naming(ctx: PrimitiveContext, eff: float) -> PolyNamingItem:
     )
 
 
-def sample_polynomial_add_subtract(ctx: PrimitiveContext) -> PolyAddSubItem:
+def sample_polynomial_add_subtract(
+    ctx: PrimitiveContext,
+    *,
+    preferred_op: Literal["+", "-"] | None = None,
+) -> PolyAddSubItem:
     eff = ctx.effective_d(PRIM_POLYNOMIALS)
     for _ in range(12):
         try:
-            return _add_sub(ctx, eff)
+            return _add_sub(ctx, eff, preferred_op=preferred_op)
         except (NicenessError, ValueError):
             continue
-    return _add_sub(ctx, eff)
+    return _add_sub(ctx, eff, preferred_op=preferred_op)
 
 
-def _add_sub(ctx: PrimitiveContext, eff: float) -> PolyAddSubItem:
+def _add_sub(
+    ctx: PrimitiveContext,
+    eff: float,
+    *,
+    preferred_op: Literal["+", "-"] | None = None,
+) -> PolyAddSubItem:
     deg = target_poly_degree(eff, ctx.policy)
     ctx.policy.assert_degree(deg, where="polynomial_add_subtract")
     var = ctx.sample_variable()
@@ -137,7 +146,10 @@ def _add_sub(ctx: PrimitiveContext, eff: float) -> PolyAddSubItem:
         n_terms=min(q_deg + 1, max(2, n_terms - 1)),
         require_leading=True,
     )
-    op: Literal["+", "-"] = "+" if ctx.rng.random() < 0.55 else "-"
+    if preferred_op in ("+", "-"):
+        op: Literal["+", "-"] = preferred_op
+    else:
+        op = "+" if ctx.rng.random() < 0.55 else "-"
     if op == "+":
         result = combine_coeff_maps(p, q)
     else:

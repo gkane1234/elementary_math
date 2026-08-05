@@ -1,0 +1,14 @@
+---
+description: Never invent difficulty costs or pad metrics; fail honestly when targets cannot be met with real structure; ask the user when stuck
+alwaysApply: true
+---
+
+# No fake metrics or disingenuous difficulty
+
+- Never invent metadata (e.g. `cost_pad`, inflated `difficulty_costs`) solely to make a sum meet a target when the generated math did not change accordingly.
+- Never claim a constraint is satisfied (difficulty ≥ target, tests green for the wrong reason, etc.) via cosmetic/accounting tricks.
+- If a target cannot be met with real structure from existing generators (ExpressionSpec / form catalogs / Spec packs), say so explicitly and surface `difficulty_shortfall` (or equivalent) — do not pad.
+- Prefer failing honestly or documenting impossibility over looking successful.
+- Difficulty increases must change the problem the student sees (structure, simplify work, function classes via allow_* checkboxes), not just multiply by a constant or stamp a cost row.
+- **When stuck on real difficulty:** If you do not know how to increase difficulty with real generator structure (ExpressionSpec, form catalogs, shared expression sampling — not metadata), stop and ask the user for direction. Never handwave, never invent accounting to "make it work," never ship jumbled metric-driven code just to look compliant. Trust > green checkboxes.
+- Subagents inherit this rule; do not optimize for "checkbox green" over truthfulness.

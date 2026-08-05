@@ -137,12 +137,16 @@ def make_questions(
     metadata_builder: Callable[[str, str, str | None], dict[str, Any]] | None = None,
     settings: dict[str, Any] | None = None,
 ) -> list[Question]:
+    from ..diagrams.figure_families import apply_batch_seed
     from ..settings.enrichment import merge_enrichment_metadata
 
     questions: list[Question] = []
     base_metadata = dict(metadata or {})
     generation_settings = settings or {}
-    for _ in range(count):
+    for i in range(count):
+        # Per-item seed + index so worksheet batches are varied but reproducible.
+        if settings is not None:
+            apply_batch_seed(settings, i)
         prompt_latex, prompt_text, answer = builder()
         question_metadata = dict(base_metadata)
         if metadata_builder is not None:

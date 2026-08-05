@@ -1,0 +1,139 @@
+{
+  "catalog_id": "precalculus_function_ops",
+  "title": "OpenStax Precalculus 2e §1.4 Composition / function operations — form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "precalculus-2e",
+      "slug": "1-4-composition-of-functions",
+      "title": "1.4 Composition of Functions",
+      "url": "https://openstax.org/books/precalculus-2e/pages/1-4-composition-of-functions",
+      "stage1": "scripts/output/example_mining/precalculus-2e/stage1/1-4-composition-of-functions.json"
+    },
+    "related": [
+      {
+        "book": "precalculus-2e",
+        "slug": "1-1-functions-and-function-notation",
+        "note": "Evaluate f(a) / function notation — separate leaf gap (pc missing dedicated type)"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "§1.4 learning objectives: algebraic ops on functions; create composition; evaluate composites; domain of composite; decompose composites.",
+    "pc_functions_operations currently evaluates (f±g)/(f·g)/(f∘g) at a point for linear f,g — composition unlocks mid+ D."
+  ],
+  "forms": [
+    {
+      "form_id": "algebraic_sum",
+      "description": "Evaluate (f+g)(a)",
+      "strategy": "function_sum",
+      "constraints": { "op": "+", "method": "add" },
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["function_ops"],
+      "leaves": ["pc_functions_operations"],
+      "wired_generators": ["function_operations"],
+      "example_item_ids": ["Example_01_04_01"],
+      "openstax_case": "§1.4 Example 1 — algebraic operations (sum)"
+    },
+    {
+      "form_id": "algebraic_difference",
+      "description": "Evaluate (f−g)(a) or (g−f)(a)",
+      "strategy": "function_difference",
+      "constraints": { "op": "-", "method": "subtract" },
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["function_ops"],
+      "leaves": ["pc_functions_operations"],
+      "wired_generators": ["function_operations"],
+      "example_item_ids": ["Example_01_04_01", "ti_01_04_09"],
+      "openstax_case": "§1.4 algebraic difference"
+    },
+    {
+      "form_id": "algebraic_product",
+      "description": "Evaluate (f·g)(a)",
+      "strategy": "function_product",
+      "constraints": { "op": "*", "method": "product" },
+      "d_min": 6,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["function_ops"],
+      "leaves": ["pc_functions_operations"],
+      "wired_generators": ["function_operations"],
+      "example_item_ids": ["ti_01_04_09"],
+      "openstax_case": "§1.4 product of functions"
+    },
+    {
+      "form_id": "algebraic_quotient",
+      "description": "Evaluate (f/g)(a)",
+      "strategy": "function_quotient",
+      "constraints": { "op": "/", "method": "quotient" },
+      "d_min": 8,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": ["function_ops"],
+      "leaves": ["pc_functions_operations"],
+      "wired_generators": ["function_operations"],
+      "example_item_ids": ["Example_01_04_01"],
+      "openstax_case": "§1.4 quotient of functions"
+    },
+    {
+      "form_id": "compose_evaluate",
+      "description": "Evaluate (f∘g)(a) = f(g(a))",
+      "strategy": "compose_eval",
+      "constraints": { "op": "compose", "method": "compose" },
+      "d_min": 10,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["function_ops", "compose"],
+      "leaves": ["pc_functions_operations"],
+      "wired_generators": ["function_operations"],
+      "example_item_ids": ["Example_01_04_02", "Example_01_04_04"],
+      "openstax_case": "§1.4 Example 2 — composition evaluate"
+    },
+    {
+      "form_id": "compose_expression",
+      "description": "Find simplified rule for (f∘g)(x) as an expression",
+      "strategy": "compose_expand",
+      "constraints": { "op": "compose_expr", "method": "compose_expression" },
+      "d_min": 12,
+      "d_weight": 1.4,
+      "generation_status": "stub",
+      "tricks": ["function_ops", "compose"],
+      "leaves": ["pc_functions_operations"],
+      "wired_generators": ["function_operations"],
+      "example_item_ids": ["Example_01_04_02"],
+      "openstax_case": "§1.4 find (f∘g)(x) simplified"
+    },
+    {
+      "form_id": "domain_of_composite",
+      "description": "Domain of (f∘g)",
+      "strategy": "compose_domain",
+      "constraints": { "method": "compose_domain" },
+      "d_min": 12,
+      "d_weight": 1.0,
+      "generation_status": "deferred",
+      "tricks": ["function_ops", "domain"],
+      "leaves": ["pc_functions_operations"],
+      "wired_generators": ["function_operations"],
+      "example_item_ids": [],
+      "openstax_case": "§1.4 domain of a composite"
+    },
+    {
+      "form_id": "decompose_composite",
+      "description": "Decompose h = f∘g into component functions",
+      "strategy": "decompose",
+      "constraints": { "method": "decompose" },
+      "d_min": 14,
+      "d_weight": 0.8,
+      "generation_status": "deferred",
+      "tricks": ["function_ops", "compose"],
+      "leaves": ["pc_functions_operations"],
+      "wired_generators": ["function_operations"],
+      "example_item_ids": [],
+      "openstax_case": "§1.4 decompose a composite"
+    }
+  ]
+}

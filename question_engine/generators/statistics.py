@@ -94,15 +94,20 @@ def stats_counting_principle(topic: str, settings: dict) -> list[Question]:
 
 def _stats_permutations(topic: str, settings: dict) -> list[Question]:
     from ..generators.utils import _make_questions
+    from question_engine.settings.params import apply_counting_continuous_knobs
     import math
     import random
 
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_counting_continuous_knobs(settings)
+    n_min = int(local.get("counting_n_min", 5))
+    n_max = int(local.get("counting_n_max", 10))
+    r_max = int(local.get("counting_r_max", 4))
 
     def build():
-        n = random.randint(5, 10)
-        r = random.randint(2, min(4, n))
+        n = random.randint(n_min, n_max)
+        r = random.randint(2, min(r_max, n))
         prompt = rf"\text{{Evaluate }} {{}}_{{{n}}}P_{{{r}}}."
         answer = str(math.perm(n, r))
         return prompt, "permutation", answer if keyed else None
@@ -112,15 +117,20 @@ def _stats_permutations(topic: str, settings: dict) -> list[Question]:
 
 def _stats_combinations(topic: str, settings: dict) -> list[Question]:
     from ..generators.utils import _make_questions
+    from question_engine.settings.params import apply_counting_continuous_knobs
     import math
     import random
 
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_counting_continuous_knobs(settings)
+    n_min = int(local.get("counting_n_min", 5))
+    n_max = int(local.get("counting_n_max", 12))
+    r_max = int(local.get("counting_r_max", 5))
 
     def build():
-        n = random.randint(5, 12)
-        r = random.randint(2, min(5, n))
+        n = random.randint(n_min, n_max)
+        r = random.randint(2, min(r_max, n))
         prompt = rf"\text{{Evaluate }} {{}}_{{{n}}}C_{{{r}}}."
         answer = str(math.comb(n, r))
         return prompt, "combination", answer if keyed else None
@@ -130,15 +140,20 @@ def _stats_combinations(topic: str, settings: dict) -> list[Question]:
 
 def _stats_permutations_vs_combinations(topic: str, settings: dict) -> list[Question]:
     from ..generators.utils import _make_questions
+    from question_engine.settings.params import apply_counting_continuous_knobs
     import math
     import random
 
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
+    local = apply_counting_continuous_knobs(settings)
+    n_min = int(local.get("counting_n_min", 6))
+    n_max = int(local.get("counting_n_max", 10))
+    r_max = int(local.get("counting_r_max", 4))
 
     def build():
-        n = random.randint(6, 10)
-        r = random.randint(2, 4)
+        n = random.randint(n_min, n_max)
+        r = random.randint(2, min(r_max, n))
         if random.choice([True, False]):
             prompt = (
                 rf"\text{{How many ways can {r} students be lined up from a class of {n}?}}"

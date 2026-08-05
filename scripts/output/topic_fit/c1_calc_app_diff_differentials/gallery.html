@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>c1: Differentials</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+
+</style>
+<link rel="stylesheet" href="../_assets/katex/katex.min.css"/>
+<script defer src="../_assets/katex/katex.min.js"></script>
+<script defer src="../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>c1: Differentials</h1>
+<p><code>calc_app_diff_differentials</code> — continuous difficulty samples for topic-fit / ramp review.</p>
+<p>Samples via the <strong>live continuous-D API path</strong> (<code>QUESTION_TYPES</code> → <code>_generate_for_type</code>).</p>
+<p>Open <a href="gallery.html">gallery.html</a> in a browser for <strong>KaTeX-rendered math</strong> (markdown preview leaves <code>$...$</code> as raw LaTeX).</p>
+<ul>
+<li>generator: <code>differentials</code></li>
+<li>difficulties: 0, 5, 10, 15, 20, 25 · 2 sample(s) each</li>
+<li>generated: 2026-07-29T16:33:20.730527+00:00</li>
+</ul>
+<h3>Structure inventory</h3>
+<p>Structures / families / templates actually used in this sample set (from live question metadata — not a static template list).</p>
+<ul>
+<li>distinct structures: <strong>6</strong> · samples: <strong>12</strong></li>
+</ul>
+<table><thead><tr>
+<th>Structure / family</th>
+<th>Count</th>
+</tr></thead><tbody>
+<tr>
+<td><code>differentials:poly_quad</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>differentials:poly_power</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>differentials:reciprocal</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>differentials:trig</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>differentials:exp</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>differentials:product</code></td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table><thead><tr>
+<th>D</th>
+<th>Prompt</th>
+<th>Answer</th>
+<th>Structure</th>
+</tr></thead><tbody>
+<tr>
+<td>0</td>
+<td>$\text{For }y=x\left(x + 5\right),\text{ find }dy.$</td>
+<td>$dy=\left(2x + 5\right)\,dx$</td>
+<td><code>differentials:poly_quad · var=factored_linear; D=0</code></td>
+</tr>
+<tr>
+<td>0</td>
+<td>$\text{For }y=\cos(x),\text{ find }dy.$</td>
+<td>$dy=-\sin(x)\,dx$</td>
+<td><code>differentials:trig · var=cos; D=0</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{For }y=x^{2} + x,\text{ find }dy.$</td>
+<td>$dy=\left(2x + 1\right)\,dx$</td>
+<td><code>differentials:poly_quad · var=standard; D=5; ups=allow_roots</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>$\text{For }y=x^{2} + 4x,\text{ find }dy.$</td>
+<td>$dy=\left(2x + 4\right)\,dx$</td>
+<td><code>differentials:poly_quad · var=standard; D=5; ups=allow_roots</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{For }y=\cos x,\text{ find }dy.$</td>
+<td>$dy=-\sin(x)\,dx$</td>
+<td><code>differentials:trig · var=cos; D=10; ups=allow_trig,allow_exp,allow_roots,allow_invtrig</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>$\text{For }y=x^{-1},\text{ find }dy.$</td>
+<td>$dy=-\frac{1}{x^{2}}\,dx$</td>
+<td><code>differentials:reciprocal · var=frac; D=10; ups=allow_trig,allow_exp,allow_roots,allow_invtrig</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{For }y=x^{-1},\text{ find }dy.$</td>
+<td>$dy=-\frac{1}{x^{2}}\,dx$</td>
+<td><code>differentials:reciprocal · var=neg_power; D=15; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>$\text{For }y=x\cdot\sin(x),\text{ find }dy.$</td>
+<td>$dy=\left(\sin(x)+x\cos(x)\right)\,dx$</td>
+<td><code>differentials:product · var=sin_first; D=15; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{For }y=x + x^{2},\text{ find }dy.$</td>
+<td>$dy=\left(2x + 1\right)\,dx$</td>
+<td><code>differentials:poly_quad · var=reversed; D=20; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>$\text{For }y=x^{3},\text{ find }dy.$</td>
+<td>$dy=3x^{2}\,dx$</td>
+<td><code>differentials:poly_power · var=power:3; D=20; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{For }y=\exp(3x),\text{ find }dy.$</td>
+<td>$dy=3e^{3x}\,dx$</td>
+<td><code>differentials:exp · var=e:k3; D=25; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>$\text{For }y=x^{3},\text{ find }dy.$</td>
+<td>$dy=3x^{2}\,dx$</td>
+<td><code>differentials:poly_power · var=power:3; D=25; ups=allow_trig,allow_exp,allow_ln,allow_nested,allow_roots</code></td>
+</tr>
+</tbody></table>
+</body></html>

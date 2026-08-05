@@ -1,0 +1,121 @@
+{
+  "catalog_id": "algebra1_linear_equations",
+  "title": "OpenStax Elementary Algebra 2e — linear equations form taxonomy (Ch. 2)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "elementary-algebra-2e",
+      "slug": "2-4-use-a-general-strategy-to-solve-linear-equations",
+      "title": "2.4 Use a General Strategy to Solve Linear Equations",
+      "url": "https://openstax.org/books/elementary-algebra-2e/pages/2-4-use-a-general-strategy-to-solve-linear-equations",
+      "stage1": "scripts/output/example_mining/elementary-algebra-2e/stage1/2-4-use-a-general-strategy-to-solve-linear-equations.json"
+    },
+    "related": [
+      { "book": "elementary-algebra-2e", "slug": "2-1-solve-equations-using-the-subtraction-and-addition-properties-of-equality" },
+      { "book": "elementary-algebra-2e", "slug": "2-2-solve-equations-using-the-division-and-multiplication-properties-of-equality" },
+      { "book": "elementary-algebra-2e", "slug": "2-3-solve-equations-with-variables-and-constants-on-both-sides" },
+      { "book": "elementary-algebra-2e", "slug": "2-5-solve-equations-with-fractions-or-decimals" },
+      { "book": "elementary-algebra-2e", "slug": "2-6-solve-a-formula-for-a-specific-variable" }
+    ]
+  },
+  "taxonomy_notes": [
+    "Algebraic equation forms only — no graphing.",
+    "Catalog documents OpenStax Ch. 2 cases; leaf catalog-sampling not yet wired (generators exist via one/two/multi-step leaves)."
+  ],
+  "wired_type_ids": [],
+  "forms": [
+    {
+      "form_id": "one_step_add_sub",
+      "description": "x ± a = b — addition/subtraction property",
+      "strategy": "one_step",
+      "constraints": { "steps": 1, "ops": ["add", "sub"] },
+      "d_min": 0,
+      "d_max": 8,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["isolate"],
+      "example_item_ids": ["fs-id1168345419326", "fs-id1168345195281"],
+      "openstax_case": "§2.1",
+      "leaves": ["one_step_equations"]
+    },
+    {
+      "form_id": "one_step_mul_div",
+      "description": "ax = b or x/a = b — multiplication/division property",
+      "strategy": "one_step",
+      "constraints": { "steps": 1, "ops": ["mul", "div"] },
+      "d_min": 0,
+      "d_max": 8,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["isolate"],
+      "example_item_ids": [],
+      "openstax_case": "§2.2",
+      "leaves": ["one_step_equations"]
+    },
+    {
+      "form_id": "two_step",
+      "description": "ax ± b = c — two-step linear",
+      "strategy": "two_step",
+      "constraints": { "steps": 2 },
+      "d_min": 2,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": ["isolate"],
+      "example_item_ids": [],
+      "openstax_case": "§2.2–2.3",
+      "leaves": ["two_step_equations"]
+    },
+    {
+      "form_id": "vars_both_sides",
+      "description": "Variables and constants on both sides",
+      "strategy": "collect_both_sides",
+      "constraints": { "vars_both_sides": true },
+      "d_min": 4,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["collect"],
+      "example_item_ids": [],
+      "openstax_case": "§2.3",
+      "leaves": ["two_step_equations", "multi_step_equations"]
+    },
+    {
+      "form_id": "multi_step_distribute",
+      "description": "Distribute, combine like terms, both sides (general strategy)",
+      "strategy": "general_strategy",
+      "constraints": { "steps": "multi", "allow_distribute": true },
+      "d_min": 6,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["distribute", "collect"],
+      "example_item_ids": ["fs-id1166503246595", "fs-id1166503471619", "fs-id1166503131348"],
+      "openstax_case": "§2.4",
+      "leaves": ["multi_step_equations"]
+    },
+    {
+      "form_id": "fraction_or_decimal_coeffs",
+      "description": "Clear denominators / ×10ⁿ for fraction or decimal coefficients",
+      "strategy": "clear_denominators",
+      "constraints": { "coeff_kind": ["fraction", "decimal"] },
+      "d_min": 8,
+      "d_weight": 1.2,
+      "generation_status": "stub",
+      "tricks": ["clear_denoms"],
+      "example_item_ids": [],
+      "openstax_case": "§2.5 — partial: folded into multi-step, no dedicated mode",
+      "leaves": ["multi_step_equations"]
+    },
+    {
+      "form_id": "literal_equation",
+      "description": "Solve a formula for a specified variable",
+      "strategy": "literal",
+      "constraints": { "kind": "literal" },
+      "d_min": 4,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["literal"],
+      "example_item_ids": [],
+      "openstax_case": "§2.6",
+      "leaves": ["literal_equations"]
+    }
+  ]
+}

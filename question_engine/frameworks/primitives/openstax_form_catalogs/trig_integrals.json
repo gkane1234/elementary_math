@@ -1,0 +1,339 @@
+{
+  "catalog_id": "trig_integrals",
+  "title": "OpenStax trigonometric integrals — explicit form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "calculus-volume-2",
+      "slug": "3-2-trigonometric-integrals",
+      "title": "3.2 Trigonometric Integrals",
+      "url": "https://openstax.org/books/calculus-volume-2/pages/3-2-trigonometric-integrals",
+      "stage1": "scripts/output/example_mining/calculus-volume-2/stage1/3-2-trigonometric-integrals.json"
+    },
+    "related": [
+      {
+        "book": "calculus-volume-1",
+        "slug": "5-5-substitution",
+        "note": "Odd-power sin/cos products appear as u-sub warmups before Vol.2 tech chapter"
+      },
+      {
+        "book": "calculus-volume-1",
+        "slug": "4-10-antiderivatives",
+        "note": "Basic ∫sin/cos/sec²/sec·tan table forms"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "Forms mirror the cases OpenStax enumerates in §3.2 (sin/cos odd/even strategies; tan/sec even/odd; reduction; product-to-sum).",
+    "Stage-1 mining alone does NOT classify items into these forms — this catalog is the explicit taxonomy layer.",
+    "Sampler selects form_id by D-weighted weights among generation_status=implemented entries."
+  ],
+  "forms": [
+    {
+      "form_id": "basic_sin_kx",
+      "description": "∫ sin(kx) dx — table form",
+      "strategy": "basic_antiderivative",
+      "constraints": { "kind": "sin_kx", "k_min": 1 },
+      "d_min": 0,
+      "d_max": 4,
+      "d_weight": 0.7,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": [],
+      "openstax_case": "basic table / Vol.1 antiderivatives"
+    },
+    {
+      "form_id": "basic_cos_kx",
+      "description": "∫ cos(kx) dx — table form",
+      "strategy": "basic_antiderivative",
+      "constraints": { "kind": "cos_kx", "k_min": 1 },
+      "d_min": 0,
+      "d_max": 4,
+      "d_weight": 0.7,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": [],
+      "openstax_case": "basic table / Vol.1 antiderivatives"
+    },
+    {
+      "form_id": "basic_sec2",
+      "description": "∫ sec²(kx) dx → (1/k) tan(kx)",
+      "strategy": "basic_antiderivative",
+      "constraints": { "kind": "sec2" },
+      "d_min": 0,
+      "d_max": 4,
+      "d_weight": 0.7,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": [],
+      "openstax_case": "basic table"
+    },
+    {
+      "form_id": "basic_sec_tan",
+      "description": "∫ sec x tan x dx → sec x",
+      "strategy": "basic_antiderivative",
+      "constraints": { "kind": "sec_tan" },
+      "d_min": 0,
+      "d_max": 5,
+      "d_weight": 0.8,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": ["fs-id1165042815096"],
+      "openstax_case": "§3.2 exercise 87"
+    },
+    {
+      "form_id": "basic_tan",
+      "description": "∫ tan x dx → −ln|cos x|",
+      "strategy": "rewrite_sin_over_cos_u_sub",
+      "constraints": { "kind": "tan" },
+      "d_min": 2,
+      "d_max": 6,
+      "d_weight": 0.9,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": [],
+      "openstax_case": "§3.2 exercise 88 (scaled)"
+    },
+    {
+      "form_id": "cos_j_sin",
+      "description": "∫ cos^j x · sin x dx (u = cos x)",
+      "strategy": "u_equals_cos",
+      "constraints": { "cos_power": ">=1", "sin_power": 1, "extra_factor": "sin" },
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165043250980"],
+      "openstax_case": "Example 3.8 — ∫ cos^j x sin x dx"
+    },
+    {
+      "form_id": "sin_j_cos",
+      "description": "∫ sin^j x · cos x dx (u = sin x)",
+      "strategy": "u_equals_sin",
+      "constraints": { "sin_power": ">=1", "cos_power": 1, "extra_factor": "cos" },
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165042964834"],
+      "openstax_case": "Checkpoint 3.5 — ∫ sin^4 x cos x dx"
+    },
+    {
+      "form_id": "sin_odd_cos_any",
+      "description": "∫ cos^j x sin^k x dx with k odd ≥ 3 — save one sin, use 1−cos²",
+      "strategy": "odd_sin_power",
+      "constraints": { "sin_power": "odd>=3", "cos_power": ">=0" },
+      "d_min": 8,
+      "d_weight": 2.5,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165043281403", "fs-id1165043272282"],
+      "openstax_case": "Example 3.9 / 3.11 — k odd"
+    },
+    {
+      "form_id": "cos_odd_sin_any",
+      "description": "∫ cos^j x sin^k x dx with j odd ≥ 3 — save one cos, use 1−sin²",
+      "strategy": "odd_cos_power",
+      "constraints": { "cos_power": "odd>=3", "sin_power": ">=0" },
+      "d_min": 8,
+      "d_weight": 2.5,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165043248784", "fs-id1165043210017"],
+      "openstax_case": "Checkpoint 3.6 / 3.8 — j odd"
+    },
+    {
+      "form_id": "sin_even_power",
+      "description": "∫ sin^{2n} x dx — power-reduction / half-angle",
+      "strategy": "power_reduction_sin",
+      "constraints": { "sin_power": "even>=2", "cos_power": 0 },
+      "d_min": 6,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": ["fs-id1165042936506", "fs-id1165042707196"],
+      "openstax_case": "Example 3.10 / 3.12 — even power of sin"
+    },
+    {
+      "form_id": "cos_even_power",
+      "description": "∫ cos^{2n} x dx (optionally cos²(ax)) — power-reduction",
+      "strategy": "power_reduction_cos",
+      "constraints": { "cos_power": "even>=2", "sin_power": 0 },
+      "d_min": 6,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": ["fs-id1165043096050", "fs-id1165039562343"],
+      "openstax_case": "Checkpoint 3.7 / 3.9"
+    },
+    {
+      "form_id": "sin_cos_both_even",
+      "description": "∫ sin^{2m} x cos^{2n} x dx — both even; reduce via identities",
+      "strategy": "both_even_power_reduction",
+      "constraints": { "sin_power": "even>=2", "cos_power": "even>=2" },
+      "d_min": 12,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": [],
+      "openstax_case": "§3.2 exercise 100 — ∫ sin² cos²"
+    },
+    {
+      "form_id": "product_sin_a_cos_b",
+      "description": "∫ sin(ax) cos(bx) dx — product-to-sum, a≠b",
+      "strategy": "product_to_sum",
+      "constraints": { "kind": "sin_a_cos_b", "a_ne_b": true },
+      "d_min": 10,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": ["fs-id1165043094091"],
+      "openstax_case": "Example 3.13 — different angles"
+    },
+    {
+      "form_id": "product_cos_a_cos_b",
+      "description": "∫ cos(ax) cos(bx) dx — product-to-sum, a≠b",
+      "strategy": "product_to_sum",
+      "constraints": { "kind": "cos_a_cos_b", "a_ne_b": true },
+      "d_min": 10,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": ["fs-id1165042707106"],
+      "openstax_case": "Checkpoint 3.10"
+    },
+    {
+      "form_id": "sec_j_tan",
+      "description": "∫ sec^j x · tan x dx (u = sec x)",
+      "strategy": "u_equals_sec",
+      "constraints": { "sec_power": ">=1", "tan_power": 1 },
+      "d_min": 8,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165043183813"],
+      "openstax_case": "Example 3.14 — ∫ sec^j tan"
+    },
+    {
+      "form_id": "tan_k_sec2",
+      "description": "∫ tan^k x · sec² x dx (u = tan x)",
+      "strategy": "u_equals_tan",
+      "constraints": { "tan_power": ">=1", "sec_power": 2 },
+      "d_min": 8,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165042708857"],
+      "openstax_case": "Checkpoint 3.11 — ∫ tan^5 sec²"
+    },
+    {
+      "form_id": "tan2",
+      "description": "∫ tan² x dx = ∫(sec² x − 1) dx",
+      "strategy": "pythagorean_rewrite",
+      "constraints": { "tan_power": 2, "sec_power": 0 },
+      "d_min": 6,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": [],
+      "openstax_case": "Pythagorean identity case (feeds reduction / tan^n)"
+    },
+    {
+      "form_id": "tan_sec_sec_even",
+      "description": "∫ tan^k x sec^j x dx with j even ≥ 4 — save sec², rewrite rest via tan²+1",
+      "strategy": "sec_even",
+      "constraints": { "sec_power": "even>=4", "tan_power": ">=0" },
+      "d_min": 14,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165042707642"],
+      "openstax_case": "Example 3.15 — j even"
+    },
+    {
+      "form_id": "tan_odd_sec_any",
+      "description": "∫ tan^k x sec^j x dx with k odd ≥ 3 — save one tan·sec, rewrite via sec²−1",
+      "strategy": "tan_odd",
+      "constraints": { "tan_power": "odd>=3", "sec_power": ">=1" },
+      "d_min": 14,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165042527092", "fs-id1165042808795"],
+      "openstax_case": "Example 3.16 / Checkpoint 3.12 — k odd"
+    },
+    {
+      "form_id": "tan_odd_alone",
+      "description": "∫ tan^{2n+1} x dx, n≥1 — rewrite tan^{2n}·tan = (sec²−1)^n tan",
+      "strategy": "tan_odd_alone",
+      "constraints": { "tan_power": "odd>=3", "sec_power": 0 },
+      "d_min": 12,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["trig", "u_sub"],
+      "example_item_ids": ["fs-id1165043327268"],
+      "openstax_case": "Example 3.17 — ∫ tan³ x"
+    },
+    {
+      "form_id": "sec3_reduction",
+      "description": "∫ sec³ x dx — parts / reduction formula",
+      "strategy": "reduction_sec",
+      "constraints": { "sec_power": 3 },
+      "d_min": 16,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["trig", "parts"],
+      "example_item_ids": ["fs-id1165043311678", "fs-id1165042445770"],
+      "openstax_case": "Example 3.18 / 3.19 — sec³"
+    },
+    {
+      "form_id": "tan_even_reduction",
+      "description": "∫ tan^{2n} x dx via reduction / Pythagorean (n≥2)",
+      "strategy": "reduction_tan",
+      "constraints": { "tan_power": "even>=4" },
+      "d_min": 16,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": ["fs-id1165042599295"],
+      "openstax_case": "Example 3.20 — ∫ tan⁴ x"
+    },
+    {
+      "form_id": "sec_odd_reduction_n5",
+      "description": "∫ sec^5 x dx — reduction formula (higher odd)",
+      "strategy": "reduction_sec",
+      "constraints": { "sec_power": "odd>=5" },
+      "d_min": 18,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": ["trig", "parts"],
+      "example_item_ids": ["fs-id1165043301703"],
+      "openstax_case": "Checkpoint 3.13 — sec⁵"
+    },
+    {
+      "form_id": "product_sin_a_sin_b",
+      "description": "∫ sin(ax) sin(bx) dx — product-to-sum",
+      "strategy": "product_to_sum",
+      "constraints": { "kind": "sin_a_sin_b", "a_ne_b": true },
+      "d_min": 12,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["trig"],
+      "example_item_ids": [],
+      "openstax_case": "§3.2 product identities sibling of sin·cos / cos·cos"
+    },
+    {
+      "form_id": "weierstrass_t_sub",
+      "description": "Weierstrass t = tan(x/2) rationalization (other strategies §3.5)",
+      "strategy": "weierstrass",
+      "constraints": { "kind": "weierstrass" },
+      "d_min": 20,
+      "d_weight": 0.5,
+      "generation_status": "deferred",
+      "tricks": ["trig", "pfd"],
+      "example_item_ids": [],
+      "openstax_case": "Vol.2 §3.5 other strategies (not primary §3.2)",
+      "gap_reason": "Belongs with other-strategies catalog; not §3.2 core cases"
+    }
+  ]
+}

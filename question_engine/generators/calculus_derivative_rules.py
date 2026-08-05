@@ -1,9 +1,10 @@
 """Enriched calculus derivative-rule generators.
 
-Overrides thin power/product/quotient/chain/trig/ln/exp/etc. builders with
-expression-ordering + function-family variety (OpenStax Vol. 1 Ch. 3 patterns).
-Also implements Differentiation stubs: instantaneous rates, inverse functions,
-and true logarithmic differentiation.
+Power / product / quotient / chain / trig / ln-exp / invtrig / higher-order route
+through the continuous-D Spec sampler in ``frameworks.primitives.derivatives``.
+Other-base, logarithmic differentiation, and implicit keep structured packs with
+``spec_snapshot`` / ``function_classes`` / ``effort_features`` for ML export.
+Rates, definition, and inverse-function leaves keep dedicated builders.
 """
 
 from __future__ import annotations
@@ -24,17 +25,224 @@ from .utils import (
 )
 
 
-def _difficulty_tier(settings: dict) -> str:
-    tier = str(settings.get("difficulty_tier", settings.get("difficulty", "easy"))).strip().lower()
-    if tier in {"1", "e"}:
-        return "easy"
-    if tier in {"2", "m"}:
-        return "medium"
-    if tier in {"3", "h"}:
-        return "hard"
-    if tier in {"easy", "medium", "hard"}:
-        return tier
-    return "easy"
+def _rule_structure(settings: dict, *, generator_key: str | None = None, topic: str | None = None) -> dict:
+    """Continuous derivative-rule knobs + allow-lists (topic defaults applied)."""
+    from question_engine.frameworks.primitives.derivatives import derivative_rule_structure
+    from question_engine.settings.params import calc_topic_structure_from_continuous
+
+    structure = derivative_rule_structure(
+        settings, generator_key=generator_key, topic=topic
+    )
+    structure.pop("_allow", None)
+    # Merge continuous topic unlock gates when numeric D is present.
+    topic_struct = calc_topic_structure_from_continuous(settings)
+    if topic_struct is not None:
+        for key, value in topic_struct.items():
+            if key.startswith("unlock_") or key in {
+                "n_max",
+                "k_max",
+                "interval_width_max",
+                "bound_max",
+            }:
+                structure[key] = value
+        structure.setdefault("difficulty", topic_struct["difficulty"])
+    else:
+        # EMH fallback unlocks from band label.
+        band = str(structure.get("band", "easy"))
+        structure.setdefault("unlock_medium", band != "easy")
+        structure.setdefault("unlock_hard", band == "hard")
+        structure.setdefault("unlock_advanced", band == "hard")
+        structure.setdefault("unlock_trig", band != "easy")
+        structure.setdefault("unlock_exp", band != "easy")
+        structure.setdefault("unlock_log", band == "hard")
+        structure.setdefault("unlock_roots", band != "easy")
+        structure.setdefault("unlock_reciprocal", band != "easy")
+    return structure
+
+
+def _pick_family(structure: dict, easy, medium=None, hard=None, *, advanced=None, extra=None) -> str:
+    from question_engine.settings.params import pick_unlocked_families
+
+    return random.choice(
+        pick_unlocked_families(
+            structure, easy, medium, hard, advanced=advanced, extra=extra
+        )
+    )
+
+
+def _allow_snapshot_from_structure(structure: dict) -> dict:
+    """Copy resolved course / allow knobs into a joinable pack snapshot."""
+    keys = (
+        "allow_trig",
+        "allow_exp",
+        "allow_log",
+        "allow_hyperbolic",
+        "allow_roots",
+        "allow_invtrig",
+        "allow_chain",
+        "allow_product",
+        "allow_quotient",
+        "allow_implicit",
+        "require_chain",
+        "require_product",
+        "require_quotient",
+        "require_implicit",
+        "coef_hi",
+        "power_max",
+        "term_budget",
+        "band",
+        "difficulty",
+        "unlock_medium",
+        "unlock_hard",
+        "unlock_advanced",
+        "unlock_trig",
+        "unlock_exp",
+        "unlock_log",
+        "unlock_roots",
+        "n_max",
+        "k_max",
+    )
+    out: dict = {}
+    for key in keys:
+        if key in structure and structure[key] is not None:
+            out[key] = structure[key]
+    return out
+
+
+def _madlibs_meta(generator_key: str, structure: dict, *, pack: str | None = None):
+    """Stash ML-ready metadata for structured (non-Spec) derivative packs.
+
+    Emits ``family`` / ``structure_id`` for gallery inventory plus
+    ``function_classes``, ``methods_used``, ``effort_features``, and a
+    ``spec_snapshot`` with ``pack=structured_*`` so export / rating join
+    keys match Spec leaves.
+    """
+    last: dict = {"meta": {}}
+    pack_name = pack or f"structured_{generator_key.replace('derivative_', '')}"
+
+    def note(
+        family: str,
+        variant: str | None = None,
+        *,
+        function_classes: list[str] | tuple[str, ...] | None = None,
+        methods_used: list[str] | tuple[str, ...] | None = None,
+        chain_depth: int = 0,
+        derivative_order: int = 1,
+        shape_id: str | None = None,
+    ) -> None:
+        classes = list(function_classes or ["algebraic"])
+        methods = list(methods_used or ["power"])
+        snap = {
+            "pack": pack_name,
+            "family": family,
+            "generator": generator_key,
+            "derivative_order": int(derivative_order),
+            "chain_depth": int(chain_depth),
+            "function_classes": classes,
+            "methods_used": methods,
+            **_allow_snapshot_from_structure(structure),
+        }
+        if variant:
+            snap["variant"] = variant
+        meta: dict = {
+            "generator": generator_key,
+            "family": family,
+            "structure_id": f"{generator_key}:{family}",
+            "shape_id": shape_id or family,
+            "band": structure.get("band"),
+            "function_classes": classes,
+            "methods_used": methods,
+            "chain_depth": int(chain_depth),
+            "derivative_order": int(derivative_order),
+            "effective_d": structure.get("difficulty"),
+            "spec_snapshot": snap,
+        }
+        if variant:
+            meta["variant"] = variant
+        last["meta"] = meta
+
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict:
+        meta = dict(last.get("meta") or {})
+        if not meta:
+            return meta
+        snap = dict(meta.get("spec_snapshot") or {})
+        ans = answer or ""
+        effort = {
+            "answer_len": len(ans),
+            "nest_depth": int(meta.get("chain_depth") or 0),
+            "chain_applications": int(meta.get("chain_depth") or 0),
+            "product_applications": int("product" in (meta.get("methods_used") or [])),
+            "quotient_applications": int("quotient" in (meta.get("methods_used") or [])),
+            "n_factors": 0,
+            "n_terms": 1,
+            "degree_max": int(structure.get("power_max") or 0),
+            "coef_abs_max": int(structure.get("coef_hi") or 0),
+            "has_fn_power": False,
+            "derivative_order": int(meta.get("derivative_order") or 1),
+            "methods": list(meta.get("methods_used") or []),
+            "n_fn_nodes": sum(
+                1
+                for c in (meta.get("function_classes") or [])
+                if c not in {"algebraic", "roots"}
+            ),
+            "pack": pack_name,
+            "family": meta.get("family"),
+        }
+        meta["effort_features"] = effort
+        snap.setdefault("effort_answer_len", effort["answer_len"])
+        meta["spec_snapshot"] = snap
+        return meta
+
+    return note, metadata_builder
+
+
+
+def _framework_generator(generator_key: str):
+    """Build a question list via the continuous-D derivative sampler."""
+
+    def _gen(topic: str, settings: dict) -> list[Question]:
+        from question_engine.frameworks.primitives.derivatives import (
+            sample_derivative_expression,
+        )
+
+        count = int(settings.get("count", 10))
+        include_answer_key = bool(settings.get("include_answer_key", False))
+        label = {
+            "derivative_power_rule": "power rule derivative",
+            "derivative_product_rule": "product rule",
+            "derivative_quotient_rule": "quotient rule",
+            "derivative_chain_rule": "chain rule",
+            "derivative_trigonometric": "trigonometric derivative",
+            "derivative_ln_exp": "ln/exp derivative",
+            "derivative_other_base": "other-base derivative",
+            "derivative_inverse_trig": "inverse trigonometric derivative",
+            "derivative_higher_order": "higher order derivative",
+            "derivative_general": "general derivative",
+        }.get(generator_key, "derivative")
+
+        def build() -> tuple[str, str, str | None]:
+            sample = sample_derivative_expression(
+                settings, generator_key=generator_key, topic=topic
+            )
+            # Stash metadata on settings for metadata_builder via closure list
+            build._last_meta = sample.as_metadata()  # type: ignore[attr-defined]
+            answer = sample.answer_latex if include_answer_key else None
+            return sample.prompt_latex, label, answer
+
+        def metadata_builder(prompt_latex: str, prompt_text: str, answer: str | None) -> dict:
+            meta = getattr(build, "_last_meta", {}) or {}
+            return dict(meta)
+
+        return _make_questions(
+            topic,
+            count,
+            include_answer_key,
+            build,
+            metadata_builder=metadata_builder,
+            settings=settings,
+        )
+
+    return _gen
 
 
 def _linear_pair(coef_hi: int = 5) -> tuple[int, int]:
@@ -57,828 +265,357 @@ def _mono(coef: int, var: str, power: int = 1) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Power rule
+# Power / product / quotient / chain / trig / ln-exp / invtrig (framework)
 # ---------------------------------------------------------------------------
 
 
-def _derivative_power_rule(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
-
-    def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            family = random.choice(["mono", "sum_two", "reversed"])
-            if family == "mono":
-                n = random.randint(2, 6)
-                c = random_int_range(-5, 5, exclude={0})
-                body = _mono(c, x, n) if c != 1 else f"{x}^{{{n}}}"
-                if c == 1:
-                    body = f"{x}^{{{n}}}"
-                elif c == -1:
-                    body = f"-{x}^{{{n}}}"
-                else:
-                    body = f"{c}{x}^{{{n}}}"
-                answer = _mono(c * n, x, n - 1) if n > 1 else str(c * n)
-                if n == 2:
-                    answer = _mono(c * 2, x, 1)
-            elif family == "sum_two":
-                n = random.randint(2, 4)
-                m = random.randint(0, n - 1)
-                a = random_int_range(-4, 4, exclude={0})
-                b = random_int_range(-4, 4, exclude={0})
-                coeffs = [0] * (n + 1)
-                coeffs[0] = a  # a x^n
-                coeffs[n - m] = b  # b x^m — wait dense [a_n..a_0]
-                coeffs = [0] * (n + 1)
-                coeffs[0] = a
-                coeffs[n - m] = b
-                body = format_polynomial_latex(coeffs, variable=x)
-                # derivative
-                d_coeffs = []
-                for i, c in enumerate(coeffs[:-1]):
-                    p = n - i
-                    d_coeffs.append(c * p)
-                answer = format_polynomial_latex(d_coeffs, variable=x) if any(d_coeffs) else "0"
-            else:
-                # reversed display of ax^2+bx+c
-                a = random.randint(1, 3)
-                b = random_int_range(-4, 4, exclude={0})
-                c = random.randint(-3, 3)
-                coeffs = [a, b, c]
-                body = _poly_display(coeffs, x, style="reversed")
-                answer = format_linear_latex(2 * a, b, variable=x)
-        elif tier == "medium":
-            family = random.choice(["quad", "neg_power", "radical_power", "factored"])
-            if family == "quad":
-                a = random.randint(1, 3)
-                b = random_int_range(-5, 5, exclude={0})
-                c = random.randint(-4, 4)
-                coeffs = [a, b, c]
-                body = _poly_display(coeffs, x)
-                answer = format_linear_latex(2 * a, b, variable=x)
-            elif family == "neg_power":
-                n = random.randint(1, 3)
-                body = random.choice([rf"{x}^{{-{n}}}", rf"\frac{{1}}{{{x}^{{{n}}}}}"])
-                # d/dx x^{-n} = -n x^{-n-1}
-                answer = rf"-{n}{x}^{{-{n + 1}}}"
-            elif family == "radical_power":
-                # x^{1/2} or x^{3/2}
-                p, q = random.choice([(1, 2), (3, 2), (2, 3)])
-                body = rf"{x}^{{{p}/{q}}}"
-                # (p/q) x^{p/q - 1} = (p/q) x^{(p-q)/q}
-                coef = frac_latex(Fraction(p, q))
-                num, den = p - q, q
-                if den < 0:
-                    num, den = -num, -den
-                g = Fraction(num, den)
-                if g.denominator == 1:
-                    exp = str(g.numerator)
-                else:
-                    exp = rf"{g.numerator}/{g.denominator}"
-                answer = rf"{coef}{x}^{{{exp}}}"
-            else:
-                b = random.randint(1, 5)
-                coeffs = [1, b, 0]
-                body = _poly_display(coeffs, x, style="factored_linear")
-                answer = format_linear_latex(2, b, variable=x)
-        else:
-            family = random.choice(["cubic", "mixed_powers", "sum_neg"])
-            if family == "cubic":
-                a = random.randint(1, 2)
-                b = random_int_range(-4, 4, exclude={0})
-                c = random_int_range(-3, 3, exclude={0})
-                d = random.randint(-3, 3)
-                coeffs = [a, b, c, d]
-                body = _poly_display(coeffs, x, style=random.choice(["standard", "reversed"]))
-                answer = format_polynomial_latex([3 * a, 2 * b, c], variable=x)
-            elif family == "mixed_powers":
-                n = random.randint(3, 5)
-                k = random.randint(1, 3)
-                body = random.choice(
-                    [
-                        rf"{k}{x}^{{{n}}}+{x}^{{-1}}",
-                        rf"{x}^{{-1}}+{k}{x}^{{{n}}}",
-                        rf"\frac{{1}}{{{x}}}+{k}{x}^{{{n}}}",
-                    ]
-                )
-                answer = rf"{k * n}{x}^{{{n - 1}}}-{x}^{{-2}}"
-            else:
-                n = random.randint(2, 4)
-                body = rf"{x}^{{{n}}}-{n}{x}+{random.randint(1, 5)}"
-                answer = rf"{n}{x}^{{{n - 1}}}-{n}"
-        prompt = _d_prefix(x, body)
-        return prompt, "power rule derivative", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
+_derivative_power_rule = _framework_generator("derivative_power_rule")
+_derivative_product_rule = _framework_generator("derivative_product_rule")
+_derivative_quotient_rule = _framework_generator("derivative_quotient_rule")
+_derivative_chain_rule = _framework_generator("derivative_chain_rule")
+_derivative_trigonometric = _framework_generator("derivative_trigonometric")
+_derivative_inverse_trig = _framework_generator("derivative_inverse_trig")
+_derivative_ln_exp = _framework_generator("derivative_ln_exp")
+_derivative_general = _framework_generator("derivative_general")
+_derivative_higher_order = _framework_generator("derivative_higher_order")
 
 
 # ---------------------------------------------------------------------------
-# Product / quotient / chain
+# Structured packs: other-base / log-diff / implicit (+ rates / definition)
 # ---------------------------------------------------------------------------
 
 
-def _derivative_product_rule(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
-
-    def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            a, b = _linear_pair(4)
-            c, d = _linear_pair(4)
-            f = format_linear_latex(a, b, variable=x)
-            g = format_linear_latex(c, d, variable=x)
-            answer = format_polynomial_latex([2 * a * c, a * d + b * c], variable=x)
-            # orderings: (f)(g) vs f·g vs g·f
-            form = random.choice(["paren", "cdot", "swapped"])
-            if form == "paren":
-                body = rf"\left({f}\right)\left({g}\right)"
-            elif form == "cdot":
-                body = rf"\left({f}\right)\cdot\left({g}\right)"
-            else:
-                body = rf"\left({g}\right)\left({f}\right)"
-                # same product
-            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        elif tier == "medium":
-            family = random.choice(["poly_linear", "x_trig", "x_exp"])
-            if family == "poly_linear":
-                a = random.randint(1, 3)
-                b = random_int_range(-4, 4, exclude={0})
-                c = random_int_range(-4, 4, exclude={0})
-                d, e = _linear_pair(4)
-                f = format_polynomial_latex([a, b, c], variable=x)
-                g = format_linear_latex(d, e, variable=x)
-                lead = 3 * a * d
-                mid = 2 * a * e + 2 * b * d
-                const = b * e + d * c
-                answer = format_polynomial_latex([lead, mid, const], variable=x)
-                body = random.choice(
-                    [
-                        rf"\left({f}\right)\left({g}\right)",
-                        rf"\left({g}\right)\left({f}\right)",
-                    ]
-                )
-            elif family == "x_trig":
-                body = random.choice(
-                    [rf"{x}\sin({x})", rf"\sin({x})\,{x}", rf"{x}\cdot\sin({x})"]
-                )
-                answer = rf"\sin({x})+{x}\cos({x})"
-            else:
-                body = random.choice(
-                    [rf"{x}e^{{{x}}}", rf"e^{{{x}}}{x}", rf"{x}\cdot e^{{{x}}}"]
-                )
-                answer = rf"e^{{{x}}}+{x}e^{{{x}}}"
-            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        else:
-            family = random.choice(["power_linear", "trig_trig", "ln_x"])
-            if family == "power_linear":
-                n = random.randint(2, 4)
-                a, b = _linear_pair(4)
-                f = f"{x}^{{{n}}}"
-                g = format_linear_latex(a, b, variable=x)
-                coeffs = [(n + 1) * a] + ([n * b] if n >= 1 else [])
-                # (n+1)a x^n + n b x^{n-1}
-                dense = [0] * (n + 1)
-                dense[0] = (n + 1) * a
-                if n >= 1:
-                    dense[1] = n * b
-                answer = format_polynomial_latex(dense, variable=x)
-                body = random.choice(
-                    [rf"{f}\left({g}\right)", rf"\left({g}\right){f}"]
-                )
-            elif family == "trig_trig":
-                body = random.choice(
-                    [rf"\sin({x})\cos({x})", rf"\cos({x})\sin({x})"]
-                )
-                answer = rf"\cos^{{2}}({x})-\sin^{{2}}({x})"
-            else:
-                body = random.choice(
-                    [rf"{x}\ln({x})", rf"\ln({x})\,{x}"]
-                )
-                answer = rf"\ln({x})+1"
-            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        return prompt, "product rule", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
-
-
-def _derivative_quotient_rule(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
-
-    def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            a, b = _linear_pair(4)
-            c, d = _linear_pair(4)
-            numer = a * d - b * c
-            while numer == 0:
-                a, b = _linear_pair(4)
-                c, d = _linear_pair(4)
-                numer = a * d - b * c
-            num = format_linear_latex(a, b, variable=x)
-            den = format_linear_latex(c, d, variable=x)
-            answer = rf"\frac{{{numer}}}{{\left({den}\right)^{{2}}}}"
-            form = random.choice(["frac", "cdot_inv"])
-            if form == "frac":
-                body = rf"\frac{{{num}}}{{{den}}}"
-            else:
-                body = rf"\left({num}\right)\left({den}\right)^{{-1}}"
-            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        elif tier == "medium":
-            family = random.choice(["quad_over_linear", "sin_over_x", "x_over_exp"])
-            if family == "quad_over_linear":
-                a = random.randint(1, 3)
-                b = random_int_range(-4, 4, exclude={0})
-                c = random_int_range(-3, 3, exclude={0})
-                d, e = _linear_pair(3)
-                num = format_polynomial_latex([a, b, c], variable=x)
-                den = format_linear_latex(d, e, variable=x)
-                n2, n1, n0 = a * d, 2 * a * e, b * e - c * d
-                numer = format_polynomial_latex([n2, n1, n0], variable=x)
-                answer = rf"\frac{{{numer}}}{{\left({den}\right)^{{2}}}}"
-                body = rf"\frac{{{num}}}{{{den}}}"
-            elif family == "sin_over_x":
-                body = random.choice(
-                    [rf"\frac{{\sin({x})}}{{{x}}}", rf"\sin({x})\,{x}^{{-1}}"]
-                )
-                answer = rf"\frac{{{x}\cos({x})-\sin({x})}}{{{x}^{{2}}}}"
-            else:
-                body = rf"\frac{{{x}}}{{e^{{{x}}}}}"
-                answer = rf"\frac{{1-{x}}}{{e^{{{x}}}}}"
-            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        else:
-            a, b = _linear_pair(3)
-            c = random.randint(1, 3)
-            d = random_int_range(-3, 3, exclude={0})
-            num = format_linear_latex(a, b, variable=x)
-            den = _poly_display([c, 0, d], x, style=random.choice(["standard", "reversed"]))
-            numer = format_polynomial_latex([-a * c, -2 * b * c, a * d], variable=x)
-            answer = rf"\frac{{{numer}}}{{\left({den}\right)^{{2}}}}"
-            body = random.choice(
-                [
-                    rf"\frac{{{num}}}{{{den}}}",
-                    rf"\left({num}\right)\left({den}\right)^{{-1}}",
-                ]
-            )
-            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        return prompt, "quotient rule", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
-
-
-def _derivative_chain_rule(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
-
-    def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            a, b = _linear_pair(4)
-            n = random.randint(2, 5)
-            # ax+b vs b+ax
-            if random.choice([True, False]):
-                inner = format_linear_latex(a, b, variable=x)
-            else:
-                mono = _mono(a, x, 1)
-                inner = f"{b}+{mono}"
-            body = rf"\left({inner}\right)^{{{n}}}"
-            outer = n * a
-            power = n - 1
-            power_latex = (
-                rf"\left({inner}\right)"
-                if power == 1
-                else rf"\left({inner}\right)^{{{power}}}"
-            )
-            if outer == 1:
-                answer = power_latex
-            elif outer == -1:
-                answer = f"-{power_latex}"
-            else:
-                answer = f"{outer}{power_latex}"
-            # rebuild answer with standard inner for consistency
-            std = format_linear_latex(a, b, variable=x)
-            power_latex = (
-                rf"\left({std}\right)" if power == 1 else rf"\left({std}\right)^{{{power}}}"
-            )
-            answer = power_latex if outer == 1 else (
-                f"-{power_latex}" if outer == -1 else f"{outer}{power_latex}"
-            )
-        elif tier == "medium":
-            family = random.choice(["poly_power", "exp_inner", "sqrt_inner", "trig_linear"])
-            if family == "poly_power":
-                a = random.randint(1, 3)
-                c = random_int_range(-4, 4, exclude={0})
-                n = random.randint(2, 4)
-                inner = _poly_display([a, 0, c], x)
-                body = rf"\left({inner}\right)^{{{n}}}"
-                coef = n * 2 * a
-                answer = rf"{coef}{x}\left({inner}\right)^{{{n - 1}}}"
-            elif family == "exp_inner":
-                a, b = _linear_pair(4)
-                inner = format_linear_latex(a, b, variable=x)
-                body = random.choice([rf"e^{{{inner}}}", rf"\exp({inner})"])
-                answer = rf"{a}e^{{{format_linear_latex(a, b, variable=x)}}}"
-            elif family == "sqrt_inner":
-                a = random.choice([1, 4, 9])
-                b = random.randint(0, 5)
-                inner = format_linear_latex(a, b, variable=x) if b else _mono(a, x, 1)
-                if b == 0:
-                    inner = _mono(a, x, 1)
-                body = rf"\sqrt{{{inner}}}"
-                # (1/2)(ax+b)^{-1/2} * a = a/(2 sqrt(ax+b))
-                answer = rf"\frac{{{a}}}{{2\sqrt{{{format_linear_latex(a, b, variable=x)}}}}}"
-            else:
-                k = random.randint(2, 5)
-                fn, der = random.choice(
-                    [("\\sin", "\\cos"), ("\\cos", "-\\sin"), ("\\tan", "\\sec^{2}")]
-                )
-                arg = _mono(k, x, 1)
-                body = rf"{fn}({arg})"
-                if der.startswith("-"):
-                    answer = rf"-{k}{der[1:]}({arg})"
-                else:
-                    answer = rf"{k}{der}({arg})"
-        else:
-            family = random.choice(["sin_power", "nested_power", "ln_inner", "comp_trig"])
-            if family == "sin_power":
-                a = random.randint(2, 5)
-                n = random.randint(2, 4)
-                body = rf"\sin\left({a}{x}^{{{n}}}\right)"
-                answer = rf"{a * n}{x}^{{{n - 1}}}\cos\left({a}{x}^{{{n}}}\right)"
-            elif family == "nested_power":
-                a, b = _linear_pair(3)
-                n = random.randint(2, 3)
-                m = random.randint(2, 3)
-                inner = format_linear_latex(a, b, variable=x)
-                body = rf"\left(\left({inner}\right)^{{{n}}}\right)^{{{m}}}"
-                # = (ax+b)^{nm}, deriv nm(ax+b)^{nm-1}*a
-                p = n * m
-                answer = rf"{p * a}\left({inner}\right)^{{{p - 1}}}"
-            elif family == "ln_inner":
-                a, b = _linear_pair(4)
-                inner = format_linear_latex(a, b, variable=x)
-                body = rf"\ln\left|{inner}\right|"
-                answer = rf"\frac{{{a}}}{{{inner}}}"
-            else:
-                n = random.randint(2, 4)
-                body = rf"\sin^{{{n}}}({x})"
-                answer = rf"{n}\sin^{{{n - 1}}}({x})\cos({x})"
-        prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        return prompt, "chain rule", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
-
-
-# ---------------------------------------------------------------------------
-# Trig / inverse trig / ln-exp / other base / logarithmic
-# ---------------------------------------------------------------------------
-
-
-def _derivative_trigonometric(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
-
-    def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            fn, deriv = random.choice(
-                [
-                    ("\\sin", "\\cos"),
-                    ("\\cos", "-\\sin"),
-                    ("\\tan", "\\sec^{2}"),
-                    ("\\cot", "-\\csc^{2}"),
-                ]
-            )
-            # sin x vs sin(x)
-            arg = random.choice([x, rf"({x})"])
-            body = f"{fn}{arg}" if arg == x else f"{fn}{arg}"
-            # normalize: always use (x) in answer
-            answer = f"{deriv}({x})"
-            prompt = rf"\frac{{d}}{{d{x}}}{fn}({x})"
-        elif tier == "medium":
-            k = random.randint(2, 6)
-            fn, deriv = random.choice(
-                [
-                    ("\\sin", "\\cos"),
-                    ("\\cos", "-\\sin"),
-                    ("\\tan", "\\sec^{2}"),
-                    ("\\sec", None),
-                ]
-            )
-            # kx vs x*k display
-            arg = random.choice([f"{k}{x}", rf"{k}\cdot {x}"])
-            if fn == "\\sec":
-                prompt = rf"\frac{{d}}{{d{x}}}\sec({arg})"
-                answer = rf"{k}\sec({k}{x})\tan({k}{x})"
-            elif deriv.startswith("-"):
-                prompt = rf"\frac{{d}}{{d{x}}}{fn}({arg})"
-                answer = rf"-{k}{deriv[1:]}({k}{x})"
-            else:
-                prompt = rf"\frac{{d}}{{d{x}}}{fn}({arg})"
-                answer = rf"{k}{deriv}({k}{x})"
-        else:
-            choice = random.choice(["product", "sec", "power", "sum", "csc"])
-            if choice == "product":
-                body = random.choice(
-                    [rf"{x}\sin({x})", rf"\sin({x}){x}", rf"{x}\cos({x})"]
-                )
-                if "sin" in body:
-                    answer = rf"\sin({x})+{x}\cos({x})"
-                else:
-                    answer = rf"\cos({x})-{x}\sin({x})"
-                prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-            elif choice == "sec":
-                k = random.randint(2, 5)
-                prompt = rf"\frac{{d}}{{d{x}}}\sec({k}{x})"
-                answer = rf"{k}\sec({k}{x})\tan({k}{x})"
-            elif choice == "power":
-                prompt = rf"\frac{{d}}{{d{x}}}\sin^{{2}}({x})"
-                answer = random.choice(
-                    [rf"2\sin({x})\cos({x})", rf"\sin(2{x})"]
-                )
-            elif choice == "csc":
-                k = random.randint(2, 4)
-                prompt = rf"\frac{{d}}{{d{x}}}\csc({k}{x})"
-                answer = rf"-{k}\csc({k}{x})\cot({k}{x})"
-            else:
-                prompt = rf"\frac{{d}}{{d{x}}}\left[\sin({x})+\cos({x})\right]"
-                answer = rf"\cos({x})-\sin({x})"
-        return prompt, "trigonometric derivative", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
-
-
-def _derivative_inverse_trig(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
-
-    def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            fn, deriv = random.choice(
-                [
-                    ("\\arcsin", rf"\frac{{1}}{{\sqrt{{1-{x}^{{2}}}}}}"),
-                    ("\\arccos", rf"-\frac{{1}}{{\sqrt{{1-{x}^{{2}}}}}}"),
-                    ("\\arctan", rf"\frac{{1}}{{1+{x}^{{2}}}}"),
-                ]
-            )
-            # arcsin x vs arcsin(x) vs sin^{-1}(x)
-            name = random.choice([fn, fn])  # keep standard; alt:
-            if fn == "\\arcsin" and random.random() < 0.35:
-                prompt = rf"\frac{{d}}{{d{x}}}\sin^{{-1}}({x})"
-            elif fn == "\\arccos" and random.random() < 0.35:
-                prompt = rf"\frac{{d}}{{d{x}}}\cos^{{-1}}({x})"
-            elif fn == "\\arctan" and random.random() < 0.35:
-                prompt = rf"\frac{{d}}{{d{x}}}\tan^{{-1}}({x})"
-            else:
-                prompt = rf"\frac{{d}}{{d{x}}}{fn}({x})"
-            answer = deriv
-        elif tier == "medium":
-            k = random.randint(2, 5)
-            fn = random.choice(["\\arcsin", "\\arctan", "\\arccos"])
-            arg = random.choice([f"{k}{x}", rf"{k}\cdot {x}"])
-            prompt = rf"\frac{{d}}{{d{x}}}{fn}({arg})"
-            if fn == "\\arcsin":
-                answer = rf"\frac{{{k}}}{{\sqrt{{1-({k}{x})^{{2}}}}}}"
-            elif fn == "\\arccos":
-                answer = rf"-\frac{{{k}}}{{\sqrt{{1-({k}{x})^{{2}}}}}}"
-            else:
-                answer = rf"\frac{{{k}}}{{1+({k}{x})^{{2}}}}"
-        else:
-            choice = random.choice(["power", "linear_shift", "sqrt_form"])
-            if choice == "power":
-                k = random.randint(2, 4)
-                prompt = rf"\frac{{d}}{{d{x}}}\arctan({x}^{{{k}}})"
-                answer = rf"\frac{{{k}{x}^{{{k - 1}}}}}{{1+{x}^{{{2 * k}}}}}"
-            elif choice == "linear_shift":
-                a, b = _linear_pair(3)
-                inner = format_linear_latex(a, b, variable=x)
-                prompt = rf"\frac{{d}}{{d{x}}}\arcsin({inner})"
-                answer = rf"\frac{{{a}}}{{\sqrt{{1-\left({inner}\right)^{{2}}}}}}"
-            else:
-                # arctan(sqrt(x)) style kept simple: arcsin(x^2)
-                prompt = rf"\frac{{d}}{{d{x}}}\arcsin({x}^{{2}})"
-                answer = rf"\frac{{2{x}}}{{\sqrt{{1-{x}^{{4}}}}}}"
-        return prompt, "inverse trigonometric derivative", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
-
-
-def _derivative_ln_exp(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
-
-    def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            if random.choice([True, False]):
-                n = random.randint(2, 5)
-                body = random.choice(
-                    [rf"\ln({x}^{{{n}}})", rf"\ln|{x}^{{{n}}}|", rf"n\ln({x})".replace("n", str(n))]
-                )
-                # if body is n ln(x), answer n/x; if ln(x^n), n/x
-                answer = rf"\frac{{{n}}}{{{x}}}"
-                prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-            else:
-                k = random.randint(1, 5)
-                body = (
-                    rf"e^{{{x}}}"
-                    if k == 1
-                    else random.choice([rf"e^{{{k}{x}}}", rf"\exp({k}{x})"])
-                )
-                answer = rf"e^{{{x}}}" if k == 1 else rf"{k}e^{{{k}{x}}}"
-                prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        elif tier == "medium":
-            family = random.choice(["ln_linear", "exp_linear", "e_over", "ln_abs"])
-            if family == "ln_linear":
-                a, b = _linear_pair(4)
-                inner = format_linear_latex(a, b, variable=x)
-                body = random.choice([rf"\ln({inner})", rf"\ln|{inner}|"])
-                answer = rf"\frac{{{a}}}{{{format_linear_latex(a, b, variable=x)}}}"
-            elif family == "exp_linear":
-                a, b = _linear_pair(4)
-                std = format_linear_latex(a, b, variable=x)
-                mono = _mono(a, x, 1)
-                exp = random.choice([std, f"{b}+{mono}"])
-                body = random.choice([rf"e^{{{exp}}}", rf"\exp({exp})"])
-                answer = rf"{a}e^{{{std}}}"
-            elif family == "e_over":
-                body = random.choice(
-                    [rf"\frac{{e^{{{x}}}}}{{{x}}}", rf"e^{{{x}}}{x}^{{-1}}"]
-                )
-                answer = rf"\frac{{{x}e^{{{x}}}-e^{{{x}}}}}{{{x}^{{2}}}}"
-            else:
-                body = rf"\ln|{x}|"
-                answer = rf"\frac{{1}}{{{x}}}"
-            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        else:
-            family = random.choice(["chain_exp", "product_ln", "ln_quad", "exp_power"])
-            if family == "chain_exp":
-                body = random.choice([rf"e^{{{x}^{{2}}}}", rf"\exp({x}^{{2}})"])
-                answer = rf"2{x}e^{{{x}^{{2}}}}"
-            elif family == "product_ln":
-                body = random.choice([rf"{x}\ln({x})", rf"\ln({x})\,{x}"])
-                answer = rf"\ln({x})+1"
-            elif family == "ln_quad":
-                a = random.randint(1, 3)
-                c = random.randint(1, 4)
-                inner = _poly_display([a, 0, c], x)
-                body = rf"\ln({inner})"
-                answer = rf"\frac{{{2 * a}{x}}}{{{inner}}}"
-            else:
-                n = random.randint(2, 4)
-                body = rf"e^{{{x}^{{{n}}}}}"
-                answer = rf"{n}{x}^{{{n - 1}}}e^{{{x}^{{{n}}}}}"
-            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-        return prompt, "ln/exp derivative", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
-
+# (power/product/quotient/chain/trig/invtrig/ln_exp/higher_order → framework above)
 
 def _derivative_other_base(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _rule_structure(settings, generator_key="derivative_other_base", topic=topic)
+    coef_hi = int(structure["coef_hi"])
     x = str(settings.get("variable", "x"))
+    note, metadata_builder = _madlibs_meta(
+        "derivative_other_base", structure, pack="structured_other_base"
+    )
 
     def build() -> tuple[str, str, str | None]:
-        base = random.randint(2, 5)
-        if tier == "easy":
-            if random.choice([True, False]):
-                body = random.choice([rf"{base}^{{{x}}}", rf"\exp({x}\ln({base}))"])
-                # keep answer in a^x ln a form
-                answer = rf"{base}^{{{x}}}\ln({base})"
-                prompt = rf"\frac{{d}}{{d{x}}}\left[{base}^{{{x}}}\right]"
-            else:
-                prompt = rf"\frac{{d}}{{d{x}}}\log_{{{base}}}({x})"
-                answer = rf"\frac{{1}}{{{x}\ln({base})}}"
-        elif tier == "medium":
-            k = random.randint(2, 5)
-            if random.choice([True, False]):
-                arg = random.choice([f"{k}{x}", rf"{k}\cdot {x}"])
-                prompt = rf"\frac{{d}}{{d{x}}}{base}^{{{arg}}}"
-                answer = rf"{k}{base}^{{{k}{x}}}\ln({base})"
-            else:
-                a, b = _linear_pair(3)
-                inner = format_linear_latex(a, b, variable=x)
-                prompt = rf"\frac{{d}}{{d{x}}}\log_{{{base}}}({inner})"
-                answer = rf"\frac{{{a}}}{{{inner}\ln({base})}}"
+        base = random.randint(2, min(5, max(2, coef_hi)))
+        family = _pick_family(
+            structure,
+            ["a_x", "log_x"],
+            medium=["a_kx", "log_linear"],
+            hard=["log_power", "a_poly", "change_order"],
+        )
+        if family == "a_x":
+            body = random.choice([rf"{base}^{{{x}}}", rf"\exp({x}\ln({base}))"])
+            answer = rf"{base}^{{{x}}}\ln({base})"
+            prompt = rf"\frac{{d}}{{d{x}}}\left[{base}^{{{x}}}\right]"
+            _ = body
+            note(family, function_classes=["exp", "algebraic"], methods_used=["power"], chain_depth=0)
+        elif family == "log_x":
+            prompt = rf"\frac{{d}}{{d{x}}}\log_{{{base}}}({x})"
+            answer = rf"\frac{{1}}{{{x}\ln({base})}}"
+            note(family, function_classes=["log", "algebraic"], methods_used=["power"], chain_depth=0)
+        elif family == "a_kx":
+            k = random.randint(2, max(2, min(5, coef_hi)))
+            arg = random.choice([f"{k}{x}", rf"{k}\cdot {x}"])
+            prompt = rf"\frac{{d}}{{d{x}}}{base}^{{{arg}}}"
+            answer = rf"{k}{base}^{{{k}{x}}}\ln({base})"
+            note(
+                family,
+                function_classes=["exp", "algebraic"],
+                methods_used=["chain"],
+                chain_depth=1,
+            )
+        elif family == "log_linear":
+            a, b = _linear_pair(min(3, coef_hi))
+            inner = format_linear_latex(a, b, variable=x)
+            prompt = rf"\frac{{d}}{{d{x}}}\log_{{{base}}}({inner})"
+            answer = rf"\frac{{{a}}}{{\left({inner}\right)\ln({base})}}"
+            note(
+                family,
+                function_classes=["log", "algebraic"],
+                methods_used=["chain"],
+                chain_depth=1,
+            )
+        elif family == "log_power":
+            k = random.randint(2, max(2, min(4, coef_hi)))
+            body = random.choice(
+                [rf"\log_{{{base}}}({x}^{{{k}}})", rf"{k}\log_{{{base}}}({x})"]
+            )
+            prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
+            answer = rf"\frac{{{k}}}{{{x}\ln({base})}}"
+            note(
+                family,
+                function_classes=["log", "algebraic"],
+                methods_used=["chain", "power"],
+                chain_depth=1,
+            )
+        elif family == "a_poly":
+            prompt = rf"\frac{{d}}{{d{x}}}{base}^{{{x}^{{2}}}}"
+            answer = rf"2{x}{base}^{{{x}^{{2}}}}\ln({base})"
+            note(
+                family,
+                function_classes=["exp", "algebraic"],
+                methods_used=["chain"],
+                chain_depth=1,
+            )
         else:
-            k = random.randint(2, 4)
-            choice = random.choice(["log_power", "a_poly", "change_order"])
-            if choice == "log_power":
-                body = random.choice(
-                    [rf"\log_{{{base}}}({x}^{{{k}}})", rf"{k}\log_{{{base}}}({x})"]
-                )
-                prompt = rf"\frac{{d}}{{d{x}}}\left[{body}\right]"
-                answer = rf"\frac{{{k}}}{{{x}\ln({base})}}"
-            elif choice == "a_poly":
-                prompt = rf"\frac{{d}}{{d{x}}}{base}^{{{x}^{{2}}}}"
-                answer = rf"2{x}{base}^{{{x}^{{2}}}}\ln({base})"
-            else:
-                prompt = rf"\frac{{d}}{{d{x}}}\left[{x}\cdot {base}^{{{x}}}\right]"
-                answer = rf"{base}^{{{x}}}+{x}{base}^{{{x}}}\ln({base})"
+            prompt = rf"\frac{{d}}{{d{x}}}\left[{x}\cdot {base}^{{{x}}}\right]"
+            answer = rf"{base}^{{{x}}}+{x}{base}^{{{x}}}\ln({base})"
+            note(
+                family,
+                function_classes=["exp", "algebraic"],
+                methods_used=["product"],
+                chain_depth=0,
+            )
         return prompt, "other-base log/exp derivative", answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic, count, include_answer_key, build, metadata_builder=metadata_builder, settings=settings
+    )
 
 
 def _derivative_logarithmic(topic: str, settings: dict) -> list[Question]:
     """Logarithmic differentiation (not plain ln/exp rules)."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _rule_structure(settings, generator_key="derivative_logarithmic", topic=topic)
     x = str(settings.get("variable", "x"))
+    note, metadata_builder = _madlibs_meta(
+        "derivative_logarithmic", structure, pack="structured_logarithmic"
+    )
 
     def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            # y = x^n via log diff framing, or product of powers
-            n = random.randint(2, 5)
+        extra = []
+        if structure.get("allow_trig") or structure.get("unlock_trig"):
+            extra.append("trig_x")
+        family = _pick_family(
+            structure,
+            ["power"],
+            medium=["product_powers", "quotient_powers", "root"],
+            hard=["x_x", "a_x_x"],
+            extra=extra if structure.get("unlock_hard") else None,
+        )
+        log_methods = ["logarithmic"]
+        if family == "power":
+            n = random.randint(2, max(2, min(5, int(structure.get("power_max", 5)))))
             body = f"{x}^{{{n}}}"
             prompt = (
                 rf"\text{{Use logarithmic differentiation to find }}"
                 rf"\frac{{d}}{{d{x}}}\left[{body}\right]."
             )
             answer = rf"{n}{x}^{{{n - 1}}}"
-        elif tier == "medium":
-            family = random.choice(["product_powers", "quotient_powers", "root"])
-            if family == "product_powers":
-                n = random.randint(2, 4)
-                m = random.randint(2, 4)
-                # (x^n)(x+1)^m — answer via log: y'/y = n/x + m/(x+1)
-                body = rf"{x}^{{{n}}}({x}+1)^{{{m}}}"
-                prompt = (
-                    rf"\text{{Use logarithmic differentiation: }}"
-                    rf"y={body}.\ \text{{Find }}y'."
-                )
-                answer = (
-                    rf"{x}^{{{n}}}({x}+1)^{{{m}}}"
-                    rf"\left(\frac{{{n}}}{{{x}}}+\frac{{{m}}}{{{x}+1}}\right)"
-                )
-            elif family == "quotient_powers":
-                n = random.randint(2, 4)
-                body = rf"\frac{{{x}^{{{n}}}}}{{{x}+1}}"
-                prompt = (
-                    rf"\text{{Use logarithmic differentiation: }}"
-                    rf"y={body}.\ \text{{Find }}y'."
-                )
-                answer = (
-                    rf"\frac{{{x}^{{{n}}}}}{{{x}+1}}"
-                    rf"\left(\frac{{{n}}}{{{x}}}-\frac{{1}}{{{x}+1}}\right)"
-                )
-            else:
-                body = rf"\sqrt{{{x}({x}+1)}}"
-                prompt = (
-                    rf"\text{{Use logarithmic differentiation: }}"
-                    rf"y={body}.\ \text{{Find }}y'."
-                )
-                answer = (
-                    rf"\sqrt{{{x}({x}+1)}}"
-                    rf"\cdot\frac{{1}}{{2}}\left(\frac{{1}}{{{x}}}+\frac{{1}}{{{x}+1}}\right)"
-                )
+            note(
+                family,
+                function_classes=["algebraic"],
+                methods_used=log_methods + ["power"],
+                chain_depth=0,
+            )
+        elif family == "product_powers":
+            n = random.randint(2, 4)
+            m = random.randint(2, 4)
+            body = rf"{x}^{{{n}}}({x}+1)^{{{m}}}"
+            prompt = (
+                rf"\text{{Use logarithmic differentiation: }}"
+                rf"y={body}.\ \text{{Find }}y'."
+            )
+            answer = (
+                rf"{x}^{{{n}}}({x}+1)^{{{m}}}"
+                rf"\left(\frac{{{n}}}{{{x}}}+\frac{{{m}}}{{{x}+1}}\right)"
+            )
+            note(
+                family,
+                function_classes=["algebraic"],
+                methods_used=log_methods + ["product", "power"],
+                chain_depth=0,
+            )
+        elif family == "quotient_powers":
+            n = random.randint(2, 4)
+            body = rf"\frac{{{x}^{{{n}}}}}{{{x}+1}}"
+            prompt = (
+                rf"\text{{Use logarithmic differentiation: }}"
+                rf"y={body}.\ \text{{Find }}y'."
+            )
+            answer = (
+                rf"\frac{{{x}^{{{n}}}}}{{{x}+1}}"
+                rf"\left(\frac{{{n}}}{{{x}}}-\frac{{1}}{{{x}+1}}\right)"
+            )
+            note(
+                family,
+                function_classes=["algebraic"],
+                methods_used=log_methods + ["quotient", "power"],
+                chain_depth=0,
+            )
+        elif family == "root":
+            body = rf"\sqrt{{{x}({x}+1)}}"
+            prompt = (
+                rf"\text{{Use logarithmic differentiation: }}"
+                rf"y={body}.\ \text{{Find }}y'."
+            )
+            answer = (
+                rf"\sqrt{{{x}({x}+1)}}"
+                rf"\cdot\frac{{1}}{{2}}\left(\frac{{1}}{{{x}}}+\frac{{1}}{{{x}+1}}\right)"
+            )
+            note(
+                family,
+                function_classes=["roots", "algebraic"],
+                methods_used=log_methods + ["product", "chain"],
+                chain_depth=1,
+            )
+        elif family == "x_x":
+            body = rf"{x}^{{{x}}}"
+            prompt = (
+                rf"\text{{Use logarithmic differentiation: }}"
+                rf"y={body}.\ \text{{Find }}y'."
+            )
+            answer = rf"{x}^{{{x}}}\left(\ln({x})+1\right)"
+            note(
+                family,
+                function_classes=["exp", "log", "algebraic"],
+                methods_used=log_methods + ["chain"],
+                chain_depth=1,
+            )
+        elif family == "a_x_x":
+            body = rf"({x}+1)^{{{x}}}"
+            prompt = (
+                rf"\text{{Use logarithmic differentiation: }}"
+                rf"y={body}.\ \text{{Find }}y'."
+            )
+            answer = (
+                rf"({x}+1)^{{{x}}}"
+                rf"\left(\ln({x}+1)+\frac{{{x}}}{{{x}+1}}\right)"
+            )
+            note(
+                family,
+                function_classes=["exp", "log", "algebraic"],
+                methods_used=log_methods + ["chain"],
+                chain_depth=1,
+            )
         else:
-            # classic x^x or (sin x)^x style
-            choice = random.choice(["x_x", "a_x_x", "trig_x"])
-            if choice == "x_x":
-                body = rf"{x}^{{{x}}}"
-                prompt = (
-                    rf"\text{{Use logarithmic differentiation: }}"
-                    rf"y={body}.\ \text{{Find }}y'."
-                )
-                answer = rf"{x}^{{{x}}}\left(\ln({x})+1\right)"
-            elif choice == "a_x_x":
-                body = rf"({x}+1)^{{{x}}}"
-                prompt = (
-                    rf"\text{{Use logarithmic differentiation: }}"
-                    rf"y={body}.\ \text{{Find }}y'."
-                )
-                answer = (
-                    rf"({x}+1)^{{{x}}}"
-                    rf"\left(\ln({x}+1)+\frac{{{x}}}{{{x}+1}}\right)"
-                )
-            else:
-                body = rf"\left(\sin({x})\right)^{{{x}}}"
-                prompt = (
-                    rf"\text{{Use logarithmic differentiation: }}"
-                    rf"y={body}.\ \text{{Find }}y'."
-                )
-                answer = (
-                    rf"\left(\sin({x})\right)^{{{x}}}"
-                    rf"\left(\ln(\sin({x}))+{x}\cot({x})\right)"
-                )
+            body = rf"\left(\sin({x})\right)^{{{x}}}"
+            prompt = (
+                rf"\text{{Use logarithmic differentiation: }}"
+                rf"y={body}.\ \text{{Find }}y'."
+            )
+            answer = (
+                rf"\left(\sin({x})\right)^{{{x}}}"
+                rf"\left(\ln(\sin({x}))+{x}\cot({x})\right)"
+            )
+            note(
+                family,
+                function_classes=["trig", "exp", "log", "algebraic"],
+                methods_used=log_methods + ["chain"],
+                chain_depth=1,
+            )
         return prompt, "logarithmic differentiation", answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic, count, include_answer_key, build, metadata_builder=metadata_builder, settings=settings
+    )
 
 
 def _derivative_implicit(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _rule_structure(settings, generator_key="derivative_implicit", topic=topic)
     x = str(settings.get("variable", "x"))
+    note, metadata_builder = _madlibs_meta(
+        "derivative_implicit", structure, pack="structured_implicit"
+    )
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(2, 9)
-        if tier == "easy":
-            # circle: x^2+y^2=a vs y^2+x^2=a
+        a = random.randint(1, max(1, min(4, int(structure["coef_hi"]))))
+        extra = []
+        if structure.get("allow_trig") or structure.get("unlock_trig"):
+            extra.append("trig")
+        if structure.get("allow_exp") or structure.get("unlock_exp"):
+            extra.append("exp_y")
+        family = _pick_family(
+            structure,
+            ["circle"],
+            medium=["xy_term", "ellipse", "line_prod"],
+            hard=["cubes"],
+            extra=extra if structure.get("unlock_hard") else None,
+        )
+        if family == "circle":
             eq = random.choice(
                 [rf"{x}^{{2}}+y^{{2}}={a}", rf"y^{{2}}+{x}^{{2}}={a}"]
             )
             answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{x}}}{{y}}"
-        elif tier == "medium":
-            family = random.choice(["xy_term", "ellipse", "line_prod"])
-            if family == "xy_term":
-                eq = random.choice(
-                    [rf"{x}^{{2}}+{x}y={a}", rf"{x}y+{x}^{{2}}={a}"]
-                )
-                answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{2{x}+y}}{{{x}}}"
-            elif family == "ellipse":
-                b = random.randint(2, 5)
-                eq = rf"{b}{x}^{{2}}+y^{{2}}={a}"
-                answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{2 * b}{x}}}{{y}}"
-            else:
-                eq = rf"{x}y={a}"
-                answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{y}}{{{x}}}"
+            note(
+                family,
+                function_classes=["algebraic"],
+                methods_used=["implicit", "power"],
+                chain_depth=0,
+            )
+        elif family == "xy_term":
+            eq = random.choice(
+                [rf"{x}^{{2}}+{x}y={a}", rf"{x}y+{x}^{{2}}={a}"]
+            )
+            answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{2{x}+y}}{{{x}}}"
+            note(
+                family,
+                function_classes=["algebraic"],
+                methods_used=["implicit", "product", "power"],
+                chain_depth=0,
+            )
+        elif family == "ellipse":
+            b = random.randint(2, max(2, min(5, int(structure["coef_hi"]))))
+            eq = rf"{b}{x}^{{2}}+y^{{2}}={a}"
+            answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{2 * b}{x}}}{{y}}"
+            note(
+                family,
+                function_classes=["algebraic"],
+                methods_used=["implicit", "power"],
+                chain_depth=0,
+            )
+        elif family == "line_prod":
+            eq = rf"{x}y={a}"
+            answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{y}}{{{x}}}"
+            note(
+                family,
+                function_classes=["algebraic"],
+                methods_used=["implicit", "product"],
+                chain_depth=0,
+            )
+        elif family == "cubes":
+            eq = random.choice(
+                [rf"{x}^{{3}}+y^{{3}}={a}", rf"y^{{3}}+{x}^{{3}}={a}"]
+            )
+            answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{x}^{{2}}}}{{y^{{2}}}}"
+            note(
+                family,
+                function_classes=["algebraic"],
+                methods_used=["implicit", "power"],
+                chain_depth=0,
+            )
+        elif family == "trig":
+            eq = rf"\sin({x})+\cos(y)=0"
+            answer = rf"\frac{{dy}}{{d{x}}}=\frac{{\cos({x})}}{{\sin(y)}}"
+            note(
+                family,
+                function_classes=["trig", "algebraic"],
+                methods_used=["implicit", "chain"],
+                chain_depth=1,
+            )
         else:
-            family = random.choice(["cubes", "trig", "exp_y"])
-            if family == "cubes":
-                eq = random.choice(
-                    [rf"{x}^{{3}}+y^{{3}}={a}", rf"y^{{3}}+{x}^{{3}}={a}"]
-                )
-                answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{x}^{{2}}}}{{y^{{2}}}}"
-            elif family == "trig":
-                eq = rf"\sin({x})+\cos(y)={a % 2}"  # keep small RHS
-                # cos x - sin(y) y' = 0 → y' = cos x / sin y
-                eq = rf"\sin({x})+\cos(y)=0"
-                answer = rf"\frac{{dy}}{{d{x}}}=\frac{{\cos({x})}}{{\sin(y)}}"
-            else:
-                eq = rf"e^{{y}}+{x}={a}"
-                answer = rf"\frac{{dy}}{{d{x}}}=-e^{{-y}}"
+            eq = rf"e^{{y}}+{x}={a}"
+            answer = rf"\frac{{dy}}{{d{x}}}=-e^{{-y}}"
+            note(
+                family,
+                function_classes=["exp", "algebraic"],
+                methods_used=["implicit", "chain"],
+                chain_depth=1,
+            )
         prompt = (
             rf"\text{{Differentiate implicitly: }}{eq}."
             rf"\text{{ Solve for }}\frac{{dy}}{{d{x}}}."
         )
         return prompt, "implicit differentiation", answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build)
-
-
-def _derivative_higher_order(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
-
-    def build() -> tuple[str, str, str | None]:
-        a = random.randint(1, 4)
-        b = random_int_range(-5, 5, exclude={0})
-        c = random_int_range(-5, 5, exclude={0})
-        d = random.randint(-5, 5)
-        if tier == "easy":
-            coeffs = [a, b, c, d]
-            f = _poly_display(coeffs, x)
-            prompt = rf"\text{{Find }}f''({x})\text{{ for }}f({x})={f}."
-            answer = format_linear_latex(6 * a, 2 * b, variable=x)
-        elif tier == "medium":
-            family = random.choice(["poly4", "trig", "exp"])
-            if family == "poly4":
-                e = random_int_range(-4, 4, exclude={0})
-                f = _poly_display([a, b, c, d, e], x)
-                prompt = rf"\text{{Find }}f'''({x})\text{{ for }}f({x})={f}."
-                answer = format_linear_latex(24 * a, 6 * b, variable=x)
-            elif family == "trig":
-                prompt = rf"\text{{Find }}\frac{{d^{{2}}}}{{d{x}^{{2}}}}\sin({x})."
-                answer = rf"-\sin({x})"
-            else:
-                prompt = rf"\text{{Find }}\frac{{d^{{2}}}}{{d{x}^{{2}}}}e^{{{x}}}."
-                answer = rf"e^{{{x}}}"
-        else:
-            family = random.choice(["eval", "trig_k", "exp_k"])
-            if family == "eval":
-                f = _poly_display([a, b, c, d], x, style=random.choice(["standard", "reversed"]))
-                t = random.randint(1, 4)
-                prompt = rf"\text{{Find }}f''({t})\text{{ for }}f({x})={f}."
-                answer = str(6 * a * t + 2 * b)
-            elif family == "trig_k":
-                k = random.randint(2, 4)
-                prompt = rf"\text{{Find }}\frac{{d^{{2}}}}{{d{x}^{{2}}}}\sin({k}{x})."
-                answer = rf"-{k * k}\sin({k}{x})"
-            else:
-                k = random.randint(2, 4)
-                prompt = rf"\text{{Find }}\frac{{d^{{2}}}}{{d{x}^{{2}}}}e^{{{k}{x}}}."
-                answer = rf"{k * k}e^{{{k}{x}}}"
-        return prompt, "higher order derivative", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic, count, include_answer_key, build, metadata_builder=metadata_builder, settings=settings
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -889,53 +626,61 @@ def _derivative_higher_order(topic: str, settings: dict) -> list[Question]:
 def _average_rate_of_change(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _rule_structure(settings)
     x = str(settings.get("variable", "x"))
+    note, metadata_builder = _madlibs_meta("average_rate_of_change", structure)
 
     def build() -> tuple[str, str, str | None]:
         a0 = random.randint(0, 3)
-        width = random.randint(1, 4) if tier == "easy" else random.randint(2, 5)
+        width_max = max(1, int(structure.get("interval_width_max", 4)))
+        width = random.randint(1, max(1, min(4, width_max)))
+        if structure.get("unlock_medium"):
+            width = random.randint(1, max(1, min(5, width_max)))
         b0 = a0 + width
-        if tier == "easy":
+        extra = []
+        if structure.get("unlock_reciprocal"):
+            extra.append("reciprocal")
+        family = _pick_family(
+            structure,
+            ["quad"],
+            medium=["cubic", "quad_const", "linear"],
+            hard=["poly", "shifted"],
+            extra=extra if structure.get("unlock_hard") else None,
+        )
+        note(family)
+        a, b = a0, b0
+        if family == "quad":
             f = f"{x}^{{2}}"
             fa, fb = a0 * a0, b0 * b0
-            a, b = a0, b0
-        elif tier == "medium":
-            family = random.choice(["cubic", "quad_const", "linear"])
-            a, b = a0, b0
-            if family == "cubic":
-                k = random.randint(1, 3)
-                f = _mono(k, x, 3)
-                fa, fb = k * a**3, k * b**3
-            elif family == "quad_const":
-                p = random.randint(1, 3)
-                q = random_int_range(-4, 4, exclude={0})
-                f = _poly_display([p, 0, q], x)
-                fa, fb = p * a * a + q, p * b * b + q
-            else:
-                m = random_int_range(-5, 5, exclude={0})
-                c = random.randint(-3, 3)
-                f = format_linear_latex(m, c, variable=x)
-                fa, fb = m * a + c, m * b + c
+        elif family == "cubic":
+            k = random.randint(1, 3)
+            f = _mono(k, x, 3)
+            fa, fb = k * a**3, k * b**3
+        elif family == "quad_const":
+            p = random.randint(1, 3)
+            q = random_int_range(-4, 4, exclude={0})
+            f = _poly_display([p, 0, q], x)
+            fa, fb = p * a * a + q, p * b * b + q
+        elif family == "linear":
+            m = random_int_range(-5, 5, exclude={0})
+            c = random.randint(-3, 3)
+            f = format_linear_latex(m, c, variable=x)
+            fa, fb = m * a + c, m * b + c
+        elif family == "reciprocal":
+            a = random.randint(1, 3)
+            b = a + random.randint(1, 3)
+            f = random.choice([rf"\frac{{1}}{{{x}}}", rf"{x}^{{-1}}"])
+            fa, fb = Fraction(1, a), Fraction(1, b)
+        elif family == "shifted":
+            f = rf"{x}^{{3}}+{x}"
+            fa, fb = a**3 + a, b**3 + b
         else:
-            family = random.choice(["poly", "reciprocal", "shifted"])
-            if family == "reciprocal":
-                a = random.randint(1, 3)
-                b = a + random.randint(1, 3)
-                f = random.choice([rf"\frac{{1}}{{{x}}}", rf"{x}^{{-1}}"])
-                fa, fb = Fraction(1, a), Fraction(1, b)
-            elif family == "shifted":
-                a, b = a0, b0
-                f = rf"{x}^{{3}}+{x}"
-                fa, fb = a**3 + a, b**3 + b
-            else:
-                a, b = a0, b0
-                p = random.randint(1, 2)
-                q = random_int_range(-3, 3, exclude={0})
-                r = random.randint(-2, 2)
-                f = _poly_display([p, q, r], x)
-                fa = p * a * a + q * a + r
-                fb = p * b * b + q * b + r
+            p = random.randint(1, 2)
+            q = random_int_range(-3, 3, exclude={0})
+            r = random.randint(-2, 2)
+            f = _poly_display([p, q, r], x)
+            fa = p * a * a + q * a + r
+            fb = p * b * b + q * b + r
         rate = Fraction(fb - fa, b - a)
         prompt = (
             rf"\text{{Find the average rate of change of }}f({x})={f}"
@@ -945,54 +690,64 @@ def _average_rate_of_change(topic: str, settings: dict) -> list[Question]:
             frac_latex(rate) if include_answer_key else None
         )
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic, count, include_answer_key, build, metadata_builder=metadata_builder, settings=settings
+    )
 
 
 def _instantaneous_rate_of_change(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _rule_structure(settings)
     x = str(settings.get("variable", "x"))
+    note, metadata_builder = _madlibs_meta("instantaneous_rate_of_change", structure)
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(1, 4)
-        if tier == "easy":
-            n = random.randint(2, 4)
+        a = random.randint(1, max(1, min(4, int(structure.get("n_max", 4)))))
+        extra = []
+        if structure.get("allow_trig") or structure.get("unlock_trig"):
+            extra.append("trig")
+        if structure.get("allow_exp") or structure.get("unlock_exp"):
+            extra.append("exp")
+        family = _pick_family(
+            structure,
+            ["power"],
+            medium=["poly", "sqrt", "reciprocal"],
+            hard=["cubic"],
+            extra=extra if structure.get("unlock_hard") else None,
+        )
+        note(family)
+        if family == "power":
+            n = random.randint(2, max(2, min(4, int(structure.get("power_max", 4)))))
             f = f"{x}^{{{n}}}"
             answer = str(n * a ** (n - 1))
-        elif tier == "medium":
-            family = random.choice(["poly", "sqrt", "reciprocal"])
-            if family == "poly":
-                p = random.randint(1, 3)
-                q = random_int_range(-4, 4, exclude={0})
-                f = _poly_display([p, 0, q], x)
-                answer = str(2 * p * a)
-            elif family == "sqrt":
-                # f=sqrt(x) at perfect square
-                a = random.choice([1, 4, 9])
-                f = random.choice([rf"\sqrt{{{x}}}", rf"{x}^{{1/2}}"])
-                answer = frac_latex(Fraction(1, 2 * int(a**0.5)))
-            else:
-                a = random.randint(1, 4)
-                f = random.choice([rf"\frac{{1}}{{{x}}}", rf"{x}^{{-1}}"])
-                answer = frac_latex(Fraction(-1, a * a))
+        elif family == "poly":
+            p = random.randint(1, 3)
+            q = random_int_range(-4, 4, exclude={0})
+            f = _poly_display([p, 0, q], x)
+            answer = str(2 * p * a)
+        elif family == "sqrt":
+            a = random.choice([1, 4, 9])
+            f = random.choice([rf"\sqrt{{{x}}}", rf"{x}^{{1/2}}"])
+            answer = frac_latex(Fraction(1, 2 * int(a**0.5)))
+        elif family == "reciprocal":
+            a = random.randint(1, 4)
+            f = random.choice([rf"\frac{{1}}{{{x}}}", rf"{x}^{{-1}}"])
+            answer = frac_latex(Fraction(-1, a * a))
+        elif family == "trig":
+            a = 0
+            f = random.choice([rf"\sin({x})", rf"\cos({x})"])
+            answer = "1" if "sin" in f else "0"
+        elif family == "exp":
+            a = 0
+            k = random.randint(1, max(1, min(3, int(structure.get("k_max", 3)))))
+            f = rf"e^{{{k}{x}}}" if k != 1 else rf"e^{{{x}}}"
+            answer = str(k)
         else:
-            family = random.choice(["trig", "exp", "cubic"])
-            if family == "trig":
-                a = 0
-                f = random.choice([rf"\sin({x})", rf"\cos({x})"])
-                answer = "1" if "sin" in f else "0"
-            elif family == "exp":
-                a = 0
-                k = random.randint(1, 3)
-                f = rf"e^{{{k}{x}}}" if k != 1 else rf"e^{{{x}}}"
-                answer = str(k)
-            else:
-                p = random.randint(1, 2)
-                q = random_int_range(-3, 3, exclude={0})
-                f = _poly_display([p, 0, q, 0], x)
-                # p x^3 + q x → f' = 3p x^2 + q
-                answer = str(3 * p * a * a + q)
+            p = random.randint(1, 2)
+            q = random_int_range(-3, 3, exclude={0})
+            f = _poly_display([p, 0, q, 0], x)
+            answer = str(3 * p * a * a + q)
         prompt = (
             rf"\text{{Find the instantaneous rate of change of }}"
             rf"f({x})={f}\text{{ at }}{x}={a}."
@@ -1001,148 +756,145 @@ def _instantaneous_rate_of_change(topic: str, settings: dict) -> list[Question]:
             answer if include_answer_key else None
         )
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic, count, include_answer_key, build, metadata_builder=metadata_builder, settings=settings
+    )
 
 
 def _definition_of_derivative(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _rule_structure(settings)
     x = str(settings.get("variable", "x"))
+    note, metadata_builder = _madlibs_meta("definition_of_derivative", structure)
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(1, 5)
-        if tier == "easy":
-            form = random.choice(["limit_h", "limit_x"])
-            if form == "limit_h":
-                prompt = rf"\lim_{{h\to 0}}\frac{{({a}+h)^{{2}}-{a * a}}}{{h}}"
-            else:
-                prompt = rf"\lim_{{{x}\to {a}}}\frac{{{x}^{{2}}-{a * a}}}{{{x}-{a}}}"
+        a = random.randint(1, max(1, min(5, int(structure.get("n_max", 5)))))
+        family = _pick_family(
+            structure,
+            ["limit_h", "limit_x"],
+            medium=["cube", "linear_coef", "named"],
+            hard=["reciprocal", "sqrt", "poly"],
+        )
+        note(family)
+        if family == "limit_h":
+            prompt = rf"\lim_{{h\to 0}}\frac{{({a}+h)^{{2}}-{a * a}}}{{h}}"
             answer = str(2 * a)
-        elif tier == "medium":
-            form = random.choice(["cube", "linear_coef", "named"])
-            if form == "cube":
-                prompt = rf"\lim_{{h\to 0}}\frac{{({a}+h)^{{3}}-{a ** 3}}}{{h}}"
-                answer = str(3 * a * a)
-            elif form == "linear_coef":
-                k = random.randint(2, 4)
-                prompt = rf"\lim_{{h\to 0}}\frac{{{k}({a}+h)^{{2}}-{k * a * a}}}{{h}}"
-                answer = str(2 * k * a)
-            else:
-                k = random.randint(2, 4)
-                prompt = (
-                    rf"\text{{Use the definition to find }}f'({a})"
-                    rf"\text{{ for }}f({x})={k}{x}^{{2}}."
-                )
-                answer = str(2 * k * a)
+        elif family == "limit_x":
+            prompt = rf"\lim_{{{x}\to {a}}}\frac{{{x}^{{2}}-{a * a}}}{{{x}-{a}}}"
+            answer = str(2 * a)
+        elif family == "cube":
+            prompt = rf"\lim_{{h\to 0}}\frac{{({a}+h)^{{3}}-{a ** 3}}}{{h}}"
+            answer = str(3 * a * a)
+        elif family == "linear_coef":
+            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
+            prompt = rf"\lim_{{h\to 0}}\frac{{{k}({a}+h)^{{2}}-{k * a * a}}}{{h}}"
+            answer = str(2 * k * a)
+        elif family == "named":
+            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
+            prompt = (
+                rf"\text{{Use the definition to find }}f'({a})"
+                rf"\text{{ for }}f({x})={k}{x}^{{2}}."
+            )
+            answer = str(2 * k * a)
+        elif family == "reciprocal":
+            prompt = (
+                rf"\lim_{{h\to 0}}\frac{{\frac{{1}}{{{a}+h}}-\frac{{1}}{{{a}}}}}{{h}}"
+            )
+            answer = frac_latex(Fraction(-1, a * a))
+        elif family == "sqrt":
+            a = random.choice([1, 4, 9])
+            prompt = (
+                rf"\lim_{{h\to 0}}\frac{{\sqrt{{{a}+h}}-\sqrt{{{a}}}}}{{h}}"
+            )
+            answer = frac_latex(Fraction(1, 2 * int(a**0.5)))
         else:
-            family = random.choice(["reciprocal", "sqrt", "poly"])
-            if family == "reciprocal":
-                prompt = (
-                    rf"\lim_{{h\to 0}}\frac{{\frac{{1}}{{{a}+h}}-\frac{{1}}{{{a}}}}}{{h}}"
-                )
-                answer = frac_latex(Fraction(-1, a * a))
-            elif family == "sqrt":
-                # pick a perfect square for nicer answer optional
-                a = random.choice([1, 4, 9])
-                prompt = (
-                    rf"\lim_{{h\to 0}}\frac{{\sqrt{{{a}+h}}-\sqrt{{{a}}}}}{{h}}"
-                )
-                answer = frac_latex(Fraction(1, 2 * int(a**0.5)))
-            else:
-                p = random.randint(1, 3)
-                q = random_int_range(-3, 3, exclude={0})
-                f = _poly_display([p, 0, q], x)
-                prompt = (
-                    rf"\text{{Use the definition to find }}f'({a})"
-                    rf"\text{{ for }}f({x})={f}."
-                )
-                answer = str(2 * p * a)
+            p = random.randint(1, 3)
+            q = random_int_range(-3, 3, exclude={0})
+            f = _poly_display([p, 0, q], x)
+            prompt = (
+                rf"\text{{Use the definition to find }}f'({a})"
+                rf"\text{{ for }}f({x})={f}."
+            )
+            answer = str(2 * p * a)
         return prompt, "definition of the derivative", (
             answer if include_answer_key else None
         )
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic, count, include_answer_key, build, metadata_builder=metadata_builder, settings=settings
+    )
 
 
 def _derivative_inverse_functions(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _rule_structure(settings)
     x = str(settings.get("variable", "x"))
+    note, metadata_builder = _madlibs_meta("derivative_inverse_functions", structure)
 
     def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            n = random.randint(2, 4)
-            a = random.randint(1, 3)
-            # f(x)=x^n, f(a)=a^n, (f^{-1})'(a^n)=1/(n a^{n-1})
+        family = _pick_family(
+            structure,
+            ["power"],
+            medium=["power_med", "table", "linear"],
+            hard=["exp", "ln", "cubic"],
+        )
+        note(family)
+        if family in {"power", "power_med"}:
+            n = random.randint(2, 4 if family == "power" else 3)
+            a = random.randint(1, 3 if family == "power" else 2)
             fp = n * a ** (n - 1)
             prompt = (
                 rf"f({x})={x}^{{{n}}};\quad f'({a})={fp}."
                 rf"\quad\text{{Find }}(f^{{-1}})'({a ** n})."
             )
             answer = frac_latex(Fraction(1, fp))
-        elif tier == "medium":
-            # f(x)=x^3+x or linear-ish with table values
-            family = random.choice(["power", "table", "linear"])
-            if family == "power":
-                n = random.randint(2, 3)
-                a = random.randint(1, 2)
-                fp = n * a ** (n - 1)
-                prompt = (
-                    rf"f({x})={x}^{{{n}}};\quad f'({a})={fp}."
-                    rf"\quad\text{{Find }}(f^{{-1}})'({a ** n})."
-                )
-                answer = frac_latex(Fraction(1, fp))
-            elif family == "table":
-                b = random.randint(1, 5)
-                y = random.randint(2, 8)
-                fp = random_int_range(-6, 6, exclude={0})
-                prompt = (
-                    rf"f({b})={y},\ f'({b})={fp}."
-                    rf"\quad\text{{Find }}(f^{{-1}})'({y})."
-                )
-                answer = frac_latex(Fraction(1, fp))
-            else:
-                m = random.randint(2, 5)
-                c = random.randint(-3, 3)
-                # f(x)=mx+c, (f^{-1})'=1/m everywhere
-                prompt = (
-                    rf"f({x})={format_linear_latex(m, c, variable=x)}."
-                    rf"\quad\text{{Find }}(f^{{-1}})'({x})."
-                )
-                answer = frac_latex(Fraction(1, m))
+        elif family == "table":
+            b = random.randint(1, 5)
+            y = random.randint(2, 8)
+            fp = random_int_range(-6, 6, exclude={0})
+            prompt = (
+                rf"f({b})={y},\ f'({b})={fp}."
+                rf"\quad\text{{Find }}(f^{{-1}})'({y})."
+            )
+            answer = frac_latex(Fraction(1, fp))
+        elif family == "linear":
+            m = random.randint(2, 5)
+            c = random.randint(-3, 3)
+            prompt = (
+                rf"f({x})={format_linear_latex(m, c, variable=x)}."
+                rf"\quad\text{{Find }}(f^{{-1}})'({x})."
+            )
+            answer = frac_latex(Fraction(1, m))
+        elif family == "exp":
+            prompt = (
+                rf"f({x})=e^{{{x}}};\quad f(0)=1,\ f'(0)=1."
+                rf"\quad\text{{Find }}(f^{{-1}})'(1)."
+            )
+            answer = "1"
+        elif family == "ln":
+            prompt = (
+                rf"f({x})=\ln({x});\quad f(e)=1,\ f'(e)=\frac{{1}}{{e}}."
+                rf"\quad\text{{Find }}(f^{{-1}})'(1)."
+            )
+            answer = "e"
         else:
-            # f(x)=e^x or ln, or cubic at a point
-            family = random.choice(["exp", "ln", "cubic"])
-            if family == "exp":
-                # f(x)=e^x, f(0)=1, f'(0)=1 → (f^{-1})'(1)=1
-                prompt = (
-                    rf"f({x})=e^{{{x}}};\quad f(0)=1,\ f'(0)=1."
-                    rf"\quad\text{{Find }}(f^{{-1}})'(1)."
-                )
-                answer = "1"
-            elif family == "ln":
-                prompt = (
-                    rf"f({x})=\ln({x});\quad f(e)=1,\ f'(e)=\frac{{1}}{{e}}."
-                    rf"\quad\text{{Find }}(f^{{-1}})'(1)."
-                )
-                answer = "e"
-            else:
-                a = random.randint(1, 2)
-                # f(x)=x^3+x, f'(x)=3x^2+1
-                fp = 3 * a * a + 1
-                y = a**3 + a
-                prompt = (
-                    rf"f({x})={x}^{{3}}+{x};\quad f'({a})={fp}."
-                    rf"\quad\text{{Find }}(f^{{-1}})'({y})."
-                )
-                answer = frac_latex(Fraction(1, fp))
+            a = random.randint(1, 2)
+            fp = 3 * a * a + 1
+            y = a**3 + a
+            prompt = (
+                rf"f({x})={x}^{{3}}+{x};\quad f'({a})={fp}."
+                rf"\quad\text{{Find }}(f^{{-1}})'({y})."
+            )
+            answer = frac_latex(Fraction(1, fp))
         return prompt, "inverse function derivative", (
             answer if include_answer_key else None
         )
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic, count, include_answer_key, build, metadata_builder=metadata_builder, settings=settings
+    )
 
 
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
@@ -1153,6 +905,7 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "derivative_trigonometric": _derivative_trigonometric,
     "derivative_inverse_trig": _derivative_inverse_trig,
     "derivative_ln_exp": _derivative_ln_exp,
+    "derivative_general": _derivative_general,
     "derivative_other_base": _derivative_other_base,
     "derivative_logarithmic": _derivative_logarithmic,
     "derivative_implicit": _derivative_implicit,

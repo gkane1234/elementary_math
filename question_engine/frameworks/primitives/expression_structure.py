@@ -9,7 +9,8 @@ intentional variety, and scale complexity with difficulty ``D``::
     scale_budget(D) = … ×/÷ wrappers after MUL_UNLOCK
 
 **Numeric** mode (order of operations): leaves are Layer-0 numbers; result is
-an evaluated ``Fraction``. Optional small exponents when D is high.
+an evaluated ``Fraction``. Optional small exponents when D is high. Numeric
+stems always use ≥2 leaves and ≥1 binary op (+ − × ÷); higher D requires ≥2.
 
 **Algebraic** mode (evaluate / expand-simplify / multi-step sides): leaves are
 constants or ``coeff·var``; result simplifies to affine ``a·var + b``. Linear
@@ -50,8 +51,11 @@ from question_engine.frameworks.primitives.presentation import (
 from question_engine.frameworks.primitives.registry import (
     PRIM_EXPAND_SIMPLIFY,
     PRIM_NUMBERS,
+    PRIM_OOO,
     PrimitiveContext,
 )
+
+_BINARY_OPS = frozenset({"+", "-", "*", "/"})
 from question_engine.frameworks.primitives.variables import SampledVariable
 
 ExprMode = Literal["numeric", "algebraic"]
@@ -76,6 +80,17 @@ def target_n_leaves(d: float) -> int:
     d = max(0.0, float(d))
     scale = fget("expression_structure", "leaf_scale", LEAF_SCALE)
     return 1 + int(math.floor(math.log2(1.0 + d / scale)))
+
+
+def min_binary_ops_for_d(d: float, *, mode: ExprMode = "numeric") -> int:
+    """Minimum +/−/×/÷ count for a finished expression (exponents alone do not count)."""
+    if mode != "numeric":
+        return 0
+    d = max(0.0, float(d))
+    # Classroom OOO: never a lone leaf; by mid D demand a multi-op stem.
+    if d >= 10.0:
+        return 2
+    return 1
 
 
 def target_nest_budget(d: float) -> int:
@@ -142,6 +157,10 @@ class _Node:
     shape_bits: list[str] = field(default_factory=list)
 
 
+def _binary_op_count(node: _Node) -> int:
+    return sum(1 for op in node.ops if op in _BINARY_OPS)
+
+
 @dataclass(frozen=True)
 class StructuredExpression:
     latex: str
@@ -179,11 +198,17 @@ def sample_structured_expression(
 ) -> StructuredExpression:
     """Sample one structured expression (numeric or algebraic linear)."""
     if d is None:
-        # Prefer expand_simplify layer when present; else numbers (OOO often
-        # budgets under ooo — callers should pass explicit d).
-        d = ctx.effective_d(PRIM_EXPAND_SIMPLIFY)
-        if d <= 0:
-            d = ctx.effective_d(PRIM_NUMBERS)
+        if mode == "numeric":
+            # Prefer OOO budget / topic D — never fall through to a 0 numbers
+            # spend that collapses the tree to a lone leaf.
+            d = max(float(ctx.effective_d(PRIM_OOO)), float(ctx.topic_d))
+            if d <= 0:
+                d = ctx.effective_d(PRIM_NUMBERS)
+        else:
+            # Prefer expand_simplify layer when present; else numbers.
+            d = ctx.effective_d(PRIM_EXPAND_SIMPLIFY)
+            if d <= 0:
+                d = ctx.effective_d(PRIM_NUMBERS)
     eff = max(0.0, float(d))
 
     if mode == "algebraic":
@@ -199,6 +224,7 @@ def sample_structured_expression(
     # One presentation style for the whole tree (commute / flip / multiply glyph).
     presentation_for_ctx(ctx, d=eff)
 
+    min_bin = min_binary_ops_for_d(eff, mode=mode)
     for _ in range(14):
         try:
             node = _build_tree(
@@ -214,8 +240,8 @@ def sample_structured_expression(
                 node = _strip_outer(node)
             if mode == "algebraic" and force_var and node.a == 0:
                 raise ValueError("expected variable term")
-            if mode == "numeric" and node.n_ops == 0 and target_n_leaves(eff) > 1:
-                raise ValueError("too trivial for D")
+            if mode == "numeric" and _binary_op_count(node) < min_bin:
+                raise ValueError("too few binary ops for D")
             return _finish(node, mode=mode, var=var, eff=eff)
         except (NicenessError, ValueError, ZeroDivisionError):
             continue
@@ -249,6 +275,12 @@ def _build_tree(
     allow_exponent: bool,
 ) -> _Node:
     n_leaves = target_n_leaves(eff)
+    # Numeric OOO is never a lone number — always at least one binary combine.
+    if mode == "numeric":
+        n_leaves = max(2, n_leaves)
+        # Higher D asks for ≥2 binary ops ⇒ need ≥3 leaves.
+        if min_binary_ops_for_d(eff, mode=mode) >= 2:
+            n_leaves = max(3, n_leaves)
     nest = target_nest_budget(eff)
     scale = target_scale_budget(eff)
     pool = op_pool_for_d(eff, mode=mode, allow_exponent=allow_exponent)
@@ -1118,6 +1150,18 @@ def _fallback(
             val = a.value * b.value
             latex = f"{a.latex} \\times {b.latex}"
             text = f"{a.latex} * {b.latex}"
+        ops: list[str] = [op]
+        n_ops = 1
+        n_leaves = 2
+        # Meet higher-D binary floor with a third leaf when needed.
+        if min_binary_ops_for_d(eff, mode="numeric") >= 2:
+            c = ctx.sample_number(exclude_zero=True)
+            val = val + c.value
+            latex = f"{latex} + {c.latex}"
+            text = f"{text} + {c.latex}"
+            ops.append("+")
+            n_ops = 2
+            n_leaves = 3
         return StructuredExpression(
             latex=latex,
             text=text,
@@ -1126,11 +1170,11 @@ def _fallback(
             coeff_b=val,
             var_name=None,
             var_latex=None,
-            n_leaves=2,
+            n_leaves=n_leaves,
             n_parens=0,
             nest_depth=0,
-            n_ops=1,
-            ops_used=(op,),
+            n_ops=n_ops,
+            ops_used=tuple(ops),
             shape_id="fallback",
             upgrades=("fallback",),
             effective_d=eff,

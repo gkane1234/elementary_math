@@ -1,0 +1,88 @@
+{
+  "catalog_id": "invtrig_integrals",
+  "title": "OpenStax integrals → inverse trig — table forms",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "calculus-volume-1",
+      "slug": "5-7-integrals-resulting-in-inverse-trigonometric-functions",
+      "title": "5.7 Integrals Resulting in Inverse Trigonometric Functions",
+      "url": "https://openstax.org/books/calculus-volume-1/pages/5-7-integrals-resulting-in-inverse-trigonometric-functions",
+      "stage1": "scripts/output/example_mining/calculus-volume-1/stage1/5-7-integrals-resulting-in-inverse-trigonometric-functions.json"
+    }
+  },
+  "forms": [
+    {
+      "form_id": "arctan_basic",
+      "description": "∫ 1/(1+x²) dx",
+      "strategy": "table_arctan",
+      "constraints": { "kind": "arctan", "scaled": false },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["invtrig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.7 table"
+    },
+    {
+      "form_id": "arctan_a2",
+      "description": "∫ 1/(a²+x²) dx",
+      "strategy": "table_arctan",
+      "constraints": { "kind": "arctan", "a": ">=2" },
+      "d_min": 2,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["invtrig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.7"
+    },
+    {
+      "form_id": "arctan_scaled",
+      "description": "∫ 1/(a²+b²x²) dx",
+      "strategy": "table_arctan_scaled",
+      "constraints": { "kind": "arctan_scaled" },
+      "d_min": 6,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["invtrig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.7 scaled"
+    },
+    {
+      "form_id": "arcsin_basic",
+      "description": "∫ 1/√(1−x²) dx",
+      "strategy": "table_arcsin",
+      "constraints": { "kind": "arcsin" },
+      "d_min": 2,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["invtrig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.7"
+    },
+    {
+      "form_id": "arcsin_a2",
+      "description": "∫ 1/√(a²−x²) dx",
+      "strategy": "table_arcsin",
+      "constraints": { "kind": "arcsin", "a": ">=2" },
+      "d_min": 4,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["invtrig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.7"
+    },
+    {
+      "form_id": "arcsin_scaled",
+      "description": "∫ 1/√(a²−b²x²) dx",
+      "strategy": "table_arcsin_scaled",
+      "constraints": { "kind": "arcsin_scaled" },
+      "d_min": 8,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": ["invtrig"],
+      "example_item_ids": [],
+      "openstax_case": "§5.7 scaled"
+    }
+  ]
+}

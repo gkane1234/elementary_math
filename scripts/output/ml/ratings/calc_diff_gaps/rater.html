@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>calc diff gaps — hand rater</title>
+<link rel="stylesheet" href="../../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+
+<style>
+:root { color-scheme: light; --ink:#1a1a1a; --muted:#5a5a5a; --line:#cfc8bc; --bg:#f7f4ee; --card:#fffdf8; --accent:#1f4d3a; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  color: var(--ink); background: linear-gradient(165deg, #efe8dc 0%, #f7f4ee 40%, #e7eef0 100%); min-height:100vh; }
+header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); background: rgba(255,253,248,0.92);
+  position: sticky; top:0; z-index:5; backdrop-filter: blur(6px); }
+header h1 { margin:0; font-size:1.35rem; letter-spacing:0.02em; }
+header p { margin:0.25rem 0 0; color:var(--muted); font-size:0.92rem; }
+.toolbar { display:flex; flex-wrap:wrap; gap:0.5rem 0.75rem; align-items:center; margin-top:0.75rem; }
+.toolbar label { font-size:0.85rem; color:var(--muted); }
+select, input[type="number"], input[type="text"], textarea, button {
+  font: inherit; font-size:0.92rem; }
+select, input[type="number"], input[type="text"] {
+  border:1px solid var(--line); border-radius:4px; padding:0.3rem 0.45rem; background:#fff; }
+button { border:1px solid var(--accent); background:var(--accent); color:#f6fff9; border-radius:4px;
+  padding:0.35rem 0.7rem; cursor:pointer; }
+button.secondary { background:#fff; color:var(--accent); }
+button.score { min-width:2.2rem; background:#fff; color:var(--ink); border-color:var(--line); }
+button.score.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+button:disabled { opacity:0.45; cursor:default; }
+main { max-width: 52rem; margin: 0 auto; padding: 1.25rem; }
+.card { background: var(--card); border:1px solid var(--line); border-radius:6px; padding:1rem 1.1rem 1.2rem;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03); }
+.meta { display:flex; flex-wrap:wrap; gap:0.35rem 0.75rem; font-size:0.82rem; color:var(--muted); margin-bottom:0.75rem; }
+.meta code { color:var(--ink); background:#efe9df; padding:0.05rem 0.3rem; border-radius:3px; }
+.prompt { font-size:1.15rem; margin:0.75rem 0; min-height:2.5rem; }
+.answer { margin:0.5rem 0 1rem; padding:0.6rem 0.75rem; background:#f0ebe3; border-radius:4px; }
+.answer summary { cursor:pointer; color:var(--muted); }
+.rate-row { display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; margin:0.75rem 0; }
+textarea { width:100%; min-height:3.5rem; border:1px solid var(--line); border-radius:4px; padding:0.45rem; background:#fff; }
+.nav { display:flex; justify-content:space-between; gap:0.75rem; margin-top:1rem; }
+.progress { font-variant-numeric: tabular-nums; }
+.toast { position:fixed; bottom:1rem; right:1rem; background:#1a1a1a; color:#fff; padding:0.5rem 0.75rem;
+  border-radius:4px; font-size:0.85rem; opacity:0; transition:opacity 0.2s; pointer-events:none; }
+.toast.show { opacity:0.92; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Polynomial — calc diff gaps rater</h1>
+  <p>Rate effort/quality 1–5. Autosaves locally. Export when done.</p>
+  <div class="toolbar">
+    <label>Pack <select id="packFilter"><option value="">All packs</option></select></label>
+    <label>Jump <input id="jump" type="number" min="1" value="1" style="width:4.5rem"/></label>
+    <span class="progress" id="progress">0 / 0 rated</span>
+    <button type="button" class="secondary" id="btnPrev">Prev</button>
+    <button type="button" id="btnNext">Next</button>
+    <button type="button" class="secondary" id="btnExport">Export ratings JSON</button>
+    <button type="button" class="secondary" id="btnExportFull">Export full JSONL</button>
+    <button type="button" class="secondary" id="btnClear" title="Clear localStorage for this campaign">Clear saved</button>
+  </div>
+</header>
+<main>
+  <div class="card" id="card">
+    <div class="meta" id="meta"></div>
+    <div class="prompt" id="prompt"></div>
+    <details class="answer"><summary>Show answer</summary><div id="answer"></div></details>
+    <div class="rate-row" id="scores">
+      <span>Rating:</span>
+    </div>
+    <div class="rate-row">
+      <label>Minutes <input id="minutes" type="number" min="0" step="0.5" style="width:5rem"/></label>
+    </div>
+    <label for="notes">Notes</label>
+    <textarea id="notes" placeholder="Optional pedagogy / latex / topic flags"></textarea>
+    <div class="nav">
+      <button type="button" class="secondary" id="btnSkip">Skip / clear rating</button>
+      <button type="button" id="btnSaveNext">Save &amp; next</button>
+    </div>
+  </div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const STORAGE_KEY = "poly_rating_calc_diff_gaps";
+const ITEMS = [{"rating_id": "calc_gap_other_base_d00_00_s93979", "pack": "other_base", "type_id": "calc_diff_other_base_logarithms_and_exponentials", "generator": "derivative_other_base", "seed": 93979, "difficulty": 0.0, "prompt_latex": "\\frac{d}{dx}\\log_{3}(x)", "answer_latex": "\\frac{1}{x\\ln(3)}", "function_classes": ["log", "algebraic"], "methods_used": ["power"], "shape_id": "log_x", "chain_depth": 0, "y_effort": 8.4, "openstax_ref": "3.9 other-base a^x / log_a (structured pack)"}, {"rating_id": "calc_gap_other_base_d12_00_s105979", "pack": "other_base", "type_id": "calc_diff_other_base_logarithms_and_exponentials", "generator": "derivative_other_base", "seed": 105979, "difficulty": 12.0, "prompt_latex": "\\frac{d}{dx}\\left[3^{x}\\right]", "answer_latex": "3^{x}\\ln(3)", "function_classes": ["exp", "algebraic"], "methods_used": ["power"], "shape_id": "a_x", "chain_depth": 0, "y_effort": 6.3, "openstax_ref": "3.9 other-base a^x / log_a (structured pack)"}, {"rating_id": "calc_gap_other_base_d25_00_s118979", "pack": "other_base", "type_id": "calc_diff_other_base_logarithms_and_exponentials", "generator": "derivative_other_base", "seed": 118979, "difficulty": 25.0, "prompt_latex": "\\frac{d}{dx}\\log_{2}(x)", "answer_latex": "\\frac{1}{x\\ln(2)}", "function_classes": ["log", "algebraic"], "methods_used": ["power"], "shape_id": "log_x", "chain_depth": 0, "y_effort": 8.4, "openstax_ref": "3.9 other-base a^x / log_a (structured pack)"}, {"rating_id": "calc_gap_logarithmic_d00_00_s93633", "pack": "logarithmic", "type_id": "calc_diff_logarithmic", "generator": "derivative_logarithmic", "seed": 93633, "difficulty": 0.0, "prompt_latex": "\\text{Use logarithmic differentiation to find }\\frac{d}{dx}\\left[x^{2}\\right].", "answer_latex": "2x^{1}", "function_classes": ["algebraic"], "methods_used": ["logarithmic", "power"], "shape_id": "power", "chain_depth": 0, "y_effort": 14.0, "openstax_ref": "logarithmic differentiation (structured pack)"}, {"rating_id": "calc_gap_logarithmic_d12_00_s105633", "pack": "logarithmic", "type_id": "calc_diff_logarithmic", "generator": "derivative_logarithmic", "seed": 105633, "difficulty": 12.0, "prompt_latex": "\\text{Use logarithmic differentiation: }y=\\sqrt{x(x+1)}.\\ \\text{Find }y'.", "answer_latex": "\\sqrt{x(x+1)}\\cdot\\frac{1}{2}\\left(\\frac{1}{x}+\\frac{1}{x+1}\\right)", "function_classes": ["roots", "algebraic"], "methods_used": ["logarithmic", "product", "chain"], "shape_id": "root", "chain_depth": 1, "y_effort": 12.0, "openstax_ref": "logarithmic differentiation (structured pack)"}, {"rating_id": "calc_gap_logarithmic_d25_00_s118633", "pack": "logarithmic", "type_id": "calc_diff_logarithmic", "generator": "derivative_logarithmic", "seed": 118633, "difficulty": 25.0, "prompt_latex": "\\text{Use logarithmic differentiation: }y=\\left(\\sin(x)\\right)^{x}.\\ \\text{Find }y'.", "answer_latex": "\\left(\\sin(x)\\right)^{x}\\left(\\ln(\\sin(x))+x\\cot(x)\\right)", "function_classes": ["trig", "exp", "log", "algebraic"], "methods_used": ["logarithmic", "chain"], "shape_id": "trig_x", "chain_depth": 1, "y_effort": 15.5, "openstax_ref": "logarithmic differentiation (structured pack)"}, {"rating_id": "calc_gap_implicit_d00_00_s91355", "pack": "implicit", "type_id": "calc_diff_implicit", "generator": "derivative_implicit", "seed": 91355, "difficulty": 0.0, "prompt_latex": "\\text{Differentiate implicitly: }y^{2}+x^{2}=2.\\text{ Solve for }\\frac{dy}{dx}.", "answer_latex": "\\frac{dy}{dx}=-\\frac{x}{y}", "function_classes": ["algebraic"], "methods_used": ["implicit", "power"], "shape_id": "circle", "chain_depth": 0, "y_effort": 11.0, "openstax_ref": "implicit differentiation (structured pack)"}, {"rating_id": "calc_gap_implicit_d12_00_s103355", "pack": "implicit", "type_id": "calc_diff_implicit", "generator": "derivative_implicit", "seed": 103355, "difficulty": 12.0, "prompt_latex": "\\text{Differentiate implicitly: }y^{3}+x^{3}=3.\\text{ Solve for }\\frac{dy}{dx}.", "answer_latex": "\\frac{dy}{dx}=-\\frac{x^{2}}{y^{2}}", "function_classes": ["algebraic"], "methods_used": ["implicit", "power"], "shape_id": "cubes", "chain_depth": 0, "y_effort": 12.5, "openstax_ref": "implicit differentiation (structured pack)"}, {"rating_id": "calc_gap_implicit_d25_00_s116355", "pack": "implicit", "type_id": "calc_diff_implicit", "generator": "derivative_implicit", "seed": 116355, "difficulty": 25.0, "prompt_latex": "\\text{Differentiate implicitly: }x^{3}+y^{3}=3.\\text{ Solve for }\\frac{dy}{dx}.", "answer_latex": "\\frac{dy}{dx}=-\\frac{x^{2}}{y^{2}}", "function_classes": ["algebraic"], "methods_used": ["implicit", "power"], "shape_id": "cubes", "chain_depth": 0, "y_effort": 12.5, "openstax_ref": "implicit differentiation (structured pack)"}];
+const FULL_BY_ID = Object.fromEntries(ITEMS.map(x => [x.rating_id, x]));
+
+function loadStore() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch (e) { return {}; }
+}
+function saveStore(store) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+}
+
+let store = loadStore();
+let pack = "";
+let idx = 0;
+let currentScore = null;
+
+const packFilter = document.getElementById("packFilter");
+const packs = [...new Set(ITEMS.map(i => i.pack))].sort();
+for (const p of packs) {
+  const opt = document.createElement("option");
+  opt.value = p; opt.textContent = p;
+  packFilter.appendChild(opt);
+}
+
+function filtered() {
+  return pack ? ITEMS.filter(i => i.pack === pack) : ITEMS;
+}
+
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 1400);
+}
+
+function renderMath() {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.getElementById("card"), {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ],
+      throwOnError: false
+    });
+  }
+}
+
+function wrapMath(tex) {
+  const t = (tex || "").trim();
+  if (!t) return "<em>(empty)</em>";
+  if (t.startsWith("$$") || t.startsWith("$")) return t;
+  return "$" + t + "$";
+}
+
+function updateProgress() {
+  const list = filtered();
+  let rated = 0;
+  for (const it of list) {
+    const r = store[it.rating_id];
+    if (r && r.rating_1_to_5 != null) rated++;
+  }
+  document.getElementById("progress").textContent =
+    rated + " / " + list.length + " rated · #" + (list.length ? (idx+1) : 0);
+  document.getElementById("jump").max = Math.max(1, list.length);
+  document.getElementById("jump").value = list.length ? (idx+1) : 1;
+}
+
+function showItem() {
+  const list = filtered();
+  if (!list.length) return;
+  idx = Math.max(0, Math.min(idx, list.length - 1));
+  const it = list[idx];
+  const saved = store[it.rating_id] || {};
+  currentScore = saved.rating_1_to_5 != null ? saved.rating_1_to_5 : null;
+  document.getElementById("meta").innerHTML = [
+    "<span>Pack <code>" + it.pack + "</code></span>",
+    "<span>D <code>" + it.difficulty + "</code></span>",
+    "<span>seed <code>" + it.seed + "</code></span>",
+    "<span>type <code>" + it.type_id + "</code></span>",
+    "<span>gen <code>" + (it.generator || "") + "</code></span>",
+    "<span>classes <code>" + JSON.stringify(it.function_classes || []) + "</code></span>",
+    "<span>methods <code>" + JSON.stringify(it.methods_used || []) + "</code></span>",
+    it.y_effort != null ? "<span>y_effort <code>" + it.y_effort + "</code></span>" : "",
+    it.openstax_ref ? "<span>" + it.openstax_ref + "</span>" : ""
+  ].filter(Boolean).join("");
+  document.getElementById("prompt").innerHTML = wrapMath(it.prompt_latex);
+  document.getElementById("answer").innerHTML = wrapMath(it.answer_latex);
+  document.getElementById("minutes").value = saved.minutes != null ? saved.minutes : "";
+  document.getElementById("notes").value = saved.notes || "";
+  document.querySelectorAll("button.score").forEach(btn => {
+    btn.classList.toggle("active", Number(btn.dataset.score) === currentScore);
+  });
+  const ans = document.querySelector("details.answer");
+  if (ans) ans.open = false;
+  updateProgress();
+  renderMath();
+}
+
+const scores = document.getElementById("scores");
+for (let s = 1; s <= 5; s++) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "score";
+  b.dataset.score = String(s);
+  b.textContent = String(s);
+  b.addEventListener("click", () => {
+    currentScore = s;
+    document.querySelectorAll("button.score").forEach(x =>
+      x.classList.toggle("active", Number(x.dataset.score) === currentScore));
+  });
+  scores.appendChild(b);
+}
+
+function persistCurrent(clear) {
+  const list = filtered();
+  if (!list.length) return;
+  const it = list[idx];
+  if (clear) {
+    delete store[it.rating_id];
+    saveStore(store);
+    currentScore = null;
+    document.getElementById("minutes").value = "";
+    document.getElementById("notes").value = "";
+    document.querySelectorAll("button.score").forEach(x => x.classList.remove("active"));
+    updateProgress();
+    toast("Cleared");
+    return;
+  }
+  const minutesRaw = document.getElementById("minutes").value;
+  store[it.rating_id] = {
+    rating_id: it.rating_id,
+    rating_1_to_5: currentScore,
+    minutes: minutesRaw === "" ? null : Number(minutesRaw),
+    notes: document.getElementById("notes").value || null,
+    rated_at: new Date().toISOString()
+  };
+  saveStore(store);
+  updateProgress();
+}
+
+packFilter.addEventListener("change", () => {
+  pack = packFilter.value;
+  idx = 0;
+  showItem();
+});
+document.getElementById("btnPrev").addEventListener("click", () => { persistCurrent(false); idx--; showItem(); });
+document.getElementById("btnNext").addEventListener("click", () => { persistCurrent(false); idx++; showItem(); });
+document.getElementById("btnSaveNext").addEventListener("click", () => { persistCurrent(false); idx++; showItem(); toast("Saved"); });
+document.getElementById("btnSkip").addEventListener("click", () => { persistCurrent(true); });
+document.getElementById("jump").addEventListener("change", () => {
+  persistCurrent(false);
+  idx = Math.max(0, Number(document.getElementById("jump").value) - 1);
+  showItem();
+});
+
+document.getElementById("btnExport").addEventListener("click", () => {
+  persistCurrent(false);
+  const blob = new Blob([JSON.stringify(store, null, 2)], {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "calc_diff_gaps_ratings.json";
+  a.click();
+  toast("Exported ratings JSON");
+});
+
+document.getElementById("btnExportFull").addEventListener("click", async () => {
+  persistCurrent(false);
+  // Merge into lightweight rows for JSONL download
+  const lines = ITEMS.map(it => {
+    const r = store[it.rating_id] || {};
+    return JSON.stringify({
+      ...it,
+      rating_1_to_5: r.rating_1_to_5 != null ? r.rating_1_to_5 : null,
+      minutes: r.minutes != null ? r.minutes : null,
+      notes: r.notes || null,
+      rated_at: r.rated_at || null
+    });
+  });
+  const blob = new Blob([lines.join("\n") + "\n"], {type: "application/x-ndjson"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "calc_diff_gaps_rated_lite.jsonl";
+  a.click();
+  toast("Exported lite JSONL");
+});
+
+document.getElementById("btnClear").addEventListener("click", () => {
+  if (confirm("Clear all saved ratings for calc_diff_gaps?")) {
+    store = {};
+    localStorage.removeItem(STORAGE_KEY);
+    showItem();
+    toast("Cleared localStorage");
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target && (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT")) return;
+  if (e.key >= "1" && e.key <= "5") {
+    currentScore = Number(e.key);
+    document.querySelectorAll("button.score").forEach(x =>
+      x.classList.toggle("active", Number(x.dataset.score) === currentScore));
+  } else if (e.key === "ArrowRight") { persistCurrent(false); idx++; showItem(); }
+  else if (e.key === "ArrowLeft") { persistCurrent(false); idx--; showItem(); }
+  else if (e.key === "Enter") { persistCurrent(false); idx++; showItem(); toast("Saved"); }
+});
+
+// Wait briefly for KaTeX auto-render onload, then draw.
+setTimeout(showItem, 50);
+</script>
+</body>
+</html>

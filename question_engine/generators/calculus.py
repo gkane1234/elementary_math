@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import random
+import re
 from fractions import Fraction
 from typing import Callable
 
@@ -108,6 +109,11 @@ def _limit_at_infinity(topic: str, settings: dict) -> list[Question]:
 
 
 def _derivative_power_rule(topic: str, settings: dict) -> list[Question]:
+    """Legacy poly d/dx builder — shadowed by calculus_derivative_rules.GENERATORS.
+
+    Kept so GENERATORS merge stays intact; live worksheets use the Spec-driven
+    sampler in frameworks.primitives.derivatives / poly_expression.
+    """
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = calculus_params_from_settings(settings)
@@ -166,16 +172,67 @@ def _integral_power_rule(topic: str, settings: dict) -> list[Question]:
 
 
 def _difficulty_tier(settings: dict) -> str:
-    tier = str(settings.get("difficulty_tier", settings.get("difficulty", "easy"))).strip().lower()
-    if tier in {"1", "e"}:
-        return "easy"
-    if tier in {"2", "m"}:
-        return "medium"
-    if tier in {"3", "h"}:
-        return "hard"
-    if tier in {"easy", "medium", "hard"}:
-        return tier
-    return "easy"
+    """Legacy EMH band label (metadata / fallback only)."""
+    from question_engine.settings.params import calc_topic_structure_from_continuous
+
+    structure = calc_topic_structure_from_continuous(settings)
+    if structure is not None:
+        return str(structure["band"])
+    from question_engine.frameworks.difficulty_budget import settings_difficulty_band
+
+    return settings_difficulty_band(settings, default=8.0)
+
+
+def _topic_structure(settings: dict) -> dict:
+    """Continuous topic knobs + family unlocks; EMH fallback when D absent."""
+    from question_engine.settings.params import calc_topic_structure_from_continuous
+
+    structure = calc_topic_structure_from_continuous(settings)
+    if structure is not None:
+        return structure
+    tier = _difficulty_tier(settings)
+    return {
+        "difficulty": {"easy": 3.0, "medium": 8.0, "hard": 14.0}.get(tier, 8.0),
+        "band": tier,
+        "coef_hi": {"easy": 3, "medium": 5, "hard": 7}.get(tier, 5),
+        "power_max": 4,
+        "n_max": 5,
+        "k_max": 5,
+        "interval_width_max": 5,
+        "bound_max": 5,
+        "riemann_n_max": {"easy": 2, "medium": 4, "hard": 4}.get(tier, 4),
+        "riemann_L_max": {"easy": 4, "medium": 4, "hard": 8}.get(tier, 4),
+        "table_points": {"easy": 3, "medium": 4, "hard": 4}.get(tier, 3),
+        "unlock_medium": tier != "easy",
+        "unlock_hard": tier == "hard",
+        "unlock_advanced": tier == "hard",
+        "unlock_trig": tier != "easy",
+        "unlock_exp": tier != "easy",
+        "unlock_log": tier == "hard",
+        "unlock_roots": tier != "easy",
+        "unlock_reciprocal": tier != "easy",
+        "unlock_quotient_table": tier != "easy",
+        "unlock_compose_table": tier == "hard",
+        "unlock_chain_ftc": tier == "hard",
+        "unlock_ibp_trig": tier != "easy",
+        "unlock_ibp_quad": tier == "hard",
+        "unlock_midpoint_table": tier == "hard",
+        "unlock_sec_csc": tier == "hard",
+        "unlock_base_a_integral": tier == "hard",
+        "unlock_scaled_invtrig": tier == "hard",
+        "unlock_poly_inner_sub": tier != "easy",
+        "unlock_power_inner_sub": tier == "hard",
+    }
+
+
+def _pick_family(structure: dict, easy, medium=None, hard=None, *, advanced=None, extra=None) -> str:
+    from question_engine.settings.params import pick_unlocked_families
+
+    return random.choice(
+        pick_unlocked_families(
+            structure, easy, medium, hard, advanced=advanced, extra=extra
+        )
+    )
 
 
 def _linear_pair(coef_hi: int = 5) -> tuple[int, int]:
@@ -495,48 +552,40 @@ def _definition_of_derivative(topic: str, settings: dict) -> list[Question]:
 def _integral_trigonometric(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            fn, antider = random.choice(
-                [
-                    ("\\sin", "-\\cos"),
-                    ("\\cos", "\\sin"),
-                ]
-            )
-            prompt = rf"\int {fn}({x})\,d{x}"
-            answer = rf"{antider}({x})+C"
-        elif tier == "medium":
-            k = random.randint(2, 6)
-            fn, antider, sign = random.choice(
-                [
-                    ("\\sin", "\\cos", -1),
-                    ("\\cos", "\\sin", 1),
-                ]
-            )
+        family = _pick_family(
+            structure,
+            ["sin", "cos"],
+            medium=["sin_k", "cos_k"],
+            hard=["sec2", "csc2", "sec_tan"] if structure.get("unlock_sec_csc") else ["sec2"],
+        )
+        k = random.randint(2, max(2, min(6, int(structure.get("k_max", 5)))))
+        if family == "sin":
+            prompt = rf"\int \sin({x})\,d{x}"
+            answer = rf"-\cos({x})+C"
+        elif family == "cos":
+            prompt = rf"\int \cos({x})\,d{x}"
+            answer = rf"\sin({x})+C"
+        elif family == "sin_k":
             arg = format_monomial_latex(k, variable=x) or f"{k}{x}"
-            prompt = rf"\int {fn}({arg})\,d{x}"
-            coef = frac_latex(Fraction(sign, k))
-            if coef == "1":
-                answer = rf"{antider}({arg})+C"
-            elif coef == "-1":
-                answer = rf"-{antider}({arg})+C"
-            else:
-                answer = rf"{coef}{antider}({arg})+C"
+            prompt = rf"\int \sin({arg})\,d{x}"
+            answer = rf"-\frac{{1}}{{{k}}}\cos({arg})+C"
+        elif family == "cos_k":
+            arg = format_monomial_latex(k, variable=x) or f"{k}{x}"
+            prompt = rf"\int \cos({arg})\,d{x}"
+            answer = rf"\frac{{1}}{{{k}}}\sin({arg})+C"
+        elif family == "sec2":
+            prompt = rf"\int \sec^{{2}}({k}{x})\,d{x}"
+            answer = rf"\frac{{1}}{{{k}}}\tan({k}{x})+C"
+        elif family == "csc2":
+            prompt = rf"\int \csc^{{2}}({k}{x})\,d{x}"
+            answer = rf"-\frac{{1}}{{{k}}}\cot({k}{x})+C"
         else:
-            k = random.randint(2, 5)
-            choice = random.choice(["sec2", "csc2", "sec_tan"])
-            if choice == "sec2":
-                prompt = rf"\int \sec^{{2}}({k}{x})\,d{x}"
-                answer = rf"\frac{{1}}{{{k}}}\tan({k}{x})+C"
-            elif choice == "csc2":
-                prompt = rf"\int \csc^{{2}}({k}{x})\,d{x}"
-                answer = rf"-\frac{{1}}{{{k}}}\cot({k}{x})+C"
-            else:
-                prompt = rf"\int \sec({k}{x})\tan({k}{x})\,d{x}"
-                answer = rf"\frac{{1}}{{{k}}}\sec({k}{x})+C"
+            prompt = rf"\int \sec({k}{x})\tan({k}{x})\,d{x}"
+            answer = rf"\frac{{1}}{{{k}}}\sec({k}{x})+C"
         return prompt, "trigonometric integral", answer if include_answer_key else None
 
     return _make_questions(topic, count, include_answer_key, build)
@@ -545,27 +594,30 @@ def _integral_trigonometric(topic: str, settings: dict) -> list[Question]:
 def _integral_substitution(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            a, b = _linear_pair(4)
-            n = random.randint(2, 4)
+        family = _pick_family(
+            structure,
+            ["linear_power"],
+            medium=["quad_inner"] if structure.get("unlock_poly_inner_sub") else None,
+            hard=["power_inner"] if structure.get("unlock_power_inner_sub") else None,
+        )
+        if family == "linear_power":
+            a, b = _linear_pair(max(2, min(4, int(structure["coef_hi"]))))
+            n = random.randint(2, max(2, min(4, int(structure.get("power_max", 4)))))
             inner = format_linear_latex(a, b, variable=x)
-            # ∫ (ax+b)^n dx = (ax+b)^{n+1}/(a(n+1)) + C
             prompt = rf"\int \left({inner}\right)^{{{n}}}\,d{x}"
             den = a * (n + 1)
             answer = rf"\frac{{1}}{{{den}}}\left({inner}\right)^{{{n + 1}}}+C"
-        elif tier == "medium":
-            n = random.randint(2, 4)
-            # ∫ 2x (x^2+1)^n dx = (x^2+1)^{n+1}/(n+1) + C
+        elif family == "quad_inner":
+            n = random.randint(2, max(2, min(4, int(structure.get("power_max", 4)))))
             prompt = rf"\int 2{x}\left({x}^{{2}}+1\right)^{{{n}}}\,d{x}"
             answer = rf"\frac{{1}}{{{n + 1}}}\left({x}^{{2}}+1\right)^{{{n + 1}}}+C"
         else:
-            a = random.randint(2, 4)
-            n = random.randint(2, 4)
-            # ∫ a x^{a-1} (x^a + 1)^n dx
+            a = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
+            n = random.randint(2, max(2, min(4, int(structure.get("power_max", 4)))))
             prompt = rf"\int {a}{x}^{{{a - 1}}}\left({x}^{{{a}}}+1\right)^{{{n}}}\,d{x}"
             answer = rf"\frac{{1}}{{{n + 1}}}\left({x}^{{{a}}}+1\right)^{{{n + 1}}}+C"
         return prompt, "power rule with substitution", answer if include_answer_key else None
@@ -576,19 +628,22 @@ def _integral_substitution(topic: str, settings: dict) -> list[Question]:
 def _riemann_approximate_area(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        # f(x)=x on [0, L] with n equal intervals, midpoint Riemann sum
-        if tier == "easy":
-            n_intervals, L = 2, 4
-        elif tier == "medium":
-            n_intervals, L = 4, 4
-        else:
-            n_intervals, L = 4, 8
+        n_max = max(2, int(structure.get("riemann_n_max", 4)))
+        L_max = max(4, int(structure.get("riemann_L_max", 4)))
+        # Continuous: more intervals and longer intervals as D rises.
+        choices = [(2, 4)]
+        if structure.get("unlock_medium"):
+            choices.append((min(4, n_max), 4))
+        if structure.get("unlock_hard"):
+            choices.append((min(4, n_max), min(8, L_max)))
+        if structure.get("unlock_advanced"):
+            choices.append((n_max, L_max))
+        n_intervals, L = random.choice(choices)
         dx = Fraction(L, n_intervals)
-        # midpoints of [i*dx, (i+1)*dx] are (i+1/2)*dx; f(mid)=mid
         total = sum((Fraction(2 * i + 1, 2) * dx) * dx for i in range(n_intervals))
         prompt = (
             rf"\text{{Use a midpoint Riemann sum with }}{n_intervals}"
@@ -598,36 +653,65 @@ def _riemann_approximate_area(topic: str, settings: dict) -> list[Question]:
         answer = frac_latex(total)
         return prompt, "approximate area", answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def _sketch_meta(prompt_latex: str, prompt_text: str, answer: str | None) -> dict:
+        from question_engine.diagrams.figure_families import sample_figure_from_settings
+
+        n_m = re.search(r"with \}(\d+)", prompt_latex or "")
+        n_rect = int(n_m.group(1)) if n_m else 4
+        sample = sample_figure_from_settings(
+            "function_sketch",
+            settings,
+            features=["curve", "riemann"],
+            curve_kind="linear",
+            a=1.0,
+            b=0.0,
+            c=0.0,
+            riemann_n=n_rect,
+            shade_a=0.0,
+            shade_b=3.0,
+            window=(-0.5, 5),
+        )
+        return sample.to_metadata_extras()
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=_sketch_meta,
+        settings=settings,
+    )
 
 
 def _first_fundamental_theorem(topic: str, settings: dict) -> list[Question]:
     """Evaluate definite integrals via antiderivatives (FTC I)."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
         a = 0
-        if tier == "easy":
-            b = random.randint(2, 5)
+        b = random.randint(2, max(2, min(5, int(structure.get("bound_max", 5)))))
+        family = _pick_family(
+            structure,
+            ["linear"],
+            medium=["quad_coef"],
+            hard=["quad_const"],
+        )
+        if family == "linear":
             prompt = rf"\int_{{{a}}}^{{{b}}} {x}\,d{x}"
             answer = frac_latex(Fraction(b * b, 2))
-        elif tier == "medium":
-            b = random.randint(2, 4)
-            k = random.randint(2, 4)
+        elif family == "quad_coef":
+            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
             f = format_monomial_latex(k, variable=x, degree=2) or f"{k}{x}^{{2}}"
             prompt = rf"\int_{{{a}}}^{{{b}}} {f}\,d{x}"
-            # ∫ k x^2 = k/3 x^3 from 0 to b
             answer = frac_latex(Fraction(k * b**3, 3))
         else:
-            b = random.randint(2, 4)
             p = random.randint(1, 3)
             q = random_int_range(-3, 3, exclude={0})
             f = format_polynomial_latex([p, 0, q], variable=x)
             prompt = rf"\int_{{{a}}}^{{{b}}} \left({f}\right)\,d{x}"
-            # ∫ (p x^2 + q) = p/3 x^3 + q x from 0 to b
             answer = frac_latex(Fraction(p * b**3, 3) + q * b)
         return prompt, "first fundamental theorem", answer if include_answer_key else None
 
@@ -637,19 +721,25 @@ def _first_fundamental_theorem(topic: str, settings: dict) -> list[Question]:
 def _area_under_curve(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        b = random.randint(2, 5) if tier != "hard" else random.randint(3, 6)
-        if tier == "easy":
+        b = random.randint(2, max(2, min(6, int(structure.get("bound_max", 5)))))
+        family = _pick_family(
+            structure,
+            ["linear"],
+            medium=["quad"],
+            hard=["quad_coef"],
+        )
+        if family == "linear":
             f = x
             area = Fraction(b * b, 2)
-        elif tier == "medium":
+        elif family == "quad":
             f = f"{x}^{{2}}"
             area = Fraction(b**3, 3)
         else:
-            k = random.randint(2, 4)
+            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
             f = format_monomial_latex(k, variable=x, degree=2) or f"{k}{x}^{{2}}"
             area = Fraction(k * b**3, 3)
         prompt = (
@@ -734,7 +824,7 @@ def _derivative_from_tables(topic: str, settings: dict) -> list[Question]:
     """Product / quotient / chain using tabulated f,g values (no interactive UI)."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
 
     def build() -> tuple[str, str, str | None]:
         a = random.randint(1, 4)
@@ -745,16 +835,20 @@ def _derivative_from_tables(topic: str, settings: dict) -> list[Question]:
         table = (
             rf"f({a})={f_a},\ f'({a})={fp_a},\ g({a})={g_a},\ g'({a})={gp_a}."
         )
-        if tier == "easy" or (tier == "medium" and random.random() < 0.5):
+        families = ["product"]
+        if structure.get("unlock_quotient_table"):
+            families.append("quotient")
+        if structure.get("unlock_compose_table"):
+            families.append("compose")
+        family = random.choice(families)
+        if family == "product":
             prompt = rf"{table}\quad\text{{Find }}(fg)'({a})."
             answer = str(fp_a * g_a + f_a * gp_a)
-        elif tier == "medium":
+        elif family == "quotient":
             prompt = rf"{table}\quad\text{{Find }}\left(\frac{{f}}{{g}}\right)'({a})."
             numer = fp_a * g_a - f_a * gp_a
             answer = frac_latex(Fraction(numer, g_a * g_a))
         else:
-            # (f∘g)'(a) = f'(g(a)) g'(a) — need f' at g(a)
-            # Reuse table with an extra f'(g(a)) value when g(a) ≠ a
             u = g_a
             fp_u = random_int_range(-5, 5, exclude={0})
             prompt = (
@@ -770,21 +864,26 @@ def _derivative_from_tables(topic: str, settings: dict) -> list[Question]:
 def _rolles_theorem(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            n = random.randint(2, 5)
+        family = _pick_family(
+            structure,
+            ["even_quad"],
+            medium=["two_roots"],
+            hard=["cubic_odd"],
+        )
+        if family == "even_quad":
+            n = random.randint(2, max(2, min(5, int(structure.get("n_max", 5)))))
             prompt = (
                 rf"\text{{Find }}c\text{{ guaranteed by Rolle's Theorem for }}"
                 rf"f({x})={x}^{{2}}-{n * n}\text{{ on }}[-{n},{n}]."
             )
             answer = "0"
-        elif tier == "medium":
-            # f(x)=(x-a)(x-b)=x^2-(a+b)x+ab on [a,b]; c midpoint
+        elif family == "two_roots":
             a = random.randint(-4, 1)
-            b = a + random.randint(2, 5)
+            b = a + random.randint(2, max(2, min(5, int(structure.get("interval_width_max", 5)))))
             mid = Fraction(a + b, 2)
             f = format_polynomial_latex([1, -(a + b), a * b], variable=x)
             prompt = (
@@ -793,7 +892,6 @@ def _rolles_theorem(topic: str, settings: dict) -> list[Question]:
             )
             answer = frac_latex(mid)
         else:
-            # f(x)=x^3 - n^2 x on [-n,n]; f'=3x^2-n^2=0 → x=±n/√3
             n = random.choice([2, 3, 4])
             prompt = (
                 rf"\text{{Find all }}c\text{{ guaranteed by Rolle's Theorem for }}"
@@ -809,26 +907,31 @@ def _mean_value_theorem(topic: str, settings: dict) -> list[Question]:
     """Differentiation MVT: find c with f'(c)=(f(b)-f(a))/(b-a)."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
         a = 0
-        width = random.randint(2, 5) if tier == "easy" else random.randint(3, 6)
+        width_max = max(2, int(structure.get("interval_width_max", 5)))
+        width = random.randint(2, max(2, min(6, width_max)))
         b = a + width
-        if tier == "easy":
-            f = format_polynomial_latex([1, 0, 0], variable=x)  # x^2
-            # f'=2x = (b^2-a^2)/(b-a)=a+b → c=(a+b)/2
+        family = _pick_family(
+            structure,
+            ["quad"],
+            medium=["cubic"],
+            hard=["quad_const"],
+        )
+        if family == "quad":
+            f = format_polynomial_latex([1, 0, 0], variable=x)
             answer = frac_latex(Fraction(a + b, 2))
-        elif tier == "medium":
+        elif family == "cubic":
             k = random.randint(1, 3)
-            f = format_polynomial_latex([k, 0, 0, 0], variable=x)  # k x^3
-            # 3k c^2 = k b^2 → c = b/√3
+            f = format_polynomial_latex([k, 0, 0, 0], variable=x)
             answer = rf"\frac{{{b}}}{{\sqrt{{3}}}}"
         else:
             p = random.randint(1, 2)
             q = random_int_range(-3, 3, exclude={0})
-            f = format_polynomial_latex([p, 0, q], variable=x)  # p x^2 + q
+            f = format_polynomial_latex([p, 0, q], variable=x)
             answer = frac_latex(Fraction(a + b, 2))
         prompt = (
             rf"\text{{Find }}c\text{{ guaranteed by the Mean Value Theorem for }}"
@@ -858,28 +961,52 @@ def _pi_frac(numer: int, denom: int) -> str:
 def _volume_disk_washer(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import calc_application_structure_from_continuous
+
+    structure = calc_application_structure_from_continuous(settings)
     tier = _difficulty_tier(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
+        if structure is not None:
+            n = random.randint(2, max(2, int(structure["bound_max"])))
+            method = random.choice(list(structure["volume_methods"]))
+            if method == "disk_linear":
+                prompt = (
+                    rf"\text{{Find the volume of the solid formed by rotating }}"
+                    rf"y={x}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
+                )
+                answer = _pi_frac(n**3, 3)
+            elif method == "disk_quadratic":
+                prompt = (
+                    rf"\text{{Find the volume of the solid formed by rotating }}"
+                    rf"y={x}^{{2}}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
+                )
+                answer = _pi_frac(n**5, 5)
+            else:
+                # washer / shell / cross_semi → washer form here
+                prompt = (
+                    rf"\text{{Find the volume of the solid formed by rotating the region between }}"
+                    rf"y={n}\text{{ and }}y={x}\text{{ on }}[0,{n}]"
+                    rf"\text{{ about the }}{x}\text{{-axis (washer method).}}"
+                )
+                answer = _pi_frac(2 * n**3, 3)
+            return prompt, "volume disk/washer", answer if include_answer_key else None
+
         n = random.randint(2, 4) if tier == "easy" else random.randint(2, 5)
         if tier == "easy":
-            # Disk: y=x on [0,n] about x-axis → V = π∫x^2 = π n^3/3
             prompt = (
                 rf"\text{{Find the volume of the solid formed by rotating }}"
                 rf"y={x}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
             )
             answer = _pi_frac(n**3, 3)
         elif tier == "medium":
-            # Disk: y=x^2 on [0,n] → π∫x^4 = π n^5/5
             prompt = (
                 rf"\text{{Find the volume of the solid formed by rotating }}"
                 rf"y={x}^{{2}}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
             )
             answer = _pi_frac(n**5, 5)
         else:
-            # Washer: region between y=n and y=x on [0,n] about x-axis
-            # V = π∫_0^n (n^2 - x^2) dx = π(n^3 - n^3/3) = 2π n^3/3
             prompt = (
                 rf"\text{{Find the volume of the solid formed by rotating the region between }}"
                 rf"y={n}\text{{ and }}y={x}\text{{ on }}[0,{n}]"
@@ -894,27 +1021,32 @@ def _volume_disk_washer(topic: str, settings: dict) -> list[Question]:
 def _volume_shell(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import calc_application_structure_from_continuous
+
+    structure = calc_application_structure_from_continuous(settings)
     tier = _difficulty_tier(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        n = random.randint(2, 4) if tier != "hard" else random.randint(2, 5)
-        if tier == "easy":
-            # Shell: y=x on [0,n] about y-axis → V = 2π∫ x·x dx = 2π n^3/3
+        if structure is not None:
+            n = random.randint(2, max(2, int(structure["bound_max"])))
+            band = structure["band"]
+        else:
+            n = random.randint(2, 4) if tier != "hard" else random.randint(2, 5)
+            band = tier
+        if band == "easy":
             prompt = (
                 rf"\text{{Find the volume of the solid formed by rotating }}"
                 rf"y={x}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
             )
             answer = _pi_frac(2 * n**3, 3)
-        elif tier == "medium":
-            # Shell: y=x^2 on [0,n] about y-axis → 2π∫ x·x^2 = 2π n^4/4 = π n^4/2
+        elif band == "medium":
             prompt = (
                 rf"\text{{Find the volume of the solid formed by rotating }}"
                 rf"y={x}^{{2}}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
             )
             answer = _pi_frac(n**4, 2)
         else:
-            # Shell: y=n-x on [0,n] about y-axis → 2π∫ x(n-x) = 2π(n·n^2/2 - n^3/3)=2π(n^3/6)=π n^3/3
             prompt = (
                 rf"\text{{Find the volume of the solid formed by rotating }}"
                 rf"y={n}-{x}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
@@ -928,30 +1060,36 @@ def _volume_shell(topic: str, settings: dict) -> list[Question]:
 def _volume_cross_sections(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import calc_application_structure_from_continuous
+
+    structure = calc_application_structure_from_continuous(settings)
     tier = _difficulty_tier(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        n = random.randint(2, 5)
-        if tier == "easy":
+        if structure is not None:
+            n = random.randint(2, max(2, int(structure["bound_max"])))
+            band = structure["band"]
+        else:
+            n = random.randint(2, 5)
+            band = tier
+        if band == "easy":
             prompt = (
                 rf"\text{{A solid has square cross sections of side length }}{x}"
                 rf"\text{{ for }}0\le {x}\le {n}.\text{{ Find its volume.}}"
             )
             answer = frac_latex(Fraction(n**3, 3))
-        elif tier == "medium":
+        elif band == "medium":
             prompt = (
                 rf"\text{{A solid has equilateral-triangle cross sections of side }}{x}"
                 rf"\text{{ for }}0\le {x}\le {n}.\text{{ Find its volume.}}"
             )
-            # Area = √3/4 s^2 → V = (√3/4)∫x^2 = √3 n^3 / 12
             answer = rf"\frac{{{n**3}\sqrt{{3}}}}{{12}}"
         else:
             prompt = (
                 rf"\text{{Cross sections perpendicular to the }}{x}\text{{-axis on }}[0,{n}]"
                 rf"\text{{ are semicircles with diameter }}{x}.\text{{ Find the volume.}}"
             )
-            # radius x/2, area = (1/2)π(x/2)^2 = π x^2/8 → V = π n^3/24
             answer = _pi_frac(n**3, 24)
         return prompt, "volume cross sections", answer if include_answer_key else None
 
@@ -961,26 +1099,29 @@ def _volume_cross_sections(topic: str, settings: dict) -> list[Question]:
 def _integral_log_exp(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        k = random.randint(2, 5)
-        if tier == "easy":
-            choice = random.choice(["reciprocal", "exp"])
-            if choice == "reciprocal":
-                prompt = rf"\int \frac{{1}}{{{x}}}\,d{x}"
-                answer = rf"\ln|{x}|+C"
-            else:
-                prompt = rf"\int e^{{{x}}}\,d{x}"
-                answer = rf"e^{{{x}}}+C"
-        elif tier == "medium":
-            if random.choice([True, False]):
-                prompt = rf"\int e^{{{k}{x}}}\,d{x}"
-                answer = rf"\frac{{1}}{{{k}}}e^{{{k}{x}}}+C"
-            else:
-                prompt = rf"\int \frac{{{k}}}{{{x}}}\,d{x}"
-                answer = rf"{k}\ln|{x}|+C"
+        k = random.randint(2, max(2, min(5, int(structure.get("k_max", 5)))))
+        family = _pick_family(
+            structure,
+            ["reciprocal", "exp"],
+            medium=["exp_k", "k_over_x"],
+            hard=["base_a"] if structure.get("unlock_base_a_integral") else ["exp_k"],
+        )
+        if family == "reciprocal":
+            prompt = rf"\int \frac{{1}}{{{x}}}\,d{x}"
+            answer = rf"\ln|{x}|+C"
+        elif family == "exp":
+            prompt = rf"\int e^{{{x}}}\,d{x}"
+            answer = rf"e^{{{x}}}+C"
+        elif family == "exp_k":
+            prompt = rf"\int e^{{{k}{x}}}\,d{x}"
+            answer = rf"\frac{{1}}{{{k}}}e^{{{k}{x}}}+C"
+        elif family == "k_over_x":
+            prompt = rf"\int \frac{{{k}}}{{{x}}}\,d{x}"
+            answer = rf"{k}\ln|{x}|+C"
         else:
             base = random.randint(2, 5)
             prompt = rf"\int {base}^{{{x}}}\,d{x}"
@@ -993,18 +1134,24 @@ def _integral_log_exp(topic: str, settings: dict) -> list[Question]:
 def _integral_inverse_trig(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
+        family = _pick_family(
+            structure,
+            ["arcsin"],
+            medium=["arctan"],
+            hard=["scaled_arctan"] if structure.get("unlock_scaled_invtrig") else ["arctan"],
+        )
+        if family == "arcsin":
             prompt = rf"\int \frac{{1}}{{\sqrt{{1-{x}^{{2}}}}}}\,d{x}"
             answer = rf"\arcsin({x})+C"
-        elif tier == "medium":
+        elif family == "arctan":
             prompt = rf"\int \frac{{1}}{{1+{x}^{{2}}}}\,d{x}"
             answer = rf"\arctan({x})+C"
         else:
-            a = random.randint(2, 4)
+            a = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
             prompt = rf"\int \frac{{1}}{{{a * a}+{x}^{{2}}}}\,d{x}"
             answer = rf"\frac{{1}}{{{a}}}\arctan\left(\frac{{{x}}}{{{a}}}\right)+C"
         return prompt, "inverse trig integral", answer if include_answer_key else None
@@ -1015,14 +1162,20 @@ def _integral_inverse_trig(topic: str, settings: dict) -> list[Question]:
 def _integration_by_parts(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
+        family = _pick_family(
+            structure,
+            ["x_exp"],
+            medium=["x_sin"] if structure.get("unlock_ibp_trig") else None,
+            hard=["x2_exp"] if structure.get("unlock_ibp_quad") else None,
+        )
+        if family == "x_exp":
             prompt = rf"\int {x}e^{{{x}}}\,d{x}"
             answer = rf"{x}e^{{{x}}}-e^{{{x}}}+C"
-        elif tier == "medium":
+        elif family == "x_sin":
             prompt = rf"\int {x}\sin({x})\,d{x}"
             answer = rf"-{x}\cos({x})+\sin({x})+C"
         else:
@@ -1037,20 +1190,25 @@ def _riemann_sum_tables(topic: str, settings: dict) -> list[Question]:
     """Left/right/midpoint Riemann sums from a short value table."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
 
     def build() -> tuple[str, str, str | None]:
-        # Uniform partitions with integer Δx for clean arithmetic.
-        if tier == "easy":
+        family = _pick_family(
+            structure,
+            ["left3"],
+            medium=["left_right4"],
+            hard=["midpoint"] if structure.get("unlock_midpoint_table") else ["left_right4"],
+        )
+        if family == "left3":
             xs = [0, 1, 2]
             ys = [random.randint(1, 5) for _ in xs]
             table = ", ".join(rf"f({x})={y}" for x, y in zip(xs, ys))
-            total = sum(ys[:-1])  # left, Δx=1
+            total = sum(ys[:-1])
             prompt = (
                 rf"{table}.\quad\text{{Approximate }}\int_{{{xs[0]}}}^{{{xs[-1]}}} f(x)\,dx"
                 rf"\text{{ with a left Riemann sum.}}"
             )
-        elif tier == "medium":
+        elif family == "left_right4":
             xs = [0, 1, 2, 3]
             ys = [random.randint(1, 6) for _ in xs]
             table = ", ".join(rf"f({x})={y}" for x, y in zip(xs, ys))
@@ -1081,20 +1239,25 @@ def _riemann_sum_tables(topic: str, settings: dict) -> list[Question]:
 def _second_fundamental_theorem(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
         a = random.randint(0, 3)
-        if tier == "easy":
+        family = _pick_family(
+            structure,
+            ["poly"],
+            medium=["trig"],
+            hard=["chain"] if structure.get("unlock_chain_ftc") else ["trig"],
+        )
+        if family == "poly":
             prompt = rf"\frac{{d}}{{d{x}}}\int_{{{a}}}^{{{x}}} t^{{2}}\,dt"
             answer = rf"{x}^{{2}}"
-        elif tier == "medium":
+        elif family == "trig":
             prompt = rf"\frac{{d}}{{d{x}}}\int_{{{a}}}^{{{x}}} \sin(t)\,dt"
             answer = rf"\sin({x})"
         else:
-            # chain: d/dx ∫_a^{g(x)} f = f(g(x)) g'(x)
-            k = random.randint(2, 4)
+            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
             prompt = rf"\frac{{d}}{{d{x}}}\int_{{{a}}}^{{{k}{x}}} e^{{t}}\,dt"
             answer = rf"{k}e^{{{k}{x}}}"
         return prompt, "second fundamental theorem", answer if include_answer_key else None
@@ -1105,19 +1268,25 @@ def _second_fundamental_theorem(topic: str, settings: dict) -> list[Question]:
 def _def_int_mean_value(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
     x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        b = random.randint(2, 5) if tier != "hard" else random.randint(3, 6)
-        if tier == "easy":
+        b = random.randint(2, max(2, min(6, int(structure.get("bound_max", 5)))))
+        family = _pick_family(
+            structure,
+            ["linear"],
+            medium=["quad"],
+            hard=["quad_coef"],
+        )
+        if family == "linear":
             f = x
             avg = Fraction(b, 2)
-        elif tier == "medium":
+        elif family == "quad":
             f = rf"{x}^{{2}}"
             avg = Fraction(b**2, 3)
         else:
-            k = random.randint(2, 4)
+            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
             f = format_monomial_latex(k, variable=x, degree=2) or f"{k}{x}^{{2}}"
             avg = Fraction(k * b**2, 3)
         prompt = (
@@ -1134,15 +1303,21 @@ def _slope_field_interpret(topic: str, settings: dict) -> list[Question]:
     """Interpret slope fields by evaluating dy/dx at a point (no sketch UI)."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _topic_structure(settings)
 
     def build() -> tuple[str, str, str | None]:
         px = random.randint(-3, 3)
         py = random.randint(-3, 3)
-        if tier == "easy":
+        family = _pick_family(
+            structure,
+            ["x_only"],
+            medium=["x_plus_y"],
+            hard=["xy"],
+        )
+        if family == "x_only":
             prompt = rf"\text{{For }}y'=x,\text{{ what is the slope at }}({px},{py})?"
             answer = str(px)
-        elif tier == "medium":
+        elif family == "x_plus_y":
             prompt = rf"\text{{For }}y'=x+y,\text{{ what is the slope at }}({px},{py})?"
             answer = str(px + py)
         else:
@@ -1156,13 +1331,29 @@ def _slope_field_interpret(topic: str, settings: dict) -> list[Question]:
 def _separable_diff_eq(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import calc_application_structure_from_continuous
+
+    structure = calc_application_structure_from_continuous(settings)
     tier = _difficulty_tier(settings)
 
     def build() -> tuple[str, str, str | None]:
-        if tier == "easy":
-            prompt = r"\text{Solve }\frac{dy}{dx}=2x,\ y(0)=3."
-            answer = r"y=x^2+3"
-        elif tier == "medium":
+        family = structure["de_family"] if structure is not None else None
+        if family == "poly" or (family is None and tier == "easy"):
+            a = random.randint(1, 3) if structure is not None else 2
+            c0 = random.randint(1, 5) if structure is not None else 3
+            if structure is None:
+                a, c0 = 2, 3
+            rhs = "x" if a == 1 else rf"{a}x"
+            prompt = rf"\text{{Solve }}\frac{{dy}}{{dx}}={rhs},\ y(0)={c0}."
+            if a == 1:
+                answer = rf"y=\frac{{1}}{{2}}x^2+{c0}"
+            elif a == 2:
+                answer = rf"y=x^2+{c0}"
+            elif a % 2 == 0:
+                answer = rf"y={a // 2}x^2+{c0}"
+            else:
+                answer = rf"y=\frac{{{a}}}{{2}}x^2+{c0}"
+        elif family == "exp" or (family is None and tier == "medium"):
             k = random.randint(2, 4)
             c0 = random.randint(1, 5)
             prompt = rf"\text{{Solve }}\frac{{dy}}{{dx}}={k}y,\ y(0)={c0}."
@@ -1223,11 +1414,44 @@ def _calculus_foundations(topic: str, settings: dict) -> list[Question]:
                 rf"\text{{minimum }}-{n}\text{{ at }}{x}={a}",
             )
         elif "optimization" in topic:
-            prompt, answer = (
-                rf"\text{{A rectangle has perimeter }}{4 * n}."
-                rf"\text{{ What dimensions maximize area?}}",
-                f"{n} by {n}",
+            from question_engine.settings.params import (
+                calc_application_structure_from_continuous,
             )
+
+            structure = calc_application_structure_from_continuous(settings)
+            if structure is None:
+                prompt, answer = (
+                    rf"\text{{A rectangle has perimeter }}{4 * n}."
+                    rf"\text{{ What dimensions maximize area?}}",
+                    f"{n} by {n}",
+                )
+            else:
+                shape = random.choice(list(structure["opt_shapes"]))
+                pmax = int(structure["opt_perimeter_max"])
+                # Even perimeter so square sides are integers.
+                peri = 2 * random.randint(max(4, n), max(5, pmax // 2))
+                side = peri // 4
+                if shape == "cylinder":
+                    # Fixed lateral area constraint simplified: maximize V for r with h=r
+                    r = random.randint(2, max(3, int(structure["radius_max"]) // 2))
+                    prompt, answer = (
+                        rf"\text{{A cylinder has }}h=r.\text{{ If }}r={r},"
+                        rf"\text{{ what is the volume?}}",
+                        rf"{r**3}\pi",
+                    )
+                elif shape == "rectangle" and structure["band"] != "easy":
+                    # Perimeter fixed; max area is still the square.
+                    prompt, answer = (
+                        rf"\text{{A rectangle has perimeter }}{peri}."
+                        rf"\text{{ What dimensions maximize area?}}",
+                        f"{side} by {side}",
+                    )
+                else:
+                    prompt, answer = (
+                        rf"\text{{A rectangle has perimeter }}{peri}."
+                        rf"\text{{ What dimensions maximize area?}}",
+                        f"{side} by {side}",
+                    )
         elif "motion_along" in topic:
             prompt, answer = (rf"s(t)=t^{{2}}-{n}t.\quad\text{{Find }}v({n}).", str(n))
         elif "differentials" in topic:
@@ -1340,11 +1564,8 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "definition_of_derivative": _definition_of_derivative,
     "rolles_theorem": _rolles_theorem,
     "mean_value_theorem": _mean_value_theorem,
-    "integral_trigonometric": _integral_trigonometric,
-    "integral_substitution": _integral_substitution,
-    "integral_log_exp": _integral_log_exp,
-    "integral_inverse_trig": _integral_inverse_trig,
-    "integration_by_parts": _integration_by_parts,
+    # Integral technique leaves live in calculus_integrals.py (OpenStax form catalogs).
+    # Do NOT re-register thin table-form stubs here — import order would matter.
     "riemann_approximate_area": _riemann_approximate_area,
     "riemann_sum_tables": _riemann_sum_tables,
     "first_fundamental_theorem": _first_fundamental_theorem,

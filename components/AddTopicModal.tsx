@@ -7,6 +7,7 @@ import { TopicPrerequisitesPanel } from "@/components/TopicPrerequisitesPanel";
 import { TopicSettingsFields, topicSettingsFields } from "@/components/TopicSettingsFields";
 import type { CurriculumSelection } from "@/lib/curriculum-picker";
 import { typeIsNotReady } from "@/lib/diagram-readiness";
+import { formatTopicLabel } from "@/lib/topic-labels";
 import type { QuestionTypeInfo, TopicSection } from "@/lib/types";
 
 function defaultTopicValues(type: QuestionTypeInfo | null): Record<string, string | number | boolean> {
@@ -168,7 +169,11 @@ export function AddTopicModal({
       {selectedType && !isBrowsingOnly && (
         <>
           <p className="description">
-            <strong>{selectedType.name}</strong>
+            <strong>
+              {formatTopicLabel(selectedType.id, selectedType.name, {
+                category: selectedType.category,
+              })}
+            </strong>
             {selectedType.description ? ` — ${selectedType.description}` : null}
           </p>
 

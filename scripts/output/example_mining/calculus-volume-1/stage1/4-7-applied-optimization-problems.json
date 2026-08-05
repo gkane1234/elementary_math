@@ -1,0 +1,876 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "4-7-applied-optimization-problems",
+  "title": "4.7 Applied Optimization Problems",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/4-7-applied-optimization-problems",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/4-7-applied-optimization-problems.html",
+  "objectives": [
+    "4.7.1 Set up and solve optimization problems in several applied fields."
+  ],
+  "headings": [
+    "4.7 Applied Optimization Problems",
+    "Learning Objectives",
+    "Solving Optimization Problems over a Closed, Bounded Interval",
+    "Example 4.32",
+    "Checkpoint 4.31",
+    "Problem-Solving Strategy",
+    "Example 4.33",
+    "Media",
+    "Checkpoint 4.32",
+    "Example 4.34",
+    "Checkpoint 4.33",
+    "Example 4.35",
+    "Checkpoint 4.34",
+    "Example 4.36",
+    "Checkpoint 4.35",
+    "Solving Optimization Problems when the Interval Is Not Closed or Is Unbounded",
+    "Example 4.37",
+    "Checkpoint 4.36",
+    "Section 4.7 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1165043431956",
+      "kind": "example",
+      "title": "Example 4.32",
+      "position": 1,
+      "nearest_heading": "Solving Optimization Problems over a Closed, Bounded Interval",
+      "prompt_text": "Maximizing the Area of a Garden A rectangular garden is to be constructed using a rock wall as one side of the garden and wire fencing for the other three sides ( Figure 4.62 ). Given $100$ ft of wire fencing, determine the dimensions that would create a garden of maximum area. What is the maximum area? Figure 4.62 We want to determine the measurements $x$ and $y$ that will create a garden with a maximum area using $100$ ft of fencing.",
+      "prompt_latex_bits": [
+        "100",
+        "x",
+        "y",
+        "100"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043431956",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042474337",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.31",
+      "position": 2,
+      "nearest_heading": "Maximizing the Area of a Garden",
+      "prompt_text": "Determine the maximum area if we want to make the same rectangular garden as in Figure 4.63 , but we have $200$ ft of fencing.",
+      "prompt_latex_bits": [
+        "200"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042474337",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043024669",
+      "kind": "example",
+      "title": "Example 4.33",
+      "position": 3,
+      "nearest_heading": "Solving Optimization Problems",
+      "prompt_text": "Maximizing the Volume of a Box An open-top box is to be made from a $24$ in. by $36$ in. piece of cardboard by removing a square from each corner of the box and folding up the flaps on each side. What size square should be cut out of each corner to get a box with the maximum volume?",
+      "prompt_latex_bits": [
+        "24",
+        "36"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043024669",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042992008",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.32",
+      "position": 4,
+      "nearest_heading": "Maximizing the Volume of a Box",
+      "prompt_text": "Suppose the dimensions of the cardboard in Example 4.33 are 20 in. by 30 in. Let $x$ be the side length of each square and write the volume of the open-top box as a function of $x .$ Determine the domain of consideration for $x .$",
+      "prompt_latex_bits": [
+        "x",
+        "x .",
+        "x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042992008",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042350080",
+      "kind": "example",
+      "title": "Example 4.34",
+      "position": 5,
+      "nearest_heading": "Maximizing the Volume of a Box",
+      "prompt_text": "Minimizing Travel Time An island is $2 \\text{mi}$ due north of its closest point along a straight shoreline. A visitor is staying at a cabin on the shore that is $6 \\text{mi}$ west of that point. The visitor is planning to go from the cabin to the island. Suppose the visitor runs at a rate of $8 \\text{mph}$ and swims at a rate of $3 \\text{mph} .$ How far should the visitor run before swimming to minimize the time it takes to reach the island?",
+      "prompt_latex_bits": [
+        "2 \\text{mi}",
+        "6 \\text{mi}",
+        "8 \\text{mph}",
+        "3 \\text{mph} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042350080",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043107415",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.33",
+      "position": 6,
+      "nearest_heading": "Minimizing Travel Time",
+      "prompt_text": "Suppose the island is $1$ mi from shore, and the distance from the cabin to the point on the shore closest to the island is $15 \\text{mi} .$ Suppose a visitor swims at the rate of $2.5 \\text{mph}$ and runs at a rate of $6 \\text{mph} .$ Let $x$ denote the distance the visitor will run before swimming, and find a function for the time it takes the visitor to get from the cabin to the island.",
+      "prompt_latex_bits": [
+        "1",
+        "15 \\text{mi} .",
+        "2.5 \\text{mph}",
+        "6 \\text{mph} .",
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043107415",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043353574",
+      "kind": "example",
+      "title": "Example 4.35",
+      "position": 7,
+      "nearest_heading": "Minimizing Travel Time",
+      "prompt_text": "Maximizing Revenue Owners of a car rental company have determined that if they charge customers $p$ dollars per day to rent a car, where $50 \\leq p \\leq 200 ,$ the number of cars $n$ they rent per day can be modeled by the linear function $n (p) = 1000 - 5 p .$ If they charge $\\$ 50$ per day or less, they will rent all their cars. If they charge $\\$ 200$ per day or more, they will not rent any cars. Assuming the owners plan to charge customers between $50 per day and $\\$ 200$ per day to rent a car, how much should they charge to maximize their revenue?",
+      "prompt_latex_bits": [
+        "p",
+        "50 \\leq p \\leq 200 ,",
+        "n",
+        "n (p) = 1000 - 5 p .",
+        "\\$ 50",
+        "\\$ 200",
+        "\\$ 200"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043353574",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043257501",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.34",
+      "position": 8,
+      "nearest_heading": "Maximizing Revenue",
+      "prompt_text": "A car rental company charges its customers $p$ dollars per day, where $60 \\leq p \\leq 150 .$ It has found that the number of cars rented per day can be modeled by the linear function $n (p) = 750 - 5 p .$ How much should the company charge each customer to maximize revenue?",
+      "prompt_latex_bits": [
+        "p",
+        "60 \\leq p \\leq 150 .",
+        "n (p) = 750 - 5 p ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043257501",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043350161",
+      "kind": "example",
+      "title": "Example 4.36",
+      "position": 9,
+      "nearest_heading": "Maximizing Revenue",
+      "prompt_text": "Maximizing the Area of an Inscribed Rectangle A rectangle is to be inscribed in the ellipse $\\frac{x^{2}}{4} + y^{2} = 1 .$ What should the dimensions of the rectangle be to maximize its area? What is the maximum area?",
+      "prompt_latex_bits": [
+        "\\frac{x^{2}}{4} + y^{2} = 1 ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165043350161",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043390986",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.35",
+      "position": 10,
+      "nearest_heading": "Maximizing the Area of an Inscribed Rectangle",
+      "prompt_text": "Modify the area function $A$ if the rectangle is to be inscribed in the unit circle $x^{2} + y^{2} = 1 .$ What is the domain of consideration?",
+      "prompt_latex_bits": [
+        "A",
+        "x^{2} + y^{2} = 1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043390986",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042327673",
+      "kind": "example",
+      "title": "Example 4.37",
+      "position": 11,
+      "nearest_heading": "Solving Optimization Problems when the Interval Is Not Closed or Is Unbounded",
+      "prompt_text": "Minimizing Surface Area A rectangular box with a square base, an open top, and a volume of $216$ in. 3 is to be constructed. What should the dimensions of the box be to minimize the surface area of the box? What is the minimum surface area?",
+      "prompt_latex_bits": [
+        "216"
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1165042327673",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042713667",
+      "kind": "checkpoint",
+      "title": "Checkpoint 4.36",
+      "position": 12,
+      "nearest_heading": "Minimizing Surface Area",
+      "prompt_text": "Consider the same open-top box, which is to have volume $216 \\text{in} .^{3} .$ Suppose the cost of the material for the base is $20 \u00a2 / \\text{in} .^{2}$ and the cost of the material for the sides is $30 \u00a2 / \\text{in} .^{2}$ and we are trying to minimize the cost of this box. Write the cost as a function of the side lengths of the base. (Let $x$ be the side length of the base and $y$ be the height of the box.)",
+      "prompt_latex_bits": [
+        "216 \\text{in} .^{3} .",
+        "20 \u00a2 / \\text{in} .^{2}",
+        "30 \u00a2 / \\text{in} .^{2}",
+        "x",
+        "y"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042713667",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043396236",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 13,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "311 . When you find the maximum for an optimization problem, why do you need to check the sign of the derivative around the critical points?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043396236",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042476074",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 14,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "312 . Why do you need to check the endpoints for optimization problems?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042476074",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042706088",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "313 . True or False . For every continuous nonlinear function, you can find the value $x$ that maximizes the function.",
+      "prompt_latex_bits": [
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042706088",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042707536",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "314 . True or False . For every continuous nonconstant function on a closed, finite domain, there exists at least one $x$ that minimizes or maximizes the function.",
+      "prompt_latex_bits": [
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042707536",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043372672",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "315 . To carry a suitcase on an airplane, the length $+ \\text{width} +$ height of the box must be less than or equal to $62 \\text{in} .$ Assuming the base of the suitcase is square, show that the volume is $V = h \\left(\\right. 31 - \\left(\\right. \\frac{1}{2} \\left.\\right) h \\left.\\right)^{2} .$ What height allows you to have the largest volume?",
+      "prompt_latex_bits": [
+        "+ \\text{width} +",
+        "62 \\text{in} .",
+        "V = h \\left(\\right. 31 - \\left(\\right. \\frac{1}{2} \\left.\\right) h \\left.\\right)^{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043372672",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042606531",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "316 . You are constructing a cardboard box with the dimensions $\\text{2 m by 4 m} .$ You then cut equal-size squares from each corner so you may fold the edges. What are the dimensions of the box with the largest volume?",
+      "prompt_latex_bits": [
+        "\\text{2 m by 4 m} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042606531",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043384497",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "317 . Find the positive integer that minimizes the sum of the number and its reciprocal.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043384497",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042334143",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "318 . Find the two positive integers so that their sum is $10$ and the sum of their squares is as large as possible. Then find another two positive integers so that their sum is 10 and the sum of their squares is as small as possible.",
+      "prompt_latex_bits": [
+        "10"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042334143",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042970430",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "319 . You have $400 \\text{ft}$ of fencing to construct a rectangular pen for cattle. What are the dimensions of the pen that maximize the area?",
+      "prompt_latex_bits": [
+        "400 \\text{ft}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042970430",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042333382",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "320 . You have $800 \\text{ft}$ of fencing to make a pen for hogs. If you have a river on one side of your property, what is the dimension of the rectangular pen that maximizes the area?",
+      "prompt_latex_bits": [
+        "800 \\text{ft}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042333382",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042315729",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "321 . You need to construct a fence around an area of $1600 \\text{ft}^{2} .$ What are the dimensions of the rectangular pen to minimize the amount of material needed?",
+      "prompt_latex_bits": [
+        "1600 \\text{ft}^{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042315729",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042705517",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "322 . Two poles are connected by a wire that is also connected to the ground. The first pole is $20 \\text{ft}$ tall and the second pole is $10 \\text{ft}$ tall. There is a distance of $30 \\text{ft}$ between the two poles. Where should the wire be anchored to the ground to minimize the amount of wire needed?",
+      "prompt_latex_bits": [
+        "20 \\text{ft}",
+        "10 \\text{ft}",
+        "30 \\text{ft}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042705517",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043395264",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "323 . [T] You are moving into a new apartment and notice there is a corner where the hallway narrows from $\\text{8 ft to 6 ft} .$ What is the length of the longest item that can be carried horizontally around the corner?",
+      "prompt_latex_bits": [
+        "\\text{8 ft to 6 ft} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043395264",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042327384",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "324 . A patient\u2019s pulse measures $\\text{70 bpm},\\text{ 80 bpm},\\text{ then 120 bpm} .$ To determine an accurate measurement of pulse, the doctor wants to know what value minimizes the expression $(x - 70)^{2} + (x - 80)^{2} + (x - 120)^{2} ?$ What value minimizes it?",
+      "prompt_latex_bits": [
+        "\\text{70 bpm},\\text{ 80 bpm},\\text{ then 120 bpm} .",
+        "(x - 70)^{2} + (x - 80)^{2} + (x - 120)^{2} ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042327384",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042647088",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "325 . In the previous problem, assume the patient was nervous during the third measurement, so we only weight that value half as much as the others. What is the value that minimizes $(x - 70)^{2} + (x - 80)^{2} + \\frac{1}{2} (x - 120)^{2} ?$",
+      "prompt_latex_bits": [
+        "(x - 70)^{2} + (x - 80)^{2} + \\frac{1}{2} (x - 120)^{2} ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042647088",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043395063",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "326 . You can run at a speed of $6$ mph and swim at a speed of $3$ mph and are located on the shore, $4$ miles east of an island that is $1$ mile north of the shoreline. How far should you run west to minimize the time needed to reach the island?",
+      "prompt_latex_bits": [
+        "6",
+        "3",
+        "4",
+        "1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043395063",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042331767",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "327 . Find a function that measures the total amount of time it takes to reach the drowning person as a function of the swim angle, $\\theta .$",
+      "prompt_latex_bits": [
+        "\\theta ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042331767",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042472042",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "328 . Find at what angle $\\theta$ the lifeguard should swim to reach the drowning person in the least amount of time.",
+      "prompt_latex_bits": [
+        "\\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042472042",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042369580",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "329 . A truck uses gas as $g (v) = a v + \\frac{b}{v} ,$ where $v$ represents the speed of the truck and $g$ represents the gallons of fuel per mile. Assuming $a$ and $b$ are positive, at what speed is fuel consumption minimized?",
+      "prompt_latex_bits": [
+        "g (v) = a v + \\frac{b}{v} ,",
+        "v",
+        "g",
+        "a",
+        "b"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042369580",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042480102",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "330 . Find the cost per mile at speed $v .$",
+      "prompt_latex_bits": [
+        "v ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042480102",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042642766",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "331 . Find the cheapest driving speed.",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042642766",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042479778",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "332 . Find the profit function for the number of pizzas. How many pizzas gives the largest profit per pizza?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042479778",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042552153",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "333 . Assume that $R (x) = 10 x$ and $C (x) = 2 x + x^{2} .$ How many pizzas sold maximizes the profit?",
+      "prompt_latex_bits": [
+        "R (x) = 10 x",
+        "C (x) = 2 x + x^{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042552153",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042376370",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "334 . Assume that $R (x) = 15 x ,$ and $C (x) = 60 + 3 x + \\frac{1}{2} x^{2} .$ How many pizzas sold maximizes the profit?",
+      "prompt_latex_bits": [
+        "R (x) = 15 x ,",
+        "C (x) = 60 + 3 x + \\frac{1}{2} x^{2} ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042376370",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043251103",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "335 . Choose $x$ to maximize the sum of their areas.",
+      "prompt_latex_bits": [
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043251103",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043374302",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "336 . Choose $x$ to minimize the sum of their areas.",
+      "prompt_latex_bits": [
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043374302",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042647584",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "337 . $x y$",
+      "prompt_latex_bits": [
+        "x y"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042647584",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042632602",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "338 . $x^{2} y^{2}$",
+      "prompt_latex_bits": [
+        "x^{2} y^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042632602",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043108768",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "339 . $y - \\frac{1}{x}$",
+      "prompt_latex_bits": [
+        "y - \\frac{1}{x}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043108768",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042332050",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "340 . $x^{2} - y$",
+      "prompt_latex_bits": [
+        "x^{2} - y"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042332050",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042320296",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "341 . Find the volume of the largest right circular cylinder that fits in a sphere of radius $1 .$",
+      "prompt_latex_bits": [
+        "1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042320296",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042374786",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "342 . Find the volume of the largest right cone that fits in a sphere of radius $1 .$",
+      "prompt_latex_bits": [
+        "1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042374786",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042374736",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "343 . Find the area of the largest rectangle that fits into the triangle with sides $x = 0 , y = 0$ and $\\frac{x}{4} + \\frac{y}{6} = 1 .$",
+      "prompt_latex_bits": [
+        "x = 0 , y = 0",
+        "\\frac{x}{4} + \\frac{y}{6} = 1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042374736",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043423998",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "344 . Find the largest volume of a cylinder that fits into a cone that has base radius $R$ and height $h .$",
+      "prompt_latex_bits": [
+        "R",
+        "h ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043423998",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043426264",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "345 . Find the dimensions of the closed cylinder volume $V = 16 \\pi$ that has the least amount of surface area.",
+      "prompt_latex_bits": [
+        "V = 16 \\pi"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043426264",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043259703",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "346 . Find the dimensions of a right cone with surface area $S = 4 \\pi$ that has the largest volume.",
+      "prompt_latex_bits": [
+        "S = 4 \\pi"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043259703",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042468209",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "347 . [T] Where is the line $y = 5 - 2 x$ closest to the origin?",
+      "prompt_latex_bits": [
+        "y = 5 - 2 x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042468209",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042323527",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "348 . [T] Where is the line $y = 5 - 2 x$ closest to point $(1 , 1) ?$",
+      "prompt_latex_bits": [
+        "y = 5 - 2 x",
+        "(1 , 1) ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042323527",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165043174103",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "349 . [T] Where is the parabola $y = x^{2}$ closest to point $(2 , 0) ?$",
+      "prompt_latex_bits": [
+        "y = x^{2}",
+        "(2 , 0) ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165043174103",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042323681",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "350 . [T] Where is the parabola $y = x^{2}$ closest to point $(0 , 3) ?$",
+      "prompt_latex_bits": [
+        "y = x^{2}",
+        "(0 , 3) ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042323681",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042708277",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "351 . A window is composed of a semicircle placed on top of a rectangle. If you have $20 \\text{ft}$ of window-framing materials for the outer frame, what is the maximum size of the window you can create? Use $r$ to represent the radius of the semicircle.",
+      "prompt_latex_bits": [
+        "20 \\text{ft}",
+        "r"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042708277",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042710874",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "352 . You have a garden row of $20$ watermelon plants that produce an average of $30$ watermelons apiece. For any additional watermelon plants planted, the output per watermelon plant drops by one watermelon. How many extra watermelon plants should you plant?",
+      "prompt_latex_bits": [
+        "20",
+        "30"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042710874",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042349953",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "353 . You are constructing a box for your cat to sleep in. The plush material for the square bottom of the box costs $\\$ 5 / \\text{ft}^{2}$ and the material for the sides costs $\\$ 2 / \\text{ft}^{2} .$ You need a box with volume $4 \\left( \\text{ft}\\right)^{3} .$ Find the dimensions of the box that minimize cost. Use $x$ to represent the length of the side of the box.",
+      "prompt_latex_bits": [
+        "\\$ 5 / \\text{ft}^{2}",
+        "\\$ 2 / \\text{ft}^{2} .",
+        "4 \\left( \\text{ft}\\right)^{3} .",
+        "x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042349953",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042323650",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "354 . You are building five identical pens adjacent to each other with a total area of $1000 \\left( \\text{m}\\right)^{2} ,$ as shown in the following figure. What dimensions should you use to minimize the amount of fencing?",
+      "prompt_latex_bits": [
+        "1000 \\left( \\text{m}\\right)^{2} ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042323650",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1165042383908",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 4.7 Exercises",
+      "prompt_text": "355 . You are the manager of an apartment complex with $50$ units. When you set rent at $\\$ 800 / \\text{month},$ all apartments are rented. As you increase rent by $\\$ 25 / \\text{month},$ one fewer apartment is rented. Maintenance costs run $\\$ 50 / \\text{month}$ for each occupied unit. What is the rent that maximizes the total amount of profit?",
+      "prompt_latex_bits": [
+        "50",
+        "\\$ 800 / \\text{month},",
+        "\\$ 25 / \\text{month},",
+        "\\$ 50 / \\text{month}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1165042383908",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:32.345366+00:00",
+  "stage": "1_inventory"
+}

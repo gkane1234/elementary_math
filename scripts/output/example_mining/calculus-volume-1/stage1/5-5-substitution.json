@@ -1,0 +1,1185 @@
+{
+  "book": "calculus-volume-1",
+  "slug": "5-5-substitution",
+  "title": "5.5 Substitution",
+  "source_url": "https://openstax.org/books/calculus-volume-1/pages/5-5-substitution",
+  "local_path": "textbooks/openstax/html/calculus-volume-1/5-5-substitution.html",
+  "objectives": [
+    "5.5.1 Use substitution to evaluate indefinite integrals.",
+    "5.5.2 Use substitution to evaluate definite integrals."
+  ],
+  "headings": [
+    "5.5 Substitution",
+    "Learning Objectives",
+    "Theorem 5.7",
+    "Proof",
+    "Problem-Solving Strategy",
+    "Example 5.30",
+    "Checkpoint 5.25",
+    "Example 5.31",
+    "Checkpoint 5.26",
+    "Example 5.32",
+    "Checkpoint 5.27",
+    "Example 5.33",
+    "Checkpoint 5.28",
+    "Substitution for Definite Integrals",
+    "Theorem 5.8",
+    "Example 5.34",
+    "Checkpoint 5.29",
+    "Example 5.35",
+    "Checkpoint 5.30",
+    "Example 5.36",
+    "Section 5.5 Exercises"
+  ],
+  "items": [
+    {
+      "item_id": "fs-id1170573385785",
+      "kind": "example",
+      "title": "Example 5.30",
+      "position": 1,
+      "nearest_heading": "Integration by Substitution",
+      "prompt_text": "Using Substitution to Find an Antiderivative Use substitution to find the antiderivative $\\int 6 x \\left(\\right. 3 x^{2} + 4 \\left.\\right)^{4} d x .$",
+      "prompt_latex_bits": [
+        "\\int 6 x \\left(\\right. 3 x^{2} + 4 \\left.\\right)^{4} d x .",
+        "y = \\frac{1}{5} \\left(\\right. 3 x^{2} + 4 \\left.\\right)^{5} + 1 .",
+        "y = \\frac{1}{5} \\left(\\right. 3 x^{2} + 4 \\left.\\right)^{5} + 1 ,",
+        "\\\\ y^{'} & = \\left(\\right. \\frac{1}{5} \\left.\\right) 5 \\left(\\left(\\right. 3 x^{2} + 4 \\left.\\right)\\right)^{4} 6 x \\\\ & = 6 x \\left(\\left(\\right. 3 x^{2} + 4 \\left.\\right)\\right)^{4} ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170573385785",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573430304",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.25",
+      "position": 2,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Use substitution to find the antiderivative $\\int 3 x^{2} \\left(\\right. x^{3} - 3 \\left.\\right)^{2} d x .$",
+      "prompt_latex_bits": [
+        "\\int 3 x^{2} \\left(\\right. x^{3} - 3 \\left.\\right)^{2} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573430304",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571334083",
+      "kind": "example",
+      "title": "Example 5.31",
+      "position": 3,
+      "nearest_heading": "Analysis",
+      "prompt_text": "Using Substitution with Alteration Use substitution to find $\\int z \\sqrt{z^{2} - 5} d z .$",
+      "prompt_latex_bits": [
+        "\\int z \\sqrt{z^{2} - 5} d z ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571334083",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573362318",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.26",
+      "position": 4,
+      "nearest_heading": "Using Substitution with Alteration",
+      "prompt_text": "Use substitution to find $\\int x^{2} \\left(\\right. x^{3} + 5 \\left.\\right)^{9} d x .$",
+      "prompt_latex_bits": [
+        "\\int x^{2} \\left(\\right. x^{3} + 5 \\left.\\right)^{9} d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573362318",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573573975",
+      "kind": "example",
+      "title": "Example 5.32",
+      "position": 5,
+      "nearest_heading": "Using Substitution with Alteration",
+      "prompt_text": "Using Substitution with Integrals of Trigonometric Functions Use substitution to evaluate the integral $\\int \\frac{\\sin t}{\\cos^{3} t} d t .$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\sin t}{\\cos^{3} t} d t ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170573573975",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573733746",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.27",
+      "position": 6,
+      "nearest_heading": "Using Substitution with Integrals of Trigonometric Functions",
+      "prompt_text": "Use substitution to evaluate the integral $\\int \\frac{\\cos t}{\\sin^{2} t} d t .$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\cos t}{\\sin^{2} t} d t ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573733746",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573426799",
+      "kind": "example",
+      "title": "Example 5.33",
+      "position": 7,
+      "nearest_heading": "Using Substitution with Integrals of Trigonometric Functions",
+      "prompt_text": "Finding an Antiderivative Using u -Substitution Use substitution to find the antiderivative $\\int \\frac{x}{\\sqrt{x - 1}} d x .$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x}{\\sqrt{x - 1}} d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170573426799",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571115891",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.28",
+      "position": 8,
+      "nearest_heading": "Finding an Antiderivative Using u -Substitution",
+      "prompt_text": "Use substitution to evaluate the indefinite integral $\\int \\cos^{3} t \\sin t d t .$",
+      "prompt_latex_bits": [
+        "\\int \\cos^{3} t \\sin t d t ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571115891",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571215481",
+      "kind": "example",
+      "title": "Example 5.34",
+      "position": 9,
+      "nearest_heading": "Substitution with Definite Integrals",
+      "prompt_text": "Using Substitution to Evaluate a Definite Integral Use substitution to evaluate $\\int_{0}^{1} x^{2} \\left(\\right. 1 + 2 x^{3} \\left.\\right)^{5} d x .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} x^{2} \\left(\\right. 1 + 2 x^{3} \\left.\\right)^{5} d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170571215481",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571101513",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.29",
+      "position": 10,
+      "nearest_heading": "Using Substitution to Evaluate a Definite Integral",
+      "prompt_text": "Use substitution to evaluate the definite integral $\\int_{\u22121}^{0} y \\left(\\right. 2 y^{2} - 3 \\left.\\right)^{5} d y .$",
+      "prompt_latex_bits": [
+        "\\int_{\u22121}^{0} y \\left(\\right. 2 y^{2} - 3 \\left.\\right)^{5} d y ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571101513",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573593895",
+      "kind": "example",
+      "title": "Example 5.35",
+      "position": 11,
+      "nearest_heading": "Using Substitution to Evaluate a Definite Integral",
+      "prompt_text": "Using Substitution with an Exponential Function Use substitution to evaluate $\\int_{0}^{1} x e^{4 x^{2} + 3} d x .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} x e^{4 x^{2} + 3} d x ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170573593895",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170570976160",
+      "kind": "checkpoint",
+      "title": "Checkpoint 5.30",
+      "position": 12,
+      "nearest_heading": "Using Substitution with an Exponential Function",
+      "prompt_text": "Use substitution to evaluate $\\int_{0}^{1} x^{2} \\cos \\left(\\right. \\frac{\\pi}{2} x^{3} \\left.\\right) d x .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} x^{2} \\cos \\left(\\right. \\frac{\\pi}{2} x^{3} \\left.\\right) d x ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170570976160",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170570994085",
+      "kind": "example",
+      "title": "Example 5.36",
+      "position": 13,
+      "nearest_heading": "Using Substitution with an Exponential Function",
+      "prompt_text": "Using Substitution to Evaluate a Trigonometric Integral Use substitution to evaluate $\\int_{0}^{\\pi / 2} \\cos^{2} \\theta d \\theta .$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi / 2} \\cos^{2} \\theta d \\theta ."
+      ],
+      "has_solution": true,
+      "source_anchor": "fs-id1170570994085",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573549514",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 14,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "254 . Why is u -substitution referred to as change of variable ?",
+      "prompt_latex_bits": [],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573549514",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573575165",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 15,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "255 . 2. If $f = g \\circ h ,$ when reversing the chain rule, $\\frac{d}{d x} \\left(\\right. g \\circ h \\left.\\right) (x) = g^{'} ( h (x) \\left.\\right) h^{'} ( x \\left.\\right) ,$ should you take $u = g (x)$ or $u = h (x) ?$",
+      "prompt_latex_bits": [
+        "f = g \\circ h ,",
+        "\\frac{d}{d x} \\left(\\right. g \\circ h \\left.\\right) (x) = g^{'} ( h (x) \\left.\\right) h^{'} ( x \\left.\\right) ,",
+        "u = g (x)",
+        "u = h (x) ?"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573575165",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571033648",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 16,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "256 . $\\int x \\sqrt{x + 1} d x = \\frac{2}{15} (x + 1)^{3 / 2} (3 x - 2) + C ; u = x + 1$",
+      "prompt_latex_bits": [
+        "\\int x \\sqrt{x + 1} d x = \\frac{2}{15} (x + 1)^{3 / 2} (3 x - 2) + C ; u = x + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571033648",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573718856",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 17,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "257 . For $x > 1 : \\int \\frac{x^{2}}{\\sqrt{x - 1}} d x = \\frac{2}{15} \\sqrt{x - 1} \\left(\\right. 3 x^{2} + 4 x + 8 \\left.\\right) + C ; u = x - 1$",
+      "prompt_latex_bits": [
+        "x > 1 : \\int \\frac{x^{2}}{\\sqrt{x - 1}} d x = \\frac{2}{15} \\sqrt{x - 1} \\left(\\right. 3 x^{2} + 4 x + 8 \\left.\\right) + C ; u = x - 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573718856",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571303033",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 18,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "258 . $\\int x \\sqrt{4 x^{2} + 9} d x = \\frac{1}{12} \\left(\\right. 4 x^{2} + 9 \\left.\\right)^{3 / 2} + C ; u = 4 x^{2} + 9$",
+      "prompt_latex_bits": [
+        "\\int x \\sqrt{4 x^{2} + 9} d x = \\frac{1}{12} \\left(\\right. 4 x^{2} + 9 \\left.\\right)^{3 / 2} + C ; u = 4 x^{2} + 9"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571303033",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571206963",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 19,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "259 . $\\int \\frac{x}{\\sqrt{4 x^{2} + 9}} d x = \\frac{1}{4} \\sqrt{4 x^{2} + 9} + C ; u = 4 x^{2} + 9$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x}{\\sqrt{4 x^{2} + 9}} d x = \\frac{1}{4} \\sqrt{4 x^{2} + 9} + C ; u = 4 x^{2} + 9"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571206963",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573759850",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 20,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "260 . $\\int \\frac{x}{\\left(\\left(\\right. 4 x^{2} + 9 \\left.\\right)\\right)^{2}} d x = - \\frac{1}{8 \\left(\\right. 4 x^{2} + 9 \\left.\\right)} ; u = 4 x^{2} + 9$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x}{\\left(\\left(\\right. 4 x^{2} + 9 \\left.\\right)\\right)^{2}} d x = - \\frac{1}{8 \\left(\\right. 4 x^{2} + 9 \\left.\\right)} ; u = 4 x^{2} + 9"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573759850",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571119993",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 21,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "261 . $\\int (x + 1)^{4} d x ; u = x + 1$",
+      "prompt_latex_bits": [
+        "\\int (x + 1)^{4} d x ; u = x + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571119993",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170570996054",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 22,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "262 . $\\int (x - 1)^{5} d x ; u = x - 1$",
+      "prompt_latex_bits": [
+        "\\int (x - 1)^{5} d x ; u = x - 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170570996054",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571056458",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 23,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "263 . $\\int (2 x - 3)^{\u22127} d x ; u = 2 x - 3$",
+      "prompt_latex_bits": [
+        "\\int (2 x - 3)^{\u22127} d x ; u = 2 x - 3"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571056458",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573760680",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 24,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "264 . $\\int (3 x - 2)^{\u221211} d x ; u = 3 x - 2$",
+      "prompt_latex_bits": [
+        "\\int (3 x - 2)^{\u221211} d x ; u = 3 x - 2"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573760680",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573417176",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 25,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "265 . $\\int \\frac{x}{\\sqrt{x^{2} + 1}} d x ; u = x^{2} + 1$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x}{\\sqrt{x^{2} + 1}} d x ; u = x^{2} + 1"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573417176",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573542517",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 26,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "266 . $\\int \\frac{x}{\\sqrt{1 - x^{2}}} d x ; u = 1 - x^{2}$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x}{\\sqrt{1 - x^{2}}} d x ; u = 1 - x^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573542517",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571123643",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 27,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "267 . $\\int (x - 1) \\left(\\right. x^{2} - 2 x \\left.\\right)^{3} d x ; u = x^{2} - 2 x$",
+      "prompt_latex_bits": [
+        "\\int (x - 1) \\left(\\right. x^{2} - 2 x \\left.\\right)^{3} d x ; u = x^{2} - 2 x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571123643",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571145634",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 28,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "268 . $\\int \\left(\\right. x^{2} - 2 x \\left.\\right) \\left(\\right. x^{3} - 3 x^{2} \\left.\\right)^{2} d x ; u = x^{3} \u2013 3 x^{2}$",
+      "prompt_latex_bits": [
+        "\\int \\left(\\right. x^{2} - 2 x \\left.\\right) \\left(\\right. x^{3} - 3 x^{2} \\left.\\right)^{2} d x ; u = x^{3} \u2013 3 x^{2}"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571145634",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573623732",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 29,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "269 . $\\int \\cos^{3} \\theta d \\theta ; u = \\sin \\theta$ $( H i n t : \\cos^{2} \\theta = 1 - \\sin^{2} \\theta )$",
+      "prompt_latex_bits": [
+        "\\int \\cos^{3} \\theta d \\theta ; u = \\sin \\theta",
+        "( H i n t : \\cos^{2} \\theta = 1 - \\sin^{2} \\theta )"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573623732",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571227343",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 30,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "270 . $\\int \\sin^{3} \\theta d \\theta ; u = \\cos \\theta$ $( H i n t : \\sin^{2} \\theta = 1 - \\cos^{2} \\theta )$",
+      "prompt_latex_bits": [
+        "\\int \\sin^{3} \\theta d \\theta ; u = \\cos \\theta",
+        "( H i n t : \\sin^{2} \\theta = 1 - \\cos^{2} \\theta )"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571227343",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571136656",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 31,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "271 . $\\int x (1 - x)^{99} d x$",
+      "prompt_latex_bits": [
+        "\\int x (1 - x)^{99} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571136656",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571304981",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 32,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "272 . $\\int t \\left(\\right. 1 - t^{2} \\left.\\right)^{10} d t$",
+      "prompt_latex_bits": [
+        "\\int t \\left(\\right. 1 - t^{2} \\left.\\right)^{10} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571304981",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571275277",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 33,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "273 . $\\int (11 x - 7)^{\u22123} d x$",
+      "prompt_latex_bits": [
+        "\\int (11 x - 7)^{\u22123} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571275277",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573545918",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 34,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "274 . $\\int (7 x - 11)^{4} d x$",
+      "prompt_latex_bits": [
+        "\\int (7 x - 11)^{4} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573545918",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573727306",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 35,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "275 . $\\int \\cos^{3} \\theta \\sin \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int \\cos^{3} \\theta \\sin \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573727306",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571094884",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 36,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "276 . $\\int \\sin^{7} \\theta \\cos \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int \\sin^{7} \\theta \\cos \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571094884",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571158870",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 37,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "277 . $\\int \\cos^{2} \\left(\\right. \\pi t \\left.\\right) \\sin \\left(\\right. \\pi t \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int \\cos^{2} \\left(\\right. \\pi t \\left.\\right) \\sin \\left(\\right. \\pi t \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571158870",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573759909",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 38,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "278 . $\\int \\sin^{2} x \\cos^{3} x d x$ $( H i n t : \\sin^{2} x + \\cos^{2} x = 1 )$",
+      "prompt_latex_bits": [
+        "\\int \\sin^{2} x \\cos^{3} x d x",
+        "( H i n t : \\sin^{2} x + \\cos^{2} x = 1 )"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573759909",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571340505",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 39,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "279 . $\\int t \\sin \\left(\\right. t^{2} \\left.\\right) \\cos \\left(\\right. t^{2} \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int t \\sin \\left(\\right. t^{2} \\left.\\right) \\cos \\left(\\right. t^{2} \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571340505",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571340409",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 40,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "280 . $\\int t^{2} \\cos^{2} \\left(\\right. t^{3} \\left.\\right) \\sin \\left(\\right. t^{3} \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int t^{2} \\cos^{2} \\left(\\right. t^{3} \\left.\\right) \\sin \\left(\\right. t^{3} \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571340409",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571232630",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 41,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "281 . $\\int \\frac{x^{2}}{\\left(\\right. x^{3} - 3 \\left.\\right)^{2}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x^{2}}{\\left(\\right. x^{3} - 3 \\left.\\right)^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571232630",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170570999552",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 42,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "282 . $\\int \\frac{x^{3}}{\\sqrt{1 - x^{2}}} d x$",
+      "prompt_latex_bits": [
+        "\\int \\frac{x^{3}}{\\sqrt{1 - x^{2}}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170570999552",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571057347",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 43,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "283 . $\\int \\frac{y^{5}}{\\left(\\right. 1 - y^{3} \\left.\\right)^{3 / 2}} d y$",
+      "prompt_latex_bits": [
+        "\\int \\frac{y^{5}}{\\left(\\right. 1 - y^{3} \\left.\\right)^{3 / 2}} d y"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571057347",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571269414",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 44,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "284 . $\\int \\cos \\theta \\left(\\right. 1 - \\cos \\theta \\left.\\right)^{99} \\sin \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int \\cos \\theta \\left(\\right. 1 - \\cos \\theta \\left.\\right)^{99} \\sin \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571269414",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571160788",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 45,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "285 . $\\int \\left(\\right. 1 - \\cos^{3} \\theta \\left.\\right)^{10} \\cos^{2} \\theta \\sin \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int \\left(\\right. 1 - \\cos^{3} \\theta \\left.\\right)^{10} \\cos^{2} \\theta \\sin \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571160788",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571379754",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 46,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "286 . $\\int \\left(\\right. \\cos \\theta - 1 \\left.\\right) \\left(\\right. \\cos^{2} \\theta - 2 \\cos \\theta \\left.\\right)^{3} \\sin \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int \\left(\\right. \\cos \\theta - 1 \\left.\\right) \\left(\\right. \\cos^{2} \\theta - 2 \\cos \\theta \\left.\\right)^{3} \\sin \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571379754",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571030683",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 47,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "287 . $\\int \\left(\\right. \\sin^{2} \\theta - 2 \\sin \\theta \\left.\\right) \\left(\\right. \\sin^{3} \\theta - 3 \\sin^{2} \\theta \\left.\\right)^{3} \\cos \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int \\left(\\right. \\sin^{2} \\theta - 2 \\sin \\theta \\left.\\right) \\left(\\right. \\sin^{3} \\theta - 3 \\sin^{2} \\theta \\left.\\right)^{3} \\cos \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571030683",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571115002",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 48,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "288 . [T] $y = 3 (1 - x)^{2}$ over $\\left[\\right. 0 , 2 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = 3 (1 - x)^{2}",
+        "\\left[\\right. 0 , 2 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571115002",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571158789",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 49,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "289 . [T] $y = x \\left(\\right. 1 - x^{2} \\left.\\right)^{3}$ over $\\left[\\right. \u22121 , 2 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = x \\left(\\right. 1 - x^{2} \\left.\\right)^{3}",
+        "\\left[\\right. \u22121 , 2 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571158789",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571337335",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 50,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "290 . [T] $y = \\sin x \\left(\\right. 1 - \\cos x \\left.\\right)^{2}$ over $\\left[\\right. 0 , \\pi \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = \\sin x \\left(\\right. 1 - \\cos x \\left.\\right)^{2}",
+        "\\left[\\right. 0 , \\pi \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571337335",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571159912",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 51,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "291 . [T] $y = \\frac{x}{\\left(\\right. x^{2} + 1 \\left.\\right)^{2}}$ over $\\left[\\right. \u22121 , 1 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "y = \\frac{x}{\\left(\\right. x^{2} + 1 \\left.\\right)^{2}}",
+        "\\left[\\right. \u22121 , 1 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571159912",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571057439",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 52,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "292 . $\\int_{0}^{1} x \\sqrt{1 - x^{2}} d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} x \\sqrt{1 - x^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571057439",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571026374",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 53,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "293 . $\\int_{0}^{1} \\frac{x}{\\sqrt{1 + x^{2}}} d x$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} \\frac{x}{\\sqrt{1 + x^{2}}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571026374",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571037384",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 54,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "294 . $\\int_{0}^{2} \\frac{t}{\\sqrt{5 + t^{2}}} d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{2} \\frac{t}{\\sqrt{5 + t^{2}}} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571037384",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571329548",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 55,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "295 . $\\int_{0}^{1} \\frac{t^{2}}{\\sqrt{1 + t^{3}}} d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} \\frac{t^{2}}{\\sqrt{1 + t^{3}}} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571329548",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571160643",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 56,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "296 . $\\int_{0}^{\\pi / 4} \\sec^{2} \\theta \\tan \\theta d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi / 4} \\sec^{2} \\theta \\tan \\theta d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571160643",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571078760",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 57,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "297 . $\\int_{0}^{\\pi / 4} \\frac{\\sin \\theta}{\\cos^{4} \\theta} d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi / 4} \\frac{\\sin \\theta}{\\cos^{4} \\theta} d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571078760",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571303693",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 58,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "298 . [T] $\\int (2 x + 1) e^{x^{2} + x - 6} d x$ over $\\left[\\right. \u22123 , 2 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\int (2 x + 1) e^{x^{2} + x - 6} d x",
+        "\\left[\\right. \u22123 , 2 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571303693",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573762457",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 59,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "299 . [T] $\\int \\frac{\\cos \\left(\\right. \\ln (2 x) \\left.\\right)}{x} d x$ on $\\left[\\right. 0 , 2 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\cos \\left(\\right. \\ln (2 x) \\left.\\right)}{x} d x",
+        "\\left[\\right. 0 , 2 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573762457",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571021797",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 60,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "300 . [T] $\\int \\frac{3 x^{2} + 2 x + 1}{\\sqrt{x^{3} + x^{2} + x + 4}} d x$ over $\\left[\\right. \u22121 , 2 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\int \\frac{3 x^{2} + 2 x + 1}{\\sqrt{x^{3} + x^{2} + x + 4}} d x",
+        "\\left[\\right. \u22121 , 2 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571021797",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573542457",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 61,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "301 . [T] $\\int \\frac{\\sin x}{\\cos^{3} x} d x$ over $\\left[\\right. - \\frac{\\pi}{3} , \\frac{\\pi}{3} \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\int \\frac{\\sin x}{\\cos^{3} x} d x",
+        "\\left[\\right. - \\frac{\\pi}{3} , \\frac{\\pi}{3} \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573542457",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571340126",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 62,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "302 . [T] $\\int (x + 2) e^{\u2212 x^{2} - 4 x + 3} d x$ over $\\left[\\right. \u22125 , 1 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\int (x + 2) e^{\u2212 x^{2} - 4 x + 3} d x",
+        "\\left[\\right. \u22125 , 1 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571340126",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571098887",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 63,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "303 . [T] $\\int 3 x^{2} \\sqrt{2 x^{3} + 1} d x$ over $\\left[\\right. 0 , 1 \\left]\\right.$",
+      "prompt_latex_bits": [
+        "\\int 3 x^{2} \\sqrt{2 x^{3} + 1} d x",
+        "\\left[\\right. 0 , 1 \\left]\\right."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571098887",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571160883",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 64,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "304 . If $h (a) = h (b)$ in $\\int_{a}^{b} g ' \\left(\\right. h (x) \\left.\\right) h ' (x) d x ,$ what can you say about the value of the integral?",
+      "prompt_latex_bits": [
+        "h (a) = h (b)",
+        "\\int_{a}^{b} g ' \\left(\\right. h (x) \\left.\\right) h ' (x) d x ,"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571160883",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571160975",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 65,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "305 . Is the substitution $u = 1 - x^{2}$ in the definite integral $\\int_{0}^{2} \\frac{x}{1 - x^{2}} d x$ okay? If not, why not?",
+      "prompt_latex_bits": [
+        "u = 1 - x^{2}",
+        "\\int_{0}^{2} \\frac{x}{1 - x^{2}} d x"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571160975",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571291144",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 66,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "306 . $\\int_{0}^{\\pi} \\cos^{2} \\left(\\right. 2 \\theta \\left.\\right) \\sin \\left(\\right. 2 \\theta \\left.\\right) d \\theta$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi} \\cos^{2} \\left(\\right. 2 \\theta \\left.\\right) \\sin \\left(\\right. 2 \\theta \\left.\\right) d \\theta"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571291144",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571158577",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 67,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "307 . $\\int_{0}^{\\sqrt{\\pi}} t \\cos \\left(\\right. t^{2} \\left.\\right) \\sin \\left(\\right. t^{2} \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\sqrt{\\pi}} t \\cos \\left(\\right. t^{2} \\left.\\right) \\sin \\left(\\right. t^{2} \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571158577",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571046470",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 68,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "308 . $\\int_{0}^{1} (1 - 2 t) d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} (1 - 2 t) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571046470",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571046569",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 69,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "309 . $\\int_{0}^{1} \\frac{1 - 2 t}{\\left(\\right. 1 + \\left(\\right. t - \\frac{1}{2} \\left.\\right)^{2} \\left.\\right)} d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{1} \\frac{1 - 2 t}{\\left(\\right. 1 + \\left(\\right. t - \\frac{1}{2} \\left.\\right)^{2} \\left.\\right)} d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571046569",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571327483",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 70,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "310 . $\\int_{0}^{\\pi} \\sin \\left(\\right. \\left(\\right. t - \\frac{\\pi}{2} \\left.\\right)^{3} \\left.\\right) \\cos \\left(\\right. t - \\frac{\\pi}{2} \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{\\pi} \\sin \\left(\\right. \\left(\\right. t - \\frac{\\pi}{2} \\left.\\right)^{3} \\left.\\right) \\cos \\left(\\right. t - \\frac{\\pi}{2} \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571327483",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571371143",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 71,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "311 . $\\int_{0}^{2} (1 - t) \\cos \\left(\\right. \\pi t \\left.\\right) d t$",
+      "prompt_latex_bits": [
+        "\\int_{0}^{2} (1 - t) \\cos \\left(\\right. \\pi t \\left.\\right) d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571371143",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571134790",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 72,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "312 . $\\int_{\\pi / 4}^{3 \\pi / 4} \\sin^{2} t \\cos t d t$",
+      "prompt_latex_bits": [
+        "\\int_{\\pi / 4}^{3 \\pi / 4} \\sin^{2} t \\cos t d t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571134790",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571276371",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 73,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "313 . Show that the average value of $f (x)$ over an interval $\\left[\\right. a , b \\left]\\right.$ is the same as the average value of $f (c x)$ over the interval $\\left[\\right. \\frac{a}{c} , \\frac{b}{c} \\left]\\right.$ for $c > 0 .$",
+      "prompt_latex_bits": [
+        "f (x)",
+        "\\left[\\right. a , b \\left]\\right.",
+        "f (c x)",
+        "\\left[\\right. \\frac{a}{c} , \\frac{b}{c} \\left]\\right.",
+        "c > 0 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571276371",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571273653",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 74,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "314 . Find the area under the graph of $f (t) = \\frac{t}{\\left(\\right. 1 + t^{2} \\left.\\right)^{a}}$ between $t = 0$ and $t = x$ where $a > 0$ and $a \\neq 1$ is fixed, and evaluate the limit as $x \\to \\infty .$",
+      "prompt_latex_bits": [
+        "f (t) = \\frac{t}{\\left(\\right. 1 + t^{2} \\left.\\right)^{a}}",
+        "t = 0",
+        "t = x",
+        "a > 0",
+        "a \\neq 1",
+        "x \\to \\infty ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571273653",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571132654",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 75,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "315 . Find the area under the graph of $g (t) = \\frac{t}{\\left(\\right. 1 - t^{2} \\left.\\right)^{a}}$ between $t = 0$ and $t = x ,$ where $0 < x < 1$ and $a > 0$ is fixed. Evaluate the limit as $x \\to 1 .$",
+      "prompt_latex_bits": [
+        "g (t) = \\frac{t}{\\left(\\right. 1 - t^{2} \\left.\\right)^{a}}",
+        "t = 0",
+        "t = x ,",
+        "0 < x < 1",
+        "a > 0",
+        "x \\to 1 ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571132654",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170573713777",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 76,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "316 . The area of a semicircle of radius 1 can be expressed as $\\int_{\u22121}^{1} \\sqrt{1 - x^{2}} d x .$ Use the substitution $x = \\cos t$ to express the area of a semicircle as the integral of a trigonometric function. You do not need to compute the integral.",
+      "prompt_latex_bits": [
+        "\\int_{\u22121}^{1} \\sqrt{1 - x^{2}} d x .",
+        "x = \\cos t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170573713777",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571169773",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 77,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "317 . The area of the top half of an ellipse with a major axis that is the x -axis from $x = - a$ to $x = a$ and with a minor axis that is the y -axis from $y = \u2212 b$ to $y = b$ can be written as $\\int_{\u2212 a}^{a} b \\sqrt{1 - \\frac{x^{2}}{a^{2}}} d x .$ Use the substitution $x = a \\cos t$ to express this area in terms of an integral of a trigonometric function. You do not need to compute the integral.",
+      "prompt_latex_bits": [
+        "x = - a",
+        "x = a",
+        "y = \u2212 b",
+        "y = b",
+        "\\int_{\u2212 a}^{a} b \\sqrt{1 - \\frac{x^{2}}{a^{2}}} d x .",
+        "x = a \\cos t"
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571169773",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571068045",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 78,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "318 . [T] The following graph is of a function of the form $f (t) = a \\sin (n t) + b \\sin (m t) .$ Estimate the coefficients a and b , and the frequency parameters n and m . Use these estimates to approximate $\\int_{0}^{\\pi} f (t) d t .$",
+      "prompt_latex_bits": [
+        "f (t) = a \\sin (n t) + b \\sin (m t) .",
+        "\\int_{0}^{\\pi} f (t) d t ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571068045",
+      "notes": ""
+    },
+    {
+      "item_id": "fs-id1170571249463",
+      "kind": "section_exercise",
+      "title": null,
+      "position": 79,
+      "nearest_heading": "Section 5.5 Exercises",
+      "prompt_text": "319 . [T] The following graph is of a function of the form $f (x) = a \\cos (n t) + b \\cos (m t) .$ Estimate the coefficients a and b and the frequency parameters n and m . Use these estimates to approximate $\\int_{0}^{\\frac{\\pi}{2}} f (t) d t .$",
+      "prompt_latex_bits": [
+        "f (x) = a \\cos (n t) + b \\cos (m t) .",
+        "\\int_{0}^{\\frac{\\pi}{2}} f (t) d t ."
+      ],
+      "has_solution": false,
+      "source_anchor": "fs-id1170571249463",
+      "notes": ""
+    }
+  ],
+  "extracted_at": "2026-07-28T21:56:40.911555+00:00",
+  "stage": "1_inventory"
+}

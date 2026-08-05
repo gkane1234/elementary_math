@@ -962,25 +962,35 @@ class WorkProblemFramework(WordProblemFramework):
 
 
 class AgeProblemFramework(WordProblemFramework):
+    """Age WP — thin adapter over narrative_wp sampler (upgrades + compose)."""
+
     problem_kind = "age"
 
+    def __init__(self, template: WordProblemTemplate | None = None):
+        super().__init__(template)
+        self._last_meta: dict[str, Any] = {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        return dict(self._last_meta)
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        older, younger = _pick_names(settings, 2)
-        diff = _random_value(settings, lo=2, hi=8)
-        younger_age = _random_value(settings, lo=8, hi=20)
-        older_age = younger_age + diff
-        total = younger_age + older_age
-        answer = _format_answer(younger_age, settings)
-        year_unit = _unit_label(settings, "years") or "years"
-        latex = (
-            rf"\text{{{older} is {diff} {year_unit} older than {younger}. "
-            rf"The sum of their ages is {total} {year_unit}. How old is {younger}?}}"
+        from question_engine.frameworks.primitives import PRIM_EQUATIONS, build_context
+        from question_engine.frameworks.primitives.narrative_wp import (
+            narrative_item_metadata,
+            sample_age_wp,
         )
-        text = (
-            f"{older} is {diff} {year_unit} older than {younger}. "
-            f"The sum of their ages is {total} {year_unit}. How old is {younger}?"
-        )
-        return latex, text, _append_units(answer, settings)
+
+        ctx = build_context(settings, [PRIM_EQUATIONS], leaf_id="wp_age")
+        item = sample_age_wp(ctx)
+        self._last_meta = narrative_item_metadata(item, ctx)
+        return item.latex, item.text, _append_units(item.answer_latex, settings)
 
 
 _COUNT_WORDS = {2: "two", 3: "three", 4: "four", 5: "five"}
@@ -1055,76 +1065,69 @@ def _consecutive_start(settings: dict, *, count: int, parity: str, step: int) ->
 
 
 class ConsecutiveIntegersFramework(WordProblemFramework):
+    """Consecutive-integer WP — thin adapter over narrative_wp sampler."""
+
     problem_kind = "consecutive_integers"
 
+    def __init__(self, template: WordProblemTemplate | None = None):
+        super().__init__(template)
+        self._last_meta: dict[str, Any] = {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        return dict(self._last_meta)
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        count = _consecutive_count(settings)
-        parity = _consecutive_parity(settings)
-        goal = _consecutive_goal(settings)
-        step = 1 if parity == "any" else 2
-        start = _consecutive_start(settings, count=count, parity=parity, step=step)
-        values = [start + i * step for i in range(count)]
-        phrase = _consecutive_phrase(count, parity)
-        first, last = values[0], values[-1]
+        from question_engine.frameworks.primitives import PRIM_EQUATIONS, build_context
+        from question_engine.frameworks.primitives.narrative_wp import (
+            narrative_item_metadata,
+            sample_consecutive_wp,
+        )
 
-        if goal == "sum_first_last":
-            clue = first + last
-            latex = (
-                rf"\text{{The sum of the first and last of {phrase} is {clue}. "
-                rf"Find the smallest integer.}}"
-            )
-            text = (
-                f"The sum of the first and last of {phrase} is {clue}. "
-                f"Find the smallest integer."
-            )
-        elif goal == "product":
-            clue = first * last
-            latex = (
-                rf"\text{{The product of the first and last of {phrase} is {clue}. "
-                rf"Find the smallest integer.}}"
-            )
-            text = (
-                f"The product of the first and last of {phrase} is {clue}. "
-                f"Find the smallest integer."
-            )
-        else:
-            clue = sum(values)
-            # Slight wording variety so tiers don't read identically.
-            if count >= 4 and random.random() < 0.5:
-                latex = (
-                    rf"\text{{Find the smallest of {phrase} whose sum is {clue}.}}"
-                )
-                text = f"Find the smallest of {phrase} whose sum is {clue}."
-            else:
-                latex = (
-                    rf"\text{{The sum of {phrase} is {clue}. Find the smallest integer.}}"
-                )
-                text = f"The sum of {phrase} is {clue}. Find the smallest integer."
-
-        answer = _format_answer(start, settings)
-        return latex, text, answer
+        ctx = build_context(
+            settings, [PRIM_EQUATIONS], leaf_id="wp_consecutive"
+        )
+        item = sample_consecutive_wp(ctx, settings=settings)
+        self._last_meta = narrative_item_metadata(item, ctx)
+        return item.latex, item.text, _append_units(item.answer_latex, settings)
 
 
 class CoinProblemFramework(WordProblemFramework):
+    """Coin WP — thin adapter over narrative_wp sampler (upgrades + compose)."""
+
     problem_kind = "coin"
 
+    def __init__(self, template: WordProblemTemplate | None = None):
+        super().__init__(template)
+        self._last_meta: dict[str, Any] = {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        return dict(self._last_meta)
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        total_coins = _random_value(settings, lo=12, hi=30)
-        quarters = _random_value(settings, lo=4, hi=total_coins - 4)
-        nickels = total_coins - quarters
-        total_cents = quarters * 25 + nickels * 5
-        answer = _format_answer(quarters, settings)
-        dollars = total_cents / 100
-        dollar_text = f"\\${dollars:.2f}" if dollars == int(dollars) else f"\\${dollars:.2f}"
-        latex = (
-            rf"\text{{A jar contains {total_coins} coins, all quarters and nickels, "
-            rf"worth {dollar_text} in total. How many quarters are in the jar?}}"
+        from question_engine.frameworks.primitives import PRIM_EQUATIONS, build_context
+        from question_engine.frameworks.primitives.narrative_wp import (
+            narrative_item_metadata,
+            sample_coin_wp,
         )
-        text = (
-            f"A jar contains {total_coins} coins, all quarters and nickels, "
-            f"worth ${dollars:.2f} in total. How many quarters are in the jar?"
-        )
-        return latex, text, _append_units(answer, settings)
+
+        ctx = build_context(settings, [PRIM_EQUATIONS], leaf_id="wp_coin")
+        item = sample_coin_wp(ctx)
+        self._last_meta = narrative_item_metadata(item, ctx)
+        return item.latex, item.text, _append_units(item.answer_latex, settings)
 
 
 class MixtureProblemFramework(WordProblemFramework):
@@ -1944,22 +1947,165 @@ class NumberLineWordFramework(WordProblemFramework):
         self._last_end: float | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        start = _random_value(settings, lo=-15, hi=10)
-        change = _random_value(settings, lo=3, hi=20)
-        if random.choice([True, False]):
-            end = start + change
-            latex = (
-                rf"\text{{The temperature was {start}\textdegree{{}}F and rose {change}\textdegree{{}}F. "
-                rf"What is the new temperature?}}"
-            )
-            text = f"The temperature was {start}°F and rose {change}°F. What is the new temperature?"
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        if not has_cont:
+            start = _random_value(settings, lo=-15, hi=10)
+            change = _random_value(settings, lo=3, hi=20)
+            if random.choice([True, False]):
+                end = start + change
+                latex = (
+                    rf"\text{{The temperature was {start}\textdegree{{}}F and rose {change}\textdegree{{}}F. "
+                    rf"What is the new temperature?}}"
+                )
+                text = f"The temperature was {start}°F and rose {change}°F. What is the new temperature?"
+            else:
+                end = start - change
+                latex = (
+                    rf"\text{{The temperature was {start}\textdegree{{}}F and dropped {change}\textdegree{{}}F. "
+                    rf"What is the new temperature?}}"
+                )
+                text = f"The temperature was {start}°F and dropped {change}°F. What is the new temperature?"
+            self._last_start = float(start)
+            self._last_end = float(end)
+            return latex, text, _format_answer(end, settings)
+
+        d = max(0.0, settings_difficulty(settings, default=0.0))
+
+        # Effort: stay-same-side → cross zero → two-step change. Magnitude modest.
+        start_hi = 8 + int(min(10, d / 2))
+        change_hi = 6 + int(min(12, d / 2))
+        start = random.randint(-start_hi if d >= 3 else 0, start_hi)
+        change = random.randint(2, change_hi)
+
+        # Cross-zero probability rises with D.
+        cross_p = 0.15 if d < 5 else (0.4 if d < 12 else (0.55 if d < 18 else 0.7))
+        want_cross = random.random() < cross_p
+        two_step = d >= 14 and random.random() < min(0.55, 0.2 + d / 50.0)
+
+        contexts = ["temperature"]
+        if d >= 8:
+            contexts.append("elevation")
+        if d >= 16:
+            contexts.append("account")
+        ctx = random.choice(contexts)
+
+        if two_step:
+            c1 = random.randint(2, change_hi)
+            c2 = random.randint(2, change_hi)
+            # First rises, then drops (or reverse).
+            if random.choice([True, False]):
+                end = start + c1 - c2
+                if ctx == "temperature":
+                    text = (
+                        f"The temperature was {start}°F, rose {c1}°F, then dropped {c2}°F. "
+                        f"What is the new temperature?"
+                    )
+                    latex = (
+                        rf"\text{{The temperature was {start}\textdegree{{}}F, rose {c1}\textdegree{{}}F, "
+                        rf"then dropped {c2}\textdegree{{}}F. What is the new temperature?}}"
+                    )
+                elif ctx == "elevation":
+                    text = (
+                        f"A hiker was at {start} meters, climbed {c1} meters, then descended {c2} meters. "
+                        f"What is the new elevation?"
+                    )
+                    latex = (
+                        rf"\text{{A hiker was at {start} meters, climbed {c1} meters, then descended "
+                        rf"{c2} meters. What is the new elevation?}}"
+                    )
+                else:
+                    text = (
+                        f"A bank account had ${start}, gained ${c1}, then spent ${c2}. "
+                        f"What is the new balance?"
+                    )
+                    latex = (
+                        rf"\text{{A bank account had \${start}, gained \${c1}, then spent \${c2}. "
+                        rf"What is the new balance?}}"
+                    )
+            else:
+                end = start - c1 + c2
+                if ctx == "temperature":
+                    text = (
+                        f"The temperature was {start}°F, dropped {c1}°F, then rose {c2}°F. "
+                        f"What is the new temperature?"
+                    )
+                    latex = (
+                        rf"\text{{The temperature was {start}\textdegree{{}}F, dropped {c1}\textdegree{{}}F, "
+                        rf"then rose {c2}\textdegree{{}}F. What is the new temperature?}}"
+                    )
+                elif ctx == "elevation":
+                    text = (
+                        f"A hiker was at {start} meters, descended {c1} meters, then climbed {c2} meters. "
+                        f"What is the new elevation?"
+                    )
+                    latex = (
+                        rf"\text{{A hiker was at {start} meters, descended {c1} meters, then climbed "
+                        rf"{c2} meters. What is the new elevation?}}"
+                    )
+                else:
+                    text = (
+                        f"A bank account had ${start}, spent ${c1}, then gained ${c2}. "
+                        f"What is the new balance?"
+                    )
+                    latex = (
+                        rf"\text{{A bank account had \${start}, spent \${c1}, then gained \${c2}. "
+                        rf"What is the new balance?}}"
+                    )
         else:
-            end = start - change
-            latex = (
-                rf"\text{{The temperature was {start}\textdegree{{}}F and dropped {change}\textdegree{{}}F. "
-                rf"What is the new temperature?}}"
-            )
-            text = f"The temperature was {start}°F and dropped {change}°F. What is the new temperature?"
+            rise = random.choice([True, False])
+            if want_cross:
+                # Force a sign change across zero when possible.
+                if start >= 0:
+                    rise = False
+                    change = max(change, start + random.randint(1, 6))
+                else:
+                    rise = True
+                    change = max(change, -start + random.randint(1, 6))
+            end = start + change if rise else start - change
+            verb_up = {"temperature": "rose", "elevation": "climbed", "account": "gained"}[ctx]
+            verb_down = {"temperature": "dropped", "elevation": "descended", "account": "spent"}[ctx]
+            if ctx == "temperature":
+                if rise:
+                    text = (
+                        f"The temperature was {start}°F and rose {change}°F. "
+                        f"What is the new temperature?"
+                    )
+                    latex = (
+                        rf"\text{{The temperature was {start}\textdegree{{}}F and rose {change}\textdegree{{}}F. "
+                        rf"What is the new temperature?}}"
+                    )
+                else:
+                    text = (
+                        f"The temperature was {start}°F and dropped {change}°F. "
+                        f"What is the new temperature?"
+                    )
+                    latex = (
+                        rf"\text{{The temperature was {start}\textdegree{{}}F and dropped {change}\textdegree{{}}F. "
+                        rf"What is the new temperature?}}"
+                    )
+            elif ctx == "elevation":
+                move = verb_up if rise else verb_down
+                text = (
+                    f"A hiker was at {start} meters and {move} {change} meters. "
+                    f"What is the new elevation?"
+                )
+                latex = (
+                    rf"\text{{A hiker was at {start} meters and {move} {change} meters. "
+                    rf"What is the new elevation?}}"
+                )
+            else:
+                move = "gained" if rise else "spent"
+                text = (
+                    f"A bank account had ${start} and {move} ${change}. "
+                    f"What is the new balance?"
+                )
+                latex = (
+                    rf"\text{{A bank account had \${start} and {move} \${change}. "
+                    rf"What is the new balance?}}"
+                )
+
         self._last_start = float(start)
         self._last_end = float(end)
         answer = _format_answer(end, settings)

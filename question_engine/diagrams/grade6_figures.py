@@ -15,8 +15,30 @@ def _svg(inner: str, width: int = 360, height: int = 220) -> str:
     )
 
 
-def area_model_svg(left: str, right_a: str, right_b: str) -> str:
-    """Rectangle split to model ``left(right_a + right_b)``."""
+def area_model_svg(
+    left: str,
+    right_a: str,
+    right_b: str,
+    *,
+    split: str = "vertical",
+    orientation: str = "standard",
+) -> str:
+    """Rectangle split to model ``left(right_a + right_b)`` (or decimal product).
+
+    ``split``: ``vertical`` (side-by-side cells) or ``horizontal`` (stacked).
+    ``orientation``: ``flipped`` swaps the factor labels' sides.
+    """
+    if orientation == "flipped":
+        right_a, right_b = right_b, right_a
+    if split == "horizontal":
+        return _svg(
+            '<rect x="70" y="40" width="220" height="140" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>'
+            '<rect x="70" y="40" width="220" height="70" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="2"/>'
+            '<line x1="70" y1="110" x2="290" y2="110" stroke="#1e3a8a" stroke-width="2"/>'
+            f'<text x="40" y="115" text-anchor="middle" font-size="18">{escape(left)}</text>'
+            f'<text x="180" y="82" text-anchor="middle" font-size="17">{escape(right_a)}</text>'
+            f'<text x="180" y="152" text-anchor="middle" font-size="17">{escape(right_b)}</text>'
+        )
     return _svg(
         '<rect x="50" y="55" width="250" height="110" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>'
         '<rect x="50" y="55" width="125" height="110" fill="#bfdbfe" stroke="#1e3a8a" stroke-width="2"/>'
@@ -24,6 +46,126 @@ def area_model_svg(left: str, right_a: str, right_b: str) -> str:
         f'<text x="34" y="115" text-anchor="middle" font-size="18">{escape(left)}</text>'
         f'<text x="112" y="188" text-anchor="middle" font-size="17">{escape(right_a)}</text>'
         f'<text x="238" y="188" text-anchor="middle" font-size="17">{escape(right_b)}</text>'
+    )
+
+
+def decimal_place_value_svg(
+    a: str,
+    b: str,
+    *,
+    op: str = "+",
+    title: str | None = None,
+) -> str:
+    """Place-value column chart for decimal add/subtract (textbook diagram)."""
+
+    def _split(s: str) -> tuple[str, str]:
+        body = str(s).strip().lstrip("+")
+        if "." in body:
+            whole, frac = body.split(".", 1)
+        else:
+            whole, frac = body, ""
+        return (whole or "0"), frac
+
+    aw, af = _split(a)
+    bw, bf = _split(b)
+    max_frac = max(len(af), len(bf), 1)
+    max_whole = max(len(aw), len(bw), 1)
+    af = af.ljust(max_frac, "0")
+    bf = bf.ljust(max_frac, "0")
+    aw = aw.rjust(max_whole, "0")
+    bw = bw.rjust(max_whole, "0")
+
+    cell_w, cell_h = 28, 34
+    ox, oy = 52, 72
+    n_cols = max_whole + 1 + max_frac
+    width = ox * 2 + n_cols * cell_w
+
+    place_names: list[str] = []
+    for i in range(max_whole - 1, -1, -1):
+        place_names.append({0: "ones", 1: "tens", 2: "hundreds"}.get(i, f"10^{i}"))
+    place_names.append(".")
+    frac_names = ("tenths", "hundredths", "thousandths", "10^-4")
+    for i in range(max_frac):
+        place_names.append(frac_names[i] if i < len(frac_names) else f"10^-{i + 1}")
+
+    header_els = []
+    for i, name in enumerate(place_names):
+        if name == ".":
+            continue
+        cx = ox + i * cell_w + cell_w / 2
+        header_els.append(
+            f'<text x="{cx:.1f}" y="{oy - 18}" text-anchor="middle" font-size="9" '
+            f'fill="#4b5563">{escape(name)}</text>'
+        )
+
+    def _row(digits_whole: str, frac: str, y: float, op_ch: str | None = None) -> str:
+        parts: list[str] = []
+        if op_ch:
+            parts.append(
+                f'<text x="{ox - 18}" y="{y + 22}" text-anchor="middle" font-size="18" '
+                f'fill="#1e3a8a">{escape(op_ch)}</text>'
+            )
+        for i, ch in enumerate(digits_whole):
+            x = ox + i * cell_w
+            parts.append(
+                f'<rect x="{x}" y="{y}" width="{cell_w}" height="{cell_h}" fill="#eff6ff" '
+                f'stroke="#1e3a8a" stroke-width="1"/>'
+                f'<text x="{x + cell_w / 2:.1f}" y="{y + 23}" text-anchor="middle" '
+                f'font-size="16" fill="#1e3a8a">{escape(ch)}</text>'
+            )
+        dx = ox + max_whole * cell_w
+        parts.append(
+            f'<text x="{dx + cell_w / 2:.1f}" y="{y + 23}" text-anchor="middle" '
+            f'font-size="18" fill="#1e3a8a">.</text>'
+        )
+        for i, ch in enumerate(frac):
+            x = ox + (max_whole + 1 + i) * cell_w
+            parts.append(
+                f'<rect x="{x}" y="{y}" width="{cell_w}" height="{cell_h}" fill="#dbeafe" '
+                f'stroke="#1e3a8a" stroke-width="1"/>'
+                f'<text x="{x + cell_w / 2:.1f}" y="{y + 23}" text-anchor="middle" '
+                f'font-size="16" fill="#1e3a8a">{escape(ch)}</text>'
+            )
+        return "".join(parts)
+
+    title_el = ""
+    if title:
+        title_el = (
+            f'<text x="{width / 2:.1f}" y="28" text-anchor="middle" font-size="14" '
+            f'fill="#4b5563">{escape(title)}</text>'
+        )
+    op_mark = "−" if op in {"-", "−"} else "+"
+    body = (
+        f"{title_el}{''.join(header_els)}"
+        f"{_row(aw, af, oy)}"
+        f"{_row(bw, bf, oy + cell_h + 6, op_mark)}"
+        f'<line x1="{ox}" y1="{oy + 2 * cell_h + 14}" x2="{ox + n_cols * cell_w}" '
+        f'y2="{oy + 2 * cell_h + 14}" stroke="#1e3a8a" stroke-width="2"/>'
+    )
+    return _svg(body, width=int(width), height=oy + 2 * cell_h + 36)
+
+
+def decimal_hundredths_shade_svg(
+    value: float,
+    *,
+    blank: bool = False,
+    shade_pattern: str = "row",
+    title: str | None = None,
+) -> str:
+    """Shade a 10×10 hundredths grid for the fractional part of ``value``."""
+    whole = int(abs(value))
+    frac = abs(value) - whole
+    pct = max(0, min(100, int(round(frac * 100))))
+    label = title or (
+        f"{value:g} on hundredths" if whole == 0 else f"{value:g} ({whole} + {frac:g})"
+    )
+    return percent_grid_svg(
+        pct,
+        blank=blank,
+        rows=10,
+        cols=10,
+        title=label,
+        shade_pattern=shade_pattern,
     )
 
 
@@ -446,8 +588,13 @@ def percent_grid_svg(
     rows: int = 10,
     cols: int = 10,
     title: str | None = None,
+    shade_pattern: str = "row",
 ) -> str:
-    """R×C grid; shade ``percent``% of cells (row-major) unless blank."""
+    """R×C grid; shade ``percent``% of cells unless blank.
+
+    ``shade_pattern``: ``row`` (row-major), ``col`` (column-major),
+    ``checker`` (alternating preference then fill), or ``blocks`` (2×2 tiles).
+    """
     r = max(1, int(rows))
     c = max(1, int(cols))
     total = r * c
@@ -458,12 +605,34 @@ def percent_grid_svg(
     ox, oy = 28, 36
     grid_w = c * cell + (c - 1) * gap
     grid_h = r * cell + (r - 1) * gap
+
+    order = list(range(total))
+    pat = str(shade_pattern or "row").lower()
+    if pat == "col":
+        order = [row * c + col for col in range(c) for row in range(r)]
+    elif pat == "checker":
+        even = [i for i in range(total) if ((i // c) + (i % c)) % 2 == 0]
+        odd = [i for i in range(total) if ((i // c) + (i % c)) % 2 == 1]
+        order = even + odd
+    elif pat == "blocks":
+        blocks: list[int] = []
+        for br in range(0, r, 2):
+            for bc in range(0, c, 2):
+                for dr in range(2):
+                    for dc in range(2):
+                        rr, cc = br + dr, bc + dc
+                        if rr < r and cc < c:
+                            blocks.append(rr * c + cc)
+        seen = set(blocks)
+        order = blocks + [i for i in range(total) if i not in seen]
+
+    shade_set = set(order[:n_shade]) if n_shade else set()
     rects: list[str] = []
     for i in range(total):
         row, col = divmod(i, c)
         x = ox + col * (cell + gap)
         y = oy + row * (cell + gap)
-        fill = _PERCENT_EMPTY_FILL if blank or i >= n_shade else _PERCENT_SHADE_FILL
+        fill = _PERCENT_EMPTY_FILL if blank or i not in shade_set else _PERCENT_SHADE_FILL
         rects.append(
             f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" '
             f'fill="{fill}" stroke="{_PERCENT_STROKE}" stroke-width="1"/>'
@@ -484,9 +653,16 @@ def percent_grid_svg(
     )
 
 
-def percent_hundred_grid_svg(percent: int, *, blank: bool = False) -> str:
-    """10×10 hundredths grid; shade ``percent`` cells (row-major) unless blank."""
-    return percent_grid_svg(percent, blank=blank, rows=10, cols=10)
+def percent_hundred_grid_svg(
+    percent: int,
+    *,
+    blank: bool = False,
+    shade_pattern: str = "row",
+) -> str:
+    """10×10 hundredths grid; shade ``percent`` cells unless blank."""
+    return percent_grid_svg(
+        percent, blank=blank, rows=10, cols=10, shade_pattern=shade_pattern
+    )
 
 
 def percent_bar_svg(
@@ -538,8 +714,13 @@ def percent_circle_svg(
     *,
     blank: bool = False,
     show_ticks: bool = True,
+    start_angle_deg: float = -90.0,
 ) -> str:
-    """Circle / pie model; shade a wedge of ``percent``% from 12 o'clock unless blank."""
+    """Circle / pie model; shade a wedge of ``percent``% unless blank.
+
+    ``start_angle_deg`` is SVG degrees (0 = 3 o'clock). Default -90 starts at
+    12 o'clock. Varying the start diversifies worksheets.
+    """
     pct = max(0, min(100, int(percent)))
     cx, cy, r = 160, 120, 78
     parts: list[str] = [
@@ -547,8 +728,7 @@ def percent_circle_svg(
         f'stroke="{_PERCENT_STROKE}" stroke-width="2"/>'
     ]
     if not blank and 0 < pct < 100:
-        # SVG angles: 0° = 3 o'clock; start at 12 o'clock (-90°) and go clockwise.
-        start = -math.pi / 2
+        start = math.radians(float(start_angle_deg))
         sweep = 2 * math.pi * pct / 100.0
         end = start + sweep
         x1 = cx + r * math.cos(start)

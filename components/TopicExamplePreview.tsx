@@ -150,6 +150,20 @@ export function TopicExamplePreview({
           </div>
           <QuestionGraphFromMetadata metadata={question.metadata} />
           <QuestionDiagramFromMetadata metadata={question.metadata} />
+          {Array.isArray(question.metadata?.difficulty_sources) &&
+          question.metadata.difficulty_sources.length > 0 ? (
+            <p className="hint topic-example-difficulty-from">
+              Difficulty from:{" "}
+              {(question.metadata.difficulty_sources as { kind?: string; tag?: string }[])
+                .slice(0, 8)
+                .map((s) => `${s.kind ?? "?"}:${s.tag ?? "?"}`)
+                .join(" · ")}
+              {question.metadata.approx_max_d != null
+                ? ` · approx max ${question.metadata.approx_max_d}`
+                : ""}
+              {question.metadata.difficulty_clamped ? " · clamped" : ""}
+            </p>
+          ) : null}
           {choices ? (
             <MultipleChoiceOptions
               choices={choices}

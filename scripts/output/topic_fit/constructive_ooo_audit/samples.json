@@ -1,0 +1,86 @@
+[
+  {
+    "d": 0,
+    "level": "L1",
+    "inflators": [
+      "seed",
+      "parens_sum"
+    ],
+    "prompt": "\\left(1 + 0\\right)",
+    "answer": "1"
+  },
+  {
+    "d": 2,
+    "level": "L1",
+    "inflators": [
+      "seed",
+      "split_add"
+    ],
+    "prompt": "(-4 + 2)",
+    "answer": "-2"
+  },
+  {
+    "d": 4,
+    "level": "L1",
+    "inflators": [
+      "seed",
+      "parens_sum"
+    ],
+    "prompt": "\\left(2 + 1\\right)",
+    "answer": "3"
+  },
+  {
+    "d": 6,
+    "level": "L1",
+    "inflators": [
+      "seed",
+      "split_add"
+    ],
+    "prompt": "(3 + -2)",
+    "answer": "1"
+  },
+  {
+    "d": 8,
+    "level": "L1",
+    "inflators": [
+      "seed",
+      "split_sub"
+    ],
+    "prompt": "(-1 - -1)",
+    "answer": "0"
+  },
+  {
+    "d": 10,
+    "level": "L1",
+    "inflators": [
+      "seed",
+      "parens_sum"
+    ],
+    "prompt": "\\left(3 + -3\\right)",
+    "answer": "0"
+  },
+  {
+    "d": 14,
+    "level": "L1",
+    "inflators": [
+      "seed",
+      "mul_add",
+      "recurse:L1_numeric",
+      "seed",
+      "scale_div"
+    ],
+    "prompt": "((0)2 + \\left((\\frac{3}{3})\\right))",
+    "answer": "1"
+  },
+  {
+    "d": 20,
+    "level": "L1",
+    "inflators": [
+      "seed",
+      "mul_add",
+      "split_add"
+    ],
+    "prompt": "(0 + 3)",
+    "answer": "3"
+  }
+]

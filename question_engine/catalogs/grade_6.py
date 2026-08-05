@@ -51,8 +51,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
     # Ratios
     _g6("Ratios", "g6_introduction_to_ratios", "Introduction to ratios", generator="g6_introduction_to_ratios", instruction_text="Write the ratio."),
     _g6("Ratios", "g6_equivalent_ratios", "Equivalent ratios", generator="g6_equivalent_ratios", instruction_text="Find an equivalent ratio."),
-    _g6("Ratios", "g6_part_part_whole_ratios", "Part-part-whole ratios", instruction_text="Write the ratio.", generator="g6_introduction_to_ratios"),
-    _g6("Ratios", "g6_comparing_ratios", "Comparing ratios", generator="g6_equivalent_ratios", instruction_text="Compare the ratios."),
+    _g6("Ratios", "g6_part_part_whole_ratios", "Part-part-whole ratios", instruction_text="Write part-to-part and part-to-whole ratios.", generator="g6_part_part_whole_ratios"),
+    _g6("Ratios", "g6_comparing_ratios", "Comparing ratios", generator="g6_comparing_ratios", instruction_text="Compare the ratios."),
     # Rates
     _g6(
         "Rates",
@@ -94,8 +94,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Percents",
         "g6_finding_percents_with_equivalent_fractions",
         "Finding percents with equivalent fractions",
-        generator="percents",
-        instruction_text="Find the percent.",
+        generator="g6_finding_percents_with_equivalent_fractions",
+        instruction_text="Write as a percent using equivalent fractions.",
     ),
     _g6(
         "Percents",

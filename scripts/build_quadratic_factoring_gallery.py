@@ -62,9 +62,23 @@ def main() -> None:
         f"<p class='meta'>Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} · "
         "Low D: bedraggled-simple · D&gt;10 unsimplified stems where applicable</p>",
     ]
+    md_lines = [
+        "# Factors-first quadratic factoring",
+        "",
+        "Open **[gallery.html](gallery.html)** in a browser for KaTeX-rendered math.",
+        "",
+        f"Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
+        "",
+    ]
     for tid, title, max_degree in TOPICS:
         parts.append(f"<h2 id='{html.escape(tid)}'>{html.escape(title)}</h2>")
         parts.append(f"<p class='meta'><code>{html.escape(tid)}</code></p>")
+        md_lines.append(f"## {title}")
+        md_lines.append("")
+        md_lines.append(f"`{tid}`")
+        md_lines.append("")
+        md_lines.append("| D | Prompt | Answer |")
+        md_lines.append("|--:|--------|--------|")
         gen = GENERATORS[tid]
         for d in DIFFS:
             parts.append(f"<h3>D = {d}</h3>")
@@ -87,15 +101,24 @@ def main() -> None:
                     f"<div class='meta'>#{i+1} · method={html.escape(str(meta.get('method')))} · "
                     f"upgrades={html.escape(str(meta.get('upgrades')))}</div>"
                 )
-                parts.append(f"<div>$${html.escape(q.prompt_latex or '')}$$</div>")
+                pl = q.prompt_latex or ""
+                al = q.answer_latex or ""
+                parts.append(f"<div>$${html.escape(pl)}$$</div>")
                 parts.append(
-                    f"<div class='ans'>→ $${html.escape(q.answer_latex or '')}$$</div>"
+                    f"<div class='ans'>→ $${html.escape(al)}$$</div>"
                 )
                 parts.append("</div>")
+                md_lines.append(
+                    f"| {d} | ${pl.replace('|', '\\|')}$ | ${al.replace('|', '\\|')}$ |"
+                )
+        md_lines.append("")
     parts.append("</body></html>")
     path = OUT / "gallery.html"
     path.write_text("\n".join(parts), encoding="utf-8")
+    md_path = OUT / "gallery.md"
+    md_path.write_text("\n".join(md_lines), encoding="utf-8")
     print(f"Wrote {path}")
+    print(f"Wrote {md_path}")
 
 
 if __name__ == "__main__":

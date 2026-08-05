@@ -22,16 +22,188 @@ from .utils import (
 
 
 def _difficulty_tier(settings: dict) -> str:
-    tier = str(settings.get("difficulty_tier", settings.get("difficulty", "easy"))).strip().lower()
-    if tier in {"1", "e"}:
-        return "easy"
-    if tier in {"2", "m"}:
-        return "medium"
-    if tier in {"3", "h"}:
-        return "hard"
-    if tier in {"easy", "medium", "hard"}:
-        return tier
-    return "easy"
+    """Map continuous ``difficulty`` or legacy EMH tier to easy|medium|hard."""
+    from question_engine.frameworks.difficulty_budget import settings_difficulty_band
+
+    return settings_difficulty_band(settings, default=8.0)
+
+
+def _pilot_structure(settings: dict) -> dict:
+    """Reuse derivative-rule continuous unlocks for pilot function-class pools."""
+    from question_engine.frameworks.primitives.derivatives import derivative_rule_structure
+
+    structure = derivative_rule_structure(settings)
+    structure.pop("_allow", None)
+    return structure
+
+
+def _structure_unlocks(structure: dict) -> list[str]:
+    """Active continuous-D unlock knobs (for gallery structure inventory)."""
+    return [
+        key
+        for key in (
+            "allow_trig",
+            "allow_exp",
+            "allow_ln",
+            "allow_nested",
+            "allow_roots",
+            "allow_invtrig",
+        )
+        if structure.get(key)
+    ]
+
+
+def _family_structure_meta(
+    family: str,
+    *,
+    generator: str,
+    structure: dict,
+    variant: str | None = None,
+) -> dict:
+    """Lightweight live structure fingerprint for topic-fit galleries + ML."""
+    classes = ["algebraic"]
+    if family in {"trig"} or (variant and variant in {"sin", "cos", "tan"}):
+        classes = ["trig"]
+    elif family in {"exp", "chain_exp"}:
+        classes = ["exp"]
+    elif family == "ln":
+        classes = ["log"]
+    elif family == "radical":
+        classes = ["algebraic", "roots"]
+    methods = ["differential"]
+    if family in {"product"}:
+        methods.append("product")
+    if family in {"quotient"}:
+        methods.append("quotient")
+    if family in {"chain_exp"}:
+        methods.append("chain")
+    snap = {
+        "pack": f"structured_{generator}",
+        "family": family,
+        "generator": generator,
+        "function_classes": classes,
+        "methods_used": methods,
+        "allow_trig": bool(structure.get("allow_trig")),
+        "allow_exp": bool(structure.get("allow_exp")),
+        "allow_log": bool(structure.get("allow_ln") or structure.get("allow_log")),
+        "allow_roots": bool(structure.get("allow_roots")),
+    }
+    if variant:
+        snap["variant"] = variant
+    meta: dict = {
+        "family": family,
+        "structure_id": f"{generator}:{family}",
+        "band": structure.get("band"),
+        "upgrades_applied": _structure_unlocks(structure),
+        "function_classes": classes,
+        "methods_used": methods,
+        "effective_d": structure.get("difficulty"),
+        "spec_snapshot": snap,
+        "effort_features": {
+            "family": family,
+            "pack": snap["pack"],
+            "n_terms": 1,
+            "methods": methods,
+            "n_fn_nodes": sum(1 for c in classes if c not in {"algebraic", "roots"}),
+        },
+    }
+    if variant:
+        meta["variant"] = variant
+    return meta
+
+
+# ---------------------------------------------------------------------------
+# Linear approximations / local linearization (OpenStax 4.2)
+# ---------------------------------------------------------------------------
+
+
+def _linear_approximation(topic: str, settings: dict) -> list[Question]:
+    """L(x) = f(a) + f'(a)(x-a); optional numerical estimate."""
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+    structure = _pilot_structure(settings)
+    x = str(settings.get("variable", "x"))
+    last: dict = {"meta": {}}
+
+    def build() -> tuple[str, str, str | None]:
+        d = float(structure.get("difficulty", 8.0))
+        a = random.randint(1, 4)
+        mode = "estimate" if d >= 8 and random.random() < 0.45 else "formula"
+        family = random.choice(["quad", "sqrt", "reciprocal", "exp"] if d >= 10 else ["quad", "sqrt"])
+
+        if family == "quad":
+            # f(x)=x^2 at a → L(x)=a^2 + 2a(x-a)
+            fa = a * a
+            fp = 2 * a
+            f_body = rf"{x}^{{2}}"
+            L = rf"{fa}+{fp}({x}-{a})" if fp != 1 else rf"{fa}+({x}-{a})"
+            if mode == "estimate":
+                h = random.choice([Fraction(1, 10), Fraction(1, 5), Fraction(1, 2)])
+                x0 = a + h
+                est = fa + fp * h
+                prompt = (
+                    rf"\text{{Use the linear approximation of }}f({x})={f_body}"
+                    rf"\text{{ at }}{x}={a}\text{{ to estimate }}f({frac_latex(x0)})."
+                )
+                answer = frac_latex(est)
+            else:
+                prompt = (
+                    rf"\text{{Find the linear approximation of }}f({x})={f_body}"
+                    rf"\text{{ at }}{x}={a}."
+                )
+                answer = rf"L({x})={L}"
+        elif family == "sqrt":
+            # f=√x at a=4 typically; keep a perfect square
+            a = random.choice([1, 4, 9])
+            fa_s = {1: "1", 4: "2", 9: "3"}[a]
+            # L = √a + (1/(2√a))(x-a)
+            prompt = (
+                rf"\text{{Find the linear approximation of }}f({x})=\sqrt{{{x}}}"
+                rf"\text{{ at }}{x}={a}."
+            )
+            answer = (
+                rf"L({x})={fa_s}+\frac{{1}}{{{2 * int(fa_s)}}}({x}-{a})"
+            )
+            mode = "formula"
+        elif family == "reciprocal":
+            a = random.randint(2, 5)
+            prompt = (
+                rf"\text{{Find the linear approximation of }}f({x})=\frac{{1}}{{{x}}}"
+                rf"\text{{ at }}{x}={a}."
+            )
+            answer = rf"L({x})=\frac{{1}}{{{a}}}-\frac{{1}}{{{a * a}}}({x}-{a})"
+            mode = "formula"
+        else:
+            # e^x at 0
+            a = 0
+            prompt = (
+                rf"\text{{Find the linear approximation of }}f({x})=e^{{{x}}}"
+                rf"\text{{ at }}{x}=0."
+            )
+            answer = rf"L({x})=1+{x}"
+            mode = "formula"
+
+        last["meta"] = _family_structure_meta(
+            family,
+            generator="linear_approximation",
+            structure=structure,
+            variant=mode,
+        )
+        last["meta"]["tricks_required"] = ["linearization"]
+        last["meta"]["spec_snapshot"]["pack"] = "structured_linear_approximation"
+        return prompt, "linear approximation", answer if include_answer_key else None
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(last.get("meta") or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _poly_display(coeffs: list[int], variable: str, *, style: str | None = None) -> str:
@@ -113,23 +285,47 @@ def _deriv_coeffs(coeffs: list[int]) -> list[int]:
 # ---------------------------------------------------------------------------
 
 
+def _tangent_families(structure: dict) -> list[str]:
+    d = float(structure.get("difficulty", 8.0))
+    families = ["poly_mono", "poly_quad"]
+    if d >= 2.0:
+        families.append("reciprocal")
+    if d >= 5.0:
+        families.append("radical")
+    if structure.get("allow_trig"):
+        families.append("trig")
+    if d >= 10.0:
+        families.append("poly_cubic")
+    if structure.get("allow_exp"):
+        families.append("exp")
+    if structure.get("allow_ln"):
+        families.append("ln")
+    if structure.get("allow_nested"):
+        families.extend(["rational_linear", "trig_chain"])
+    return families
+
+
 def _tangent_normal_line(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _pilot_structure(settings)
+    d = float(structure.get("difficulty", 8.0))
     x = str(settings.get("variable", "x"))
     want_normal = False
-    if tier == "medium":
-        want_normal = random.random() < 0.25
-    elif tier == "hard":
+    if d >= 12.0:
         want_normal = random.choice([True, False])
+    elif d >= 6.0:
+        want_normal = random.random() < min(0.55, 0.15 + (d - 6.0) / 20.0)
+    last: dict = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        family = {
-            "easy": random.choice(["poly_mono", "poly_quad", "reciprocal"]),
-            "medium": random.choice(["poly_quad", "reciprocal", "radical", "trig"]),
-            "hard": random.choice(["poly_cubic", "exp", "ln", "rational_linear", "trig_chain"]),
-        }[tier]
+        family = random.choice(_tangent_families(structure))
+        last["meta"] = _family_structure_meta(
+            family,
+            generator="tangent_normal_line",
+            structure=structure,
+            variant="normal" if want_normal else "tangent",
+        )
 
         if family == "poly_mono":
             n = random.randint(2, 4)
@@ -337,7 +533,40 @@ def _tangent_normal_line(topic: str, settings: dict) -> list[Question]:
         answer = rf"y-{y0}={m}\left({x}-{a_pt}\right)"
         return prompt, "tangent line", answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def _sketch_meta(prompt_latex: str, prompt_text: str, answer: str | None) -> dict:
+        from question_engine.diagrams.figure_families import sample_figure_from_settings
+
+        features = ["curve", "point", "label_point"]
+        low = (prompt_latex or "").lower()
+        if "normal" in low:
+            features.append("normal")
+        else:
+            features.append("tangent")
+        curve_kind = "parabola"
+        if r"\frac{1}{" in (prompt_latex or "") or "^{-1}" in (prompt_latex or ""):
+            curve_kind = "reciprocal"
+        elif r"\sin" in (prompt_latex or "") or r"\cos" in (prompt_latex or ""):
+            curve_kind = "sine"
+        elif r"e^{" in (prompt_latex or ""):
+            curve_kind = "exp"
+        elif r"\sqrt" in (prompt_latex or ""):
+            curve_kind = "abs_linear"
+        sample = sample_figure_from_settings(
+            "function_sketch",
+            settings,
+            features=features,
+            curve_kind=curve_kind,
+        )
+        return {**(last.get("meta") or {}), **sample.to_metadata_extras()}
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=_sketch_meta,
+        settings=settings,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -345,18 +574,35 @@ def _tangent_normal_line(topic: str, settings: dict) -> list[Question]:
 # ---------------------------------------------------------------------------
 
 
+def _differential_families(structure: dict) -> list[str]:
+    d = float(structure.get("difficulty", 8.0))
+    families = ["poly_power", "poly_quad"]
+    if structure.get("allow_trig") or d < 6.0:
+        # Keep a light trig sample at low D (OpenStax 4.2 includes cos x early).
+        families.append("trig")
+    if d >= 5.0:
+        families.extend(["radical", "reciprocal"])
+    if structure.get("allow_exp"):
+        families.append("exp")
+    if structure.get("allow_ln") or d >= 12.0:
+        families.append("ln")
+    if structure.get("allow_nested") or d >= 14.0:
+        families.extend(["product", "quotient", "chain_exp", "eval_dx"])
+    elif d >= 10.0:
+        families.append("eval_dx")
+    return families
+
+
 def _differentials(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _pilot_structure(settings)
     x = str(settings.get("variable", "x"))
+    last: dict = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        family = {
-            "easy": random.choice(["poly_power", "poly_quad", "trig"]),
-            "medium": random.choice(["poly_quad", "trig", "exp", "radical", "reciprocal"]),
-            "hard": random.choice(["product", "quotient", "chain_exp", "ln", "eval_dx"]),
-        }[tier]
+        family = random.choice(_differential_families(structure))
+        variant: str | None = None
 
         if family == "poly_power":
             n = random.randint(2, 5)
@@ -364,16 +610,20 @@ def _differentials(topic: str, settings: dict) -> list[Question]:
             dy = rf"{n}{x}^{{{n - 1}}}\,d{x}" if n - 1 != 1 else rf"{n}{x}\,d{x}"
             if n - 1 == 0:
                 dy = rf"{n}\,d{x}"
+            variant = f"power:{n}"
         elif family == "poly_quad":
             # OpenStax: y = x^2 + 2x — also reversed / factored
             b = random.randint(1, 5)
             coeffs = [1, b, 0]
-            y = _poly_display(coeffs, x)
+            style = random.choice(["standard", "reversed", "factored_linear"])
+            y = _poly_display(coeffs, x, style=style)
             # dy = (2x+b) dx
             inner = format_linear_latex(2, b, variable=x)
             dy = rf"\left({inner}\right)\,d{x}"
+            variant = style
         elif family == "trig":
             fn = random.choice(["sin", "cos", "tan"])
+            variant = fn
             # alternate: sin x vs \sin(x)
             if fn == "sin":
                 y = random.choice([rf"\sin({x})", rf"\sin {x}"])
@@ -386,6 +636,8 @@ def _differentials(topic: str, settings: dict) -> list[Question]:
                 dy = rf"\sec^{{2}}({x})\,d{x}"
         elif family == "exp":
             k = random.randint(1, 4)
+            form = random.choice(["e", "exp"])
+            variant = f"{form}:k{k}"
             y = random.choice(
                 [
                     rf"e^{{{k}{x}}}" if k != 1 else rf"e^{{{x}}}",
@@ -398,18 +650,26 @@ def _differentials(topic: str, settings: dict) -> list[Question]:
                 else rf"e^{{{x}}}\,d{x}"
             )
         elif family == "radical":
+            form = random.choice(["sqrt", "half_power"])
+            variant = form
             y = random.choice([rf"\sqrt{{{x}}}", rf"{x}^{{1/2}}"])
             dy = rf"\frac{{1}}{{2\sqrt{{{x}}}}}\,d{x}"
         elif family == "reciprocal":
+            form = random.choice(["frac", "neg_power"])
+            variant = form
             y = random.choice([rf"\frac{{1}}{{{x}}}", rf"{x}^{{-1}}"])
             dy = rf"-\frac{{1}}{{{x}^{{2}}}}\,d{x}"
         elif family == "product":
             # y = x sin x
+            form = random.choice(["juxtapose", "sin_first", "cdot"])
+            variant = form
             y = random.choice(
                 [rf"{x}\sin({x})", rf"\sin({x})\,{x}", rf"{x}\cdot\sin({x})"]
             )
             dy = rf"\left(\sin({x})+{x}\cos({x})\right)\,d{x}"
         elif family == "quotient":
+            form = random.choice(["frac", "neg_power"])
+            variant = form
             y = random.choice(
                 [
                     rf"\frac{{{x}}}{{{x}+1}}",
@@ -419,9 +679,13 @@ def _differentials(topic: str, settings: dict) -> list[Question]:
             dy = rf"\frac{{1}}{{\left({x}+1\right)^{{2}}}}\,d{x}"
         elif family == "chain_exp":
             # y = e^{x^2}
+            form = random.choice(["e", "exp"])
+            variant = form
             y = random.choice([rf"e^{{{x}^{{2}}}}", rf"\exp({x}^{{2}})"])
             dy = rf"2{x}e^{{{x}^{{2}}}}\,d{x}"
         elif family == "ln":
+            form = random.choice(["ln", "ln_abs", "log"])
+            variant = form
             y = random.choice([rf"\ln({x})", rf"\ln|{x}|", rf"\log({x})"])
             dy = rf"\frac{{1}}{{{x}}}\,d{x}"
         else:  # eval_dx — OpenStax style: find dy when x=a, dx=h
@@ -429,7 +693,9 @@ def _differentials(topic: str, settings: dict) -> list[Question]:
             h = random.choice([Fraction(1, 10), Fraction(1, 5), Fraction(1, 2)])
             b = random.randint(1, 4)
             coeffs = [1, b, 0]
-            y = _poly_display(coeffs, x, style=random.choice(["standard", "reversed", "factored_linear"]))
+            style = random.choice(["standard", "reversed", "factored_linear"])
+            variant = style
+            y = _poly_display(coeffs, x, style=style)
             # dy = (2x+b) dx at x=a
             slope = 2 * a + b
             dy_val = frac_latex(Fraction(slope) * h)
@@ -438,13 +704,35 @@ def _differentials(topic: str, settings: dict) -> list[Question]:
                 rf"{x}={a}\text{{ and }}d{x}={frac_latex(h)}."
             )
             answer = dy_val
+            last["meta"] = _family_structure_meta(
+                family,
+                generator="differentials",
+                structure=structure,
+                variant=variant,
+            )
             return prompt, "differential evaluation", answer if include_answer_key else None
 
+        last["meta"] = _family_structure_meta(
+            family,
+            generator="differentials",
+            structure=structure,
+            variant=variant,
+        )
         prompt = rf"\text{{For }}y={y},\text{{ find }}dy."
         answer = rf"dy={dy}"
         return prompt, "differential", answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(last.get("meta") or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -452,26 +740,34 @@ def _differentials(topic: str, settings: dict) -> list[Question]:
 # ---------------------------------------------------------------------------
 
 
+def _integral_sub_families(structure: dict) -> list[str]:
+    d = float(structure.get("difficulty", 8.0))
+    families = ["plain_exp", "exp_linear", "reciprocal_linear"]
+    if d >= 5.0:
+        families.append("log_du_over_u")
+    if d >= 7.0:
+        families.extend(["exp_chain_poly", "exp_over_one_plus_exp"])
+    if d >= 12.0:
+        families.extend(["log_du_over_u_reordered", "mixed_rewrite"])
+    return families
+
+
 def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    tier = _difficulty_tier(settings)
+    structure = _pilot_structure(settings)
+    tier = str(structure["band"])
     x = str(settings.get("variable", "x"))
+    last: dict = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        family = {
-            "easy": random.choice(["exp_linear", "reciprocal_linear", "plain_exp"]),
-            "medium": random.choice(
-                ["log_du_over_u", "exp_chain_poly", "exp_over_one_plus_exp"]
-            ),
-            "hard": random.choice(
-                ["exp_chain_poly", "log_du_over_u_reordered", "mixed_rewrite"]
-            ),
-        }[tier]
+        family = random.choice(_integral_sub_families(structure))
+        variant: str | None = None
 
         if family == "plain_exp":
             # OpenStax 5.37: ∫ e^{-x} dx — also e^{kx}
             k = random.choice([-1, 1, 2, 3, -2])
+            variant = f"k{k}"
             if k == 1:
                 integrand = rf"e^{{{x}}}"
                 answer = rf"e^{{{x}}}+C"
@@ -488,9 +784,11 @@ def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]
             std = format_linear_latex(a, b, variable=x)
             if random.choice([True, False]):
                 exponent = std
+                variant = "ax+b"
             else:
                 mono = format_monomial_safe(a, x)
                 exponent = f"{b}+{mono}" if b > 0 else f"{b}+{mono}"
+                variant = "b+ax"
             integrand = rf"e^{{{exponent}}}"
             answer = rf"\frac{{1}}{{{a}}}e^{{{std}}}+C"
         elif family == "reciprocal_linear":
@@ -499,6 +797,7 @@ def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]
             b = random_int_range(-5, 5, exclude={0})
             inner = format_linear_latex(a, b, variable=x)
             form = random.choice(["frac", "recip_power", "reversed_inner"])
+            variant = form
             if form == "frac":
                 integrand = rf"\frac{{1}}{{{inner}}}"
             elif form == "recip_power":
@@ -520,6 +819,7 @@ def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]
             coef = power  # so du matches
             den = rf"{x}^{{{power}}}+{c}"
             form = random.choice(["frac", "right_mul", "left_mul"])
+            variant = form
             if form == "frac":
                 integrand = rf"\frac{{{coef}{x}^{{{power - 1}}}}}{{{den}}}"
             elif form == "right_mul":
@@ -531,6 +831,7 @@ def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]
             # Same skill, harder rewrite: \frac{x}{x^2+4} needs factor 1/2
             c = random.choice([1, 4, 9])
             form = random.choice(["half_missing", "three_x", "reversed_den"])
+            variant = form
             if form == "half_missing":
                 integrand = rf"\frac{{{x}}}{{{x}^{{2}}+{c}}}"
                 answer = rf"\frac{{1}}{{2}}\ln\left|{x}^{{2}}+{c}\right|+C"
@@ -544,6 +845,7 @@ def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]
             # OpenStax 5.39: ∫ 3x^2 e^{2x^3} dx
             # variants: 2x e^{x^2}, x e^{x^2}, e^{x^2}·2x (order)
             choice = random.choice(["x2", "x3", "reordered"])
+            variant = choice
             if choice == "x2":
                 integrand = random.choice(
                     [
@@ -573,6 +875,7 @@ def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]
         elif family == "exp_over_one_plus_exp":
             # OpenStax 5.38 pattern: e^x / (1+e^x)
             form = random.choice(["frac", "rewrite"])
+            variant = form
             if form == "frac":
                 integrand = rf"\frac{{e^{{{x}}}}}{{1+e^{{{x}}}}}"
             else:
@@ -582,6 +885,7 @@ def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]
             # ∫ e^{2x}/(e^{2x}+5) or (2e^{2x})/(e^{2x}+5)
             c = random.randint(2, 6)
             form = random.choice(["exact_du", "half_factor", "reordered"])
+            variant = form
             if form == "exact_du":
                 integrand = rf"\frac{{2e^{{2{x}}}}}{{e^{{2{x}}}+{c}}}"
                 answer = rf"\ln\left|e^{{2{x}}}+{c}\right|+C"
@@ -592,10 +896,26 @@ def _integral_log_exp_substitution(topic: str, settings: dict) -> list[Question]
                 integrand = rf"\left(e^{{2{x}}}+{c}\right)^{{-1}}\cdot 2e^{{2{x}}}"
                 answer = rf"\ln\left|e^{{2{x}}}+{c}\right|+C"
 
+        last["meta"] = _family_structure_meta(
+            family,
+            generator="integral_log_exp_substitution",
+            structure=structure,
+            variant=variant,
+        )
         prompt = rf"\int {integrand}\,d{x}"
         return prompt, "log/exp substitution integral", answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(last.get("meta") or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def format_monomial_safe(coef: int, variable: str) -> str:
@@ -609,5 +929,6 @@ def format_monomial_safe(coef: int, variable: str) -> str:
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "tangent_normal_line": _tangent_normal_line,
     "differentials": _differentials,
+    "linear_approximation": _linear_approximation,
     "integral_log_exp_substitution": _integral_log_exp_substitution,
 }

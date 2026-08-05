@@ -1,0 +1,1350 @@
+<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'/>
+<title>Quadratic factoring</title>
+<link rel="stylesheet" href="../_assets/katex/katex.min.css"/>
+<script defer src='../_assets/katex/katex.min.js'></script>
+<script defer src='../_assets/katex/contrib/auto-render.min.js'
+ onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>body{font-family:Georgia,serif;max-width:980px;margin:2rem auto;padding:0 1rem;background:#f7f4ef}
+h1{font-size:1.6rem}h2{margin-top:2rem;border-bottom:1px solid #ccc}
+h3{color:#444}.card{background:#fff;border:1px solid #ddd;border-radius:6px;padding:.75rem 1rem;margin:.5rem 0}
+.ans{color:#1a5c2e}.meta{font-size:.8rem;color:#666}</style></head><body>
+<h1>Factors-first quadratic factoring (+ cubes, quadratic form, mixers)</h1>
+<p class='meta'>Generated 2026-07-29 05:27 UTC · Low D: bedraggled-simple · D&gt;10 unsimplified stems where applicable</p>
+<h2 id='quadratic_factoring'>Factor quadratic expressions</h2>
+<p class='meta'><code>quadratic_factoring</code></p>
+<h3>D = 0</h3>
+<div class='card'>
+<div class='meta'>#1 · method=monic_simple · upgrades=[&#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{2} + 6x + 8$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=monic_simple · upgrades=[&#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{2} + 7x + 12$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x + 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=monic_simple · upgrades=[&#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{2} + 7x + 12$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x + 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=monic_simple · upgrades=[&#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{2} + 7x + 12$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x + 3\right)$$</div>
+</div>
+<h3>D = 3</h3>
+<div class='card'>
+<div class='meta'>#1 · method=monic_one_negative · upgrades=[&#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{2} + 2x - 3$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=monic_one_negative · upgrades=[&#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{2} - 16$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=monic_one_negative · upgrades=[&#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{2} - x - 6$$</div>
+<div class='ans'>→ $$\left(x - 3\right)\left(x + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=monic_one_negative · upgrades=[&#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{2} - x - 2$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x - 2\right)$$</div>
+</div>
+<h3>D = 6</h3>
+<div class='card'>
+<div class='meta'>#1 · method=monic_signed · upgrades=[&#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{2} + 7x + 12$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=monic_signed · upgrades=[&#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{2} + x - 6$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=monic_signed · upgrades=[&#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{2} - 2x - 24$$</div>
+<div class='ans'>→ $$\left(x - 6\right)\left(x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=monic_signed · upgrades=[&#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{2} + 2x + 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x + 1\right)$$</div>
+</div>
+<h3>D = 8</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$3x^{2} + 5x - 2$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(3x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$3x^{2} + x - 14$$</div>
+<div class='ans'>→ $$\left(3x + 7\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$2x^{2} - 14x - 16$$</div>
+<div class='ans'>→ $$2\left(x + 1\right)\left(x - 8\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$3x^{2} - 28x + 32$$</div>
+<div class='ans'>→ $$\left(3x - 4\right)\left(x - 8\right)$$</div>
+</div>
+<h3>D = 10</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$3x^{2} - 17x + 10$$</div>
+<div class='ans'>→ $$\left(3x - 2\right)\left(x - 5\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$4x^{2} - 12x - 16$$</div>
+<div class='ans'>→ $$4\left(x - 4\right)\left(x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$6x^{2} - 6$$</div>
+<div class='ans'>→ $$6\left(x - 1\right)\left(x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$2x^{2} - x - 36$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(2x - 9\right)$$</div>
+</div>
+<h3>D = 12</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2x^{2} + x^{2} - 5x - 28$$</div>
+<div class='ans'>→ $$\left(x - 4\right)\left(3x + 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$23x^{2} + 28 - 29x$$</div>
+<div class='ans'>→ $$\left(2x - 7\right)\left(3x - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-29x + 32x^{2} + 35$$</div>
+<div class='ans'>→ $$\left(3x - 7\right)\left(2x - 5\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-19x - 72 - 3\left(-x^{2}\right)$$</div>
+<div class='ans'>→ $$\left(3x + 8\right)\left(x - 9\right)$$</div>
+</div>
+<h3>D = 15</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$6 + 4x^{2} + 2x^{2} + 20x$$</div>
+<div class='ans'>→ $$2\left(3x + 1\right)\left(x + 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$5\left(x^{2} - 2\right) + 13x^{2} + 45x - 53$$</div>
+<div class='ans'>→ $$9\left(2x + 7\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;]</div>
+<div>$$3x^{2} - 17x - 60 + 4$$</div>
+<div class='ans'>→ $$\left(3x + 7\right)\left(x - 8\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3x^{2} - 6x + 10 - 2\left(x^{2} + 1\right)$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x - 4\right)$$</div>
+</div>
+<h3>D = 20</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-64 + 2x^{2} + 24x$$</div>
+<div class='ans'>→ $$2\left(x + 8\right)\left(x - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;, &#x27;compose:d0:numeric_split&#x27;]</div>
+<div>$$3x^{2} + 20x - 64 - 5 + 6$$</div>
+<div class='ans'>→ $$\left(3x - 7\right)\left(x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3x^{2} - x^{2} + 7x - 9$$</div>
+<div class='ans'>→ $$\left(x - 1\right)\left(2x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-16x - 18 + 3\left(x^{2} + 2\right)$$</div>
+<div class='ans'>→ $$\left(x - 6\right)\left(3x + 2\right)$$</div>
+</div>
+<h3>D = 25</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-4x^{2} + 10x^{2} - 2x - 48$$</div>
+<div class='ans'>→ $$2\left(x - 3\right)\left(3x + 8\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$4x^{2} + x + 3x - 24$$</div>
+<div class='ans'>→ $$4\left(x - 2\right)\left(x + 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-4\left(x^{2} + 1\right) + 4\left(x^{2} - 2\right) + 5x^{2} - 68$$</div>
+<div class='ans'>→ $$5\left(x - 4\right)\left(x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-4x^{2} + 8x - 27 + 3\left(x^{2} + 1\right) + 3x^{2}$$</div>
+<div class='ans'>→ $$2\left(x + 6\right)\left(x - 2\right)$$</div>
+</div>
+<h2 id='polynomial_factoring_special_cases'>Special products (DOS/PST)</h2>
+<p class='meta'><code>polynomial_factoring_special_cases</code></p>
+<h3>D = 0</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 16$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 4$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(x - 2\right)$$</div>
+</div>
+<h3>D = 3</h3>
+<div class='card'>
+<div class='meta'>#1 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} + 4x + 4$$</div>
+<div class='ans'>→ $$\left(x + 2\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} + 6x + 9$$</div>
+<div class='ans'>→ $$\left(x + 3\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 9$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x - 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} + 4x + 4$$</div>
+<div class='ans'>→ $$\left(x + 2\right)^{2}$$</div>
+</div>
+<h3>D = 6</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$9x^{2} - 4$$</div>
+<div class='ans'>→ $$\left(3x + 2\right)\left(3x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$x^{2} - 36$$</div>
+<div class='ans'>→ $$\left(x + 6\right)\left(x - 6\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 49$$</div>
+<div class='ans'>→ $$\left(x + 7\right)\left(x - 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$9x^{2} - 49$$</div>
+<div class='ans'>→ $$\left(3x + 7\right)\left(3x - 7\right)$$</div>
+</div>
+<h3>D = 8</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$x^{2} + 2x + 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} + 12x + 36$$</div>
+<div class='ans'>→ $$\left(x + 6\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 6x + 9$$</div>
+<div class='ans'>→ $$\left(x - 3\right)^{2}$$</div>
+</div>
+<h3>D = 10</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$9x^{2} - 42x + 49$$</div>
+<div class='ans'>→ $$\left(3x - 7\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$9x^{2} - 30x + 25$$</div>
+<div class='ans'>→ $$\left(3x - 5\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$9x^{2} - 25$$</div>
+<div class='ans'>→ $$\left(3x + 5\right)\left(3x - 5\right)$$</div>
+</div>
+<h3>D = 12</h3>
+<div class='card'>
+<div class='meta'>#1 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$28x + 2\left(2x^{2} + 2\right) + 45$$</div>
+<div class='ans'>→ $$\left(2x + 7\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;]</div>
+<div>$$1 - 50 + x^{2}$$</div>
+<div class='ans'>→ $$\left(x + 7\right)\left(x - 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3x^{2} + x^{2} - 9$$</div>
+<div class='ans'>→ $$\left(2x + 3\right)\left(2x - 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;]</div>
+<div>$$-3 + 52 + 14x + x^{2}$$</div>
+<div class='ans'>→ $$\left(x + 7\right)^{2}$$</div>
+</div>
+<h3>D = 15</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$4\left(x^{2} - 1\right) - 3x^{2}$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-2x^{2} + 3x^{2} - 8x + 16$$</div>
+<div class='ans'>→ $$\left(x - 4\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3x^{2} + 4 + 4\left(x^{2} - 2\right)$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$1 + 5x^{2} - 4x^{2} - 2x$$</div>
+<div class='ans'>→ $$\left(x - 1\right)^{2}$$</div>
+</div>
+<h3>D = 20</h3>
+<div class='card'>
+<div class='meta'>#1 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3x^{2} - 14 + 5\left(x^{2} + 2\right) - x^{2} + 8x + 20$$</div>
+<div class='ans'>→ $$\left(x + 4\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3x^{2} + x^{2} + 16 + 16x$$</div>
+<div class='ans'>→ $$4\left(x + 2\right)\left(x + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3x^{2} - 12x + 36 + 4x^{2}$$</div>
+<div class='ans'>→ $$\left(x - 6\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$5x^{2} - x^{2} - 25$$</div>
+<div class='ans'>→ $$\left(2x + 5\right)\left(2x - 5\right)$$</div>
+</div>
+<h3>D = 25</h3>
+<div class='card'>
+<div class='meta'>#1 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-x^{2} + 2x + 1 + 2x^{2}$$</div>
+<div class='ans'>→ $$\left(x + 1\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3x^{2} + 10x - 2x^{2} + 25$$</div>
+<div class='ans'>→ $$\left(x + 5\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_squares · upgrades=[&#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$11x^{2} - 30 + 3x^{2} - 10x^{2} + 14$$</div>
+<div class='ans'>→ $$4\left(x + 2\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=perfect_square · upgrades=[&#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2\left(2x^{2} - 8x + 8\right)$$</div>
+<div class='ans'>→ $$4\left(x - 2\right)\left(x - 2\right)$$</div>
+</div>
+<h2 id='quadratic_factoring_equations'>Solve by factoring</h2>
+<p class='meta'><code>quadratic_factoring_equations</code></p>
+<h3>D = 0</h3>
+<div class='card'>
+<div class='meta'>#1 · method=monic_simple_equation · upgrades=[&#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} + 4x + 3 = 0$$</div>
+<div class='ans'>→ $$x = -3, x = -1$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=monic_simple_equation · upgrades=[&#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} + 2x + 1 = 0$$</div>
+<div class='ans'>→ $$x = -1$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=monic_simple_equation · upgrades=[&#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} + 6x + 8 = 0$$</div>
+<div class='ans'>→ $$x = -4, x = -2$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=monic_simple_equation · upgrades=[&#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} + 5x + 4 = 0$$</div>
+<div class='ans'>→ $$x = -4, x = -1$$</div>
+</div>
+<h3>D = 3</h3>
+<div class='card'>
+<div class='meta'>#1 · method=monic_one_negative_equation · upgrades=[&#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} + x - 12 = 0$$</div>
+<div class='ans'>→ $$x = -4, x = 3$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=monic_one_negative_equation · upgrades=[&#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} + x - 2 = 0$$</div>
+<div class='ans'>→ $$x = -2, x = 1$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=monic_one_negative_equation · upgrades=[&#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} - x - 2 = 0$$</div>
+<div class='ans'>→ $$x = -1, x = 2$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=monic_one_negative_equation · upgrades=[&#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} - 3x - 4 = 0$$</div>
+<div class='ans'>→ $$x = -1, x = 4$$</div>
+</div>
+<h3>D = 6</h3>
+<div class='card'>
+<div class='meta'>#1 · method=monic_signed_equation · upgrades=[&#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} - 9x + 18 = 0$$</div>
+<div class='ans'>→ $$x = 3, x = 6$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=monic_signed_equation · upgrades=[&#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} - 8x + 12 = 0$$</div>
+<div class='ans'>→ $$x = 2, x = 6$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=monic_signed_equation · upgrades=[&#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} - 11x + 30 = 0$$</div>
+<div class='ans'>→ $$x = 5, x = 6$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=monic_signed_equation · upgrades=[&#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} + 2x - 8 = 0$$</div>
+<div class='ans'>→ $$x = -4, x = 2$$</div>
+</div>
+<h3>D = 8</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$2x^{2} + 3x + 1 = 0$$</div>
+<div class='ans'>→ $$x = -1, x = -\frac{1}{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;, &#x27;with_gcf&#x27;, &#x27;equation&#x27;]</div>
+<div>$$2x^{2} - 18 = 0$$</div>
+<div class='ans'>→ $$x = -3, x = 3$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} + 6x + 8 = 0$$</div>
+<div class='ans'>→ $$x = -4, x = -2$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} - 5x - 14 = 0$$</div>
+<div class='ans'>→ $$x = -2, x = 7$$</div>
+</div>
+<h3>D = 10</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} - 14x + 45 = 0$$</div>
+<div class='ans'>→ $$x = 5, x = 9$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$x^{2} - 17x + 72 = 0$$</div>
+<div class='ans'>→ $$x = 8, x = 9$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$3x^{2} + 13x - 56 = 0$$</div>
+<div class='ans'>→ $$x = -7, x = \frac{8}{3}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;, &#x27;equation&#x27;]</div>
+<div>$$6x^{2} - 7x + 2 = 0$$</div>
+<div class='ans'>→ $$x = \frac{1}{2}, x = \frac{2}{3}$$</div>
+</div>
+<h3>D = 12</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$32x^{2} + 2x - 4 = 0$$</div>
+<div class='ans'>→ $$x = -1, x = \frac{2}{3}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$-x^{2} + 8x + 3\left(x^{2} + 2\right) = 0$$</div>
+<div class='ans'>→ $$x = -3, x = -1$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$-3\left(-2x^{2} - 16x - 14\right) = 0$$</div>
+<div class='ans'>→ $$x = -7, x = -1$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$9x - 83 + 2\left(x^{2} + 1\right) = 0$$</div>
+<div class='ans'>→ $$x = -9, x = \frac{9}{2}$$</div>
+</div>
+<h3>D = 15</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$2\left(3x^{2} + 8x - 16\right) = 0$$</div>
+<div class='ans'>→ $$x = -4, x = \frac{4}{3}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$3x^{2} + 13x^{2} + 16x - 60 = 0$$</div>
+<div class='ans'>→ $$x = -\frac{5}{2}, x = \frac{3}{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_term&#x27;, &#x27;equation&#x27;]</div>
+<div>$$27x^{2} + 21 + 72x = 0$$</div>
+<div class='ans'>→ $$x = -\frac{7}{3}, x = -\frac{1}{3}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$-31x + 4x + 20 + 9x^{2} = 0$$</div>
+<div class='ans'>→ $$x = \frac{4}{3}, x = \frac{5}{3}$$</div>
+</div>
+<h3>D = 20</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$-x^{2} - 13x + 46 + 2\left(x^{2} - 2\right) = 0$$</div>
+<div class='ans'>→ $$x = 6, x = 7$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$7x^{2} - 2x - 70 + 4x^{2} + x^{2} = 0$$</div>
+<div class='ans'>→ $$x = -\frac{7}{3}, x = \frac{5}{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$2\left(4x^{2} - 14x + 10\right) = 0$$</div>
+<div class='ans'>→ $$x = 1, x = \frac{5}{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$2\left(8x^{2} - 32x + 30\right) = 0$$</div>
+<div class='ans'>→ $$x = \frac{3}{2}, x = \frac{5}{2}$$</div>
+</div>
+<h3>D = 25</h3>
+<div class='card'>
+<div class='meta'>#1 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$-7x^{2} + 84x + 166 + 15\left(x^{2} + 2\right) = 0$$</div>
+<div class='ans'>→ $$x = -7, x = -\frac{7}{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$3\left(10x^{2} - 35x - 45\right) = 0$$</div>
+<div class='ans'>→ $$x = -1, x = \frac{9}{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$29x^{2} + 2\left(-3x\right) - 4 = 0$$</div>
+<div class='ans'>→ $$x = -\frac{1}{3}, x = \frac{2}{3}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=ac_method_equation · upgrades=[&#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;equation&#x27;]</div>
+<div>$$2\left(3x^{2} - 2\right) + 5x - 52 = 0$$</div>
+<div class='ans'>→ $$x = -\frac{7}{2}, x = \frac{8}{3}$$</div>
+</div>
+<h2 id='a2_polynomial_functions_factoring_sum_difference_of_cubes'>Sum/difference of cubes</h2>
+<p class='meta'><code>a2_polynomial_functions_factoring_sum_difference_of_cubes</code></p>
+<h3>D = 0</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{3} - 8$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x^{2} + 2x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{3} - 8$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x^{2} + 2x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{3} - 1$$</div>
+<div class='ans'>→ $$\left(x - 1\right)\left(x^{2} + x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{3} - 1$$</div>
+<div class='ans'>→ $$\left(x - 1\right)\left(x^{2} + x + 1\right)$$</div>
+</div>
+<h3>D = 3</h3>
+<div class='card'>
+<div class='meta'>#1 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{3} + 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x^{2} - x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{3} - 1$$</div>
+<div class='ans'>→ $$\left(x - 1\right)\left(x^{2} + x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{3} - 27$$</div>
+<div class='ans'>→ $$\left(x - 3\right)\left(x^{2} + 3x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{3} + 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x^{2} - x + 1\right)$$</div>
+</div>
+<h3>D = 6</h3>
+<div class='card'>
+<div class='meta'>#1 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{3} + 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x^{2} - x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{3} + 27$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x^{2} - 3x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{3} - 8$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x^{2} + 2x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{3} + 8$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(x^{2} - 2x + 4\right)$$</div>
+</div>
+<h3>D = 8</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$x^{3} - 8$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x^{2} + 2x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$8x^{3} - 27$$</div>
+<div class='ans'>→ $$\left(2x - 3\right)\left(4x^{2} + 6x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$x^{3} - 27$$</div>
+<div class='ans'>→ $$\left(x - 3\right)\left(x^{2} + 3x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$8x^{3} - 8$$</div>
+<div class='ans'>→ $$8\left(x - 1\right)\left(x^{2} + x + 1\right)$$</div>
+</div>
+<h3>D = 10</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$8x^{3} - 1$$</div>
+<div class='ans'>→ $$\left(2x - 1\right)\left(4x^{2} + 2x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$x^{3} - 64$$</div>
+<div class='ans'>→ $$\left(x - 4\right)\left(x^{2} + 4x + 16\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$8x^{3} - 1$$</div>
+<div class='ans'>→ $$\left(2x - 1\right)\left(4x^{2} + 2x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$x^{3} - 8$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x^{2} + 2x + 4\right)$$</div>
+</div>
+<h3>D = 12</h3>
+<div class='card'>
+<div class='meta'>#1 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$5x^{3} - 4x^{3} + 64$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x^{2} - 4x + 16\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$4\left(2x^{3} + 2\right)$$</div>
+<div class='ans'>→ $$8\left(x + 1\right)\left(x^{2} - x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:numeric_split&#x27;]</div>
+<div>$$8x^{3} - 2 + 10$$</div>
+<div class='ans'>→ $$8\left(x + 1\right)\left(x^{2} - x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-27 + 3x^{3} - 2x^{3}$$</div>
+<div class='ans'>→ $$\left(x - 3\right)\left(x^{2} + 3x + 9\right)$$</div>
+</div>
+<h3>D = 15</h3>
+<div class='card'>
+<div class='meta'>#1 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3x^{3} - 2x^{3} + 64$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x^{2} - 4x + 16\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2\left(x^{3} + 1\right) + 25x^{3} + 6$$</div>
+<div class='ans'>→ $$\left(3x + 2\right)\left(9x^{2} - 6x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3\left(x^{3} - 1\right) + 5x^{3} + 30$$</div>
+<div class='ans'>→ $$\left(2x + 3\right)\left(4x^{2} - 6x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-x^{3} + 25 + 2\left(x^{3} + 1\right)$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x^{2} - 3x + 9\right)$$</div>
+</div>
+<h3>D = 20</h3>
+<div class='card'>
+<div class='meta'>#1 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$23x^{3} + 23 + 2\left(2x^{3} + 2\right)$$</div>
+<div class='ans'>→ $$27\left(x + 1\right)\left(x^{2} - x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-x^{3} + 3x^{3} - x^{3} + 1$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x^{2} - x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3\left(x^{3} + 1\right) + 11x^{3} + 4$$</div>
+<div class='ans'>→ $$\left(2x + 1\right)\left(4x^{2} - 2x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=sum_of_cubes · upgrades=[&#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:split_const&#x27;]</div>
+<div>$$2x^{3} - x^{3} + 4 + 4$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(x^{2} - 2x + 4\right)$$</div>
+</div>
+<h3>D = 25</h3>
+<div class='card'>
+<div class='meta'>#1 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_term&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-2\left(x^{3} + 2\right) + 29x^{3} - 60$$</div>
+<div class='ans'>→ $$\left(3x - 4\right)\left(9x^{2} + 12x + 16\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2x^{3} - x^{3} - 27$$</div>
+<div class='ans'>→ $$\left(x - 3\right)\left(x^{2} + 3x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;nonmonic&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;, &#x27;compose:d0:split_term&#x27;]</div>
+<div>$$3 - 67 + 27x^{3}$$</div>
+<div class='ans'>→ $$\left(3x - 4\right)\left(9x^{2} + 12x + 16\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=difference_of_cubes · upgrades=[&#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-2x^{3} - 8 - 3\left(-x^{3}\right)$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x^{2} + 2x + 4\right)$$</div>
+</div>
+<h2 id='a2_polynomial_functions_factoring_quadratic_form'>Quadratic form</h2>
+<p class='meta'><code>a2_polynomial_functions_factoring_quadratic_form</code></p>
+<h3>D = 0</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_simple · upgrades=[&#x27;quadratic_form_simple&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{4} + 5x^{2} + 4$$</div>
+<div class='ans'>→ $$\left(x^{2} + 4\right)\left(x^{2} + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_simple · upgrades=[&#x27;quadratic_form_simple&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{4} + 5x^{2} + 4$$</div>
+<div class='ans'>→ $$\left(x^{2} + 4\right)\left(x^{2} + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_simple · upgrades=[&#x27;quadratic_form_simple&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{4} + 5x^{2} + 4$$</div>
+<div class='ans'>→ $$\left(x^{2} + 1\right)\left(x^{2} + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_simple · upgrades=[&#x27;quadratic_form_simple&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{4} + 7x^{2} + 12$$</div>
+<div class='ans'>→ $$\left(x^{2} + 3\right)\left(x^{2} + 4\right)$$</div>
+</div>
+<h3>D = 3</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_signed · upgrades=[&#x27;quadratic_form_signed&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{4} - 7x^{2} + 12$$</div>
+<div class='ans'>→ $$\left(x^{2} - 3\right)\left(x^{2} - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_signed · upgrades=[&#x27;quadratic_form_signed&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{4} + x^{2} - 12$$</div>
+<div class='ans'>→ $$\left(x^{2} - 3\right)\left(x^{2} + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_signed · upgrades=[&#x27;quadratic_form_signed&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{4} - 3x^{2} - 18$$</div>
+<div class='ans'>→ $$\left(x^{2} + 3\right)\left(x^{2} - 6\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_signed · upgrades=[&#x27;quadratic_form_signed&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{4} - 16$$</div>
+<div class='ans'>→ $$\left(x^{2} - 4\right)\left(x^{2} + 4\right)$$</div>
+</div>
+<h3>D = 6</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_signed · upgrades=[&#x27;quadratic_form_signed&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{4} - 8x^{2} + 15$$</div>
+<div class='ans'>→ $$\left(x^{2} - 5\right)\left(x^{2} - 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_signed · upgrades=[&#x27;quadratic_form_signed&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{4} + x^{2} - 2$$</div>
+<div class='ans'>→ $$\left(x^{2} + 2\right)\left(x^{2} - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_signed · upgrades=[&#x27;quadratic_form_signed&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{4} - x^{2} - 6$$</div>
+<div class='ans'>→ $$\left(x^{2} + 2\right)\left(x^{2} - 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_signed · upgrades=[&#x27;quadratic_form_signed&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{4} + 5x^{2} - 6$$</div>
+<div class='ans'>→ $$\left(x^{2} - 1\right)\left(x^{2} + 6\right)$$</div>
+</div>
+<h3>D = 8</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$x^{4} - 13x^{2} + 42$$</div>
+<div class='ans'>→ $$\left(x^{2} - 6\right)\left(x^{2} - 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$3x^{4} - 20x^{2} - 7$$</div>
+<div class='ans'>→ $$\left(3x^{2} + 1\right)\left(x^{2} - 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$6x^{4} - 29x^{2} + 28$$</div>
+<div class='ans'>→ $$\left(3x^{2} - 4\right)\left(2x^{2} - 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$2x^{4} + 13x^{2} + 18$$</div>
+<div class='ans'>→ $$\left(2x^{2} + 9\right)\left(x^{2} + 2\right)$$</div>
+</div>
+<h3>D = 10</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$3x^{4} - 2x^{2} - 5$$</div>
+<div class='ans'>→ $$\left(3x^{2} - 5\right)\left(x^{2} + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$x^{4} - x^{2} - 72$$</div>
+<div class='ans'>→ $$\left(x^{2} - 9\right)\left(x^{2} + 8\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$9x^{4} - 6x^{2} - 8$$</div>
+<div class='ans'>→ $$\left(3x^{2} - 4\right)\left(3x^{2} + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:10.0&#x27;]</div>
+<div>$$2x^{4} - 13x^{2} - 7$$</div>
+<div class='ans'>→ $$\left(x^{2} - 7\right)\left(2x^{2} + 1\right)$$</div>
+</div>
+<h3>D = 12</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-x^{4} - 12x^{2} + 32 + 2x^{4}$$</div>
+<div class='ans'>→ $$\left(x^{2} - 8\right)\left(x^{2} - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2x^{2} - 3x^{2} - 15 + 6x^{4}$$</div>
+<div class='ans'>→ $$\left(2x^{2} + 3\right)\left(3x^{2} - 5\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:numeric_split&#x27;]</div>
+<div>$$3x^{4} + 16x^{2} + 4 + 12$$</div>
+<div class='ans'>→ $$\left(3x^{2} + 4\right)\left(x^{2} + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$-33x^{2} + 72 - 3\left(-x^{4}\right)$$</div>
+<div class='ans'>→ $$3\left(x^{2} - 8\right)\left(x^{2} - 3\right)$$</div>
+</div>
+<h3>D = 15</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$3x^{4} + 54 - 33x^{2}$$</div>
+<div class='ans'>→ $$3\left(x^{2} - 2\right)\left(x^{2} - 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$-2\left(x^{4} + 1\right) + 11x^{4} - 9x^{2} - 16$$</div>
+<div class='ans'>→ $$9\left(x^{2} + 1\right)\left(x^{2} - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$8x^{4} - 6x^{4} - 6 - 4x^{2}$$</div>
+<div class='ans'>→ $$2\left(x^{2} - 3\right)\left(x^{2} + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$20x^{2} + 2x^{4} + x^{4} + 32$$</div>
+<div class='ans'>→ $$\left(x^{2} + 4\right)\left(3x^{2} + 8\right)$$</div>
+</div>
+<h3>D = 20</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2\left(2x^{4} - 1\right) + 3x^{2} + 5x^{2} - 3$$</div>
+<div class='ans'>→ $$\left(2x^{2} + 5\right)\left(2x^{2} - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2x^{4} + x^{4} + 26x^{2} + 16$$</div>
+<div class='ans'>→ $$\left(3x^{2} + 2\right)\left(x^{2} + 8\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$3\left(3x^{4} - x^{2} - 2\right)$$</div>
+<div class='ans'>→ $$3\left(x^{2} - 1\right)\left(3x^{2} + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$6x^{4} - 24x^{2} + 60 - 2\left(2x^{4} - 2\right)$$</div>
+<div class='ans'>→ $$2\left(x^{2} - 4\right)\left(x^{2} - 8\right)$$</div>
+</div>
+<h3>D = 25</h3>
+<div class='card'>
+<div class='meta'>#1 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$4x^{4} + 3x^{2} - 45 + 3\left(x^{4} + 1\right) + 2x^{4}$$</div>
+<div class='ans'>→ $$3\left(3x^{2} + 7\right)\left(x^{2} - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$7x^{4} - x^{4} + x^{2} - 2$$</div>
+<div class='ans'>→ $$\left(2x^{2} - 1\right)\left(3x^{2} + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3\left(x^{4} - 1\right) - 2x^{4} - 6x^{2} - 4$$</div>
+<div class='ans'>→ $$\left(x^{2} - 7\right)\left(x^{2} + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=quadratic_form_ac · upgrades=[&#x27;quadratic_form_ac&#x27;, &#x27;degree:4&#x27;, &#x27;u_power:2&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$x^{4} - 20x^{2} + 9 + 3x^{4}$$</div>
+<div class='ans'>→ $$\left(2x^{2} - 9\right)\left(2x^{2} - 1\right)$$</div>
+</div>
+<h2 id='a2_polynomial_functions_factoring_all_techniques'>All techniques (A2 mixer)</h2>
+<p class='meta'><code>a2_polynomial_functions_factoring_all_techniques</code></p>
+<h3>D = 0</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:monic_simple · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{2} + 5x + 6$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;]</div>
+<div>$$2x + 2$$</div>
+<div class='ans'>→ $$2\left(x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:monic_simple · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{2} + 4x + 3$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:difference_of_cubes · upgrades=[&#x27;all_techniques&#x27;, &#x27;cubes&#x27;, &#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{3} - 27$$</div>
+<div class='ans'>→ $$\left(x - 3\right)\left(x^{2} + 3x + 9\right)$$</div>
+</div>
+<h3>D = 3</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:difference_of_cubes · upgrades=[&#x27;all_techniques&#x27;, &#x27;cubes&#x27;, &#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{3} - 1$$</div>
+<div class='ans'>→ $$\left(x - 1\right)\left(x^{2} + x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:difference_of_cubes · upgrades=[&#x27;all_techniques&#x27;, &#x27;cubes&#x27;, &#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{3} - 27$$</div>
+<div class='ans'>→ $$\left(x - 3\right)\left(x^{2} + 3x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:difference_of_cubes · upgrades=[&#x27;all_techniques&#x27;, &#x27;cubes&#x27;, &#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{3} - 8$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x^{2} + 2x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:difference_of_cubes · upgrades=[&#x27;all_techniques&#x27;, &#x27;cubes&#x27;, &#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{3} - 8$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x^{2} + 2x + 4\right)$$</div>
+</div>
+<h3>D = 6</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$9x^{2} - 16$$</div>
+<div class='ans'>→ $$\left(3x + 4\right)\left(3x - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$x^{2} - 49$$</div>
+<div class='ans'>→ $$\left(x + 7\right)\left(x - 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:monic_signed · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{2} - 4x - 5$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x - 5\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:monic_signed · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{2} - 11x + 30$$</div>
+<div class='ans'>→ $$\left(x - 5\right)\left(x - 6\right)$$</div>
+</div>
+<h3>D = 8</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$3x^{2} + 36x + 81$$</div>
+<div class='ans'>→ $$3\left(x + 3\right)\left(x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:difference_of_cubes · upgrades=[&#x27;all_techniques&#x27;, &#x27;cubes&#x27;, &#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$x^{3} - 1$$</div>
+<div class='ans'>→ $$\left(x - 1\right)\left(x^{2} + x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:perfect_square · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} + 6x + 9$$</div>
+<div class='ans'>→ $$\left(x + 3\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:perfect_square · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} + 14x + 49$$</div>
+<div class='ans'>→ $$\left(x + 7\right)^{2}$$</div>
+</div>
+<h3>D = 10</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$4x^{2} - 49$$</div>
+<div class='ans'>→ $$\left(2x + 7\right)\left(2x - 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;]</div>
+<div>$$9x^{2} - 25$$</div>
+<div class='ans'>→ $$\left(3x + 5\right)\left(3x - 5\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;, &#x27;signed_terms&#x27;, &#x27;three_terms&#x27;, &#x27;variable_gcf&#x27;]</div>
+<div>$$24x^{2}$$</div>
+<div class='ans'>→ $$8x\left(3x\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:grouping_quadratic · upgrades=[&#x27;all_techniques&#x27;, &#x27;grouping&#x27;, &#x27;grouping_quadratic&#x27;, &#x27;degree:2&#x27;]</div>
+<div>$$x^{2} - 7x + 10$$</div>
+<div class='ans'>→ $$\left(x - 5\right)\left(x - 2\right)$$</div>
+</div>
+<h3>D = 12</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3\left(-x^{2} + 7x - 6\right)$$</div>
+<div class='ans'>→ $$3\left(x - 6\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3\left(x^{2} - 2\right) + 7x^{2} - 15$$</div>
+<div class='ans'>→ $$\left(2x + 3\right)\left(2x - 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:perfect_square · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-18x + 9 + 2x^{2} + 7x^{2}$$</div>
+<div class='ans'>→ $$9\left(x - 1\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$33x + 18 - 3\left(-3x^{2}\right)$$</div>
+<div class='ans'>→ $$3\left(x + 3\right)\left(3x + 2\right)$$</div>
+</div>
+<h3>D = 15</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3x - 2x - 42 + 2x^{2}$$</div>
+<div class='ans'>→ $$\left(2x + 7\right)\left(x - 6\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:difference_of_cubes · upgrades=[&#x27;all_techniques&#x27;, &#x27;cubes&#x27;, &#x27;difference_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;]</div>
+<div>$$x^{3} - 32 + 5$$</div>
+<div class='ans'>→ $$\left(x - 3\right)\left(x^{2} + 3x + 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2\left(2x^{2} - 8\right)$$</div>
+<div class='ans'>→ $$4\left(x + 2\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$11x^{2} + 18x + 9 - 2x^{2}$$</div>
+<div class='ans'>→ $$9\left(x + 1\right)\left(x + 1\right)$$</div>
+</div>
+<h3>D = 20</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$5x^{2} - 2x^{2} - 2x^{2} - 4$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2\left(x^{2} - 1\right) - x^{2} - 14$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-5x^{2} - 1 + 2x^{2} + 4x^{2}$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:sum_of_cubes · upgrades=[&#x27;all_techniques&#x27;, &#x27;cubes&#x27;, &#x27;sum_of_cubes&#x27;, &#x27;degree:3&#x27;, &#x27;monic&#x27;, &#x27;d:20.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3\left(x^{3} - 1\right) - 2x^{3} + 30$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x^{2} - 3x + 9\right)$$</div>
+</div>
+<h3>D = 25</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:perfect_square · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2\left(x^{2} + 2\right) - x^{2} - 2x - 3$$</div>
+<div class='ans'>→ $$\left(x - 1\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$14x + 3\left(x^{2} + 5\right)$$</div>
+<div class='ans'>→ $$\left(3x + 5\right)\left(x + 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;, &#x27;signed_terms&#x27;, &#x27;three_terms&#x27;, &#x27;variable_gcf&#x27;]</div>
+<div>$$50x + 10x^{2}$$</div>
+<div class='ans'>→ $$10x\left(x + 5\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;, &#x27;signed_terms&#x27;, &#x27;three_terms&#x27;, &#x27;variable_gcf&#x27;]</div>
+<div>$$-16x + 8x^{2}$$</div>
+<div class='ans'>→ $$8x\left(x - 2\right)$$</div>
+</div>
+<h2 id='polynomial_factoring_general_strategy'>General strategy (A1 mixer)</h2>
+<p class='meta'><code>polynomial_factoring_general_strategy</code></p>
+<h3>D = 0</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;]</div>
+<div>$$3x + 6$$</div>
+<div class='ans'>→ $$3\left(x + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:monic_simple · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{2} + 8x + 16$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:grouping_quadratic · upgrades=[&#x27;all_techniques&#x27;, &#x27;grouping&#x27;, &#x27;grouping_quadratic&#x27;, &#x27;degree:2&#x27;]</div>
+<div>$$x^{2} + 8x + 15$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x + 5\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:monic_simple · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_simple&#x27;, &#x27;degree:2&#x27;, &#x27;d:0.0&#x27;]</div>
+<div>$$x^{2} + 3x + 2$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(x + 2\right)$$</div>
+</div>
+<h3>D = 3</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:monic_one_negative · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{2} - x - 2$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:monic_one_negative · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{2} + 2x - 8$$</div>
+<div class='ans'>→ $$\left(x - 2\right)\left(x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:monic_one_negative · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_one_negative&#x27;, &#x27;degree:2&#x27;, &#x27;d:3.0&#x27;]</div>
+<div>$$x^{2} + 3x - 4$$</div>
+<div class='ans'>→ $$\left(x - 1\right)\left(x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 9$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x - 3\right)$$</div>
+</div>
+<h3>D = 6</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:grouping_quadratic · upgrades=[&#x27;all_techniques&#x27;, &#x27;grouping&#x27;, &#x27;grouping_quadratic&#x27;, &#x27;degree:2&#x27;]</div>
+<div>$$3x^{2} + 5x + 2$$</div>
+<div class='ans'>→ $$\left(x + 1\right)\left(3x + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:grouping_quadratic · upgrades=[&#x27;all_techniques&#x27;, &#x27;grouping&#x27;, &#x27;grouping_quadratic&#x27;, &#x27;degree:2&#x27;]</div>
+<div>$$3x^{2} + 16x + 5$$</div>
+<div class='ans'>→ $$\left(x + 5\right)\left(3x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:monic_signed · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;monic_signed&#x27;, &#x27;degree:2&#x27;, &#x27;d:6.0&#x27;]</div>
+<div>$$x^{2} - 11x + 30$$</div>
+<div class='ans'>→ $$\left(x - 5\right)\left(x - 6\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;, &#x27;signed_terms&#x27;, &#x27;three_terms&#x27;]</div>
+<div>$$4 - 8x^{2} - 8x$$</div>
+<div class='ans'>→ $$4\left(-2x^{2} - 2x + 1\right)$$</div>
+</div>
+<h3>D = 8</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$3x^{2} + 19x + 6$$</div>
+<div class='ans'>→ $$\left(x + 6\right)\left(3x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:8.0&#x27;]</div>
+<div>$$x^{2} - 4$$</div>
+<div class='ans'>→ $$\left(x + 2\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:grouping_quadratic · upgrades=[&#x27;all_techniques&#x27;, &#x27;grouping&#x27;, &#x27;grouping_quadratic&#x27;, &#x27;degree:2&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$2x^{2} + 6x + 4$$</div>
+<div class='ans'>→ $$2\left(x + 1\right)\left(x + 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 25$$</div>
+<div class='ans'>→ $$\left(x + 5\right)\left(x - 5\right)$$</div>
+</div>
+<h3>D = 10</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 16$$</div>
+<div class='ans'>→ $$\left(x + 4\right)\left(x - 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;, &#x27;signed_terms&#x27;, &#x27;three_terms&#x27;, &#x27;variable_gcf&#x27;]</div>
+<div>$$45x^{2} + 27x$$</div>
+<div class='ans'>→ $$9x\left(5x + 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:perfect_square · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;]</div>
+<div>$$x^{2} - 6x + 9$$</div>
+<div class='ans'>→ $$\left(x - 3\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:10.0&#x27;, &#x27;with_gcf&#x27;]</div>
+<div>$$3x^{2} - 18x - 21$$</div>
+<div class='ans'>→ $$3\left(x - 7\right)\left(x + 1\right)$$</div>
+</div>
+<h3>D = 12</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;, &#x27;signed_terms&#x27;, &#x27;three_terms&#x27;, &#x27;variable_gcf&#x27;]</div>
+<div>$$24x + 12x^{2}$$</div>
+<div class='ans'>→ $$4x\left(3x + 6\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$3\left(x^{2} - 2\right) - x^{2} + 15x + 24$$</div>
+<div class='ans'>→ $$\left(x + 6\right)\left(2x + 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$13x - 3\left(-2x^{2}\right) + 6$$</div>
+<div class='ans'>→ $$\left(3x + 2\right)\left(2x + 3\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:12.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3\left(-x^{2} - 1\right) - x - 5$$</div>
+<div class='ans'>→ $$\left(3x + 2\right)\left(x - 1\right)$$</div>
+</div>
+<h3>D = 15</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-3\left(-3x^{2}\right) + 24 - 30x$$</div>
+<div class='ans'>→ $$3\left(3x - 4\right)\left(x - 2\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$30x + 2\left(2x^{2} + 25\right)$$</div>
+<div class='ans'>→ $$2\left(x + 5\right)\left(2x + 5\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:15.0&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-x^{2} + 7x - 66 + 3\left(x^{2} - 2\right)$$</div>
+<div class='ans'>→ $$\left(x + 8\right)\left(2x - 9\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:grouping_cubic · upgrades=[&#x27;all_techniques&#x27;, &#x27;grouping&#x27;, &#x27;grouping_cubic&#x27;, &#x27;degree:3&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2\left(2x^{3} - 8x^{2} + 2\right) - x$$</div>
+<div class='ans'>→ $$\left(x - 4\right)\left(4x^{2} - 1\right)$$</div>
+</div>
+<h3>D = 20</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;, &#x27;signed_terms&#x27;, &#x27;three_terms&#x27;, &#x27;variable_gcf&#x27;]</div>
+<div>$$-10x + 60x^{2}$$</div>
+<div class='ans'>→ $$10x\left(6x - 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$2\left(2x^{2} + 12x + 10\right)$$</div>
+<div class='ans'>→ $$4\left(x + 5\right)\left(x + 1\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:20.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$58x - 8 + 4\left(3x^{2} + 1\right) + 60$$</div>
+<div class='ans'>→ $$2\left(2x + 7\right)\left(3x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:difference_of_squares · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;difference_of_squares&#x27;, &#x27;degree:2&#x27;, &#x27;nonmonic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$11x^{2} - 25 + 3x^{2} - 5x^{2}$$</div>
+<div class='ans'>→ $$\left(3x + 5\right)\left(3x - 5\right)$$</div>
+</div>
+<h3>D = 25</h3>
+<div class='card'>
+<div class='meta'>#1 · method=all:perfect_square · upgrades=[&#x27;all_techniques&#x27;, &#x27;special&#x27;, &#x27;perfect_square&#x27;, &#x27;degree:2&#x27;, &#x27;monic&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$-x^{2} + 14x + 49 + 2x^{2}$$</div>
+<div class='ans'>→ $$\left(x + 7\right)^{2}$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#2 · method=all:ac_method · upgrades=[&#x27;all_techniques&#x27;, &#x27;quadratic&#x27;, &#x27;ac_method&#x27;, &#x27;degree:2&#x27;, &#x27;d:25.0&#x27;, &#x27;with_gcf&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:split_const&#x27;, &#x27;compose:d0:split_const&#x27;]</div>
+<div>$$3 + 39x - 1 + 40 + 9x^{2}$$</div>
+<div class='ans'>→ $$3\left(x + 2\right)\left(3x + 7\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#3 · method=all:grouping_quadratic · upgrades=[&#x27;all_techniques&#x27;, &#x27;grouping&#x27;, &#x27;grouping_quadratic&#x27;, &#x27;degree:2&#x27;, &#x27;unsimplified&#x27;, &#x27;compose:d0:distribute&#x27;, &#x27;compose:d0:distribute&#x27;]</div>
+<div>$$x^{2} + 12 + 10x + 2x - 5x$$</div>
+<div class='ans'>→ $$\left(x + 3\right)\left(x + 4\right)$$</div>
+</div>
+<div class='card'>
+<div class='meta'>#4 · method=all:gcf · upgrades=[&#x27;all_techniques&#x27;, &#x27;gcf&#x27;, &#x27;gcf&#x27;, &#x27;signed_terms&#x27;, &#x27;three_terms&#x27;, &#x27;variable_gcf&#x27;]</div>
+<div>$$5x^{2} + 15x$$</div>
+<div class='ans'>→ $$5x\left(x + 3\right)$$</div>
+</div>
+</body></html>

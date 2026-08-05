@@ -29,6 +29,7 @@ from question_engine.frameworks.primitives.factor_gcf import sample_factor_gcf
 from question_engine.frameworks.primitives.factor_poly import (
     PRIM_FACTOR_POLY,
     sample_factoring_all_techniques,
+    sample_factoring_from_catalog,
     sample_factoring_grouping,
     sample_quadratic_factoring,
     sample_quadratic_form,
@@ -42,14 +43,73 @@ from question_engine.frameworks.primitives.polynomials import (
     sample_polynomial_multiply,
     sample_polynomial_naming,
 )
+from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
 from question_engine.generators.utils import make_questions
 
 
-def _meta_builder(last: dict[str, Any]):
-    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict[str, Any]:
-        return dict(last.get("meta") or {})
+def _meta_builder(
+    last: dict[str, Any],
+    topic: str = "",
+    *,
+    pack: str | None = None,
+    generator: str | None = None,
+    methods_used: list[str] | None = None,
+    course_tag: str | None = None,
+):
+    """Stamp ML join fields (spec_snapshot / structure_id / effort_features).
+
+    When ``pack`` / ``generator`` are omitted, falls back to
+    ``primitive_engine`` already on the per-item meta.
+    """
+    tag = course_tag if course_tag is not None else _course_tag_for(topic)
+
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
+        meta = dict(last.get("meta") or {})
+        eng = str(meta.get("primitive_engine") or generator or "algebraic")
+        return enrich_algebraic_meta(
+            meta,
+            pack=pack or f"structured_{eng}",
+            generator=generator or eng,
+            family=str(meta.get("method") or meta.get("pattern") or meta.get("op") or eng),
+            methods_used=methods_used
+            or (
+                ["factor"]
+                if "factor" in eng
+                else (
+                    ["product"]
+                    if "multiply" in eng
+                    else (
+                        ["expand", "simplify"]
+                        if "simplify" in eng or "expand" in eng
+                        else ["algebraic"]
+                    )
+                )
+            ),
+            knobs=meta.get("target_constraints")
+            if isinstance(meta.get("target_constraints"), dict)
+            else None,
+            answer=answer,
+            course_tag=tag,
+            degree_max=meta.get("degree") or meta.get("poly_degree") or meta.get("max_degree"),
+            n_terms=meta.get("n_terms") or meta.get("n_hot_terms"),
+            n_factors=meta.get("n_factors")
+            or (
+                (meta.get("left_terms") or 0) + (meta.get("right_terms") or 0)
+                if meta.get("left_terms") is not None
+                else None
+            ),
+        )
 
     return metadata_builder
+
+
+def _course_tag_for(topic: str) -> str:
+    t = str(topic or "")
+    if t.startswith("a2_") or t.startswith("pa_"):
+        return "a2" if t.startswith("a2_") else "pa"
+    if t.startswith("pc_"):
+        return "pc"
+    return "a1"
 
 
 def _poly_settings(settings: dict) -> dict[str, Any]:
@@ -66,6 +126,30 @@ def _policy_from(settings: dict):
     return polynomial_policy(max_degree=md)
 
 
+def _maybe_a2_poly_form(topic: str, settings: dict, leaf_id: str):
+    """Select OpenStax poly form when generating an A2 leaf; else ``(None, {})``."""
+    if not str(topic or "").startswith("a2_"):
+        return None, {}
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+    from question_engine.frameworks.primitives.openstax_a2 import select_a2_form
+    import random as _random
+
+    d = float(settings_difficulty(settings))
+    seed = settings.get("seed")
+    batch = int(settings.get("_batch_index") or 0)
+    if seed is not None:
+        try:
+            rng = _random.Random(int(seed) + batch * 1009)
+        except (TypeError, ValueError):
+            rng = _random.Random()
+    else:
+        rng = _random.Random()
+    form, meta = select_a2_form(
+        "algebra2_polys", d=d, rng=rng, leaf_id=str(topic or leaf_id)
+    )
+    return form, meta
+
+
 def polynomial_naming(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
@@ -73,6 +157,7 @@ def polynomial_naming(topic: str, settings: dict) -> list[Question]:
     local = _poly_settings(settings)
 
     def build() -> tuple[str, str, str | None]:
+        form, form_meta = _maybe_a2_poly_form(topic, local, "a2_polynomial_functions_naming")
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_POLYNOMIALS],
@@ -88,7 +173,10 @@ def polynomial_naming(topic: str, settings: dict) -> list[Question]:
             "leading_coeff": str(item.leading_coeff),
             "n_terms": item.n_terms,
             "upgrades": list(item.upgrades),
+            **form_meta,
         }
+        if form is not None:
+            last["meta"]["form_constraints"] = form.get("constraints")
         return (
             f"\\text{{Name the polynomial: }} {item.latex}",
             f"Name the polynomial: {item.text}",
@@ -97,7 +185,7 @@ def polynomial_naming(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -108,13 +196,26 @@ def polynomial_add_subtract(topic: str, settings: dict) -> list[Question]:
     local = _poly_settings(settings)
 
     def build() -> tuple[str, str, str | None]:
+        # apply_batch_seed sets settings["_batch_index"]; PrimitiveContext uses it.
+        live = dict(local)
+        for k in ("seed", "difficulty", "_batch_index"):
+            if k in settings:
+                live[k] = settings[k]
+        form, form_meta = _maybe_a2_poly_form(
+            topic, live, "a2_polynomial_functions_adding_and_subtracting"
+        )
+        preferred_op = None
+        if form is not None:
+            op_c = (form.get("constraints") or {}).get("op")
+            if op_c in ("+", "-"):
+                preferred_op = op_c
         ctx = build_context(
-            local,
+            live,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_POLYNOMIALS],
-            policy=_policy_from(local),
+            policy=_policy_from(live),
             leaf_id="polynomial_add_subtract",
         )
-        item = sample_polynomial_add_subtract(ctx)
+        item = sample_polynomial_add_subtract(ctx, preferred_op=preferred_op)
         answer = item.simplified_latex if include_answer_key else None
         last["meta"] = {
             **ctx.metadata(),
@@ -122,6 +223,7 @@ def polynomial_add_subtract(topic: str, settings: dict) -> list[Question]:
             "degree": item.degree,
             "op": item.op,
             "upgrades": list(item.upgrades),
+            **form_meta,
         }
         return (
             f"\\text{{Simplify: }} {item.latex}",
@@ -131,7 +233,7 @@ def polynomial_add_subtract(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -167,7 +269,7 @@ def polynomial_multiply(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -201,7 +303,7 @@ def polynomial_multiply_special(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -238,7 +340,7 @@ def evaluate_polynomial(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -271,7 +373,7 @@ def poly_combine_like_terms(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -305,7 +407,7 @@ def poly_expand_simplify(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -444,6 +546,11 @@ def simplify_polynomials(topic: str, settings: dict) -> list[Question]:
 
         answer = surface.simplified_latex if include_answer_key else None
         n_terms = len([c for c in (surface.poly_coeffs or {}).values() if c != 0])
+        from question_engine.frameworks.primitives.poly_expression import (
+            pack_poly_expand,
+            spec_snapshot,
+        )
+
         last["meta"] = {
             **ctx.metadata(),
             "primitive_engine": "construct_poly",
@@ -460,13 +567,25 @@ def simplify_polynomials(topic: str, settings: dict) -> list[Question]:
                 "exact_terms": exact_terms,
                 "prefer_single_hot": prefer_single,
             },
+            # Spec-shaped snapshot for ML (joinable with calc ExpressionSpec rows).
+            "spec_snapshot": {
+                **spec_snapshot(
+                    pack_poly_expand(
+                        d,
+                        power_max=max_degree,
+                        course_tag=_course_tag_for(topic),
+                    )
+                ),
+                "pack": "poly_expand",
+                "family": "construct_poly",
+            },
         }
         # Catalog instruction is "Simplify."; stem is the unsimplified expression.
         return (surface.latex, surface.text, answer)
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -501,7 +620,7 @@ def factor_gcf_poly(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -511,17 +630,27 @@ def quadratic_factoring(topic: str, settings: dict) -> list[Question]:
     last: dict[str, Any] = {"meta": {}}
     local = _poly_settings(settings)
     local["max_degree"] = min(2, int(local.get("max_degree", 2)))
+    tid = str(topic or "quadratic_factoring")
+    use_catalog = tid in {
+        "quadratic_factoring",
+    }
 
     def build() -> tuple[str, str, str | None]:
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY],
             policy=polynomial_policy(max_degree=2),
-            leaf_id=str(topic or "quadratic_factoring"),
+            leaf_id=tid,
         )
-        item = sample_quadratic_factoring(ctx)
+        if use_catalog:
+            item = sample_factoring_from_catalog(
+                ctx, catalog_name="algebra1_factoring", leaf_id="quadratic_factoring"
+            )
+        else:
+            item = sample_quadratic_factoring(ctx)
         answer = item.factored_latex if include_answer_key else None
-        last["meta"] = {
+        fid = item.form_id or item.method
+        meta = {
             **ctx.metadata(),
             "primitive_engine": "quadratic_factoring",
             "method": item.method,
@@ -529,12 +658,23 @@ def quadratic_factoring(topic: str, settings: dict) -> list[Question]:
             "upgrades": list(item.upgrades),
             "effective_d": item.effective_d,
         }
+        if use_catalog:
+            meta.update(
+                {
+                    "form_id": fid,
+                    "openstax_form": fid,
+                    "construction": "forward_form_catalog",
+                    "catalog_id": "algebra1_factoring",
+                    "shape_id": fid,
+                }
+            )
+        last["meta"] = meta
         # Catalog instruction is "Factor."; stem is the (maybe unsimplified) poly.
         return item.latex, item.text, answer
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -583,7 +723,7 @@ def quadratic_factoring_equations(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -592,28 +732,51 @@ def polynomial_factoring_special_cases(topic: str, settings: dict) -> list[Quest
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
     local = _poly_settings(settings)
+    tid = str(topic or "polynomial_factoring_special_cases")
+    use_catalog = tid in {
+        "polynomial_factoring_special_cases",
+    }
 
     def build() -> tuple[str, str, str | None]:
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY],
             policy=_policy_from(local),
-            leaf_id="polynomial_factoring_special_cases",
+            leaf_id=tid,
         )
-        item = sample_special_factoring(ctx)
+        if use_catalog:
+            item = sample_factoring_from_catalog(
+                ctx,
+                catalog_name="algebra1_factoring",
+                leaf_id="polynomial_factoring_special_cases",
+            )
+        else:
+            item = sample_special_factoring(ctx)
         answer = item.factored_latex if include_answer_key else None
-        last["meta"] = {
+        fid = item.form_id or item.method
+        meta = {
             **ctx.metadata(),
             "primitive_engine": "polynomial_factoring_special_cases",
             "method": item.method,
             "degree": item.degree,
             "upgrades": list(item.upgrades),
         }
+        if use_catalog:
+            meta.update(
+                {
+                    "form_id": fid,
+                    "openstax_form": fid,
+                    "construction": "forward_form_catalog",
+                    "catalog_id": "algebra1_factoring",
+                    "shape_id": fid,
+                }
+            )
+        last["meta"] = meta
         return item.latex, item.text, answer
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -624,6 +787,9 @@ def polynomial_factoring_grouping(topic: str, settings: dict) -> list[Question]:
     local = _poly_settings(settings)
 
     def build() -> tuple[str, str, str | None]:
+        form, form_meta = _maybe_a2_poly_form(
+            topic, local, "a2_polynomial_functions_factoring_by_grouping"
+        )
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY],
@@ -638,7 +804,10 @@ def polynomial_factoring_grouping(topic: str, settings: dict) -> list[Question]:
             "method": item.method,
             "degree": item.degree,
             "upgrades": list(item.upgrades),
+            **form_meta,
         }
+        if form is not None:
+            last["meta"]["form_constraints"] = form.get("constraints")
         return (
             item.latex,
             item.text,
@@ -647,7 +816,7 @@ def polynomial_factoring_grouping(topic: str, settings: dict) -> list[Question]:
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -679,7 +848,7 @@ def polynomial_factoring_sum_diff_cubes(topic: str, settings: dict) -> list[Ques
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
@@ -711,17 +880,21 @@ def polynomial_factoring_quadratic_form(topic: str, settings: dict) -> list[Ques
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 
 def polynomial_factoring_all_techniques(topic: str, settings: dict) -> list[Question]:
-    """Mixer over GCF / quadratic / special / grouping (+ cubes for A2 all-techniques)."""
+    """Mixer over GCF / quadratic / special / grouping (+ cubes for A2 all-techniques).
+
+    A1 ``polynomial_factoring_general_strategy`` is OpenStax form-catalog driven.
+    """
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
     local = _poly_settings(settings)
     tid = str(topic or "polynomial_factoring_all_techniques")
+    use_catalog = "general_strategy" in tid
     # A2 all-techniques needs degree ≥3 for cubes; A1 general strategy stays ≤3.
     if "all_techniques" in tid:
         local["max_degree"] = max(3, int(local.get("max_degree", 3)))
@@ -735,9 +908,15 @@ def polynomial_factoring_all_techniques(topic: str, settings: dict) -> list[Ques
             policy=_policy_from(local),
             leaf_id=tid,
         )
-        item = sample_factoring_all_techniques(ctx)
+        if use_catalog:
+            item = sample_factoring_from_catalog(
+                ctx, catalog_name="algebra1_factoring", leaf_id=tid
+            )
+        else:
+            item = sample_factoring_all_techniques(ctx)
         answer = item.factored_latex if include_answer_key else None
-        last["meta"] = {
+        fid = item.form_id or item.method
+        meta = {
             **ctx.metadata(),
             "primitive_engine": "polynomial_factoring_all_techniques",
             "method": item.method,
@@ -745,11 +924,22 @@ def polynomial_factoring_all_techniques(topic: str, settings: dict) -> list[Ques
             "upgrades": list(item.upgrades),
             "effective_d": item.effective_d,
         }
+        if use_catalog:
+            meta.update(
+                {
+                    "form_id": fid,
+                    "openstax_form": fid,
+                    "construction": "forward_form_catalog",
+                    "catalog_id": "algebra1_factoring",
+                    "shape_id": fid,
+                }
+            )
+        last["meta"] = meta
         return item.latex, item.text, answer
 
     return make_questions(
         topic, count, include_answer_key, build,
-        metadata_builder=_meta_builder(last), settings=settings,
+        metadata_builder=_meta_builder(last, topic), settings=settings,
     )
 
 

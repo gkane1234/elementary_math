@@ -1,5 +1,6 @@
 import type { SettingField } from "@/lib/types";
 import { applyDifficultyPresetToSettings } from "@/lib/difficulty-presets";
+import { approxMaxDForSettings } from "@/lib/approx-max-d";
 
 const WORKSHEET_LEVEL_KEYS = new Set(["count", "max_columns"]);
 
@@ -17,7 +18,9 @@ const MC_DETAIL_KEYS = new Set(["multiple_choice_ratio"]);
  * Continuous difficulty → canceling factors → RRT → other difficulty-adjacent knobs.
  */
 const DIFFICULTY_PIN_ORDER = [
+  "conceptual_difficulty",
   "difficulty",
+  "spec_difficulty",
   "difficulty_tier",
   "cancel_factor_count",
   "factor_rrt",
@@ -125,6 +128,11 @@ function isFieldVisible(
 }
 
 function optionLabel(field: SettingField, option: string): string {
+  if (field.key === "difficulty_tier") {
+    if (option === "easy") return "D ~3";
+    if (option === "medium") return "D ~8";
+    if (option === "hard") return "D ~14";
+  }
   if (field.key === "cancel_factor_count") {
     return CANCEL_FACTOR_COUNT_LABELS[option] ?? option;
   }
@@ -194,16 +202,31 @@ function renderDifficultyField(
   field: SettingField,
   values: Record<string, string | number | boolean>,
   onChange: (key: string, value: string | number | boolean) => void,
+  typeId?: string | null,
+  opts?: { labelOverride?: string; unbounded?: boolean; syncConceptualAlias?: boolean },
 ) {
   const value = numberFieldValue(values, field);
   const min = field.min ?? 0;
   const softMax = field.max ?? SOFT_DIFFICULTY_SLIDER_MAX;
   const sliderValue = Math.min(Math.max(value, min), softMax);
+  const approxMax =
+    opts?.unbounded ? null : approxMaxDForSettings(typeId, values);
+  const clamped = approxMax != null && value > approxMax + 1e-9;
+  const label = opts?.labelOverride ?? field.label;
+
+  const commit = (next: number) => {
+    const v = Math.max(min, next);
+    onChange(field.key, v);
+    // Keep legacy ``difficulty`` in sync with conceptual for API / ML join keys.
+    if (opts?.syncConceptualAlias && field.key === "conceptual_difficulty") {
+      onChange("difficulty", v);
+    }
+  };
 
   return (
     <div className="field field-difficulty" key={field.key}>
       <label className="field-difficulty-label">
-        <span>{field.label}</span>
+        <span>{label}</span>
         <input
           type="number"
           value={Number.isFinite(value) ? value : min}
@@ -212,23 +235,38 @@ function renderDifficultyField(
           onChange={(event) => {
             const next = Number(event.target.value);
             if (!Number.isFinite(next)) {
-              onChange(field.key, min);
+              commit(min);
               return;
             }
-            onChange(field.key, Math.max(min, next));
+            commit(next);
           }}
         />
       </label>
       <input
         type="range"
-        aria-label={`${field.label} (quick adjust)`}
+        aria-label={`${label} (quick adjust)`}
         value={sliderValue}
         min={min}
         max={softMax}
         step={1}
-        onChange={(event) => onChange(field.key, Number(event.target.value))}
+        onChange={(event) => commit(Number(event.target.value))}
       />
-      {value > softMax ? (
+      {opts?.unbounded ? (
+        <p className="settings-hint">
+          Spec difficulty is independent and unbounded (expression awkwardness /
+          nesting / coeffs). Soft slider is 0–{softMax}; type higher values freely.
+          {value > softMax
+            ? ` Using ${value} as entered.`
+            : ""}
+        </p>
+      ) : approxMax != null ? (
+        <p className="settings-hint">
+          Approx conceptual max for these settings: {approxMax}
+          {clamped
+            ? ` (requested ${value} is above this — generation clamps conceptual spend; Spec is separate).`
+            : "."}
+        </p>
+      ) : value > softMax ? (
         <p className="settings-hint">
           Above the typical 0–{softMax} range; generation will use {value} as entered.
         </p>
@@ -374,7 +412,13 @@ function partitionFields(fields: SettingField[]) {
   const layer0Advanced: SettingField[] = [];
   const specific: SettingField[] = [];
   const common: SettingField[] = [];
-  const hasContinuousDifficulty = fields.some((field) => field.key === "difficulty");
+  const hasContinuousDifficulty = fields.some(
+    (field) =>
+      field.key === "difficulty" ||
+      field.key === "conceptual_difficulty" ||
+      field.key === "spec_difficulty",
+  );
+  const hasDualDifficulty = fields.some((field) => field.key === "spec_difficulty");
   const hasCancelFactorCount = fields.some((field) => field.key === "cancel_factor_count");
 
   for (const field of fields) {
@@ -382,11 +426,17 @@ function partitionFields(fields: SettingField[]) {
     if (hasContinuousDifficulty && field.key === "difficulty_tier") {
       continue;
     }
+    // Dual-axis UI: conceptual + Spec are primary; hide aliased ``difficulty``.
+    if (hasDualDifficulty && field.key === "difficulty") {
+      continue;
+    }
     // Surface cancel / RRT / top generator knobs next to difficulty (never bury).
     if (
       field.group === "difficulty" ||
       field.key === "difficulty_tier" ||
       field.key === "difficulty" ||
+      field.key === "conceptual_difficulty" ||
+      field.key === "spec_difficulty" ||
       field.key === "cancel_factor_count" ||
       // RRT sits under canceling factors for rational topics that expose cancel count.
       (field.key === "factor_rrt" && hasCancelFactorCount) ||
@@ -441,9 +491,24 @@ function renderSingleField(
   field: SettingField,
   values: Record<string, string | number | boolean>,
   onChange: (key: string, value: string | number | boolean) => void,
+  typeId?: string | null,
 ) {
+  if (field.key === "conceptual_difficulty") {
+    return renderDifficultyField(field, values, onChange, typeId, {
+      syncConceptualAlias: true,
+    });
+  }
+  if (field.key === "spec_difficulty") {
+    return renderDifficultyField(field, values, onChange, typeId, {
+      unbounded: true,
+    });
+  }
   if (field.key === "difficulty") {
-    return renderDifficultyField(field, values, onChange);
+    // When Spec axis exists elsewhere, treat plain difficulty as conceptual.
+    const hasSpec = Object.prototype.hasOwnProperty.call(values, "spec_difficulty");
+    return renderDifficultyField(field, values, onChange, typeId, {
+      labelOverride: hasSpec ? "Conceptual difficulty" : undefined,
+    });
   }
   if (field.type === "bool") {
     return renderBoolField(field, values, onChange);
@@ -459,6 +524,7 @@ function renderFieldBlock(
   values: Record<string, string | number | boolean>,
   onChange: (key: string, value: string | number | boolean) => void,
   sectionKey: string,
+  typeId?: string | null,
 ) {
   const visible = fields.filter((field) => isFieldVisible(field, values));
   if (visible.length === 0) return null;
@@ -467,24 +533,36 @@ function renderFieldBlock(
   if (sectionKey === "difficulty") {
     return (
       <div className="settings-fields-section" key={sectionKey}>
-        {visible.map((field) => renderSingleField(field, values, onChange))}
+        {visible.map((field) => renderSingleField(field, values, onChange, typeId))}
       </div>
     );
   }
 
-  const difficultyFields = visible.filter((field) => field.key === "difficulty");
+  const difficultyFields = visible.filter(
+    (field) =>
+      field.key === "difficulty" ||
+      field.key === "conceptual_difficulty" ||
+      field.key === "spec_difficulty",
+  );
   const compactFields = visible.filter(
     (field) =>
-      field.key !== "difficulty" && (field.type === "int" || field.type === "select"),
+      field.key !== "difficulty" &&
+      field.key !== "conceptual_difficulty" &&
+      field.key !== "spec_difficulty" &&
+      (field.type === "int" || field.type === "select"),
   );
   const rangeFields = visible.filter(
-    (field) => field.key !== "difficulty" && field.type === "range",
+    (field) =>
+      field.key !== "difficulty" &&
+      field.key !== "conceptual_difficulty" &&
+      field.key !== "spec_difficulty" &&
+      field.type === "range",
   );
   const boolFields = visible.filter((field) => field.type === "bool");
 
   return (
     <div className="settings-fields-section" key={sectionKey}>
-      {difficultyFields.map((field) => renderDifficultyField(field, values, onChange))}
+      {difficultyFields.map((field) => renderDifficultyField(field, values, onChange, typeId))}
       {compactFields.length > 0 && (
         <div className="settings-compact-grid">
           {compactFields.map((field) => renderCompactField(field, values, onChange))}
@@ -534,7 +612,7 @@ export function TopicSettingsFields({
 
   return (
     <>
-      {renderFieldBlock(difficulty, values, handleFieldChange, "difficulty")}
+      {renderFieldBlock(difficulty, values, handleFieldChange, "difficulty", typeId)}
       {prereqCaps.length > 0 && (
         <div className="settings-fields-section" key="prereq-caps">
           <div className="settings-section-label">Prerequisite difficulty caps</div>
@@ -554,7 +632,7 @@ export function TopicSettingsFields({
             pools are allowed (e.g. integers only, only x, no Greek). Lock a
             letter to force that variable for the whole item.
           </p>
-          {renderFieldBlock(layer0, values, handleFieldChange, "layer0-inner")}
+          {renderFieldBlock(layer0, values, handleFieldChange, "layer0-inner", typeId)}
           {layer0Advanced.length > 0 && (
             <details className="settings-fields-section" key="layer0-advanced">
               <summary>Advanced: force number / variable lane</summary>
@@ -567,6 +645,7 @@ export function TopicSettingsFields({
                 values,
                 handleFieldChange,
                 "layer0-advanced-inner",
+                typeId,
               )}
             </details>
           )}
@@ -574,8 +653,8 @@ export function TopicSettingsFields({
       )}
       {/* Black-box: hide legacy specific knobs when continuous difficulty is active */}
       {!hasContinuousDifficulty &&
-        renderFieldBlock(specific, values, handleFieldChange, "specific")}
-      {renderFieldBlock(common, values, handleFieldChange, "common")}
+        renderFieldBlock(specific, values, handleFieldChange, "specific", typeId)}
+      {renderFieldBlock(common, values, handleFieldChange, "common", typeId)}
     </>
   );
 }

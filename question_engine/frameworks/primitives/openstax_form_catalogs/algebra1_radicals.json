@@ -1,0 +1,121 @@
+{
+  "catalog_id": "algebra1_radicals",
+  "title": "OpenStax Elementary Algebra 2e — radicals & square roots form taxonomy (Ch. 9 algebraic)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "elementary-algebra-2e",
+      "slug": "9-2-simplify-square-roots",
+      "title": "9.2 Simplify Square Roots",
+      "url": "https://openstax.org/books/elementary-algebra-2e/pages/9-2-simplify-square-roots",
+      "stage1": "scripts/output/example_mining/elementary-algebra-2e/stage1/9-2-simplify-square-roots.json"
+    },
+    "related": [
+      { "book": "elementary-algebra-2e", "slug": "9-1-simplify-and-use-square-roots" },
+      { "book": "elementary-algebra-2e", "slug": "9-3-add-and-subtract-square-roots" },
+      { "book": "elementary-algebra-2e", "slug": "9-4-multiply-square-roots" },
+      { "book": "elementary-algebra-2e", "slug": "9-5-divide-square-roots" },
+      { "book": "elementary-algebra-2e", "slug": "9-6-solve-equations-with-square-roots" },
+      { "book": "elementary-algebra-2e", "slug": "9-7-higher-roots" },
+      { "book": "elementary-algebra-2e", "slug": "9-8-rational-exponents" }
+    ]
+  },
+  "taxonomy_notes": [
+    "Square-root algebraic ops; higher roots / rational exponents deferred to A2 unless product wants Elem Alg parity.",
+    "Leaf catalog-sampling not yet wired."
+  ],
+  "wired_type_ids": [],
+  "forms": [
+    {
+      "form_id": "simplify_square_root",
+      "description": "Factor perfect-square factors out of √",
+      "strategy": "perfect_square_factor",
+      "constraints": { "kind": "simplify", "index": 2 },
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["perfect_squares"],
+      "example_item_ids": ["fs-id1169594051758", "fs-id1169594272843", "fs-id1169596287619"],
+      "openstax_case": "§9.1–9.2",
+      "leaves": ["radical_simplification"]
+    },
+    {
+      "form_id": "add_sub_like_radicals",
+      "description": "± like square roots (after optional simplify)",
+      "strategy": "like_radicals",
+      "constraints": { "op": ["add", "sub"] },
+      "d_min": 2,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["like_radicals"],
+      "example_item_ids": [],
+      "openstax_case": "§9.3",
+      "leaves": ["radical_add_subtract"]
+    },
+    {
+      "form_id": "multiply_square_roots",
+      "description": "Product rule / FOIL with radicals",
+      "strategy": "product_rule",
+      "constraints": { "op": "mul" },
+      "d_min": 3,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["product_rule"],
+      "example_item_ids": [],
+      "openstax_case": "§9.4",
+      "leaves": ["radical_multiply"]
+    },
+    {
+      "form_id": "divide_rationalize",
+      "description": "Divide / rationalize denominator (incl. conjugate)",
+      "strategy": "rationalize",
+      "constraints": { "op": "div" },
+      "d_min": 4,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": ["rationalize"],
+      "example_item_ids": [],
+      "openstax_case": "§9.5",
+      "leaves": ["radical_divide"]
+    },
+    {
+      "form_id": "radical_equation",
+      "description": "Solve equations with square roots; check extraneous",
+      "strategy": "isolate_square",
+      "constraints": { "kind": "equation" },
+      "d_min": 6,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["isolate", "extraneous"],
+      "example_item_ids": [],
+      "openstax_case": "§9.6",
+      "leaves": ["radical_equations"]
+    },
+    {
+      "form_id": "higher_roots",
+      "description": "Simplify cube / nth roots",
+      "strategy": "nth_root",
+      "constraints": { "index": ">=3" },
+      "d_min": 8,
+      "d_weight": 1.0,
+      "generation_status": "stub",
+      "tricks": ["nth_root"],
+      "example_item_ids": [],
+      "openstax_case": "§9.7 — missing on A1",
+      "leaves": []
+    },
+    {
+      "form_id": "rational_exponents",
+      "description": "a^{m/n} ↔ radical; exponent laws",
+      "strategy": "rational_exp",
+      "constraints": { "kind": "rational_exp" },
+      "d_min": 8,
+      "d_weight": 0.8,
+      "generation_status": "deferred",
+      "tricks": ["exponents"],
+      "example_item_ids": [],
+      "openstax_case": "§9.8 — A2 home",
+      "leaves": []
+    }
+  ]
+}

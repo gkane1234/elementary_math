@@ -45,3 +45,16 @@ def test_catalog_wires_pilot_generators() -> None:
         by_id["calc_indef_int_logarithmic_rule_and_exponentials_with_substitution"].generator
         == "integral_log_exp_substitution"
     )
+
+
+def test_differentials_emit_structure_family() -> None:
+    gen = GENERATORS["differentials"]
+    qs = gen(
+        "differentials",
+        {"count": 12, "difficulty": 18.0, "include_answer_key": True},
+    )
+    families = {q.metadata.get("family") for q in qs}
+    assert None not in families
+    assert all(q.metadata.get("structure_id", "").startswith("differentials:") for q in qs)
+    assert len(families) >= 2
+

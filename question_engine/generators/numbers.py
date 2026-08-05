@@ -10,12 +10,15 @@ from packages.polynomial_core import Polynomial, square_root_latex
 from ..core.models import Question
 from ..frameworks.number import (
     ComparingRatesFramework,
+    ComparingRatiosFramework,
     ConvertingUnitsFramework,
     DecimalArithmeticFramework,
     DistributiveFramework,
+    FindingPercentsEquivalentFractionsFramework,
     FractionDecimalConvertFramework,
     IntegerArithmeticFramework,
     OrderOfOperationsFramework,
+    PartPartWholeRatioFramework,
     PercentFramework,
     ProportionFramework,
     RationalFramework,
@@ -42,12 +45,16 @@ _FRAC_DECIMAL_PERCENT = FractionDecimalConvertFramework(include_percent=True)
 _PROPORTIONS = ProportionFramework()
 _RATIO_INTRO = RatioFramework()
 _RATIO_EQUIVALENT = RatioFramework(equivalent=True)
+_RATIO_PART_WHOLE = PartPartWholeRatioFramework()
+_RATIO_COMPARE = ComparingRatiosFramework()
 _UNIT_RATE = UnitRateFramework()
 _COMPARING_RATES = ComparingRatesFramework()
 _CONVERTING_UNITS = ConvertingUnitsFramework()
+_FINDING_PERCENTS_EQUIV = FindingPercentsEquivalentFractionsFramework()
 _DECIMAL_ADD = DecimalArithmeticFramework("+")
 _DECIMAL_SUBTRACT = DecimalArithmeticFramework("-")
 _DECIMAL_MULTIPLY = DecimalArithmeticFramework("*")
+_DECIMAL_MULTIPLY_EQUIV = DecimalArithmeticFramework("*", via_equivalent_fractions=True)
 _ORDER_OF_OPERATIONS = OrderOfOperationsFramework()
 _SCI_NOTATION_WRITE = ScientificNotationFramework(mode="write")
 _SCI_NOTATION_OPS = ScientificNotationFramework(mode="operations")
@@ -130,6 +137,14 @@ def g6_equivalent_ratios(topic: str, settings: dict) -> list[Question]:
     return _framework_generator(_RATIO_EQUIVALENT, topic, settings)
 
 
+def g6_part_part_whole_ratios(topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_RATIO_PART_WHOLE, topic, settings)
+
+
+def g6_comparing_ratios(topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_RATIO_COMPARE, topic, settings)
+
+
 def g6_unit_rates(topic: str, settings: dict) -> list[Question]:
     return _framework_generator(_UNIT_RATE, topic, settings)
 
@@ -142,6 +157,10 @@ def g6_converting_units(topic: str, settings: dict) -> list[Question]:
     return _framework_generator(_CONVERTING_UNITS, topic, settings)
 
 
+def g6_finding_percents_with_equivalent_fractions(topic: str, settings: dict) -> list[Question]:
+    return _framework_generator(_FINDING_PERCENTS_EQUIV, topic, settings)
+
+
 def g6_decimal_addition(topic: str, settings: dict) -> list[Question]:
     return _framework_generator(_DECIMAL_ADD, topic, settings)
 
@@ -151,6 +170,8 @@ def g6_decimal_subtraction(topic: str, settings: dict) -> list[Question]:
 
 
 def g6_decimal_multiplication(topic: str, settings: dict) -> list[Question]:
+    if "equivalent_fractions" in (topic or ""):
+        return _framework_generator(_DECIMAL_MULTIPLY_EQUIV, topic, settings)
     return _framework_generator(_DECIMAL_MULTIPLY, topic, settings)
 
 
@@ -164,20 +185,63 @@ def _normalize_base_range(settings: dict) -> tuple[int, int]:
     return lo, hi
 
 
+def _squares_continuous_knobs(d: float) -> dict[str, int | bool]:
+    """Map continuous D → base range / form mix (perfect → extract → leave-√)."""
+    d = max(0.0, float(d))
+    if d < 5.0:
+        return {
+            "base_min": 2,
+            "base_max": 12,
+            "perfect_squares_only": True,
+            "allow_extract_square_factors": False,
+            "allow_word_prompts": True,
+        }
+    if d < 12.0:
+        return {
+            "base_min": 8,
+            "base_max": 20,
+            "perfect_squares_only": True,
+            "allow_extract_square_factors": False,
+            "allow_word_prompts": True,
+        }
+    if d < 18.0:
+        return {
+            "base_min": 12,
+            "base_max": 28,
+            "perfect_squares_only": False,
+            "allow_extract_square_factors": True,
+            "allow_word_prompts": False,
+        }
+    return {
+        "base_min": 15,
+        "base_max": 35,
+        "perfect_squares_only": False,
+        "allow_extract_square_factors": True,
+        "allow_word_prompts": False,
+    }
+
+
 def pa_squares_and_square_roots(topic: str, settings: dict) -> list[Question]:
     """Evaluate squares (n²) and square roots (√n) for Pre-Algebra.
 
-    Easy/medium stay on perfect-square mental math. Hard mixes larger perfects
-    with non-perfect radicands (leave under √ or extract a square factor).
+    Continuous ``difficulty`` climbs perfect-square mental math → larger perfects
+    → non-perfect / extractable radicals. EMH presets still apply when continuous
+    D is absent.
     """
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    allow_roots = bool(settings.get("allow_square_roots", True))
-    allow_squares = bool(settings.get("allow_squares", True))
-    allow_word = bool(settings.get("allow_word_prompts", True))
-    perfect_only = bool(settings.get("perfect_squares_only", True))
-    allow_extract = bool(settings.get("allow_extract_square_factors", False))
-    base_lo, base_hi = _normalize_base_range(settings)
+    effective = dict(settings)
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        knobs = _squares_continuous_knobs(settings_difficulty(settings, default=0.0))
+        effective.update(knobs)
+    allow_roots = bool(effective.get("allow_square_roots", True))
+    allow_squares = bool(effective.get("allow_squares", True))
+    allow_word = bool(effective.get("allow_word_prompts", True))
+    perfect_only = bool(effective.get("perfect_squares_only", True))
+    allow_extract = bool(effective.get("allow_extract_square_factors", False))
+    base_lo, base_hi = _normalize_base_range(effective)
 
     modes: list[str] = []
     if allow_roots:
@@ -268,9 +332,12 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "scientific_notation_add_subtract": scientific_notation_add_subtract,
     "g6_introduction_to_ratios": g6_introduction_to_ratios,
     "g6_equivalent_ratios": g6_equivalent_ratios,
+    "g6_part_part_whole_ratios": g6_part_part_whole_ratios,
+    "g6_comparing_ratios": g6_comparing_ratios,
     "g6_unit_rates": g6_unit_rates,
     "g6_comparing_rates": g6_comparing_rates,
     "g6_converting_units": g6_converting_units,
+    "g6_finding_percents_with_equivalent_fractions": g6_finding_percents_with_equivalent_fractions,
     "g6_decimal_addition": g6_decimal_addition,
     "g6_decimal_subtraction": g6_decimal_subtraction,
     "g6_decimal_multiplication": g6_decimal_multiplication,

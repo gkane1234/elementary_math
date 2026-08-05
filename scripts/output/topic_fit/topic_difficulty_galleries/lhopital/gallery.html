@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>L&#x27;Hôpital&#x27;s rule — conceptual × Spec gallery</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+/* If katex.css fails to load, MathML text duplicates the HTML render
+   (looks like "Find ddx … Find d/dx …"). Match KaTeX's sr-only clip. */
+.katex .katex-mathml {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+}
+
+</style>
+<link rel="stylesheet" href="../../_assets/katex/katex.min.css"/>
+<script defer src="../../_assets/katex/katex.min.js"></script>
+<script defer src="../../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>L&#x27;Hôpital&#x27;s rule</h1>
+<p><strong>type_id:</strong> <code>calc_app_diff_lhopitals_rule</code> · <strong>leaf:</strong> <code>lhopitals_rule</code> Conceptual max (full allow_* kit): <strong>25</strong> Conceptual axis: 0, 4, 8, 12, 16, 20, 25 Spec axis (presentation dress, unbounded): 0, 4, 8, 16, 32 Allows: <code>allow_exp</code>, <code>allow_invtrig</code>, <code>allow_log</code>, <code>allow_trig</code> <strong>Generated:</strong> 2026-08-05 19:09 UTC</p>
+<p>Open <a href="gallery.html">gallery.html</a> in a browser for KaTeX.</p>
+<p>True <strong>2D grid</strong>: rows = conceptual (calculus method/form), columns = Spec (algebra presentation: cancel bait / cancel pairs — same answer after simplify). Spec does not change the calculus method or raise the underlying degree.</p>
+<h2>Grid (prompt)</h2>
+<table><thead><tr>
+<th>C \ S</th>
+<th><strong>S=0</strong></th>
+<th><strong>S=4</strong></th>
+<th><strong>S=8</strong></th>
+<th><strong>S=16</strong></th>
+<th><strong>S=32</strong></th>
+</tr></thead><tbody>
+<tr>
+<td><strong>C=0</strong></td>
+<td>$\lim_{x \to 1} \frac{x^{2}-1}{x-1}$</td>
+<td>$\lim_{x \to 1} -\left(-\frac{x^{2}-1}{x-1}\right)$</td>
+<td>$\lim_{x \to 1} -\left(-\left(\left(\frac{x^{2}-1}{x-1}+1\right)-1\right)\right)$</td>
+<td>$\lim_{x \to 1} \left(\left(\left(\left(\frac{x^{2}-1}{x-1}+\left(x-2\right)\right)-\left(x-2\right)+1\right)-1\right)+\left(x\right)\right)-\left(x\right)$</td>
+<td>$\lim_{x \to 1} -\left(-\left(\left(\left(\frac{x^{2}-1}{x-1}+3-3\right)+2\right)-2\right)\right)$</td>
+</tr>
+<tr>
+<td><strong>C=4</strong></td>
+<td>$\lim_{x \to 0} \frac{\sin(5x)}{x}$</td>
+<td>$\lim_{x \to 0} -\left(-\frac{\sin(5x)}{x}\right)$</td>
+<td>$\lim_{x \to 0} -\left(-\left(\frac{\sin(5x)}{x}+3-3\right)\right)$</td>
+<td>$\lim_{x \to 0} \left(\left(\left(-\left(-\frac{\sin(5x)}{x}\right)\right)+\left(-2x+2\right)\right)-\left(-2x+2\right)+3\right)-3$</td>
+<td>$\lim_{x \to 0} \left(\left(-\left(-\left(\frac{\sin(5x)}{x}+1-1\right)\right)\right)+\left(x-1\right)\right)-\left(x-1\right)$</td>
+</tr>
+<tr>
+<td><strong>C=8</strong></td>
+<td>$\lim_{x \to 1} \frac{x^{2}-1}{x-1}$</td>
+<td>$\lim_{x \to 1} -\left(-\frac{x^{2}-1}{x-1}\right)$</td>
+<td>$\lim_{x \to 1} \left(\left(\frac{x^{2}-1}{x-1}+\left(-x\right)-\left(-x\right)\right)+6\right)-6$</td>
+<td>$\lim_{x \to 1} \left(\left(\left(\frac{x^{2}-1}{x-1}+\left(-2x-1\right)\right)-\left(-2x-1\right)+6-6\right)+\left(-x+1\right)\right)-\left(-x+1\right)$</td>
+<td>$\lim_{x \to 1} \left(\left(\left(\left(\frac{x^{2}-1}{x-1}+\left(-2x+1\right)\right)-\left(-2x+1\right)+4\right)-4\right)+\left(3x+3\right)\right)-\left(3x+3\right)$</td>
+</tr>
+<tr>
+<td><strong>C=12</strong></td>
+<td>$\lim_{x \to 0^{+}} \left(\frac{1}{x}-\frac{1}{\sin(x)}\right)$</td>
+<td>$\lim_{x \to 0^{+}} -\left(-\left(\frac{1}{x}-\frac{1}{\sin(x)}\right)\right)$</td>
+<td>$\lim_{x \to 0^{+}} \left(\left(-\left(-\left(\frac{1}{x}-\frac{1}{\sin(x)}\right)\right)\right)+\left(x-1\right)\right)-\left(x-1\right)$</td>
+<td>$\lim_{x \to 0^{+}} -\left(-\left(\left(\frac{1}{x}-\frac{1}{\sin(x)}\right)+\left(2x-2\right)-\left(2x-2\right)+\left(2x+2\right)\right)-\left(2x+2\right)\right)$</td>
+<td>$\lim_{x \to 0^{+}} -\left(-\left(\left(\left(\frac{1}{x}-\frac{1}{\sin(x)}\right)+1\right)-1\right)+\left(-2x-1\right)-\left(-2x-1\right)\right)$</td>
+</tr>
+<tr>
+<td><strong>C=16</strong></td>
+<td>$\lim_{x \to \infty} \frac{6x^{2}-1}{3x^{2}+1}$</td>
+<td>$\lim_{x \to \infty} \frac{6x^{2}-1}{3x^{2}+1}+1-1$</td>
+<td>$\lim_{x \to \infty} \left(\frac{6x^{2}-1}{3x^{2}+1}+6-6\right)+\left(x-1\right)-\left(x-1\right)$</td>
+<td>$\lim_{x \to \infty} \left(\left(-\left(-\frac{6x^{2}-1}{3x^{2}+1}\right)\right)+\left(3x\right)\right)-\left(3x\right)+5-5$</td>
+<td>$\lim_{x \to \infty} -\left(-\left(\left(\left(\frac{6x^{2}-1}{3x^{2}+1}+1\right)-1\right)+\left(-2x\right)\right)-\left(-2x\right)\right)$</td>
+</tr>
+<tr>
+<td><strong>C=20</strong></td>
+<td>$\lim_{x \to \infty} \left(\frac{1}{x}\right)^{x}$</td>
+<td>$\lim_{x \to \infty} \left(\frac{1}{x}\right)^{x}+\left(2x\right)-\left(2x\right)$</td>
+<td>$\lim_{x \to \infty} \left(\left(\left(\frac{1}{x}\right)^{x}+6-6\right)+3\right)-3$</td>
+<td>$\lim_{x \to \infty} \left(-\left(-\left(\frac{1}{x}\right)^{x}+\left(-x+1\right)-\left(-x+1\right)\right)\right)+3-3$</td>
+<td>$\lim_{x \to \infty} \left(\left(\left(\left(\frac{1}{x}\right)^{x}+4\right)-4\right)+\left(x+1\right)\right)-\left(x+1\right)+6-6$</td>
+</tr>
+<tr>
+<td><strong>C=25</strong></td>
+<td>$\lim_{x \to 0} \frac{\sin(3x)}{x}$</td>
+<td>$\lim_{x \to 0} \left(\frac{\sin(3x)}{x}+6\right)-6$</td>
+<td>$\lim_{x \to 0} -\left(-\left(\frac{\sin(3x)}{x}+\left(-2x+2\right)\right)-\left(-2x+2\right)\right)$</td>
+<td>$\lim_{x \to 0} \left(\left(-\left(-\frac{\sin(3x)}{x}\right)\right)+\left(2x-2\right)\right)-\left(2x-2\right)+\left(3x+1\right)-\left(3x+1\right)$</td>
+<td>$\lim_{x \to 0} \left(\left(\left(\left(-\left(-\frac{\sin(3x)}{x}\right)\right)+4\right)-4\right)+5\right)-5$</td>
+</tr>
+</tbody></table>
+<h2>Grid (answer)</h2>
+<table><thead><tr>
+<th>C \ S</th>
+<th><strong>S=0</strong></th>
+<th><strong>S=4</strong></th>
+<th><strong>S=8</strong></th>
+<th><strong>S=16</strong></th>
+<th><strong>S=32</strong></th>
+</tr></thead><tbody>
+<tr>
+<td><strong>C=0</strong></td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+</tr>
+<tr>
+<td><strong>C=4</strong></td>
+<td>$5$</td>
+<td>$5$</td>
+<td>$5$</td>
+<td>$5$</td>
+<td>$5$</td>
+</tr>
+<tr>
+<td><strong>C=8</strong></td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+</tr>
+<tr>
+<td><strong>C=12</strong></td>
+<td>$-\frac{1}{6}$</td>
+<td>$-\frac{1}{6}$</td>
+<td>$-\frac{1}{6}$</td>
+<td>$-\frac{1}{6}$</td>
+<td>$-\frac{1}{6}$</td>
+</tr>
+<tr>
+<td><strong>C=16</strong></td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+<td>$2$</td>
+</tr>
+<tr>
+<td><strong>C=20</strong></td>
+<td>$0$</td>
+<td>$0$</td>
+<td>$0$</td>
+<td>$0$</td>
+<td>$0$</td>
+</tr>
+<tr>
+<td><strong>C=25</strong></td>
+<td>$3$</td>
+<td>$3$</td>
+<td>$3$</td>
+<td>$3$</td>
+<td>$3$</td>
+</tr>
+</tbody></table>
+<h2>Cell detail</h2>
+<h3>C=0 · S=0</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} \frac{x^{2}-1}{x-1}$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=0 · S=0 · amax=25</li>
+</ul>
+<h3>C=0 · S=4</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} -\left(-\frac{x^{2}-1}{x-1}\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=0 · S=4 · amax=25</li>
+</ul>
+<h3>C=0 · S=8</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} -\left(-\left(\left(\frac{x^{2}-1}{x-1}+1\right)-1\right)\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=0 · S=8 · amax=25</li>
+</ul>
+<h3>C=0 · S=16</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} \left(\left(\left(\left(\frac{x^{2}-1}{x-1}+\left(x-2\right)\right)-\left(x-2\right)+1\right)-1\right)+\left(x\right)\right)-\left(x\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_linear</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=0 · S=16 · amax=25</li>
+</ul>
+<h3>C=0 · S=32</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} -\left(-\left(\left(\left(\frac{x^{2}-1}{x-1}+3-3\right)+2\right)-2\right)\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=0 · S=32 · amax=25</li>
+</ul>
+<h3>C=4 · S=0</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} \frac{\sin(5x)}{x}$</li>
+<li>Answer: $5$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=4 · S=0 · amax=25</li>
+</ul>
+<h3>C=4 · S=4</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} -\left(-\frac{\sin(5x)}{x}\right)$</li>
+<li>Answer: $5$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=4 · S=4 · amax=25</li>
+</ul>
+<h3>C=4 · S=8</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} -\left(-\left(\frac{\sin(5x)}{x}+3-3\right)\right)$</li>
+<li>Answer: $5$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=4 · S=8 · amax=25</li>
+</ul>
+<h3>C=4 · S=16</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} \left(\left(\left(-\left(-\frac{\sin(5x)}{x}\right)\right)+\left(-2x+2\right)\right)-\left(-2x+2\right)+3\right)-3$</li>
+<li>Answer: $5$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_linear</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=4 · S=16 · amax=25</li>
+</ul>
+<h3>C=4 · S=32</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} \left(\left(-\left(-\left(\frac{\sin(5x)}{x}+1-1\right)\right)\right)+\left(x-1\right)\right)-\left(x-1\right)$</li>
+<li>Answer: $5$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=4 · S=32 · amax=25</li>
+</ul>
+<h3>C=8 · S=0</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} \frac{x^{2}-1}{x-1}$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=8 · S=0 · amax=25 · shortfall=1</li>
+</ul>
+<h3>C=8 · S=4</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} -\left(-\frac{x^{2}-1}{x-1}\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=8 · S=4 · amax=25</li>
+</ul>
+<h3>C=8 · S=8</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} \left(\left(\frac{x^{2}-1}{x-1}+\left(-x\right)-\left(-x\right)\right)+6\right)-6$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_linear</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=8 · S=8 · amax=25</li>
+</ul>
+<h3>C=8 · S=16</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} \left(\left(\left(\frac{x^{2}-1}{x-1}+\left(-2x-1\right)\right)-\left(-2x-1\right)+6-6\right)+\left(-x+1\right)\right)-\left(-x+1\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_linear</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=8 · S=16 · amax=25</li>
+</ul>
+<h3>C=8 · S=32</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 1} \left(\left(\left(\left(\frac{x^{2}-1}{x-1}+\left(-2x+1\right)\right)-\left(-2x+1\right)+4\right)-4\right)+\left(3x+3\right)\right)-\left(3x+3\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_0_0_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_linear</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=8 · S=32 · amax=25</li>
+</ul>
+<h3>C=12 · S=0</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0^{+}} \left(\frac{1}{x}-\frac{1}{\sin(x)}\right)$</li>
+<li>Answer: $-\frac{1}{6}$</li>
+<li>From: <code>form:lhopital_inf_minus_inf</code> · <code>conceptual:lhopital</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code> · <code>answer:unkind_or_messy</code></li>
+<li>Flags: C=12 · S=0 · amax=25</li>
+</ul>
+<h3>C=12 · S=4</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0^{+}} -\left(-\left(\frac{1}{x}-\frac{1}{\sin(x)}\right)\right)$</li>
+<li>Answer: $-\frac{1}{6}$</li>
+<li>From: <code>form:lhopital_inf_minus_inf</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=12 · S=4 · amax=25</li>
+</ul>
+<h3>C=12 · S=8</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0^{+}} \left(\left(-\left(-\left(\frac{1}{x}-\frac{1}{\sin(x)}\right)\right)\right)+\left(x-1\right)\right)-\left(x-1\right)$</li>
+<li>Answer: $-\frac{1}{6}$</li>
+<li>From: <code>form:lhopital_inf_minus_inf</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=12 · S=8 · amax=25</li>
+</ul>
+<h3>C=12 · S=16</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0^{+}} -\left(-\left(\left(\frac{1}{x}-\frac{1}{\sin(x)}\right)+\left(2x-2\right)-\left(2x-2\right)+\left(2x+2\right)\right)-\left(2x+2\right)\right)$</li>
+<li>Answer: $-\frac{1}{6}$</li>
+<li>From: <code>form:lhopital_inf_minus_inf</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=12 · S=16 · amax=25</li>
+</ul>
+<h3>C=12 · S=32</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0^{+}} -\left(-\left(\left(\left(\frac{1}{x}-\frac{1}{\sin(x)}\right)+1\right)-1\right)+\left(-2x-1\right)-\left(-2x-1\right)\right)$</li>
+<li>Answer: $-\frac{1}{6}$</li>
+<li>From: <code>form:lhopital_inf_minus_inf</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=12 · S=32 · amax=25</li>
+</ul>
+<h3>C=16 · S=0</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \frac{6x^{2}-1}{3x^{2}+1}$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_inf_inf_poly</code> · <code>conceptual:lhopital</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=16 · S=0 · amax=25 · shortfall=5</li>
+</ul>
+<h3>C=16 · S=4</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \frac{6x^{2}-1}{3x^{2}+1}+1-1$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_inf_inf_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=16 · S=4 · amax=25 · shortfall=4</li>
+</ul>
+<h3>C=16 · S=8</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \left(\frac{6x^{2}-1}{3x^{2}+1}+6-6\right)+\left(x-1\right)-\left(x-1\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_inf_inf_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=16 · S=8 · amax=25 · shortfall=3</li>
+</ul>
+<h3>C=16 · S=16</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \left(\left(-\left(-\frac{6x^{2}-1}{3x^{2}+1}\right)\right)+\left(3x\right)\right)-\left(3x\right)+5-5$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_inf_inf_poly</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_linear</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=16 · S=16 · amax=25 · shortfall=2</li>
+</ul>
+<h3>C=16 · S=32</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} -\left(-\left(\left(\left(\frac{6x^{2}-1}{3x^{2}+1}+1\right)-1\right)+\left(-2x\right)\right)-\left(-2x\right)\right)$</li>
+<li>Answer: $2$</li>
+<li>From: <code>form:lhopital_inf_inf_poly</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=16 · S=32 · amax=25 · shortfall=2</li>
+</ul>
+<h3>C=20 · S=0</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \left(\frac{1}{x}\right)^{x}$</li>
+<li>Answer: $0$</li>
+<li>From: <code>form:lhopital_0_inf_power</code> · <code>conceptual:lhopital</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=20 · S=0 · amax=25 · shortfall=1</li>
+</ul>
+<h3>C=20 · S=4</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \left(\frac{1}{x}\right)^{x}+\left(2x\right)-\left(2x\right)$</li>
+<li>Answer: $0$</li>
+<li>From: <code>form:lhopital_0_inf_power</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=20 · S=4 · amax=25</li>
+</ul>
+<h3>C=20 · S=8</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \left(\left(\left(\frac{1}{x}\right)^{x}+6-6\right)+3\right)-3$</li>
+<li>Answer: $0$</li>
+<li>From: <code>form:lhopital_0_inf_power</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=20 · S=8 · amax=25</li>
+</ul>
+<h3>C=20 · S=16</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \left(-\left(-\left(\frac{1}{x}\right)^{x}+\left(-x+1\right)-\left(-x+1\right)\right)\right)+3-3$</li>
+<li>Answer: $0$</li>
+<li>From: <code>form:lhopital_0_inf_power</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code></li>
+<li>Flags: C=20 · S=16 · amax=25</li>
+</ul>
+<h3>C=20 · S=32</h3>
+<ul>
+<li>Prompt: $\lim_{x \to \infty} \left(\left(\left(\left(\frac{1}{x}\right)^{x}+4\right)-4\right)+\left(x+1\right)\right)-\left(x+1\right)+6-6$</li>
+<li>Answer: $0$</li>
+<li>From: <code>form:lhopital_0_inf_power</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=20 · S=32 · amax=25</li>
+</ul>
+<h3>C=25 · S=0</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} \frac{\sin(3x)}{x}$</li>
+<li>Answer: $3$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=25 · S=0 · amax=25 · shortfall=16.5</li>
+</ul>
+<h3>C=25 · S=4</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} \left(\frac{\sin(3x)}{x}+6\right)-6$</li>
+<li>Answer: $3$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code> · <code>allow:one_sided</code></li>
+<li>Flags: C=25 · S=4 · amax=25 · shortfall=15.5</li>
+</ul>
+<h3>C=25 · S=8</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} -\left(-\left(\frac{\sin(3x)}{x}+\left(-2x+2\right)\right)-\left(-2x+2\right)\right)$</li>
+<li>Answer: $3$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>effort:add_cancel_linear</code> · <code>effort:double_neg</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=25 · S=8 · amax=25 · shortfall=14.5</li>
+</ul>
+<h3>C=25 · S=16</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} \left(\left(-\left(-\frac{\sin(3x)}{x}\right)\right)+\left(2x-2\right)\right)-\left(2x-2\right)+\left(3x+1\right)-\left(3x+1\right)$</li>
+<li>Answer: $3$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_linear</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=25 · S=16 · amax=25 · shortfall=13.5</li>
+</ul>
+<h3>C=25 · S=32</h3>
+<ul>
+<li>Prompt: $\lim_{x \to 0} \left(\left(\left(\left(-\left(-\frac{\sin(3x)}{x}\right)\right)+4\right)-4\right)+5\right)-5$</li>
+<li>Answer: $3$</li>
+<li>From: <code>form:lhopital_0_0_trig</code> · <code>conceptual:lhopital</code> · <code>effort:double_neg</code> · <code>effort:add_cancel_const</code> · <code>allow:trig</code> · <code>allow:exp</code> · <code>allow:log</code> · <code>allow:invtrig</code></li>
+<li>Flags: C=25 · S=32 · amax=25 · shortfall=13.5</li>
+</ul>
+</body></html>

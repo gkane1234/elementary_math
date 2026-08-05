@@ -1,0 +1,105 @@
+{
+  "campaign": "precalc_algebraic",
+  "n_rows": 9,
+  "n_ok": 9,
+  "n_errors": 0,
+  "difficulties": [
+    0.0,
+    3.0,
+    6.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    25.0
+  ],
+  "by_pack": {
+    "log_props": 3,
+    "exp_equation": 3,
+    "power_rule": 3
+  },
+  "by_difficulty": {
+    "0.0": 3,
+    "12.0": 3,
+    "25.0": 3
+  },
+  "packs": [
+    {
+      "pack": "log_props",
+      "type_id": "pc_properties_of_logarithms",
+      "generator": "log_change_of_base",
+      "n_per_d": 3,
+      "openstax": "Precalc properties of logarithms"
+    },
+    {
+      "pack": "exp_equation",
+      "type_id": "pc_exponential_equations_not_requiring_logarithms",
+      "generator": "exponential_equation_simple",
+      "n_per_d": 3,
+      "openstax": "Precalc exponential equations (same base)"
+    },
+    {
+      "pack": "power_rule",
+      "type_id": "pc_power_rule_for_differentiation",
+      "generator": "derivative_power_rule",
+      "n_per_d": 3,
+      "openstax": "Precalc intro-calc power rule (shared Spec with calc)"
+    },
+    {
+      "pack": "pfd",
+      "type_id": "pc_partial_fraction_decomposition",
+      "generator": "partial_fraction_decomposition",
+      "n_per_d": 3,
+      "openstax": "Precalc PFD (construct_pfd; reverse of rational add)"
+    },
+    {
+      "pack": "function_ops",
+      "type_id": "pc_functions_operations",
+      "generator": "function_operations",
+      "n_per_d": 3,
+      "openstax": "Precalc function operations algebraic"
+    },
+    {
+      "pack": "rational_equations",
+      "type_id": "pc_rational_equations",
+      "generator": "rational_equations",
+      "n_per_d": 3,
+      "openstax": "Precalc rational equations"
+    },
+    {
+      "pack": "log_equation",
+      "type_id": "pc_logarithmic_equations_simple",
+      "generator": "log_equation_simple",
+      "n_per_d": 3,
+      "openstax": "Precalc simple log equations"
+    },
+    {
+      "pack": "exp_equation_log",
+      "type_id": "pc_exponential_equations_requiring_logarithms",
+      "generator": "exponential_equation_with_log",
+      "n_per_d": 3,
+      "openstax": "Precalc exponential equations requiring logs"
+    }
+  ],
+  "rating_schema": {
+    "rating_1_to_5": "int 1..5 or null",
+    "minutes": "float minutes or null",
+    "notes": "optional string"
+  },
+  "join_keys": [
+    "rating_id",
+    "type_id",
+    "generator",
+    "seed",
+    "difficulty",
+    "theta_full",
+    "spec_snapshot"
+  ],
+  "elapsed_s": 0.01,
+  "paths": {
+    "jsonl": "items.jsonl",
+    "json": "items.json",
+    "rater": "rater.html",
+    "coverage": "COVERAGE.md"
+  }
+}

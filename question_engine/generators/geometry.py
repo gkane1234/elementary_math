@@ -33,8 +33,10 @@ from ..frameworks.geometry_extended import (
     KiteAreaFramework,
     ParallelTransversalFramework,
     ParallelogramAreaFramework,
+    PlaneFiguresAreaFramework,
     PolygonInteriorAngleFramework,
     RemainingGeometryFramework,
+    RhombusAreaFramework,
     SegmentAdditionFramework,
     SolidVolumeSurfaceFramework,
     SpecialRightTriangleFramework,
@@ -70,6 +72,11 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = framework_generat
         "geo_parallelogram_area": ParallelogramAreaFramework(),
         "geo_trapezoid_area": TrapezoidAreaFramework(),
         "geo_kite_area": KiteAreaFramework(),
+        "geo_rhombus_area": RhombusAreaFramework(),
+        "geo_triangles_and_quadrilaterals_area": PlaneFiguresAreaFramework(
+            include_triangle=True
+        ),
+        "geo_quadrilateral_area": PlaneFiguresAreaFramework(include_triangle=False),
         "geo_central_arc": CentralArcAngleFramework(),
         "geo_inscribed_angle": InscribedAngleFramework(),
         "geo_arc_sector": ArcLengthSectorFramework(),

@@ -56,6 +56,21 @@ export function getPdfPriceCents(): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 300;
 }
 
+export function getSubscriptionPriceCents(): number {
+  const raw = process.env.STRIPE_SUBSCRIPTION_PRICE_CENTS;
+  const parsed = raw ? Number.parseInt(raw, 10) : 1000;
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 1000;
+}
+
+export function getSubscriptionPriceId(): string | null {
+  const priceId = process.env.STRIPE_SUBSCRIPTION_PRICE_ID?.trim();
+  return priceId || null;
+}
+
+export function isSubscriptionConfigured(): boolean {
+  return isStripeConfigured() && Boolean(getSubscriptionPriceId());
+}
+
 export function getAppOrigin(request: Request): string {
   const configured = process.env.NEXT_PUBLIC_APP_URL;
   if (configured) {

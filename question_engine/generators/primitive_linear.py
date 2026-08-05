@@ -455,10 +455,23 @@ def _wp_generator(kind: WPKind) -> Callable[[str, dict], list[Question]]:
         include_answer_key = bool(settings.get("include_answer_key", False))
         last: dict[str, Any] = {"meta": {}}
         policy = SYSTEMS_POLICY if kind == "systems" else LINEAR_POLICY
+        local = dict(settings)
+        # G6 equation word problems: keep classroom variables / integers until mid D.
+        if topic.startswith("g6_") and kind in {"one_step", "two_step"}:
+            local.setdefault("allow_greek", False)
+            local.setdefault("force_variable_lane", "xyz")
+            try:
+                d = float(local["difficulty"]) if local.get("difficulty") is not None else None
+            except (TypeError, ValueError):
+                d = None
+            if d is not None and d < 12.0:
+                local.setdefault("integers_only", True)
+            if d is not None and d < 6.0:
+                local.setdefault("force_variable_lane", "only_x")
 
         def build() -> tuple[str, str, str | None]:
             ctx = build_context(
-                settings,
+                local,
                 [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_EQUATIONS],
                 policy=policy,
                 leaf_id=f"wp_{kind}",
@@ -476,7 +489,7 @@ def _wp_generator(kind: WPKind) -> Callable[[str, dict], list[Question]]:
 
         return make_questions(
             topic, count, include_answer_key, build,
-            metadata_builder=_meta_builder(last), settings=settings,
+            metadata_builder=_meta_builder(last), settings=local,
         )
 
     return generator
@@ -622,13 +635,9 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "polynomial_factoring_common_factor": factor_gcf_poly,
     "wp_one_step_equation": _wp_generator("one_step"),
     "wp_two_step_equation": _wp_generator("two_step"),
-    # wp_mixture / wp_distance_rate_time: real narrative frameworks in word_problems.py
-    # (do not override with equation-with-story stubs).
-    "wp_work": _wp_generator("work"),
-    "wp_age": _wp_generator("age"),
-    "wp_coin": _wp_generator("coin"),
-    "wp_consecutive_integers": _wp_generator("consecutive"),
-    "wp_percent": _wp_generator("percent"),
+    # Narrative frameworks in word_problems.py — do not override with
+    # equation-with-story stubs: mixture / DRT / work / age / coin /
+    # consecutive / percent.
     "wp_proportion": _wp_generator("proportion"),
     "wp_inequality": _wp_generator("inequality"),
     "wp_systems": _wp_generator("systems"),

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Forced-profile audit (within-lane only)</title>
+<style>
+:root { color-scheme: light; }
+body { font-family: Georgia, "Times New Roman", serif; margin: 1.5rem 2rem; line-height: 1.45;
+       color: #1a1a1a; background: #faf9f7; max-width: 72rem; }
+h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+h2 { margin-top: 2rem; border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; }
+h3 { margin-top: 1.25rem; }
+p, li { max-width: 52rem; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em;
+       background: #eee; padding: 0.05rem 0.25rem; border-radius: 3px; }
+pre { background: #f0eeea; padding: 0.75rem 1rem; overflow-x: auto; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; margin: 0.5rem 0 1.5rem; }
+th, td { border: 1px solid #ccc; padding: 0.4rem 0.5rem; vertical-align: top; }
+th { background: #e8e6e1; text-align: left; }
+a { color: #1a4a7a; }
+.banner { background: #eef2f7; border: 1px solid #c5d0de; padding: 0.5rem 0.75rem;
+          margin-bottom: 1rem; border-radius: 4px; font-size: 0.9rem; }
+
+</style>
+<link rel="stylesheet" href="../../_assets/katex/katex.min.css"/>
+<script defer src="../../_assets/katex/katex.min.js"></script>
+<script defer src="../../_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head><body>
+<p class="banner">KaTeX-rendered view of <code>gallery.md</code>. Open this file in a browser (not the Cursor markdown preview).</p>
+<h1>Forced-profile audit (within-lane only)</h1>
+<p>Each profile is forced. Difficulty only escalates *within* the lane. Prefer the <strong>lane_from_d</strong> gallery for the product path (D + constraints).</p>
+<h2>Friendly wholes (<code>friendly_wholes</code>)</h2>
+<ul>
+<li><strong>D=0:</strong> $3$, $2$, $0$, $1$, $3$, $3$, $2$, $2$</li>
+<li><strong>D=3:</strong> $6$, $3$, $3$, $5$, $4$, $4$, $6$, $6$</li>
+<li><strong>D=6:</strong> $8$, $0$, $1$, $6$, $8$, $4$, $2$, $5$</li>
+<li><strong>D=10:</strong> $12$, $0$, $12$, $12$, $3$, $13$, $1$, $8$</li>
+<li><strong>D=14:</strong> $14$, $5$, $14$, $12$, $0$, $6$, $2$, $6$</li>
+</ul>
+<h2>Signed small integers (<code>signed_small</code>)</h2>
+<ul>
+<li><strong>D=0:</strong> $0$, $3$, $2$, $-1$, $-3$, $0$, $3$, $-2$</li>
+<li><strong>D=3:</strong> $-1$, $0$, $-5$, $-2$, $2$, $2$, $2$, $-3$</li>
+<li><strong>D=6:</strong> $8$, $-9$, $1$, $-1$, $-6$, $-4$, $4$, $9$</li>
+<li><strong>D=10:</strong> $-12$, $13$, $3$, $1$, $-3$, $10$, $11$, $10$</li>
+<li><strong>D=14:</strong> $-15$, $16$, $14$, $-16$, $5$, $-3$, $-17$, $2$</li>
+</ul>
+<h2>Unit fractions (<code>unit_fractions</code>)</h2>
+<ul>
+<li><strong>D=0:</strong> $\frac{1}{3}$, $\frac{1}{3}$, $\frac{1}{3}$, $\frac{1}{3}$, $\frac{1}{3}$, $\frac{1}{2}$, $\frac{1}{2}$, $\frac{1}{2}$</li>
+<li><strong>D=3:</strong> $\frac{1}{4}$, $\frac{1}{3}$, $\frac{1}{5}$, $\frac{1}{3}$, $\frac{1}{6}$, $\frac{1}{5}$, $\frac{1}{6}$, $\frac{1}{4}$</li>
+<li><strong>D=6:</strong> $\frac{1}{9}$, $\frac{1}{8}$, $\frac{1}{8}$, $\frac{1}{4}$, $\frac{1}{4}$, $\frac{1}{5}$, $\frac{1}{9}$, $\frac{1}{4}$</li>
+<li><strong>D=10:</strong> $\frac{1}{4}$, $\frac{1}{6}$, $\frac{1}{6}$, $\frac{1}{6}$, $\frac{1}{3}$, $\frac{1}{8}$, $\frac{1}{5}$, $\frac{1}{2}$</li>
+<li><strong>D=14:</strong> $\frac{1}{6}$, $\frac{1}{16}$, $\frac{1}{7}$, $\frac{1}{11}$, $\frac{1}{10}$, $\frac{1}{7}$, $\frac{1}{6}$, $\frac{1}{16}$</li>
+</ul>
+<h2>Simple rationals (<code>simple_rations</code>)</h2>
+<ul>
+<li><strong>D=0:</strong> $\frac{1}{2}$, $-\frac{1}{2}$, $1$, $\frac{1}{2}$, $-\frac{2}{3}$, $\frac{1}{3}$, $\frac{1}{2}$, $-\frac{1}{3}$</li>
+<li><strong>D=3:</strong> $-\frac{4}{3}$, $\frac{1}{3}$, $\frac{1}{2}$, $-\frac{3}{2}$, $-\frac{1}{4}$, $\frac{5}{3}$, $-\frac{2}{3}$, $-\frac{3}{2}$</li>
+<li><strong>D=6:</strong> $\frac{1}{5}$, $-\frac{4}{3}$, $-\frac{1}{2}$, $\frac{6}{5}$, $1$, $2$, $\frac{5}{3}$, $\frac{1}{2}$</li>
+<li><strong>D=10:</strong> $1$, $-\frac{3}{8}$, $\frac{1}{2}$, $2$, $1$, $-2$, $-\frac{3}{2}$, $\frac{1}{2}$</li>
+<li><strong>D=14:</strong> $2$, $\frac{4}{9}$, $-\frac{1}{3}$, $-\frac{18}{7}$, $\frac{2}{7}$, $\frac{22}{9}$, $\frac{17}{3}$, $\frac{10}{3}$</li>
+</ul>
+<h2>Difficult rationals (<code>difficult_rations</code>)</h2>
+<ul>
+<li><strong>D=0:</strong> $\frac{7}{4}$, $\frac{8}{4}$, $\frac{5}{5}$, $\frac{10}{5}$, $\frac{8}{6}$, $\frac{7}{4}$, $\frac{8}{5}$, $-\frac{2}{6}$</li>
+<li><strong>D=3:</strong> $-\frac{3}{18}$, $\frac{7}{9}$, $-\frac{15}{12}$, $-\frac{3}{5}$, $\frac{4}{9}$, $\frac{33}{24}$, $-\frac{6}{16}$, $\frac{12}{9}$</li>
+<li><strong>D=6:</strong> $\frac{12}{12}$, $-\frac{24}{33}$, $\frac{9}{21}$, $\frac{8}{4}$, $\frac{5}{4}$, $\frac{21}{27}$, $\frac{84}{16}$, $\frac{42}{20}$</li>
+<li><strong>D=10:</strong> $-\frac{68}{36}$, $\frac{69}{12}$, $\frac{19}{14}$, $\frac{112}{28}$, $\frac{4}{8}$, $-\frac{3}{12}$, $-\frac{69}{48}$, $\frac{92}{48}$</li>
+<li><strong>D=14:</strong> $\frac{6}{18}$, $\frac{112}{24}$, $-\frac{116}{64}$, $\frac{80}{60}$, $\frac{54}{36}$, $\frac{44}{36}$, $\frac{19}{16}$, $\frac{90}{27}$</li>
+</ul>
+<h2>Friendly decimals (<code>friendly_decimals</code>)</h2>
+<ul>
+<li><strong>D=0:</strong> $3.9$, $1.3$, $2.5$, $1.9$, $2.7$, $3.4$, $0.5$, $1.5$</li>
+<li><strong>D=3:</strong> $5.1$, $0.5$, $5.7$, $2$, $2$, $4.2$, $2$, $0.8$</li>
+<li><strong>D=6:</strong> $5.4$, $2.9$, $7.09$, $6.36$, $8.4$, $-1.3$, $7$, $2.2$</li>
+<li><strong>D=10:</strong> $-7.94$, $12.8$, $9.32$, $-10.11$, $-6.3$, $9.5$, $13.9$, $8.99$</li>
+<li><strong>D=14:</strong> $14.37$, $7.6$, $6.4$, $12.9$, $16.3$, $-16$, $2.66$, $4$</li>
+</ul>
+<h2>Awkward decimals (<code>awkward_decimals</code>)</h2>
+<ul>
+<li><strong>D=0:</strong> $-1.37$, $2.11$, $1.58$, $1.63$, $0.77$, $-0.86$, $1.69$, $-2.41$</li>
+<li><strong>D=3:</strong> $-3.47$, $-4.14$, $-0.31$, $4.43$, $2.04$, $4.51$, $4.11$, $2.3$</li>
+<li><strong>D=6:</strong> $1.57$, $6.431$, $4.93$, $2.814$, $-4.598$, $-3.67$, $7.686$, $2.09$</li>
+<li><strong>D=10:</strong> $11.07$, $4.558$, $1.64$, $2.227$, $10.03$, $-9.02$, $2.38$, $-5.687$</li>
+<li><strong>D=14:</strong> $-1.26$, $4.26$, $-1.33$, $15.76$, $14.03$, $15.82$, $9.62$, $-0.32$</li>
+</ul>
+</body></html>

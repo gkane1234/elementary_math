@@ -1,0 +1,153 @@
+{
+  "catalog_id": "algebra2_rationals",
+  "title": "OpenStax Intermediate Algebra 2e — rational expressions (Ch 7)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "intermediate-algebra-2e",
+      "chapters": ["7"],
+      "title": "Rational Expressions and Equations",
+      "url": "https://openstax.org/books/intermediate-algebra-2e/pages/7-introduction",
+      "stage1": "scripts/output/example_mining/intermediate-algebra-2e/stage1/"
+    }
+  },
+  "taxonomy_notes": [
+    "Forms mirror §§7.1–7.4 learning objectives (simplify, ×÷, ±, complex fractions, equations).",
+    "PFD is not taught in Intermediate Algebra; stub form documents future wrap of construct_pfd (PC leaf today)."
+  ],
+  "forms": [
+    {
+      "form_id": "simplify_cancel",
+      "description": "Simplify a single rational by canceling common factors",
+      "strategy": "cancel_common_factors",
+      "constraints": { "mode": "simplify", "as_sum": false, "cancel_min": 1 },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_rational_expressions_simplifying"],
+      "example_item_ids": [],
+      "openstax_case": "§7.1 Simplify rational expressions"
+    },
+    {
+      "form_id": "add_common_den",
+      "description": "Add/subtract rationals with a common denominator",
+      "strategy": "common_denominator",
+      "constraints": { "mode": "add_subtract", "as_sum": true, "n_terms": 2, "same_den": true, "cancel_count": 0 },
+      "d_min": 0,
+      "d_max": 10,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_rational_expressions_adding_and_subtracting"],
+      "example_item_ids": ["fs-id1167836544834"],
+      "openstax_case": "§7.2 Add/subtract with a common denominator"
+    },
+    {
+      "form_id": "add_unlike_dens",
+      "description": "Add/subtract rationals with unlike denominators (LCD)",
+      "strategy": "lcd_combine",
+      "constraints": { "mode": "add_subtract", "as_sum": true, "n_terms": 2, "same_den": false },
+      "d_min": 4,
+      "d_weight": 2.4,
+      "generation_status": "implemented",
+      "leaves": ["a2_rational_expressions_adding_and_subtracting"],
+      "example_item_ids": [],
+      "openstax_case": "§7.2 Add/subtract with unlike denominators"
+    },
+    {
+      "form_id": "add_unlike_with_cancel",
+      "description": "Unlike dens plus planned cancel after combine",
+      "strategy": "lcd_combine_cancel",
+      "constraints": { "mode": "add_subtract", "as_sum": true, "n_terms": 3, "cancel_min": 1 },
+      "d_min": 10,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": ["a2_rational_expressions_adding_and_subtracting"],
+      "example_item_ids": [],
+      "openstax_case": "§7.2 harder LCD + cancel"
+    },
+    {
+      "form_id": "multiply_rationals",
+      "description": "Multiply rational expressions and simplify",
+      "strategy": "multiply_cancel",
+      "constraints": { "op": "multiply" },
+      "d_min": 2,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": ["a2_rational_expressions_multiplying_and_dividing"],
+      "example_item_ids": [],
+      "openstax_case": "§7.1 Multiply rational expressions"
+    },
+    {
+      "form_id": "divide_rationals",
+      "description": "Divide rational expressions (multiply by reciprocal)",
+      "strategy": "divide_reciprocal",
+      "constraints": { "op": "divide" },
+      "d_min": 4,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": ["a2_rational_expressions_multiplying_and_dividing"],
+      "example_item_ids": [],
+      "openstax_case": "§7.1 Divide rational expressions"
+    },
+    {
+      "form_id": "complex_fraction_lcd",
+      "description": "Simplify complex rational by LCD method",
+      "strategy": "complex_lcd",
+      "constraints": { "kind": "complex_lcd" },
+      "d_min": 8,
+      "d_weight": 1.4,
+      "generation_status": "stub",
+      "leaves": ["a2_rational_expressions_complex_fractions"],
+      "example_item_ids": [],
+      "openstax_case": "§7.3 Simplify complex rational by LCD"
+    },
+    {
+      "form_id": "rational_equation",
+      "description": "Solve rational equation (clear dens; check extraneous)",
+      "strategy": "clear_denominators",
+      "constraints": { "kind": "equation" },
+      "d_min": 6,
+      "d_weight": 1.6,
+      "generation_status": "stub",
+      "leaves": ["a2_rational_expressions_equations"],
+      "example_item_ids": [],
+      "openstax_case": "§7.4 Solve rational equations"
+    },
+    {
+      "form_id": "add_opposite_dens",
+      "description": "Add/subtract when denominators are opposites",
+      "strategy": "opposite_denominators",
+      "constraints": { "mode": "add_subtract", "opposites": true },
+      "d_min": 6,
+      "d_weight": 1.2,
+      "generation_status": "stub",
+      "leaves": ["a2_rational_expressions_adding_and_subtracting"],
+      "example_item_ids": ["fs-id1167836728843"],
+      "openstax_case": "§7.2 Denominators are opposites"
+    },
+    {
+      "form_id": "pfd_linear_factors",
+      "description": "Partial fractions with distinct linear factors (not IntAlg core)",
+      "strategy": "construct_pfd",
+      "constraints": { "mode": "pfd", "n_terms_min": 2 },
+      "d_min": 8,
+      "d_weight": 1.0,
+      "generation_status": "deferred",
+      "leaves": [],
+      "example_item_ids": [],
+      "openstax_case": "Not in Intermediate Algebra — wrap construct_pfd / PC leaf pc_partial_fraction_decomposition"
+    },
+    {
+      "form_id": "rational_apps",
+      "description": "Applications with rational equations (work/motion)",
+      "strategy": "rational_word_problem",
+      "constraints": { "kind": "application" },
+      "d_min": 10,
+      "d_weight": 1.0,
+      "generation_status": "deferred",
+      "leaves": [],
+      "example_item_ids": [],
+      "openstax_case": "§7.5 — curriculum gap (missing on A2)"
+    }
+  ]
+}

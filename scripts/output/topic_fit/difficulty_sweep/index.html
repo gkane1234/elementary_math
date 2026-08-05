@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Difficulty sweep index (continuous only)</title>
+<style>
+
+    :root { color-scheme: light; }
+    body { font-family: Georgia, "Times New Roman", serif; margin: 1.25rem 1.5rem 3rem;
+           line-height: 1.45; color: #1a1a1a; background: #faf9f7; }
+    h1 { font-size: 1.65rem; margin-bottom: 0.2rem; }
+    h2 { margin-top: 1.75rem; border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+    h3 { margin-top: 1.1rem; font-size: 1.05rem; }
+    .lede { max-width: 56rem; color: #444; }
+    .code { font-family: ui-monospace, Consolas, monospace; font-size: 0.82em; }
+    .meta { color: #555; font-size: 0.9rem; margin: 0.2rem 0 0.6rem; }
+    .pill { display: inline-block; background: #eef2f7; border: 1px solid #c5d0de;
+            border-radius: 3px; padding: 0.05rem 0.35rem; margin: 0.08rem; font-size: 0.78rem; }
+    .pill.fail { background: #fde8e8; border-color: #e8b0b0; }
+    .pill.ok { background: #e6f4ea; border-color: #b7dfc3; }
+    .pill.warn { background: #fff4d6; border-color: #e6d39a; }
+    table.compare { border-collapse: collapse; width: 100%; font-size: 0.86rem; margin: 0.4rem 0 1.2rem; }
+    table.compare th, table.compare td { border: 1px solid #ccc; padding: 0.35rem 0.45rem; vertical-align: top; }
+    table.compare th { background: #e8e6e1; position: sticky; top: 0; }
+    .samples { font-family: "Cambria Math", "Times New Roman", serif; font-size: 0.98rem; }
+    .ans { color: #255; }
+    .toc a { margin-right: 0.65rem; white-space: nowrap; }
+    .nav { margin: 0.75rem 0 1.25rem; }
+    .nav a { margin-right: 0.85rem; }
+    .truncated { color: #888; font-size: 0.8rem; }
+    .type-block { scroll-margin-top: 0.75rem; }
+        
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$',right:'$',display:false},{left:'$$',right:'$$',display:true}],throwOnError:false})"></script>
+</head><body>
+<h1>Difficulty sweep gallery (continuous only)</h1>
+<p class="lede">Generated 2026-07-19T01:42:10.598719+00:00. <strong>Continuous-difficulty only:</strong> included <strong>29</strong> Ready types (18 unique generators); excluded <strong>556</strong> Ready types without a numeric <span class='code'>difficulty</span> slider field. Generation: fully OK 29, partial 0, failed 0, skipped 0. D ∈ {0, 5, 10, 15, 20, 25, 50}, 5 samples each. Display latex truncated at 420 chars; full text in <span class='code'>samples.jsonl</span>.</p>
+<h2>Open</h2>
+<p class="nav">
+<a href="gallery.html"><strong>Full gallery</strong></a>
+<a href="INDEX.md">INDEX.md</a>
+<a href="samples.jsonl">samples.jsonl</a>
+<a href="failed.jsonl">failed.jsonl</a>
+<a href="excluded.jsonl">excluded.jsonl</a>
+<a href="summary.json">summary.json</a>
+</p>
+<h2>By course</h2>
+<p><a class="pill" href="by_course/grade_6.html">grade_6</a> (8) <a class="pill" href="by_course/pre_algebra.html">pre_algebra</a> (2) <a class="pill" href="by_course/algebra_1.html">algebra_1</a> (11) <a class="pill" href="by_course/algebra_2.html">algebra_2</a> (6) <a class="pill" href="by_course/geometry.html">geometry</a> (1) <a class="pill" href="by_course/precalculus.html">precalculus</a> (1)</p>
+<h2>Summary</h2>
+<table class='compare'><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>
+<tr><td>Included (continuous difficulty)</td><td><span class='pill ok'>29</span></td></tr>
+<tr><td>Unique generators</td><td>18</td></tr>
+<tr><td>Excluded Ready (no continuous D)</td><td><span class='pill warn'>556</span></td></tr>
+<tr><td>Fully succeeded</td><td><span class='pill ok'>29</span></td></tr>
+<tr><td>Partial</td><td><span class='pill warn'>0</span></td></tr>
+<tr><td>Fully failed</td><td><span class='pill fail'>0</span></td></tr>
+<tr><td>Sample rows</td><td>1015</td></tr>
+<tr><td>Elapsed</td><td>5.1s</td></tr>
+</tbody></table>
+<h2>Exclude reasons</h2><ul>
+<li>difficulty_tier only (easy/medium/hard): <strong>531</strong></li>
+<li>discrete difficulty field (type=select): <strong>24</strong></li>
+<li>no difficulty / difficulty_tier field: <strong>1</strong></li>
+</ul>
+<h2>High-D notes</h2><ul>
+<li>`a2_equations_and_inequalities_multi_step_equations`: grows sharply by D=50 (len≈626 vs D=0≈59)</li>
+<li>`geo_review_multi_step_equations`: grows sharply by D=50 (len≈600 vs D=0≈59)</li>
+<li>`pa_equations_multi_step_equations`: grows sharply by D=50 (len≈733 vs D=0≈68)</li>
+</ul>
+</body></html>

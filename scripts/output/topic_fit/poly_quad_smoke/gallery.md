@@ -249,18 +249,18 @@ Review prompts for **topic / method / difficulty shape** — not answer correctn
 
 ### easy
 
-- `\text{Find the discriminant of } x^{2} + 2x - 1.`
-- `\text{Find the discriminant of } x^{2} + 3x + 1.`
+- $\text{Find the discriminant of } x^{2} + 2x - 1.$
+- $\text{Find the discriminant of } x^{2} + 3x + 1.$
 
 ### medium
 
-- `\text{Find the discriminant of } 3x^{2} + 3x + 3.`
-- `\text{Find the discriminant of } 2x^{2} - 7x - 1.`
+- $\text{Find the discriminant of } 3x^{2} + 3x + 3.$
+- $\text{Find the discriminant of } 2x^{2} - 7x - 1.$
 
 ### hard
 
-- `\text{Find the discriminant of } 4x^{2} - 12x + 8.`
-- `\text{Find the discriminant of } 2x^{2} + 16x + 19.`
+- $\text{Find the discriminant of } 4x^{2} - 12x + 8.$
+- $\text{Find the discriminant of } 2x^{2} + 16x + 19.$
 
 ## `quadratic_completing_square_constant` — Completing the square by finding the constant
 
@@ -269,18 +269,18 @@ Review prompts for **topic / method / difficulty shape** — not answer correctn
 
 ### easy
 
-- `x^{2} + 2x + c \text{ is a perfect square trinomial. Find } c.`
-- `x^{2} + 2x + c \text{ is a perfect square trinomial. Find } c.`
+- $x^{2} + 2x + c \text{ is a perfect square trinomial. Find } c.$
+- $x^{2} + 2x + c \text{ is a perfect square trinomial. Find } c.$
 
 ### medium
 
-- `x^{2} + 10x + c \text{ is a perfect square trinomial. Find } c.`
-- `x^{2} - 8x + c \text{ is a perfect square trinomial. Find } c.`
+- $x^{2} + 10x + c \text{ is a perfect square trinomial. Find } c.$
+- $x^{2} - 8x + c \text{ is a perfect square trinomial. Find } c.$
 
 ### hard
 
-- `x^{2} - 17x + c \text{ is a perfect square trinomial. Find } c.`
-- `x^{2} - 21x + c \text{ is a perfect square trinomial. Find } c.`
+- $x^{2} - 17x + c \text{ is a perfect square trinomial. Find } c.$
+- $x^{2} - 21x + c \text{ is a perfect square trinomial. Find } c.$
 
 ## `quadratic_completing_square_solve` — Solving equations by completing the square
 

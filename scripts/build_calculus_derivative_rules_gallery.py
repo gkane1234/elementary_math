@@ -1,6 +1,6 @@
 """Build gallery for enriched calculus derivative-rule generators.
 
-Writes scripts/output/topic_fit/calculus_derivative_rules/:
+Writes scripts/output/topic_fit/c1_calculus_derivative_rules/:
   gallery.md, gallery.html, NOTES.md, samples.jsonl
 
 Usage:
@@ -25,7 +25,7 @@ import question_engine.types  # noqa: F401
 from question_engine.core.base import QUESTION_TYPES
 from question_engine.settings.presets import apply_difficulty_presets
 
-OUT = ROOT / "scripts" / "output" / "topic_fit" / "calculus_derivative_rules"
+OUT = ROOT / "scripts" / "output" / "topic_fit" / "c1_calculus_derivative_rules"
 TIERS = ("easy", "medium", "hard")
 N_PER_TIER = 3
 

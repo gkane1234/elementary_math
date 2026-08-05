@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { unlockWorksheet } from "@/lib/payment";
+import { fetchEntitlement, unlockWorksheet } from "@/lib/payment";
 import type { WorksheetDraft } from "@/lib/types";
 
 const STORAGE_KEY = "polynomial_unlocked_worksheet";
@@ -37,11 +37,70 @@ function writeStoredUnlock(value: StoredUnlock) {
 export default function SuccessPage() {
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [message, setMessage] = useState("Confirming your payment...");
+  const [mode, setMode] = useState<"payment" | "subscription">("payment");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
     const worksheetId = params.get("worksheet_id");
+    const type = params.get("type");
+
+    if (type === "subscription") {
+      setMode("subscription");
+      setMessage("Confirming your subscription...");
+
+      if (!sessionId) {
+        setStatus("error");
+        setMessage("Missing subscription details. Return to the worksheet and try again.");
+        return;
+      }
+
+      let cancelled = false;
+      let attempts = 0;
+
+      const pollEntitlement = async () => {
+        try {
+          const result = await fetchEntitlement();
+          if (cancelled) {
+            return;
+          }
+
+          if (result.entitled) {
+            setStatus("ready");
+            setMessage("Subscription active. You can export unlimited worksheets.");
+            return;
+          }
+
+          attempts += 1;
+          if (attempts < 8) {
+            window.setTimeout(pollEntitlement, 1500);
+            return;
+          }
+
+          setStatus("error");
+          setMessage("Subscription not confirmed yet. Refresh in a moment or return home.");
+        } catch (error) {
+          if (cancelled) {
+            return;
+          }
+
+          attempts += 1;
+          if (attempts < 8) {
+            window.setTimeout(pollEntitlement, 1500);
+            return;
+          }
+
+          const detail = error instanceof Error ? error.message : "Subscription could not be confirmed";
+          setStatus("error");
+          setMessage(detail);
+        }
+      };
+
+      pollEntitlement();
+      return () => {
+        cancelled = true;
+      };
+    }
 
     if (!sessionId || !worksheetId) {
       setStatus("error");
@@ -91,23 +150,34 @@ export default function SuccessPage() {
     };
   }, []);
 
-  const stored = status === "ready" ? readStoredUnlock() : null;
+  const stored = status === "ready" && mode === "payment" ? readStoredUnlock() : null;
 
   return (
     <section className="panel payment-status">
-      <h2>{status === "ready" ? "Worksheet unlocked" : "Processing payment"}</h2>
+      <h2>
+        {status === "ready"
+          ? mode === "subscription"
+            ? "Subscription active"
+            : "Worksheet unlocked"
+          : "Processing payment"}
+      </h2>
       <p>{message}</p>
 
       {status === "loading" && <p className="worksheet-status">This usually takes a few seconds.</p>}
 
-      {status === "ready" && stored && (
+      {status === "ready" && (
         <div className="payment-actions">
           <Link className="primary button-link" href="/">
             Return to worksheet
           </Link>
-          <p className="plan-summary">
-            Unlocked: <strong>{stored.worksheet.title}</strong>
-          </p>
+          {stored && (
+            <p className="plan-summary">
+              Unlocked: <strong>{stored.worksheet.title}</strong>
+            </p>
+          )}
+          {mode === "subscription" && (
+            <p className="plan-summary">Pro unlocks answer keys and PDF export on every worksheet.</p>
+          )}
         </div>
       )}
 

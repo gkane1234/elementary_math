@@ -139,7 +139,7 @@
     "term_max_quad": 0.00008
   },
   "constructive": {
-    "_description": "Answer-first expression inflation. D=0 = plain seed (no inflators). Poly uses compositional subset inflate: budget units pick a tree level (poly_level_bias^depth, favoring root), then a subset, then a local disguise. poly_single_hot_* bias seed shape.",
+    "_description": "Answer-first expression inflation. Top-level L1 numeric always applies ≥1 inflator (never a bare seed). Nested disguise children may stay plain. Poly uses compositional subset inflate: budget units pick a tree level (poly_level_bias^depth, favoring root), then a subset, then a local disguise. poly_single_hot_* bias seed shape.",
     "inflator_scale": 5.0,
     "min_inflators_when_d_ge": 4.0,
     "min_inflators_count": 1,
@@ -223,11 +223,63 @@
     }
   },
   "distributive": {
-    "_description": "Distributive-property topic overrides (thin client of construct_affine). cancel_clutter here overrides presentation.cancel_clutter when set.",
+    "_description": "Distributive structure upgrades (factor_right / signed_inside / three_terms / two_binomials) bought from effective D; presentation layer owns ·/×/juxtapose. cancel_clutter overrides presentation.cancel_clutter when set.",
     "cancel_clutter": {
       "_description": "Topic-level override of presentation.cancel_clutter for distributive leaves.",
       "amount": 0.0,
       "min_d": 10.0
     }
+  },
+  "narrative_wp": {
+    "_description": "Coin / age / consecutive word-problem upgrade costs. Required structure is fixed in the sampler; D spends on optional complexity (relations, third denom, trades, time shifts). Presentation uses composed phrase fragments, not Mad-Libs script piles.",
+    "coin_alt_pair_cost": 3.0,
+    "coin_ask_other_cost": 2.0,
+    "coin_rel_ratio_cost": 5.0,
+    "coin_rel_diff_cost": 5.0,
+    "coin_ask_value_cost": 4.0,
+    "coin_three_denoms_cost": 8.0,
+    "coin_trade_step_cost": 10.0,
+    "coin_larger_scale_cost": 2.5,
+    "age_ask_older_cost": 1.5,
+    "age_future_shift_cost": 5.0,
+    "age_past_shift_cost": 5.0,
+    "age_times_as_old_cost": 7.0,
+    "age_three_people_cost": 9.0,
+    "age_larger_ages_cost": 2.0,
+    "consec_more_count_cost": 3.0,
+    "consec_parity_cost": 4.0,
+    "consec_sum_first_last_cost": 3.5,
+    "consec_product_cost": 7.0,
+    "consec_larger_start_cost": 2.0,
+    "consec_min_count": 2,
+    "consec_max_count": 5
+  },
+  "derivatives": {
+    "_description": "Calculus derivative sampler. Function classes (trig/exp/log/hyp/roots/invtrig) are gated only by allow_* checkboxes: checked = available from D=0; unchecked = never. Continuous D buys ops / nesting / mix within allowed classes. Method unlock thresholds (product/quotient/chain/nested) remain soft D floors within an allowed method.",
+    "unlock_trig_d": 0.0,
+    "unlock_exp_d": 0.0,
+    "unlock_log_d": 0.0,
+    "unlock_roots_d": 0.0,
+    "unlock_invtrig_d": 0.0,
+    "unlock_hyperbolic_d": 0.0,
+    "unlock_nested_d": 14.0,
+    "unlock_product_d": 5.0,
+    "unlock_quotient_d": 6.0,
+    "unlock_chain_d": 4.0,
+    "upgrade_extra_term_cost": 1.0,
+    "upgrade_higher_power_cost": 1.5,
+    "upgrade_use_product_cost": 3.0,
+    "upgrade_use_quotient_cost": 3.5,
+    "upgrade_use_chain_cost": 2.5,
+    "upgrade_chain_depth_2_cost": 4.0,
+    "upgrade_class_trig_cost": 3.0,
+    "upgrade_class_exp_cost": 3.5,
+    "upgrade_class_log_cost": 4.0,
+    "upgrade_class_roots_cost": 2.5,
+    "upgrade_class_invtrig_cost": 5.0,
+    "upgrade_class_hyperbolic_cost": 5.5,
+    "upgrade_mix_classes_cost": 2.0,
+    "upgrade_fn_power_cost": 2.5,
+    "upgrade_higher_order_cost": 4.5
   }
 }

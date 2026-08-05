@@ -414,10 +414,62 @@ def _build_multi_operand_multiply(settings: dict, operand_count: int) -> tuple[s
 def generate_rational_expression_multiply_divide(
     topic: str, settings: dict
 ) -> list[Question]:
+    from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    use_a2 = str(topic or "").startswith("a2_")
+    last: dict = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        return build_rational_multiply_divide_prompt(settings)
+        local = dict(settings)
+        form_stamp: dict = {}
+        if use_a2:
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+            from question_engine.frameworks.primitives.openstax_a2 import (
+                a2_form_constraints,
+                select_a2_form,
+            )
 
-    return make_questions(topic, count, include_answer_key, build, settings=settings)
+            d = float(settings_difficulty(local))
+            form, form_stamp = select_a2_form(
+                "algebra2_rationals",
+                d=d,
+                rng=random.Random(local.get("seed")),
+                leaf_id=str(topic or ""),
+            )
+            op = a2_form_constraints(form).get("op")
+            if op == "multiply":
+                local["allow_multiply"] = True
+                local["allow_divide"] = False
+            elif op == "divide":
+                local["allow_multiply"] = False
+                local["allow_divide"] = True
+        prompt, kind, answer = build_rational_multiply_divide_prompt(local)
+        if not include_answer_key:
+            answer = None
+        last["meta"] = {
+            "primitive_engine": "rational_expression_multiply_divide",
+            "mode": kind,
+            **form_stamp,
+        }
+        return prompt, kind, answer
+
+    def metadata_builder(_p: str, _t: str, answer: str | None) -> dict:
+        return enrich_algebraic_meta(
+            last.get("meta"),
+            pack="structured_rational_muldiv",
+            generator="rational_expression_multiply_divide",
+            methods_used=["rational", "multiply_divide"],
+            answer=answer,
+            course_tag="a2" if use_a2 else "a1",
+        )
+
+    return make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder if use_a2 else None,
+        settings=settings,
+    )

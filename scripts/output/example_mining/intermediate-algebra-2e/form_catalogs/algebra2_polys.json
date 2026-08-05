@@ -1,0 +1,176 @@
+{
+  "catalog_id": "algebra2_polys",
+  "title": "OpenStax Intermediate Algebra 2e — polynomials (Ch 5–6)",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "intermediate-algebra-2e",
+      "chapters": ["5", "6"],
+      "title": "Polynomials / Factoring Polynomials",
+      "url": "https://openstax.org/books/intermediate-algebra-2e/pages/5-introduction",
+      "stage1": "scripts/output/example_mining/intermediate-algebra-2e/stage1/"
+    }
+  },
+  "taxonomy_notes": [
+    "Forms mirror OpenStax Intermediate Algebra §§5.1–5.4 and §§6.1–6.5 learning objectives.",
+    "Sampler selects form_id by D-weighted weights among generation_status=implemented entries tagged to a leaf."
+  ],
+  "forms": [
+    {
+      "form_id": "poly_add",
+      "description": "Add two polynomials (combine like terms)",
+      "strategy": "combine_like_terms",
+      "constraints": { "op": "+", "kind": "add_subtract" },
+      "d_min": 0,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_adding_and_subtracting"],
+      "example_item_ids": ["fs-id1167836415722"],
+      "openstax_case": "§5.1 Add and subtract polynomials"
+    },
+    {
+      "form_id": "poly_subtract",
+      "description": "Subtract polynomials (distribute minus, combine)",
+      "strategy": "distribute_minus_combine",
+      "constraints": { "op": "-", "kind": "add_subtract" },
+      "d_min": 2,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_adding_and_subtracting"],
+      "example_item_ids": [],
+      "openstax_case": "§5.1 Subtract polynomials"
+    },
+    {
+      "form_id": "mono_times_poly",
+      "description": "Multiply a monomial by a polynomial",
+      "strategy": "distribute_monomial",
+      "constraints": { "pattern": "mono_poly", "left_terms": 1 },
+      "d_min": 0,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_multiplying"],
+      "example_item_ids": [],
+      "openstax_case": "§5.3 Multiply a polynomial by a monomial"
+    },
+    {
+      "form_id": "binomial_times_binomial",
+      "description": "Multiply two binomials (FOIL)",
+      "strategy": "foil",
+      "constraints": { "pattern": "binom_binom", "left_terms": 2, "right_terms": 2 },
+      "d_min": 2,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_multiplying"],
+      "example_item_ids": [],
+      "openstax_case": "§5.3 Multiply a binomial by a binomial"
+    },
+    {
+      "form_id": "poly_times_poly",
+      "description": "Multiply a polynomial by a polynomial (deg≥2 × deg≥2)",
+      "strategy": "distribute_all",
+      "constraints": { "pattern": "poly_poly", "left_terms_min": 3 },
+      "d_min": 8,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_multiplying"],
+      "example_item_ids": [],
+      "openstax_case": "§5.3 Multiply a polynomial by a polynomial"
+    },
+    {
+      "form_id": "special_product_square",
+      "description": "(a±b)² special product",
+      "strategy": "perfect_square",
+      "constraints": { "pattern": "square_binom" },
+      "d_min": 4,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_multiplying_special_cases"],
+      "example_item_ids": [],
+      "openstax_case": "§5.3 Multiply special products — square"
+    },
+    {
+      "form_id": "special_product_diff_squares",
+      "description": "(a−b)(a+b) difference of squares product",
+      "strategy": "diff_squares_product",
+      "constraints": { "pattern": "diff_squares" },
+      "d_min": 4,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_multiplying_special_cases"],
+      "example_item_ids": [],
+      "openstax_case": "§5.3 Multiply special products — difference of squares"
+    },
+    {
+      "form_id": "factor_by_grouping",
+      "description": "Factor four-term polynomial by grouping",
+      "strategy": "grouping",
+      "constraints": { "kind": "grouping" },
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_factoring_by_grouping"],
+      "example_item_ids": [],
+      "openstax_case": "§6.1 Factor by grouping"
+    },
+    {
+      "form_id": "sum_diff_cubes",
+      "description": "Factor sum or difference of cubes",
+      "strategy": "cubes",
+      "constraints": { "kind": "cubes" },
+      "d_min": 6,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_factoring_sum_difference_of_cubes"],
+      "example_item_ids": [],
+      "openstax_case": "§6.3 Factor sums and differences of cubes"
+    },
+    {
+      "form_id": "poly_degree_classify",
+      "description": "Name monomial/binomial/trinomial and degree",
+      "strategy": "classify_degree",
+      "constraints": { "kind": "naming" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_naming"],
+      "example_item_ids": ["fs-id1167836415722"],
+      "openstax_case": "§5.1 Degree of a polynomial"
+    },
+    {
+      "form_id": "long_division",
+      "description": "Divide polynomials using long division",
+      "strategy": "long_division",
+      "constraints": { "kind": "long_division" },
+      "d_min": 6,
+      "d_weight": 1.4,
+      "generation_status": "stub",
+      "leaves": ["a2_polynomial_functions_dividing"],
+      "example_item_ids": [],
+      "openstax_case": "§5.4 Dividing polynomials using long division"
+    },
+    {
+      "form_id": "gcf_factor",
+      "description": "Factor out greatest common factor",
+      "strategy": "gcf",
+      "constraints": { "kind": "gcf" },
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "stub",
+      "leaves": [],
+      "example_item_ids": [],
+      "openstax_case": "§6.1 Factor the GCF from a polynomial — A2 leaf unwired (A1 has dedicated type)"
+    },
+    {
+      "form_id": "trinomial_a_gt_1",
+      "description": "Factor ax²+bx+c with a≠1 (trial/ac)",
+      "strategy": "ac_method",
+      "constraints": { "a_gt_1": true },
+      "d_min": 6,
+      "d_weight": 1.8,
+      "generation_status": "stub",
+      "leaves": [],
+      "example_item_ids": [],
+      "openstax_case": "§6.2 Factor trinomials a≠1 — catalog form pending dedicated leaf wiring"
+    }
+  ]
+}

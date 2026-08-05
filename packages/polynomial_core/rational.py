@@ -1235,12 +1235,10 @@ def _build_cancelled_expression_pieces(
     if not summands:
         return None
 
-    # Prefer shared LCD whenever the combined numerator is classroom-degree.
-    # When RRT is off, force shared LCD so the student path is: rewrite → add →
-    # factor expanded combined (≤ quadratic) → cancel — no unlike-den residuals.
-    use_shared_lcd = target_fractional.deg() <= 2
-    if rrt_exclude and cancelled_lcd_factors:
-        use_shared_lcd = True
+    # Prefer unlike denominators whenever the LCD has multiple factors so
+    # students practice finding an LCD. Shared LCD is only the default for
+    # single-factor LCDs, and remains the fallback if unlike packaging fails.
+    use_shared_lcd = len(lcd_factors) < 2
     packaged_numerators = [s for s in summands if not s.is_zero()]
     packaged_factor_lists: list[tuple[Polynomial, ...]] = [
         lcd_factor_tuple for _ in packaged_numerators
@@ -1251,33 +1249,41 @@ def _build_cancelled_expression_pieces(
     ]
 
     # Unlike dens (add-then-cancel): residual method with rejection when a term
-    # would already cancel. Forced when shared LCD would show RRT-hard nums.
-    allow_unlike = (
-        (not use_shared_lcd)
-        or (
-            (not rrt_exclude or not cancelled_lcd_factors)
-            and (max_subset_size is None or max_subset_size >= 1)
-            and len(lcd_factors) >= 2
-            and random.random() < 0.4
-        )
+    # would already cancel. Require genuinely distinct dens — identical dens are
+    # the shared-LCD fallback, not a successful unlike packaging.
+    allow_unlike = not use_shared_lcd and (
+        max_subset_size is None or max_subset_size >= 1
     )
     unlike_ok = False
     if allow_unlike:
-        for _attempt in range(40 if not use_shared_lcd else 25):
-            dens = _pick_term_denominators(
-                lcd_factors,
-                len(packaged_numerators),
-                max_subset_size=max_subset_size,
-                allow_empty=False,
-                force_shared_single=False,
-            )
-            if len(dens) != len(packaged_numerators):
+        n_pack = len(packaged_numerators)
+        for _attempt in range(60):
+            if n_pack >= 2 and len(lcd_factors) >= 2 and _attempt < 20:
+                # Bias early attempts toward complementary single factors.
+                dens_list = [
+                    (lcd_factors[i % len(lcd_factors)],)
+                    for i in range(n_pack)
+                ]
+                if n_pack == 2 and random.random() < 0.45:
+                    dens_list[-1] = lcd_factor_tuple
+            else:
+                dens = _pick_term_denominators(
+                    lcd_factors,
+                    n_pack,
+                    max_subset_size=max_subset_size,
+                    allow_empty=False,
+                    force_shared_single=False,
+                )
+                if len(dens) != n_pack:
+                    continue
+                dens_list = list(dens)
+            dens_polys = [_factors_to_polynomial(d) for d in dens_list]
+            if len(_unique_polynomials(dens_polys)) < 2:
                 continue
-            dens_list = list(dens)
             nums: list[Polynomial] = []
             ok = True
             for i in range(len(dens_list) - 1):
-                den_poly = _factors_to_polynomial(dens_list[i])
+                den_poly = dens_polys[i]
                 num = _random_numerator_for_denominator(
                     den_poly, coef_min, coef_max, options.positive_leading
                 )
@@ -1300,19 +1306,41 @@ def _build_cancelled_expression_pieces(
             try:
                 partial = _compose_over_term_denominators(
                     nums,
-                    [_factors_to_polynomial(d) for d in dens_list[:-1]],
+                    dens_polys[:-1],
                     lcd,
                 )
             except ValueError:
                 continue
             residual = _integerize_polynomial(target_fractional - partial)
-            last_den = _factors_to_polynomial(dens_list[-1])
+            last_den = dens_polys[-1]
             try:
                 cofactor = _exact_divide(lcd, last_den)
                 last_num = _exact_divide(residual, cofactor)
             except ValueError:
-                dens_list[-1] = lcd_factor_tuple
-                last_num = residual
+                # Keep dens unlike: use a complementary cofactor den when possible.
+                if len(lcd_factors) >= 2:
+                    alt = tuple(
+                        f
+                        for f in lcd_factors
+                        if all(
+                            str(f) != str(g)
+                            for g in dens_list[0]
+                        )
+                    )
+                    if alt:
+                        dens_list[-1] = alt
+                    else:
+                        dens_list[-1] = lcd_factor_tuple
+                else:
+                    dens_list[-1] = lcd_factor_tuple
+                dens_polys[-1] = _factors_to_polynomial(dens_list[-1])
+                if len(_unique_polynomials(dens_polys)) < 2:
+                    continue
+                try:
+                    cofactor = _exact_divide(lcd, dens_polys[-1])
+                    last_num = _exact_divide(residual, cofactor)
+                except ValueError:
+                    continue
             last_num = _integerize_polynomial(last_num)
             if last_num.is_zero():
                 continue
@@ -1327,6 +1355,8 @@ def _build_cancelled_expression_pieces(
                     continue
             nums.append(last_num)
             if _count_per_term_cancels(nums, dens_list) > 0:
+                continue
+            if len(_unique_polynomials([_factors_to_polynomial(d) for d in dens_list])) < 2:
                 continue
             try:
                 check = _compose_over_term_denominators(
@@ -1349,7 +1379,8 @@ def _build_cancelled_expression_pieces(
                 break
 
     if not use_shared_lcd and not unlike_ok:
-        # Last resort: shared LCD with factored high-degree nums when possible.
+        # Fall back to shared LCD only when residual packaging cannot produce
+        # unlike dens. Keep high-degree nums displayable when RRT is off.
         if any(
             options.rrt_mode == "exclude"
             and num.deg() >= 3

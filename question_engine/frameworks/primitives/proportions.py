@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
+import math
 from typing import Any
 
 from question_engine.frameworks.difficulty_budget import DifficultyFactor, select_upgrades
@@ -83,32 +84,64 @@ def sample_literal_equation(ctx: PrimitiveContext) -> LiteralEquation:
 
 
 def _build_prop(ctx: PrimitiveContext, ids: set[str], eff: float) -> ProportionEquation:
-    var = ctx.sample_variable()
-    # a/b = c/x  or  a/x = b/c  or  a/b = x/c
-    a = abs(int(sample_integerish(ctx, exclude_zero=True, prefer_positive=True).value))
-    b = abs(int(sample_integerish(ctx, exclude_zero=True, prefer_positive=True).value))
-    c = abs(int(sample_integerish(ctx, exclude_zero=True, prefer_positive=True).value))
-    if min(a, b, c) < 1:
-        a, b, c = 2, 3, 4
+    from question_engine.frameworks.number import (
+        _build_k_with_meaningful_steps,
+        _target_meaningful_cancel_steps,
+        meaningful_cancel_steps,
+    )
 
-    if "variable_in_denom" in ids:
+    var = ctx.sample_variable()
+    # Meaningful-effort cores: inflate with non-10ⁿ cancel steps as D rises.
+    target = _target_meaningful_cancel_steps(eff)
+    k_max = max(6, 4 + int(eff))
+    if target <= 0:
+        a, b, c = 2, 3, 4
+        k = 1
+    else:
+        k = _build_k_with_meaningful_steps(target, k_max, min_k=2 if eff >= 5 else 1)
+        core_a, core_b = 2, 3
+        # Vary small coprime cores.
+        cores = [(2, 3), (3, 4), (2, 5), (3, 5), (4, 5), (2, 7), (3, 7)]
+        core_a, core_b = ctx.rng.choice(cores)
+        a, b = core_a * k, core_b * k
+        # Third part also uses a related multiple so cross-multiply isn't trivial 1.
+        m = max(2, min(9, 2 + int(eff // 4)))
+        c = core_a * m if "variable_in_denom" in ids else core_b * m
+        if c < 1:
+            c = max(2, m)
+
+    # Prefer multi_step_clear when both upgrades purchased (was shadowed before).
+    if "multi_step_clear" in ids and (
+        "variable_in_denom" not in ids or ctx.rng.random() < 0.55
+    ):
+        d_add = int(sample_integerish(ctx, exclude_zero=False).value)
+        if abs(d_add) > 8:
+            d_add = 3 if d_add > 0 else -3
+        # a/b = (x+d)/c → x = (a c)/b - d
+        sol = Fraction(a * c, b) - d_add
+        inner = f"{var.latex} + {d_add}" if d_add >= 0 else f"{var.latex} - {abs(d_add)}"
+        latex = f"\\frac{{{a}}}{{{b}}} = \\frac{{{inner}}}{{{c}}}"
+        text = f"{a}/{b} = ({var.name}+{d_add})/{c}"
+        used = {"multi_step_clear"}
+        if meaningful_cancel_steps(math.gcd(a, b)) >= 2:
+            used.add("meaningful_cancel")
+    elif "variable_in_denom" in ids:
         # a/x = b/c  → x = a c / b
+        # Rebuild so left numerator carries inflate effort.
         sol = Fraction(a * c, b)
         latex = f"\\frac{{{a}}}{{{var.latex}}} = \\frac{{{b}}}{{{c}}}"
         text = f"{a}/{var.name} = {b}/{c}"
-    elif "multi_step_clear" in ids:
-        # (a)/(b) = (x+d)/c → cross multiply
-        d = int(sample_integerish(ctx, exclude_zero=False).value)
-        # a/b = (x+d)/c → a c = b(x+d) → x = (a c)/b - d
-        sol = Fraction(a * c, b) - d
-        inner = f"{var.latex} + {d}" if d >= 0 else f"{var.latex} - {abs(d)}"
-        latex = f"\\frac{{{a}}}{{{b}}} = \\frac{{{inner}}}{{{c}}}"
-        text = f"{a}/{b} = ({var.name}+{d})/{c}"
+        used = {"variable_in_denom"}
+        if meaningful_cancel_steps(math.gcd(a, b)) >= 2:
+            used.add("meaningful_cancel")
     else:
         # a/b = x/c → x = a c / b
         sol = Fraction(a * c, b)
         latex = f"\\frac{{{a}}}{{{b}}} = \\frac{{{var.latex}}}{{{c}}}"
         text = f"{a}/{b} = {var.name}/{c}"
+        used = set()
+        if meaningful_cancel_steps(math.gcd(a, b)) >= 1:
+            used.add("meaningful_cancel")
 
     return ProportionEquation(
         latex=latex,
@@ -117,7 +150,7 @@ def _build_prop(ctx: PrimitiveContext, ids: set[str], eff: float) -> ProportionE
         solution=sol,
         var_latex=var.latex,
         var_name=var.name,
-        upgrades=tuple(sorted(ids)),
+        upgrades=tuple(sorted(used | (ids & {"variable_in_denom", "multi_step_clear"}))),
         effective_d=eff,
     )
 

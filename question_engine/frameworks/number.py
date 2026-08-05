@@ -226,11 +226,52 @@ def _sample_equivalent_rate_pair(settings: dict) -> tuple[int, int, int, int]:
     return total1, q1, total2, q2
 
 
+def strip_place_value_tens(n: int) -> int:
+    """Remove factors of 10 (paired 2×5) from ``n``.
+
+    Trailing-zero / place-value ÷10ⁿ cancellations are free effort: ``100`` and
+    ``500`` strip to ``1``, while ``24`` stays ``24`` and ``20`` strips to ``2``.
+    """
+    n = abs(int(n))
+    if n <= 1:
+        return n
+    while n % 10 == 0:
+        n //= 10
+    return n
+
+
+def prime_omega(n: int) -> int:
+    """Total number of prime factors of ``n`` counted with multiplicity (Ω)."""
+    n = abs(int(n))
+    if n <= 1:
+        return 0
+    count = 0
+    x = n
+    p = 2
+    while p * p <= x:
+        while x % p == 0:
+            count += 1
+            x //= p
+        p += 1 if p == 2 else 2
+    if x > 1:
+        count += 1
+    return count
+
+
+def meaningful_cancel_steps(n: int) -> int:
+    """Count real cancel steps: Ω after stripping place-value ÷10ⁿ factors.
+
+    Examples: ``1000`` → 0, ``20`` → 1 (leftover ÷2), ``24`` → 4, ``12`` → 3.
+    """
+    return prime_omega(strip_place_value_tens(n))
+
+
 def continuous_ratio_inflate_max(settings: dict) -> int | None:
     """Max common factor ``k`` for inflating a simplified core ratio.
 
     When continuous ``difficulty`` is set: D≈0 → k=1 (already simplified),
     D≈10 → tens-ish GCF budget, D≈40 → large composite inflate factors.
+    Growth is sized so *meaningful* cancel steps (not bare ×10ⁿ) can ramp.
     """
     if "difficulty" not in settings or settings["difficulty"] is None:
         return None
@@ -238,7 +279,8 @@ def continuous_ratio_inflate_max(settings: dict) -> int | None:
 
     d = max(0.0, settings_difficulty(settings, default=0.0))
     # Polynomial growth — no soft asymptote (same spirit as continuous_abs_max).
-    hi = int(1 + 0.4 * d + 0.02 * d * d)
+    # Slightly steeper than before so D≈25 can host multi-prime non-10ⁿ GCFs.
+    hi = int(1 + 0.55 * d + 0.028 * d * d)
     return max(1, hi)
 
 
@@ -283,39 +325,115 @@ def _sample_coprime_ratio_core(part_hi: int) -> tuple[int, int]:
     return 2, 3
 
 
+def _target_meaningful_cancel_steps(d: float) -> int:
+    """Target Ω(strip_place_value_tens(k)) from continuous difficulty.
+
+    Anchors (intro-ratios simplify path): D≈0 → 0, D≈5 → 1, D≈10 → 2,
+    D≈15 → 3, D≈20 → 4, D≈25 → 5+. Pure ×10ⁿ GCFs never satisfy mid/high targets.
+    """
+    d = max(0.0, float(d))
+    if d < 2.5:
+        return 0
+    if d < 7.0:
+        return 1
+    if d < 12.0:
+        return 2
+    if d < 17.0:
+        return 3
+    if d < 22.0:
+        return 4
+    return max(5, int(4 + (d - 22) / 3))
+
+
+def _build_k_with_meaningful_steps(target_steps: int, k_max: int, *, min_k: int = 1) -> int:
+    """Build inflate ``k ≤ k_max`` whose *meaningful* cancel steps ≈ ``target_steps``.
+
+    Prefer non-place-value primes (3, 7, leftover 2s) so ``500:1000``-style free
+    ÷10ⁿ cancels are rare at mid/high D. May optionally multiply by 10ⁿ *after*
+    the meaningful core (still free steps) when budget allows.
+    """
+    k_max = max(1, int(k_max))
+    min_k = max(1, min(int(min_k), k_max))
+    target_steps = max(0, int(target_steps))
+    if target_steps <= 0:
+        return 1 if min_k <= 1 else min(min_k, k_max)
+
+    # Primes that always add meaningful work (5 alone is fine; 2×5 pairs strip).
+    work_primes = (3, 3, 7, 2, 2, 3, 11, 5, 13, 2, 7)
+    best = min_k
+    best_dist = 10**9
+    for _ in range(48):
+        k = 1
+        steps_built = 0
+        # Build meaningful core first.
+        guard = 0
+        while steps_built < target_steps and guard < 12:
+            guard += 1
+            candidates = [p for p in work_primes if k * p <= k_max]
+            if not candidates:
+                break
+            # Avoid closing a free ×10 when we still need meaningful steps:
+            # if k is divisible by 2 but not 5, prefer not picking 5 (and vice versa)
+            # unless we have no other option — leftover 2 or 5 still counts.
+            prefer = [
+                p
+                for p in candidates
+                if not (
+                    (k % 2 == 0 and k % 5 != 0 and p == 5)
+                    or (k % 5 == 0 and k % 2 != 0 and p == 2)
+                )
+            ]
+            p = random.choice(prefer or candidates)
+            k *= p
+            steps_built = meaningful_cancel_steps(k)
+        if k < min_k:
+            continue
+        # Optional free trailing ×10 when it still fits (does not change steps).
+        while k * 10 <= k_max and random.random() < 0.25:
+            k *= 10
+        dist = abs(meaningful_cancel_steps(k) - target_steps)
+        if dist < best_dist or (dist == best_dist and k >= best):
+            best = k
+            best_dist = dist
+            if dist == 0:
+                break
+    if best_dist < 10**9:
+        return min(max(best, min_k), k_max)
+    # Fallback: product of 3s toward target.
+    k = 1
+    for _ in range(target_steps):
+        if k * 3 <= k_max:
+            k *= 3
+        elif k * 2 <= k_max:
+            k *= 2
+        else:
+            break
+    return min(max(k, min_k), k_max)
+
+
 def _sample_ratio_inflate_k(d: float, k_max: int, *, min_k: int = 1) -> int:
-    """Common factor ``k``; prefers already-simple at low D, composites at high D.
+    """Common factor ``k``; prefers already-simple at low D, *meaningful* composites at high D.
 
     ``min_k=1`` (ratios): often already-simplified at low D.
     ``min_k=2`` (simplify-fractions): always something to cancel; low D uses 2 or 3.
+
+    Place-value-only GCFs (10, 100, 1000, …) are avoided when the D target asks
+    for real cancel steps — ``500:1000`` stays easy; ``24:136`` is harder.
     """
     k_max = max(1, int(k_max))
     min_k = max(1, min(int(min_k), k_max))
     if k_max <= 1:
         return 1
-    if d < 2.5:
+    target = _target_meaningful_cancel_steps(d)
+    if target <= 0:
         if min_k <= 1:
             return 1 if random.random() < 0.85 else min(2, k_max)
         pool = [k for k in (2, 3) if min_k <= k <= k_max]
         return random.choice(pool) if pool else min_k
-    if d < 8:
-        if min_k >= 2:
-            hi = max(min_k, min(k_max, 12))
-            return random.randint(min_k, hi)
-        return random.randint(1, max(1, min(k_max, 4)))
-    # Product of small primes → multi-step cancel (e.g. 12, 18, 24, 36).
-    primes = (2, 2, 3, 3, 5, 5, 7)
-    k = 1
-    for _ in range(4 if d >= 20 else 3):
-        p = random.choice(primes)
-        if k * p <= k_max:
-            k *= p
-    if k < min_k:
-        k = random.randint(min_k, k_max)
-    floor = max(min_k, int(k_max * 0.35)) if d >= 15 else min_k
-    if d >= 15 and k < floor:
-        k = random.randint(floor, k_max)
-    return min(max(k, min_k), k_max)
+    # Soft jitter ±1 so sheets aren't lockstep identical.
+    if target >= 2 and random.random() < 0.35:
+        target = max(1, target + random.choice([-1, 0, 1]))
+    return _build_k_with_meaningful_steps(target, k_max, min_k=min_k)
 
 
 def continuous_simplify_frac_core_max(settings: dict) -> int | None:
@@ -387,7 +505,9 @@ def _sample_shown_ratio_parts(settings: dict) -> tuple[int, int]:
     d = max(0.0, settings_difficulty(settings, default=0.0))
     core_hi = continuous_ratio_core_max(settings) or 5
     core_a, core_b = _sample_coprime_ratio_core(core_hi)
-    k = _sample_ratio_inflate_k(d, k_max)
+    # Once past the intro band, require a real inflate so simplify items have work.
+    min_k = 2 if d >= 5.0 else 1
+    k = _sample_ratio_inflate_k(d, k_max, min_k=min_k)
     return core_a * k, core_b * k
 
 
@@ -451,6 +571,14 @@ def _sample_equivalent_ratio_missing(settings: dict) -> tuple[int, int, int, int
 
 
 def _sci_exp_bounds(settings: dict) -> tuple[int, int]:
+    continuous = _sci_continuous_knobs(settings)
+    if continuous is not None:
+        lo = int(continuous["sci_exp_min"])
+        hi = int(continuous["sci_exp_max"])
+        if not bool(continuous.get("allow_negative_exponents", True)):
+            lo = max(0, lo)
+            hi = max(lo, hi)
+        return lo, hi
     lo, hi = _int_range(settings, "sci_exp_min", "sci_exp_max", lo_default=-8, hi_default=8)
     if not bool(settings.get("allow_negative_exponents", True)):
         lo = max(0, lo)
@@ -459,7 +587,101 @@ def _sci_exp_bounds(settings: dict) -> tuple[int, int]:
 
 
 def _sci_mantissa_decimals(settings: dict) -> int:
+    continuous = _sci_continuous_knobs(settings)
+    if continuous is not None:
+        return max(1, min(3, int(continuous["mantissa_decimals"])))
     return max(1, min(3, int(settings.get("mantissa_decimals", 1))))
+
+
+def _sci_continuous_knobs(settings: dict) -> dict[str, Any] | None:
+    """Map continuous difficulty → scientific-notation knobs (EMH ladder).
+
+    Returns None when continuous ``difficulty`` is absent so EMH presets win.
+    """
+    if "difficulty" not in settings or settings["difficulty"] is None:
+        return None
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+    d = max(0.0, settings_difficulty(settings, default=0.0))
+    if d < 4.0:
+        return {
+            "sci_exp_min": 1,
+            "sci_exp_max": max(2, int(2 + d * 0.5)),
+            "allow_negative_exponents": False,
+            "mantissa_decimals": 1,
+            "sci_write_direction": "to_sci",
+            "sci_operation": "multiply",
+            "require_normalization": False,
+            "sci_exp_diff_min": 0,
+            "sci_exp_diff_max": 0,
+            "allow_magnitude_compare": False,
+        }
+    if d < 10.0:
+        span = int(4 + d * 0.4)
+        return {
+            "sci_exp_min": -min(4, span // 2),
+            "sci_exp_max": min(8, span),
+            "allow_negative_exponents": True,
+            "mantissa_decimals": 2 if d >= 6 else 1,
+            "sci_write_direction": "both",
+            "sci_operation": "mixed",
+            "require_normalization": d >= 7.0,
+            "sci_exp_diff_min": 0 if d < 7 else 1,
+            "sci_exp_diff_max": 1 if d < 8 else 2,
+            "allow_magnitude_compare": False,
+        }
+    if d < 18.0:
+        return {
+            "sci_exp_min": -8,
+            "sci_exp_max": 8,
+            "allow_negative_exponents": True,
+            "mantissa_decimals": 2 if d < 14 else 3,
+            "sci_write_direction": "both",
+            "sci_operation": "mixed",
+            "require_normalization": True,
+            "sci_exp_diff_min": 2,
+            "sci_exp_diff_max": 4,
+            "allow_magnitude_compare": d >= 14.0,
+        }
+    return {
+        "sci_exp_min": -10 - int(max(0.0, d - 18) // 4),
+        "sci_exp_max": 10 + int(max(0.0, d - 18) // 4),
+        "allow_negative_exponents": True,
+        "mantissa_decimals": 3,
+        "sci_write_direction": "both",
+        "sci_operation": "mixed",
+        "require_normalization": True,
+        "sci_exp_diff_min": 3,
+        "sci_exp_diff_max": 6,
+        "allow_magnitude_compare": True,
+    }
+
+
+def _apply_sci_continuous_settings(settings: dict) -> dict:
+    """Return settings with continuous-D sci knobs filled when applicable."""
+    continuous = _sci_continuous_knobs(settings)
+    if continuous is None:
+        return settings
+    out = dict(settings)
+    for key, value in continuous.items():
+        # Explicit caller overrides still win.
+        if key not in settings or settings.get(key) is None:
+            out[key] = value
+        elif key in {
+            "sci_exp_min",
+            "sci_exp_max",
+            "sci_exp_diff_min",
+            "sci_exp_diff_max",
+            "mantissa_decimals",
+            "allow_negative_exponents",
+            "require_normalization",
+            "allow_magnitude_compare",
+            "sci_write_direction",
+            "sci_operation",
+        }:
+            # Continuous D owns these when present (same pattern as ratio inflate).
+            out[key] = value
+    return out
 
 
 def _random_sci_mantissa(settings: dict) -> float:
@@ -511,6 +733,9 @@ def _ordinary_number_latex(mantissa: float, exponent: int) -> str:
 
 
 def _sci_exp_diff_bounds(settings: dict) -> tuple[int, int]:
+    continuous = _sci_continuous_knobs(settings)
+    if continuous is not None:
+        return int(continuous["sci_exp_diff_min"]), int(continuous["sci_exp_diff_max"])
     return _int_range(
         settings, "sci_exp_diff_min", "sci_exp_diff_max", lo_default=0, hi_default=0
     )
@@ -572,15 +797,99 @@ class RationalFramework(NumberFramework):
             return random.choice(["+", "-"])
         return self.operation
 
+    def _sample_effort_divide_pair(
+        self, settings: dict
+    ) -> tuple[int, int, int, int, Fraction]:
+        """Return unreduced ``(a_num, a_den, b_num, b_den)`` plus exact answer.
+
+        Shared inflate factors between (a_num,b_num) and (a_den,b_den) cancel when
+        rewriting as multiply-by-reciprocal. Place-value-only inflates stay free.
+        Surface fractions are intentionally unreduced so cancel work is visible.
+        """
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        d = max(0.0, settings_difficulty(settings, default=0.0))
+        allow_mixed = bool(settings.get("allow_mixed", False)) or d >= 14.0
+        target = _target_meaningful_cancel_steps(d)
+        t1 = target // 2
+        t2 = target - t1
+        k_budget = max(4, int(continuous_simplify_frac_inflate_max(settings) or 12))
+        k1 = _build_k_with_meaningful_steps(t1, k_budget, min_k=1 if t1 == 0 else 2)
+        k2 = _build_k_with_meaningful_steps(t2, k_budget, min_k=1 if t2 == 0 else 2)
+
+        core_hi = max(3, min(12, int(3 + d / 4)))
+        if d < 3.0:
+            pairs = (
+                (1, 2, 1, 4),
+                (1, 2, 1, 3),
+                (3, 4, 1, 4),
+                (1, 3, 1, 6),
+                (2, 3, 1, 3),
+                (1, 4, 1, 2),
+                (3, 5, 1, 5),
+                (1, 2, 1, 2),
+            )
+            a0, b0, c0, d0 = random.choice(pairs)
+            k1 = k2 = 1
+        else:
+            for _ in range(40):
+                a0 = random.randint(1, core_hi)
+                b0 = random.randint(2, max(3, core_hi))
+                c0 = random.randint(1, core_hi)
+                d0 = random.randint(2, max(3, core_hi))
+                if math.gcd(a0, b0) == 1 and math.gcd(c0, d0) == 1 and c0 != 0:
+                    break
+            else:
+                a0, b0, c0, d0 = 2, 3, 1, 4
+
+        if not allow_mixed:
+            if a0 >= b0:
+                a0, b0 = (b0 - 1 if b0 > 1 else 1), max(b0, a0 + 1)
+            if c0 >= d0:
+                c0, d0 = (d0 - 1 if d0 > 1 else 1), max(d0, c0 + 1)
+            a0 = max(1, a0)
+            c0 = max(1, c0)
+
+        a_num, a_den = a0 * k1, b0 * k2
+        b_num, b_den = c0 * k1, d0 * k2
+        if b_num == 0:
+            b_num = k1
+        answer = Fraction(a_num, a_den) / Fraction(b_num, b_den)
+        return a_num, a_den, b_num, b_den, answer
+
+    @staticmethod
+    def _raw_frac_latex(num: int, den: int) -> str:
+        if den < 0:
+            num, den = -num, -den
+        if den == 1:
+            return str(num)
+        if num < 0:
+            return f"-\\frac{{{abs(num)}}}{{{den}}}"
+        return f"\\frac{{{num}}}{{{den}}}"
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         params = number_params_from_settings(settings)
+        op = self._resolve_operation()
+        if op == "/" and "difficulty" in settings and settings["difficulty"] is not None:
+            a_num, a_den, b_num, b_den, result = self._sample_effort_divide_pair(settings)
+            a_tex = self._raw_frac_latex(a_num, a_den)
+            b_tex = self._raw_frac_latex(b_num, b_den)
+            notation = random.choice(allowed_division_notations(settings))
+            if notation == "complex_fraction":
+                prompt_latex = f"\\frac{{{a_tex}}}{{{b_tex}}}"
+            elif notation == "slash":
+                prompt_latex = f"\\left({a_tex}\\right) / \\left({b_tex}\\right)"
+            else:
+                prompt_latex = f"{a_tex} \\div {b_tex}"
+            prompt_text = f"{a_num}/{a_den} / {b_num}/{b_den}"
+            return prompt_latex, prompt_text, frac_latex(result)
+
         a = self._random_fraction(params)
         b = self._random_fraction(params)
-        if self.operation == "/":
+        if op == "/":
             while b == 0:
                 b = self._random_fraction(params)
 
-        op = self._resolve_operation()
         ops = {
             "+": lambda x, y: x + y,
             "-": lambda x, y: x - y,
@@ -711,10 +1020,12 @@ class PercentFramework(NumberFramework):
 
     def __init__(self, *, percent_change: bool = False):
         self.percent_change = percent_change
+        self._diagram_ctx: dict[str, object] | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from ..settings.enrichment import format_answer_value
 
+        self._diagram_ctx = None
         pct_lo, pct_hi = _int_range(
             settings, "percent_min", "percent_max", lo_default=5, hi_default=75
         )
@@ -762,6 +1073,29 @@ class PercentFramework(NumberFramework):
             return prompt, f"From {original} to {new_value}", f"{answer_value}\\%"
 
         mode = random.choice(["percent_of", "find_percent", "find_whole"])
+        if "difficulty" in settings and settings["difficulty"] is not None:
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            d = max(0.0, settings_difficulty(settings, default=0.0))
+            # Effort ladder for formulas: which quantity is unknown + messier percents.
+            # D≈0–5: mostly "p% of n"; D≈5–15: mix find-% ; D≥15: more find-whole.
+            if d < 5.0:
+                mode = "percent_of" if random.random() < 0.75 else random.choice(
+                    ["percent_of", "find_percent"]
+                )
+            elif d < 15.0:
+                mode = random.choice(["percent_of", "find_percent", "find_percent", "find_whole"])
+            else:
+                mode = random.choice(["percent_of", "find_percent", "find_whole", "find_whole"])
+            # Continuous base growth beyond EMH caps.
+            base_hi = max(base_hi, int(40 + 4 * d + 0.15 * d * d))
+            base_lo = max(1, min(base_lo, max(10, base_hi // 8)))
+            if d >= 18.0:
+                allow_decimal_pct = True
+                prefer_exact = False
+                prefer_nice = False
+            elif d >= 10.0:
+                prefer_nice = False
         percent = _pick_percent_value(
             settings,
             pct_lo=pct_lo,
@@ -791,6 +1125,7 @@ class PercentFramework(NumberFramework):
                 {**settings, "round_answers_to_whole": round_whole},
                 result_value,
             )
+            self._diagram_ctx = {"percent": int(percent) if float(percent) == int(percent) else float(percent)}
             return prompt, f"What is {percent}% of {base}?", answer
 
         if mode == "find_percent":
@@ -810,6 +1145,7 @@ class PercentFramework(NumberFramework):
             _soft_fail_independent_percent(part, whole, percent)
             prompt = f"\\text{{{part} is what percent of {whole}?}}"
             pct_answer = _format_percent_answer(settings, percent, round_whole=False)
+            self._diagram_ctx = {"percent": int(percent) if float(percent) == int(percent) else float(percent)}
             return prompt, f"{part} is what percent of {whole}?", f"{pct_answer}\\%"
 
         # find_whole: choose percent + part so whole = part * 100 / percent is exact.
@@ -839,7 +1175,148 @@ class PercentFramework(NumberFramework):
             {**settings, "round_answers_to_whole": round_whole},
             result_value,
         )
+        self._diagram_ctx = {"percent": int(percent) if float(percent) == int(percent) else float(percent)}
         return prompt, f"{part} is {percent}% of what number?", answer
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, object]:
+        topic = str(settings.get("_topic_id") or "")
+        if "with_diagram" not in topic and not settings.get("attach_percent_diagram"):
+            return {}
+        ctx = self._diagram_ctx
+        if not ctx or ctx.get("percent") is None:
+            return {}
+        from ..diagrams.figure_families import sample_figure_from_settings
+        from ..diagrams.grade6_figures import (
+            percent_bar_svg,
+            percent_circle_svg,
+            percent_grid_svg,
+            percent_hundred_grid_svg,
+        )
+
+        pct = int(round(float(ctx["percent"])))
+        pct = max(0, min(100, pct))
+        family = sample_figure_from_settings("percent_shade", settings)
+        fig = str(family.params.get("figure") or "hundred_grid")
+        pattern = str(family.params.get("shade_pattern") or "row")
+        start = float(family.params.get("start_angle_deg") or -90)
+        blank_svg: str
+        shaded_svg: str
+        if fig in {"grid", "hundred_grid"}:
+            rows = 10 if fig == "hundred_grid" else int(family.params.get("rows") or 5)
+            cols = 10 if fig == "hundred_grid" else int(family.params.get("cols") or 10)
+            blank_svg = percent_grid_svg(pct, blank=True, rows=rows, cols=cols, shade_pattern=pattern)
+            shaded_svg = percent_grid_svg(pct, blank=False, rows=rows, cols=cols, shade_pattern=pattern)
+            if fig == "hundred_grid":
+                blank_svg = percent_hundred_grid_svg(pct, blank=True, shade_pattern=pattern)
+                shaded_svg = percent_hundred_grid_svg(pct, blank=False, shade_pattern=pattern)
+        elif fig == "bar":
+            blank_svg = percent_bar_svg(pct, blank=True)
+            shaded_svg = percent_bar_svg(pct, blank=False)
+        else:
+            blank_svg = percent_circle_svg(pct, blank=True, start_angle_deg=start)
+            shaded_svg = percent_circle_svg(pct, blank=False, start_angle_deg=start)
+        meta = family.to_metadata_extras()
+        meta["diagram_svg"] = blank_svg
+        meta["answer_diagram_svg"] = shaded_svg
+        meta["diagram_spec"] = {"kind": "percent_shade", "percent": pct, **family.params}
+        meta["stimulus"] = {"kind": "percent_shade", "percent": pct}
+        return meta
+
+
+class FindingPercentsEquivalentFractionsFramework(NumberFramework):
+    """Write a fraction as a percent via equivalent fractions (denom → 100).
+
+    Effort is the work to reach a denominator of 100 (or 1000 for tenths of a
+    percent), not the size of the numerator alone. Place-value ×10ⁿ to 100 is
+    cheap; awkward factors (e.g. ×4 from 25, reduce-then-scale from 12/16) cost more.
+    """
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_continuous = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_continuous else 0.0
+
+        # Explicit denom banks by effort (scale-to-100 work), not magnitude.
+        # Each entry: (reduced_denom, scale_to_100_or_1000, percent_is_int)
+        if d < 4.0:
+            # ×1 / ×2 / ×5 / ×10 — trivial place-value or doubling
+            bank = (2, 4, 5, 10, 20, 50, 100)
+            force_unreduced = False
+            mode = "frac_to_pct"
+        elif d < 9.0:
+            # ×4 / ×5 from 25/20 — standard classroom
+            bank = (20, 25, 50, 4, 5)
+            force_unreduced = False
+            mode = "frac_to_pct" if random.random() < 0.7 else "pct_to_frac"
+        elif d < 14.0:
+            # Eighths → 12.5%; or mild unreduced
+            bank = (8, 40, 25, 16)
+            force_unreduced = random.random() < 0.45
+            mode = random.choice(["frac_to_pct", "frac_to_pct", "pct_to_frac"])
+        elif d < 20.0:
+            bank = (8, 16, 40, 80)
+            force_unreduced = True
+            mode = random.choice(["frac_to_pct", "pct_to_frac", "frac_to_pct"])
+        else:
+            # Hostile: reduce-then-scale with composite inflate + eighths/sixteenths
+            bank = (8, 16, 32, 40, 80)
+            force_unreduced = True
+            mode = random.choice(["frac_to_pct", "pct_to_frac"])
+
+        for _ in range(50):
+            den = random.choice(bank)
+            num = random.randint(1, max(1, den - 1))
+            g0 = math.gcd(num, den)
+            core_n, core_d = num // g0, den // g0
+            # Keep convertible to a terminating percent (denom | 100 or | 1000 after ×).
+            # core_d's prime factors only 2 and/or 5, or divides 100/1000 after inflate.
+            trial = Fraction(core_n, core_d)
+            pct = trial * 100
+            if pct.denominator not in (1, 2, 4, 5, 8, 10) and float(pct) != round(float(pct), 2):
+                continue
+            if force_unreduced:
+                k_max = continuous_ratio_inflate_max(settings) or 12
+                k = _sample_ratio_inflate_k(max(d, 8.0), k_max, min_k=2)
+                show_n, show_d = core_n * k, core_d * k
+            else:
+                show_n, show_d = core_n, core_d
+            frac = Fraction(core_n, core_d)
+            if pct.denominator == 1:
+                pct_val: int | float = int(pct)
+            else:
+                pct_val = round(float(pct), 2)
+                if abs(pct_val - round(pct_val)) < 1e-9:
+                    pct_val = int(round(pct_val))
+            break
+        else:
+            frac = Fraction(3, 8)
+            pct_val = 37.5
+            show_n, show_d = 3, 8
+
+        if mode == "pct_to_frac":
+            pct_latex = f"{pct_val:g}\\%" if isinstance(pct_val, float) else f"{pct_val}\\%"
+            prompt = (
+                f"\\text{{Write }} {pct_latex} \\text{{ as a fraction in simplest form "
+                f"(use an equivalent fraction with denominator 100).}}"
+            )
+            return prompt, f"{pct_val}% to fraction", frac_latex(frac)
+
+        # Keep surface unreduced when we inflated (Fraction() would cancel).
+        show_latex = f"\\frac{{{show_n}}}{{{show_d}}}"
+        prompt = (
+            f"\\text{{Write }} {show_latex} \\text{{ as a percent by finding an "
+            f"equivalent fraction with denominator 100.}}"
+        )
+        pct_latex = f"{pct_val:g}\\%" if isinstance(pct_val, float) else f"{pct_val}\\%"
+        return prompt, f"{show_n}/{show_d} to percent", pct_latex
 
 
 class RatioFramework(NumberFramework):
@@ -871,12 +1348,20 @@ class RatioFramework(NumberFramework):
             from question_engine.frameworks.difficulty_budget import settings_difficulty
 
             d = max(0.0, settings_difficulty(settings, default=0.0))
-            # Hardness is simplification: prefer simplest-form asks when unreduced
-            # or once D leaves the introductory band.
-            if g > 1 or d >= 6:
-                form = "fraction" if random.random() < 0.8 else "word"
+            # Mode split so write-as-given cannot fake high D:
+            #   D≈0–3: mostly write the given ratio (effort ~0–2)
+            #   D≈3–8: mostly simplify; rare write-as-given
+            #   D≥8: always simplify (meaningful cancel steps carry the ladder)
+            if d < 3.0:
+                form = "word" if random.random() < 0.75 else "fraction"
+            elif d < 8.0:
+                form = "fraction" if random.random() < 0.85 else "word"
             else:
-                form = random.choice(["word", "fraction"])
+                form = "fraction"
+            # At mid D, if we somehow landed on write-as-given with a hard GCF,
+            # still ask simplify — high inflate-k must not appear as freebies.
+            if form == "word" and meaningful_cancel_steps(g) >= 2 and d >= 5.0:
+                form = "fraction"
         else:
             form = random.choice(["word", "fraction"])
 
@@ -893,6 +1378,341 @@ class RatioFramework(NumberFramework):
             )
             answer = frac_latex(Fraction(a, b))
         return prompt, f"ratio {a} to {b}", answer
+
+
+class PartPartWholeRatioFramework(NumberFramework):
+    """Part–part and part–whole ratio prompts (not a simplify-ratio stand-in)."""
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_continuous = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_continuous else 0.0
+
+        # Parts: factors-first when continuous D is on.
+        if has_continuous:
+            k_max = continuous_ratio_inflate_max(settings) or 1
+            core_hi = continuous_ratio_core_max(settings) or 5
+            core_a, core_b = _sample_coprime_ratio_core(core_hi)
+            # Low D: already-reduced small parts. Higher D: inflate for messier totals.
+            if d < 4.0:
+                k = 1
+            else:
+                k = _sample_ratio_inflate_k(d, k_max, min_k=1)
+            part_a, part_b = core_a * k, core_b * k
+        else:
+            lo, hi = _int_range(
+                settings, "ratio_part_min", "ratio_part_max", lo_default=2, hi_default=12
+            )
+            part_a = random.randint(lo, hi)
+            part_b = random.randint(lo, hi)
+            while part_b == part_a:
+                part_b = random.randint(lo, hi)
+
+        whole = part_a + part_b
+        context = random.choice(["marbles", "apples", "books", "stickers", "students"])
+        color_a = random.choice(["red", "blue", "green"])
+        color_b = random.choice(["yellow", "orange", "purple"])
+        while color_b == color_a:
+            color_b = random.choice(["yellow", "orange", "purple"])
+
+        # Task ladder by D — effort is *which ratio* and whether reduction is needed,
+        # not raw part size alone.
+        #   D≈0–5: part:part from given parts (write as given / maybe reduce at mid)
+        #   D≈5–12: part:whole (or whole:part)
+        #   D≈12+: missing-part from whole + ratio, or three-way ask, or reduce first
+        if d < 5.0:
+            mode = "part_part"
+        elif d < 12.0:
+            mode = random.choice(["part_whole", "part_whole", "whole_part", "part_part"])
+        elif d < 18.0:
+            mode = random.choice(
+                ["part_whole", "whole_part", "missing_part", "missing_part", "both"]
+            )
+        else:
+            # High D: always multi-ask or missing-part with inflated parts
+            mode = random.choice(["missing_part", "missing_part", "both", "both"])
+
+        if mode == "part_part":
+            prompt = (
+                f"\\text{{There are {part_a} {color_a} {context} and {part_b} {color_b} "
+                f"{context}. Write the ratio of {color_a} to {color_b}"
+            )
+            if d >= 6.0 and math.gcd(part_a, part_b) > 1:
+                prompt += " in simplest form.}"
+                g = math.gcd(part_a, part_b)
+                answer = f"{part_a // g}:{part_b // g}"
+            else:
+                prompt += ".}"
+                answer = f"{part_a}:{part_b}"
+            return prompt, f"part:part {part_a}:{part_b}", answer
+
+        if mode == "part_whole":
+            which = random.choice([("a", part_a, color_a), ("b", part_b, color_b)])
+            prompt = (
+                f"\\text{{There are {part_a} {color_a} {context} and {part_b} {color_b} "
+                f"{context}. Write the ratio of {which[2]} {context} to all {context}"
+            )
+            num, den = which[1], whole
+            if d >= 8.0 and math.gcd(num, den) > 1:
+                prompt += " in simplest form.}"
+                g = math.gcd(num, den)
+                answer = f"{num // g}:{den // g}"
+            else:
+                prompt += ".}"
+                answer = f"{num}:{den}"
+            return prompt, f"part:whole {num}:{den}", answer
+
+        if mode == "whole_part":
+            which = random.choice([("a", part_a, color_a), ("b", part_b, color_b)])
+            prompt = (
+                f"\\text{{There are {part_a} {color_a} {context} and {part_b} {color_b} "
+                f"{context}. Write the ratio of all {context} to {which[2]} {context}"
+            )
+            num, den = whole, which[1]
+            if d >= 8.0 and math.gcd(num, den) > 1:
+                prompt += " in simplest form.}"
+                g = math.gcd(num, den)
+                answer = f"{num // g}:{den // g}"
+            else:
+                prompt += ".}"
+                answer = f"{num}:{den}"
+            return prompt, f"whole:part {num}:{den}", answer
+
+        if mode == "both":
+            # Two answers: part:part and part:whole for the first color.
+            prompt = (
+                f"\\text{{There are {part_a} {color_a} {context} and {part_b} {color_b} "
+                f"{context}. Write the ratio of {color_a} to {color_b}, and the ratio of "
+                f"{color_a} to all {context}, both in simplest form.}}"
+            )
+            g1 = math.gcd(part_a, part_b)
+            g2 = math.gcd(part_a, whole)
+            answer = f"{part_a // g1}:{part_b // g1}, {part_a // g2}:{whole // g2}"
+            return prompt, "part:part and part:whole", answer
+
+        # missing_part: given whole and simplified ratio, find one part.
+        g = math.gcd(part_a, part_b)
+        ra, rb = part_a // g, part_b // g
+        ask_a = random.choice([True, False])
+        if ask_a:
+            prompt = (
+                f"\\text{{A collection of {whole} {context} is split in the ratio "
+                f"{ra}:{rb} ({color_a} to {color_b}). How many are {color_a}?}}"
+            )
+            answer = str(part_a)
+        else:
+            prompt = (
+                f"\\text{{A collection of {whole} {context} is split in the ratio "
+                f"{ra}:{rb} ({color_a} to {color_b}). How many are {color_b}?}}"
+            )
+            answer = str(part_b)
+        return prompt, f"missing part from {whole} at {ra}:{rb}", answer
+
+
+def _ratio_compare_max_rel_diff(d: float) -> float:
+    """Max relative |v1−v2|/max(v1,v2) for comparing-ratios pairs.
+
+    Far at low D (easy to tell apart); tight near-ties at high D.
+    Anchors: D≈5 → ~0.37, D≈15 → ~0.17, D≈25 → ~0.07.
+    """
+    d = max(0.0, float(d))
+    return max(0.04, 0.55 * math.exp(-0.08 * d))
+
+
+def _ratio_rel_diff(v1: Fraction, v2: Fraction) -> float:
+    denom = max(abs(float(v1)), abs(float(v2)), 1e-9)
+    return abs(float(v1 - v2)) / denom
+
+
+def _sample_nearby_coprime_core(
+    ca: int, cb: int, core_hi: int, max_rel: float
+) -> tuple[int, int] | None:
+    """Find a distinct simplified core near ``ca:cb`` within ``max_rel``."""
+    core_hi = max(3, int(core_hi))
+    v1 = Fraction(ca, cb)
+    pool: list[tuple[int, int, float]] = []
+    for a in range(1, core_hi + 1):
+        for b in range(1, core_hi + 1):
+            if (a, b) == (ca, cb) or math.gcd(a, b) != 1:
+                continue
+            v2 = Fraction(a, b)
+            if v2 == v1:
+                continue
+            rel = _ratio_rel_diff(v1, v2)
+            if 1e-12 < rel <= max_rel:
+                pool.append((a, b, rel))
+    if not pool:
+        return None
+    # Prefer the closer half so high-D budgets land as near-ties.
+    pool.sort(key=lambda t: t[2])
+    half = pool[: max(1, (len(pool) + 1) // 2)]
+    a2, b2, _ = random.choice(half)
+    return a2, b2
+
+
+def _inflate_ratio_core(ca: int, cb: int, d: float, k_max: int, *, min_k: int) -> tuple[int, int]:
+    """Apply factors-first inflate-k (meaningful cancel steps grow with D)."""
+    if d < 4.0:
+        k = 1 if min_k <= 1 else _sample_ratio_inflate_k(d, k_max, min_k=min_k)
+    else:
+        k = _sample_ratio_inflate_k(d, k_max, min_k=min_k)
+    return ca * k, cb * k
+
+
+class ComparingRatiosFramework(NumberFramework):
+    """Compare two ratios (which is greater / equal) — not missing-value stand-in.
+
+    Continuous difficulty ramps two axes:
+      1. Closeness — relative unit-rate gap shrinks with D (harder judgment)
+      2. Simplification — inflate-k gains meaningful (non-10ⁿ) cancel steps
+    """
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_continuous = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_continuous else 0.0
+
+        def _legacy_pair() -> tuple[int, int, int, int]:
+            lo, hi = _int_range(
+                settings, "ratio_part_min", "ratio_part_max", lo_default=2, hi_default=12
+            )
+            a1, b1 = random.randint(lo, hi), random.randint(lo, hi)
+            if random.random() < 0.5:
+                a2 = a1 + random.choice([-2, -1, 1, 2])
+                while a2 <= 0:
+                    a2 = a1 + random.choice([1, 2, 3])
+                b2 = b1
+            else:
+                a2 = a1
+                b2 = b1 + random.choice([-2, -1, 1, 2])
+                while b2 <= 0:
+                    b2 = b1 + random.choice([1, 2, 3])
+            return a1, b1, a2, b2
+
+        def _same_part_pair(a1: int, b1: int) -> tuple[int, int]:
+            # Easy: shared part → direct compare; keep a clear gap.
+            if random.random() < 0.5:
+                delta = random.choice([-3, -2, -1, 1, 2, 3]) if d >= 4.0 else random.choice(
+                    [-2, -1, 1, 2]
+                )
+                a2 = a1 + delta
+                while a2 <= 0:
+                    a2 = a1 + random.choice([1, 2, 3])
+                return a2, b1
+            delta = random.choice([-3, -2, -1, 1, 2, 3]) if d >= 4.0 else random.choice(
+                [-2, -1, 1, 2]
+            )
+            b2 = b1 + delta
+            while b2 <= 0:
+                b2 = b1 + random.choice([1, 2, 3])
+            return a1, b2
+
+        if not has_continuous:
+            a1, b1, a2, b2 = _legacy_pair()
+            v1, v2 = Fraction(a1, b1), Fraction(a2, b2)
+        else:
+            k_max = continuous_ratio_inflate_max(settings) or 1
+            core_hi = continuous_ratio_core_max(settings) or 5
+            # High D: both sides must be unreduced (min_k≥2). Mid: allow k=1 sometimes.
+            if d >= 14.0:
+                min_k = 2
+            elif d >= 8.0:
+                min_k = 2 if random.random() < 0.65 else 1
+            else:
+                min_k = 1
+            max_rel = _ratio_compare_max_rel_diff(d)
+
+            a1 = b1 = a2 = b2 = 2
+            v1 = v2 = Fraction(2, 3)
+            for _ in range(80):
+                if d < 6.0:
+                    # Easy: same first/second part, small/light inflate, clearly different.
+                    ca, cb = _sample_coprime_ratio_core(min(core_hi, 6))
+                    a1, b1 = _inflate_ratio_core(ca, cb, d, k_max, min_k=1)
+                    a2, b2 = _same_part_pair(a1, b1)
+                else:
+                    # Mid/high: independent cores forced close in unit rate, then inflate.
+                    # Widen core search slightly so near-ties exist under tight budgets.
+                    search_hi = max(core_hi, int(6 + 0.35 * d))
+                    ca, cb = _sample_coprime_ratio_core(core_hi)
+                    nearby = _sample_nearby_coprime_core(ca, cb, search_hi, max_rel)
+                    if nearby is None:
+                        # Loosen once, then fall back to a classic close pair.
+                        nearby = _sample_nearby_coprime_core(
+                            ca, cb, max(search_hi, 12), max_rel * 1.4
+                        )
+                    if nearby is None:
+                        ca, cb, ca2, cb2 = 2, 3, 3, 4
+                    else:
+                        ca2, cb2 = nearby
+                    a1, b1 = _inflate_ratio_core(ca, cb, d, k_max, min_k=min_k)
+                    a2, b2 = _inflate_ratio_core(ca2, cb2, d, k_max, min_k=min_k)
+
+                if (a1, b1) == (a2, b2):
+                    continue
+                # Mid/high: no shared part — direct compare would skip the hard work.
+                if d >= 6.0 and (a1 == a2 or b1 == b2):
+                    continue
+                v1, v2 = Fraction(a1, b1), Fraction(a2, b2)
+                if v1 == v2:
+                    # Occasional equals ok mid-band; rare at high D (near-ties teach more).
+                    if d >= 14.0 and random.random() < 0.85:
+                        continue
+                elif d >= 6.0 and _ratio_rel_diff(v1, v2) > max_rel:
+                    continue
+                # High D: require real cancel work on both GCDs (not bare ×10ⁿ).
+                if d >= 12.0:
+                    g1, g2 = math.gcd(a1, b1), math.gcd(a2, b2)
+                    if meaningful_cancel_steps(g1) < 1 or meaningful_cancel_steps(g2) < 1:
+                        continue
+                if d >= 18.0:
+                    g1, g2 = math.gcd(a1, b1), math.gcd(a2, b2)
+                    target = max(2, _target_meaningful_cancel_steps(d) - 1)
+                    if (
+                        meaningful_cancel_steps(g1) < target
+                        or meaningful_cancel_steps(g2) < target
+                    ):
+                        continue
+                break
+            else:
+                # Pedagogical near-tie fallback (unreduced).
+                a1, b1, a2, b2 = 8, 12, 9, 14
+                v1, v2 = Fraction(a1, b1), Fraction(a2, b2)
+
+        if v1 > v2:
+            winner = "first"
+            answer = f"{a1}:{b1}"
+        elif v2 > v1:
+            winner = "second"
+            answer = f"{a2}:{b2}"
+        else:
+            winner = "equal"
+            answer = "equal"
+
+        form = "colon"
+        if d >= 10.0 and random.random() < 0.45:
+            form = "fraction"
+
+        if form == "fraction":
+            left = f"\\frac{{{a1}}}{{{b1}}}"
+            right = f"\\frac{{{a2}}}{{{b2}}}"
+        else:
+            left = f"{a1}:{b1}"
+            right = f"{a2}:{b2}"
+
+        if winner == "equal":
+            prompt = (
+                f"\\text{{Compare }} {left} \\text{{ and }} {right}"
+                f"\\text{{. Are they equal, or is one greater?}}"
+            )
+        else:
+            prompt = (
+                f"\\text{{Which ratio is greater: }} {left} \\text{{ or }} {right}"
+                f"\\text{{?}}"
+            )
+        return prompt, f"compare {a1}:{b1} vs {a2}:{b2}", answer
 
 
 class UnitRateFramework(NumberFramework):
@@ -1472,21 +2292,22 @@ class ConvertingUnitsFramework(NumberFramework):
         from ..diagrams.grade6_figures import double_number_line_svg
 
         d = max(0.0, settings_difficulty(settings, default=0.0))
-        if d < 6:
+        if d < 5:
             pool = [c for c in _CONVERT_METRIC if c["band"] == "easy"]
             allow_partial = False
             max_ticks = 6
-        elif d < 14:
+        elif d < 10:
             pool = list(_CONVERT_METRIC)
             allow_partial = False
             max_ticks = 8
-        elif d < 24:
+        elif d < 16:
+            # Mix mid metric with some approximate customary
             pool = list(_CONVERT_METRIC) + list(_CONVERT_APPROX)
             allow_partial = True
             max_ticks = 8
         else:
             # Prefer messier approximate rates; keep some metric large-scale.
-            pool = list(_CONVERT_APPROX) + [
+            pool = list(_CONVERT_APPROX) + list(_CONVERT_APPROX) + [
                 c for c in _CONVERT_METRIC if c["band"] == "mid"
             ]
             allow_partial = True
@@ -1602,103 +2423,457 @@ def _exact_terminating_decimal(frac: Fraction) -> str:
 
 
 class DecimalArithmeticFramework(NumberFramework):
-    """Decimal addition, subtraction, multiplication, and division."""
+    """Decimal addition, subtraction, multiplication, and division.
 
-    def __init__(self, operation: str = "+"):
+    Continuous ``difficulty`` drives *effort* (places, alignment, regrouping,
+    product place-sum, divisor awkwardness) — not raw magnitude alone.
+    Place-value ×/÷10ⁿ shifts stay comparatively free.
+    """
+
+    def __init__(self, operation: str = "+", *, via_equivalent_fractions: bool = False):
         self.operation = operation
+        self.via_equivalent_fractions = via_equivalent_fractions
+        self._diagram_ctx: dict[str, object] | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        places = int(settings.get("decimal_places", 2))
-        allow_negative = bool(settings.get("allow_negative", False))
-        minimum = 0.1 if not allow_negative else -99.9
-        a_places = places
-        b_places = places
-        a = _random_decimal(places=places, minimum=minimum, maximum=99.9, allow_negative=allow_negative)
-        b = _random_decimal(places=places, minimum=minimum, maximum=99.9, allow_negative=allow_negative)
-        if self.operation == "-":
-            if not allow_negative:
-                while b > a:
-                    b = _random_decimal(places=places, minimum=0.1, maximum=float(a))
-            elif random.choice([True, False]):
-                while b > a:
-                    a, b = b, a
-        if self.operation == "*":
-            a, b, a_places, b_places = self._multiplication_factors(settings)
-        if self.operation == "/":
-            divisor = random.randint(2, 9)
-            quotient = _random_decimal(places=places, minimum=0.5, maximum=9.5)
-            a = (quotient * Decimal(divisor)).quantize(Decimal(10) ** -places)
-            b = Decimal(divisor)
-            b_places = 0
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
 
-        ops = {
-            "+": lambda x, y: x + y,
-            "-": lambda x, y: x - y,
-            "*": lambda x, y: x * y,
-            "/": lambda x, y: x / y,
+        self._diagram_ctx = None
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_cont else 0.0
+        places = _decimal_places_from_settings(settings, default=2)
+        int_max = _decimal_int_max_from_settings(settings, default=99)
+        allow_negative = bool(settings.get("allow_negative", False))
+        if has_cont:
+            # G6 decimal arithmetic: unlock signs only at high D (and only if allowed).
+            allow_negative = allow_negative and d >= 18.0
+
+        if self.operation in ("+", "-"):
+            return self._add_sub_prompt(
+                settings,
+                places=places,
+                int_max=int_max,
+                allow_negative=allow_negative,
+                d=d,
+                has_cont=has_cont,
+            )
+        if self.operation == "*":
+            return self._mul_prompt(
+                settings,
+                places=places,
+                int_max=int_max,
+                allow_negative=allow_negative,
+                d=d,
+                has_cont=has_cont,
+            )
+        return self._div_by_whole_prompt(
+            settings,
+            places=places,
+            int_max=int_max,
+            allow_negative=allow_negative,
+            d=d,
+            has_cont=has_cont,
+        )
+
+    def _add_sub_prompt(
+        self,
+        settings: dict,
+        *,
+        places: int,
+        int_max: int,
+        allow_negative: bool,
+        d: float,
+        has_cont: bool,
+    ) -> tuple[str, str, str | None]:
+        # Misaligned places: mid+ often pairs different fractional lengths.
+        if has_cont and d >= 6.0 and places >= 2 and random.random() < 0.55:
+            a_places = random.randint(1, places)
+            b_places = places if a_places < places else random.randint(1, max(1, places - 1))
+        else:
+            a_places = b_places = places
+
+        target_carries = 0
+        if has_cont:
+            if d >= 20:
+                target_carries = 2
+            elif d >= 12:
+                target_carries = 1
+            elif d >= 5:
+                target_carries = 1 if random.random() < 0.5 else 0
+
+        a = _sample_decimal_with_places(
+            places=a_places, int_max=int_max, allow_negative=False, force_fractional=True
+        )
+        b = _sample_decimal_with_places(
+            places=b_places, int_max=int_max, allow_negative=False, force_fractional=True
+        )
+
+        # Nudge toward regrouping targets for addition.
+        if self.operation == "+" and target_carries > 0:
+            for _ in range(30):
+                if _count_decimal_carries(a, b, places=max(a_places, b_places)) >= target_carries:
+                    break
+                b = _sample_decimal_with_places(
+                    places=b_places, int_max=int_max, allow_negative=False, force_fractional=True
+                )
+
+        if self.operation == "-":
+            if not allow_negative and b > a:
+                a, b = b, a
+            # Borrowing effort: prefer cases needing borrow at mid/high.
+            if has_cont and d >= 5.0:
+                want_borrows = 1 if d < 15 else 2
+                for _ in range(40):
+                    nb = 0
+                    scale = 10 ** max(a_places, b_places)
+                    ai, bi = int(a * scale), int(b * scale)
+                    if ai < bi:
+                        a, b = b, a
+                        ai, bi = bi, ai
+                    x, y = ai, bi
+                    for __ in range(max(a_places, b_places)):
+                        if (x % 10) < (y % 10):
+                            nb += 1
+                        x //= 10
+                        y //= 10
+                    if nb >= want_borrows:
+                        break
+                    a = _sample_decimal_with_places(
+                        places=a_places, int_max=int_max, allow_negative=False, force_fractional=True
+                    )
+                    b = _sample_decimal_with_places(
+                        places=b_places,
+                        int_max=max(1, min(int_max, int(a))),
+                        allow_negative=False,
+                        force_fractional=True,
+                    )
+                    if b > a:
+                        a, b = b, a
+            # High D: force 3–4 place minuend with shorter subtrahend (hard alignment).
+            if has_cont and d >= 18.0 and a_places < 3:
+                a_places = min(4, places)
+                a = _sample_decimal_with_places(
+                    places=a_places, int_max=int_max, allow_negative=False, force_fractional=True
+                )
+                if b > a:
+                    a, b = b, a
+
+        if allow_negative and random.random() < 0.4:
+            if random.random() < 0.5:
+                a = -a
+            else:
+                b = -b
+
+        result = a + b if self.operation == "+" else a - b
+        out_places = max(a_places, b_places)
+        latex_op = "+" if self.operation == "+" else "-"
+        a_s = _format_decimal(a, places=a_places)
+        b_s = _format_decimal(b, places=b_places)
+        prompt_latex = format_binop_expression(a_s, latex_op, b_s)
+        prompt_text = format_binop_expression(a_s, self.operation, b_s)
+        self._diagram_ctx = {
+            "kind": "add_sub",
+            "a": a_s,
+            "b": b_s,
+            "op": self.operation,
+            "a_val": float(a),
+            "b_val": float(b),
         }
-        result = ops[self.operation](a, b)
-        latex_op = {"+": "+", "-": "-", "*": "\\cdot", "/": "\\div"}[self.operation]
-        answer_places = a_places + b_places if self.operation == "*" else places
-        prompt_latex = format_binop_expression(
-            _format_decimal(a, places=a_places),
-            latex_op,
-            _format_decimal(b, places=b_places),
-        )
-        prompt_text = format_binop_expression(
-            _format_decimal(a, places=a_places),
-            self.operation,
-            _format_decimal(b, places=b_places),
-        )
+        return prompt_latex, prompt_text, _format_decimal(result, places=out_places)
+
+    def _mul_prompt(
+        self,
+        settings: dict,
+        *,
+        places: int,
+        int_max: int,
+        allow_negative: bool,
+        d: float,
+        has_cont: bool,
+    ) -> tuple[str, str, str | None]:
+        if self.via_equivalent_fractions or bool(
+            settings.get("decimal_multiply_via_fractions", False)
+        ):
+            a, b, a_places, b_places = self._equiv_frac_factors(settings, d=d, has_cont=has_cont)
+        else:
+            a, b, a_places, b_places = self._multiplication_factors(
+                settings, places=places, int_max=int_max, allow_negative=allow_negative, d=d, has_cont=has_cont
+            )
+        result = a * b
+        answer_places = a_places + b_places
+        a_s = _format_decimal(a, places=a_places)
+        b_s = _format_decimal(b, places=b_places)
+        prompt_latex = format_binop_expression(a_s, "\\cdot", b_s)
+        prompt_text = format_binop_expression(a_s, "*", b_s)
+        self._diagram_ctx = {
+            "kind": "mul",
+            "a": a_s,
+            "b": b_s,
+            "a_places": a_places,
+            "b_places": b_places,
+        }
         return prompt_latex, prompt_text, _format_decimal(result, places=answer_places)
 
+    def _div_by_whole_prompt(
+        self,
+        settings: dict,
+        *,
+        places: int,
+        int_max: int,
+        allow_negative: bool,
+        d: float,
+        has_cont: bool,
+    ) -> tuple[str, str, str | None]:
+        # Construct dividend = quotient × divisor so answer terminates cleanly.
+        if has_cont:
+            if d < 4:
+                divisor = random.choice((2, 4, 5))
+                q_places = 1
+            elif d < 8:
+                divisor = random.choice((2, 3, 4, 5))
+                q_places = 2
+            elif d < 13:
+                divisor = random.choice((3, 6, 7, 8, 9))
+                q_places = 2
+            elif d < 18:
+                divisor = random.choice((6, 7, 8, 9, 12, 15))
+                q_places = 3
+            else:
+                divisor = random.choice((7, 8, 9, 12, 15, 16, 24, 25, 32))
+                q_places = 4 if d >= 22 else 3
+        else:
+            divisor = random.randint(2, 9)
+            q_places = places
+
+        quot_int_max = max(2, min(int_max, 12 if not has_cont else max(4, int_max // 3)))
+        if has_cont and d >= 15:
+            quot_int_max = max(quot_int_max, min(int_max, 20 + int(d)))
+        quot = _sample_decimal_with_places(
+            places=q_places,
+            int_max=quot_int_max,
+            allow_negative=False,
+            force_fractional=q_places >= 1,
+        )
+        dividend = (quot * Decimal(divisor)).quantize(Decimal(10) ** -q_places)
+        if allow_negative and random.random() < 0.4:
+            if random.random() < 0.5:
+                dividend = -dividend
+            else:
+                divisor = -divisor
+        needed = _terminating_decimal_places(Fraction(dividend)) or q_places
+        a_places = max(q_places, needed)
+        result = Decimal(dividend) / Decimal(divisor)
+        prompt_latex = format_binop_expression(
+            _format_decimal(Decimal(dividend), places=a_places),
+            "\\div",
+            str(int(divisor)),
+        )
+        prompt_text = format_binop_expression(
+            _format_decimal(Decimal(dividend), places=a_places),
+            "/",
+            str(int(divisor)),
+        )
+        return prompt_latex, prompt_text, _format_decimal(result, places=q_places)
+
     def _multiplication_factors(
-        self, settings: dict
+        self,
+        settings: dict,
+        *,
+        places: int | None = None,
+        int_max: int | None = None,
+        allow_negative: bool | None = None,
+        d: float = 0.0,
+        has_cont: bool = False,
     ) -> tuple[Decimal, Decimal, int, int]:
         """Build multiplication factors shaped by difficulty settings.
 
         - whole_times_decimal: whole number × decimal (tenths when decimal_places=1)
         - otherwise both factors are decimals with 1..max_decimal_places places
         """
-        places = max(1, int(settings.get("decimal_places", 2)))
+        places = places if places is not None else max(1, int(settings.get("decimal_places", 2)))
         max_places = max(1, int(settings.get("max_decimal_places", places)))
-        allow_negative = bool(settings.get("allow_negative", False))
+        if has_cont:
+            max_places = places
+        allow_negative = (
+            bool(settings.get("allow_negative", False))
+            if allow_negative is None
+            else allow_negative
+        )
         whole_times = bool(settings.get("whole_times_decimal", False))
+        int_max = int_max if int_max is not None else 20
+        if has_cont:
+            # Continuous ladder overrides EMH whole_times flag.
+            whole_times = d < 5.0 or (d < 10.0 and random.random() < 0.35)
 
         def fractional_decimal(factor_places: int) -> Decimal:
-            while True:
-                value = _random_decimal(
-                    places=factor_places,
-                    minimum=0.1,
-                    maximum=9.9,
-                    allow_negative=False,
-                )
-                if value != value.to_integral_value():
-                    if allow_negative and random.choice([True, False]):
-                        value = -value
-                    return value
+            return _sample_decimal_with_places(
+                places=factor_places,
+                int_max=max(1, min(9, int_max)),
+                allow_negative=False,
+                force_fractional=True,
+            )
 
         if whole_times:
-            whole = Decimal(random.randint(2, 20))
+            whole = Decimal(random.randint(2, max(3, min(20, int_max))))
             decimal_places = min(places, max_places)
-            # Tenths-only easy items look like 7 × 0.3, not 17 × 7.5.
-            while True:
-                decimal = _random_decimal(
-                    places=decimal_places,
-                    minimum=0.1,
-                    maximum=0.9 if decimal_places == 1 else 9.9,
-                    allow_negative=False,
-                )
-                if decimal != decimal.to_integral_value():
-                    break
+            decimal = _sample_decimal_with_places(
+                places=decimal_places,
+                int_max=0 if decimal_places == 1 and d < 5 else min(9, int_max),
+                allow_negative=False,
+                force_fractional=True,
+            )
             if allow_negative and random.choice([True, False]):
                 whole = -whole
-            # Prefer whole × decimal (matches grade-6 presentation).
             return whole, decimal, 0, decimal_places
 
-        a_places = random.randint(1, max_places)
-        b_places = random.randint(1, max_places)
-        return fractional_decimal(a_places), fractional_decimal(b_places), a_places, b_places
+        # Product place-sum effort: prefer a_places + b_places ≈ target.
+        if has_cont:
+            target_sum = max(2, min(2 * max_places, 1 + int(d / 5)))
+            a_places = max(1, min(max_places, target_sum // 2))
+            b_places = max(1, min(max_places, target_sum - a_places))
+            if a_places + b_places < target_sum and max_places >= target_sum - a_places:
+                b_places = min(max_places, target_sum - a_places)
+        else:
+            a_places = random.randint(1, max_places)
+            b_places = random.randint(1, max_places)
+        a = fractional_decimal(a_places)
+        b = fractional_decimal(b_places)
+        if allow_negative and random.choice([True, False]):
+            a = -a
+        return a, b, a_places, b_places
+
+    def _equiv_frac_factors(
+        self, settings: dict, *, d: float, has_cont: bool
+    ) -> tuple[Decimal, Decimal, int, int]:
+        """Decimals whose fraction forms have meaningful cancel beyond ÷10ⁿ."""
+        if not has_cont:
+            d = 8.0
+        target = _target_meaningful_cancel_steps(d)
+        # Low D: pure tenths with no shared non-10 cancel (place-value method only).
+        if d < 3.0:
+            a = Decimal(random.choice(("0.2", "0.3", "0.4", "0.5", "0.6", "0.8")))
+            b = Decimal(random.choice(("0.2", "0.3", "0.4", "0.5", "0.6", "0.8")))
+            return a, b, 1, 1
+        if d < 7.0:
+            # Single small cancel (÷3) over tenths/hundredths.
+            k = random.choice((3, 3, 7))
+            p1, p2 = 1, 1 if random.random() < 0.6 else 2
+            c1 = random.choice((1, 2, 4))
+            c2 = random.choice((1, 2, 4))
+            a = (Decimal(c1 * k) / Decimal(10**p1)).quantize(Decimal(10) ** -p1)
+            b = (Decimal(c2 * k) / Decimal(10**p2)).quantize(Decimal(10) ** -p2)
+            return a, b, p1, p2
+
+        k_max = max(6, int(4 + 0.8 * d))
+        k = _build_k_with_meaningful_steps(max(1, target), k_max, min_k=2)
+        p1 = 1 if d < 12 else (2 if d < 18 else 3)
+        p2 = 1 if d < 10 else (2 if d < 20 else 3)
+        c1 = random.choice((1, 3, 7, 9, 11))
+        c2 = random.choice((1, 3, 7, 9, 13))
+        n1 = c1 * k
+        n2 = c2 * k
+        while n1 % 10 == 0 and p1 > 1:
+            n1 //= 10
+            p1 -= 1
+        while n2 % 10 == 0 and p2 > 1:
+            n2 //= 10
+            p2 -= 1
+        a = (Decimal(n1) / Decimal(10**p1)).quantize(Decimal(10) ** -p1)
+        b = (Decimal(n2) / Decimal(10**p2)).quantize(Decimal(10) ** -p2)
+        return a, b, p1, p2
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, object]:
+        topic = str(settings.get("_topic_id") or "")
+        wants_diagram = (
+            "with_diagram" in topic
+            or "area_diagram" in topic
+            or bool(settings.get("attach_decimal_diagram"))
+        )
+        ctx = self._diagram_ctx
+        if not wants_diagram or not ctx:
+            return {}
+        from ..diagrams.figure_families import sample_figure_from_settings
+        from ..diagrams.grade6_figures import (
+            area_model_svg,
+            decimal_hundredths_shade_svg,
+            decimal_place_value_svg,
+        )
+
+        if ctx.get("kind") == "mul":
+            family = sample_figure_from_settings("area_model", settings)
+            a_s = str(ctx["a"])
+            b_s = str(ctx["b"])
+            # Split second factor into ones + fractional part when possible.
+            try:
+                b_val = float(b_s)
+                whole = int(b_val)
+                frac = b_val - whole
+                if whole > 0 and frac > 0:
+                    right_a, right_b = str(whole), f"{frac:g}"
+                else:
+                    right_a, right_b = b_s, "0"
+            except ValueError:
+                right_a, right_b = b_s, "0"
+            split = str(family.params.get("split") or "vertical")
+            orient = str(family.params.get("orientation") or "standard")
+            svg = area_model_svg(a_s, right_a, right_b, split=split, orientation=orient)
+            meta = family.to_metadata_extras()
+            meta["diagram_svg"] = svg
+            meta["diagram_spec"] = {
+                "kind": "area_model",
+                **family.params,
+                "left": a_s,
+                "right_a": right_a,
+                "right_b": right_b,
+            }
+            return meta
+
+        family = sample_figure_from_settings(
+            "decimal_grid", settings, op=str(ctx.get("op") or "+")
+        )
+        style = str(family.params.get("style") or "place_value")
+        if style == "hundredths":
+            # Show hundredths shade for the first addend (visual magnitude).
+            svg = decimal_hundredths_shade_svg(
+                float(ctx.get("a_val") or 0),
+                blank=False,
+                shade_pattern=str(family.params.get("shade_pattern") or "row"),
+                title=f"{ctx['a']} (shaded hundredths)",
+            )
+        else:
+            svg = decimal_place_value_svg(
+                str(ctx["a"]),
+                str(ctx["b"]),
+                op=str(ctx.get("op") or "+"),
+                title="Place-value model",
+            )
+        meta = family.to_metadata_extras()
+        meta["diagram_svg"] = svg
+        meta["diagram_spec"] = {"kind": "decimal_grid", **family.params}
+        return meta
+
+
+def _needs_decimal_borrow(a: Decimal, b: Decimal, *, places: int) -> bool:
+    """True if subtracting b from a requires at least one fractional borrow."""
+    scale = 10**places
+    ai = int(abs(a) * scale)
+    bi = int(abs(b) * scale)
+    if ai <= bi:
+        return False
+    for _ in range(places):
+        da, db = ai % 10, bi % 10
+        if da < db:
+            return True
+        ai //= 10
+        bi //= 10
+    return False
 
 
 class WholeDivideToDecimalFramework(NumberFramework):
@@ -1708,23 +2883,43 @@ class WholeDivideToDecimalFramework(NumberFramework):
         1: (2, 4, 5, 10),
         2: (4, 5, 8, 10, 16, 20, 25, 40, 50),
         3: (8, 16, 20, 25, 40, 50, 80, 100, 125, 200),
+        4: (16, 32, 80, 125, 200, 250, 625),
     }
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        places = max(1, min(3, int(settings.get("decimal_places", 2))))
-        max_places = settings.get("max_decimal_places")
-        if max_places is not None:
-            places = max(1, min(places, int(max_places)))
-        num_max = max(4, int(settings.get("num_max", 50)))
-        dividend_hi = max(num_max, 10)
-        divisors = [d for d in self._DIVISORS_BY_PLACES[places] if d <= max(num_max, 10)]
-        if not divisors:
-            divisors = list(self._DIVISORS_BY_PLACES[places])
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
 
-        # Prefer quotients that use the full place budget on harder tiers.
-        prefer_exact_places = places >= 2
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_cont else 0.0
+        places = _decimal_places_from_settings(settings, default=2)
+        places = max(1, min(4, places))
+        if has_cont:
+            # Prefer exact place length at mid/high (awkward ÷8/÷16 vs free ÷2/÷5).
+            prefer_exact_places = d >= 8.0
+            cont = continuous_abs_max(settings, base=12, floor=8)
+            dividend_hi = max(10, cont or 50)
+            # Bias divisor pool toward awkward (non-place-value) at higher D.
+            awkward = (8, 16, 32, 40, 80, 125, 200, 250, 625)
+            base_pool = list(self._DIVISORS_BY_PLACES.get(places, self._DIVISORS_BY_PLACES[2]))
+            if d >= 15:
+                divisors = [x for x in awkward if x in base_pool or _terminating_decimal_places(Fraction(1, x)) == places]
+                if not divisors:
+                    divisors = [x for x in awkward if (_terminating_decimal_places(Fraction(1, x)) or 99) <= places]
+            elif d >= 8:
+                mixed = base_pool + [x for x in awkward if x <= max(base_pool)]
+                divisors = list(dict.fromkeys(mixed))
+            else:
+                # Easy: place-value friendly (2,4,5,10)
+                divisors = [x for x in (2, 4, 5, 10) if x in base_pool] or list(base_pool[:3])
+        else:
+            prefer_exact_places = places >= 2
+            num_max = max(4, int(settings.get("num_max", 50)))
+            dividend_hi = max(num_max, 10)
+            divisors = [d0 for d0 in self._DIVISORS_BY_PLACES.get(places, self._DIVISORS_BY_PLACES[2]) if d0 <= max(num_max, 10)]
+            if not divisors:
+                divisors = list(self._DIVISORS_BY_PLACES.get(places, self._DIVISORS_BY_PLACES[2]))
 
-        for _ in range(120):
+        for _ in range(140):
             divisor = random.choice(divisors)
             dividend = random.randint(1, dividend_hi)
             if dividend % divisor == 0:
@@ -1733,15 +2928,17 @@ class WholeDivideToDecimalFramework(NumberFramework):
             needed = _terminating_decimal_places(frac)
             if needed is None or needed < 1 or needed > places:
                 continue
-            if prefer_exact_places and needed < places and random.random() < 0.65:
+            if prefer_exact_places and needed < places and random.random() < 0.7:
+                continue
+            # At high D, skip pure place-value quotients (×2/×5 only).
+            if has_cont and d >= 12 and needed <= 1 and divisor in (2, 4, 5, 10) and random.random() < 0.8:
                 continue
             answer = _exact_terminating_decimal(frac)
             prompt_latex = f"{dividend} \\div {divisor}"
             return prompt_latex, f"{dividend} / {divisor}", answer
 
-        # Guaranteed terminating fallbacks by place budget.
-        fallbacks = {1: (5, 2), 2: (7, 4), 3: (3, 8)}
-        dividend, divisor = fallbacks[places]
+        fallbacks = {1: (5, 2), 2: (7, 4), 3: (3, 8), 4: (1, 16)}
+        dividend, divisor = fallbacks.get(places, (7, 4))
         answer = _exact_terminating_decimal(Fraction(dividend, divisor))
         return f"{dividend} \\div {divisor}", f"{dividend} / {divisor}", answer
 
@@ -2647,6 +3844,7 @@ class ScientificNotationFramework(NumberFramework):
         return prompt, "scientific notation add/subtract", _format_sci_latex(result_m, result_e)
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        settings = _apply_sci_continuous_settings(settings)
         if self.mode == "write":
             return self._write_prompt(settings)
         if self.mode == "operations":
@@ -2673,6 +3871,109 @@ def continuous_abs_max(
     # Polynomial growth — no soft asymptote.
     hi = int(base + 2.5 * d + 0.2 * d * d)
     return max(floor, hi)
+
+
+def continuous_decimal_places(settings: dict) -> int | None:
+    """Operand decimal places from continuous ``difficulty``.
+
+    Anchors: D≈0–4 → 1, D≈5–11 → 2, D≈12–19 → 3, D≥20 → 3–4.
+    Returns ``None`` when continuous difficulty is absent (use EMH presets).
+    """
+    if "difficulty" not in settings or settings["difficulty"] is None:
+        return None
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+    d = max(0.0, settings_difficulty(settings, default=0.0))
+    if d <= 4.0 + 1e-9:
+        return 1
+    if d <= 11.0 + 1e-9:
+        return 2
+    if d <= 17.0 + 1e-9:
+        return 3
+    # D≥18: often 4 places (mean-to-assign awkward alignment).
+    return 4
+
+
+def continuous_decimal_int_max(settings: dict) -> int | None:
+    """Integer-part magnitude budget for decimal operands (effort ≠ magnitude alone)."""
+    if "difficulty" not in settings or settings["difficulty"] is None:
+        return None
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+    d = max(0.0, settings_difficulty(settings, default=0.0))
+    # Keep modest: skill is places/alignment/cancel, not huge integers.
+    # D=0 → 9; D=10 → 24; D=20 → 55; D=25 → 80
+    return max(5, int(9 + 1.4 * d + 0.04 * d * d))
+
+
+def _decimal_places_from_settings(settings: dict, *, default: int = 2) -> int:
+    cont = continuous_decimal_places(settings)
+    if cont is not None:
+        return cont
+    places = max(1, int(settings.get("decimal_places", default)))
+    max_places = settings.get("max_decimal_places")
+    if max_places is not None:
+        places = min(places, max(1, int(max_places)))
+    return places
+
+
+def _decimal_int_max_from_settings(settings: dict, *, default: int = 99) -> int:
+    cont = continuous_decimal_int_max(settings)
+    if cont is not None:
+        return cont
+    return max(1, int(settings.get("num_max", default)))
+
+
+def _count_decimal_carries(a: Decimal, b: Decimal, *, places: int) -> int:
+    """Count place-wise digit sums ≥ 10 (addition regrouping effort)."""
+    scale = 10**places
+    ai = int(abs(a) * scale)
+    bi = int(abs(b) * scale)
+    carries = 0
+    carry = 0
+    for _ in range(places + 6):
+        da, db = ai % 10, bi % 10
+        total = da + db + carry
+        if total >= 10:
+            carries += 1
+            carry = 1
+        else:
+            carry = 0
+        ai //= 10
+        bi //= 10
+        if ai == 0 and bi == 0 and carry == 0:
+            break
+    return carries
+
+
+def _sample_decimal_with_places(
+    *,
+    places: int,
+    int_max: int,
+    allow_negative: bool = False,
+    force_fractional: bool = True,
+) -> Decimal:
+    """Sample a decimal with exactly ``places`` fractional digits (when forced)."""
+    places = max(0, int(places))
+    int_max = max(0, int(int_max))
+    for _ in range(40):
+        whole = random.randint(0, int_max)
+        if places == 0:
+            frac = 0
+        else:
+            lo = 1 if force_fractional else 0
+            frac = random.randint(lo, 10**places - 1)
+        if whole == 0 and frac == 0:
+            continue
+        value = Decimal(whole) + (Decimal(frac) / Decimal(10**places) if places else Decimal(0))
+        value = value.quantize(Decimal(10) ** -places) if places else value
+        if force_fractional and places > 0 and value == value.to_integral_value():
+            continue
+        if allow_negative and random.random() < 0.45:
+            value = -value
+        return value
+    fallback = Decimal("0.5") if places >= 1 else Decimal(1)
+    return fallback.quantize(Decimal(10) ** -max(places, 0)) if places else fallback
 
 
 def _int_bounds(settings: dict, *, lo_default: int = -20, hi_default: int = 20) -> tuple[int, int]:
@@ -2978,16 +4279,35 @@ class LongDivisionWithRemaindersFramework(NumberFramework):
     """Whole-number long division with a nonzero remainder."""
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        dividend_min = max(1, int(settings.get("dividend_min", 10)))
-        dividend_max = max(dividend_min, int(settings.get("dividend_max", 99)))
-        divisor_min = max(2, int(settings.get("divisor_min", 2)))
-        divisor_max = max(divisor_min, int(settings.get("divisor_max", 9)))
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        if has_cont:
+            d = max(0.0, settings_difficulty(settings, default=0.0))
+            # Digit count of dividend grows continuously; divisor awkwardness too.
+            # D=0 → 2 digits ÷ single digit; D=10 → 3 digits; D=20 → 4; D=25 → 4–5
+            digs = max(2, min(5, 2 + int(d / 7)))
+            dividend_min = 10 ** (digs - 1)
+            dividend_max = 10**digs - 1
+            if d < 5:
+                divisor_min, divisor_max = 2, 9
+            elif d < 12:
+                divisor_min, divisor_max = 2, 12
+            elif d < 20:
+                divisor_min, divisor_max = 3, 25
+            else:
+                divisor_min, divisor_max = 7, max(12, int(9 + 1.6 * d))
+        else:
+            dividend_min = max(1, int(settings.get("dividend_min", 10)))
+            dividend_max = max(dividend_min, int(settings.get("dividend_max", 99)))
+            divisor_min = max(2, int(settings.get("divisor_min", 2)))
+            divisor_max = max(divisor_min, int(settings.get("divisor_max", 9)))
 
         dividend = dividend_min
         divisor = divisor_min
         quotient = 0
         remainder = 1
-        for _ in range(60):
+        for _ in range(80):
             divisor = random.randint(divisor_min, divisor_max)
             if divisor < 2:
                 continue
@@ -3002,7 +4322,6 @@ class LongDivisionWithRemaindersFramework(NumberFramework):
                 remainder = rem
                 break
         else:
-            # Deterministic fallback within easy-scale bounds.
             divisor = min(divisor_max, max(divisor_min, 3))
             remainder = 1
             quotient = max(1, dividend_min // divisor)
@@ -3014,6 +4333,121 @@ class LongDivisionWithRemaindersFramework(NumberFramework):
         prompt_latex = f"{dividend} \\div {divisor}"
         answer = f"{quotient} \\text{{ R }} {remainder}"
         return prompt_latex, f"{dividend} ÷ {divisor}", answer
+
+
+class DecimalDivideByDecimalFramework(NumberFramework):
+    """Decimal ÷ decimal with continuous effort (place-shift free vs awkward).
+
+    Ladder:
+    - Low D: tenths ÷ tenths, integer quotient after one ×10 place shift
+    - Mid: hundredths, mixed places, still terminating
+    - High: multi-place both sides, non-place-value divisors (0.16, 0.125, …)
+    """
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_cont else 8.0
+        places = _decimal_places_from_settings(settings, default=2)
+        int_max = _decimal_int_max_from_settings(settings, default=40)
+        allow_negative = bool(settings.get("allow_negative", False)) and d >= 18.0
+
+        if d < 5:
+            pool = tuple(Decimal(x) for x in ("0.1", "0.2", "0.4", "0.5", "0.8"))
+            quot_max = max(4, min(12, int_max))
+            q_is_int = True
+        elif d < 12:
+            pool = tuple(
+                Decimal(x)
+                for x in ("0.05", "0.16", "0.2", "0.25", "0.4", "0.5", "0.75", "1.2", "1.5", "2.5")
+            )
+            quot_max = max(6, min(24, int_max))
+            q_is_int = random.random() < 0.55
+        elif d < 20:
+            pool = tuple(
+                Decimal(x)
+                for x in (
+                    "0.08",
+                    "0.125",
+                    "0.16",
+                    "0.25",
+                    "0.375",
+                    "0.625",
+                    "0.75",
+                    "1.25",
+                    "1.6",
+                    "2.4",
+                    "3.75",
+                    "12.5",
+                )
+            )
+            quot_max = max(8, min(40, int_max))
+            q_is_int = random.random() < 0.35
+        else:
+            pool = tuple(
+                Decimal(x)
+                for x in (
+                    "0.08",
+                    "0.125",
+                    "0.16",
+                    "0.375",
+                    "0.625",
+                    "0.875",
+                    "1.25",
+                    "1.75",
+                    "2.75",
+                    "3.2",
+                    "6.4",
+                    "7.5",
+                    "12.5",
+                )
+            )
+            quot_max = max(12, min(80, int_max))
+            q_is_int = False
+
+        divisor = abs(random.choice(pool))
+        # Build decimal÷decimal: dividend should look like a decimal on the page.
+        if q_is_int:
+            quotient_i, _ = _compatible_integer_quotient_for_decimal(divisor, quot_max)
+            if d >= 8 and random.random() < 0.55:
+                extra = Decimal(random.choice(("0.5", "0.25", "1.5", "2.5")))
+                dividend = (Decimal(quotient_i) * divisor * extra).normalize()
+                answer_dec = Decimal(quotient_i) * extra
+            else:
+                dividend = Decimal(quotient_i) * divisor
+                answer_dec = Decimal(quotient_i)
+        else:
+            q_places = 1 if d < 15 else min(2, places)
+            q = _sample_decimal_with_places(
+                places=q_places, int_max=max(2, quot_max // 2), allow_negative=False
+            )
+            dividend = (q * divisor).normalize()
+            answer_dec = q
+
+        div_places = _terminating_decimal_places(Fraction(dividend)) or 0
+        d_places = _terminating_decimal_places(Fraction(divisor)) or places
+        # Force a visible decimal dividend (topic is decimal ÷ decimal).
+        if div_places == 0:
+            scale = Decimal(random.choice(("0.5", "0.25", "0.2")))
+            dividend = (dividend * scale).normalize()
+            answer_dec = (answer_dec * scale).normalize()
+            div_places = _terminating_decimal_places(Fraction(dividend)) or 1
+        div_places = max(1, div_places)
+
+        if allow_negative and random.random() < 0.4:
+            if random.random() < 0.5:
+                dividend = -dividend
+            else:
+                divisor = -divisor
+
+        ans_places = _terminating_decimal_places(Fraction(answer_dec)) or 0
+        a_s = _format_decimal(Decimal(dividend), places=max(1, div_places))
+        b_s = _format_decimal(Decimal(divisor), places=max(1, d_places))
+        ans_s = _format_decimal(Decimal(answer_dec), places=ans_places)
+        prompt_latex = format_binop_expression(a_s, "\\div", b_s)
+        prompt_text = format_binop_expression(a_s, "/", b_s)
+        return prompt_latex, prompt_text, ans_s
 
 
 class LikeDenominatorFractionFramework(NumberFramework):
@@ -3257,75 +4691,6 @@ class FractionDivideWordFramework(NumberFramework):
         return prompt, f"fraction division ({self.mode})", self._format_value(answer, params)
 
 
-class GcfLcmFramework(NumberFramework):
-    """Greatest common factor and least common multiple."""
-
-    def __init__(self, *, mode: str = "gcf"):
-        self.mode = mode
-
-    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        lo, hi = _factor_bounds(settings)
-        count = random.choice([2, 2, 3])
-        if self.mode == "gcf":
-            values = _sample_values_for_gcf(
-                lo,
-                hi,
-                count,
-                require_gt_one=_require_gcf_greater_than_one(settings),
-            )
-            result = math.gcd(*values)
-            label = "GCF"
-        else:
-            values = _sample_distinct_ints(lo, hi, count)
-            result = math.lcm(*values)
-            label = "LCM"
-        numbers = ", ".join(str(v) for v in values)
-        prompt = f"\\text{{Find the {label} of }} {numbers}"
-        return prompt, f"{label} of {numbers}", str(result)
-
-
-class GcfLcmWordFramework(NumberFramework):
-    """GCF/LCM word problems."""
-
-    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        from question_engine.frameworks.difficulty_budget import settings_difficulty
-        from question_engine.word_problems.things import (
-            SAME_LETTER_MIN_DIFFICULTY,
-            pick_things,
-        )
-
-        lo, hi = _factor_bounds(settings)
-        # High continuous D: allow same-first-letter nouns for extra confusion.
-        prefer_same_letter = False
-        if "difficulty" in settings and settings["difficulty"] is not None:
-            d = settings_difficulty(settings, default=0.0)
-            prefer_same_letter = d >= SAME_LETTER_MIN_DIFFICULTY - 1e-9
-        item_a, item_b = pick_things(2, prefer_same_first_letter=prefer_same_letter)
-
-        use_gcf = random.choice([True, False])
-        if use_gcf:
-            a, b, g = _sample_gcf_pair(
-                lo,
-                hi,
-                require_gt_one=_require_gcf_greater_than_one(settings),
-            )
-            text = (
-                f"You have {a} {item_a} and {b} {item_b}. "
-                f"What is the greatest number of identical bags you can make?"
-            )
-            prompt = f"\\text{{{text}}}"
-            return prompt, text, str(g)
-        a, b = _sample_lcm_pair(lo, hi)
-        lcm_val = math.lcm(a, b)
-        # Pack story needs two distinct items (classic hot-dogs / buns pattern).
-        text = (
-            f"{item_a.capitalize()} come in packs of {a} and {item_b} come in packs of {b}. "
-            f"What is the least number of each needed so there are no leftovers?"
-        )
-        prompt = f"\\text{{{text}}}"
-        return prompt, text, str(lcm_val)
-
-
 _SMALL_PRIMES: tuple[int, ...] = (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47)
 
 
@@ -3351,7 +4716,7 @@ def _prime_factorization_latex(n: int) -> str:
 
 
 def _count_prime_factors(n: int) -> int:
-    """Total number of prime factors counting multiplicity."""
+    """Total number of prime factors counting multiplicity (big-omega)."""
     count = 0
     value = n
     d = 2
@@ -3365,8 +4730,114 @@ def _count_prime_factors(n: int) -> int:
     return count
 
 
+def _distinct_prime_count(n: int) -> int:
+    """Number of distinct prime factors (little-omega)."""
+    count = 0
+    value = abs(int(n))
+    d = 2
+    while d * d <= value:
+        if value % d == 0:
+            count += 1
+            while value % d == 0:
+                value //= d
+        d += 1
+    if value > 1:
+        count += 1
+    return count
+
+
+def _target_prime_omega(d: float) -> int:
+    """Target Ω(n) for prime-factorization / LCM factor work from continuous D."""
+    d = max(0.0, float(d))
+    if d < 3.0:
+        return 2
+    if d < 8.0:
+        return 2
+    if d < 13.0:
+        return 3
+    if d < 18.0:
+        return 4
+    if d < 23.0:
+        return 5
+    return max(6, int(5 + (d - 22) / 3))
+
+
+def _prime_max_for_difficulty(d: float) -> int:
+    """Largest prime allowed in constructed composites (effort, not huge semiprimes)."""
+    d = max(0.0, float(d))
+    if d < 4.0:
+        return 5
+    if d < 9.0:
+        return 7
+    if d < 14.0:
+        return 11
+    if d < 19.0:
+        return 13
+    if d < 24.0:
+        return 17
+    return 23
+
+
+def _factor_product_cap(d: float) -> int:
+    """Keep classroom-sized products; magnitude is not the difficulty signal."""
+    d = max(0.0, float(d))
+    return max(24, min(720, int(36 + 8 * d + 0.35 * d * d)))
+
+
+def _sample_prime_product_effort(d: float, *, target_omega: int | None = None) -> int:
+    """Build a composite whose Ω matches effort target; avoid large-prime theater."""
+    target = target_omega if target_omega is not None else _target_prime_omega(d)
+    target = max(2, int(target))
+    prime_max = _prime_max_for_difficulty(d)
+    product_max = _factor_product_cap(d)
+    primes = [p for p in _SMALL_PRIMES if p <= prime_max]
+    if len(primes) < 2:
+        primes = [2, 3, 5, 7]
+
+    best = 12
+    best_dist = 10**9
+    for _ in range(64):
+        # Prefer multi-small-prime products over one large prime factor.
+        weight_small = [3 if p <= 7 else (2 if p <= 13 else 1) for p in primes]
+        product = 1
+        omega = 0
+        guard = 0
+        while omega < target and guard < 14:
+            guard += 1
+            candidates = [p for p in primes if product * p <= product_max]
+            if not candidates:
+                break
+            # Keep at least one small prime early so trial division stays G6-shaped.
+            if omega == 0 and random.random() < 0.85:
+                small = [p for p in candidates if p <= 7]
+                p = random.choice(small or candidates)
+            else:
+                c_w = [weight_small[primes.index(p)] for p in candidates]
+                p = random.choices(candidates, weights=c_w, k=1)[0]
+            product *= p
+            omega += 1
+        if product < 4 or omega < 2:
+            continue
+        dist = abs(omega - target)
+        # Prefer more distinct primes at higher D (harder factor trees).
+        distinct_bonus = 0 if _distinct_prime_count(product) >= min(2, target) else 1
+        dist += distinct_bonus
+        if dist < best_dist or (dist == best_dist and product >= best):
+            best = product
+            best_dist = dist
+            if dist == 0:
+                break
+    return best
+
+
 def _sample_prime_product(settings: dict) -> int:
     """Build a composite from prime factors honoring count / size presets."""
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        d = max(0.0, settings_difficulty(settings, default=0.0))
+        return _sample_prime_product_effort(d)
+
     count_min, count_max = _int_range(
         settings, "prime_factor_count_min", "prime_factor_count_max", lo_default=2, hi_default=4
     )
@@ -3399,12 +4870,261 @@ def _sample_prime_product(settings: dict) -> int:
     return 6
 
 
-class PrimeFactorizationFramework(NumberFramework):
-    """Prime factorization of a composite whole number."""
+def _sample_gcf_values_effort(
+    d: float,
+    count: int,
+    *,
+    require_gt_one: bool,
+    hi_cap: int,
+) -> list[int]:
+    """GCF effort = meaningful cancel steps of the shared factor (+ 3-number sets)."""
+    target_steps = _target_meaningful_cancel_steps(d)
+    if require_gt_one and target_steps <= 0:
+        target_steps = 1
+    # Soft magnitude ceiling — structure drives difficulty.
+    hi_cap = max(24, min(int(hi_cap), _factor_product_cap(d)))
+    g_max = max(2, min(hi_cap // 2, _factor_product_cap(max(0.0, d - 4))))
+    g = _build_k_with_meaningful_steps(target_steps, g_max, min_k=2 if require_gt_one else 1)
+    if require_gt_one and g < 2:
+        g = 2
+
+    # Multipliers stay coprime as a set so GCF is exactly g.
+    mult_hi = max(2, min(hi_cap // g, 4 + int(d / 3) + (2 if count >= 3 else 0)))
+    for _ in range(60):
+        pool = list(range(1, mult_hi + 1))
+        if len(pool) < count:
+            mult_hi = count + 2
+            pool = list(range(1, mult_hi + 1))
+        chosen = random.sample(pool, count)
+        # Ensure pairwise gcd of multipliers is 1 as a group.
+        from functools import reduce
+
+        if reduce(math.gcd, chosen) != 1:
+            continue
+        values = [g * m for m in chosen]
+        if len(set(values)) != count:
+            continue
+        if math.gcd(*values) != g and require_gt_one:
+            continue
+        if max(values) > hi_cap and hi_cap >= g * 2:
+            continue
+        return values
+    # Fallback
+    base = [g, 2 * g, 3 * g][:count]
+    if len(base) < count:
+        base.append(5 * g)
+    return base[:count]
+
+
+def _sample_lcm_values_effort(d: float, count: int, *, hi_cap: int) -> list[int]:
+    """LCM effort = combined prime-factor work, not huge coprime products."""
+    # Very easy classroom pairs at the bottom of the slider.
+    if d < 3.0 and count == 2 and random.random() < 0.85:
+        return list(random.choice([(2, 4), (3, 6), (2, 6), (4, 6), (3, 9), (2, 8), (5, 10)]))
+    if d < 6.0 and count == 2 and random.random() < 0.55:
+        return list(random.choice([(4, 6), (6, 9), (4, 10), (6, 8), (6, 15), (8, 12), (9, 12)]))
+
+    target = _target_prime_omega(d)
+    if d < 5:
+        target = 2
+    elif d < 10:
+        target = min(target, 3)
+    # Shared core shrinks with D so LCM needs more unique prime work.
+    if d < 6:
+        shared_omega = 1
+    elif d < 14:
+        shared_omega = 1 if random.random() < 0.7 else 0
+    else:
+        shared_omega = 1 if random.random() < 0.35 else 0
+    product_max = min(hi_cap, _factor_product_cap(d))
+    if d < 8:
+        product_max = min(product_max, 60)
+    shared = 1
+    if shared_omega:
+        shared = _sample_prime_product_effort(max(0.0, d - 6), target_omega=shared_omega)
+        if shared > product_max // 4:
+            shared = min(shared, 6)
+
+    # Per-number extra factors.
+    extras_needed = max(1, target - shared_omega)
+    values: list[int] = []
+    used_primes: set[int] = set()
+    primes = [p for p in _SMALL_PRIMES if p <= _prime_max_for_difficulty(d)]
+    for i in range(count):
+        extra = 1
+        need = 1 if d < 8 else (extras_needed if i == 0 else max(1, extras_needed - 1))
+        guard = 0
+        while _count_prime_factors(extra) < need and guard < 20:
+            guard += 1
+            pool = [p for p in primes if extra * p * shared <= product_max]
+            if d >= 10:
+                fresh = [p for p in pool if p not in used_primes]
+                pool = fresh or pool
+            if not pool:
+                break
+            p = random.choice(pool)
+            extra *= p
+            used_primes.add(p)
+        n = shared * extra
+        if n < 2:
+            n = shared * random.choice([2, 3, 5])
+        values.append(n)
+
+    # Ensure distinct and LCM not absurd.
+    values = list(dict.fromkeys(values))
+    while len(values) < count:
+        bump = shared * random.choice([2, 3, 5, 7, 11])
+        if bump not in values and bump <= product_max:
+            values.append(bump)
+        else:
+            values.append(max(values) + shared if shared > 1 else max(values) + 2)
+    values = values[:count]
+    lcm_val = math.lcm(*values)
+    if lcm_val > product_max * 2 and d >= 5:
+        shared2 = _sample_prime_product_effort(max(0.0, d - 8), target_omega=1)
+        return [shared2 * 2, shared2 * 3][:count] if count == 2 else [
+            shared2 * 2,
+            shared2 * 3,
+            shared2 * 5,
+        ][:count]
+    return values
+
+
+class GcfLcmFramework(NumberFramework):
+    """Greatest common factor and least common multiple.
+
+    Continuous difficulty targets **factorization effort** (meaningful GCF cancel
+    steps / combined Ω for LCM), not raw magnitude or huge near-coprime products.
+    """
+
+    def __init__(self, *, mode: str = "gcf"):
+        self.mode = mode
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        # Prefer factor-count presets when present; otherwise fall back to range sampling.
-        if "prime_factor_count_min" in settings or "prime_factor_count_max" in settings:
+        lo, hi = _factor_bounds(settings)
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        if has_cont:
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            d = max(0.0, settings_difficulty(settings, default=0.0))
+            # More 3-number sets at higher D (extra comparison work).
+            if d < 6:
+                count = 2
+            elif d < 14:
+                count = random.choice([2, 2, 3])
+            else:
+                count = random.choice([2, 3, 3])
+            if self.mode == "gcf":
+                values = _sample_gcf_values_effort(
+                    d,
+                    count,
+                    require_gt_one=_require_gcf_greater_than_one(settings),
+                    hi_cap=hi,
+                )
+                result = math.gcd(*values)
+                label = "GCF"
+            else:
+                # Prefer 3-number LCM at high D for extra factor work.
+                if d >= 18:
+                    count = random.choice([2, 3, 3, 3])
+                values = _sample_lcm_values_effort(d, count, hi_cap=hi)
+                result = math.lcm(*values)
+                label = "LCM"
+        else:
+            count = random.choice([2, 2, 3])
+            if self.mode == "gcf":
+                values = _sample_values_for_gcf(
+                    lo,
+                    hi,
+                    count,
+                    require_gt_one=_require_gcf_greater_than_one(settings),
+                )
+                result = math.gcd(*values)
+                label = "GCF"
+            else:
+                values = _sample_distinct_ints(lo, hi, count)
+                result = math.lcm(*values)
+                label = "LCM"
+        numbers = ", ".join(str(v) for v in values)
+        prompt = f"\\text{{Find the {label} of }} {numbers}"
+        return prompt, f"{label} of {numbers}", str(result)
+
+
+class GcfLcmWordFramework(NumberFramework):
+    """GCF/LCM word problems (effort-targeted when continuous difficulty is set)."""
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+        from question_engine.word_problems.things import (
+            SAME_LETTER_MIN_DIFFICULTY,
+            pick_things,
+        )
+
+        lo, hi = _factor_bounds(settings)
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_cont else 0.0
+        # High continuous D: allow same-first-letter nouns for extra confusion.
+        prefer_same_letter = has_cont and d >= SAME_LETTER_MIN_DIFFICULTY - 1e-9
+        item_a, item_b = pick_things(2, prefer_same_first_letter=prefer_same_letter)
+
+        # Bias toward LCM stories as D rises (pack-align is usually more work).
+        if has_cont:
+            lcm_p = 0.35 if d < 5 else (0.45 if d < 12 else (0.55 if d < 18 else 0.65))
+            use_gcf = random.random() >= lcm_p
+        else:
+            use_gcf = random.choice([True, False])
+
+        if use_gcf:
+            if has_cont:
+                vals = _sample_gcf_values_effort(
+                    d,
+                    2,
+                    require_gt_one=_require_gcf_greater_than_one(settings),
+                    hi_cap=hi,
+                )
+                a, b = vals[0], vals[1]
+                g = math.gcd(a, b)
+            else:
+                a, b, g = _sample_gcf_pair(
+                    lo,
+                    hi,
+                    require_gt_one=_require_gcf_greater_than_one(settings),
+                )
+            text = (
+                f"You have {a} {item_a} and {b} {item_b}. "
+                f"What is the greatest number of identical bags you can make?"
+            )
+            prompt = f"\\text{{{text}}}"
+            return prompt, text, str(g)
+        if has_cont:
+            a, b = _sample_lcm_values_effort(d, 2, hi_cap=hi)[:2]
+        else:
+            a, b = _sample_lcm_pair(lo, hi)
+        lcm_val = math.lcm(a, b)
+        # Pack story needs two distinct items (classic hot-dogs / buns pattern).
+        text = (
+            f"{item_a.capitalize()} come in packs of {a} and {item_b} come in packs of {b}. "
+            f"What is the least number of each needed so there are no leftovers?"
+        )
+        prompt = f"\\text{{{text}}}"
+        return prompt, text, str(lcm_val)
+
+
+class PrimeFactorizationFramework(NumberFramework):
+    """Prime factorization of a composite whole number.
+
+    Continuous difficulty targets Ω(n) and small-prime factor trees — not
+    large semiprimes (2×67) that inflate magnitude without extra cancel work.
+    """
+
+    def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        if has_cont:
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            d = max(0.0, settings_difficulty(settings, default=0.0))
+            n = _sample_prime_product_effort(d)
+        elif "prime_factor_count_min" in settings or "prime_factor_count_max" in settings:
             n = _sample_prime_product(settings)
         else:
             lo, hi = _factor_bounds(settings)
@@ -3923,12 +5643,8 @@ class AbsoluteValueFramework(NumberFramework):
 
         d = max(0.0, settings_difficulty(settings, default=8.0))
         if self.mode == "evaluate":
-            lo, hi = _int_bounds(settings, lo_default=-15, hi_default=15)
-            n = random.randint(lo, hi)
-            while n == 0 and d < 3:
-                n = random.randint(lo, hi)
-            prompt = f"\\left| {n} \\right|"
-            return prompt, f"|{n}|", str(abs(n))
+            # Effort: sign / expression structure — not |146| magnitude theater.
+            return self._build_evaluate(d)
 
         if self.mode == "compare":
             a, b = _sample_abs_compare_pair(d)
@@ -3950,6 +5666,54 @@ class AbsoluteValueFramework(NumberFramework):
         )
         answer = ", ".join(str(v) for v in ordered)
         return prompt, "order by absolute value", answer
+
+    def _build_evaluate(self, d: float) -> tuple[str, str, str | None]:
+        """Evaluate |·|: sign first, then integer expressions inside abs."""
+        d = max(0.0, float(d))
+        # D0–4: mostly positive atoms (trivial abs).
+        # D4–10: negatives / zero edge.
+        # D10–16: |a−b| with same-sign small ints.
+        # D≥16: mixed-sign expressions / double negatives in the interior.
+        if d < 4.0:
+            n = random.randint(1, 10)
+            if random.random() < 0.12:
+                n = -n
+            prompt = f"\\left| {n} \\right|"
+            return prompt, f"|{n}|", str(abs(n))
+        if d < 10.0:
+            mag = random.randint(1, 12 + int(d))
+            n = -mag if random.random() < min(0.9, 0.55 + d / 25.0) else mag
+            if d >= 6.0 and random.random() < 0.12:
+                n = 0
+            prompt = f"\\left| {n} \\right|"
+            return prompt, f"|{n}|", str(abs(n))
+
+        # Expression inside absolute value — force at D≥10.
+        a = random.randint(1, 9 + int(d / 5))
+        b = random.randint(1, 9 + int(d / 5))
+        if d < 16.0:
+            if random.random() < 0.6:
+                latex_inner = f"{a} - {b}"
+                inner = a - b
+            else:
+                latex_inner = f"{a} + (-{b})"
+                inner = a - b
+        else:
+            mode = random.choice(["a_minus_neg", "neg_a_minus_b", "neg_a_plus_b", "neg_a_minus_neg"])
+            if mode == "a_minus_neg":
+                latex_inner = f"{a} - (-{b})"
+                inner = a + b
+            elif mode == "neg_a_minus_b":
+                latex_inner = f"-{a} - {b}"
+                inner = -a - b
+            elif mode == "neg_a_plus_b":
+                latex_inner = f"-{a} + {b}"
+                inner = -a + b
+            else:
+                latex_inner = f"-{a} - (-{b})"
+                inner = -a + b
+        prompt = f"\\left| {latex_inner} \\right|"
+        return prompt, f"|{latex_inner}|", str(abs(inner))
 
 
 class OppositeFramework(NumberFramework):
@@ -4026,6 +5790,15 @@ _MEDIUM_FDP_TRIPLES: tuple[tuple[Fraction, str, int | float], ...] = _EASY_FDP_T
     (Fraction(3, 20), "0.15", 15),
     (Fraction(1, 50), "0.02", 2),
 )
+_HARD_FDP_TRIPLES: tuple[tuple[Fraction, str, int | float], ...] = _MEDIUM_FDP_TRIPLES + (
+    (Fraction(5, 8), "0.625", 62.5),
+    (Fraction(7, 8), "0.875", 87.5),
+    (Fraction(3, 16), "0.1875", 18.75),
+    (Fraction(1, 16), "0.0625", 6.25),
+    (Fraction(9, 20), "0.45", 45),
+    (Fraction(11, 25), "0.44", 44),
+    (Fraction(13, 40), "0.325", 32.5),
+)
 
 
 class FractionDecimalConvertFramework(NumberFramework):
@@ -4041,25 +5814,46 @@ class FractionDecimalConvertFramework(NumberFramework):
         )
         if include_pct:
             return self._build_fdp_prompt(settings)
-        params = number_params_from_settings(settings)
-        denom = random.choice([2, 4, 5, 8, 10, 20, 25, 50, 100])
-        num = random.randint(1, denom - 1)
-        while math.gcd(num, denom) != 1:
-            num = random.randint(1, denom - 1)
-        frac = Fraction(num, denom)
-        to_decimal = self.to_decimal if self.to_decimal is not None else random.choice([True, False])
+        return self._build_fd_prompt(settings)
+
+    @staticmethod
+    def _fdp_triples_for_difficulty(settings: dict) -> tuple[tuple[Fraction, str, int | float], ...]:
+        """Shared easy/medium/hard FDP banks keyed by continuous D (or EMH tier)."""
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_continuous = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_continuous else 0.0
+        if has_continuous:
+            if d < 5.0:
+                return _EASY_FDP_TRIPLES
+            if d < 12.0:
+                return _MEDIUM_FDP_TRIPLES
+            if d < 18.0:
+                return _HARD_FDP_TRIPLES if random.random() < 0.65 else _MEDIUM_FDP_TRIPLES
+            hard_only = tuple(t for t in _HARD_FDP_TRIPLES if t not in _EASY_FDP_TRIPLES)
+            return hard_only or _HARD_FDP_TRIPLES
+        tier = _percent_difficulty_tier(settings)
+        return _EASY_FDP_TRIPLES if tier == "easy" else _MEDIUM_FDP_TRIPLES
+
+    def _build_fd_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        """Fraction ↔ decimal only; continuous D climbs terminating-decimal banks."""
+        triples = self._fdp_triples_for_difficulty(settings)
+        frac, dec_text, _percent = random.choice(triples)
+        to_decimal = (
+            self.to_decimal if self.to_decimal is not None else random.choice([True, False])
+        )
         if to_decimal:
             prompt = f"\\text{{Write }} {frac_latex(frac)} \\text{{ as a decimal.}}"
-            answer = _format_decimal(Decimal(frac.numerator) / Decimal(frac.denominator), places=3)
-        else:
-            dec = Decimal(frac.numerator) / Decimal(frac.denominator)
-            prompt = f"\\text{{Write }} {_format_decimal(dec, places=3)} \\text{{ as a fraction.}}"
-            answer = frac_latex(frac)
-        return prompt, "fraction-decimal conversion", answer
+            return prompt, f"Write {frac} as a decimal", dec_text
+        prompt = f"\\text{{Write }} {dec_text} \\text{{ as a fraction in simplest form.}}"
+        return prompt, f"Write {dec_text} as a fraction", frac_latex(frac)
 
     def _build_fdp_prompt(self, settings: dict) -> tuple[str, str, str | None]:
-        tier = _percent_difficulty_tier(settings)
-        triples = _EASY_FDP_TRIPLES if tier == "easy" else _MEDIUM_FDP_TRIPLES
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        has_continuous = "difficulty" in settings and settings["difficulty"] is not None
+        d = max(0.0, settings_difficulty(settings, default=0.0)) if has_continuous else 0.0
+        triples = self._fdp_triples_for_difficulty(settings)
         frac, dec_text, percent = random.choice(triples)
         modes = [
             "frac_to_pct",
@@ -4069,8 +5863,10 @@ class FractionDecimalConvertFramework(NumberFramework):
             "frac_to_dec",
             "dec_to_frac",
         ]
-        if tier == "easy":
-            # Favor percent forms so the topic isn't a fraction↔decimal-only loop.
+        # Favor percent forms so the topic isn't a fraction↔decimal-only loop.
+        if (has_continuous and d < 8.0) or (
+            not has_continuous and _percent_difficulty_tier(settings) == "easy"
+        ):
             modes = [
                 "frac_to_pct",
                 "frac_to_pct",
@@ -4078,6 +5874,16 @@ class FractionDecimalConvertFramework(NumberFramework):
                 "dec_to_pct",
                 "pct_to_dec",
                 "frac_to_dec",
+                "dec_to_frac",
+            ]
+        elif has_continuous and d >= 14.0:
+            # High D: more awkward %↔frac and %↔dec (eighths / 6.25%).
+            modes = [
+                "frac_to_pct",
+                "pct_to_frac",
+                "pct_to_frac",
+                "dec_to_pct",
+                "pct_to_dec",
                 "dec_to_frac",
             ]
         mode = random.choice(modes)
@@ -4137,13 +5943,24 @@ def _format_grid_area_answer(area: Fraction) -> str:
 def _grid_polygon_shape_kinds(settings: dict) -> list[str]:
     """Shape mix for polygons / shaded regions on a grid.
 
-    Returns a weighted list (with repetition) so rectangles are not predominant.
+    Continuous D unlocks harder shape families (effort = counting strategy),
+    not larger grid cells. Returns a weighted list (with repetition).
     """
     raw = settings.get("polygon_shapes")
     if isinstance(raw, (list, tuple)) and raw:
         return [str(s) for s in raw]
-    tier = _difficulty_band(settings)
-    if tier == "easy":
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    if d < 4:
+        return [
+            "square",
+            "square",
+            "rectangle",
+            "rectangle",
+            "triangle",
+        ]
+    if d < 8:
         return [
             "square",
             "rectangle",
@@ -4152,9 +5969,8 @@ def _grid_polygon_shape_kinds(settings: dict) -> list[str]:
             "parallelogram",
             "parallelogram",
         ]
-    if tier == "hard":
+    if d < 13:
         return [
-            "square",
             "rectangle",
             "triangle",
             "triangle",
@@ -4162,20 +5978,25 @@ def _grid_polygon_shape_kinds(settings: dict) -> list[str]:
             "parallelogram",
             "trapezoid",
             "trapezoid",
+        ]
+    if d < 18:
+        return [
+            "triangle",
+            "parallelogram",
+            "trapezoid",
+            "trapezoid",
             "l_shape",
             "l_shape",
-            "irregular_quad",
             "irregular_quad",
         ]
     return [
-        "square",
-        "rectangle",
-        "triangle",
-        "triangle",
-        "parallelogram",
-        "parallelogram",
         "trapezoid",
-        "trapezoid",
+        "l_shape",
+        "l_shape",
+        "l_shape",
+        "irregular_quad",
+        "irregular_quad",
+        "parallelogram",
     ]
 
 
@@ -4304,7 +6125,9 @@ def _make_grid_irregular_quad() -> list[tuple[int, int]]:
     return [(1, 1), (6, 1), (5, 3), (2, 4)]
 
 
-def _random_grid_polygon(settings: dict) -> tuple[list[tuple[int, int]], Fraction]:
+def _random_grid_polygon(
+    settings: dict,
+) -> tuple[list[tuple[int, int]], Fraction, str]:
     makers = {
         "square": _make_grid_square,
         "rectangle": lambda: _make_grid_rectangle(non_square=True),
@@ -4317,16 +6140,100 @@ def _random_grid_polygon(settings: dict) -> tuple[list[tuple[int, int]], Fractio
     kinds = [k for k in _grid_polygon_shape_kinds(settings) if k in makers]
     if not kinds:
         kinds = ["rectangle", "triangle", "parallelogram"]
-    for _ in range(30):
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    # Half-square-unit areas (shoelace odd) are a small extra counting step.
+    prefer_half = d >= 12 and random.random() < min(0.75, 0.25 + 0.03 * d)
+    best: tuple[list[tuple[int, int]], Fraction, str] | None = None
+    for _ in range(40):
         kind = random.choice(kinds)
         points = makers[kind]()
         if not _points_on_grid(points):
             continue
         area = _shoelace_area(points)
-        if area > 0:
-            return points, area
+        if area <= 0:
+            continue
+        if prefer_half and area.denominator == 2:
+            return points, area, kind
+        if not prefer_half and area.denominator == 1:
+            return points, area, kind
+        if best is None:
+            best = (points, area, kind)
+    if best is not None:
+        return best
     points = _make_grid_rectangle(non_square=True)
-    return points, _shoelace_area(points)
+    return points, _shoelace_area(points), "rectangle"
+
+
+def _polyhedron_kind_pool(settings: dict) -> list[str]:
+    """Familiar solids first; less common at high continuous D."""
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    if d < 5:
+        return ["cube", "rectangular prism"]
+    if d < 10:
+        return ["cube", "rectangular prism", "triangular prism", "square pyramid"]
+    if d < 16:
+        return [
+            "rectangular prism",
+            "triangular prism",
+            "square pyramid",
+            "triangular pyramid",
+        ]
+    return ["triangular prism", "square pyramid", "triangular pyramid"]
+
+
+def _isometric_dims(settings: dict) -> tuple[int, int, int]:
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    if d < 5:
+        lo, hi = 2, 3
+        prefer_near_cube = True
+    elif d < 10:
+        lo, hi = 2, 4
+        prefer_near_cube = True
+    elif d < 16:
+        lo, hi = 3, 5
+        prefer_near_cube = False
+    else:
+        lo, hi = 3, 6
+        prefer_near_cube = False
+    for _ in range(30):
+        dims = [random.randint(lo, hi) for _ in range(3)]
+        span = max(dims) - min(dims)
+        if prefer_near_cube and span <= 1:
+            return dims[0], dims[1], dims[2]
+        if not prefer_near_cube and span >= 2:
+            return dims[0], dims[1], dims[2]
+    return (
+        random.randint(lo, hi),
+        random.randint(lo, hi),
+        random.randint(lo, hi),
+    )
+
+
+def _fraction_pair_for_difficulty(settings: dict) -> tuple[Fraction, Fraction]:
+    """Two sides for rect/triangle area; high D biases cancel-needed products."""
+    from .difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=8.0)
+    sample = Grade6VisualFramework._fraction_side_for_difficulty
+    a = sample(settings)
+    b = sample(settings)
+    if d < 12:
+        return a, b
+    for _ in range(25):
+        a = sample(settings, allow_whole=False)
+        b = sample(settings, allow_whole=False)
+        cross = math.gcd(a.numerator, b.denominator) * math.gcd(
+            b.numerator, a.denominator
+        )
+        if cross > 1:
+            return a, b
+    return a, b
 
 
 class Grade6VisualFramework(NumberFramework):
@@ -4341,6 +6248,83 @@ class Grade6VisualFramework(NumberFramework):
         denominator = random.choice([2, 3, 4, 5, 6, 8])
         numerator = random.randint(1, denominator * 2 - 1)
         return Fraction(numerator, denominator)
+
+    @staticmethod
+    def _fraction_side_for_difficulty(settings: dict, *, allow_whole: bool = True) -> Fraction:
+        """Sample a positive length whose fraction-multiply effort tracks continuous D.
+
+        Effort drivers (not magnitude alone): awkward denominators, improper /
+        mixed-style values, and avoiding pure place-value cancels when multiplying.
+        """
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        d = settings_difficulty(settings, default=6.0)
+        if d < 4.0:
+            denoms = (2, 3, 4)
+            max_mult = 1  # mostly proper / unit-ish
+        elif d < 9.0:
+            denoms = (2, 3, 4, 5, 6)
+            max_mult = 2
+        elif d < 14.0:
+            denoms = (3, 4, 5, 6, 8)
+            max_mult = 2
+        elif d < 19.0:
+            denoms = (5, 6, 8, 9, 10)
+            max_mult = 3
+        else:
+            denoms = (6, 8, 9, 10, 12)
+            max_mult = 3
+
+        if allow_whole and d < 8.0 and random.random() < max(0.15, 0.55 - 0.04 * d):
+            return Fraction(random.randint(1, 2 + int(d // 5)), 1)
+
+        denom = random.choice(denoms)
+        # Prefer numerators that leave real cancel work vs trailing ×10-only.
+        for _ in range(24):
+            if d >= 12.0 and random.random() < 0.55:
+                # Improper / mixed-range lengths (student often rewrites first).
+                numer = random.randint(denom + 1, denom * max_mult + max(1, denom // 2))
+            else:
+                numer = random.randint(1, max(1, denom * max_mult - 1))
+            value = Fraction(numer, denom)
+            if allow_whole or value.denominator != 1:
+                return value
+        # Last resort: unit fraction with chosen denom.
+        return Fraction(1, denom)
+
+    @staticmethod
+    def _prism_fraction_sides(settings: dict) -> tuple[Fraction, Fraction, Fraction]:
+        """Three edge lengths; number of non-integer sides ramps with D."""
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+        d = settings_difficulty(settings, default=6.0)
+        if d < 5.0:
+            n_frac = 1
+        elif d < 12.0:
+            n_frac = 2
+        else:
+            n_frac = 3
+
+        sides: list[Fraction] = []
+        for i in range(3):
+            if i < n_frac:
+                sides.append(
+                    Grade6VisualFramework._fraction_side_for_difficulty(
+                        settings, allow_whole=False
+                    )
+                )
+            else:
+                sides.append(Fraction(random.randint(1, 2 + int(d // 8)), 1))
+        random.shuffle(sides)
+        # At high D, bias against pairwise-friendly denoms that all cancel to 1
+        # with a single shared factor (still allow some cancel — that's real work).
+        if d >= 18.0:
+            dens = [s.denominator for s in sides]
+            if dens.count(dens[0]) == 3 and dens[0] in {2, 4, 5, 10}:
+                sides[2] = Grade6VisualFramework._fraction_side_for_difficulty(
+                    settings, allow_whole=False
+                )
+        return sides[0], sides[1], sides[2]
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from ..diagrams.charts import dot_plot_svg, histogram_svg
@@ -4358,9 +6342,8 @@ class Grade6VisualFramework(NumberFramework):
 
         unit = random.choice(["cm", "in"])
         if self.mode in {"fraction_rectangle", "fraction_triangle", "fraction_prism"}:
-            a, b = self._positive_fraction(), self._positive_fraction()
             if self.mode == "fraction_prism":
-                c = self._positive_fraction()
+                a, b, c = self._prism_fraction_sides(settings)
                 volume = a * b * c
                 self._metadata = {
                     "diagram_svg": prism_svg(
@@ -4377,6 +6360,7 @@ class Grade6VisualFramework(NumberFramework):
                     f"Volume of prism with sides {a}, {b}, and {c} {unit}",
                     format_with_unit(frac_latex(volume), unit, power=3),
                 )
+            a, b = _fraction_pair_for_difficulty(settings)
             area = a * b if self.mode == "fraction_rectangle" else a * b / 2
             shape = "rectangle" if self.mode == "fraction_rectangle" else "right triangle"
             figure = (
@@ -4404,38 +6388,117 @@ class Grade6VisualFramework(NumberFramework):
             if self.mode == "tape":
                 return self._build_tape_diagram(settings)
 
-            parts = random.randint(2, 5)
-            solution = random.randint(2, 12)
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            d = max(0.0, settings_difficulty(settings, default=6.0))
+            # Effort: more equal parts, larger solution, then awkward totals.
+            if d < 4.0:
+                parts = random.randint(2, 3)
+                solution = random.randint(2, 6)
+            elif d < 10.0:
+                parts = random.randint(2, 4)
+                solution = random.randint(3, 10)
+            elif d < 16.0:
+                parts = random.randint(3, 6)
+                solution = random.randint(4, 14)
+            elif d < 22.0:
+                parts = random.randint(4, 7)
+                solution = random.randint(5, 18)
+            else:
+                parts = random.randint(5, 9)
+                solution = random.randint(6, 24)
             total = parts * solution
             self._metadata = {
                 "diagram_svg": hanger_svg(parts, total, inequality=inequality)
             }
-            relation = "\\le" if inequality else "="
-            answer_relation = "\\le" if inequality else "="
+            if inequality:
+                if d < 8:
+                    relation = "\\le"
+                elif d < 16:
+                    relation = random.choice(["\\le", "\\ge"])
+                else:
+                    relation = random.choice(["\\le", "\\ge"])
+                answer_relation = relation
+            else:
+                relation = "="
+                answer_relation = "="
             return (
                 f"\\text{{Use the diagram to solve }} {parts}x {relation} {total}.",
-                f"Solve {parts}x {'<=' if inequality else '='} {total}",
+                f"Solve {parts}x {relation.replace(chr(92), '')} {total}",
                 f"x {answer_relation} {solution}" if inequality else str(solution),
             )
 
         if self.mode == "area_model_algebraic":
-            outer = random.randint(2, 8)
-            constant = random.randint(2, 9)
-            self._metadata = {"diagram_svg": area_model_svg(str(outer), "x", str(constant))}
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            d = max(0.0, settings_difficulty(settings, default=6.0))
+            # Effort: small positive expand → larger coeffs → subtraction inside
+            # → negative outer / larger awkward products (not magnitude alone).
+            if d < 4.0:
+                outer = random.randint(2, 4)
+                constant = random.randint(1, 5)
+                sign = "+"
+            elif d < 10.0:
+                outer = random.randint(2, 7)
+                constant = random.randint(2, 9)
+                sign = "+"
+            elif d < 16.0:
+                outer = random.randint(3, 9)
+                constant = random.randint(2, 12)
+                sign = "-" if random.random() < 0.55 else "+"
+            elif d < 22.0:
+                outer = random.randint(4, 12)
+                constant = random.randint(3, 15)
+                sign = "-" if random.random() < 0.7 else "+"
+                if random.random() < 0.35:
+                    outer = -outer
+            else:
+                outer = random.randint(5, 15)
+                if random.random() < 0.5:
+                    outer = -outer
+                constant = random.randint(4, 18)
+                sign = "-" if random.random() < 0.75 else "+"
+            inner_const = constant if sign == "+" else -constant
+            expanded_const = outer * inner_const
+            outer_lab = str(outer)
+            const_lab = str(constant) if sign == "+" else f"-{constant}"
+            # SVG labels stay positive-looking; prompt carries the signed form.
+            self._metadata = {
+                "diagram_svg": area_model_svg(str(abs(outer)), "x", str(constant))
+            }
+            prompt_expr = (
+                f"{outer_lab}(x + {constant})"
+                if sign == "+"
+                else f"{outer_lab}(x - {constant})"
+            )
             return (
-                f"\\text{{Use the area model to expand }} {outer}(x + {constant}).",
-                f"Expand {outer}(x + {constant})",
-                f"{format_linear_latex(outer, outer * constant)}",
+                f"\\text{{Use the area model to expand }} {prompt_expr}.",
+                f"Expand {prompt_expr}",
+                f"{format_linear_latex(outer, expanded_const)}",
             )
 
         if self.mode in {"grid_polygon", "shaded_polygon"}:
-            points, area = _random_grid_polygon(settings)
+            points, area, kind = _random_grid_polygon(settings)
+            shape_label = {
+                "square": "square",
+                "rectangle": "rectangle",
+                "triangle": "triangle",
+                "parallelogram": "parallelogram",
+                "trapezoid": "trapezoid",
+                "l_shape": "L-shaped polygon",
+                "irregular_quad": "irregular quadrilateral",
+            }.get(kind, "polygon")
             self._metadata = {
                 "diagram_svg": grid_polygon_svg(
                     points, shaded=self.mode == "shaded_polygon"
-                )
+                ),
+                "shape_kind": kind,
+                "area": str(area),
             }
-            noun = "shaded region" if self.mode == "shaded_polygon" else "polygon"
+            if self.mode == "shaded_polygon":
+                noun = f"shaded {shape_label}"
+            else:
+                noun = shape_label
             return (
                 f"\\text{{Find the area of the {noun} on the grid.}}",
                 f"Area of the {noun} on the grid ({points})",
@@ -4465,8 +6528,13 @@ class Grade6VisualFramework(NumberFramework):
             )
 
         if self.mode in {"isometric", "isometric_measure"}:
-            length, width, height = (random.randint(2, 5) for _ in range(3))
-            self._metadata = {"diagram_svg": prism_svg(str(length), str(width), str(height))}
+            from .difficulty_budget import settings_difficulty
+
+            length, width, height = _isometric_dims(settings)
+            self._metadata = {
+                "diagram_svg": prism_svg(str(length), str(width), str(height)),
+                "dims": [length, width, height],
+            }
             if self.mode == "isometric":
                 return (
                     "\\text{Sketch/copy the rectangular prism shown in the isometric drawing.}",
@@ -4475,7 +6543,18 @@ class Grade6VisualFramework(NumberFramework):
                 )
             volume = length * width * height
             surface = 2 * (length * width + length * height + width * height)
-            ask_volume = random.choice([True, False])
+            d = settings_difficulty(settings, default=8.0)
+            # Volume (count cubes) is easier than careful face counting for SA.
+            if d < 5:
+                ask_volume_p = 0.8
+            elif d < 12:
+                ask_volume_p = 0.55
+            elif d < 18:
+                ask_volume_p = 0.35
+            else:
+                ask_volume_p = 0.22
+            ask_volume = random.random() < ask_volume_p
+            self._metadata["ask"] = "volume" if ask_volume else "surface_area"
             return (
                 f"\\text{{Use the drawing to find the {'volume' if ask_volume else 'surface area'}.}}",
                 "Measure the rectangular prism shown",
@@ -4483,7 +6562,8 @@ class Grade6VisualFramework(NumberFramework):
             )
 
         if self.mode == "classify_polyhedron":
-            kind = random.choice(POLYHEDRON_KINDS)
+            pool = _polyhedron_kind_pool(settings)
+            kind = random.choice(pool)
             answer = rf"\text{{{kind}}}"
             distractors = [
                 rf"\text{{{other}}}" for other in POLYHEDRON_KINDS if other != kind
@@ -4492,6 +6572,7 @@ class Grade6VisualFramework(NumberFramework):
             self._metadata = {
                 "diagram_svg": polyhedron_svg(kind),
                 "mc_distractors": distractors[:3],
+                "kind": kind,
             }
             return (
                 "\\text{Classify the polyhedron shown.}",
@@ -4500,11 +6581,49 @@ class Grade6VisualFramework(NumberFramework):
             )
 
         if self.mode in {"draw_dot_plot", "draw_histogram"}:
-            values = [random.randint(1, 12) for _ in range(random.randint(6, 10))]
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            d = settings_difficulty(settings, default=6.0)
+            v_max = max(6, int(8 + 0.7 * d))
+            # Clustered easy → more distinct values at high D (more axis ticks to place).
+            if d < 5.0:
+                pool = list(range(1, min(v_max, 6) + 1))
+                n_lo, n_hi = 4, 6
+            elif d < 10.0:
+                pool = list(range(1, min(v_max, 10) + 1))
+                n_lo, n_hi = 6, 9
+            elif d < 16.0:
+                pool = list(range(1, v_max + 1))
+                n_lo, n_hi = 8, 12
+            else:
+                # Sparse support: pick a subset of values across a wider range.
+                span = list(range(1, v_max + 1))
+                k = max(4, min(len(span), int(5 + d / 5)))
+                pool = sorted(random.sample(span, k))
+                n_lo, n_hi = 10, max(10, int(12 + d / 5))
+            n = random.randint(n_lo, n_hi)
+            values = [random.choice(pool) for _ in range(n)]
             listed = ",\\ ".join(str(v) for v in values)
-            include_axis = bool(settings.get("include_axis", True))
+            # Explicit setting wins; else drop blank axis scaffolding at high D.
+            if "include_axis" in settings:
+                include_axis = bool(settings.get("include_axis"))
+            else:
+                include_axis = d < 14.0
             lo, hi = min(values), max(values)
-            bins = [(float(i), float(i + 2)) for i in range(lo - lo % 2, hi + 2, 2)]
+            if self.mode == "draw_histogram":
+                if d < 6.0:
+                    bin_width = 2
+                elif d < 12.0:
+                    bin_width = random.choice([2, 3])
+                else:
+                    bin_width = random.choice([2, 3, 4, 5])
+                start = (lo // bin_width) * bin_width
+                bins = [
+                    (float(i), float(i + bin_width))
+                    for i in range(start, hi + bin_width, bin_width)
+                ]
+            else:
+                bins = [(float(i), float(i + 2)) for i in range(lo - lo % 2, hi + 2, 2)]
 
             if self.mode == "draw_dot_plot":
                 label = "dot plot"
@@ -4538,7 +6657,7 @@ class Grade6VisualFramework(NumberFramework):
             axis_hint = (
                 r" \text{Use the blank axis provided.}"
                 if include_axis
-                else ""
+                else r" \text{Draw and label your own axis.}"
             )
             return (
                 f"\\text{{Create a {label} for the data set }} \\{{{listed}\\}}."
@@ -4551,30 +6670,37 @@ class Grade6VisualFramework(NumberFramework):
     def _build_tape_diagram(self, settings: dict) -> tuple[str, str, str | None]:
         """Uniform equal-x boxes or non-uniform segments with one missing piece."""
         from ..diagrams.grade6_figures import tape_svg
+        from question_engine.frameworks.difficulty_budget import settings_difficulty
 
-        tier = _difficulty_band(settings)
+        d = max(0.0, settings_difficulty(settings, default=6.0))
         forced = str(settings.get("tape_style") or "").strip().lower()
+        # Continuous style mix: uniform → mixed → nonuniform-only.
         if forced in {"uniform", "nonuniform"}:
             style = forced
-        elif forced == "mixed" or tier == "medium":
+        elif forced == "mixed":
             style = random.choice(["uniform", "nonuniform"])
-        elif tier == "easy":
+        elif d < 5.0:
             style = "uniform"
-        elif tier == "hard":
-            style = "nonuniform"
-        else:
+        elif d < 12.0:
             style = random.choice(["uniform", "nonuniform"])
+        elif d < 18.0:
+            style = "nonuniform" if random.random() < 0.7 else "uniform"
+        else:
+            style = "nonuniform"
 
         if style == "uniform":
-            if tier == "easy":
+            if d < 5.0:
                 parts = random.randint(2, 3)
                 solution = random.randint(2, 8)
-            elif tier == "hard":
-                parts = random.randint(3, 6)
-                solution = random.randint(4, 15)
-            else:
+            elif d < 12.0:
                 parts = random.randint(2, 5)
                 solution = random.randint(2, 12)
+            elif d < 18.0:
+                parts = random.randint(3, 6)
+                solution = random.randint(4, 16)
+            else:
+                parts = random.randint(4, 8)
+                solution = random.randint(5, 20)
             total = parts * solution
             self._metadata = {
                 "diagram_svg": tape_svg(
@@ -4591,12 +6717,15 @@ class Grade6VisualFramework(NumberFramework):
             )
 
         # Non-uniform: known sizes inside segments, one missing piece.
-        if tier == "hard":
-            n_segs = random.randint(3, 5)
-            value_lo, value_hi = 4, 28
-        else:
+        if d < 10.0:
             n_segs = random.randint(3, 4)
-            value_lo, value_hi = 2, 16
+            value_lo, value_hi = 2, 14
+        elif d < 18.0:
+            n_segs = random.randint(3, 5)
+            value_lo, value_hi = 3, 22
+        else:
+            n_segs = random.randint(4, 6)
+            value_lo, value_hi = 4, 32
 
         values = [random.randint(value_lo, value_hi) for _ in range(n_segs)]
         # Keep segments visibly distinct so proportional widths read clearly.
@@ -4691,7 +6820,7 @@ def _intro_percent_ladder(settings: dict) -> dict[str, Any]:
         }
 
     # --- Mid classroom: awkward % on hundred grid / bar -------------------
-    if d <= 16.0 + 1e-9:
+    if d <= 12.0 + 1e-9:
         percent = _intro_percent_pick_awkward()
         figure = random.choice(["hundred_grid", "hundred_grid", "bar"])
         return {
@@ -4703,10 +6832,24 @@ def _intro_percent_ladder(settings: dict) -> dict[str, Any]:
             "segments": 10,
         }
 
-    # --- Hard classroom (~D20): awkward % + circle estimation -------------
+    # --- Upper-mid (~D15): awkward % + bar estimation ---------------------
+    if d <= 18.0 + 1e-9:
+        percent = _intro_percent_pick_awkward()
+        figure = random.choice(["bar", "bar", "hundred_grid"])
+        return {
+            "mode": "single",
+            "percent": percent,
+            "figure": figure,
+            "rows": 10,
+            "cols": 10,
+            "segments": random.choice([8, 10]),
+            "show_ticks": True,
+        }
+
+    # --- Hard classroom (~D20–25): awkward % + circle estimation ----------
     if d <= 28.0 + 1e-9:
         percent = _intro_percent_pick_awkward()
-        figure = random.choice(["bar", "circle", "circle", "hundred_grid"])
+        figure = random.choice(["circle", "circle", "bar", "hundred_grid"])
         segments = random.choice([8, 10, 10]) if figure == "bar" else 10
         return {
             "mode": "single",
@@ -4855,18 +6998,36 @@ class IntroductionToPercentsFramework(NumberFramework):
         show_ticks = bool(spec.get("show_ticks", True))
         label_ticks = bool(spec.get("label_ticks", True))
 
+        from ..diagrams.figure_families import sample_figure_from_settings
+
+        family = sample_figure_from_settings("percent_shade", settings, figure=figure)
+        shade_pattern = str(family.params.get("shade_pattern", "row"))
+        start_angle = float(family.params.get("start_angle_deg", -90.0))
+
         if figure in {"grid", "hundred_grid"}:
             if figure == "hundred_grid" or (rows == 10 and cols == 10):
-                blank_svg = percent_hundred_grid_svg(percent, blank=True)
-                shaded_svg = percent_hundred_grid_svg(percent, blank=False)
+                blank_svg = percent_hundred_grid_svg(
+                    percent, blank=True, shade_pattern=shade_pattern
+                )
+                shaded_svg = percent_hundred_grid_svg(
+                    percent, blank=False, shade_pattern=shade_pattern
+                )
                 figure_out = "hundred_grid"
                 figure_label = "100-square grid"
             else:
                 blank_svg = percent_grid_svg(
-                    percent, blank=True, rows=rows, cols=cols
+                    percent,
+                    blank=True,
+                    rows=rows,
+                    cols=cols,
+                    shade_pattern=shade_pattern,
                 )
                 shaded_svg = percent_grid_svg(
-                    percent, blank=False, rows=rows, cols=cols
+                    percent,
+                    blank=False,
+                    rows=rows,
+                    cols=cols,
+                    shade_pattern=shade_pattern,
                 )
                 figure_out = "grid"
                 figure_label = f"{rows}×{cols} grid"
@@ -4881,10 +7042,16 @@ class IntroductionToPercentsFramework(NumberFramework):
             figure_label = "percent bar"
         else:
             blank_svg = percent_circle_svg(
-                percent, blank=True, show_ticks=show_ticks
+                percent,
+                blank=True,
+                show_ticks=show_ticks,
+                start_angle_deg=start_angle,
             )
             shaded_svg = percent_circle_svg(
-                percent, blank=False, show_ticks=show_ticks
+                percent,
+                blank=False,
+                show_ticks=show_ticks,
+                start_angle_deg=start_angle,
             )
             figure_out = "circle"
             figure_label = "circle"
@@ -4893,6 +7060,7 @@ class IntroductionToPercentsFramework(NumberFramework):
             "kind": "percent_shade",
             "figure": figure_out,
             "percent": percent,
+            "shade_pattern": shade_pattern,
         }
         if figure_out in {"grid", "hundred_grid"}:
             stimulus["rows"] = rows
@@ -4907,6 +7075,7 @@ class IntroductionToPercentsFramework(NumberFramework):
                 "kind": "percent_shade",
                 "figure": figure_out,
                 "percent": percent,
+                "shade_pattern": shade_pattern,
                 **(
                     {"rows": rows, "cols": cols}
                     if figure_out in {"grid", "hundred_grid"}
@@ -4914,9 +7083,10 @@ class IntroductionToPercentsFramework(NumberFramework):
                 ),
             },
             "stimulus": stimulus,
+            **family.to_metadata_extras(),
         }
         return (
-            f"\\text{{Shade the figure to represent }} {percent}\\%.",
+            f"\\text{{Shade the {figure_label} to represent }} {percent}\\%.",
             f"Shade the {figure_label} to represent {percent}%",
             f"{percent}\\%",
         )

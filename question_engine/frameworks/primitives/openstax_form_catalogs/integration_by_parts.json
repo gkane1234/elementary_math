@@ -1,0 +1,174 @@
+{
+  "catalog_id": "integration_by_parts",
+  "title": "OpenStax integration by parts — LIATE form taxonomy",
+  "version": 1,
+  "source": {
+    "primary": {
+      "book": "calculus-volume-2",
+      "slug": "3-1-integration-by-parts",
+      "title": "3.1 Integration by Parts",
+      "url": "https://openstax.org/books/calculus-volume-2/pages/3-1-integration-by-parts",
+      "stage1": null,
+      "note": "Section not yet in stage-1 mining dump; taxonomy from OpenStax Vol.2 §3.1"
+    },
+    "related": [
+      {
+        "book": "calculus-volume-2",
+        "slug": "3-2-trigonometric-integrals",
+        "note": "sec³ uses parts / reduction"
+      }
+    ]
+  },
+  "taxonomy_notes": [
+    "LIATE families: poly×ln, poly×exp, poly×trig, tabular/repeated parts, cyclic e^x sin/cos.",
+    "Sampler selects form_id by D-weighted weights among implemented entries."
+  ],
+  "forms": [
+    {
+      "form_id": "ln_alone",
+      "description": "∫ ln x dx — u=ln, dv=dx",
+      "strategy": "parts_ln",
+      "constraints": { "u": "ln", "dv": "1" },
+      "d_min": 0,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 classic ∫ ln x"
+    },
+    {
+      "form_id": "poly1_ln",
+      "description": "∫ x ln x dx",
+      "strategy": "parts_poly_ln",
+      "constraints": { "u": "ln", "dv": "x" },
+      "d_min": 4,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 poly × ln"
+    },
+    {
+      "form_id": "poly1_exp",
+      "description": "∫ x e^x dx",
+      "strategy": "parts_poly_exp",
+      "constraints": { "u": "x", "dv": "e^x" },
+      "d_min": 2,
+      "d_weight": 2.2,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 poly × exp"
+    },
+    {
+      "form_id": "poly1_sin",
+      "description": "∫ x sin x dx",
+      "strategy": "parts_poly_trig",
+      "constraints": { "u": "x", "dv": "sin" },
+      "d_min": 2,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 poly × sin"
+    },
+    {
+      "form_id": "poly1_cos",
+      "description": "∫ x cos x dx",
+      "strategy": "parts_poly_trig",
+      "constraints": { "u": "x", "dv": "cos" },
+      "d_min": 2,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 poly × cos"
+    },
+    {
+      "form_id": "poly2_exp",
+      "description": "∫ x² e^x dx — tabular / repeated parts",
+      "strategy": "tabular_parts",
+      "constraints": { "u": "x^2", "dv": "e^x", "parts_depth": 2 },
+      "d_min": 10,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 repeated / tabular"
+    },
+    {
+      "form_id": "poly2_sin",
+      "description": "∫ x² sin x dx — repeated parts",
+      "strategy": "tabular_parts",
+      "constraints": { "u": "x^2", "dv": "sin", "parts_depth": 2 },
+      "d_min": 14,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 repeated poly×trig"
+    },
+    {
+      "form_id": "cyclic_exp_sin",
+      "description": "∫ e^x sin x dx — cyclic parts",
+      "strategy": "cyclic_parts",
+      "constraints": { "kind": "e^x_sin" },
+      "d_min": 12,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 cyclic e^x sin x"
+    },
+    {
+      "form_id": "cyclic_exp_cos",
+      "description": "∫ e^x cos x dx — cyclic parts",
+      "strategy": "cyclic_parts",
+      "constraints": { "kind": "e^x_cos" },
+      "d_min": 12,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 cyclic e^x cos x"
+    },
+    {
+      "form_id": "arctan_alone",
+      "description": "∫ arctan x dx — parts with invtrig",
+      "strategy": "parts_invtrig",
+      "constraints": { "u": "arctan", "dv": "1" },
+      "d_min": 14,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 invtrig × 1"
+    },
+    {
+      "form_id": "poly1_arcsin",
+      "description": "∫ x arcsin x dx",
+      "strategy": "parts_poly_invtrig",
+      "constraints": { "u": "arcsin", "dv": "x" },
+      "d_min": 16,
+      "d_weight": 1.0,
+      "generation_status": "stub",
+      "tricks": ["parts"],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 poly × arcsin",
+      "gap_reason": "Antiderivative messier; defer until answer-key template ready"
+    },
+    {
+      "form_id": "sec3_via_parts",
+      "description": "∫ sec³ x via parts (shared with trig integrals)",
+      "strategy": "parts_sec3",
+      "constraints": { "kind": "sec3" },
+      "d_min": 16,
+      "d_weight": 0.8,
+      "generation_status": "deferred",
+      "tricks": ["parts", "trig"],
+      "example_item_ids": [],
+      "openstax_case": "Generated under trig_integrals.sec3_reduction",
+      "gap_reason": "Owned by trig_integrals catalog to avoid double-routing"
+    }
+  ]
+}

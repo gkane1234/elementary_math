@@ -17,8 +17,10 @@ from typing import Any, Literal, Sequence
 
 from question_engine.frameworks.difficulty_budget import (
     DifficultyFactor,
+    dual_axis_rngs,
     select_upgrades,
     settings_difficulty,
+    settings_spec_difficulty,
 )
 from question_engine.frameworks.primitives.difficulty_knobs import fget
 from question_engine.frameworks.primitives import poly_expression as poly_expr
@@ -1047,8 +1049,67 @@ def _sample_via_spec(
     want_mix: bool,
     allow_fn_power: bool = False,
     derivative_order: int = 1,
+    catalog_fid: str = "",
 ) -> tuple[DerivativeExpr, dict[str, Any]]:
-    """Route power / product / alg-chain / specials / general through ExpressionSpec packs."""
+    """Route power / product / alg-chain / specials / general through ExpressionSpec packs.
+
+    When ``catalog_fid`` maps to an ``expr_skeleton`` pattern, fill that pattern
+    (OpenStax form → structure → hole fill) and skip pack-only sampling.
+    """
+    order = max(1, int(derivative_order))
+    if catalog_fid:
+        from question_engine.frameworks.primitives.expr_skeleton import (
+            has_form_pattern,
+            sample_from_form,
+        )
+
+        if has_form_pattern(catalog_fid):
+            try:
+                _skel_allows = {
+                    "allow_trig": bool(allow.allow_trig) or "trig" in classes,
+                    "allow_exp": bool(allow.allow_exp) or "exp" in classes,
+                    "allow_log": bool(allow.allow_log) or "log" in classes,
+                    "allow_roots": bool(structure.get("allow_roots"))
+                    or "roots" in classes,
+                    "allow_invtrig": bool(allow.allow_invtrig) or "invtrig" in classes,
+                }
+                expr_ast, _d_ast, body, deriv, inv = sample_from_form(
+                    catalog_fid,
+                    conceptual_d=float(d),
+                    allows=_skel_allows,
+                    rng=rng,
+                    var=var,
+                    derivative_order=order,
+                )
+                inv = dict(inv)
+                inv.setdefault(
+                    "spec_snapshot",
+                    {
+                        "pack": "expr_skeleton",
+                        "skeleton_pattern": inv.get("skeleton_pattern"),
+                        "skeleton_kind": inv.get("skeleton_kind"),
+                        "derivative_order": order,
+                        "variable": var,
+                        "coef_abs_max": coef_hi,
+                        "degree_max": power_max,
+                    },
+                )
+                methods = frozenset(inv.get("methods_used") or [])
+                classes_set = frozenset(inv.get("function_classes") or [])
+                pair = poly_expr.PolyLatexPair(
+                    body_latex=body,
+                    deriv_latex=deriv,
+                    function_classes=classes_set
+                    or poly_expr.function_classes_of(expr_ast),
+                    methods_used=methods or poly_expr.methods_used_of(expr_ast),
+                    chain_depth=int(
+                        inv.get("chain_depth") or poly_expr.chain_depth_of(expr_ast)
+                    ),
+                )
+                return _from_poly_pair(pair), inv
+            except Exception:
+                pass
+
     fn_tokens = _fn_class_names([c for c in classes if c != "algebraic"])
 
     require_fn: str | None = None
@@ -1108,7 +1169,6 @@ def _sample_via_spec(
     else:
         mix = bool(want_mix or general_topic) and len(fn_tokens) >= 2
 
-    order = max(1, int(derivative_order))
     # Fn-powers unlock early; allowed on order=2 (safer bases) but not order≥3
     fn_power = bool(allow_fn_power and order <= 2 and d >= 6)
     exp_ov = _exponent_overrides(structure)
@@ -1300,7 +1360,10 @@ def sample_derivative_expression(
     rng: random.Random | None = None,
 ) -> DerivativeSample:
     """Sample one derivative problem respecting allow-lists + continuous D."""
-    rng = rng or _rng(settings)
+    if rng is None:
+        rng, dress_rng = dual_axis_rngs(settings, xor_mask=0xD311)
+    else:
+        dress_rng = rng
     key = generator_key or resolve_generator_key(topic)
     allow = resolve_derivative_allows(settings, generator_key=key, topic=topic)
     d = settings_difficulty(settings, default=6.0)
@@ -1465,70 +1528,155 @@ def sample_derivative_expression(
             want_mix=want_mix,
             allow_fn_power=allow_fn_power,
             derivative_order=derivative_order,
+            catalog_fid=catalog_fid,
         )
     elif force_quotient or (use_quotient and not force_product and not force_chain):
-        if want_mix:
-            c1, c2 = rng.sample(classes, 2) if len(classes) >= 2 else (classes[0], "algebraic")
-            num = _pick_atom(
-                rng, var, coef_hi, power_max,
-                classes=[c1], prefer_chain=prefer_chain, extra_term=False,
-            )
-            den = _pick_atom(
-                rng, var, coef_hi, power_max,
-                classes=[c2], prefer_chain=False, extra_term=False,
-            )
+        # Prefer OpenStax quotient patterns when mapped.
+        from question_engine.frameworks.primitives.expr_skeleton import (
+            has_form_pattern,
+            sample_from_form,
+        )
+
+        if catalog_fid and has_form_pattern(catalog_fid):
+            try:
+                _skel_allows = {
+                    "allow_trig": bool(allow.allow_trig) or "trig" in classes,
+                    "allow_exp": bool(allow.allow_exp) or "exp" in classes,
+                    "allow_log": bool(allow.allow_log) or "log" in classes,
+                    "allow_roots": bool(structure.get("allow_roots"))
+                    or "roots" in classes,
+                    "allow_invtrig": bool(allow.allow_invtrig) or "invtrig" in classes,
+                }
+                expr_ast, _d_ast, body_q, deriv_q, inv_q = sample_from_form(
+                    catalog_fid,
+                    conceptual_d=float(d),
+                    allows=_skel_allows,
+                    rng=rng,
+                    var=var,
+                    derivative_order=1,
+                )
+                inv_q = dict(inv_q)
+                inv_q.setdefault(
+                    "spec_snapshot",
+                    {
+                        "pack": "expr_skeleton",
+                        "skeleton_pattern": inv_q.get("skeleton_pattern"),
+                        "skeleton_kind": inv_q.get("skeleton_kind"),
+                        "derivative_order": 1,
+                        "variable": var,
+                        "coef_abs_max": coef_hi,
+                        "degree_max": power_max,
+                        "allow_quotient": True,
+                    },
+                )
+                pair = poly_expr.PolyLatexPair(
+                    body_latex=body_q,
+                    deriv_latex=deriv_q,
+                    function_classes=frozenset(
+                        inv_q.get("function_classes")
+                        or poly_expr.function_classes_of(expr_ast)
+                    ),
+                    methods_used=frozenset(
+                        inv_q.get("methods_used")
+                        or poly_expr.methods_used_of(expr_ast)
+                    ),
+                    chain_depth=int(
+                        inv_q.get("chain_depth")
+                        or poly_expr.chain_depth_of(expr_ast)
+                    ),
+                )
+                expr = _from_poly_pair(pair)
+                inventory = inv_q
+                inventory["derivative_order"] = 1
+            except Exception:
+                catalog_fid_quot_fail = True
+            else:
+                catalog_fid_quot_fail = False
         else:
-            num = _pick_atom(
-                rng, var, coef_hi, power_max,
-                classes=classes, prefer_chain=prefer_chain, extra_term=extra_term,
-            )
-            den = _atom_linear(rng, var, coef_hi)
-        expr = _quotient(num, den)
-        derivative_order = 1  # quotient path stays first-order
-        # Legacy (non-Spec) quotient: still emit joinable structure / effort hints.
-        inventory = {
-            "shape_id": "quotient",
-            "nest_depth": int(expr.chain_depth),
-            "n_terms": 2,
-            "n_factors": 0,
-            "has_fn_power": False,
-            "derivative_order": 1,
-            "effort_features": {
-                "answer_len": len(expr.deriv_latex or ""),
+            catalog_fid_quot_fail = True
+
+        if catalog_fid_quot_fail:
+            if want_mix:
+                c1, c2 = (
+                    rng.sample(classes, 2)
+                    if len(classes) >= 2
+                    else (classes[0], "algebraic")
+                )
+                num = _pick_atom(
+                    rng,
+                    var,
+                    coef_hi,
+                    power_max,
+                    classes=[c1],
+                    prefer_chain=prefer_chain,
+                    extra_term=False,
+                )
+                den = _pick_atom(
+                    rng,
+                    var,
+                    coef_hi,
+                    power_max,
+                    classes=[c2],
+                    prefer_chain=False,
+                    extra_term=False,
+                )
+            else:
+                num = _pick_atom(
+                    rng,
+                    var,
+                    coef_hi,
+                    power_max,
+                    classes=classes,
+                    prefer_chain=prefer_chain,
+                    extra_term=extra_term,
+                )
+                den = _atom_linear(rng, var, coef_hi)
+            expr = _quotient(num, den)
+            derivative_order = 1  # quotient path stays first-order
+            # Legacy (non-Spec) quotient: still emit joinable structure / effort hints.
+            inventory = {
+                "shape_id": "quotient",
                 "nest_depth": int(expr.chain_depth),
-                "chain_applications": int(expr.chain_depth),
-                "product_applications": 0,
-                "quotient_applications": 1,
-                "n_factors": 0,
                 "n_terms": 2,
-                "degree_max": power_max,
-                "coef_abs_max": coef_hi,
+                "n_factors": 0,
                 "has_fn_power": False,
                 "derivative_order": 1,
-                "methods": sorted(expr.methods_used),
-                "n_fn_nodes": sum(
-                    1
-                    for c in expr.function_classes
-                    if c not in {"algebraic", "roots"}
-                ),
-            },
-            # Not a full ExpressionSpec; record resolved exponent / method θ instead.
-            "spec_snapshot": {
-                "pack": "legacy_quotient",
-                "allow_quotient": True,
-                "require_quotient": bool(allow.require_quotient),
-                "allow_integer_exponents": True,
-                "allow_fractional_exponents": bool(structure.get("allow_roots")),
-                "allow_irrational_exponents": False,
-                "allow_negative_exponents": bool(
-                    structure.get("allow_negative_exponents")
-                ),
-                "derivative_order": 1,
-                "coef_abs_max": coef_hi,
-                "degree_max": power_max,
-                "variable": var,
-            },
-        }
+                "effort_features": {
+                    "answer_len": len(expr.deriv_latex or ""),
+                    "nest_depth": int(expr.chain_depth),
+                    "chain_applications": int(expr.chain_depth),
+                    "product_applications": 0,
+                    "quotient_applications": 1,
+                    "n_factors": 0,
+                    "n_terms": 2,
+                    "degree_max": power_max,
+                    "coef_abs_max": coef_hi,
+                    "has_fn_power": False,
+                    "derivative_order": 1,
+                    "methods": sorted(expr.methods_used),
+                    "n_fn_nodes": sum(
+                        1
+                        for c in expr.function_classes
+                        if c not in {"algebraic", "roots"}
+                    ),
+                },
+                # Not a full ExpressionSpec; record resolved exponent / method θ instead.
+                "spec_snapshot": {
+                    "pack": "legacy_quotient",
+                    "allow_quotient": True,
+                    "require_quotient": bool(allow.require_quotient),
+                    "allow_integer_exponents": True,
+                    "allow_fractional_exponents": bool(structure.get("allow_roots")),
+                    "allow_irrational_exponents": False,
+                    "allow_negative_exponents": bool(
+                        structure.get("allow_negative_exponents")
+                    ),
+                    "derivative_order": 1,
+                    "coef_abs_max": coef_hi,
+                    "degree_max": power_max,
+                    "variable": var,
+                },
+            }
     else:
         expr, inventory = _sample_via_spec(
             rng,
@@ -1548,10 +1696,49 @@ def sample_derivative_expression(
             want_mix=want_mix,
             allow_fn_power=allow_fn_power,
             derivative_order=derivative_order,
+            catalog_fid=catalog_fid,
         )
 
     order = int(inventory.get("derivative_order") or derivative_order or 1)
     body = expr.body_latex
+    undressed_body = body
+    # Spec identity extras (thin): demoted cancel wraps stay weight 0.
+    _spec_d = settings_spec_difficulty(settings)
+    if _spec_d is not None and float(_spec_d) > 0:
+        from question_engine.frameworks.primitives.expression_flesh import (
+            flesh_from_skeleton,
+            flesh_meta,
+            stamp_flesh_sources,
+        )
+
+        dressed_body, wraps = flesh_from_skeleton(
+            body,
+            float(_spec_d),
+            dress_rng,
+            var=var,
+            leaf=key,
+            allows={
+                "allow_trig": "trig" in classes,
+                "allow_exp": "exp" in classes,
+                "allow_log": "log" in classes,
+                "allow_roots": "roots" in classes,
+                "allow_invtrig": "invtrig" in classes,
+            },
+        )
+        if wraps:
+            body = dressed_body
+            expr = DerivativeExpr(
+                body_latex=body,
+                deriv_latex=expr.deriv_latex,
+                function_classes=expr.function_classes,
+                methods_used=expr.methods_used,
+                chain_depth=expr.chain_depth,
+            )
+            inventory = dict(inventory)
+            inventory.update(
+                flesh_meta(undressed_body=undressed_body, wrappers=wraps)
+            )
+            inventory["difficulty_sources_extra"] = stamp_flesh_sources(wraps)
     if order >= 3:
         prompt = rf"\frac{{d^{{3}}}}{{d{var}^{{3}}}}\left[{body}\right]"
     elif order == 2:
@@ -1587,6 +1774,18 @@ def sample_derivative_expression(
             "has_fn_power",
             "effort_features",
             "spec_snapshot",
+            "core_form_id",
+            "skeleton_source",
+            "skeleton_pattern",
+            "skeleton_kind",
+            "productions",
+            "shared_inner",
+            "undressed_body_latex",
+            "wrappers_applied",
+            "spec_answer_preserved",
+            "expression_flesh",
+            "spec_presentation",
+            "difficulty_sources_extra",
         ):
             if field_name in inventory:
                 meta[field_name] = inventory[field_name]

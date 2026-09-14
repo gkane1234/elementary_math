@@ -995,6 +995,10 @@ _FORM_BASE_COST_EXACT: dict[str, float] = {
     "piecewise_jump_linear": 6.0,
     "piecewise_jump_poly": 10.0,
     "continuity_classify": 0.0,
+    "continuity_classify_continuous": 0.0,
+    "continuity_classify_removable": 0.0,
+    "continuity_classify_jump": 0.0,
+    "continuity_classify_essential": 0.0,
 }
 
 _FORM_BASE_COST_PREFIX: tuple[tuple[str, float], ...] = (

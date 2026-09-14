@@ -1154,27 +1154,39 @@ def _sample_essential(
 
 
 def _sample_continuity(
-    rng: random.Random, spec: LimitSpec
+    rng: random.Random,
+    spec: LimitSpec,
+    *,
+    force_form_id: str | None = None,
 ) -> tuple[str, str, str, str, dict[str, Any]]:
     """Classify continuity at a point: continuous / removable / jump / essential."""
     var = spec.variable
     a = rng.randint(-spec.approach_abs_max, spec.approach_abs_max)
     d = float(spec.d_spend)
 
-    pool: list[str] = ["removable"]
-    if d < 4:
-        pool = ["removable", "continuous"]
-    elif d < 10:
-        pool = ["removable", "continuous", "jump"]
-    else:
-        pool = ["removable", "continuous", "jump"]
+    kind_map = {
+        "continuity_classify_continuous": "continuous",
+        "continuity_classify_removable": "removable",
+        "continuity_classify_jump": "jump",
+        "continuity_classify_essential": "essential",
+    }
+    leftover_kinds = {"continuous", "removable"}
+    # Catalog leftover linear-continuous / rem_diff_sq: d_max=10 — not high-D.
+    if d > 10:
+        pool = ["jump"]
         if spec.allow_essential:
             pool.append("essential")
-    # Weight toward variety at mid/high D (avoid removable-only stuck seeds).
-    if d >= 8:
-        kind = rng.choice(pool)
+    elif d >= 8:
+        pool = ["removable", "continuous", "jump"]
     else:
-        kind = rng.choice(pool if d >= 2 else ["removable", "continuous"])
+        pool = ["removable", "continuous"]
+
+    if force_form_id and force_form_id in kind_map:
+        kind = kind_map[force_form_id]
+        if d > 10 and kind in leftover_kinds:
+            kind = rng.choice(pool)
+    else:
+        kind = rng.choice(pool)
 
     if kind == "continuous":
         b = _coef(rng, spec.coef_abs_max)
@@ -1214,7 +1226,8 @@ def _sample_continuity(
     else:
         left_val = _coef(rng, spec.coef_abs_max, exclude_zero=False)
         right_val = left_val + _coef(rng, max(2, spec.coef_abs_max))
-        if d >= 8 and rng.random() < 0.5:
+        # High D: leftover const||const locked out (existing linear core).
+        if d > 10 or (d >= 8 and rng.random() < 0.5):
             m = _coef(rng, spec.coef_abs_max)
             b = left_val - m * a
             left_tex = format_linear_latex(m, b, variable=var)
@@ -1688,8 +1701,10 @@ def sample_limit_expression(
         prompt, answer, form, tech, extra = _sample_lhopital(
             rng, spec, purchased=purchased, force_form_id=catalog_fid or None
         )
-    elif catalog_fid == "continuity_classify" or key == "limit_continuity":
-        prompt, answer, form, tech, extra = _sample_continuity(rng, spec)
+    elif catalog_fid.startswith("continuity_classify") or key == "limit_continuity":
+        prompt, answer, form, tech, extra = _sample_continuity(
+            rng, spec, force_form_id=catalog_fid or None
+        )
     elif catalog_fid.startswith("inf_") or form == "rational_inf" or key == "limit_at_infinity":
         prompt, answer, form, tech, extra = _sample_infinity(
             rng, spec, force_form_id=catalog_fid or None

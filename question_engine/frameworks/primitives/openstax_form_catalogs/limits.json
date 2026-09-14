@@ -460,15 +460,50 @@
       "indeterminate_form": "∞/∞"
     },
     {
-      "form_id": "continuity_classify",
-      "description": "Classify continuity at a point",
+      "form_id": "continuity_classify_continuous",
+      "description": "Classify a linear (or low-degree poly) as continuous at a; D=0 old easy leftover, not high-D",
       "strategy": "continuity",
       "generator_keys": ["limit_continuity"],
       "d_min": 0,
+      "d_max": 10,
       "d_weight": 2.0,
       "generation_status": "implemented",
       "example_item_ids": [],
-      "openstax_case": "§2.4"
+      "openstax_case": "§2.4 continuous poly"
+    },
+    {
+      "form_id": "continuity_classify_removable",
+      "description": "Classify (x²−a²)/(x−a) hole as removable; D=0 old Mad-Lib leftover, not high-D",
+      "strategy": "continuity",
+      "generator_keys": ["limit_continuity"],
+      "d_min": 0,
+      "d_max": 10,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§2.4 removable"
+    },
+    {
+      "form_id": "continuity_classify_jump",
+      "description": "Classify piecewise jump (linear||const at high D)",
+      "strategy": "continuity",
+      "generator_keys": ["limit_continuity"],
+      "d_min": 8,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§2.4 jump"
+    },
+    {
+      "form_id": "continuity_classify_essential",
+      "description": "Classify 1/(x−a) vertical asymptote as essential",
+      "strategy": "continuity",
+      "generator_keys": ["limit_continuity"],
+      "d_min": 10,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "example_item_ids": [],
+      "openstax_case": "§2.4 infinite / essential"
     },
     {
       "form_id": "epsilon_delta",

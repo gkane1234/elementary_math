@@ -1301,6 +1301,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "allow_removable": True,
             "allow_piecewise": True,
             "allow_one_sided": True,
+            "allow_essential": True,
         },
     ),
     "lhopitals_rule": TypeSettingConfig(

@@ -23,6 +23,10 @@ _DIRECT_EASY_LEFTOVER = ("poly_direct",)
 _REMOVABLE_EASY_LEFTOVER = ("removable_diff_sq",)
 _ESSENTIAL_EASY_LEFTOVER = ("essential_1_over_x",)
 _INFINITY_EASY_LEFTOVER = ("inf_rational",)
+_CONTINUITY_EASY_LEFTOVER = (
+    "continuity_classify_continuous",
+    "continuity_classify_removable",
+)
 
 _ESSENTIAL_STAMP_MARKERS = {
     "essential_1_over_x": (r"\frac",),
@@ -114,6 +118,18 @@ def _gen_infinity(d: float, *, seed: int = 101):
     )[0]
 
 
+def _gen_continuity(d: float, *, seed: int = 101):
+    return _generate_for_type(
+        "calc_continuity_determining_and_classifying",
+        {
+            "difficulty": d,
+            "seed": seed,
+            "count": 1,
+            "include_answer_key": True,
+        },
+    )[0]
+
+
 def _is_essential_1_over_x_leftover_prompt(prompt: str) -> bool:
     """Old Mad-Lib / D=0 leftover: lim x→0 of ±1/x (no shift, no higher power)."""
     compact = (prompt or "").replace(" ", "")
@@ -140,6 +156,19 @@ def _infinity_stamp_matches(fid: str, prompt: str) -> bool:
         return "e^" in p
     if fid == "inf_ln_over_poly":
         return r"\ln" in p
+    return True
+
+
+def _continuity_stamp_matches(fid: str, prompt: str) -> bool:
+    p = prompt or ""
+    if fid == "continuity_classify_continuous":
+        return r"\frac" not in p and r"\begin{cases}" not in p
+    if fid == "continuity_classify_removable":
+        return r"\frac" in p and r"\begin{cases}" not in p and r"^{2}" in p
+    if fid == "continuity_classify_essential":
+        return r"\frac" in p and r"\begin{cases}" not in p and r"^{2}" not in p
+    if fid == "continuity_classify_jump":
+        return r"\begin{cases}" in p
     return True
 
 
@@ -534,6 +563,85 @@ def test_limit_infinity_leftover_lockout_no_easy_rational():
                 q.prompt_latex,
             )
     assert len(high) >= 3
+
+
+def test_limit_continuity_leftover_lockout_no_easy_continuous_removable():
+    """Leftover lockout of D=0 linear-continuous / rem_diff_sq at D>=16."""
+    q0 = _gen_continuity(0, seed=101)
+    md0 = q0.metadata or {}
+    snap0 = md0.get("spec_snapshot") or {}
+    assert md0.get("form_id") in _CONTINUITY_EASY_LEFTOVER
+    assert md0.get("generator") == "limit_continuity"
+    assert snap0.get("form_id") == md0.get("form_id")
+    assert snap0.get("generator") == "limit_continuity"
+    assert "Classify the continuity" in (q0.prompt_latex or "")
+    assert _continuity_stamp_matches(str(md0.get("form_id")), q0.prompt_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen_continuity(0, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid in _CONTINUITY_EASY_LEFTOVER
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_continuity"
+        assert (q.metadata or {}).get("generator") == "limit_continuity"
+        assert _continuity_stamp_matches(str(fid), q.prompt_latex or "")
+    assert easy == set(_CONTINUITY_EASY_LEFTOVER)
+
+    mid = set()
+    leftover_cont = leftover_rem = leftover_jump = 0
+    for seed in range(40):
+        q = _gen_continuity(8, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "continuity_classify_continuous":
+            leftover_cont += 1
+        if fid == "continuity_classify_removable":
+            leftover_rem += 1
+        if fid == "continuity_classify_jump":
+            leftover_jump += 1
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_continuity"
+        assert (q.metadata or {}).get("generator") == "limit_continuity"
+        assert _continuity_stamp_matches(str(fid), q.prompt_latex or ""), (
+            seed,
+            fid,
+            q.prompt_latex,
+        )
+        assert fid != "continuity_classify_essential"
+    assert leftover_cont >= 1
+    assert leftover_rem >= 1
+    assert leftover_jump >= 1
+    assert mid - set(_CONTINUITY_EASY_LEFTOVER)
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen_continuity(d, seed=seed)
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid not in _CONTINUITY_EASY_LEFTOVER, (d, seed, fid, q.prompt_latex)
+            assert (q.metadata or {}).get("generator") == "limit_continuity"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "limit_continuity"
+            assert "Classify the continuity" in (q.prompt_latex or "")
+            assert _continuity_stamp_matches(str(fid), q.prompt_latex or ""), (
+                d,
+                seed,
+                fid,
+                q.prompt_latex,
+            )
+            if fid == "continuity_classify_jump":
+                assert (q.metadata or {}).get("left_kind") == "linear", (
+                    d,
+                    seed,
+                    q.prompt_latex,
+                )
+    assert high == {"continuity_classify_jump", "continuity_classify_essential"}
 
 
 def test_lhopital_indeterminate_form_diversity():

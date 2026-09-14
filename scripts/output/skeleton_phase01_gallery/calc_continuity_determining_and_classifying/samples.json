@@ -28,10 +28,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\text{Classify the continuity of }f(x)=3x - 3\\text{ at }x=4.",
-      "answer_latex": "\\text{continuous}",
+      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\frac{x^{2}-16}{x-4}\\text{ at }x=4.",
+      "answer_latex": "\\text{removable discontinuity}",
       "skeleton_pattern": "",
-      "form_id": "continuity_classify_continuous",
+      "form_id": "continuity_classify_removable",
       "diagram_svg": "",
       "debug": [
         [
@@ -44,15 +44,15 @@
         ],
         [
           "form_id",
-          "continuity_classify_continuous"
+          "continuity_classify_removable"
         ],
         [
           "openstax_form",
-          "continuity_classify_continuous"
+          "continuity_classify_removable"
         ],
         [
           "form",
-          "poly_direct"
+          "removable_factor"
         ],
         [
           "construction",
@@ -64,12 +64,12 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
-        "structure_id": "limit_continuity:poly_direct",
-        "form": "poly_direct",
-        "technique": "classify_continuous",
+        "family": "continuity_classify_removable",
+        "structure_id": "limit_continuity:removable_factor",
+        "form": "removable_factor",
+        "technique": "classify_removable",
         "methods_used": [
-          "classify_continuous"
+          "classify_removable"
         ],
         "function_classes": [
           "algebraic"
@@ -110,47 +110,52 @@
           "degree_max": 2,
           "term_count_max": 3,
           "d_spend": 0.0,
-          "form": "poly_direct",
-          "technique": "classify_continuous",
-          "variant": "continuous"
+          "form": "removable_factor",
+          "technique": "classify_removable",
+          "variant": "removable",
+          "form_id": "continuity_classify_removable",
+          "family": "continuity_classify_removable",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "poly_direct",
-          "technique": "classify_continuous",
+          "form": "removable_factor",
+          "technique": "classify_removable",
           "degree_max": 2,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 17,
+          "answer_len": 30,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_continuity",
           "methods": [
-            "classify_continuous"
+            "classify_removable"
           ]
         },
-        "shape_id": "poly_direct",
-        "form_id": "continuity_classify_continuous",
-        "openstax_form": "continuity_classify_continuous",
-        "core_form_id": "continuity_classify_continuous",
+        "shape_id": "removable_factor",
+        "form_id": "continuity_classify_removable",
+        "openstax_form": "continuity_classify_removable",
+        "core_form_id": "continuity_classify_removable",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 removable",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 4,
-        "variant": "continuous",
+        "variant": "removable",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "continuity_classify_continuous",
-            "cost": 2.0
+            "feature": "continuity_classify_removable",
+            "cost": 0.0
           }
         ],
-        "difficulty_cost_total": 2.0,
+        "difficulty_cost_total": 0.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 2,
           "allow_infinity": false,
@@ -208,7 +213,7 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
+        "family": "continuity_classify_removable",
         "structure_id": "limit_continuity:removable_factor",
         "form": "removable_factor",
         "technique": "classify_removable",
@@ -256,7 +261,11 @@
           "d_spend": 0.0,
           "form": "removable_factor",
           "technique": "classify_removable",
-          "variant": "removable"
+          "variant": "removable",
+          "form_id": "continuity_classify_removable",
+          "family": "continuity_classify_removable",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "removable_factor",
@@ -278,7 +287,7 @@
         "core_form_id": "continuity_classify_removable",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 removable",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 1,
@@ -287,14 +296,15 @@
           {
             "source": "form",
             "feature": "continuity_classify_removable",
-            "cost": 2.0
+            "cost": 0.0
           }
         ],
-        "difficulty_cost_total": 2.0,
+        "difficulty_cost_total": 0.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 2,
           "allow_infinity": false,
@@ -316,10 +326,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "\\text{Classify the continuity of }f(x)=3x - 4\\text{ at }x=0.",
-      "answer_latex": "\\text{continuous}",
+      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\frac{x^{2}-0}{x-0}\\text{ at }x=0.",
+      "answer_latex": "\\text{removable discontinuity}",
       "skeleton_pattern": "",
-      "form_id": "continuity_classify_continuous",
+      "form_id": "continuity_classify_removable",
       "diagram_svg": "",
       "debug": [
         [
@@ -332,15 +342,15 @@
         ],
         [
           "form_id",
-          "continuity_classify_continuous"
+          "continuity_classify_removable"
         ],
         [
           "openstax_form",
-          "continuity_classify_continuous"
+          "continuity_classify_removable"
         ],
         [
           "form",
-          "poly_direct"
+          "removable_factor"
         ],
         [
           "construction",
@@ -352,12 +362,12 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
-        "structure_id": "limit_continuity:poly_direct",
-        "form": "poly_direct",
-        "technique": "classify_continuous",
+        "family": "continuity_classify_removable",
+        "structure_id": "limit_continuity:removable_factor",
+        "form": "removable_factor",
+        "technique": "classify_removable",
         "methods_used": [
-          "classify_continuous"
+          "classify_removable"
         ],
         "function_classes": [
           "algebraic"
@@ -398,47 +408,52 @@
           "degree_max": 2,
           "term_count_max": 3,
           "d_spend": 0.0,
-          "form": "poly_direct",
-          "technique": "classify_continuous",
-          "variant": "continuous"
+          "form": "removable_factor",
+          "technique": "classify_removable",
+          "variant": "removable",
+          "form_id": "continuity_classify_removable",
+          "family": "continuity_classify_removable",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "poly_direct",
-          "technique": "classify_continuous",
+          "form": "removable_factor",
+          "technique": "classify_removable",
           "degree_max": 2,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 17,
+          "answer_len": 30,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_continuity",
           "methods": [
-            "classify_continuous"
+            "classify_removable"
           ]
         },
-        "shape_id": "poly_direct",
-        "form_id": "continuity_classify_continuous",
-        "openstax_form": "continuity_classify_continuous",
-        "core_form_id": "continuity_classify_continuous",
+        "shape_id": "removable_factor",
+        "form_id": "continuity_classify_removable",
+        "openstax_form": "continuity_classify_removable",
+        "core_form_id": "continuity_classify_removable",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 removable",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 0,
-        "variant": "continuous",
+        "variant": "removable",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "continuity_classify_continuous",
-            "cost": 2.0
+            "feature": "continuity_classify_removable",
+            "cost": 0.0
           }
         ],
-        "difficulty_cost_total": 2.0,
+        "difficulty_cost_total": 0.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 2,
           "allow_infinity": false,
@@ -460,10 +475,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\text{Classify the continuity of }f(x)=3x - 3\\text{ at }x=4.",
-      "answer_latex": "\\text{continuous}",
+      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\begin{cases}2x - 5&x<4\\\\0&x\\ge 4\\end{cases}\\text{ at }x=4.",
+      "answer_latex": "\\text{jump discontinuity}",
       "skeleton_pattern": "",
-      "form_id": "continuity_classify_continuous",
+      "form_id": "continuity_classify_jump",
       "diagram_svg": "",
       "debug": [
         [
@@ -476,15 +491,15 @@
         ],
         [
           "form_id",
-          "continuity_classify_continuous"
+          "continuity_classify_jump"
         ],
         [
           "openstax_form",
-          "continuity_classify_continuous"
+          "continuity_classify_jump"
         ],
         [
           "form",
-          "poly_direct"
+          "piecewise_jump"
         ],
         [
           "construction",
@@ -496,15 +511,16 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
-        "structure_id": "limit_continuity:poly_direct",
-        "form": "poly_direct",
-        "technique": "classify_continuous",
+        "family": "continuity_classify_jump",
+        "structure_id": "limit_continuity:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "classify_jump",
         "methods_used": [
-          "classify_continuous"
+          "classify_jump"
         ],
         "function_classes": [
-          "algebraic"
+          "algebraic",
+          "piecewise"
         ],
         "upgrades": [
           "higher_degree",
@@ -546,48 +562,54 @@
           "degree_max": 4,
           "term_count_max": 3,
           "d_spend": 8.0,
-          "form": "poly_direct",
-          "technique": "classify_continuous",
-          "variant": "continuous"
+          "form": "piecewise_jump",
+          "technique": "classify_jump",
+          "variant": "jump",
+          "form_id": "continuity_classify_jump",
+          "family": "continuity_classify_jump",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "poly_direct",
-          "technique": "classify_continuous",
+          "form": "piecewise_jump",
+          "technique": "classify_jump",
           "degree_max": 2,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 17,
+          "answer_len": 25,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_continuity",
           "methods": [
-            "classify_continuous"
+            "classify_jump"
           ]
         },
-        "shape_id": "poly_direct",
-        "form_id": "continuity_classify_continuous",
-        "openstax_form": "continuity_classify_continuous",
-        "core_form_id": "continuity_classify_continuous",
+        "shape_id": "piecewise_jump",
+        "form_id": "continuity_classify_jump",
+        "openstax_form": "continuity_classify_jump",
+        "core_form_id": "continuity_classify_jump",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 jump",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 4,
-        "variant": "continuous",
+        "left_kind": "linear",
+        "right_kind": "const",
+        "variant": "jump",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "continuity_classify_continuous",
-            "cost": 2.0
+            "feature": "continuity_classify_jump",
+            "cost": 8.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 6.0,
+        "difficulty_cost_total": 8.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 3,
           "allow_infinity": false,
@@ -645,7 +667,7 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
+        "family": "continuity_classify_jump",
         "structure_id": "limit_continuity:piecewise_jump",
         "form": "piecewise_jump",
         "technique": "classify_jump",
@@ -698,7 +720,11 @@
           "d_spend": 8.0,
           "form": "piecewise_jump",
           "technique": "classify_jump",
-          "variant": "jump"
+          "variant": "jump",
+          "form_id": "continuity_classify_jump",
+          "family": "continuity_classify_jump",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "piecewise_jump",
@@ -720,7 +746,7 @@
         "core_form_id": "continuity_classify_jump",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 jump",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 1,
@@ -731,15 +757,15 @@
           {
             "source": "form",
             "feature": "continuity_classify_jump",
-            "cost": 2.0
+            "cost": 8.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 6.0,
+        "difficulty_cost_total": 8.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 3,
           "allow_infinity": false,
@@ -761,10 +787,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\text{Classify the continuity of }f(x)=3x - 4\\text{ at }x=0.",
-      "answer_latex": "\\text{continuous}",
+      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\begin{cases}4x + 3&x<0\\\\-1&x\\ge 0\\end{cases}\\text{ at }x=0.",
+      "answer_latex": "\\text{jump discontinuity}",
       "skeleton_pattern": "",
-      "form_id": "continuity_classify_continuous",
+      "form_id": "continuity_classify_jump",
       "diagram_svg": "",
       "debug": [
         [
@@ -777,15 +803,15 @@
         ],
         [
           "form_id",
-          "continuity_classify_continuous"
+          "continuity_classify_jump"
         ],
         [
           "openstax_form",
-          "continuity_classify_continuous"
+          "continuity_classify_jump"
         ],
         [
           "form",
-          "poly_direct"
+          "piecewise_jump"
         ],
         [
           "construction",
@@ -797,15 +823,16 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
-        "structure_id": "limit_continuity:poly_direct",
-        "form": "poly_direct",
-        "technique": "classify_continuous",
+        "family": "continuity_classify_jump",
+        "structure_id": "limit_continuity:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "classify_jump",
         "methods_used": [
-          "classify_continuous"
+          "classify_jump"
         ],
         "function_classes": [
-          "algebraic"
+          "algebraic",
+          "piecewise"
         ],
         "upgrades": [
           "higher_degree",
@@ -847,48 +874,54 @@
           "degree_max": 4,
           "term_count_max": 3,
           "d_spend": 8.0,
-          "form": "poly_direct",
-          "technique": "classify_continuous",
-          "variant": "continuous"
+          "form": "piecewise_jump",
+          "technique": "classify_jump",
+          "variant": "jump",
+          "form_id": "continuity_classify_jump",
+          "family": "continuity_classify_jump",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "poly_direct",
-          "technique": "classify_continuous",
+          "form": "piecewise_jump",
+          "technique": "classify_jump",
           "degree_max": 2,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 17,
+          "answer_len": 25,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_continuity",
           "methods": [
-            "classify_continuous"
+            "classify_jump"
           ]
         },
-        "shape_id": "poly_direct",
-        "form_id": "continuity_classify_continuous",
-        "openstax_form": "continuity_classify_continuous",
-        "core_form_id": "continuity_classify_continuous",
+        "shape_id": "piecewise_jump",
+        "form_id": "continuity_classify_jump",
+        "openstax_form": "continuity_classify_jump",
+        "core_form_id": "continuity_classify_jump",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 jump",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 0,
-        "variant": "continuous",
+        "left_kind": "linear",
+        "right_kind": "const",
+        "variant": "jump",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "continuity_classify_continuous",
-            "cost": 2.0
+            "feature": "continuity_classify_jump",
+            "cost": 8.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 6.0,
+        "difficulty_cost_total": 8.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 3,
           "allow_infinity": false,
@@ -946,7 +979,7 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
+        "family": "continuity_classify_essential",
         "structure_id": "limit_continuity:essential",
         "form": "essential",
         "technique": "classify_essential",
@@ -1000,7 +1033,11 @@
           "d_spend": 16.0,
           "form": "essential",
           "technique": "classify_essential",
-          "variant": "essential"
+          "variant": "essential",
+          "form_id": "continuity_classify_essential",
+          "family": "continuity_classify_essential",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "essential",
@@ -1022,7 +1059,7 @@
         "core_form_id": "continuity_classify_essential",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 infinite / essential",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 4,
@@ -1031,15 +1068,16 @@
           {
             "source": "form",
             "feature": "continuity_classify_essential",
-            "cost": 2.0
+            "cost": 10.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 14.0,
+        "difficulty_cost_total": 10.0,
+        "difficulty_shortfall": 6.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
@@ -1061,10 +1099,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\frac{x^{2}-1}{x-1}\\text{ at }x=1.",
-      "answer_latex": "\\text{removable discontinuity}",
+      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\frac{1}{x-1}\\text{ at }x=1.",
+      "answer_latex": "\\text{essential discontinuity}",
       "skeleton_pattern": "",
-      "form_id": "continuity_classify_removable",
+      "form_id": "continuity_classify_essential",
       "diagram_svg": "",
       "debug": [
         [
@@ -1077,15 +1115,15 @@
         ],
         [
           "form_id",
-          "continuity_classify_removable"
+          "continuity_classify_essential"
         ],
         [
           "openstax_form",
-          "continuity_classify_removable"
+          "continuity_classify_essential"
         ],
         [
           "form",
-          "removable_factor"
+          "essential"
         ],
         [
           "construction",
@@ -1097,12 +1135,12 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
-        "structure_id": "limit_continuity:removable_factor",
-        "form": "removable_factor",
-        "technique": "classify_removable",
+        "family": "continuity_classify_essential",
+        "structure_id": "limit_continuity:essential",
+        "form": "essential",
+        "technique": "classify_essential",
         "methods_used": [
-          "classify_removable"
+          "classify_essential"
         ],
         "function_classes": [
           "algebraic"
@@ -1149,13 +1187,17 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 16.0,
-          "form": "removable_factor",
-          "technique": "classify_removable",
-          "variant": "removable"
+          "form": "essential",
+          "technique": "classify_essential",
+          "variant": "essential",
+          "form_id": "continuity_classify_essential",
+          "family": "continuity_classify_essential",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "removable_factor",
-          "technique": "classify_removable",
+          "form": "essential",
+          "technique": "classify_essential",
           "degree_max": 2,
           "coef_abs_max": 7,
           "n_terms": 2,
@@ -1164,33 +1206,34 @@
           "nest_depth": 0,
           "pack": "limit_continuity",
           "methods": [
-            "classify_removable"
+            "classify_essential"
           ]
         },
-        "shape_id": "removable_factor",
-        "form_id": "continuity_classify_removable",
-        "openstax_form": "continuity_classify_removable",
-        "core_form_id": "continuity_classify_removable",
+        "shape_id": "essential",
+        "form_id": "continuity_classify_essential",
+        "openstax_form": "continuity_classify_essential",
+        "core_form_id": "continuity_classify_essential",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 infinite / essential",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 1,
-        "variant": "removable",
+        "variant": "essential",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "continuity_classify_removable",
-            "cost": 2.0
+            "feature": "continuity_classify_essential",
+            "cost": 10.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 14.0,
+        "difficulty_cost_total": 10.0,
+        "difficulty_shortfall": 6.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
@@ -1212,10 +1255,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\begin{cases}3x + 2&x<0\\\\-3&x\\ge 0\\end{cases}\\text{ at }x=0.",
-      "answer_latex": "\\text{jump discontinuity}",
+      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\frac{1}{x-0}\\text{ at }x=0.",
+      "answer_latex": "\\text{essential discontinuity}",
       "skeleton_pattern": "",
-      "form_id": "continuity_classify_jump",
+      "form_id": "continuity_classify_essential",
       "diagram_svg": "",
       "debug": [
         [
@@ -1228,15 +1271,15 @@
         ],
         [
           "form_id",
-          "continuity_classify_jump"
+          "continuity_classify_essential"
         ],
         [
           "openstax_form",
-          "continuity_classify_jump"
+          "continuity_classify_essential"
         ],
         [
           "form",
-          "piecewise_jump"
+          "essential"
         ],
         [
           "construction",
@@ -1248,16 +1291,15 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
-        "structure_id": "limit_continuity:piecewise_jump",
-        "form": "piecewise_jump",
-        "technique": "classify_jump",
+        "family": "continuity_classify_essential",
+        "structure_id": "limit_continuity:essential",
+        "form": "essential",
+        "technique": "classify_essential",
         "methods_used": [
-          "classify_jump"
+          "classify_essential"
         ],
         "function_classes": [
-          "algebraic",
-          "piecewise"
+          "algebraic"
         ],
         "upgrades": [
           "higher_degree",
@@ -1301,50 +1343,53 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 16.0,
-          "form": "piecewise_jump",
-          "technique": "classify_jump",
-          "variant": "jump"
+          "form": "essential",
+          "technique": "classify_essential",
+          "variant": "essential",
+          "form_id": "continuity_classify_essential",
+          "family": "continuity_classify_essential",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "piecewise_jump",
-          "technique": "classify_jump",
+          "form": "essential",
+          "technique": "classify_essential",
           "degree_max": 2,
           "coef_abs_max": 7,
           "n_terms": 2,
-          "answer_len": 25,
+          "answer_len": 30,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_continuity",
           "methods": [
-            "classify_jump"
+            "classify_essential"
           ]
         },
-        "shape_id": "piecewise_jump",
-        "form_id": "continuity_classify_jump",
-        "openstax_form": "continuity_classify_jump",
-        "core_form_id": "continuity_classify_jump",
+        "shape_id": "essential",
+        "form_id": "continuity_classify_essential",
+        "openstax_form": "continuity_classify_essential",
+        "core_form_id": "continuity_classify_essential",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 infinite / essential",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 0,
-        "left_kind": "linear",
-        "right_kind": "const",
-        "variant": "jump",
+        "variant": "essential",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "continuity_classify_jump",
-            "cost": 2.0
+            "feature": "continuity_classify_essential",
+            "cost": 10.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 14.0,
+        "difficulty_cost_total": 10.0,
+        "difficulty_shortfall": 6.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
@@ -1402,7 +1447,7 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
+        "family": "continuity_classify_essential",
         "structure_id": "limit_continuity:essential",
         "form": "essential",
         "technique": "classify_essential",
@@ -1458,7 +1503,11 @@
           "d_spend": 22.0,
           "form": "essential",
           "technique": "classify_essential",
-          "variant": "essential"
+          "variant": "essential",
+          "form_id": "continuity_classify_essential",
+          "family": "continuity_classify_essential",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "essential",
@@ -1480,7 +1529,7 @@
         "core_form_id": "continuity_classify_essential",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 infinite / essential",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 4,
@@ -1489,15 +1538,16 @@
           {
             "source": "form",
             "feature": "continuity_classify_essential",
-            "cost": 2.0
+            "cost": 10.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 20.0,
+        "difficulty_cost_total": 10.0,
+        "difficulty_shortfall": 12.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
@@ -1519,10 +1569,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\frac{x^{2}-1}{x-1}\\text{ at }x=1.",
-      "answer_latex": "\\text{removable discontinuity}",
+      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\frac{1}{x-1}\\text{ at }x=1.",
+      "answer_latex": "\\text{essential discontinuity}",
       "skeleton_pattern": "",
-      "form_id": "continuity_classify_removable",
+      "form_id": "continuity_classify_essential",
       "diagram_svg": "",
       "debug": [
         [
@@ -1535,15 +1585,15 @@
         ],
         [
           "form_id",
-          "continuity_classify_removable"
+          "continuity_classify_essential"
         ],
         [
           "openstax_form",
-          "continuity_classify_removable"
+          "continuity_classify_essential"
         ],
         [
           "form",
-          "removable_factor"
+          "essential"
         ],
         [
           "construction",
@@ -1555,12 +1605,12 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
-        "structure_id": "limit_continuity:removable_factor",
-        "form": "removable_factor",
-        "technique": "classify_removable",
+        "family": "continuity_classify_essential",
+        "structure_id": "limit_continuity:essential",
+        "form": "essential",
+        "technique": "classify_essential",
         "methods_used": [
-          "classify_removable"
+          "classify_essential"
         ],
         "function_classes": [
           "algebraic"
@@ -1609,13 +1659,17 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 22.0,
-          "form": "removable_factor",
-          "technique": "classify_removable",
-          "variant": "removable"
+          "form": "essential",
+          "technique": "classify_essential",
+          "variant": "essential",
+          "form_id": "continuity_classify_essential",
+          "family": "continuity_classify_essential",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "removable_factor",
-          "technique": "classify_removable",
+          "form": "essential",
+          "technique": "classify_essential",
           "degree_max": 2,
           "coef_abs_max": 8,
           "n_terms": 2,
@@ -1624,33 +1678,34 @@
           "nest_depth": 0,
           "pack": "limit_continuity",
           "methods": [
-            "classify_removable"
+            "classify_essential"
           ]
         },
-        "shape_id": "removable_factor",
-        "form_id": "continuity_classify_removable",
-        "openstax_form": "continuity_classify_removable",
-        "core_form_id": "continuity_classify_removable",
+        "shape_id": "essential",
+        "form_id": "continuity_classify_essential",
+        "openstax_form": "continuity_classify_essential",
+        "core_form_id": "continuity_classify_essential",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 infinite / essential",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 1,
-        "variant": "removable",
+        "variant": "essential",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "continuity_classify_removable",
-            "cost": 2.0
+            "feature": "continuity_classify_essential",
+            "cost": 10.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 20.0,
+        "difficulty_cost_total": 10.0,
+        "difficulty_shortfall": 12.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
@@ -1672,10 +1727,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\begin{cases}7x - 3&x<0\\\\2&x\\ge 0\\end{cases}\\text{ at }x=0.",
-      "answer_latex": "\\text{jump discontinuity}",
+      "prompt_latex": "\\text{Classify the continuity of }f(x)=\\frac{1}{x-0}\\text{ at }x=0.",
+      "answer_latex": "\\text{essential discontinuity}",
       "skeleton_pattern": "",
-      "form_id": "continuity_classify_jump",
+      "form_id": "continuity_classify_essential",
       "diagram_svg": "",
       "debug": [
         [
@@ -1688,15 +1743,15 @@
         ],
         [
           "form_id",
-          "continuity_classify_jump"
+          "continuity_classify_essential"
         ],
         [
           "openstax_form",
-          "continuity_classify_jump"
+          "continuity_classify_essential"
         ],
         [
           "form",
-          "piecewise_jump"
+          "essential"
         ],
         [
           "construction",
@@ -1708,16 +1763,15 @@
         ]
       ],
       "metadata": {
-        "family": "continuity_classify",
-        "structure_id": "limit_continuity:piecewise_jump",
-        "form": "piecewise_jump",
-        "technique": "classify_jump",
+        "family": "continuity_classify_essential",
+        "structure_id": "limit_continuity:essential",
+        "form": "essential",
+        "technique": "classify_essential",
         "methods_used": [
-          "classify_jump"
+          "classify_essential"
         ],
         "function_classes": [
-          "algebraic",
-          "piecewise"
+          "algebraic"
         ],
         "upgrades": [
           "essential",
@@ -1763,50 +1817,53 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 22.0,
-          "form": "piecewise_jump",
-          "technique": "classify_jump",
-          "variant": "jump"
+          "form": "essential",
+          "technique": "classify_essential",
+          "variant": "essential",
+          "form_id": "continuity_classify_essential",
+          "family": "continuity_classify_essential",
+          "generator": "limit_continuity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "piecewise_jump",
-          "technique": "classify_jump",
+          "form": "essential",
+          "technique": "classify_essential",
           "degree_max": 2,
           "coef_abs_max": 8,
           "n_terms": 2,
-          "answer_len": 25,
+          "answer_len": 30,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_continuity",
           "methods": [
-            "classify_jump"
+            "classify_essential"
           ]
         },
-        "shape_id": "piecewise_jump",
-        "form_id": "continuity_classify_jump",
-        "openstax_form": "continuity_classify_jump",
-        "core_form_id": "continuity_classify_jump",
+        "shape_id": "essential",
+        "form_id": "continuity_classify_essential",
+        "openstax_form": "continuity_classify_essential",
+        "core_form_id": "continuity_classify_essential",
         "catalog_id": "limits",
         "wrappers_applied": [],
-        "openstax_case": "\u00a72.4",
+        "openstax_case": "\u00a72.4 infinite / essential",
         "strategy": "continuity",
         "construction": "forward_form_catalog",
         "approach_value": 0,
-        "left_kind": "linear",
-        "right_kind": "const",
-        "variant": "jump",
+        "variant": "essential",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "continuity_classify_jump",
-            "cost": 2.0
+            "feature": "continuity_classify_essential",
+            "cost": 10.0
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 20.0,
+        "difficulty_cost_total": 10.0,
+        "difficulty_shortfall": 12.0,
         "generation_settings": {
           "allow_removable": true,
           "allow_piecewise": true,
           "allow_one_sided": true,
+          "allow_essential": true,
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,

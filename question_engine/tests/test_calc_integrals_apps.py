@@ -153,16 +153,70 @@ def test_area_under_curve_d0_simple():
     assert q.answer_latex
 
 
-def test_relative_extrema_d0_parabola_high_d_cubic():
+def test_relative_extrema_d0_parabola_high_d_shifted_lockout():
     q0 = _gen("calc_app_diff_relative_extrema", 0, seed=101)[0]
-    assert "minimum" in (q0.prompt_latex or "").lower() or "minimum" in (q0.answer_latex or "").lower()
     assert (q0.metadata or {}).get("form_id") == "parabola_vertex"
-    forms = set()
-    for seed in range(12):
+    assert (q0.metadata or {}).get("generator") == "relative_extrema"
+    assert "minimum" in (q0.prompt_latex or "").lower() or "minimum" in (q0.answer_latex or "").lower()
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "parabola_vertex"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_relative_extrema", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+    assert "parabola_vertex" in mid
+    assert "cubic_first_derivative_test" in mid
+
+    high = set()
+    for seed in range(30):
         q = _gen("calc_app_diff_relative_extrema", 16, seed=seed)[0]
-        forms.add((q.metadata or {}).get("form_id"))
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "parabola_vertex"
         assert "rel max" in (q.answer_latex or "") or "relative" in (q.answer_latex or "")
-    assert "cubic_first_derivative_test" in forms
+        assert (q.metadata or {}).get("generator") == "relative_extrema"
+    assert high <= {"cubic_first_derivative_test", "cubic_shifted_extrema"}
+    assert "cubic_shifted_extrema" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_relative_extrema", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "cubic_shifted_extrema"
+        p = (q.metadata or {}).get("p")
+        qv = (q.metadata or {}).get("q")
+        assert p is not None and qv is not None and p != -qv
+        assert (q.metadata or {}).get("generator") == "relative_extrema"
+    assert expert == {"cubic_shifted_extrema"}
+
+
+def test_relative_extrema_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_relative_extrema,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_relative_extrema(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"parabola_vertex": -2.5, "cubic_first_derivative_test": 2.5})
+    assert tilted["cubic_first_derivative_test"] > baseline["cubic_first_derivative_test"]
 
 
 def test_absolute_extrema_closed_interval():

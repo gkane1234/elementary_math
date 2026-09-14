@@ -60,17 +60,71 @@ def _cubic_odd(rng: random.Random) -> tuple[int, int, str]:
     return a, c, body
 
 
-def sample_relative_extrema(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    d = _d(settings)
+def _poly_eval(coeffs: list[int], x: int) -> int:
+    v = 0
+    for a in coeffs:
+        v = v * x + a
+    return v
+
+
+def _shifted_cubic_integer_crits(
+    rng: random.Random,
+) -> tuple[int, int, int, list[int]]:
+    """Ex. 4.17: integer crits p<q, f'=3(x-p)(x-q), p+q even so coeffs are ints."""
+    p, q = rng.choice(((-1, 3), (-2, 4), (-3, 1), (-4, 2), (-1, 5), (-5, 1)))
+    c = rng.choice([0, 1, -1, -2])
+    a_coef = (3 * (p + q)) // 2
+    b_coef = 3 * p * q
+    return p, q, c, [1, -a_coef, b_coef, c]
+
+
+RELATIVE_EXTREMA_GENERATOR = "relative_extrema"
+
+_EXTREMA_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("parabola_vertex",),
+    "medium": ("parabola_vertex", "cubic_first_derivative_test"),
+    "hard": ("cubic_first_derivative_test", "cubic_shifted_extrema"),
+    "expert": ("cubic_shifted_extrema",),
+}
+
+
+def relative_extrema_forms_for_difficulty(d: float) -> tuple[str, ...]:
     if d < 8.0:
-        h = rng.randint(1, 5)
-        k = rng.randint(1, 6)
-        prompt = rf"\text{{Find the relative minimum of }}f(x)=(x-{h})^{{2}}-{k}."
-        answer = rf"\text{{relative minimum }}-{k}\text{{ at }}x={h}"
-        return AppDiffItem(
-            prompt, answer, "relative extrema", "parabola_vertex",
-            {"h": h, "k": k},
-        )
+        return _EXTREMA_BANDS["easy"]
+    if d < 16.0:
+        return _EXTREMA_BANDS["medium"]
+    if d < 20.0:
+        return _EXTREMA_BANDS["hard"]
+    return _EXTREMA_BANDS["expert"]
+
+
+def _extrema_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [RELATIVE_EXTREMA_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_parabola_vertex(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: f=(x-h)^2-k, relative min at the vertex."""
+    h = rng.randint(1, 5)
+    k = rng.randint(1, 6)
+    prompt = rf"\text{{Find the relative minimum of }}f(x)=(x-{h})^{{2}}-{k}."
+    answer = rf"\text{{relative minimum }}-{k}\text{{ at }}x={h}"
+    return AppDiffItem(
+        prompt, answer, "relative extrema", "parabola_vertex",
+        {"h": h, "k": k},
+    )
+
+
+def _sample_cubic_odd_extrema(rng: random.Random) -> AppDiffItem:
+    """Reuse ``_cubic_odd``: crits ±a. Mid-D leftover."""
     a, c, body = _cubic_odd(rng)
     ymax = 2 * a**3 + c
     ymin = -2 * a**3 + c
@@ -82,6 +136,63 @@ def sample_relative_extrema(rng: random.Random, settings: dict[str, Any]) -> App
     return AppDiffItem(
         prompt, answer, "relative extrema", "cubic_first_derivative_test",
         {"a": a, "c": c},
+    )
+
+
+def _sample_cubic_shifted_extrema(rng: random.Random) -> AppDiffItem:
+    """Ex. 4.17 shape: integer crits p<q; rel max at p, rel min at q."""
+    p, q, c, coeffs = _shifted_cubic_integer_crits(rng)
+    body = format_polynomial_latex(coeffs, variable="x")
+    ymax = _poly_eval(coeffs, p)
+    ymin = _poly_eval(coeffs, q)
+    prompt = rf"\text{{Find the relative extrema of }}f(x)={body}."
+    answer = (
+        rf"\text{{rel max }}{ymax}\text{{ at }}x={p};"
+        rf"\text{{ rel min }}{ymin}\text{{ at }}x={q}"
+    )
+    return AppDiffItem(
+        prompt, answer, "relative extrema", "cubic_shifted_extrema",
+        {"p": p, "q": q, "c": c},
+    )
+
+
+_EXTREMA_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "parabola_vertex": _sample_parabola_vertex,
+    "cubic_first_derivative_test": _sample_cubic_odd_extrema,
+    "cubic_shifted_extrema": _sample_cubic_shifted_extrema,
+}
+
+
+def sample_relative_extrema(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """First-derivative test. High D unlocks Ex. 4.17 shifted crits."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = relative_extrema_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _extrema_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _EXTREMA_BUILDERS:
+        fid = forms[0]
+    item = _EXTREMA_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": RELATIVE_EXTREMA_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": RELATIVE_EXTREMA_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 
@@ -197,11 +308,8 @@ def _sample_cubic_odd_sign_chart(rng: random.Random) -> AppDiffItem:
 
 def _sample_cubic_shifted_sign_chart(rng: random.Random) -> AppDiffItem:
     """Ex. 4.17 shape: integer crits p<q, f'=3(x-p)(x-q), p+q even."""
-    p, q = rng.choice(((-1, 3), (-2, 4), (-3, 1), (-4, 2), (-1, 5), (-5, 1)))
-    c = rng.choice([0, 1, -1, -2])
-    a_coef = (3 * (p + q)) // 2
-    b_coef = 3 * p * q
-    body = _poly_body([1, -a_coef, b_coef, c])
+    p, q, c, coeffs = _shifted_cubic_integer_crits(rng)
+    body = _poly_body(coeffs)
     prompt = (
         rf"\text{{Find the intervals of increase and decrease of }}f(x)={body}."
     )

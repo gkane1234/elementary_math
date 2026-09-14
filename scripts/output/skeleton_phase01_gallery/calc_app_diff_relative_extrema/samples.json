@@ -15,9 +15,13 @@
     "ladder_seeds": [
       101,
       207,
-      313
+      313,
+      0,
+      2,
+      5,
+      7
     ],
-    "blurb": "Parabola vertex at D=0; cubic first-derivative test at D\u22658. OpenStax Vol 1 \u00a74.3/4.5."
+    "blurb": "D=0 parabola leftover (old easy); D\u22658 unlocks odd cubics; high D shifted cubics (OpenStax Ex. 4.17) and locks out the parabola. OpenStax Vol 1 \u00a74.3/4.5."
   },
   "rows": [
     {
@@ -28,8 +32,8 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-5)^{2}-2.",
-      "answer_latex": "\\text{relative minimum }-2\\text{ at }x=5",
+      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-2)^{2}-5.",
+      "answer_latex": "\\text{relative minimum }-5\\text{ at }x=2",
       "skeleton_pattern": "",
       "form_id": "parabola_vertex",
       "diagram_svg": "",
@@ -47,20 +51,21 @@
           "parabola_vertex"
         ],
         [
-          "frame_id",
-          "parabola_vertex"
-        ],
-        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "h": 2,
+        "k": 5,
         "form_id": "parabola_vertex",
         "family": "parabola_vertex",
-        "frame_id": "parabola_vertex",
-        "h": 5,
-        "k": 2,
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "parabola_vertex",
+          "family": "parabola_vertex",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -82,8 +87,8 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-5)^{2}-6.",
-      "answer_latex": "\\text{relative minimum }-6\\text{ at }x=5",
+      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-5)^{2}-2.",
+      "answer_latex": "\\text{relative minimum }-2\\text{ at }x=5",
       "skeleton_pattern": "",
       "form_id": "parabola_vertex",
       "diagram_svg": "",
@@ -101,20 +106,21 @@
           "parabola_vertex"
         ],
         [
-          "frame_id",
-          "parabola_vertex"
-        ],
-        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "h": 5,
+        "k": 2,
         "form_id": "parabola_vertex",
         "family": "parabola_vertex",
-        "frame_id": "parabola_vertex",
-        "h": 5,
-        "k": 6,
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "parabola_vertex",
+          "family": "parabola_vertex",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -136,8 +142,8 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-5)^{2}-2.",
-      "answer_latex": "\\text{relative minimum }-2\\text{ at }x=5",
+      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-4)^{2}-4.",
+      "answer_latex": "\\text{relative minimum }-4\\text{ at }x=4",
       "skeleton_pattern": "",
       "form_id": "parabola_vertex",
       "diagram_svg": "",
@@ -155,7 +161,58 @@
           "parabola_vertex"
         ],
         [
-          "frame_id",
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "h": 4,
+        "k": 4,
+        "form_id": "parabola_vertex",
+        "family": "parabola_vertex",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "parabola_vertex",
+          "family": "parabola_vertex",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=0",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-4)^{2}-1.",
+      "answer_latex": "\\text{relative minimum }-1\\text{ at }x=4",
+      "skeleton_pattern": "",
+      "form_id": "parabola_vertex",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
           "parabola_vertex"
         ],
         [
@@ -164,16 +221,186 @@
         ]
       ],
       "metadata": {
+        "h": 4,
+        "k": 1,
         "form_id": "parabola_vertex",
         "family": "parabola_vertex",
-        "frame_id": "parabola_vertex",
-        "h": 5,
-        "k": 2,
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "parabola_vertex",
+          "family": "parabola_vertex",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
           "difficulty": 0.0,
-          "seed": 313,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=2",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-1)^{2}-1.",
+      "answer_latex": "\\text{relative minimum }-1\\text{ at }x=1",
+      "skeleton_pattern": "",
+      "form_id": "parabola_vertex",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "parabola_vertex"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "h": 1,
+        "k": 1,
+        "form_id": "parabola_vertex",
+        "family": "parabola_vertex",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "parabola_vertex",
+          "family": "parabola_vertex",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=5",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-3)^{2}-6.",
+      "answer_latex": "\\text{relative minimum }-6\\text{ at }x=3",
+      "skeleton_pattern": "",
+      "form_id": "parabola_vertex",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "parabola_vertex"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "h": 3,
+        "k": 6,
+        "form_id": "parabola_vertex",
+        "family": "parabola_vertex",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "parabola_vertex",
+          "family": "parabola_vertex",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=7",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-2)^{2}-4.",
+      "answer_latex": "\\text{relative minimum }-4\\text{ at }x=2",
+      "skeleton_pattern": "",
+      "form_id": "parabola_vertex",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "parabola_vertex"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "h": 2,
+        "k": 4,
+        "form_id": "parabola_vertex",
+        "family": "parabola_vertex",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "parabola_vertex",
+          "family": "parabola_vertex",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 7,
           "include_answer_key": true,
           "integers_only": true,
           "only_x": true,
@@ -209,20 +436,21 @@
           "cubic_first_derivative_test"
         ],
         [
-          "frame_id",
-          "cubic_first_derivative_test"
-        ],
-        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "form_id": "cubic_first_derivative_test",
-        "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
         "a": 2,
         "c": -2,
+        "form_id": "cubic_first_derivative_test",
+        "family": "cubic_first_derivative_test",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_first_derivative_test",
+          "family": "cubic_first_derivative_test",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -263,20 +491,21 @@
           "cubic_first_derivative_test"
         ],
         [
-          "frame_id",
-          "cubic_first_derivative_test"
-        ],
-        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "form_id": "cubic_first_derivative_test",
-        "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
         "a": 2,
         "c": 1,
+        "form_id": "cubic_first_derivative_test",
+        "family": "cubic_first_derivative_test",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_first_derivative_test",
+          "family": "cubic_first_derivative_test",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -298,8 +527,8 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-12x+2.",
-      "answer_latex": "\\text{rel max }18\\text{ at }x=-2;\\text{ rel min }-14\\text{ at }x=2",
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-48x+2.",
+      "answer_latex": "\\text{rel max }130\\text{ at }x=-4;\\text{ rel min }-126\\text{ at }x=4",
       "skeleton_pattern": "",
       "form_id": "cubic_first_derivative_test",
       "diagram_svg": "",
@@ -317,20 +546,21 @@
           "cubic_first_derivative_test"
         ],
         [
-          "frame_id",
-          "cubic_first_derivative_test"
-        ],
-        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "a": 4,
+        "c": 2,
         "form_id": "cubic_first_derivative_test",
         "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
-        "a": 2,
-        "c": 2,
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_first_derivative_test",
+          "family": "cubic_first_derivative_test",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -347,15 +577,235 @@
     {
       "ok": true,
       "warn": false,
+      "label": "D\u22488 \u00b7 seed=0",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-48x.",
+      "answer_latex": "\\text{rel max }128\\text{ at }x=-4;\\text{ rel min }-128\\text{ at }x=4",
+      "skeleton_pattern": "",
+      "form_id": "cubic_first_derivative_test",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "cubic_first_derivative_test"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 4,
+        "c": 0,
+        "form_id": "cubic_first_derivative_test",
+        "family": "cubic_first_derivative_test",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_first_derivative_test",
+          "family": "cubic_first_derivative_test",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=2",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-3x.",
+      "answer_latex": "\\text{rel max }2\\text{ at }x=-1;\\text{ rel min }-2\\text{ at }x=1",
+      "skeleton_pattern": "",
+      "form_id": "cubic_first_derivative_test",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "cubic_first_derivative_test"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 1,
+        "c": 0,
+        "form_id": "cubic_first_derivative_test",
+        "family": "cubic_first_derivative_test",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_first_derivative_test",
+          "family": "cubic_first_derivative_test",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=5",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-27x-2.",
+      "answer_latex": "\\text{rel max }52\\text{ at }x=-3;\\text{ rel min }-56\\text{ at }x=3",
+      "skeleton_pattern": "",
+      "form_id": "cubic_first_derivative_test",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "cubic_first_derivative_test"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 3,
+        "c": -2,
+        "form_id": "cubic_first_derivative_test",
+        "family": "cubic_first_derivative_test",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_first_derivative_test",
+          "family": "cubic_first_derivative_test",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=7",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the relative minimum of }f(x)=(x-2)^{2}-4.",
+      "answer_latex": "\\text{relative minimum }-4\\text{ at }x=2",
+      "skeleton_pattern": "",
+      "form_id": "parabola_vertex",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "parabola_vertex"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "h": 2,
+        "k": 4,
+        "form_id": "parabola_vertex",
+        "family": "parabola_vertex",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "parabola_vertex",
+          "family": "parabola_vertex",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
       "label": "D\u224816 \u00b7 seed=101",
       "type_id": "calc_app_diff_relative_extrema",
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-12x-2.",
-      "answer_latex": "\\text{rel max }14\\text{ at }x=-2;\\text{ rel min }-18\\text{ at }x=2",
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} - 3x^{2} - 24x - 1.",
+      "answer_latex": "\\text{rel max }27\\text{ at }x=-2;\\text{ rel min }-81\\text{ at }x=4",
       "skeleton_pattern": "",
-      "form_id": "cubic_first_derivative_test",
+      "form_id": "cubic_shifted_extrema",
       "diagram_svg": "",
       "debug": [
         [
@@ -368,11 +818,7 @@
         ],
         [
           "form_id",
-          "cubic_first_derivative_test"
-        ],
-        [
-          "frame_id",
-          "cubic_first_derivative_test"
+          "cubic_shifted_extrema"
         ],
         [
           "has_diagram_svg",
@@ -380,11 +826,17 @@
         ]
       ],
       "metadata": {
-        "form_id": "cubic_first_derivative_test",
-        "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
-        "a": 2,
-        "c": -2,
+        "p": -2,
+        "q": 4,
+        "c": -1,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -406,10 +858,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-12x+1.",
-      "answer_latex": "\\text{rel max }17\\text{ at }x=-2;\\text{ rel min }-15\\text{ at }x=2",
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} + 6x^{2} - 15x + 1.",
+      "answer_latex": "\\text{rel max }101\\text{ at }x=-5;\\text{ rel min }-7\\text{ at }x=1",
       "skeleton_pattern": "",
-      "form_id": "cubic_first_derivative_test",
+      "form_id": "cubic_shifted_extrema",
       "diagram_svg": "",
       "debug": [
         [
@@ -422,11 +874,7 @@
         ],
         [
           "form_id",
-          "cubic_first_derivative_test"
-        ],
-        [
-          "frame_id",
-          "cubic_first_derivative_test"
+          "cubic_shifted_extrema"
         ],
         [
           "has_diagram_svg",
@@ -434,11 +882,17 @@
         ]
       ],
       "metadata": {
-        "form_id": "cubic_first_derivative_test",
-        "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
-        "a": 2,
+        "p": -5,
+        "q": 1,
         "c": 1,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -460,10 +914,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-12x+2.",
-      "answer_latex": "\\text{rel max }18\\text{ at }x=-2;\\text{ rel min }-14\\text{ at }x=2",
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} + 6x^{2} - 15x - 2.",
+      "answer_latex": "\\text{rel max }98\\text{ at }x=-5;\\text{ rel min }-10\\text{ at }x=1",
       "skeleton_pattern": "",
-      "form_id": "cubic_first_derivative_test",
+      "form_id": "cubic_shifted_extrema",
       "diagram_svg": "",
       "debug": [
         [
@@ -476,11 +930,7 @@
         ],
         [
           "form_id",
-          "cubic_first_derivative_test"
-        ],
-        [
-          "frame_id",
-          "cubic_first_derivative_test"
+          "cubic_shifted_extrema"
         ],
         [
           "has_diagram_svg",
@@ -488,11 +938,17 @@
         ]
       ],
       "metadata": {
-        "form_id": "cubic_first_derivative_test",
-        "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
-        "a": 2,
-        "c": 2,
+        "p": -5,
+        "q": 1,
+        "c": -2,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -509,15 +965,238 @@
     {
       "ok": true,
       "warn": false,
+      "label": "D\u224816 \u00b7 seed=0",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} + 3x^{2} - 24x.",
+      "answer_latex": "\\text{rel max }80\\text{ at }x=-4;\\text{ rel min }-28\\text{ at }x=2",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_extrema",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "cubic_shifted_extrema"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -4,
+        "q": 2,
+        "c": 0,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=2",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} - 3x^{2} - 9x.",
+      "answer_latex": "\\text{rel max }5\\text{ at }x=-1;\\text{ rel min }-27\\text{ at }x=3",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_extrema",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "cubic_shifted_extrema"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -1,
+        "q": 3,
+        "c": 0,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=5",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} + 6x^{2} - 15x - 1.",
+      "answer_latex": "\\text{rel max }99\\text{ at }x=-5;\\text{ rel min }-9\\text{ at }x=1",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_extrema",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "cubic_shifted_extrema"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -5,
+        "q": 1,
+        "c": -1,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=7",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-12x+2.",
+      "answer_latex": "\\text{rel max }18\\text{ at }x=-2;\\text{ rel min }-14\\text{ at }x=2",
+      "skeleton_pattern": "",
+      "form_id": "cubic_first_derivative_test",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "cubic_first_derivative_test"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 2,
+        "c": 2,
+        "form_id": "cubic_first_derivative_test",
+        "family": "cubic_first_derivative_test",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_first_derivative_test",
+          "family": "cubic_first_derivative_test",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
       "label": "D\u224822 \u00b7 seed=101",
       "type_id": "calc_app_diff_relative_extrema",
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-12x-2.",
-      "answer_latex": "\\text{rel max }14\\text{ at }x=-2;\\text{ rel min }-18\\text{ at }x=2",
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} - 3x^{2} - 24x - 1.",
+      "answer_latex": "\\text{rel max }27\\text{ at }x=-2;\\text{ rel min }-81\\text{ at }x=4",
       "skeleton_pattern": "",
-      "form_id": "cubic_first_derivative_test",
+      "form_id": "cubic_shifted_extrema",
       "diagram_svg": "",
       "debug": [
         [
@@ -530,11 +1209,7 @@
         ],
         [
           "form_id",
-          "cubic_first_derivative_test"
-        ],
-        [
-          "frame_id",
-          "cubic_first_derivative_test"
+          "cubic_shifted_extrema"
         ],
         [
           "has_diagram_svg",
@@ -542,11 +1217,17 @@
         ]
       ],
       "metadata": {
-        "form_id": "cubic_first_derivative_test",
-        "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
-        "a": 2,
-        "c": -2,
+        "p": -2,
+        "q": 4,
+        "c": -1,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -568,10 +1249,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-12x+1.",
-      "answer_latex": "\\text{rel max }17\\text{ at }x=-2;\\text{ rel min }-15\\text{ at }x=2",
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} + 6x^{2} - 15x + 1.",
+      "answer_latex": "\\text{rel max }101\\text{ at }x=-5;\\text{ rel min }-7\\text{ at }x=1",
       "skeleton_pattern": "",
-      "form_id": "cubic_first_derivative_test",
+      "form_id": "cubic_shifted_extrema",
       "diagram_svg": "",
       "debug": [
         [
@@ -584,11 +1265,7 @@
         ],
         [
           "form_id",
-          "cubic_first_derivative_test"
-        ],
-        [
-          "frame_id",
-          "cubic_first_derivative_test"
+          "cubic_shifted_extrema"
         ],
         [
           "has_diagram_svg",
@@ -596,11 +1273,17 @@
         ]
       ],
       "metadata": {
-        "form_id": "cubic_first_derivative_test",
-        "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
-        "a": 2,
+        "p": -5,
+        "q": 1,
         "c": 1,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -622,10 +1305,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3}-12x+2.",
-      "answer_latex": "\\text{rel max }18\\text{ at }x=-2;\\text{ rel min }-14\\text{ at }x=2",
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} + 6x^{2} - 15x - 2.",
+      "answer_latex": "\\text{rel max }98\\text{ at }x=-5;\\text{ rel min }-10\\text{ at }x=1",
       "skeleton_pattern": "",
-      "form_id": "cubic_first_derivative_test",
+      "form_id": "cubic_shifted_extrema",
       "diagram_svg": "",
       "debug": [
         [
@@ -638,11 +1321,7 @@
         ],
         [
           "form_id",
-          "cubic_first_derivative_test"
-        ],
-        [
-          "frame_id",
-          "cubic_first_derivative_test"
+          "cubic_shifted_extrema"
         ],
         [
           "has_diagram_svg",
@@ -650,16 +1329,246 @@
         ]
       ],
       "metadata": {
-        "form_id": "cubic_first_derivative_test",
-        "family": "cubic_first_derivative_test",
-        "frame_id": "cubic_first_derivative_test",
-        "a": 2,
-        "c": 2,
+        "p": -5,
+        "q": 1,
+        "c": -2,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
           "difficulty": 22.0,
           "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=0",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} + 3x^{2} - 24x.",
+      "answer_latex": "\\text{rel max }80\\text{ at }x=-4;\\text{ rel min }-28\\text{ at }x=2",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_extrema",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "cubic_shifted_extrema"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -4,
+        "q": 2,
+        "c": 0,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=2",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} - 3x^{2} - 9x.",
+      "answer_latex": "\\text{rel max }5\\text{ at }x=-1;\\text{ rel min }-27\\text{ at }x=3",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_extrema",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "cubic_shifted_extrema"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -1,
+        "q": 3,
+        "c": 0,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=5",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} + 6x^{2} - 15x - 1.",
+      "answer_latex": "\\text{rel max }99\\text{ at }x=-5;\\text{ rel min }-9\\text{ at }x=1",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_extrema",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "cubic_shifted_extrema"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -5,
+        "q": 1,
+        "c": -1,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the relative extrema.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=7",
+      "type_id": "calc_app_diff_relative_extrema",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the relative extrema of }f(x)=x^{3} - 3x^{2} - 24x - 2.",
+      "answer_latex": "\\text{rel max }26\\text{ at }x=-2;\\text{ rel min }-82\\text{ at }x=4",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_extrema",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "cubic_shifted_extrema"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -2,
+        "q": 4,
+        "c": -2,
+        "form_id": "cubic_shifted_extrema",
+        "family": "cubic_shifted_extrema",
+        "generator": "relative_extrema",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_extrema",
+          "family": "cubic_shifted_extrema",
+          "generator": "relative_extrema"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 7,
           "include_answer_key": true,
           "integers_only": true,
           "only_x": true,

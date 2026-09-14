@@ -223,10 +223,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "calc_app_diff `rolles_theorem` (even-quad / two-root / odd cubic).",
     },
     "calc_app_diff_relative_extrema": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "`calculus_foundations` stub — gold is critical points + relative max/min (OpenStax §4.3/4.5).",
+        "flag_why": "Shipped leftover lockout + Ex. 4.17 shifted extrema; LIMITATIONS no fractional-power first-derivative test.",
         "skill": "Locate relative extrema via critical points / derivative tests.",
-        "engine": "New apps-of-diff skeleton; reuse Diff only for computing f'/f''.",
+        "engine": "calc_app_diff `relative_extrema` (parabola vertex / odd cubic / shifted cubic).",
     },
     "calc_app_diff_absolute_extrema": {
         "force_flags": ["UNCLEAR"],

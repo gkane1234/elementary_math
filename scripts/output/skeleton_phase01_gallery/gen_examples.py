@@ -2877,7 +2877,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_relative_extrema",
         "App — relative extrema",
-        "Parabola vertex at D=0; cubic first-derivative test at D≥8. OpenStax Vol 1 §4.3/4.5.",
+        "D=0 parabola leftover (old easy); D≥8 unlocks odd cubics; high D "
+        "shifted cubics (OpenStax Ex. 4.17) and locks out the parabola. "
+        "OpenStax Vol 1 §4.3/4.5.",
     ),
     (
         "calc_app_diff_absolute_extrema",
@@ -3151,6 +3153,7 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             "calc_app_diff_intervals_of_increase_and_decrease",
             "calc_app_diff_intervals_of_concavity",
             "calc_app_diff_mean_value_theorem",
+            "calc_app_diff_relative_extrema",
         ):
             eng = "calc_apps"
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)

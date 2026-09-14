@@ -255,10 +255,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "calc_app_diff `motion_along_a_line` (quadratic leftover / cubic rest / cubic speed-sign).",
     },
     "calc_app_diff_newtons_method": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "`calculus_foundations` Newton path exists but difficulty/shape lock TBD vs OpenStax §4.9.",
+        "flag_why": "Shipped leftover lockout of one-quad; LIMITATIONS no Ex. 4.46 cubic / failure cases / two-step quadratic.",
         "skill": "Perform one or more Newton iterations.",
-        "engine": "Keep constructive Newton builder; harden difficulty honestly.",
+        "engine": "calc_app_diff `newtons_method` (one-quad leftover / one-cubic leftover / two cubic steps).",
     },
     "calc_app_diff_related_rates": {
         "force_flags": ["LOW_VARIETY"],

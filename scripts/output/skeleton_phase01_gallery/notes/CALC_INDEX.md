@@ -249,7 +249,7 @@ skill pair with a Calculus leaf. See `PRECALC_INDEX.md`.
 | `calc_app_diff_related_rates` | `related_rates_simple` | — |
 | `calc_app_diff_differentials` | `differentials` | — |
 | `calc_app_diff_linear_approximations` | `linear_approximation` | — |
-| `calc_app_diff_newtons_method` | `calculus_foundations` | — |
+| `calc_app_diff_newtons_method` | `newtons_method` | — |
 | `calc_app_diff_limits_in_form_of_definition_of_derivative` | `definition_of_derivative` | — |
 | `calc_app_diff_lhopitals_rule` | `lhopitals_rule` | — |
 | `calc_indef_int_power_rule` | `integral_power_rule` | — |

@@ -432,6 +432,48 @@ def _absolute_extrema(topic: str, settings: dict) -> list[Question]:
     )
 
 
+def _newtons_method(topic: str, settings: dict) -> list[Question]:
+    """Newton iterates; stamps live-loop form_id / generator."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        NEWTON_GENERATOR,
+        sample_app_diff,
+    )
+
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+
+    def build() -> tuple[str, str, str | None]:
+        item = sample_app_diff("newtons_method", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": NEWTON_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": NEWTON_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
+
+
 def _motion_along_a_line(topic: str, settings: dict) -> list[Question]:
     """Particle motion s→v/a; stamps live-loop form_id / generator."""
     from question_engine.frameworks.primitives.calc_app_diff import (
@@ -480,7 +522,7 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "intervals_concavity": _intervals_concavity,
     "mean_value_theorem": _mean_value_theorem,
     "rolles_theorem": _rolles_theorem,
-    "newtons_method": _framework("newtons_method", "Newton's method"),
+    "newtons_method": _newtons_method,
     "motion_along_a_line": _motion_along_a_line,
     "motion_along_a_line_integral": _framework(
         "motion_integral", "motion (integral)"

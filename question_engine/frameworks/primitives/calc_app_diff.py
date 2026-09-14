@@ -839,24 +839,60 @@ def sample_rolles(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     )
 
 
-def sample_newton(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    d = _d(settings)
-    if d < 10.0:
-        a = rng.choice([2, 3, 5, 10])
-        x0 = rng.choice([1, 2])
-        if x0 * x0 == a:
-            x0 = 1 if a != 1 else 2
-        fx = x0 * x0 - a
-        fpx = 2 * x0
-        x1 = Fraction(x0) - Fraction(fx, fpx)
-        prompt = (
-            rf"\text{{Use one Newton step for }}f(x)=x^{{2}}-{a}"
-            rf"\text{{ from }}x_0={x0}."
-        )
-        return AppDiffItem(
-            prompt, rf"x_1={frac_latex(x1)}", "Newton", "newton_one_quad",
-            {"steps": 1, "x0": x0, "a": a},
-        )
+NEWTON_GENERATOR = "newtons_method"
+
+_NEWTON_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("newton_one_quad",),
+    "medium": ("newton_one_quad", "newton_one_cubic"),
+    "hard": ("newton_one_cubic", "newton_two_cubic"),
+    "expert": ("newton_two_cubic",),
+}
+
+
+def newton_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _NEWTON_BANDS["easy"]
+    if d < 16.0:
+        return _NEWTON_BANDS["medium"]
+    if d < 20.0:
+        return _NEWTON_BANDS["hard"]
+    return _NEWTON_BANDS["expert"]
+
+
+def _newton_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [NEWTON_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_newton_one_quad(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: one step on f=x²−a (OpenStax square-root shape)."""
+    a = rng.choice([2, 3, 5, 10])
+    x0 = rng.choice([1, 2])
+    if x0 * x0 == a:
+        x0 = 1 if a != 1 else 2
+    fx = x0 * x0 - a
+    fpx = 2 * x0
+    x1 = Fraction(x0) - Fraction(fx, fpx)
+    prompt = (
+        rf"\text{{Use one Newton step for }}f(x)=x^{{2}}-{a}"
+        rf"\text{{ from }}x_0={x0}."
+    )
+    return AppDiffItem(
+        prompt, rf"x_1={frac_latex(x1)}", "Newton", "newton_one_quad",
+        {"steps": 1, "x0": x0, "a": a},
+    )
+
+
+def _newton_cubic_start(rng: random.Random) -> tuple[int, int, Fraction]:
+    """Old-path cubic: f=x³−a, first iterate from x0∈{1,2}."""
     a = rng.choice([2, 3, 5, 7, 10])
     x0 = rng.choice([1, 2])
     if x0**3 == a:
@@ -864,19 +900,26 @@ def sample_newton(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     fx = x0**3 - a
     fpx = 3 * x0 * x0
     x1 = Fraction(x0) - Fraction(fx, fpx)
-    steps = 2 if d >= 16.0 else 1
-    if steps == 1:
-        prompt = (
-            rf"\text{{Use one Newton step for }}f(x)=x^{{3}}-{a}"
-            rf"\text{{ from }}x_0={x0}."
-        )
-        return AppDiffItem(
-            prompt, rf"x_1={frac_latex(x1)}", "Newton", "newton_one_cubic",
-            {"steps": 1, "x0": x0, "a": a},
-        )
-    # Second iterate from x1 (rational).
+    return a, x0, x1
+
+
+def _sample_newton_one_cubic(rng: random.Random) -> AppDiffItem:
+    """Mid-D leftover: one step on f=x³−a."""
+    a, x0, x1 = _newton_cubic_start(rng)
+    prompt = (
+        rf"\text{{Use one Newton step for }}f(x)=x^{{3}}-{a}"
+        rf"\text{{ from }}x_0={x0}."
+    )
+    return AppDiffItem(
+        prompt, rf"x_1={frac_latex(x1)}", "Newton", "newton_one_cubic",
+        {"steps": 1, "x0": x0, "a": a},
+    )
+
+
+def _sample_newton_two_cubic(rng: random.Random) -> AppDiffItem:
+    """High D: two steps on f=x³−a (old-path expert)."""
+    a, x0, x1 = _newton_cubic_start(rng)
     x1n, x1d = x1.numerator, x1.denominator
-    # f(x1)=x1^3-a, f'(x1)=3 x1^2
     x1_3 = x1**3
     fp = 3 * x1 * x1
     x2 = x1 - (x1_3 - a) / fp
@@ -887,6 +930,46 @@ def sample_newton(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     return AppDiffItem(
         prompt, rf"x_2={frac_latex(x2)}", "Newton", "newton_two_cubic",
         {"steps": 2, "x0": x0, "x1": str(x1), "a": a, "x1_frac": (x1n, x1d)},
+    )
+
+
+_NEWTON_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "newton_one_quad": _sample_newton_one_quad,
+    "newton_one_cubic": _sample_newton_one_cubic,
+    "newton_two_cubic": _sample_newton_two_cubic,
+}
+
+
+def sample_newton(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Newton iterates. High D locks out one-quad leftovers for two cubic steps."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = newton_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _newton_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _NEWTON_BUILDERS:
+        fid = forms[0]
+    item = _NEWTON_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": NEWTON_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": NEWTON_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 

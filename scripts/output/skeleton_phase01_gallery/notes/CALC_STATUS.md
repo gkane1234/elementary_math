@@ -57,7 +57,8 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Absolute extrema: leftover lockout + Ex. 4.17 shifted closed-interval shipped; still no fractional-power EVT (Ex. 4.13 \(x^{2}-3x^{2/3}\))
 - Relative extrema: leftover lockout + Ex. 4.17 shifted extrema shipped; still no fractional-power first-derivative test
 - Curve sketching: leftover lockout + shifted inflections shipped; still text checklist only (no SVG / asymptotes)
-- Newton / DE intro: OpenStax-shaped but not full exercise breadth
+- Newton: leftover lockout + two cubic steps shipped; still no Ex. 4.46 \(x^{3}-3x+1\) / failure / two-step quadratic
+- DE intro: OpenStax-shaped but not full exercise breadth
 - Optimization: leftover lockout + §4.7 frames shipped; still no travel-time / Norman window / solids-in-solids
 - Increase/decrease: leftover lockout + Ex. 4.17 cubics shipped; still no fractional-power first-derivative test
 - Concavity: leftover lockout + Ex. 4.19 shifted inflections shipped; still no quintic second-derivative test
@@ -73,6 +74,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_app_diff_newtons_method`:** Leftover lockout of one-quad \(x^{2}-a\). D=0 one Newton step on \(x^{2}-a\) (old easy); D=8 one-quad leftover + one cubic step; D=16 one-cubic leftover + two cubic steps (no quad); D=22 two cubic steps only. Stamps `form_id` + `generator=newtons_method`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_motion_along_a_line`:** Leftover lockout + Ex. 3.36/3.35 cubics. D=0 \(s=t^{2}-nt\) eval \(v(n)\) (old easy); D=8 eval leftover + quadratic rest; D=16 rest leftover + cubic rest (no eval-velocity); D=22 cubics only (no \(t^{2}-nt\)). Drops inverted old `Find a(t)` (always 2). Stamps `form_id` + `generator=motion_along_a_line`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_relative_extrema`:** Leftover lockout + Ex. 4.17 shifted extrema. D=0 parabola vertex (old easy); D=8 parabola leftover + odd cubic (crits ±a); D=16 odd-cubic leftover + shifted (no parabola); D=22 shifted only. Stamps `form_id` + `generator=relative_extrema`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_absolute_extrema`:** Leftover lockout + Ex. 4.17 shifted cubics on a closed interval. D=0 parabola on \([0,b]\) (old easy); D=8 parabola leftover + odd cubic (crits ±a); D=16 odd-cubic leftover + shifted (no parabola); D=22 shifted only (endpoint pad so EVT is not interior-only). Stamps `form_id` + `generator=absolute_extrema`; `select_form_id` / `live_quality_form_weights`.

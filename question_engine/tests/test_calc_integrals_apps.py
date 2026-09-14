@@ -480,12 +480,84 @@ def test_rolles_quality_weights_tilt():
     assert tilted["rolles_two_roots"] > baseline["rolles_two_roots"]
 
 
-def test_newton_one_then_two_steps():
+def test_newton_d0_one_quad_high_d_two_cubic_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        newton_forms_for_difficulty,
+    )
+
+    assert newton_forms_for_difficulty(0) == ("newton_one_quad",)
+    med = newton_forms_for_difficulty(8)
+    assert "newton_one_quad" in med and "newton_one_cubic" in med
+    hard = newton_forms_for_difficulty(16)
+    assert "newton_one_quad" not in hard
+    assert hard == ("newton_one_cubic", "newton_two_cubic")
+    assert newton_forms_for_difficulty(22) == ("newton_two_cubic",)
+
     q0 = _gen("calc_app_diff_newtons_method", 0, seed=101)[0]
-    assert "Newton" in (q0.prompt_latex or "")
+    assert (q0.metadata or {}).get("form_id") == "newton_one_quad"
+    assert (q0.metadata or {}).get("generator") == "newtons_method"
+    assert r"x^{2}" in (q0.prompt_latex or "")
     assert "x_1=" in (q0.answer_latex or "")
-    qh = _gen("calc_app_diff_newtons_method", 18, seed=5)[0]
-    assert "x_2=" in (qh.answer_latex or "") or "x_1=" in (qh.answer_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "newton_one_quad"
+    assert snap.get("generator") == "newtons_method"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_newtons_method", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert "x_1=" in (q.answer_latex or "")
+    assert "newton_one_quad" in mid
+    assert "newton_one_cubic" in mid
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_newtons_method", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "newton_one_quad"
+        assert r"x^{2}" not in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "newtons_method"
+    assert high <= {"newton_one_cubic", "newton_two_cubic"}
+    assert "newton_two_cubic" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_newtons_method", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "newton_two_cubic"
+        assert "x_2=" in (q.answer_latex or "")
+        assert r"x^{3}" in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "newtons_method"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "newton_two_cubic"
+    assert expert == {"newton_two_cubic"}
+
+
+def test_newton_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_newton,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_newton(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"newton_one_quad": -2.5, "newton_one_cubic": 2.5})
+    assert tilted["newton_one_cubic"] > baseline["newton_one_cubic"]
 
 
 def test_optimization_frames_unlock():

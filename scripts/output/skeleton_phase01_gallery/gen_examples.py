@@ -2924,7 +2924,8 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_newtons_method",
         "App — Newton's method",
-        "One quadratic step; two cubic steps at high D. OpenStax Vol 1 §4.9.",
+        "D=0 one quadratic leftover (old easy); D≥8 one cubic step; high D "
+        "two cubic steps and locks out x^2-a. OpenStax Vol 1 §4.9.",
     ),
     (
         "calc_app_int_motion_along_a_line_revisited",

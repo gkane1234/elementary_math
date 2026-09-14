@@ -1723,6 +1723,10 @@ def sample_limit_expression(
     else:
         fid = catalog_fid or fleshed_fid or form
     core_fid = str(extra.get("core_form_id") or fid)
+    snap["form_id"] = fid
+    snap["family"] = fid
+    snap["generator"] = key
+    snap["catalog_id"] = "limits"
 
     meta: dict[str, Any] = {
         "generator": key,
@@ -1733,6 +1737,7 @@ def sample_limit_expression(
         "function_classes": extra.get("function_classes") or ["algebraic"],
         "shape_id": form,
         "form_id": fid,
+        "family": fid,
         "openstax_form": fid,
         "core_form_id": core_fid,
         "catalog_id": "limits",

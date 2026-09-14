@@ -6,6 +6,7 @@ from collections import Counter
 
 import pytest
 
+from question_engine.api.handler import _generate_for_type
 from question_engine.frameworks.primitives.integrals import (
     plan_trick_pipeline,
     sample_integral_expression,
@@ -14,6 +15,21 @@ from question_engine.frameworks.primitives.integrals import (
 from question_engine.frameworks.primitives.limits import sample_limit_expression
 from question_engine.generators import GENERATORS
 from question_engine.ml.schema import build_generation_record
+
+
+_LHOPITAL_EASY_LEFTOVER = ("lhopital_0_0_poly", "lhopital_0_0_trig")
+
+
+def _gen_lhopital(d: float, *, seed: int = 101):
+    return _generate_for_type(
+        "calc_app_diff_lhopitals_rule",
+        {
+            "difficulty": d,
+            "seed": seed,
+            "count": 1,
+            "include_answer_key": True,
+        },
+    )[0]
 
 
 def test_limit_removable_emits_spec_snapshot():
@@ -40,6 +56,61 @@ def test_lhopital_is_indet_not_standard_only():
     assert meta.get("indeterminate_form")
     assert meta.get("lhopital_passes") is not None
     assert meta.get("form_id")
+
+
+def test_lhopital_leftover_lockout_no_easy_0_0():
+    """Leftover lockout of D=0 0/0 poly and of old Mad-Lib sin(kx)/x at D>=16."""
+    q0 = _gen_lhopital(0, seed=101)
+    md0 = q0.metadata or {}
+    snap0 = md0.get("spec_snapshot") or {}
+    assert md0.get("form_id") == "lhopital_0_0_poly"
+    assert md0.get("generator") == "lhopitals_rule"
+    assert snap0.get("form_id") == "lhopital_0_0_poly"
+    assert snap0.get("generator") == "lhopitals_rule"
+    assert r"\lim" in (q0.prompt_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen_lhopital(0, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "lhopital_0_0_poly"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "lhopitals_rule"
+    assert easy == {"lhopital_0_0_poly"}
+
+    mid = set()
+    leftover_poly = leftover_trig = 0
+    for seed in range(40):
+        q = _gen_lhopital(8, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "lhopital_0_0_poly":
+            leftover_poly += 1
+        if fid == "lhopital_0_0_trig":
+            leftover_trig += 1
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "lhopitals_rule"
+        assert (q.metadata or {}).get("generator") == "lhopitals_rule"
+    assert leftover_poly >= 1
+    assert leftover_trig >= 1
+    assert mid - set(_LHOPITAL_EASY_LEFTOVER)
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen_lhopital(d, seed=seed)
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid not in _LHOPITAL_EASY_LEFTOVER, (d, seed, fid, q.prompt_latex)
+            assert (q.metadata or {}).get("generator") == "lhopitals_rule"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "lhopitals_rule"
+            assert r"\lim" in (q.prompt_latex or "")
+    assert len(high) >= 4
 
 
 def test_lhopital_indeterminate_form_diversity():
@@ -904,11 +975,11 @@ def test_dressed_limit_answer_matches_scaled_core():
     """Same-seed L'H with wraps: answer equals scale applied to undressed numeric core."""
     from question_engine.frameworks.primitives.complexity_wrap import scale_answer_latex
 
-    # Find dressed lhopital_0_0_poly samples and check integer answers scale cleanly
+    # Find dressed lhopital_0_0_poly samples (catalog d_max=10 leftover band).
     ok = 0
-    for seed in range(0, 80):
+    for seed in range(0, 120):
         hi = sample_limit_expression(
-            {"difficulty": 20, "seed": seed, "include_answer_key": True},
+            {"difficulty": 8, "seed": seed, "include_answer_key": True},
             generator_key="lhopitals_rule",
         )
         meta = hi.as_metadata()

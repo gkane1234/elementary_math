@@ -107,6 +107,108 @@ def test_ftc1_evaluates_definite():
     assert q.answer_latex
 
 
+def test_ftc1_d0_easy_high_d_sqrt_sin_lockout():
+    from question_engine.frameworks.primitives.integrals import (
+        ftc1_forms_for_difficulty,
+    )
+
+    assert ftc1_forms_for_difficulty(0) == ("ftc1_linear", "ftc1_quad")
+    med = ftc1_forms_for_difficulty(8)
+    assert "ftc1_linear" in med and "ftc1_quad" in med
+    assert "ftc1_quad_const" in med
+    assert "ftc1_sqrt" not in med and "ftc1_sin" not in med
+    hard = ftc1_forms_for_difficulty(16)
+    assert "ftc1_linear" not in hard and "ftc1_quad" not in hard
+    assert hard == ("ftc1_quad_const", "ftc1_sqrt", "ftc1_sin")
+    assert ftc1_forms_for_difficulty(22) == ("ftc1_sqrt", "ftc1_sin")
+
+    q0 = _gen("calc_def_int_first_fundamental_theorem_of_calculus", 0, seed=101)[0]
+    fid0 = (q0.metadata or {}).get("form_id")
+    assert fid0 in {"ftc1_linear", "ftc1_quad"}
+    assert (q0.metadata or {}).get("generator") == "first_fundamental_theorem"
+    assert r"\sqrt" not in (q0.prompt_latex or "")
+    assert r"\sin" not in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == fid0
+    assert snap.get("generator") == "first_fundamental_theorem"
+
+    mid = set()
+    for seed in range(30):
+        q = _gen(
+            "calc_def_int_first_fundamental_theorem_of_calculus", 8, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert (q.metadata or {}).get("generator") == "first_fundamental_theorem"
+        assert r"\sqrt" not in (q.prompt_latex or "")
+        assert r"\sin" not in (q.prompt_latex or "")
+    assert "ftc1_linear" in mid
+    assert "ftc1_quad" in mid
+    assert "ftc1_quad_const" in mid
+    assert mid <= {"ftc1_linear", "ftc1_quad", "ftc1_quad_const"}
+
+    high = set()
+    for seed in range(36):
+        q = _gen(
+            "calc_def_int_first_fundamental_theorem_of_calculus", 16, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid not in {"ftc1_linear", "ftc1_quad"}
+        p = q.prompt_latex or ""
+        assert r"} x\,d" not in p
+        assert (q.metadata or {}).get("generator") == "first_fundamental_theorem"
+    assert high <= {"ftc1_quad_const", "ftc1_sqrt", "ftc1_sin"}
+    assert "ftc1_quad_const" in high
+    assert high & {"ftc1_sqrt", "ftc1_sin"}
+
+    expert = set()
+    for seed in range(30):
+        q = _gen(
+            "calc_def_int_first_fundamental_theorem_of_calculus", 22, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in {"ftc1_sqrt", "ftc1_sin"}
+        p = q.prompt_latex or ""
+        assert r"} x\,d" not in p
+        assert r"x^{2}" not in p
+        assert (q.metadata or {}).get("generator") == "first_fundamental_theorem"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "first_fundamental_theorem"
+    assert expert == {"ftc1_sqrt", "ftc1_sin"}
+
+
+def test_ftc1_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.integrals import (
+        sample_integral_expression,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                sample = sample_integral_expression(
+                    {"difficulty": 8.0, "include_answer_key": True},
+                    generator_key="first_fundamental_theorem",
+                    rng=_random.Random(i),
+                )
+                c[sample.metadata.get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"ftc1_linear": -2.5, "ftc1_quad": 2.5})
+    assert tilted["ftc1_quad"] > baseline["ftc1_quad"]
+
+
 def test_ftc2_is_derivative_of_integral():
     q = _gen("calc_def_int_second_fundamental_theorem_of_calculus", 0, seed=101)[0]
     assert r"\frac{d}" in (q.prompt_latex or "")

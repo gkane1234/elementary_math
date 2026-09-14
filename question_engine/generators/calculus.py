@@ -737,38 +737,15 @@ def _riemann_approximate_area(topic: str, settings: dict) -> list[Question]:
 
 
 def _first_fundamental_theorem(topic: str, settings: dict) -> list[Question]:
-    """Evaluate definite integrals via antiderivatives (FTC I)."""
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _topic_structure(settings)
-    x = str(settings.get("variable", "x"))
+    """Evaluate definite integrals via antiderivatives (OpenStax FTC Part 2).
 
-    def build() -> tuple[str, str, str | None]:
-        a = 0
-        b = random.randint(2, max(2, min(5, int(structure.get("bound_max", 5)))))
-        family = _pick_family(
-            structure,
-            ["linear"],
-            medium=["quad_coef"],
-            hard=["quad_const"],
-        )
-        if family == "linear":
-            prompt = rf"\int_{{{a}}}^{{{b}}} {x}\,d{x}"
-            answer = frac_latex(Fraction(b * b, 2))
-        elif family == "quad_coef":
-            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
-            f = format_monomial_latex(k, variable=x, degree=2) or f"{k}{x}^{{2}}"
-            prompt = rf"\int_{{{a}}}^{{{b}}} {f}\,d{x}"
-            answer = frac_latex(Fraction(k * b**3, 3))
-        else:
-            p = random.randint(1, 3)
-            q = random_int_range(-3, 3, exclude={0})
-            f = format_polynomial_latex([p, 0, q], variable=x)
-            prompt = rf"\int_{{{a}}}^{{{b}}} \left({f}\right)\,d{x}"
-            answer = frac_latex(Fraction(p * b**3, 3) + q * b)
-        return prompt, "first fundamental theorem", answer if include_answer_key else None
+    Live worksheets use ``calculus_integrals`` (merge-overwrites this key). Keep
+    the same leftover-lockout sampler so a merge-order flip cannot reintroduce
+    accumulate ``_pick_family`` leftovers.
+    """
+    from question_engine.generators.calculus_integrals import GENERATORS as INT
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return INT["first_fundamental_theorem"](topic, settings)
 
 
 def _area_under_curve(topic: str, settings: dict) -> list[Question]:

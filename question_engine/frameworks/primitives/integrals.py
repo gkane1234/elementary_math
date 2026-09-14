@@ -2250,55 +2250,140 @@ def _sample_parts(
     return prompt, answer, meta
 
 
+FTC1_GENERATOR = "first_fundamental_theorem"
+
+_FTC1_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("ftc1_linear", "ftc1_quad"),
+    "medium": ("ftc1_linear", "ftc1_quad", "ftc1_quad_const"),
+    "hard": ("ftc1_quad_const", "ftc1_sqrt", "ftc1_sin"),
+    "expert": ("ftc1_sqrt", "ftc1_sin"),
+}
+
+
+def ftc1_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 ∫x / ∫kx²; D=22 is √x / sin only."""
+    if d < 8.0:
+        return _FTC1_BANDS["easy"]
+    if d < 16.0:
+        return _FTC1_BANDS["medium"]
+    if d < 20.0:
+        return _FTC1_BANDS["hard"]
+    return _FTC1_BANDS["expert"]
+
+
+def _ftc1_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [FTC1_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_ftc1_linear(
+    rng: random.Random, var: str, b_hi: int
+) -> tuple[str, str, list[str]]:
+    """Old-path D=0 leftover: ∫_0^b x dx."""
+    b = rng.randint(2, max(2, b_hi))
+    prompt = rf"\int_{{0}}^{{{b}}} {var}\,d{var}"
+    return prompt, frac_latex(Fraction(b * b, 2)), ["algebraic"]
+
+
+def _sample_ftc1_quad(
+    rng: random.Random, var: str, b_hi: int, coef_hi: int
+) -> tuple[str, str, list[str]]:
+    """Old-path D=0 leftover: ∫_0^b k x^2 dx (k≥1)."""
+    b = rng.randint(2, max(2, b_hi))
+    k = rng.randint(1, max(1, min(6, coef_hi)))
+    f = format_monomial_latex(k, variable=var, degree=2) or f"{k}{var}^{{2}}"
+    prompt = rf"\int_{{0}}^{{{b}}} {f}\,d{var}"
+    return prompt, frac_latex(Fraction(k * b**3, 3)), ["algebraic"]
+
+
+def _sample_ftc1_quad_const(
+    rng: random.Random, var: str, b_hi: int, coef_hi: int
+) -> tuple[str, str, list[str]]:
+    """Old mid unlock: ∫_0^b (p x^2 + q) dx."""
+    b = rng.randint(2, max(2, b_hi))
+    p = rng.randint(1, max(1, min(4, coef_hi)))
+    q = _coef(rng, max(2, min(4, coef_hi)))
+    f = format_polynomial_latex([p, 0, q], variable=var)
+    prompt = rf"\int_{{0}}^{{{b}}} \left({f}\right)\,d{var}"
+    return prompt, frac_latex(Fraction(p * b**3, 3) + q * b), ["algebraic"]
+
+
+def _sample_ftc1_sqrt(
+    rng: random.Random, var: str, d: float
+) -> tuple[str, str, list[str]]:
+    """Old high unlock: ∫_0^b √x dx; b a perfect square for a clean key."""
+    b = rng.choice([1, 4, 9] if d < 18 else [1, 4, 9, 16])
+    prompt = rf"\int_{{0}}^{{{b}}} \sqrt{{{var}}}\,d{var}"
+    root = int(b**0.5)
+    return prompt, frac_latex(Fraction(2 * b * root, 3)), ["algebraic"]
+
+
+def _sample_ftc1_sin(var: str) -> tuple[str, str, list[str]]:
+    """Old high unlock: ∫_0^{π/2} sin(x) dx = 1."""
+    prompt = rf"\int_{{0}}^{{\pi/2}} \sin({var})\,d{var}"
+    return prompt, "1", ["trig"]
+
+
 def _sample_ftc(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
-    """FTC evaluation ∫_a^b f (OpenStax Part 2 / first_fundamental_theorem leaf)."""
+    """FTC evaluation ∫_a^b f (OpenStax Part 2 / first_fundamental_theorem leaf).
+
+    High D locks out D=0 ∫x / ∫kx² leftovers. Same five old builders.
+    """
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
     var = spec.variable
-    a = 0
-    b_hi = max(2, min(8, spec.bound_abs_max))
-    b = rng.randint(2, b_hi)
     d = float(spec.d_spend)
-    # D=0: linear / simple quad only (old easy). Numeric hardness then unlocks.
-    pool = ["linear", "quad"]
-    if d >= 8:
-        pool.append("quad_const")
-    if d >= 12:
-        pool.extend(["sqrt", "sin"])
-    family = rng.choice(pool)
-    if family == "linear":
-        prompt = rf"\int_{{{a}}}^{{{b}}} {var}\,d{var}"
-        answer = frac_latex(Fraction(b * b, 2))
-        classes = ["algebraic"]
-    elif family == "quad":
-        k = rng.randint(1, max(1, min(6, spec.coef_abs_max)))
-        f = format_monomial_latex(k, variable=var, degree=2) or f"{k}{var}^{{2}}"
-        prompt = rf"\int_{{{a}}}^{{{b}}} {f}\,d{var}"
-        answer = frac_latex(Fraction(k * b**3, 3))
-        classes = ["algebraic"]
-    elif family == "quad_const":
-        p = rng.randint(1, max(1, min(4, spec.coef_abs_max)))
-        q = _coef(rng, max(2, min(4, spec.coef_abs_max)))
-        f = format_polynomial_latex([p, 0, q], variable=var)
-        prompt = rf"\int_{{{a}}}^{{{b}}} \left({f}\right)\,d{var}"
-        answer = frac_latex(Fraction(p * b**3, 3) + q * b)
-        classes = ["algebraic"]
-    elif family == "sqrt":
-        # ∫_0^b √x dx = (2/3) b^{3/2}; keep b a perfect square for clean key
-        b = rng.choice([1, 4, 9] if d < 18 else [1, 4, 9, 16])
-        prompt = rf"\int_{{{a}}}^{{{b}}} \sqrt{{{var}}}\,d{var}"
-        root = int(b**0.5)
-        answer = frac_latex(Fraction(2 * b * root, 3))
-        classes = ["algebraic"]
+    forms = ftc1_forms_for_difficulty(d)
+    b_hi = max(2, min(8, spec.bound_abs_max))
+    form = select_form_id(_ftc1_form_rows(forms), d=d, rng=rng)
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "ftc1_linear" and fid in forms:
+        prompt, answer, classes = _sample_ftc1_linear(rng, var, b_hi)
+    elif fid == "ftc1_quad" and fid in forms:
+        prompt, answer, classes = _sample_ftc1_quad(
+            rng, var, b_hi, spec.coef_abs_max
+        )
+    elif fid == "ftc1_quad_const" and fid in forms:
+        prompt, answer, classes = _sample_ftc1_quad_const(
+            rng, var, b_hi, spec.coef_abs_max
+        )
+    elif fid == "ftc1_sqrt" and fid in forms:
+        prompt, answer, classes = _sample_ftc1_sqrt(rng, var, d)
+    elif fid == "ftc1_sin" and fid in forms:
+        prompt, answer, classes = _sample_ftc1_sin(var)
     else:
-        prompt = rf"\int_{{0}}^{{\pi/2}} \sin({var})\,d{var}"
-        answer = "1"
-        classes = ["trig"]
-        family = "sin"
+        fid = forms[0]
+        if fid == "ftc1_quad":
+            prompt, answer, classes = _sample_ftc1_quad(
+                rng, var, b_hi, spec.coef_abs_max
+            )
+        elif fid == "ftc1_quad_const":
+            prompt, answer, classes = _sample_ftc1_quad_const(
+                rng, var, b_hi, spec.coef_abs_max
+            )
+        elif fid == "ftc1_sqrt":
+            prompt, answer, classes = _sample_ftc1_sqrt(rng, var, d)
+        elif fid == "ftc1_sin":
+            prompt, answer, classes = _sample_ftc1_sin(var)
+        else:
+            prompt, answer, classes = _sample_ftc1_linear(rng, var, b_hi)
     return prompt, answer, {
         "function_classes": classes,
-        "family": family,
-        "form_id": family,
+        "family": fid,
+        "form_id": fid,
+        "generator": FTC1_GENERATOR,
         "n_terms": 1,
         "definite": True,
     }
@@ -4048,6 +4133,7 @@ def sample_integral_expression(
         meta["family"] = fid
         snap["form_id"] = fid
         snap["family"] = fid
+        snap["generator"] = str(extra.get("generator") or meta.get("generator") or key)
         if extra.get("catalog_id"):
             snap["catalog_id"] = extra["catalog_id"]
         if extra.get("strategy"):

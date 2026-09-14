@@ -58,6 +58,8 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Motion along a line (diff): leftover lockout + Ex. 3.36/3.35 cubics shipped; still no free-fall \(-16t^{2}\) / piecewise / trig / \(s(t)\) graph
 - Motion along a line revisited (integral): leftover lockout of \(v=2t\) shipped; still no \(\int|v|\) distance / Ex. 5.24 nonzero net / quadratic \(v(t)\)
 - Graphical comparison: no figure bank
+- First FTC (evaluate \(\int_a^b\)): leftover lockout of D=0 \(\int x\) / \(\int kx^{2}\) shipped; still five frozen old builders (no Ex. 5.20 \(t^{2}-4\) / Ex. 5.21 \(\frac{x-1}{\sqrt{x}}\) / \(a\neq 0\)); D=16 can still emit quad-const leftover
+- Second FTC (\(\frac{d}{dx}\int_a^{g(x)}\)): still `_sample_ftc2` accumulate; D=22 can emit leftover \(t^{2}\)
 - Integral MVT (average value): leftover lockout of \(f(x)=x\) shipped; still three frozen monomials on \([0,b]\) (no \(\sin x\) / \(e^x\) / \(a\neq 0\) / find-\(c\)); D=16 can still emit \(x^{2}\) leftover
 - Slope, tangent, and normal lines: leftover lockout of D=0 poly/trig/exp/ln shipped; still no implicit/folium / \(x\cdot 5^{x}\) normals; D=16 can still emit reciprocal/radical leftover; generic `function_sketch` only
 - Linear approximations: leftover lockout of \(x^{2}\) shipped; still no Ex. 4.5 estimate-\(\sqrt{x}\) / Ex. 4.6 \(\sin x\) / cube-root / \((1+x)^{n}\); D=16 can still emit \(\sqrt{x}\) leftover
@@ -85,6 +87,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_def_int_first_fundamental_theorem_of_calculus`:** Leftover lockout of D=0 \(\int x\) / \(\int kx^{2}\). D=0 linear+quad (old easy); D=8 leftover linear/quad + \(px^{2}+q\); D=16 quad-const leftover + \(\sqrt{x}\) / \(\sin x\) (no \(\int x\)); D=22 \(\sqrt{x}\) / \(\sin x\) only. Stamps `form_id` + `generator=first_fundamental_theorem`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_def_int_mean_value_theorem`:** Leftover lockout of D=0 \(f(x)=x\). D=0 linear on \([0,b]\) (old easy); D=8 leftover linear + \(f(x)=x^{2}\); D=16 \(x^{2}\) leftover + \(kx^{2}\) (no \(f(x)=x\)); D=22 \(kx^{2}\) only. Stamps `form_id` + `generator=def_int_mean_value`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_int_area_between_curves`:** Leftover lockout of exclusive cliffs and of D=0 triangle \(y=k-x\) vs \(y=0\) at expert. D=0 \(y=x\) vs \(y=0\) (old easy); D=8 leftover axis-triangles + \(x^{2}\) vs \(0\) + three-line region (no two-curve yet); D=16 \(x^{2}\) leftover + three-line leftover + \(y=x\) vs \(y=x^{2}\) (no axis-triangles); D=22 two-curve only. Stamps `form_id` + `generator=area_between_curves`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_int_area_under_a_curve`:** Leftover lockout of D=0 \(y=x\). D=0 linear on \([0,b]\) (old easy); D=8 leftover linear + \(y=x^{2}\); D=16 \(x^{2}\) leftover + \(kx^{2}\) (no \(y=x\)); D=22 \(kx^{2}\) only. Stamps `form_id` + `generator=area_under_curve`; `select_form_id` / `live_quality_form_weights`. Shared generator also serves the limit-of-sums sibling (still FTC wording).

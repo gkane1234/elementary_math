@@ -3907,10 +3907,52 @@ def _antideriv_from_pfd_target(target, var: str, *, include_plus_c: bool) -> str
     return _plus_c(_join_signed_pieces(pieces), include=include_plus_c)
 
 
+PFD_GENERATOR = "integral_partial_fractions"
+
+_PFD_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("distinct_linear_2",),
+    "medium": (
+        "distinct_linear_2",
+        "distinct_linear_3",
+        "irreducible_quad_arctan",
+        "irreducible_quad_ln",
+        "mixed_linear_quad",
+        "repeated_linear_square",
+    ),
+    "hard": (
+        "distinct_linear_3",
+        "mixed_linear_quad",
+        "repeated_linear_square",
+    ),
+    "expert": (
+        "distinct_linear_3",
+        "mixed_linear_quad",
+        "repeated_linear_square",
+    ),
+}
+
+
+def pfd_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 two-linear and of single-term quad at high D."""
+    if d < 8.0:
+        return _PFD_BANDS["easy"]
+    if d < 16.0:
+        return _PFD_BANDS["medium"]
+    if d < 20.0:
+        return _PFD_BANDS["hard"]
+    return _PFD_BANDS["expert"]
+
+
 def _sample_pfd_integral(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
-    """PFD integrals driven by ``partial_fractions`` form catalog."""
+    """PFD integrals driven by ``partial_fractions`` form catalog.
+
+    High D locks out D=0 two-linear leftovers and single-term
+    ``C/(x^2+a^2)`` / ``Bx/(x^2+a^2)`` (not a decomposition). Same six
+    old builders; named ``pfd_form_preset=bc_bank`` still intersects the
+    leftover band.
+    """
     from question_engine.frameworks.primitives import partial_fractions as pf
     from question_engine.frameworks.primitives.constructive import (
         PartialFractionTerm,
@@ -3925,10 +3967,13 @@ def _sample_pfd_integral(
 
     # Multi-trick pipeline forms are sampled elsewhere; keep single-trick here.
     catalog = load_form_catalog("partial_fractions")
+    d = float(spec.d_spend)
+    allowed = set(pfd_forms_for_difficulty(d))
     pool = [
         f
         for f in implemented_forms(catalog)
         if not str(f.get("form_id", "")).startswith("u_sub_then_pfd")
+        and str(f.get("form_id")) in allowed
     ]
     preset_ids = resolve_pfd_form_preset(spec.pfd_form_preset)
     if preset_ids:
@@ -3939,14 +3984,27 @@ def _sample_pfd_integral(
         {"forms": pool, "catalog_id": catalog.get("catalog_id")},
         spec,
     ) or pool
-    form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
+    pool = [f for f in pool if str(f.get("form_id")) in allowed]
+    if not pool:
+        pool = [
+            f
+            for f in implemented_forms(catalog)
+            if str(f.get("form_id")) in allowed
+            and not str(f.get("form_id", "")).startswith("u_sub_then_pfd")
+        ]
+    form = select_form_id(pool, d=d, rng=rng)
     form_id = str(form["form_id"])
+    if form_id not in allowed:
+        form_id = pfd_forms_for_difficulty(d)[0]
     ctx = _pfd_ctx(rng, spec)
     var = spec.variable
     include = spec.include_plus_c
     meta = {
         **catalog_form_meta(form, catalog),
         "family": form_id,
+        "form_id": form_id,
+        "openstax_form": form_id,
+        "generator": PFD_GENERATOR,
         "construction": "partial_fractions.combine_pf_to_rational",
         "pfd_source": "partial_fractions.combine_pf_to_rational",
         "tricks_required": ["pfd"],

@@ -3548,6 +3548,86 @@ _GENERAL_POWER = {
 _GENERAL_D0 = _GENERAL_TABLE | {"poly_sum", "sqrt_x", "ln", "exp"}
 
 
+def test_indef_pfd_leftover_lockout_no_single_term_quad():
+    """Leftover lockout of D=0 two-linear and of single-term quad at D>=16."""
+    from question_engine.frameworks.primitives.integrals import (
+        pfd_forms_for_difficulty,
+    )
+
+    assert pfd_forms_for_difficulty(0) == ("distinct_linear_2",)
+    med = pfd_forms_for_difficulty(8)
+    assert "distinct_linear_2" in med
+    assert "irreducible_quad_arctan" in med
+    hard = pfd_forms_for_difficulty(16)
+    assert "distinct_linear_2" not in hard
+    assert "irreducible_quad_arctan" not in hard
+    assert "irreducible_quad_ln" not in hard
+    assert hard == (
+        "distinct_linear_3",
+        "mixed_linear_quad",
+        "repeated_linear_square",
+    )
+    assert pfd_forms_for_difficulty(22) == hard
+
+    q0 = _gen("calc_indef_int_partial_fractions", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "distinct_linear_2"
+    assert (q0.metadata or {}).get("generator") == "integral_partial_fractions"
+    snap0 = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap0.get("form_id") == "distinct_linear_2"
+    assert snap0.get("generator") == "integral_partial_fractions"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen("calc_indef_int_partial_fractions", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "distinct_linear_2"
+        assert (q.metadata or {}).get("generator") == "integral_partial_fractions"
+        assert "+C" in (q.answer_latex or "")
+    assert easy == {"distinct_linear_2"}
+
+    mid = set()
+    leftover_two = 0
+    leftover_quad = 0
+    for seed in range(40):
+        q = _gen("calc_indef_int_partial_fractions", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "distinct_linear_2":
+            leftover_two += 1
+        if fid in {"irreducible_quad_arctan", "irreducible_quad_ln"}:
+            leftover_quad += 1
+        assert (q.metadata or {}).get("generator") == "integral_partial_fractions"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "integral_partial_fractions"
+        assert "+C" in (q.answer_latex or "")
+    assert leftover_two >= 1
+    assert leftover_quad >= 1
+    assert mid - {"distinct_linear_2"}
+
+    high_ok = {
+        "distinct_linear_3",
+        "mixed_linear_quad",
+        "repeated_linear_square",
+    }
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen("calc_indef_int_partial_fractions", d, seed=seed)[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid in high_ok, (d, seed, fid, q.prompt_latex)
+            assert (q.metadata or {}).get("generator") == "integral_partial_fractions"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "integral_partial_fractions"
+            assert "+C" in (q.answer_latex or "")
+    assert len(high) >= 2
+
+
 def test_indef_parts_stamps_and_high_d_no_ln_alone():
     """catalog d_max=8 + EMH bc_bank already drop ln_alone at D>=16; stamps live.
 

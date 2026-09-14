@@ -2695,7 +2695,7 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_indef_int_partial_fractions",
         "Integral — PFD",
-        "Reuse <code>partial_fractions</code> constructive core then integrate. OpenStax Vol 2 §3.4. Named preset <code>pfd_form_preset=bc_bank</code> for §4 lookalikes; <code>x4_plus_1</code> deferred.",
+        "Leftover lockout: D=0 two linears; D=8 leftover two-linear + irred/3-linear; D=16/22 3-linear / mixed / repeated (no single-term quad). OpenStax Vol 2 §3.4. Named preset <code>pfd_form_preset=bc_bank</code> intersects the band; <code>x4_plus_1</code> deferred.",
     ),
     (
         "calc_indef_int_multi_trick",
@@ -3149,7 +3149,8 @@ CALC_PARTS_PFD_PRESET_SHOWCASE: list[tuple[str, str, str, str, dict[str, Any]]] 
         "calc_indef_int_partial_fractions",
         "PFD preset — bc_bank",
         "Forced BC bank §4 families the existing PFD core can emit "
-        "(distinct linear 2/3, mixed linear-quad, repeated square, irreducible quad). "
+        "(distinct linear 2/3, mixed linear-quad, repeated square; irreducible "
+        "quad leftover is mid-D only). "
         "<code>1/(x^4+1)</code> and <code>(x^2+1)^2</code> stay deferred.",
         {"pfd_form_preset": "bc_bank"},
     ),

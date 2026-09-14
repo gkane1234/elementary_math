@@ -322,6 +322,11 @@ def test_pfd_bc_bank_preset_lookalikes():
         fid = _form_id(sample.as_metadata())
         assert fid in bank, (seed, fid, sample.prompt_latex)
         assert fid != "x4_plus_1"
+        assert fid not in {
+            "irreducible_quad_arctan",
+            "irreducible_quad_ln",
+            "distinct_linear_2",
+        }, (seed, fid, sample.prompt_latex)
         assert "+C" in (sample.answer_latex or "")
         prompts.add(sample.prompt_latex or "")
         seen.add(fid)
@@ -483,7 +488,7 @@ def test_pfd_d0_distinct_linear_2():
 
 
 def test_pfd_high_d_not_distinct_linear_2():
-    """distinct_linear_2 has d_max=10; D=16/22 must be 3-linear / mixed / repeated / quad."""
+    """High D locks out two-linear and single-term quad leftovers."""
     seen: set[str] = set()
     for seed in range(36):
         sample = sample_integral_expression(
@@ -492,6 +497,10 @@ def test_pfd_high_d_not_distinct_linear_2():
         )
         fid = _form_id(sample.as_metadata())
         assert fid != "distinct_linear_2", (seed, fid, sample.prompt_latex)
+        assert fid not in {
+            "irreducible_quad_arctan",
+            "irreducible_quad_ln",
+        }, (seed, fid, sample.prompt_latex)
         seen.add(fid)
         assert "+C" in (sample.answer_latex or "")
     assert seen & {

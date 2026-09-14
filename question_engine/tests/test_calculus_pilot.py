@@ -79,3 +79,27 @@ def test_linear_approximation_emit_structure_family() -> None:
     assert "quad" not in families
     assert len(families) >= 2
 
+
+def test_tangent_normal_emit_structure_family() -> None:
+    gen = GENERATORS["tangent_normal_line"]
+    qs = gen(
+        "tangent_normal_line",
+        {"count": 12, "difficulty": 16.0, "include_answer_key": True},
+    )
+    families = {q.metadata.get("family") for q in qs}
+    assert None not in families
+    assert all(
+        q.metadata.get("structure_id", "").startswith("tangent_normal_line:")
+        for q in qs
+    )
+    assert families <= {
+        "reciprocal",
+        "radical",
+        "poly_cubic",
+        "rational_linear",
+        "trig_chain",
+    }
+    assert "poly_mono" not in families
+    assert "ln" not in families
+    assert len(families) >= 2
+

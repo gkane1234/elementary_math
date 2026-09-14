@@ -39,6 +39,7 @@ Kind = Literal[
     "related_rates",
     "differentials",
     "linear_approximation",
+    "tangent_normal",
 ]
 
 
@@ -975,6 +976,448 @@ def sample_newton(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
             "form_id": fid,
             "family": fid,
             "generator": NEWTON_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
+TANGENT_GENERATOR = "tangent_normal_line"
+
+_TANGENT_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("poly_mono", "poly_quad", "trig", "exp", "ln"),
+    "medium": (
+        "poly_mono", "poly_quad", "trig", "exp", "ln", "reciprocal", "radical",
+    ),
+    "hard": (
+        "reciprocal", "radical", "poly_cubic", "rational_linear", "trig_chain",
+    ),
+    "expert": ("poly_cubic", "rational_linear", "trig_chain"),
+}
+
+
+def tangent_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _TANGENT_BANDS["easy"]
+    if d < 16.0:
+        return _TANGENT_BANDS["medium"]
+    if d < 20.0:
+        return _TANGENT_BANDS["hard"]
+    return _TANGENT_BANDS["expert"]
+
+
+def _tangent_d(settings: dict[str, Any]) -> float:
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        try:
+            return max(0.0, float(settings["difficulty"]))
+        except (TypeError, ValueError):
+            pass
+    tier = str(settings.get("difficulty_tier", "")).strip().lower()
+    return {"easy": 0.0, "medium": 8.0, "hard": 16.0}.get(tier, _d(settings))
+
+
+def _tangent_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [TANGENT_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _tangent_want_normal(d: float, rng: random.Random) -> bool:
+    """Old-path overlay: D=0 always tangent; mid D some normals; D≥12 coin-flip."""
+    if d >= 12.0:
+        return bool(rng.choice([True, False]))
+    if d >= 6.0:
+        return rng.random() < min(0.55, 0.15 + (d - 6.0) / 20.0)
+    return False
+
+
+def _tangent_poly_display(
+    rng: random.Random,
+    coeffs: list[int],
+    variable: str,
+    *,
+    styles: tuple[str, ...] = ("standard", "reversed", "factored_linear"),
+) -> str:
+    from question_engine.generators.calculus_pilot import _poly_display
+
+    return _poly_display(coeffs, variable, style=rng.choice(list(styles)))
+
+
+def _poly_deriv_coeffs(coeffs: list[int]) -> list[int]:
+    deg = len(coeffs) - 1
+    if deg <= 0:
+        return [0]
+    out = []
+    for i, c in enumerate(coeffs[:-1]):
+        power = deg - i
+        out.append(c * power)
+    return out if any(out) else [0]
+
+
+def _tn_int_item(
+    f_latex: str,
+    y0: int,
+    m: int,
+    a: int,
+    x: str,
+    want_normal: bool,
+    form_id: str,
+    extra: dict[str, Any] | None = None,
+) -> AppDiffItem:
+    """Old-path integer point-slope (poly / mono / exp / trig with m≠0)."""
+    if want_normal and m != 0:
+        ns = frac_latex(Fraction(-1, m))
+        prompt = (
+            rf"\text{{Find the normal line to }}y={f_latex}"
+            rf"\text{{ at }}{x}={a}."
+        )
+        answer = rf"y-{y0}={ns}\left({x}-{a}\right)"
+        label = "normal line"
+        variant = "normal"
+    elif want_normal and m == 0:
+        prompt = (
+            rf"\text{{Find the normal line to }}y={f_latex}"
+            rf"\text{{ at }}{x}={a}."
+        )
+        answer = rf"{x}={a}"
+        label = "normal line"
+        variant = "normal"
+    else:
+        prompt = (
+            rf"\text{{Find the tangent line to }}y={f_latex}"
+            rf"\text{{ at }}{x}={a}."
+        )
+        answer = rf"y-{y0}={m}\left({x}-{a}\right)"
+        label = "tangent line"
+        variant = "tangent"
+    meta = {"variant": variant, "a": a, **(extra or {})}
+    return AppDiffItem(prompt, answer, label, form_id, meta)
+
+
+def _sample_tangent_poly_mono(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path D=0 leftover: y=x^n at a∈{1,…,4} (OpenStax Ex. 3.1 is x²)."""
+    n = rng.randint(2, 4)
+    a = rng.randint(1, 4)
+    f_latex = f"{x}^{{{n}}}"
+    y0 = a**n
+    m = n * a ** (n - 1)
+    return _tn_int_item(
+        f_latex, y0, m, a, x, want_normal, "poly_mono", {"n": n}
+    )
+
+
+def _sample_tangent_poly_quad(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path D=0 leftover: textbook-like Ax²+Bx+C."""
+    A = rng.randint(1, 3)
+    B = rng.choice([i for i in range(-4, 5) if i != 0])
+    C = rng.randint(-3, 3)
+    coeffs = [A, B, C]
+    a = rng.randint(1, 3)
+    f_latex = _tangent_poly_display(rng, coeffs, x)
+    y0 = _poly_eval(coeffs, a)
+    m = _poly_eval(_poly_deriv_coeffs(coeffs), a)
+    return _tn_int_item(
+        f_latex, y0, m, a, x, want_normal, "poly_quad",
+        {"coeffs": coeffs},
+    )
+
+
+def _sample_tangent_poly_cubic(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path D≥10 unlock: A x³ + B x."""
+    A = rng.randint(1, 2)
+    B = rng.choice([i for i in range(-3, 4) if i != 0])
+    coeffs = [A, 0, B, 0]
+    a = rng.randint(1, 2)
+    f_latex = _tangent_poly_display(
+        rng, coeffs, x, styles=("standard", "reversed")
+    )
+    y0 = _poly_eval(coeffs, a)
+    m = _poly_eval(_poly_deriv_coeffs(coeffs), a)
+    return _tn_int_item(
+        f_latex, y0, m, a, x, want_normal, "poly_cubic",
+        {"coeffs": coeffs},
+    )
+
+
+def _sample_tangent_reciprocal(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path D≥2 unlock: OpenStax Ex. 3.3 f=1/x (also x^{-1})."""
+    a = rng.choice([1, 2, 3, 4])
+    f_latex = rng.choice([rf"\frac{{1}}{{{x}}}", rf"{x}^{{-1}}"])
+    y0_tex = frac_latex(Fraction(1, a))
+    m_frac = Fraction(-1, a * a)
+    if want_normal:
+        ns = a * a
+        prompt = (
+            rf"\text{{Find the normal line to }}y={f_latex}"
+            rf"\text{{ at }}{x}={a}."
+        )
+        answer = rf"y-{y0_tex}={ns}\left({x}-{a}\right)"
+        return AppDiffItem(
+            prompt, answer, "normal line", "reciprocal",
+            {"a": a, "variant": "normal"},
+        )
+    prompt = (
+        rf"\text{{Find the tangent line to }}y={f_latex}"
+        rf"\text{{ at }}{x}={a}."
+    )
+    answer = rf"y-{y0_tex}={frac_latex(m_frac)}\left({x}-{a}\right)"
+    return AppDiffItem(
+        prompt, answer, "tangent line", "reciprocal",
+        {"a": a, "variant": "tangent"},
+    )
+
+
+def _sample_tangent_radical(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path D≥5 unlock: √(ax+b) at a perfect-square inside (Checkpoint 3.1)."""
+    a_coef = rng.choice([1, 4, 9])
+    b = rng.choice([0, 5, 7, 12])
+    squares = [k * k for k in range(1, 6)]
+    candidates = [t for t in range(0, 6) if a_coef * t + b in squares]
+    x0 = rng.choice(candidates) if candidates else 0
+    inside = a_coef * x0 + b
+    root = int(inside**0.5)
+    f_latex = (
+        rf"\sqrt{{{a_coef}{x}}}"
+        if b == 0
+        else rf"\sqrt{{{format_linear_latex(a_coef, b, variable=x)}}}"
+    )
+    y0 = root
+    m_frac = Fraction(a_coef, 2 * root)
+    if want_normal and m_frac != 0:
+        ns = -Fraction(1) / m_frac
+        prompt = (
+            rf"\text{{Find the normal line to }}y={f_latex}"
+            rf"\text{{ at }}{x}={x0}."
+        )
+        answer = rf"y-{y0}={frac_latex(ns)}\left({x}-{x0}\right)"
+        return AppDiffItem(
+            prompt, answer, "normal line", "radical",
+            {"a": x0, "variant": "normal"},
+        )
+    prompt = (
+        rf"\text{{Find the tangent line to }}y={f_latex}"
+        rf"\text{{ at }}{x}={x0}."
+    )
+    answer = rf"y-{y0}={frac_latex(m_frac)}\left({x}-{x0}\right)"
+    return AppDiffItem(
+        prompt, answer, "tangent line", "radical",
+        {"a": x0, "variant": "tangent"},
+    )
+
+
+def _sample_tangent_trig(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path D=0 leftover: sin x / cos x at 0."""
+    fn = rng.choice(["sin", "cos"])
+    a = 0
+    if fn == "sin":
+        f_latex = rf"\sin({x})"
+        y0, m = 0, 1
+    else:
+        f_latex = rf"\cos({x})"
+        y0, m = 1, 0
+        prompt = (
+            rf"\text{{Find the tangent line to }}y={f_latex}"
+            rf"\text{{ at }}{x}={a}."
+        )
+        return AppDiffItem(
+            prompt, rf"y={y0}", "tangent line", "trig",
+            {"a": a, "variant": "tangent", "fn": fn},
+        )
+    return _tn_int_item(
+        f_latex, y0, m, a, x, want_normal, "trig", {"fn": fn}
+    )
+
+
+def _sample_tangent_trig_chain(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path nested: sin(kx) / cos(kx) / sin(x²) at 0."""
+    k = rng.randint(2, 4)
+    f_latex = rng.choice(
+        [rf"\sin({k}{x})", rf"\cos({k}{x})", rf"\sin({x}^{{2}})"]
+    )
+    a = 0
+    if "sin" in f_latex and "^{" not in f_latex:
+        y0, m = 0, k
+        return _tn_int_item(
+            f_latex, y0, m, a, x, want_normal, "trig_chain", {"k": k}
+        )
+    if "cos" in f_latex:
+        prompt = (
+            rf"\text{{Find the tangent line to }}y={f_latex}"
+            rf"\text{{ at }}{x}={a}."
+        )
+        return AppDiffItem(
+            prompt, "y=1", "tangent line", "trig_chain",
+            {"a": a, "variant": "tangent", "k": k},
+        )
+    prompt = (
+        rf"\text{{Find the tangent line to }}y={f_latex}"
+        rf"\text{{ at }}{x}={a}."
+    )
+    return AppDiffItem(
+        prompt, r"y=0", "tangent line", "trig_chain",
+        {"a": a, "variant": "tangent"},
+    )
+
+
+def _sample_tangent_exp(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path D=0 leftover: e^{kx} / exp(kx) at 0."""
+    k = rng.randint(1, 3)
+    a = 0
+    form = rng.choice(["e^{kx}", "exp rewritten"])
+    if form == "e^{kx}":
+        f_latex = rf"e^{{{k}{x}}}" if k != 1 else rf"e^{{{x}}}"
+    else:
+        f_latex = rf"\exp({k}{x})" if k != 1 else rf"\exp({x})"
+    return _tn_int_item(
+        f_latex, 1, k, a, x, want_normal, "exp", {"k": k, "display": form}
+    )
+
+
+def _sample_tangent_ln(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path D=0 leftover: ln x / ln(x²) / ln(2x) at 1 or 2."""
+    a = rng.choice([1, 2])
+    f_latex = rng.choice([rf"\ln({x})", rf"\ln({x}^{{2}})", rf"\ln(2{x})"])
+    if f_latex == rf"\ln({x})":
+        y0_tex = r"0" if a == 1 else rf"\ln({a})"
+        m_frac = Fraction(1, a)
+    elif f_latex == rf"\ln({x}^{{2}})":
+        y0_tex = r"0" if a == 1 else rf"\ln({a * a})"
+        m_frac = Fraction(2, a)
+    else:
+        y0_tex = r"\ln(2)" if a == 1 else rf"\ln({2 * a})"
+        m_frac = Fraction(1, a)
+    if want_normal:
+        ns = -Fraction(1) / m_frac
+        prompt = (
+            rf"\text{{Find the normal line to }}y={f_latex}"
+            rf"\text{{ at }}{x}={a}."
+        )
+        answer = rf"y-{y0_tex}={frac_latex(ns)}\left({x}-{a}\right)"
+        return AppDiffItem(
+            prompt, answer, "normal line", "ln",
+            {"a": a, "variant": "normal"},
+        )
+    prompt = (
+        rf"\text{{Find the tangent line to }}y={f_latex}"
+        rf"\text{{ at }}{x}={a}."
+    )
+    answer = rf"y-{y0_tex}={frac_latex(m_frac)}\left({x}-{a}\right)"
+    return AppDiffItem(
+        prompt, answer, "tangent line", "ln",
+        {"a": a, "variant": "tangent"},
+    )
+
+
+def _sample_tangent_rational_linear(
+    rng: random.Random, x: str = "x", want_normal: bool = False
+) -> AppDiffItem:
+    """Old-path nested: (x+p)/(x+q) at 0. Always tangent (old builder)."""
+    del want_normal
+    p = rng.randint(1, 3)
+    q = rng.randint(1, 4)
+    if p == q:
+        q = p + 1
+    a = 0
+    order = rng.choice(["fraction", "factored_num"])
+    if order == "fraction":
+        f_latex = rf"\frac{{{x}+{p}}}{{{x}+{q}}}"
+    else:
+        f_latex = (
+            rf"\frac{{{format_linear_latex(1, p, variable=x)}}}"
+            rf"{{{format_linear_latex(1, q, variable=x)}}}"
+        )
+    y0_tex = frac_latex(Fraction(p, q))
+    m_frac = Fraction(q - p, q * q)
+    prompt = (
+        rf"\text{{Find the tangent line to }}y={f_latex}"
+        rf"\text{{ at }}{x}={a}."
+    )
+    answer = rf"y-{y0_tex}={frac_latex(m_frac)}\left({x}-{a}\right)"
+    return AppDiffItem(
+        prompt, answer, "tangent line", "rational_linear",
+        {"a": a, "variant": "tangent", "p": p, "q": q},
+    )
+
+
+_TANGENT_BUILDERS: dict[
+    str, Callable[[random.Random, str, bool], AppDiffItem]
+] = {
+    "poly_mono": _sample_tangent_poly_mono,
+    "poly_quad": _sample_tangent_poly_quad,
+    "poly_cubic": _sample_tangent_poly_cubic,
+    "reciprocal": _sample_tangent_reciprocal,
+    "radical": _sample_tangent_radical,
+    "trig": _sample_tangent_trig,
+    "trig_chain": _sample_tangent_trig_chain,
+    "exp": _sample_tangent_exp,
+    "ln": _sample_tangent_ln,
+    "rational_linear": _sample_tangent_rational_linear,
+}
+
+
+def sample_tangent_normal_line(
+    rng: random.Random, settings: dict[str, Any]
+) -> AppDiffItem:
+    """Tangent/normal at a point. High D locks out D=0 poly/trig/exp/ln leftovers."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _tangent_d(settings)
+    x = str(settings.get("variable") or "x")
+    forms = tangent_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _tangent_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _TANGENT_BUILDERS:
+        fid = forms[0]
+    want_normal = _tangent_want_normal(d, rng)
+    item = _TANGENT_BUILDERS[fid](rng, x, want_normal)
+    variant = item.metadata.get("variant") or (
+        "normal" if want_normal else "tangent"
+    )
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": TANGENT_GENERATOR,
+        "structure_id": f"{TANGENT_GENERATOR}:{fid}",
+        "variant": variant,
+        "spec_snapshot": {
+            "pack": "structured_tangent_normal_line",
+            "form_id": fid,
+            "family": fid,
+            "generator": TANGENT_GENERATOR,
+            "variant": variant,
         },
     }
     return AppDiffItem(
@@ -2425,6 +2868,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "related_rates": sample_related_rates,
     "differentials": sample_differentials,
     "linear_approximation": sample_linear_approximation,
+    "tangent_normal": sample_tangent_normal_line,
 }
 
 

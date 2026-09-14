@@ -763,6 +763,117 @@ def test_linear_approx_quality_weights_tilt():
     assert tilted["reciprocal"] > baseline["reciprocal"]
 
 
+def test_tangent_normal_d0_easy_high_d_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        tangent_forms_for_difficulty,
+    )
+
+    easy = ("poly_mono", "poly_quad", "trig", "exp", "ln")
+    assert tangent_forms_for_difficulty(0) == easy
+    med = tangent_forms_for_difficulty(8)
+    assert "poly_mono" in med and "ln" in med
+    assert "reciprocal" in med and "radical" in med
+    assert "trig_chain" not in med and "poly_cubic" not in med
+    hard = tangent_forms_for_difficulty(16)
+    assert "poly_mono" not in hard and "ln" not in hard and "trig" not in hard
+    assert hard == (
+        "reciprocal", "radical", "poly_cubic", "rational_linear", "trig_chain",
+    )
+    assert tangent_forms_for_difficulty(22) == (
+        "poly_cubic", "rational_linear", "trig_chain",
+    )
+
+    q0 = _gen("calc_app_diff_slope_tangent_and_normal_lines", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") in easy
+    assert (q0.metadata or {}).get("generator") == "tangent_normal_line"
+    assert "tangent line" in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") in easy
+    assert snap.get("generator") == "tangent_normal_line"
+    assert snap.get("pack") == "structured_tangent_normal_line"
+
+    d0 = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_slope_tangent_and_normal_lines", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        d0.add(fid)
+        assert fid in easy
+        assert (q.metadata or {}).get("generator") == "tangent_normal_line"
+        assert (q.metadata or {}).get("structure_id", "").startswith(
+            "tangent_normal_line:"
+        )
+        assert "normal line" not in (q.prompt_latex or "")
+    assert len(d0) >= 3, d0
+
+    mid = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_slope_tangent_and_normal_lines", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "tangent_normal_line"
+    assert mid & {"poly_mono", "poly_quad", "trig", "exp", "ln"}
+    assert mid & {"reciprocal", "radical"}
+    assert mid <= set(med)
+
+    high = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_slope_tangent_and_normal_lines", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid not in easy
+        assert (q.metadata or {}).get("generator") == "tangent_normal_line"
+        p = q.prompt_latex or ""
+        assert r"\ln" not in p
+        assert r"e^{" not in p and r"\exp" not in p
+    assert high <= set(hard)
+    assert high & {"poly_cubic", "rational_linear", "trig_chain"}
+    assert high & {"reciprocal", "radical"}
+
+    expert = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_slope_tangent_and_normal_lines", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in {"poly_cubic", "rational_linear", "trig_chain"}
+        assert fid not in easy
+        assert fid not in {"reciprocal", "radical"}
+        assert (q.metadata or {}).get("generator") == "tangent_normal_line"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "tangent_normal_line"
+        p = q.prompt_latex or ""
+        assert r"\ln" not in p
+        assert r"\frac{1}{x}" not in p and r"x^{-1}" not in p
+        assert r"\sqrt" not in p
+    assert len(expert) >= 2, expert
+
+
+def test_tangent_normal_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_tangent_normal_line,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_tangent_normal_line(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"poly_mono": -2.5, "reciprocal": 2.5})
+    assert tilted["reciprocal"] > baseline["reciprocal"]
+
+
 def test_optimization_frames_unlock():
     frames = set()
     for seed in range(20):

@@ -686,6 +686,52 @@ def _linear_approximation(topic: str, settings: dict) -> list[Question]:
     )
 
 
+def _tangent_normal_line(topic: str, settings: dict) -> list[Question]:
+    """Tangent/normal at a point; leftover lockout; stamps form_id / generator."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        TANGENT_GENERATOR,
+        sample_app_diff,
+    )
+    from question_engine.generators.calculus_pilot import _tangent_sketch_meta
+
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+
+    def build() -> tuple[str, str, str | None]:
+        item = sample_app_diff("tangent_normal", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": TANGENT_GENERATOR,
+            "structure_id": f"{TANGENT_GENERATOR}:{fid}",
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": TANGENT_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
+
+    def metadata_builder(prompt_latex: str, _t: str, _a: str | None) -> dict:
+        return _tangent_sketch_meta(
+            prompt_latex, settings, dict(getattr(build, "_last_meta", {}) or {})
+        )
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
+
+
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "relative_extrema": _relative_extrema,
     "absolute_extrema": _absolute_extrema,
@@ -703,4 +749,5 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "related_rates_simple": _related_rates_simple,
     "differentials": _differentials,
     "linear_approximation": _linear_approximation,
+    "tangent_normal_line": _tangent_normal_line,
 }

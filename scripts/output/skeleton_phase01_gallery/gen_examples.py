@@ -2740,7 +2740,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_slope_tangent_and_normal_lines",
         "App — tangent / normal lines",
-        "Pilot <code>tangent_normal_line</code>. OpenStax Vol 1 §3.1 / §4.2.",
+        "D=0 poly/trig/exp/ln leftover (old easy, always tangent); D=8 adds "
+        "1/x and radical; high D cubic / nested and locks out the D=0 mix. "
+        "OpenStax Vol 1 §3.1.",
     ),
 
     (

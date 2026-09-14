@@ -249,6 +249,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Match or compare graphs of f, f', and f''.",
         "engine": "Leave leaf until figure bank exists; not Diff skeleton.",
     },
+    "calc_app_diff_slope_tangent_and_normal_lines": {
+        "flag_why": "Shipped leftover lockout of D=0 poly/trig/exp/ln; LIMITATIONS no implicit/folium / x·5^x normals.",
+        "skill": "Find the tangent (and sometimes normal) line to y=f(x) at x=a.",
+        "engine": "calc_app_diff `tangent_normal_line` (easy leftover / reciprocal-radical leftover / cubic+nested).",
+    },
     "calc_app_diff_motion_along_a_line": {
         "flag_why": "Shipped leftover lockout + Ex. 3.36/3.35 cubics; LIMITATIONS no free-fall / piecewise / trig / s(t) graph.",
         "skill": "From s(t) find velocity / rest / direction and speeding up vs slowing down.",

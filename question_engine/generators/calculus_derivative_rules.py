@@ -2,13 +2,15 @@
 
 Power / product / quotient / chain / trig / ln-exp / invtrig / higher-order route
 through the continuous-D Spec sampler in ``frameworks.primitives.derivatives``.
-Other-base, logarithmic differentiation, and implicit keep structured packs with
-``spec_snapshot`` / ``function_classes`` / ``effort_features`` for ML export.
-Rates, definition, and inverse-function leaves keep dedicated builders.
+Other-base, logarithmic differentiation, implicit, and inverse-function keep
+structured packs with catalog ``form_id`` routing plus ``spec_snapshot`` /
+``function_classes`` / ``effort_features`` for ML export.
+Rates and definition leaves keep dedicated builders.
 """
 
 from __future__ import annotations
 
+import math
 import random
 from fractions import Fraction
 from typing import Callable
@@ -129,6 +131,7 @@ def _madlibs_meta(generator_key: str, structure: dict, *, pack: str | None = Non
         chain_depth: int = 0,
         derivative_order: int = 1,
         shape_id: str | None = None,
+        form_id: str | None = None,
     ) -> None:
         classes = list(function_classes or ["algebraic"])
         methods = list(methods_used or ["power"])
@@ -156,7 +159,63 @@ def _madlibs_meta(generator_key: str, structure: dict, *, pack: str | None = Non
             "derivative_order": int(derivative_order),
             "effective_d": structure.get("difficulty"),
             "spec_snapshot": snap,
+            "skeleton_source": pack_name,
+            "skeleton_pattern": f"Diff({pack_name})",
         }
+        if generator_key == "derivative_implicit":
+            fid = form_id or {
+                "circle": "implicit_basic",
+                "xy_term": "implicit_xy",
+                "ellipse": "implicit_ellipse",
+                "line_prod": "implicit_product",
+                "cubes": "implicit_cubes",
+                "trig": "implicit_trig",
+                "exp_y": "implicit_exp",
+                "folium": "implicit_folium",
+            }.get(family, family)
+            meta["form_id"] = fid
+            meta["openstax_form"] = fid
+            meta["skeleton_pattern"] = f"Diff(implicit:{fid})"
+        elif generator_key == "derivative_logarithmic":
+            fid = form_id or {
+                "power": "logdiff_power",
+                "product_powers": "logdiff_product_powers",
+                "quotient_powers": "logdiff_quotient_powers",
+                "root": "logdiff_root",
+                "x_x": "logdiff_x_x",
+                "a_x_x": "logdiff_a_x",
+                "trig_x": "logdiff_trig_x",
+            }.get(family, family)
+            meta["form_id"] = fid
+            meta["openstax_form"] = fid
+            meta["skeleton_pattern"] = f"Diff(logarithmic:{fid})"
+        elif generator_key == "derivative_other_base":
+            fid = form_id or {
+                "a_x": "other_base_a_x",
+                "log_x": "other_base_log_x",
+                "a_kx": "other_base_a_kx",
+                "log_linear": "other_base_log_linear",
+                "log_power": "other_base_log_power",
+                "a_poly": "other_base_a_poly",
+                "change_order": "other_base_product",
+            }.get(family, family)
+            meta["form_id"] = fid
+            meta["openstax_form"] = fid
+            meta["skeleton_pattern"] = f"Diff(other_base:{fid})"
+        elif generator_key == "derivative_inverse_functions":
+            fid = form_id or {
+                "power": "invfn_power",
+                "power_med": "invfn_power",
+                "table": "invfn_table",
+                "linear": "invfn_linear",
+                "exp": "invfn_exp",
+                "ln": "invfn_ln",
+                "cubic": "invfn_cubic",
+                "trig": "invfn_trig",
+            }.get(family, family)
+            meta["form_id"] = fid
+            meta["openstax_form"] = fid
+            meta["skeleton_pattern"] = f"Diff(inverse_functions:{fid})"
         if variant:
             meta["variant"] = variant
         last["meta"] = meta
@@ -288,6 +347,7 @@ _derivative_higher_order = _framework_generator("derivative_higher_order")
 # (power/product/quotient/chain/trig/invtrig/ln_exp/higher_order → framework above)
 
 def _derivative_other_base(topic: str, settings: dict) -> list[Question]:
+    """Other-base a^x / log_a (not ln/e^x; not log-diff)."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     structure = _rule_structure(settings, generator_key="derivative_other_base", topic=topic)
@@ -296,48 +356,72 @@ def _derivative_other_base(topic: str, settings: dict) -> list[Question]:
     note, metadata_builder = _madlibs_meta(
         "derivative_other_base", structure, pack="structured_other_base"
     )
+    d = float(structure.get("difficulty") or settings.get("difficulty") or 0)
 
     def build() -> tuple[str, str, str | None]:
-        base = random.randint(2, min(5, max(2, coef_hi)))
-        family = _pick_family(
-            structure,
-            ["a_x", "log_x"],
-            medium=["a_kx", "log_linear"],
-            hard=["log_power", "a_poly", "change_order"],
+        from question_engine.frameworks.primitives.openstax_form_catalogs import (
+            implemented_forms,
+            load_form_catalog,
+            select_form_id,
         )
-        if family == "a_x":
-            body = random.choice([rf"{base}^{{{x}}}", rf"\exp({x}\ln({base}))"])
-            answer = rf"{base}^{{{x}}}\ln({base})"
+
+        catalog = load_form_catalog("derivatives")
+        pool = implemented_forms(catalog, generator_key="derivative_other_base")
+        form = select_form_id(pool, d=d, rng=random)
+        form_id = str(form["form_id"])
+        base = random.randint(2, min(5, max(2, coef_hi)))
+
+        if form_id == "other_base_a_x":
+            family = "a_x"
             prompt = rf"\frac{{d}}{{d{x}}}\left[{base}^{{{x}}}\right]"
-            _ = body
-            note(family, function_classes=["exp", "algebraic"], methods_used=["power"], chain_depth=0)
-        elif family == "log_x":
+            answer = rf"{base}^{{{x}}}\ln({base})"
+            note(
+                family,
+                form_id=form_id,
+                function_classes=["exp", "algebraic"],
+                methods_used=["power"],
+                chain_depth=0,
+            )
+        elif form_id == "other_base_log_x":
+            family = "log_x"
             prompt = rf"\frac{{d}}{{d{x}}}\log_{{{base}}}({x})"
             answer = rf"\frac{{1}}{{{x}\ln({base})}}"
-            note(family, function_classes=["log", "algebraic"], methods_used=["power"], chain_depth=0)
-        elif family == "a_kx":
+            note(
+                family,
+                form_id=form_id,
+                function_classes=["log", "algebraic"],
+                methods_used=["power"],
+                chain_depth=0,
+            )
+        elif form_id == "other_base_a_kx":
+            family = "a_kx"
             k = random.randint(2, max(2, min(5, coef_hi)))
             arg = random.choice([f"{k}{x}", rf"{k}\cdot {x}"])
             prompt = rf"\frac{{d}}{{d{x}}}{base}^{{{arg}}}"
-            answer = rf"{k}{base}^{{{k}{x}}}\ln({base})"
+            # Explicit \cdot so k=5, base=3 is not 53^{…}.
+            answer = rf"{k}\cdot {base}^{{{k}{x}}}\ln({base})"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["exp", "algebraic"],
                 methods_used=["chain"],
                 chain_depth=1,
             )
-        elif family == "log_linear":
+        elif form_id == "other_base_log_linear":
+            family = "log_linear"
             a, b = _linear_pair(min(3, coef_hi))
             inner = format_linear_latex(a, b, variable=x)
             prompt = rf"\frac{{d}}{{d{x}}}\log_{{{base}}}({inner})"
             answer = rf"\frac{{{a}}}{{\left({inner}\right)\ln({base})}}"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["log", "algebraic"],
                 methods_used=["chain"],
                 chain_depth=1,
             )
-        elif family == "log_power":
+        elif form_id == "other_base_log_power":
+            family = "log_power"
             k = random.randint(2, max(2, min(4, coef_hi)))
             body = random.choice(
                 [rf"\log_{{{base}}}({x}^{{{k}}})", rf"{k}\log_{{{base}}}({x})"]
@@ -346,24 +430,30 @@ def _derivative_other_base(topic: str, settings: dict) -> list[Question]:
             answer = rf"\frac{{{k}}}{{{x}\ln({base})}}"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["log", "algebraic"],
                 methods_used=["chain", "power"],
                 chain_depth=1,
             )
-        elif family == "a_poly":
+        elif form_id == "other_base_a_poly":
+            family = "a_poly"
             prompt = rf"\frac{{d}}{{d{x}}}{base}^{{{x}^{{2}}}}"
             answer = rf"2{x}{base}^{{{x}^{{2}}}}\ln({base})"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["exp", "algebraic"],
                 methods_used=["chain"],
                 chain_depth=1,
             )
         else:
+            family = "change_order"
+            fid = form_id if form_id.startswith("other_base_") else "other_base_product"
             prompt = rf"\frac{{d}}{{d{x}}}\left[{x}\cdot {base}^{{{x}}}\right]"
             answer = rf"{base}^{{{x}}}+{x}{base}^{{{x}}}\ln({base})"
             note(
                 family,
+                form_id=fid,
                 function_classes=["exp", "algebraic"],
                 methods_used=["product"],
                 chain_depth=0,
@@ -384,34 +474,39 @@ def _derivative_logarithmic(topic: str, settings: dict) -> list[Question]:
     note, metadata_builder = _madlibs_meta(
         "derivative_logarithmic", structure, pack="structured_logarithmic"
     )
+    d = float(structure.get("difficulty") or settings.get("difficulty") or 0)
 
     def build() -> tuple[str, str, str | None]:
-        extra = []
-        if structure.get("allow_trig") or structure.get("unlock_trig"):
-            extra.append("trig_x")
-        family = _pick_family(
-            structure,
-            ["power"],
-            medium=["product_powers", "quotient_powers", "root"],
-            hard=["x_x", "a_x_x"],
-            extra=extra if structure.get("unlock_hard") else None,
+        from question_engine.frameworks.primitives.openstax_form_catalogs import (
+            implemented_forms,
+            load_form_catalog,
+            select_form_id,
         )
+
+        catalog = load_form_catalog("derivatives")
+        pool = implemented_forms(catalog, generator_key="derivative_logarithmic")
+        form = select_form_id(pool, d=d, rng=random)
+        form_id = str(form["form_id"])
         log_methods = ["logarithmic"]
-        if family == "power":
+
+        if form_id == "logdiff_power":
+            family = "power"
             n = random.randint(2, max(2, min(5, int(structure.get("power_max", 5)))))
             body = f"{x}^{{{n}}}"
             prompt = (
                 rf"\text{{Use logarithmic differentiation to find }}"
                 rf"\frac{{d}}{{d{x}}}\left[{body}\right]."
             )
-            answer = rf"{n}{x}^{{{n - 1}}}"
+            answer = _mono(n, x, n - 1)
             note(
                 family,
+                form_id=form_id,
                 function_classes=["algebraic"],
                 methods_used=log_methods + ["power"],
                 chain_depth=0,
             )
-        elif family == "product_powers":
+        elif form_id == "logdiff_product_powers":
+            family = "product_powers"
             n = random.randint(2, 4)
             m = random.randint(2, 4)
             body = rf"{x}^{{{n}}}({x}+1)^{{{m}}}"
@@ -425,11 +520,13 @@ def _derivative_logarithmic(topic: str, settings: dict) -> list[Question]:
             )
             note(
                 family,
+                form_id=form_id,
                 function_classes=["algebraic"],
                 methods_used=log_methods + ["product", "power"],
                 chain_depth=0,
             )
-        elif family == "quotient_powers":
+        elif form_id == "logdiff_quotient_powers":
+            family = "quotient_powers"
             n = random.randint(2, 4)
             body = rf"\frac{{{x}^{{{n}}}}}{{{x}+1}}"
             prompt = (
@@ -442,11 +539,13 @@ def _derivative_logarithmic(topic: str, settings: dict) -> list[Question]:
             )
             note(
                 family,
+                form_id=form_id,
                 function_classes=["algebraic"],
                 methods_used=log_methods + ["quotient", "power"],
                 chain_depth=0,
             )
-        elif family == "root":
+        elif form_id == "logdiff_root":
+            family = "root"
             body = rf"\sqrt{{{x}({x}+1)}}"
             prompt = (
                 rf"\text{{Use logarithmic differentiation: }}"
@@ -458,11 +557,13 @@ def _derivative_logarithmic(topic: str, settings: dict) -> list[Question]:
             )
             note(
                 family,
+                form_id=form_id,
                 function_classes=["roots", "algebraic"],
                 methods_used=log_methods + ["product", "chain"],
                 chain_depth=1,
             )
-        elif family == "x_x":
+        elif form_id == "logdiff_x_x":
+            family = "x_x"
             body = rf"{x}^{{{x}}}"
             prompt = (
                 rf"\text{{Use logarithmic differentiation: }}"
@@ -471,11 +572,13 @@ def _derivative_logarithmic(topic: str, settings: dict) -> list[Question]:
             answer = rf"{x}^{{{x}}}\left(\ln({x})+1\right)"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["exp", "log", "algebraic"],
                 methods_used=log_methods + ["chain"],
                 chain_depth=1,
             )
-        elif family == "a_x_x":
+        elif form_id == "logdiff_a_x":
+            family = "a_x_x"
             body = rf"({x}+1)^{{{x}}}"
             prompt = (
                 rf"\text{{Use logarithmic differentiation: }}"
@@ -487,11 +590,13 @@ def _derivative_logarithmic(topic: str, settings: dict) -> list[Question]:
             )
             note(
                 family,
+                form_id=form_id,
                 function_classes=["exp", "log", "algebraic"],
                 methods_used=log_methods + ["chain"],
                 chain_depth=1,
             )
         else:
+            family = "trig_x"
             body = rf"\left(\sin({x})\right)^{{{x}}}"
             prompt = (
                 rf"\text{{Use logarithmic differentiation: }}"
@@ -503,6 +608,7 @@ def _derivative_logarithmic(topic: str, settings: dict) -> list[Question]:
             )
             note(
                 family,
+                form_id=form_id if form_id.startswith("logdiff_") else "logdiff_trig_x",
                 function_classes=["trig", "exp", "log", "algebraic"],
                 methods_used=log_methods + ["chain"],
                 chain_depth=1,
@@ -522,87 +628,151 @@ def _derivative_implicit(topic: str, settings: dict) -> list[Question]:
     note, metadata_builder = _madlibs_meta(
         "derivative_implicit", structure, pack="structured_implicit"
     )
+    d = float(structure.get("difficulty") or settings.get("difficulty") or 0)
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(1, max(1, min(4, int(structure["coef_hi"]))))
-        extra = []
-        if structure.get("allow_trig") or structure.get("unlock_trig"):
-            extra.append("trig")
-        if structure.get("allow_exp") or structure.get("unlock_exp"):
-            extra.append("exp_y")
-        family = _pick_family(
-            structure,
-            ["circle"],
-            medium=["xy_term", "ellipse", "line_prod"],
-            hard=["cubes"],
-            extra=extra if structure.get("unlock_hard") else None,
+        from question_engine.frameworks.primitives.openstax_form_catalogs import (
+            implemented_forms,
+            load_form_catalog,
+            select_form_id,
         )
-        if family == "circle":
+
+        catalog = load_form_catalog("derivatives")
+        pool = implemented_forms(catalog, generator_key="derivative_implicit")
+        form = select_form_id(pool, d=d, rng=random)
+        form_id = str(form["form_id"])
+        a = random.randint(1, max(1, min(4, int(structure["coef_hi"]))))
+
+        if form_id == "implicit_basic":
+            family = "circle"
             eq = random.choice(
                 [rf"{x}^{{2}}+y^{{2}}={a}", rf"y^{{2}}+{x}^{{2}}={a}"]
             )
             answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{x}}}{{y}}"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["algebraic"],
                 methods_used=["implicit", "power"],
                 chain_depth=0,
             )
-        elif family == "xy_term":
+        elif form_id == "implicit_xy":
+            family = "xy_term"
             eq = random.choice(
                 [rf"{x}^{{2}}+{x}y={a}", rf"{x}y+{x}^{{2}}={a}"]
             )
             answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{2{x}+y}}{{{x}}}"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["algebraic"],
                 methods_used=["implicit", "product", "power"],
                 chain_depth=0,
             )
-        elif family == "ellipse":
+        elif form_id == "implicit_ellipse":
+            family = "ellipse"
             b = random.randint(2, max(2, min(5, int(structure["coef_hi"]))))
             eq = rf"{b}{x}^{{2}}+y^{{2}}={a}"
             answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{2 * b}{x}}}{{y}}"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["algebraic"],
                 methods_used=["implicit", "power"],
                 chain_depth=0,
             )
-        elif family == "line_prod":
+        elif form_id == "implicit_product":
+            family = "line_prod"
             eq = rf"{x}y={a}"
             answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{y}}{{{x}}}"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["algebraic"],
                 methods_used=["implicit", "product"],
                 chain_depth=0,
             )
-        elif family == "cubes":
-            eq = random.choice(
-                [rf"{x}^{{3}}+y^{{3}}={a}", rf"y^{{3}}+{x}^{{3}}={a}"]
-            )
-            answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{x}^{{2}}}}{{y^{{2}}}}"
+        elif form_id == "implicit_cubes":
+            family = "cubes"
+            lead = 1
+            if d >= 14:
+                lead = random.randint(2, max(2, min(4, int(structure["coef_hi"]))))
+            if lead == 1:
+                eq = random.choice(
+                    [rf"{x}^{{3}}+y^{{3}}={a}", rf"y^{{3}}+{x}^{{3}}={a}"]
+                )
+                answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{x}^{{2}}}}{{y^{{2}}}}"
+            else:
+                eq = rf"{lead}{x}^{{3}}+y^{{3}}={a}"
+                answer = rf"\frac{{dy}}{{d{x}}}=-\frac{{{lead}{x}^{{2}}}}{{y^{{2}}}}"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["algebraic"],
                 methods_used=["implicit", "power"],
                 chain_depth=0,
             )
-        elif family == "trig":
-            eq = rf"\sin({x})+\cos(y)=0"
-            answer = rf"\frac{{dy}}{{d{x}}}=\frac{{\cos({x})}}{{\sin(y)}}"
+        elif form_id == "implicit_trig":
+            family = "trig"
+            k = 1
+            if d >= 18:
+                k = random.randint(2, 3)
+            if k == 1 and random.random() < 0.45:
+                eq = rf"\sin(y)={x}"
+                answer = rf"\frac{{dy}}{{d{x}}}=\frac{{1}}{{\cos(y)}}"
+            elif k == 1:
+                eq = rf"\sin({x})+\cos(y)=0"
+                answer = rf"\frac{{dy}}{{d{x}}}=\frac{{\cos({x})}}{{\sin(y)}}"
+            else:
+                eq = rf"\sin({k}{x})+\cos(y)=0"
+                answer = rf"\frac{{dy}}{{d{x}}}=\frac{{{k}\cos({k}{x})}}{{\sin(y)}}"
             note(
                 family,
+                form_id=form_id,
                 function_classes=["trig", "algebraic"],
                 methods_used=["implicit", "chain"],
                 chain_depth=1,
             )
-        else:
-            eq = rf"e^{{y}}+{x}={a}"
-            answer = rf"\frac{{dy}}{{d{x}}}=-e^{{-y}}"
+        elif form_id == "implicit_folium":
+            family = "folium"
+            c = random.choice([3, 6])
+            eq = rf"{x}^{{3}}+y^{{3}}={c}{x}y"
+            g = math.gcd(3, c)
+            n_x2, n_y = 3 // g, c // g
+            d_x, d_y2 = c // g, 3 // g
+            if n_x2 == 1 and n_y == 1:
+                num = rf"{x}^{{2}}-y"
+            elif n_x2 == 1:
+                num = rf"{x}^{{2}}-{n_y}y"
+            else:
+                num = rf"{n_x2}{x}^{{2}}-{n_y}y"
+            if d_x == 1 and d_y2 == 1:
+                den = rf"{x}-y^{{2}}"
+            elif d_y2 == 1:
+                den = rf"{d_x}{x}-y^{{2}}"
+            elif d_x == 1:
+                den = rf"{x}-{d_y2}y^{{2}}"
+            else:
+                den = rf"{d_x}{x}-{d_y2}y^{{2}}"
+            answer = rf"\frac{{dy}}{{d{x}}}=\frac{{{num}}}{{{den}}}"
             note(
                 family,
+                form_id=form_id,
+                function_classes=["algebraic"],
+                methods_used=["implicit", "product", "power"],
+                chain_depth=0,
+            )
+        else:
+            family = "exp_y"
+            if d >= 20:
+                eq = rf"e^{{y}}+e^{{{x}}}={a}"
+                answer = rf"\frac{{dy}}{{d{x}}}=-e^{{{x}-y}}"
+            else:
+                eq = rf"e^{{y}}+{x}={a}"
+                answer = rf"\frac{{dy}}{{d{x}}}=-e^{{-y}}"
+            note(
+                family,
+                form_id=form_id if form_id.startswith("implicit_") else "implicit_exp",
                 function_classes=["exp", "algebraic"],
                 methods_used=["implicit", "chain"],
                 chain_depth=1,
@@ -827,30 +997,43 @@ def _definition_of_derivative(topic: str, settings: dict) -> list[Question]:
 
 
 def _derivative_inverse_functions(topic: str, settings: dict) -> list[Question]:
+    """Inverse Function Theorem (f^{-1})'(f(a))=1/f'(a) — not the invtrig formula leaf."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _rule_structure(settings)
+    structure = _rule_structure(
+        settings, generator_key="derivative_inverse_functions", topic=topic
+    )
     x = str(settings.get("variable", "x"))
-    note, metadata_builder = _madlibs_meta("derivative_inverse_functions", structure)
+    note, metadata_builder = _madlibs_meta(
+        "derivative_inverse_functions", structure, pack="structured_inverse_functions"
+    )
+    d = float(structure.get("difficulty") or settings.get("difficulty") or 0)
 
     def build() -> tuple[str, str, str | None]:
-        family = _pick_family(
-            structure,
-            ["power"],
-            medium=["power_med", "table", "linear"],
-            hard=["exp", "ln", "cubic"],
+        from question_engine.frameworks.primitives.openstax_form_catalogs import (
+            implemented_forms,
+            load_form_catalog,
+            select_form_id,
         )
-        note(family)
-        if family in {"power", "power_med"}:
-            n = random.randint(2, 4 if family == "power" else 3)
-            a = random.randint(1, 3 if family == "power" else 2)
+
+        catalog = load_form_catalog("derivatives")
+        pool = implemented_forms(catalog, generator_key="derivative_inverse_functions")
+        form = select_form_id(pool, d=d, rng=random)
+        form_id = str(form["form_id"])
+
+        if form_id == "invfn_power":
+            family = "power"
+            n = random.randint(2, 4)
+            a = random.randint(1, 3)
             fp = n * a ** (n - 1)
             prompt = (
                 rf"f({x})={x}^{{{n}}};\quad f'({a})={fp}."
                 rf"\quad\text{{Find }}(f^{{-1}})'({a ** n})."
             )
             answer = frac_latex(Fraction(1, fp))
-        elif family == "table":
+            note(family, form_id=form_id, function_classes=["algebraic"], methods_used=["power"])
+        elif form_id == "invfn_table":
+            family = "table"
             b = random.randint(1, 5)
             y = random.randint(2, 8)
             fp = random_int_range(-6, 6, exclude={0})
@@ -859,7 +1042,9 @@ def _derivative_inverse_functions(topic: str, settings: dict) -> list[Question]:
                 rf"\quad\text{{Find }}(f^{{-1}})'({y})."
             )
             answer = frac_latex(Fraction(1, fp))
-        elif family == "linear":
+            note(family, form_id=form_id, function_classes=["algebraic"], methods_used=["power"])
+        elif form_id == "invfn_linear":
+            family = "linear"
             m = random.randint(2, 5)
             c = random.randint(-3, 3)
             prompt = (
@@ -867,19 +1052,50 @@ def _derivative_inverse_functions(topic: str, settings: dict) -> list[Question]:
                 rf"\quad\text{{Find }}(f^{{-1}})'({x})."
             )
             answer = frac_latex(Fraction(1, m))
-        elif family == "exp":
+            note(family, form_id=form_id, function_classes=["algebraic"], methods_used=["power"])
+        elif form_id == "invfn_exp":
+            family = "exp"
             prompt = (
                 rf"f({x})=e^{{{x}}};\quad f(0)=1,\ f'(0)=1."
                 rf"\quad\text{{Find }}(f^{{-1}})'(1)."
             )
             answer = "1"
-        elif family == "ln":
+            note(
+                family,
+                form_id=form_id,
+                function_classes=["exp", "algebraic"],
+                methods_used=["power"],
+            )
+        elif form_id == "invfn_ln":
+            family = "ln"
             prompt = (
                 rf"f({x})=\ln({x});\quad f(e)=1,\ f'(e)=\frac{{1}}{{e}}."
                 rf"\quad\text{{Find }}(f^{{-1}})'(1)."
             )
             answer = "e"
+            note(
+                family,
+                form_id=form_id,
+                function_classes=["log", "algebraic"],
+                methods_used=["power"],
+            )
+        elif form_id == "invfn_trig":
+            family = "trig"
+            # OpenStax §3.7 exercise 267: f(x)=sin x at x=0, same IFT template.
+            prompt = (
+                rf"f({x})=\sin({x});\quad f(0)=0,\ f'(0)=1."
+                rf"\quad\text{{Find }}(f^{{-1}})'(0)."
+            )
+            answer = "1"
+            note(
+                family,
+                form_id=form_id,
+                function_classes=["trig", "algebraic"],
+                methods_used=["power"],
+            )
         else:
+            family = "cubic"
+            fid = form_id if form_id.startswith("invfn_") else "invfn_cubic"
             a = random.randint(1, 2)
             fp = 3 * a * a + 1
             y = a**3 + a
@@ -888,6 +1104,12 @@ def _derivative_inverse_functions(topic: str, settings: dict) -> list[Question]:
                 rf"\quad\text{{Find }}(f^{{-1}})'({y})."
             )
             answer = frac_latex(Fraction(1, fp))
+            note(
+                family,
+                form_id=fid,
+                function_classes=["algebraic"],
+                methods_used=["power"],
+            )
         return prompt, "inverse function derivative", (
             answer if include_answer_key else None
         )

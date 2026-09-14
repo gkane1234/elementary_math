@@ -1,0 +1,640 @@
+{
+  "section": {
+    "slug": "mul_div_cancel",
+    "title": "MulDivCancel \u2014 multiply / divide rationals",
+    "pattern": "MulDivCancel",
+    "engine": "rational_skeleton",
+    "type_id": "rational_expression_multiply_divide",
+    "aliases": [
+      "a2_rational_expressions_multiplying_and_dividing"
+    ],
+    "blurb": "Cross-operand cancels; remain degree \u2264 2."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=101",
+      "type_id": "rational_expression_multiply_divide",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\frac{\\left(x + 4\\right)\\left(x + 1\\right)}{x - 1} \\div \\frac{x + 1}{1}",
+      "answer_latex": "\\frac{x + 4}{x - 1},\\; x \\neq -1",
+      "skeleton_pattern": "MulDivCancel",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "MulDivCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "k / cancel_factor_count",
+          1
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            -1
+          ]
+        ],
+        [
+          "operation",
+          "divide"
+        ],
+        [
+          "n_factors",
+          3
+        ],
+        [
+          "mode",
+          "rational multiply/divide"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "primitive_engine": "rational_skeleton",
+        "mode": "rational multiply/divide",
+        "skeleton_pattern": "MulDivCancel",
+        "skeleton_source": "rational_skeleton",
+        "cancel_factor_count": 1,
+        "operation": "divide",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "n_factors": 3,
+        "den_degree": 1,
+        "excluded_values": [
+          -1
+        ],
+        "operand_count": 2,
+        "generation_settings": {
+          "allow_multiply": true,
+          "allow_divide": true,
+          "cancel_factor_count": 1,
+          "factor_rrt": false,
+          "max_factor_degree": 1,
+          "expand_polynomials": false,
+          "operand_count": 2,
+          "leading_coefficient_one": true,
+          "allow_obelus": true,
+          "allow_complex_fraction": false,
+          "allow_slash": false,
+          "coef_min": -4,
+          "coef_max": 4,
+          "difficulty": 2.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=207",
+      "type_id": "rational_expression_multiply_divide",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\frac{2\\left(x - 1\\right)\\left(x - 3\\right)}{x - 2} \\cdot \\frac{1}{x - 3}",
+      "answer_latex": "\\frac{2\\left(x - 1\\right)}{x - 2},\\; x \\neq 3",
+      "skeleton_pattern": "MulDivCancel",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "MulDivCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "k / cancel_factor_count",
+          1
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            3
+          ]
+        ],
+        [
+          "operation",
+          "multiply"
+        ],
+        [
+          "n_factors",
+          3
+        ],
+        [
+          "mode",
+          "rational multiply/divide"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "primitive_engine": "rational_skeleton",
+        "mode": "rational multiply/divide",
+        "skeleton_pattern": "MulDivCancel",
+        "skeleton_source": "rational_skeleton",
+        "cancel_factor_count": 1,
+        "operation": "multiply",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "n_factors": 3,
+        "den_degree": 1,
+        "excluded_values": [
+          3
+        ],
+        "operand_count": 2,
+        "generation_settings": {
+          "allow_multiply": true,
+          "allow_divide": true,
+          "cancel_factor_count": 1,
+          "factor_rrt": false,
+          "max_factor_degree": 1,
+          "expand_polynomials": false,
+          "operand_count": 2,
+          "leading_coefficient_one": true,
+          "allow_obelus": true,
+          "allow_complex_fraction": false,
+          "allow_slash": false,
+          "coef_min": -4,
+          "coef_max": 4,
+          "difficulty": 2.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "rational_expression_multiply_divide",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\left(\\frac{2\\left(2x - 7\\right)\\left(x + 7\\right)}{\\left(2x - 1\\right)\\left(x + 5\\right)}\\right) / \\left(\\frac{x + 7}{x + 5}\\right)",
+      "answer_latex": "\\frac{2\\left(2x - 7\\right)}{2x - 1},\\; x \\neq -7, -5",
+      "skeleton_pattern": "MulDivCancel",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "MulDivCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "k / cancel_factor_count",
+          2
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            -7,
+            -5
+          ]
+        ],
+        [
+          "operation",
+          "divide"
+        ],
+        [
+          "n_factors",
+          4
+        ],
+        [
+          "mode",
+          "rational multiply/divide"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "primitive_engine": "rational_skeleton",
+        "mode": "rational multiply/divide",
+        "skeleton_pattern": "MulDivCancel",
+        "skeleton_source": "rational_skeleton",
+        "cancel_factor_count": 2,
+        "operation": "divide",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "n_factors": 4,
+        "den_degree": 1,
+        "excluded_values": [
+          -7,
+          -5
+        ],
+        "operand_count": 2,
+        "generation_settings": {
+          "allow_multiply": true,
+          "allow_divide": true,
+          "cancel_factor_count": 2,
+          "factor_rrt": false,
+          "max_factor_degree": 1,
+          "expand_polynomials": false,
+          "operand_count": 2,
+          "leading_coefficient_one": false,
+          "allow_obelus": true,
+          "allow_complex_fraction": false,
+          "allow_slash": true,
+          "coef_min": -8,
+          "coef_max": 8,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "rational_expression_multiply_divide",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\frac{2\\left(2x - 5\\right)\\left(x + 3\\right)}{\\left(x - 5\\right)\\left(x - 3\\right)} \\cdot \\frac{x - 3}{x + 3}",
+      "answer_latex": "\\frac{2\\left(2x - 5\\right)}{x - 5},\\; x \\neq -3, 3",
+      "skeleton_pattern": "MulDivCancel",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "MulDivCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "k / cancel_factor_count",
+          2
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            -3,
+            3
+          ]
+        ],
+        [
+          "operation",
+          "multiply"
+        ],
+        [
+          "n_factors",
+          4
+        ],
+        [
+          "mode",
+          "rational multiply/divide"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "primitive_engine": "rational_skeleton",
+        "mode": "rational multiply/divide",
+        "skeleton_pattern": "MulDivCancel",
+        "skeleton_source": "rational_skeleton",
+        "cancel_factor_count": 2,
+        "operation": "multiply",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "n_factors": 4,
+        "den_degree": 1,
+        "excluded_values": [
+          -3,
+          3
+        ],
+        "operand_count": 2,
+        "generation_settings": {
+          "allow_multiply": true,
+          "allow_divide": true,
+          "cancel_factor_count": 2,
+          "factor_rrt": false,
+          "max_factor_degree": 1,
+          "expand_polynomials": false,
+          "operand_count": 2,
+          "leading_coefficient_one": false,
+          "allow_obelus": true,
+          "allow_complex_fraction": false,
+          "allow_slash": true,
+          "coef_min": -8,
+          "coef_max": 8,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "rational_expression_multiply_divide",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\frac{\\frac{2x^{2} - x - 45}{3x^{2} - 10x + 8}}{\\frac{2x + 9}{x - 2}}",
+      "answer_latex": "\\frac{x - 5}{3x - 4},\\; x \\neq -\\frac{9}{2}, 2",
+      "skeleton_pattern": "MulDivCancel",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "MulDivCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "k / cancel_factor_count",
+          2
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "excluded_values",
+          [
+            "-9/2",
+            2
+          ]
+        ],
+        [
+          "operation",
+          "divide"
+        ],
+        [
+          "display_intent",
+          "complex_fraction_skill"
+        ],
+        [
+          "n_factors",
+          4
+        ],
+        [
+          "mode",
+          "rational multiply/divide"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "primitive_engine": "rational_skeleton",
+        "mode": "rational multiply/divide",
+        "skeleton_pattern": "MulDivCancel",
+        "skeleton_source": "rational_skeleton",
+        "cancel_factor_count": 2,
+        "operation": "divide",
+        "dens_style": "expanded",
+        "display_normalize": true,
+        "display_intent": "complex_fraction_skill",
+        "display_preset": "none",
+        "n_factors": 4,
+        "den_degree": 1,
+        "excluded_values": [
+          "-9/2",
+          2
+        ],
+        "operand_count": 2,
+        "generation_settings": {
+          "allow_multiply": true,
+          "allow_divide": true,
+          "cancel_factor_count": 2,
+          "factor_rrt": false,
+          "max_factor_degree": 2,
+          "expand_polynomials": true,
+          "operand_count": 3,
+          "leading_coefficient_one": false,
+          "allow_obelus": true,
+          "allow_complex_fraction": true,
+          "allow_slash": false,
+          "coef_min": -10,
+          "coef_max": 10,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "rational_expression_multiply_divide",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\frac{6x^{2} + 2x - 28}{6x^{2} - 13x - 8} \\cdot \\frac{3x - 8}{3x + 7}",
+      "answer_latex": "\\frac{2\\left(x - 2\\right)}{2x + 1},\\; x \\neq -\\frac{7}{3}, \\frac{8}{3}",
+      "skeleton_pattern": "MulDivCancel",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "MulDivCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "k / cancel_factor_count",
+          2
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "excluded_values",
+          [
+            "-7/3",
+            "8/3"
+          ]
+        ],
+        [
+          "operation",
+          "multiply"
+        ],
+        [
+          "n_factors",
+          4
+        ],
+        [
+          "mode",
+          "rational multiply/divide"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "primitive_engine": "rational_skeleton",
+        "mode": "rational multiply/divide",
+        "skeleton_pattern": "MulDivCancel",
+        "skeleton_source": "rational_skeleton",
+        "cancel_factor_count": 2,
+        "operation": "multiply",
+        "dens_style": "expanded",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "n_factors": 4,
+        "den_degree": 1,
+        "excluded_values": [
+          "-7/3",
+          "8/3"
+        ],
+        "operand_count": 2,
+        "generation_settings": {
+          "allow_multiply": true,
+          "allow_divide": true,
+          "cancel_factor_count": 2,
+          "factor_rrt": false,
+          "max_factor_degree": 2,
+          "expand_polynomials": true,
+          "operand_count": 3,
+          "leading_coefficient_one": false,
+          "allow_obelus": true,
+          "allow_complex_fraction": true,
+          "allow_slash": false,
+          "coef_min": -10,
+          "coef_max": 10,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    }
+  ],
+  "failures": []
+}

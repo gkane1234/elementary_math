@@ -1,0 +1,2061 @@
+{
+  "section": {
+    "slug": "calc_diff_general",
+    "title": "Diff \u2014 General derivatives",
+    "pattern": "Diff(",
+    "engine": "expr_skeleton",
+    "type_id": "calc_diff_general",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "pattern_soft": true,
+    "blurb": "Mixed rules across classes. OpenStax Calc Vol.1 \u00a73.3\u20133.9."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_diff_general",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\sin\\left(x - 1\\right)\\right)",
+      "answer_latex": "\\cos\\left(x - 1\\right)",
+      "skeleton_pattern": "Diff(Apply(fn,u))",
+      "form_id": "trig_basic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(fn,u))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "trig_basic"
+        ],
+        [
+          "openstax_form",
+          "trig_basic"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "trig_basic",
+        "structure_id": "derivative_general:chain+power",
+        "function_classes": [
+          "algebraic",
+          "trig"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 0.0,
+        "form_id": "trig_basic",
+        "openstax_form": "trig_basic",
+        "openstax_case": "\u00a73.5",
+        "strategy": "trig_table",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "trig_basic",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(fn,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "trig_basic",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(fn,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "sin",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 1,
+          "n_applies": 1,
+          "n_terms": 2,
+          "n_factors": 0,
+          "inner_kind": "affine",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "sin",
+            "cos",
+            "tan"
+          ],
+          "atom_fn_candidates_g": [
+            "sin",
+            "cos",
+            "tan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "affine",
+        "inner_latex": "x - 1",
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_diff_general",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\frac{d}{dx}\\left[e^{-x}\\right]",
+      "answer_latex": "e^{-x}\\left(-1\\right)",
+      "skeleton_pattern": "Diff(Apply(exp,u))",
+      "form_id": "exp_basic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(exp,u))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "exp_basic"
+        ],
+        [
+          "openstax_form",
+          "exp_basic"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_basic",
+        "structure_id": "derivative_general:chain+power",
+        "function_classes": [
+          "algebraic",
+          "exp"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 0.0,
+        "form_id": "exp_basic",
+        "openstax_form": "exp_basic",
+        "openstax_case": "\u00a73.9",
+        "strategy": "exp_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "exp_basic",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(exp,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "exp_basic",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(exp,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "exp",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 1,
+          "n_applies": 1,
+          "n_terms": 1,
+          "n_factors": 0,
+          "inner_kind": "affine",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "exp"
+          ],
+          "atom_fn_candidates_g": [
+            "exp"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "affine",
+        "inner_latex": "-x",
+        "atom_fn_candidates": [
+          "exp"
+        ],
+        "atom_fn_candidates_g": [
+          "exp"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_diff_general",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\frac{d}{dx}\\left[-2\\left(-3x - 3\\right)^{2}\\right]",
+      "answer_latex": "2\\left(-3x - 3\\right)^{1}\\left(-3\\right)\\left(-2\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "form_id": "power_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "power_poly"
+        ],
+        [
+          "openstax_form",
+          "power_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_poly",
+        "structure_id": "derivative_general:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 0.0,
+        "form_id": "power_poly",
+        "openstax_form": "power_poly",
+        "openstax_case": "\u00a73.3 power",
+        "strategy": "power_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "power_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n))",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "power_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n))",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 2,
+          "n_applies": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "inner_kind": "var",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "var",
+        "inner_latex": "x",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_diff_general",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\frac{\\ln\\left(5x^{3} + 5x^{2} + x + 3\\right)}{\\sin\\left(4x - 2\\right)}\\right)",
+      "answer_latex": "\\frac{3x^{2}\\left(5\\right) + 2x^{1}\\left(5\\right) + 1}{\\left(5x^{3} + 5x^{2} + x + 3\\right)\\sin\\left(4x - 2\\right)} - \\sin^{-2}\\left(4x - 2\\right)\\cos\\left(4x - 2\\right)\\left(4\\right)\\ln\\left(5x^{3} + 5x^{2} + x + 3\\right)",
+      "skeleton_pattern": "Diff(Quot(F,G)) log/\u2026",
+      "form_id": "quotient_log_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Quot(F,G)) log/\u2026"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "quotient_log_poly"
+        ],
+        [
+          "openstax_form",
+          "quotient_log_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "quotient_log_poly",
+        "structure_id": "derivative_general:chain+power+quotient",
+        "function_classes": [
+          "algebraic",
+          "log",
+          "roots",
+          "trig"
+        ],
+        "methods_used": [
+          "chain",
+          "power",
+          "quotient"
+        ],
+        "chain_depth": 2,
+        "upgrades": [
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product",
+          "use_quotient"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 8.0,
+        "form_id": "quotient_log_poly",
+        "openstax_form": "quotient_log_poly",
+        "openstax_case": "\u00a73.9",
+        "strategy": "quotient_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "quotient_log_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Quot(F,G)) log/\u2026",
+          "skeleton_kind": "diff_quot_fg",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "quotient_log_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Quot(F,G)) log/\u2026",
+        "skeleton_kind": "diff_quot_fg",
+        "productions": [
+          "Quot",
+          "F",
+          "G"
+        ],
+        "shared_inner": false,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 2,
+          "chain_depth": 2,
+          "degree_max": 3,
+          "n_applies": 2,
+          "n_terms": 4,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "ln"
+          ],
+          "atom_fn_candidates_g": [
+            "poly",
+            "sin",
+            "cos"
+          ],
+          "shared_vs_independent": "independent",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 3,
+          "poly_degree_min": 2,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\ln\\left(5x^{3} + 5x^{2} + x + 3\\right)",
+        "atom_fn_candidates": [
+          "ln"
+        ],
+        "atom_fn_candidates_g": [
+          "poly",
+          "sin",
+          "cos"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_diff_general",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\cos\\left(-2x^{3} + 5x^{2} + 4x + 5\\right)\\sin\\left(-2x^{3} + 5x^{2} + 4x + 5\\right)\\right)",
+      "answer_latex": "-\\sin\\left(-2x^{3} + 5x^{2} + 4x + 5\\right)\\left(3x^{2}\\left(-2\\right) + 2x^{1}\\left(5\\right) + 4\\right)\\sin\\left(-2x^{3} + 5x^{2} + 4x + 5\\right) + \\cos\\left(-2x^{3} + 5x^{2} + 4x + 5\\right)\\left(3x^{2}\\left(-2\\right) + 2x^{1}\\left(5\\right) + 4\\right)\\cos\\left(-2x^{3} + 5x^{2} + 4x + 5\\right)",
+      "skeleton_pattern": "Diff(Prod(F,G)(u)) trig\u00d7trig",
+      "form_id": "trig_product_chain",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Prod(F,G)(u)) trig\u00d7trig"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "trig_product_chain"
+        ],
+        [
+          "openstax_form",
+          "trig_product_chain"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "trig_product_chain",
+        "structure_id": "derivative_general:chain+power+product",
+        "function_classes": [
+          "algebraic",
+          "roots",
+          "trig"
+        ],
+        "methods_used": [
+          "chain",
+          "power",
+          "product"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 8.0,
+        "form_id": "trig_product_chain",
+        "openstax_form": "trig_product_chain",
+        "openstax_case": "\u00a73.5",
+        "strategy": "trig_advanced",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "trig_product_chain",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Prod(F,G)(u)) trig\u00d7trig",
+          "skeleton_kind": "diff_prod_fg_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "trig_product_chain",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Prod(F,G)(u)) trig\u00d7trig",
+        "skeleton_kind": "diff_prod_fg_u",
+        "productions": [
+          "Prod",
+          "F",
+          "G",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 3,
+          "n_applies": 2,
+          "n_terms": 4,
+          "n_factors": 2,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "sin",
+            "cos"
+          ],
+          "atom_fn_candidates_g": [
+            "sin",
+            "cos"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 3,
+          "poly_degree_min": 2,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "poly",
+        "inner_latex": "-2x^{3} + 5x^{2} + 4x + 5",
+        "atom_fn_candidates": [
+          "sin",
+          "cos"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_diff_general",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(-2x^{2} - 3\\right)\\left(-x^{2} - 5\\right)\\right]",
+      "answer_latex": "2x^{1}\\left(-2\\right)\\left(-x^{2} - 5\\right) + 2x^{1}\\left(-1\\right)\\left(-2x^{2} - 3\\right)",
+      "skeleton_pattern": "Diff(Prod(F,G)) fn\u00d7fn",
+      "form_id": "product_two_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Prod(F,G)) fn\u00d7fn"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "product_two_poly"
+        ],
+        [
+          "openstax_form",
+          "product_two_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "product_two_poly",
+        "structure_id": "derivative_general:power+product",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "power",
+          "product"
+        ],
+        "chain_depth": 0,
+        "upgrades": [
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 8.0,
+        "form_id": "product_two_poly",
+        "openstax_form": "product_two_poly",
+        "openstax_case": "\u00a73.3 product",
+        "strategy": "product_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "product_two_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Prod(F,G)) fn\u00d7fn",
+          "skeleton_kind": "diff_prod_fg",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "product_two_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Prod(F,G)) fn\u00d7fn",
+        "skeleton_kind": "diff_prod_fg",
+        "productions": [
+          "Prod",
+          "F",
+          "G"
+        ],
+        "shared_inner": false,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 0,
+          "chain_depth": 0,
+          "degree_max": 2,
+          "n_applies": 0,
+          "n_terms": 2,
+          "n_factors": 2,
+          "inner_kind": "poly",
+          "inner_degree": 2,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "independent",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 3,
+          "poly_degree_min": 2,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "poly",
+        "inner_latex": "-2x^{2} - 3",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_diff_general",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\cos^{2}\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\right)",
+      "answer_latex": "2\\cos^{1}\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\sin\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\sin\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\left(4x^{3} + 3x^{2}\\left(7\\right) + 2x^{1}\\left(2\\right) + 3\\right)",
+      "skeleton_pattern": "Diff(Apply(fn,u)) chain",
+      "form_id": "chain_trig_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(fn,u)) chain"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "chain_trig_poly"
+        ],
+        [
+          "openstax_form",
+          "chain_trig_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "chain_trig_poly",
+        "structure_id": "derivative_general:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots",
+          "trig"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 3,
+        "upgrades": [
+          "chain_depth_2",
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product",
+          "use_quotient"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 16.0,
+        "form_id": "chain_trig_poly",
+        "openstax_form": "chain_trig_poly",
+        "openstax_case": "\u00a73.6 / \u00a73.5",
+        "strategy": "chain_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "chain_trig_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(fn,u)) chain",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "chain_trig_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(fn,u)) chain",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "cos",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 1,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 3,
+          "chain_depth": 3,
+          "degree_max": 4,
+          "n_applies": 2,
+          "n_terms": 5,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 4,
+          "atom_fn_candidates": [
+            "sin",
+            "cos"
+          ],
+          "atom_fn_candidates_g": [
+            "sin",
+            "cos"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 1,
+          "force_min_nest": 1,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 5,
+          "poly_degree_min": 2,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)",
+        "atom_fn_candidates": [
+          "sin",
+          "cos"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_diff_general",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(e^{e^{4x^{4} - 2x^{3} + 6x^{2} - 3}}\\right)",
+      "answer_latex": "e^{e^{4x^{4} - 2x^{3} + 6x^{2} - 3}}e^{4x^{4} - 2x^{3} + 6x^{2} - 3}\\left(4x^{3}\\left(4\\right) + 3x^{2}\\left(-2\\right) + 2x^{1}\\left(6\\right)\\right)",
+      "skeleton_pattern": "Diff(Apply(exp,u))",
+      "form_id": "exp_basic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(exp,u))"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "exp_basic"
+        ],
+        [
+          "openstax_form",
+          "exp_basic"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_basic",
+        "structure_id": "derivative_general:chain+power",
+        "function_classes": [
+          "algebraic",
+          "exp",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 2,
+        "upgrades": [
+          "chain_depth_2",
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product",
+          "use_quotient"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 16.0,
+        "form_id": "exp_basic",
+        "openstax_form": "exp_basic",
+        "openstax_case": "\u00a73.9",
+        "strategy": "exp_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "exp_basic",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(exp,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "exp_basic",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(exp,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "exp",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 1,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 2,
+          "chain_depth": 2,
+          "degree_max": 4,
+          "n_applies": 2,
+          "n_terms": 4,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 4,
+          "atom_fn_candidates": [
+            "exp"
+          ],
+          "atom_fn_candidates_g": [
+            "exp"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 1,
+          "force_min_nest": 1,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 5,
+          "poly_degree_min": 2,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "e^{4x^{4} - 2x^{3} + 6x^{2} - 3}",
+        "atom_fn_candidates": [
+          "exp"
+        ],
+        "atom_fn_candidates_g": [
+          "exp"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_diff_general",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\sin\\left(3x + 2\\right)\\cos\\left(-7x^{3} - 4x^{2} + 6x - 4\\right)\\right)",
+      "answer_latex": "\\cos\\left(3x + 2\\right)\\left(3\\right)\\cos\\left(-7x^{3} - 4x^{2} + 6x - 4\\right) - \\sin\\left(-7x^{3} - 4x^{2} + 6x - 4\\right)\\left(3x^{2}\\left(-7\\right) + 2x^{1}\\left(-4\\right) + 6\\right)\\sin\\left(3x + 2\\right)",
+      "skeleton_pattern": "Diff(Prod(F,G)) trig\u00d7trig",
+      "form_id": "product_poly_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Prod(F,G)) trig\u00d7trig"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "product_poly_trig"
+        ],
+        [
+          "openstax_form",
+          "product_poly_trig"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "product_poly_trig",
+        "structure_id": "derivative_general:chain+power+product",
+        "function_classes": [
+          "algebraic",
+          "roots",
+          "trig"
+        ],
+        "methods_used": [
+          "chain",
+          "power",
+          "product"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "chain_depth_2",
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product",
+          "use_quotient"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 16.0,
+        "form_id": "product_poly_trig",
+        "openstax_form": "product_poly_trig",
+        "openstax_case": "\u00a73.3 / \u00a73.5",
+        "strategy": "product_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "product_poly_trig",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Prod(F,G)) trig\u00d7trig",
+          "skeleton_kind": "diff_prod_fg",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "product_poly_trig",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Prod(F,G)) trig\u00d7trig",
+        "skeleton_kind": "diff_prod_fg",
+        "productions": [
+          "Prod",
+          "F",
+          "G"
+        ],
+        "shared_inner": false,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 3,
+          "n_applies": 2,
+          "n_terms": 4,
+          "n_factors": 2,
+          "inner_kind": "nested_apply",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "sin",
+            "cos"
+          ],
+          "atom_fn_candidates_g": [
+            "sin",
+            "cos",
+            "tan"
+          ],
+          "shared_vs_independent": "independent",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 1,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 5,
+          "poly_degree_min": 2,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\sin\\left(3x + 2\\right)",
+        "atom_fn_candidates": [
+          "sin",
+          "cos"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_diff_general",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\cos^{2}\\left(\\cos\\left(\\sin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\right)\\right)\\right)",
+      "answer_latex": "2\\cos^{1}\\left(\\cos\\left(\\sin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\right)\\right)\\sin\\left(\\cos\\left(\\sin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\right)\\right)\\sin\\left(\\sin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\right)\\cos\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\left(4x^{3}\\left(-2\\right) + 3x^{2}\\left(5\\right) + 2x^{1}\\left(-1\\right) + 9\\right)",
+      "skeleton_pattern": "Diff(Apply(fn,u)) chain",
+      "form_id": "chain_trig_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(fn,u)) chain"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "chain_trig_poly"
+        ],
+        [
+          "openstax_form",
+          "chain_trig_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "chain_trig_poly",
+        "structure_id": "derivative_general:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots",
+          "trig"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 4,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product",
+          "use_quotient"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 22.0,
+        "form_id": "chain_trig_poly",
+        "openstax_form": "chain_trig_poly",
+        "openstax_case": "\u00a73.6 / \u00a73.5",
+        "strategy": "chain_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "chain_trig_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(fn,u)) chain",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "chain_trig_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(fn,u)) chain",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "cos",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 2,
+          "nest_budget_forced_min": 2,
+          "nest_left_at_sample": 2,
+          "nest_depth_expr": 4,
+          "chain_depth": 4,
+          "degree_max": 4,
+          "n_applies": 3,
+          "n_terms": 4,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 4,
+          "atom_fn_candidates": [
+            "sin",
+            "cos"
+          ],
+          "atom_fn_candidates_g": [
+            "sin",
+            "cos"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 2,
+          "force_min_nest": 2,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 4,
+          "power_max": 7,
+          "poly_degree_min": 2,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\cos\\left(\\sin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\right)",
+        "atom_fn_candidates": [
+          "sin",
+          "cos"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_diff_general",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\frac{d}{dx}\\left[e^{e^{7x^{4} + 2x^{3} + 9x^{2} + 7x + 10}}\\right]",
+      "answer_latex": "e^{e^{7x^{4} + 2x^{3} + 9x^{2} + 7x + 10}}e^{7x^{4} + 2x^{3} + 9x^{2} + 7x + 10}\\left(4x^{3}\\left(7\\right) + 3x^{2}\\left(2\\right) + 2x^{1}\\left(9\\right) + 7\\right)",
+      "skeleton_pattern": "Diff(Apply(exp,u))",
+      "form_id": "exp_basic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(exp,u))"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "exp_basic"
+        ],
+        [
+          "openstax_form",
+          "exp_basic"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_basic",
+        "structure_id": "derivative_general:chain+power",
+        "function_classes": [
+          "algebraic",
+          "exp",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 2,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product",
+          "use_quotient"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 22.0,
+        "form_id": "exp_basic",
+        "openstax_form": "exp_basic",
+        "openstax_case": "\u00a73.9",
+        "strategy": "exp_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "exp_basic",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(exp,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "exp_basic",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(exp,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "exp",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 1,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 2,
+          "chain_depth": 2,
+          "degree_max": 4,
+          "n_applies": 2,
+          "n_terms": 5,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 4,
+          "atom_fn_candidates": [
+            "exp"
+          ],
+          "atom_fn_candidates_g": [
+            "exp"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 1,
+          "force_min_nest": 1,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 4,
+          "power_max": 7,
+          "poly_degree_min": 2,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "e^{7x^{4} + 2x^{3} + 9x^{2} + 7x + 10}",
+        "atom_fn_candidates": [
+          "exp"
+        ],
+        "atom_fn_candidates_g": [
+          "exp"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_diff_general",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\sin\\left(3x^{3} - x^{2} - 9x - 6\\right)\\cos\\left(\\tan\\left(8x^{3} - 2x^{2} - 7x - 6\\right)\\right)\\right]",
+      "answer_latex": "\\cos\\left(3x^{3} - x^{2} - 9x - 6\\right)\\left(3x^{2}\\left(3\\right) + 2x^{1}\\left(-1\\right) - 9\\right)\\cos\\left(\\tan\\left(8x^{3} - 2x^{2} - 7x - 6\\right)\\right) - \\sin\\left(\\tan\\left(8x^{3} - 2x^{2} - 7x - 6\\right)\\right)\\sec^{2}(8x^{3} - 2x^{2} - 7x - 6)\\left(3x^{2}\\left(8\\right) + 2x^{1}\\left(-2\\right) - 7\\right)\\sin\\left(3x^{3} - x^{2} - 9x - 6\\right)",
+      "skeleton_pattern": "Diff(Prod(F,G)) trig\u00d7trig",
+      "form_id": "product_poly_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Prod(F,G)) trig\u00d7trig"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "product_poly_trig"
+        ],
+        [
+          "openstax_form",
+          "product_poly_trig"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "product_poly_trig",
+        "structure_id": "derivative_general:chain+power+product",
+        "function_classes": [
+          "algebraic",
+          "roots",
+          "trig"
+        ],
+        "methods_used": [
+          "chain",
+          "power",
+          "product"
+        ],
+        "chain_depth": 2,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain",
+          "use_product",
+          "use_quotient"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_general",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 22.0,
+        "form_id": "product_poly_trig",
+        "openstax_form": "product_poly_trig",
+        "openstax_case": "\u00a73.3 / \u00a73.5",
+        "strategy": "product_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "product_poly_trig",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Prod(F,G)) trig\u00d7trig",
+          "skeleton_kind": "diff_prod_fg",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "product_poly_trig",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Prod(F,G)) trig\u00d7trig",
+        "skeleton_kind": "diff_prod_fg",
+        "productions": [
+          "Prod",
+          "F",
+          "G"
+        ],
+        "shared_inner": false,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 2,
+          "chain_depth": 2,
+          "degree_max": 3,
+          "n_applies": 3,
+          "n_terms": 4,
+          "n_factors": 2,
+          "inner_kind": "nested_apply",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "sin",
+            "cos"
+          ],
+          "atom_fn_candidates_g": [
+            "sin",
+            "cos",
+            "tan"
+          ],
+          "shared_vs_independent": "independent",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 1,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 4,
+          "power_max": 7,
+          "poly_degree_min": 2,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\sin\\left(3x^{3} - x^{2} - 9x - 6\\right)",
+        "atom_fn_candidates": [
+          "sin",
+          "cos"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": false,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    }
+  ],
+  "failures": []
+}

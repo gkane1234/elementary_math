@@ -1,4 +1,8 @@
-"""Proportions and literal equations — linear, policy max_degree=1."""
+"""Proportions and literal equations — linear, policy max_degree=1.
+
+**Live ``literal_equations`` default** is SolveLiteral in ``equation_skeleton.py``.
+Opt out with ``use_sample_literal_equation=True``.
+"""
 
 from __future__ import annotations
 

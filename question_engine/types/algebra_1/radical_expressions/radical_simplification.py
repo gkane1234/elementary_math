@@ -100,6 +100,8 @@ class RadicalSimplificationQuestionType(QuestionType):
                     prompt_text=f"root({radicand})",
                     answer_latex=answer_latex,
                     metadata={
+                        "skeleton_pattern": "RadicalSimplify",
+                        "primitive_engine": "radical_simplification",
                         "radicand": radicand,
                         "simplified_coefficient": coeff,
                         "radical_index": params.radical_index,

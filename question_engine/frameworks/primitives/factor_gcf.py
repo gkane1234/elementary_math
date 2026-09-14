@@ -23,10 +23,12 @@ from question_engine.frameworks.primitives.registry import PRIM_FACTOR_GCF, Prim
 
 FACTOR_GCF_SETTINGS_SCHEMA: dict[str, Any] = {}
 
+# Buy signed + variable GCF before extra terms so D≥8 matches old 4x(2x-3),
+# not a 3-term numeric GCF that never puts x in the GCF.
 _UPGRADES: tuple[DifficultyFactor, ...] = (
-    DifficultyFactor("three_terms", 1.5, ("structure",)),
     DifficultyFactor("signed_terms", 1.0, ("structure",)),
     DifficultyFactor("variable_gcf", 2.5, ("structure",)),
+    DifficultyFactor("three_terms", 1.5, ("structure",)),
 )
 
 
@@ -42,14 +44,33 @@ class FactorGcfExpression:
     max_degree: int = 1
 
 
+def _gcf_effective_d(ctx: PrimitiveContext) -> float:
+    """Spend GCF budget; poly_skeleton GCF leaves often only plan FactorPoly."""
+    from question_engine.frameworks.primitives.registry import PRIM_FACTOR_POLY
+
+    eff = float(ctx.effective_d(PRIM_FACTOR_GCF) or 0.0)
+    if eff > 0:
+        return eff
+    poly_eff = float(ctx.effective_d(PRIM_FACTOR_POLY) or 0.0)
+    if poly_eff > 0:
+        return poly_eff
+    return float(getattr(ctx, "topic_d", 0.0) or 0.0)
+
+
 def sample_factor_gcf(ctx: PrimitiveContext) -> FactorGcfExpression:
-    eff = ctx.effective_d(PRIM_FACTOR_GCF)
+    topic_d = float(getattr(ctx, "topic_d", 0.0) or 0.0)
+    eff = _gcf_effective_d(ctx)
     purchased, _, _ = select_upgrades(_UPGRADES, eff, rng=ctx.rng)
     ids = {f.id for f in purchased}
     # Policy gates degree-raising upgrades (D never buys degree on linear).
     ids = {i for i in ids if ctx.policy.allows_upgrade(i)}
     if ctx.policy.max_degree <= 1:
         ids.discard("variable_gcf")
+    # Poly GCF leaf: old opt-out puts x in the GCF once D≥8 (e.g. 4x(2x-3)).
+    if ctx.policy.max_degree >= 2 and topic_d >= 8:
+        ids.add("variable_gcf")
+        ids.add("signed_terms")
+        ids.discard("three_terms")
 
     for _ in range(12):
         try:
@@ -57,8 +78,9 @@ def sample_factor_gcf(ctx: PrimitiveContext) -> FactorGcfExpression:
         except (NicenessError, ValueError):
             if not ids:
                 break
-            costs = {f.id: f.cost for f in _UPGRADES}
-            drop = max(ids, key=lambda i: costs.get(i, 0))
+            # Keep variable_gcf at poly D≥8; drop extra terms first.
+            drop_order = ("three_terms", "signed_terms", "variable_gcf")
+            drop = next((i for i in drop_order if i in ids), next(iter(ids)))
             ids.remove(drop)
             ctx.note_degraded(drop)
 
@@ -87,7 +109,9 @@ def _coprime_inners(rng, n: int, *, allow_neg: bool, span: int) -> list[int]:
 
 def _build(ctx: PrimitiveContext, ids: set[str], eff: float) -> FactorGcfExpression:
     var = ctx.sample_variable()
-    g = ctx.rng.randint(2, max(3, min(12, 2 + int(eff))))
+    topic_d = float(getattr(ctx, "topic_d", 0.0) or 0.0)
+    g_hi = max(3, min(12, 2 + int(max(eff, topic_d) // 2)))
+    g = ctx.rng.randint(2, g_hi)
     n_terms = 3 if "three_terms" in ids else 2
     allow_neg = "signed_terms" in ids
     span = max(2, min(8, 2 + int(eff // 2)))
@@ -186,6 +210,13 @@ def _with_variable_gcf(ctx, ids, eff, var, g, inners) -> FactorGcfExpression:
     if len(inners) >= 3 and "three_terms" in ids:
         c = inners[2] or 1
         b = b + c
+        if b == 0:
+            b = 1
+    extra = math.gcd(int(a), abs(int(b))) or 1
+    if extra > 1:
+        a //= extra
+        b //= extra
+        g *= extra
 
     display = [
         (Fraction(g * a), f"{var.latex}^{{2}}"),

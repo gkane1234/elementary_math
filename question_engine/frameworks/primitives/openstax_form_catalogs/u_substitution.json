@@ -24,7 +24,8 @@
     ]
   },
   "taxonomy_notes": [
-    "Forms enumerate textbook-visible u-sub patterns: power of linear/quadratic, du/u, exp-of-trig, trig-of-u, arctan chain, alteration.",
+    "Forms enumerate textbook-visible u-sub patterns: power of linear/quadratic/cubic, du/u, exp-of-trig, exp-of-cubic, exp-of-quartic, exp-root, trig-of-u, arctan chain, alteration, cot/tan rewrite.",
+    "BC bank extra families (scripts/output/example_mining/challenging_indefinite_integrals_bc.tex §1) unlock at mid/high D via form_ids below; D=0 stays OpenStax easy.",
     "Sampler selects form_id by D-weighted weights among generation_status=implemented entries."
   ],
   "forms": [
@@ -32,170 +33,883 @@
       "form_id": "power_linear_du",
       "description": "∫ a(ax+b)^n dx — visible constant du factor",
       "strategy": "u_equals_linear",
-      "constraints": { "inner": "poly_linear", "outer": "power", "du_visible": true },
+      "constraints": {
+        "inner": "poly_linear",
+        "outer": "power",
+        "du_visible": true
+      },
       "d_min": 0,
+      "d_max": 10,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
-      "example_item_ids": ["fs-id1170573385785"],
-      "openstax_case": "Example 5.30 — ∫ 6x(3x²+4)^4 (related power-of-poly)"
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170573385785"
+      ],
+      "openstax_case": "Example 5.30 — ∫ 6x(3x²+4)^4 (related power-of-poly)",
+      "requires_allows": [
+        "allow_substitution"
+      ]
     },
     {
       "form_id": "power_quad_x_du",
       "description": "∫ (x²+c)^n · 2x dx (or without 2 absorbed)",
       "strategy": "u_equals_quad",
-      "constraints": { "inner": "poly_quad", "outer": "power" },
+      "constraints": {
+        "inner": "poly_quad",
+        "outer": "power"
+      },
       "d_min": 4,
       "d_weight": 2.2,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
-      "example_item_ids": ["fs-id1170573430304", "fs-id1170571334083"],
-      "openstax_case": "Checkpoint 5.25 / Example 5.31 — quadratic inner"
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170573430304",
+        "fs-id1170571334083"
+      ],
+      "openstax_case": "Checkpoint 5.25 / Example 5.31 — quadratic inner",
+      "requires_allows": [
+        "allow_substitution"
+      ]
+    },
+    {
+      "form_id": "power_cubic_x2_du",
+      "description": "∫ 3x² (x³±c)^n dx (or without the 3 at high format tier)",
+      "strategy": "u_equals_cubic",
+      "constraints": {
+        "inner": "poly_cubic",
+        "outer": "power"
+      },
+      "d_min": 8,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170573430304",
+        "fs-id1170573362318"
+      ],
+      "openstax_case": "Checkpoint 5.25 / 5.26 — ∫ 3x²(x³-3)² and ∫ x²(x³+5)⁹",
+      "requires_allows": [
+        "allow_substitution"
+      ]
     },
     {
       "form_id": "root_quad_x_du",
       "description": "∫ x √(x²±c) dx — alteration / root of quadratic",
       "strategy": "u_equals_quad_root",
-      "constraints": { "inner": "poly_quad", "outer": "root" },
+      "constraints": {
+        "inner": "poly_quad",
+        "outer": "root"
+      },
       "d_min": 6,
       "d_weight": 1.8,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
-      "example_item_ids": ["fs-id1170571334083"],
-      "openstax_case": "Example 5.31 — ∫ z√(z²−5) dz"
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170571334083"
+      ],
+      "openstax_case": "Example 5.31 — ∫ z√(z²−5) dz",
+      "requires_allows": [
+        "allow_substitution"
+      ]
     },
     {
       "form_id": "du_over_u_linear",
       "description": "∫ a/(ax+b) dx → ln|ax+b|",
       "strategy": "du_over_u",
-      "constraints": { "inner": "poly_linear", "outer": "ln" },
+      "constraints": {
+        "inner": "poly_linear",
+        "outer": "ln"
+      },
       "d_min": 2,
+      "d_max": 12,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
+      "tricks": [
+        "u_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§5.5 / §5.6 ln|g| forms"
+      "openstax_case": "§5.5 / §5.6 ln|g| forms",
+      "requires_allows": [
+        "allow_substitution"
+      ]
     },
     {
       "form_id": "du_over_u_trig",
       "description": "∫ sin/cos^n or cos/sin^n — u = cos or sin",
       "strategy": "trig_power_u_sub",
-      "constraints": { "inner": "trig", "outer": "power_or_ln" },
+      "constraints": {
+        "inner": "trig",
+        "outer": "power_or_ln"
+      },
       "d_min": 6,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["u_sub", "trig"],
-      "example_item_ids": ["fs-id1170573573975", "fs-id1170573733746"],
-      "openstax_case": "Example 5.32 / Checkpoint 5.27 — trig substitution warmup"
+      "tricks": [
+        "u_sub",
+        "trig"
+      ],
+      "example_item_ids": [
+        "fs-id1170573573975",
+        "fs-id1170573733746"
+      ],
+      "openstax_case": "Example 5.32 / Checkpoint 5.27 — trig substitution warmup",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_trig"
+      ]
     },
     {
       "form_id": "exp_of_trig",
       "description": "∫ e^{sin x} cos x dx (or e^{cos} sin)",
       "strategy": "exp_composite_trig",
-      "constraints": { "inner": "trig", "outer": "exp" },
+      "constraints": {
+        "inner": "trig",
+        "outer": "exp"
+      },
       "d_min": 8,
       "d_weight": 2.2,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
+      "tricks": [
+        "u_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§5.6 composite e^{g} g'"
+      "openstax_case": "§5.6 composite e^{g} g'",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
     },
     {
       "form_id": "exp_of_poly",
       "description": "∫ e^{ax+b} · a dx",
       "strategy": "exp_linear",
-      "constraints": { "inner": "poly_linear", "outer": "exp" },
+      "constraints": {
+        "inner": "poly_linear",
+        "outer": "exp"
+      },
       "d_min": 4,
+      "d_max": 14,
       "d_weight": 1.8,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
+      "tricks": [
+        "u_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§5.6 exponential substitution"
+      "openstax_case": "§5.6 exponential substitution",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
+    },
+    {
+      "form_id": "exp_of_cubic",
+      "description": "∫ 3x² e^{a x³} dx — Example 5.39 / Checkpoint 5.31",
+      "strategy": "exp_cubic",
+      "constraints": {
+        "inner": "poly_cubic",
+        "outer": "exp"
+      },
+      "d_min": 8,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170572168487",
+        "fs-id1170572248011"
+      ],
+      "openstax_case": "Example 5.39 / Checkpoint 5.31 — ∫ 3x² e^{2x³} / x² e^{-2x³}",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
+    },
+    {
+      "form_id": "exp_of_quartic",
+      "description": "∫ 2x³ e^{a x⁴} dx — Checkpoint 5.33",
+      "strategy": "exp_quartic",
+      "constraints": {
+        "inner": "poly_quartic",
+        "outer": "exp"
+      },
+      "d_min": 8,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170572551647"
+      ],
+      "openstax_case": "Checkpoint 5.33 — ∫ 2x³ e^{x⁴} dx",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
+    },
+    {
+      "form_id": "exp_root_chain",
+      "description": "∫ e^x √(c+e^x) dx — Example 5.38",
+      "strategy": "exp_root",
+      "constraints": {
+        "inner": "c_plus_exp",
+        "outer": "root"
+      },
+      "d_min": 10,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170572209244"
+      ],
+      "openstax_case": "Example 5.38 — ∫ e^x √(1+e^x) dx",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
+    },
+    {
+      "form_id": "exp_power_of_exp",
+      "description": "∫ e^x (a e^x ± b)^n dx — Checkpoint 5.32",
+      "strategy": "exp_power_outer",
+      "constraints": {
+        "inner": "linear_in_exp",
+        "outer": "power"
+      },
+      "d_min": 12,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170572207056"
+      ],
+      "openstax_case": "Checkpoint 5.32 — ∫ e^x (3e^x-2)² dx",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
     },
     {
       "form_id": "trig_of_linear",
       "description": "∫ cos(ax+b)·a or sin(ax+b)·a",
       "strategy": "trig_of_u",
-      "constraints": { "inner": "poly_linear", "outer": "trig" },
+      "constraints": {
+        "inner": "poly_linear",
+        "outer": "trig"
+      },
       "d_min": 4,
       "d_weight": 1.8,
       "generation_status": "implemented",
-      "tricks": ["u_sub", "trig"],
+      "tricks": [
+        "u_sub",
+        "trig"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§5.5 trig of linear inner"
+      "openstax_case": "§5.5 trig of linear inner",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_trig"
+      ]
     },
     {
       "form_id": "arctan_of_linear",
       "description": "∫ a/(1+(ax+b)²) dx → arctan(ax+b)",
       "strategy": "arctan_chain",
-      "constraints": { "inner": "poly_linear", "outer": "invtrig" },
+      "constraints": {
+        "inner": "poly_linear",
+        "outer": "invtrig"
+      },
       "d_min": 10,
       "d_weight": 1.6,
       "generation_status": "implemented",
-      "tricks": ["u_sub", "invtrig"],
+      "tricks": [
+        "u_sub",
+        "invtrig"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§5.7 invtrig via substitution"
+      "openstax_case": "§5.7 invtrig via substitution",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_invtrig"
+      ]
     },
     {
       "form_id": "ln_squared_chain",
       "description": "∫ (ln|g|/g)·g' → (1/2)(ln|g|)²",
       "strategy": "ln_squared",
-      "constraints": { "inner": "poly", "outer": "ln_power" },
+      "constraints": {
+        "inner": "poly",
+        "outer": "ln_power"
+      },
       "d_min": 12,
       "d_weight": 1.4,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
+      "tricks": [
+        "u_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§5.6 higher log-chain"
+      "openstax_case": "§5.6 higher log-chain",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log"
+      ]
     },
     {
       "form_id": "alteration_linear_over_root",
       "description": "∫ x/√(x−a) style alteration (rewrite then u-sub)",
       "strategy": "alteration",
-      "constraints": { "kind": "alteration_root" },
+      "constraints": {
+        "kind": "alteration_root"
+      },
       "d_min": 10,
       "d_weight": 1.5,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
-      "example_item_ids": ["fs-id1170573426799"],
-      "openstax_case": "Example 5.33 — ∫ x/√(x−1) dx"
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1170573426799"
+      ],
+      "openstax_case": "Example 5.33 — ∫ x/√(x−1) dx",
+      "requires_allows": [
+        "allow_substitution"
+      ]
     },
     {
       "form_id": "nested_trig_exp",
       "description": "∫ e^{sin(kx)} cos(kx) with k≠1",
       "strategy": "exp_composite_trig_scaled",
-      "constraints": { "inner": "trig_scaled", "outer": "exp" },
+      "constraints": {
+        "inner": "trig_scaled",
+        "outer": "exp"
+      },
       "d_min": 14,
       "d_weight": 1.2,
       "generation_status": "implemented",
-      "tricks": ["u_sub"],
+      "tricks": [
+        "u_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "Scaled composite e^{g} g'"
+      "openstax_case": "Scaled composite e^{g} g'",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
     },
     {
       "form_id": "sec2_of_u",
       "description": "∫ sec²(g)·g' → tan(g)",
       "strategy": "sec2_chain",
-      "constraints": { "outer": "sec2" },
+      "constraints": {
+        "outer": "sec2"
+      },
       "d_min": 8,
       "d_weight": 1.5,
       "generation_status": "implemented",
-      "tricks": ["u_sub", "trig"],
+      "tricks": [
+        "u_sub",
+        "trig"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§5.5 sec² chain"
+      "openstax_case": "§5.5 sec² chain",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_trig"
+      ]
     },
     {
       "form_id": "composite_ln_of_trig",
       "description": "∫ cot = cos/sin → ln|sin| (trig du/u)",
       "strategy": "du_over_u_trig_basic",
-      "constraints": { "kind": "cot_or_tan_rewrite" },
+      "constraints": {
+        "kind": "cot_or_tan_rewrite"
+      },
       "d_min": 8,
       "d_weight": 1.3,
-      "generation_status": "stub",
-      "tricks": ["u_sub", "trig"],
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub",
+        "trig"
+      ],
       "example_item_ids": [],
-      "openstax_case": "Related §3.2 / §5.5 rewrite-then-u",
-      "gap_reason": "Covered partly by trig_integrals basic_tan; dedicated cot form not yet separate"
+      "openstax_case": "Related §3.2 / §5.5 rewrite-then-u (∫ cot = ln|sin|, ∫ tan = −ln|cos|)",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_trig"
+      ]
+    },
+    {
+      "form_id": "power_quad_neg",
+      "description": "∫ x/(x²+c)^n dx — BC bank §1.1",
+      "strategy": "u_equals_quad_neg_power",
+      "constraints": {
+        "inner": "poly_quad",
+        "outer": "neg_power",
+        "n_ge": 2
+      },
+      "d_min": 10,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 power-of-quadratic with negative outer (bank ∫ x/(x²+1)⁴)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.1",
+      "requires_allows": [
+        "allow_substitution"
+      ]
+    },
+    {
+      "form_id": "power_cubic_neg",
+      "description": "∫ 3x²/(x³±c)^n dx — BC bank §1.2",
+      "strategy": "u_equals_cubic_neg_power",
+      "constraints": {
+        "inner": "poly_cubic",
+        "outer": "neg_power"
+      },
+      "d_min": 12,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "Checkpoint 5.25 shape with negative outer (bank ∫ 3x²/(x³−5)²)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.2",
+      "requires_allows": [
+        "allow_substitution"
+      ]
+    },
+    {
+      "form_id": "root_quad_minus",
+      "description": "∫ x/√(c−x²) dx — BC bank §1.4",
+      "strategy": "u_equals_c_minus_x2",
+      "constraints": {
+        "inner": "c_minus_x2",
+        "outer": "root_neg"
+      },
+      "d_min": 10,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 root of quadratic (minus inner)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.4",
+      "requires_allows": [
+        "allow_substitution"
+      ]
+    },
+    {
+      "form_id": "power_quad_m3_2",
+      "description": "∫ x (x²+c)^{-3/2} dx — BC bank §1.5",
+      "strategy": "u_equals_quad_m3_2",
+      "constraints": {
+        "inner": "poly_quad",
+        "outer": "power_-3/2"
+      },
+      "d_min": 12,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 fractional negative power of quadratic",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.5",
+      "requires_allows": [
+        "allow_substitution"
+      ]
+    },
+    {
+      "form_id": "ln_power_over_x",
+      "description": "∫ (ln x)^n / x dx — BC bank §1.6",
+      "strategy": "u_equals_ln",
+      "constraints": {
+        "inner": "ln",
+        "outer": "power"
+      },
+      "d_min": 10,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 ln-power chain (bank (ln x)³/x)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.6",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log"
+      ]
+    },
+    {
+      "form_id": "power_of_one_plus_ln",
+      "description": "∫ 1/(x (a+ln x)^n) dx — BC bank §1.7",
+      "strategy": "u_equals_a_plus_ln",
+      "constraints": {
+        "inner": "a_plus_ln",
+        "outer": "neg_power"
+      },
+      "d_min": 12,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 shifted ln power",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.7",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log"
+      ]
+    },
+    {
+      "form_id": "exp_over_power_of_exp",
+      "description": "∫ e^x / (a+e^x)^n dx — BC bank §1.8",
+      "strategy": "u_equals_a_plus_exp_neg",
+      "constraints": {
+        "inner": "a_plus_exp",
+        "outer": "neg_power"
+      },
+      "d_min": 12,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "Checkpoint 5.32 sibling with negative outer (bank e^x/(1+e^x)²)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.8",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
+    },
+    {
+      "form_id": "exp_e2x_over_power",
+      "description": "∫ e^{2x}/(a+e^x)^3 dx — rewrite then u-sub — BC bank §1.9",
+      "strategy": "exp_alteration_then_u",
+      "constraints": {
+        "inner": "a_plus_exp",
+        "num": "e^{2x}",
+        "n": 3
+      },
+      "d_min": 16,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 after rewrite e^{2x}=e^x(u−a)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.9",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
+    },
+    {
+      "form_id": "trig_over_linear_trig_power",
+      "description": "∫ trig' / (a+trig)^n — BC bank §1.10–1.13",
+      "strategy": "u_equals_a_plus_trig",
+      "constraints": {
+        "inner": "a_plus_trig",
+        "outer": "neg_power"
+      },
+      "d_min": 10,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub",
+        "trig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 trig-linear inner (bank sin/(2+cos)⁴ etc.)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.10–1.13",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_trig"
+      ]
+    },
+    {
+      "form_id": "ln_ln_nested",
+      "description": "∫ dx/(x ln x (ln ln x)^n) — BC bank §1.14",
+      "strategy": "u_equals_ln_ln",
+      "constraints": {
+        "inner": "ln_ln",
+        "outer": "neg_power"
+      },
+      "d_min": 16,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 nested-log chain",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.14",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log"
+      ]
+    },
+    {
+      "form_id": "ln_over_x_sqrt",
+      "description": "∫ dx/(x √(ln x)) — BC bank §1.15",
+      "strategy": "u_equals_ln_root",
+      "constraints": {
+        "inner": "ln",
+        "outer": "root_neg"
+      },
+      "d_min": 10,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 root of ln",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.15",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log"
+      ]
+    },
+    {
+      "form_id": "arctan_of_ln",
+      "description": "∫ dx/(x(1+(ln x)²)) → arctan(ln x) — BC bank §1.16",
+      "strategy": "u_equals_ln_arctan",
+      "constraints": {
+        "inner": "ln",
+        "outer": "arctan"
+      },
+      "d_min": 12,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub",
+        "invtrig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.7 arctan chain with u=ln x",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.16",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log",
+        "allow_invtrig"
+      ]
+    },
+    {
+      "form_id": "du_over_u_quadratic",
+      "description": "∫ (2x+b)/(x²+bx+c) dx → ln|quad| — BC bank §1.17",
+      "strategy": "du_over_u_quad",
+      "constraints": {
+        "inner": "poly_quad_complete",
+        "num": "derivative"
+      },
+      "d_min": 8,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 / §5.6 du/u with quadratic inner",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.17",
+      "requires_allows": [
+        "allow_substitution"
+      ]
+    },
+    {
+      "form_id": "du_over_ln_of_poly",
+      "description": "∫ x²/((x³±c) ln(x³±c)) dx — BC bank §1.18",
+      "strategy": "u_equals_ln_of_cubic",
+      "constraints": {
+        "inner": "ln_of_cubic"
+      },
+      "d_min": 14,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 du/u after u=ln(poly)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.18",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log"
+      ]
+    },
+    {
+      "form_id": "cos_of_ln_over_x",
+      "description": "∫ cos(ln x)/x dx — BC bank §1.19",
+      "strategy": "trig_of_ln",
+      "constraints": {
+        "inner": "ln",
+        "outer": "trig"
+      },
+      "d_min": 10,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5/§5.6 trig of ln",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.19",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_trig",
+        "allow_log"
+      ]
+    },
+    {
+      "form_id": "sin_of_sqrt",
+      "description": "∫ sin(√x)/√x dx — BC bank §1.20",
+      "strategy": "trig_of_sqrt",
+      "constraints": {
+        "inner": "sqrt",
+        "outer": "trig"
+      },
+      "d_min": 10,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 trig of root (omit-2 style)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.20",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_trig"
+      ]
+    },
+    {
+      "form_id": "exp_of_sqrt",
+      "description": "∫ e^{√x}/√x dx — BC bank §1.21",
+      "strategy": "exp_of_sqrt",
+      "constraints": {
+        "inner": "sqrt",
+        "outer": "exp"
+      },
+      "d_min": 10,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 exp of root",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.21",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_exp"
+      ]
+    },
+    {
+      "form_id": "root_ln_of_linear",
+      "description": "∫ dx/((x+a) √ln(x+a)) — BC bank §1.22",
+      "strategy": "u_equals_ln_linear_root",
+      "constraints": {
+        "inner": "ln_linear",
+        "outer": "root_neg"
+      },
+      "d_min": 14,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 root of ln(linear)",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.22",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log"
+      ]
+    },
+    {
+      "form_id": "ln_sq_over_root_ln_cube",
+      "description": "∫ (ln x)² / (x √(1+(ln x)³)) dx — BC bank §1.23",
+      "strategy": "u_equals_one_plus_ln_cube",
+      "constraints": {
+        "inner": "1_plus_ln_cube"
+      },
+      "d_min": 16,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.6 nested ln-power root",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.23",
+      "requires_allows": [
+        "allow_substitution",
+        "allow_log"
+      ]
+    },
+    {
+      "form_id": "power_hex_neg",
+      "description": "∫ x⁵/(x⁶+c)^n dx — BC bank §1.24",
+      "strategy": "u_equals_x6_neg_power",
+      "constraints": {
+        "inner": "poly_deg6",
+        "outer": "neg_power"
+      },
+      "d_min": 14,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 high even inner",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.24",
+      "requires_allows": [
+        "allow_substitution"
+      ]
+    },
+    {
+      "form_id": "root_of_x4",
+      "description": "∫ x³/√(1+x⁴) dx — BC bank §1.25",
+      "strategy": "u_equals_x4_root",
+      "constraints": {
+        "inner": "poly_quartic",
+        "outer": "root"
+      },
+      "d_min": 12,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.5 root of quartic",
+      "bank_ref": "challenging_indefinite_integrals_bc.tex §1.25",
+      "requires_allows": [
+        "allow_substitution"
+      ]
     }
   ]
 }

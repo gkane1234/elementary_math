@@ -19,183 +19,311 @@
       "form_id": "sqrt_a2_minus_x2",
       "description": "∫ √(a²−x²) dx — x = a sin θ",
       "strategy": "sin_sub",
-      "constraints": { "radicand": "a2-x2", "power": "1/2" },
+      "constraints": {
+        "radicand": "a2-x2",
+        "power": "1/2"
+      },
       "d_min": 0,
       "d_weight": 2.2,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
-      "example_item_ids": ["fs-id1165041837235"],
-      "openstax_case": "Example 3.21"
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1165041837235"
+      ],
+      "openstax_case": "Example 3.21",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "sqrt_a2_plus_x2",
       "description": "∫ √(a²+x²) dx — x = a tan θ",
       "strategy": "tan_sub",
-      "constraints": { "radicand": "a2+x2", "power": "1/2" },
+      "constraints": {
+        "radicand": "a2+x2",
+        "power": "1/2"
+      },
       "d_min": 2,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3 a²+x² family"
+      "openstax_case": "§3.3 a²+x² family",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "sqrt_x2_minus_a2",
       "description": "∫ √(x²−a²) dx — x = a sec θ",
       "strategy": "sec_sub",
-      "constraints": { "radicand": "x2-a2", "power": "1/2" },
+      "constraints": {
+        "radicand": "x2-a2",
+        "power": "1/2"
+      },
       "d_min": 4,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3 x²−a² family"
+      "openstax_case": "§3.3 x²−a² family",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "one_over_sqrt_x2_plus_a2",
       "description": "∫ 1/√(x²+a²) dx",
       "strategy": "tan_sub",
-      "constraints": { "radicand": "x2+a2", "power": "-1/2" },
+      "constraints": {
+        "radicand": "x2+a2",
+        "power": "-1/2"
+      },
       "d_min": 4,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
-      "example_item_ids": ["fs-id1165042089656"],
-      "openstax_case": "Example 3.24"
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1165042089656"
+      ],
+      "openstax_case": "Example 3.24",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "one_over_sqrt_x2_minus_a2",
       "description": "∫ 1/√(x²−a²) dx",
       "strategy": "sec_sub",
-      "constraints": { "radicand": "x2-a2", "power": "-1/2" },
+      "constraints": {
+        "radicand": "x2-a2",
+        "power": "-1/2"
+      },
       "d_min": 6,
       "d_weight": 1.8,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3"
+      "openstax_case": "§3.3",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "x2_over_sqrt_a2_minus_x2",
       "description": "∫ x²/√(a²−x²) dx",
       "strategy": "sin_sub",
-      "constraints": { "radicand": "a2-x2", "num": "x2" },
+      "constraints": {
+        "radicand": "a2-x2",
+        "num": "x2"
+      },
       "d_min": 8,
       "d_weight": 1.8,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
-      "example_item_ids": ["fs-id1165042094001"],
-      "openstax_case": "Checkpoint 3.14 related"
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1165042094001"
+      ],
+      "openstax_case": "Checkpoint 3.14 related",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "one_over_x2_sqrt_x2_plus_a2",
       "description": "∫ 1/(x² √(x²+a²)) dx",
       "strategy": "tan_sub",
-      "constraints": { "radicand": "x2+a2", "den": "x2_sqrt" },
+      "constraints": {
+        "radicand": "x2+a2",
+        "den": "x2_sqrt"
+      },
       "d_min": 10,
       "d_weight": 1.5,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3 denser rational×sqrt"
+      "openstax_case": "§3.3 denser rational×sqrt",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "pow_3_2_a2_minus",
       "description": "∫ (a²−x²)^{3/2} dx",
       "strategy": "sin_sub",
-      "constraints": { "power": "3/2", "radicand": "a2-x2" },
+      "constraints": {
+        "power": "3/2",
+        "radicand": "a2-x2"
+      },
       "d_min": 10,
       "d_weight": 1.6,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3 fractional power"
+      "openstax_case": "§3.3 fractional power",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "pow_3_2_a2_plus",
       "description": "∫ (a²+x²)^{3/2} dx",
       "strategy": "tan_sub",
-      "constraints": { "power": "3/2", "radicand": "a2+x2" },
+      "constraints": {
+        "power": "3/2",
+        "radicand": "a2+x2"
+      },
       "d_min": 10,
       "d_weight": 1.5,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3"
+      "openstax_case": "§3.3",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "pow_m3_2_a2_plus",
       "description": "∫ 1/(a²+x²)^{3/2} dx",
       "strategy": "tan_sub",
-      "constraints": { "power": "-3/2", "radicand": "a2+x2" },
+      "constraints": {
+        "power": "-3/2",
+        "radicand": "a2+x2"
+      },
       "d_min": 12,
       "d_weight": 1.5,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3"
+      "openstax_case": "§3.3",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "pow_m3_2_a2_minus",
       "description": "∫ 1/(a²−x²)^{3/2} dx",
       "strategy": "sin_sub",
-      "constraints": { "power": "-3/2", "radicand": "a2-x2" },
+      "constraints": {
+        "power": "-3/2",
+        "radicand": "a2-x2"
+      },
       "d_min": 12,
       "d_weight": 1.5,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3"
+      "openstax_case": "§3.3",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "pow_m5_2_a2_plus",
       "description": "∫ 1/(a²+x²)^{5/2} dx",
       "strategy": "tan_sub",
-      "constraints": { "power": "-5/2", "radicand": "a2+x2" },
+      "constraints": {
+        "power": "-5/2",
+        "radicand": "a2+x2"
+      },
       "d_min": 16,
       "d_weight": 1.2,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3 high fractional"
+      "openstax_case": "§3.3 high fractional",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "pow_5_2_a2_minus",
       "description": "∫ (a²−x²)^{5/2} dx",
       "strategy": "sin_sub",
-      "constraints": { "power": "5/2", "radicand": "a2-x2" },
+      "constraints": {
+        "power": "5/2",
+        "radicand": "a2-x2"
+      },
       "d_min": 16,
       "d_weight": 1.2,
       "generation_status": "implemented",
-      "tricks": ["trig_sub"],
+      "tricks": [
+        "trig_sub"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.3"
+      "openstax_case": "§3.3",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "sqrt_over_x_a2_minus",
       "description": "∫ √(a²−x²)/x dx",
       "strategy": "sin_sub",
-      "constraints": { "kind": "sqrt_over_x" },
+      "constraints": {
+        "kind": "sqrt_over_x"
+      },
       "d_min": 10,
       "d_weight": 1.4,
       "generation_status": "stub",
-      "tricks": ["trig_sub"],
-      "example_item_ids": ["fs-id1165042229562"],
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1165042229562"
+      ],
       "openstax_case": "Example 3.22",
-      "gap_reason": "Needs dedicated closed-form template (ln + sqrt mix)"
+      "gap_reason": "Needs dedicated closed-form template (ln + sqrt mix)",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     },
     {
       "form_id": "sinh_alternate_a2_plus",
       "description": "∫ 1/√(1+x²) via x=sinh θ (alternate)",
       "strategy": "hyperbolic_sub",
-      "constraints": { "kind": "sinh" },
+      "constraints": {
+        "kind": "sinh"
+      },
       "d_min": 18,
       "d_weight": 0.5,
       "generation_status": "deferred",
-      "tricks": ["trig_sub"],
-      "example_item_ids": ["fs-id1165042301696"],
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [
+        "fs-id1165042301696"
+      ],
       "openstax_case": "Example 3.25 — hyperbolic alternate",
-      "gap_reason": "Hyperbolic path not in primary Calc1 algebraic sampler"
+      "gap_reason": "Hyperbolic path not in primary Calc1 algebraic sampler",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
     }
   ]
 }

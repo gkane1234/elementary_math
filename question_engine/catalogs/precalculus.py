@@ -50,19 +50,28 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Functions",
         "pc_continuity",
         "Continuity",
+        generator="pc_continuity",
         instruction_text="Determine if the function is continuous.",
     ),
     _pc(
         "Functions",
         "pc_extrema_intervals_of_increase_and_decrease",
         "Extrema, intervals of increase and decrease",
+        generator="pc_extrema_intervals",
         instruction_text="Find the extrema and intervals.",
     ),
-    _pc("Functions", "pc_power_functions", "Power functions", instruction_text="Graph or evaluate."),
+    _pc(
+        "Functions",
+        "pc_power_functions",
+        "Power functions",
+        generator="pc_power_functions",
+        instruction_text="Graph or evaluate.",
+    ),
     _pc(
         "Functions",
         "pc_average_rates_of_change",
         "Average rates of change",
+        generator="average_rate_of_change",
         instruction_text="Find the average rate of change.",
     ),
     _pc(
@@ -71,7 +80,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Transformations of graphs", generator="graph_transformations", instruction_latex="\\text{Graph the following functions.}",
         instruction_text="Graph the following functions.",
     ),
-    _pc("Functions", "pc_piecewise_functions", "Piecewise functions", instruction_text="Evaluate or graph."),
+    _pc(
+        "Functions",
+        "pc_piecewise_functions",
+        "Piecewise functions",
+        generator="pc_piecewise_functions",
+        instruction_text="Evaluate or graph.",
+    ),
     _pc("Functions", "pc_functions_operations", "Operations", generator="function_operations", instruction_text="Evaluate."),
     _pc("Functions", "pc_inverses", "Inverses", generator="inverse_function_basic", instruction_text="Find the inverse."),
     # Power, Polynomial, and Rational Functions
@@ -98,12 +113,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Power, Polynomial, and Rational Functions",
         "pc_writing_polynomial_functions_and_conjugate_roots",
         "Writing polynomial functions and conjugate roots",
+        generator="polynomial_conjugate_writing",
         instruction_text="Write the polynomial function.",
     ),
     _pc(
         "Power, Polynomial, and Rational Functions",
         "pc_complex_zeros_and_fundamental_theorem_of_algebra",
         "Complex zeros and The Fundamental Theorem of Algebra",
+        generator="pc_complex_zeros",
         instruction_text="Find the zeros.",
     ),
     _pc(
@@ -126,6 +143,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Power, Polynomial, and Rational Functions",
         "pc_polynomial_inequalities",
         "Polynomial inequalities",
+        generator="pc_polynomial_inequalities",
         instruction_latex="\\text{Solve the inequality.}",
         instruction_text="Solve the inequality.",
     ),
@@ -133,6 +151,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Power, Polynomial, and Rational Functions",
         "pc_rational_inequalities",
         "Rational inequalities",
+        generator="pc_rational_inequalities",
         instruction_latex="\\text{Solve the inequality.}",
         instruction_text="Solve the inequality.",
     ),
@@ -228,6 +247,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Trigonometry",
         "pc_angles_and_angle_measure",
         "Angles and angle measure",
+        generator="pc_angles_and_angle_measure",
         instruction_text="Find the measure.",
     ),
     _pc(
@@ -347,12 +367,14 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Parametric Equations",
         "pc_parametric_equations",
         "Parametric equations",
+        generator="pc_parametric_equations",
         instruction_text="Solve or graph.",
     ),
     _pc(
         "Parametric Equations",
         "pc_projectile_motion",
         "Projectile motion",
+        generator="pc_projectile_motion",
         instruction_latex="\\text{Solve the problem.}",
         instruction_text="Solve the problem.",
         count_default=5,
@@ -409,14 +431,22 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Three-Dimensional Vectors",
         "pc_3d_points_in_three_dimensions",
         "Points in three dimensions",
+        generator="pc_3d_points",
         instruction_text="Find the distance or coordinates.",
     ),
     _pc("Three-Dimensional Vectors", "pc_3d_vectors_basics", "Basics", generator="vector_3d_basics", instruction_text="Evaluate."),
-    _pc("Three-Dimensional Vectors", "pc_3d_vectors_operations", "Operations", generator="precalc_foundations", instruction_text="Evaluate."),
+    _pc(
+        "Three-Dimensional Vectors",
+        "pc_3d_vectors_operations",
+        "Operations",
+        generator="vector_3d_operations",
+        instruction_text="Evaluate.",
+    ),
     _pc(
         "Three-Dimensional Vectors",
         "pc_cross_products",
         "Cross products",
+        generator="cross_products",
         instruction_text="Find the cross product.",
     ),
     # Matrices and Systems
@@ -424,6 +454,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Matrices and Systems",
         "pc_multivariable_linear_systems_and_row_operations",
         "Multivariable linear systems and row operations",
+        generator="pc_multivariable_systems",
         instruction_text="Solve the system.",
     ),
     _pc(
@@ -512,6 +543,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Discrete Mathematics",
         "pc_permutations_vs_combinations",
         "Permutations vs combinations",
+        generator="stats_permutations_vs_combinations",
         instruction_text="Determine whether to use permutations or combinations.",
     ),
     _pc(
@@ -524,6 +556,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Discrete Mathematics",
         "pc_mathematical_induction",
         "Mathematical induction",
+        generator="pc_mathematical_induction",
         instruction_text="Prove by mathematical induction.",
     ),
     _pc(
@@ -564,7 +597,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Probability: With permutations and combinations", generator="stats_counting_principle", instruction_text="Find the probability.",
     ),
     # Sequences and Series
-    _pc("Sequences and Series", "pc_power_series", "Power series", instruction_text="Evaluate the series."),
+    _pc("Sequences and Series", "pc_power_series", "Power series", generator="pc_power_series", instruction_text="Evaluate the series."),
     # Introduction to Calculus
     _pc(
         "Introduction to Calculus",
@@ -577,6 +610,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Introduction to Calculus",
         "pc_limits_at_kinks_and_jumps",
         "Limits at kinks and jumps",
+        generator="limit_jump",
         instruction_text="Evaluate the limit.",
     ),
     _pc(
@@ -589,6 +623,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Introduction to Calculus",
         "pc_limits_at_essential_discontinuities",
         "Limits at essential discontinuities",
+        generator="limit_essential",
         instruction_text="Evaluate the limit.",
     ),
     _pc(
@@ -608,6 +643,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Introduction to Calculus",
         "pc_instantaneous_rates_of_change",
         "Instantaneous rates of change",
+        generator="instantaneous_rate_of_change",
         instruction_text="Find the instantaneous rate of change.",
     ),
     _pc(
@@ -621,6 +657,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Introduction to Calculus",
         "pc_motion_along_a_line",
         "Motion along a line",
+        generator="pc_motion_along_a_line",
         instruction_latex="\\text{Solve the problem.}",
         instruction_text="Solve the problem.",
         count_default=5,

@@ -38,6 +38,22 @@ def test_number_line_types_emit_blank_number_line_by_default():
         assert meta.get("answer_number_line_spec"), f"{tid}: missing answer_number_line_spec"
 
 
+def test_compound_inequality_answer_line_has_two_boundaries():
+    status, _, body = handle_generate(
+        {
+            "type_id": "compound_inequalities",
+            "settings": {"count": 1, "include_answer_key": True, "difficulty": 0},
+        }
+    )
+    data = json.loads(body)
+    assert status == 200
+    meta = data["questions"][0]["metadata"]
+    ans = meta["answer_number_line_spec"]
+    assert "boundary_high" in ans
+    assert ans.get("direction") in {"both", "outside"}
+    assert (meta.get("number_line_spec") or {}).get("blank") is True
+
+
 def test_number_line_word_problem_answer_marks_endpoint():
     status, _, body = handle_generate(
         {

@@ -1,0 +1,925 @@
+{
+  "section": {
+    "slug": "g6_points_on_the_coordinate_plane",
+    "title": "GeometryMeasure \u2014 plot or identify a point",
+    "pattern": "GeometryMeasure",
+    "engine": "geometry_skeleton",
+    "type_id": "g6_points_on_the_coordinate_plane",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Plot a given ordered pair on a blank plane, or read a labeled point. Not the old identity dump. Opt out with <code>use_legacy_geometry=True</code>."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Plot the point } (5, 2) \\text{ on the coordinate plane.}",
+      "answer_latex": "(5, 2)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "plot_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"176\" viewBox=\"0 0 254 176\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"140.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "plot_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "plot_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "plot_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"176\" viewBox=\"0 0 254 176\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"140.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"176\" viewBox=\"0 0 254 176\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"140.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><circle cx=\"192.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"199.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": 5,
+            "y": 2
+          }
+        ],
+        "form_id": "plot_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -5,
+          "coord_max": 5,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Plot the point } (5, 6) \\text{ on the coordinate plane.}",
+      "answer_latex": "(5, 6)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "plot_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"280\" viewBox=\"0 0 254 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"244.0\" x2=\"218.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"218.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"218.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"218.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"218.0\" y2=\"218.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"244.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"248.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"196.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">7</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "plot_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "plot_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "plot_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"280\" viewBox=\"0 0 254 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"244.0\" x2=\"218.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"218.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"218.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"218.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"218.0\" y2=\"218.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"244.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"248.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"196.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">7</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"280\" viewBox=\"0 0 254 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"244.0\" x2=\"218.0\" y2=\"244.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"218.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"218.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"218.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"218.0\" y2=\"218.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"244.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"232.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"248.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"196.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">7</text><circle cx=\"192.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"199.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "form_id": "plot_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -5,
+          "coord_max": 5,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Plot the point } (5, 2) \\text{ on the coordinate plane.}",
+      "answer_latex": "(5, 2)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "plot_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"176\" viewBox=\"0 0 254 176\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"140.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "plot_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "plot_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "plot_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"176\" viewBox=\"0 0 254 176\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"140.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"254\" height=\"176\" viewBox=\"0 0 254 176\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"218.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"218.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"218.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"218.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"140.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"128.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><circle cx=\"192.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"199.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": 5,
+            "y": 2
+          }
+        ],
+        "form_id": "plot_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -5,
+          "coord_max": 5,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Plot the point } (4, -3) \\text{ on the coordinate plane.}",
+      "answer_latex": "(4, -3)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "plot_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"228\" height=\"202\" viewBox=\"0 0 228 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"192.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"192.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"166.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "plot_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "plot_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "plot_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"228\" height=\"202\" viewBox=\"0 0 228 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"192.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"192.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"166.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"228\" height=\"202\" viewBox=\"0 0 228 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"192.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"192.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"166.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><circle cx=\"166.0\" cy=\"140.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"173.0\" y=\"133.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": 4,
+            "y": -3
+          }
+        ],
+        "form_id": "plot_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -8,
+          "coord_max": 8,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Plot the point } (3, 5) \\text{ on the coordinate plane.}",
+      "answer_latex": "(3, 5)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "plot_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"218.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "plot_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "plot_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "plot_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"218.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"218.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"52.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><circle cx=\"140.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"147.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "form_id": "plot_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -8,
+          "coord_max": 8,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Plot the point } (4, -4) \\text{ on the coordinate plane.}",
+      "answer_latex": "(4, -4)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "plot_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"228\" height=\"228\" viewBox=\"0 0 228 228\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"192.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"192.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"192.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"192.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"196.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-5</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "plot_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "plot_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "plot_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"228\" height=\"228\" viewBox=\"0 0 228 228\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"192.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"192.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"192.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"192.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"196.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-5</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"228\" height=\"228\" viewBox=\"0 0 228 228\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"192.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"192.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"192.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"192.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"192.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"192.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"192.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"52.0\" y=\"196.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-5</text><text x=\"52.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"52.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><circle cx=\"166.0\" cy=\"166.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"173.0\" y=\"159.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": 4,
+            "y": -4
+          }
+        ],
+        "form_id": "plot_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -8,
+          "coord_max": 8,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{What are the coordinates of point } A?",
+      "answer_latex": "(-2, 3)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "identify_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"176\" height=\"202\" viewBox=\"0 0 176 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"140.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"140.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"114.0\" y1=\"166.0\" x2=\"114.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"62.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"88.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"140.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"104.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"104.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"104.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "identify_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "identify_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "identify_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"176\" height=\"202\" viewBox=\"0 0 176 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"140.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"140.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"114.0\" y1=\"166.0\" x2=\"114.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"62.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"88.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"140.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"104.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"104.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"104.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"176\" height=\"202\" viewBox=\"0 0 176 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"140.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"140.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"114.0\" y1=\"166.0\" x2=\"114.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"62.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"88.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"140.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"104.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"104.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"104.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": -2,
+            "y": 3
+          }
+        ],
+        "form_id": "identify_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -12,
+          "coord_max": 12,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Plot the point } (8, -1) \\text{ on the coordinate plane.}",
+      "answer_latex": "(8, -1)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "plot_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"332\" height=\"150\" viewBox=\"0 0 332 150\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"244.0\" y1=\"36.0\" x2=\"244.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"270.0\" y1=\"36.0\" x2=\"270.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"296.0\" y1=\"36.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"296.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"296.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"114.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"244.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">7</text><text x=\"270.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">8</text><text x=\"296.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">9</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "plot_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "plot_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "plot_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"332\" height=\"150\" viewBox=\"0 0 332 150\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"244.0\" y1=\"36.0\" x2=\"244.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"270.0\" y1=\"36.0\" x2=\"270.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"296.0\" y1=\"36.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"296.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"296.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"114.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"244.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">7</text><text x=\"270.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">8</text><text x=\"296.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">9</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"332\" height=\"150\" viewBox=\"0 0 332 150\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"244.0\" y1=\"36.0\" x2=\"244.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"270.0\" y1=\"36.0\" x2=\"270.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"296.0\" y1=\"36.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"296.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"296.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"114.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"244.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">7</text><text x=\"270.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">8</text><text x=\"296.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">9</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><circle cx=\"270.0\" cy=\"88.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"277.0\" y=\"81.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": 8,
+            "y": -1
+          }
+        ],
+        "form_id": "plot_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -12,
+          "coord_max": 12,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{What are the coordinates of point } A?",
+      "answer_latex": "(-3, 5)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "identify_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"140.0\" y1=\"218.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"62.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"130.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"130.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"130.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"130.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"130.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "identify_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "identify_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "identify_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"140.0\" y1=\"218.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"62.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"130.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"130.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"130.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"130.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"130.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"140.0\" y1=\"218.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"62.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"130.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"130.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"130.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"130.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"130.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": -3,
+            "y": 5
+          }
+        ],
+        "form_id": "identify_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -12,
+          "coord_max": 12,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{What are the coordinates of point } A?",
+      "answer_latex": "(-2, 3)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "identify_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"176\" height=\"202\" viewBox=\"0 0 176 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"140.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"140.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"114.0\" y1=\"166.0\" x2=\"114.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"62.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"88.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"140.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"104.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"104.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"104.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "identify_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "identify_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "identify_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"176\" height=\"202\" viewBox=\"0 0 176 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"140.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"140.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"114.0\" y1=\"166.0\" x2=\"114.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"62.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"88.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"140.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"104.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"104.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"104.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"176\" height=\"202\" viewBox=\"0 0 176 202\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"140.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"140.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"140.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"140.0\" y2=\"140.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"114.0\" y1=\"166.0\" x2=\"114.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"62.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"88.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"140.0\" y=\"154.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"104.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"104.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"104.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"104.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": -2,
+            "y": 3
+          }
+        ],
+        "form_id": "identify_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -12,
+          "coord_max": 12,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Plot the point } (8, -1) \\text{ on the coordinate plane.}",
+      "answer_latex": "(8, -1)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "plot_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"332\" height=\"150\" viewBox=\"0 0 332 150\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"244.0\" y1=\"36.0\" x2=\"244.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"270.0\" y1=\"36.0\" x2=\"270.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"296.0\" y1=\"36.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"296.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"296.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"114.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"244.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">7</text><text x=\"270.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">8</text><text x=\"296.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">9</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "plot_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "plot_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "plot_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"332\" height=\"150\" viewBox=\"0 0 332 150\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"244.0\" y1=\"36.0\" x2=\"244.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"270.0\" y1=\"36.0\" x2=\"270.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"296.0\" y1=\"36.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"296.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"296.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"114.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"244.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">7</text><text x=\"270.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">8</text><text x=\"296.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">9</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"332\" height=\"150\" viewBox=\"0 0 332 150\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"192.0\" y1=\"36.0\" x2=\"192.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"218.0\" y1=\"36.0\" x2=\"218.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"244.0\" y1=\"36.0\" x2=\"244.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"270.0\" y1=\"36.0\" x2=\"270.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"296.0\" y1=\"36.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"296.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"296.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"296.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"296.0\" y2=\"62.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"62.0\" y1=\"114.0\" x2=\"62.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"88.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"114.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"140.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"166.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"192.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"218.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">6</text><text x=\"244.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">7</text><text x=\"270.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">8</text><text x=\"296.0\" y=\"76.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">9</text><text x=\"52.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"52.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"52.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><circle cx=\"270.0\" cy=\"88.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"277.0\" y=\"81.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": 8,
+            "y": -1
+          }
+        ],
+        "form_id": "plot_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -12,
+          "coord_max": 12,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "g6_points_on_the_coordinate_plane",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{What are the coordinates of point } A?",
+      "answer_latex": "(-3, 5)",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "identify_point",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"140.0\" y1=\"218.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"62.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"130.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"130.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"130.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"130.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"130.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "identify_point"
+        ],
+        [
+          "mode",
+          "plot_point"
+        ],
+        [
+          "construction",
+          "identify_point"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "plot_point",
+        "construction": "identify_point",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"140.0\" y1=\"218.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"62.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"130.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"130.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"130.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"130.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"130.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"202\" height=\"254\" viewBox=\"0 0 202 254\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"36.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"62.0\" y1=\"36.0\" x2=\"62.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"88.0\" y1=\"36.0\" x2=\"88.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"114.0\" y1=\"36.0\" x2=\"114.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"140.0\" y1=\"36.0\" x2=\"140.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"166.0\" y1=\"36.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"218.0\" x2=\"166.0\" y2=\"218.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"166.0\" x2=\"166.0\" y2=\"166.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"140.0\" x2=\"166.0\" y2=\"140.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"114.0\" x2=\"166.0\" y2=\"114.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"88.0\" x2=\"166.0\" y2=\"88.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"62.0\" x2=\"166.0\" y2=\"62.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"36.0\" x2=\"166.0\" y2=\"36.0\" stroke=\"#e5e7eb\"/><line x1=\"36.0\" y1=\"192.0\" x2=\"166.0\" y2=\"192.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><line x1=\"140.0\" y1=\"218.0\" x2=\"140.0\" y2=\"36.0\" stroke=\"#374151\" stroke-width=\"1.5\"/><text x=\"36.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-4</text><text x=\"62.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-3</text><text x=\"88.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-2</text><text x=\"114.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"166.0\" y=\"206.0\" text-anchor=\"middle\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"222.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">-1</text><text x=\"130.0\" y=\"170.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">1</text><text x=\"130.0\" y=\"144.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">2</text><text x=\"130.0\" y=\"118.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">3</text><text x=\"130.0\" y=\"92.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">4</text><text x=\"130.0\" y=\"66.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">5</text><text x=\"130.0\" y=\"40.0\" text-anchor=\"end\" font-size=\"11\" fill=\"#4b5563\">6</text><circle cx=\"62.0\" cy=\"62.0\" r=\"4\" fill=\"#1e3a8a\"/><text x=\"69.0\" y=\"55.0\" font-size=\"13\" fill=\"#1e3a8a\">A</text></svg>",
+        "coordinate_points": [
+          {
+            "x": -3,
+            "y": 5
+          }
+        ],
+        "form_id": "identify_point",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "coord_min": -12,
+          "coord_max": 12,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Identify the point.}"
+      }
+    }
+  ],
+  "failures": []
+}

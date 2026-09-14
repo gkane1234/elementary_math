@@ -1,0 +1,1982 @@
+{
+  "section": {
+    "slug": "calc_diff_higher_order_derivatives",
+    "title": "Diff \u2014 Higher order derivatives",
+    "pattern": "Diff(Pow(H,n))",
+    "engine": "expr_skeleton",
+    "type_id": "calc_diff_higher_order_derivatives",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "pattern_soft": true,
+    "blurb": "Always $d^2/dx^2$ (or higher). OpenStax Calc Vol.1 \u00a73.2\u20133.3."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[x^{2}\\right]",
+      "answer_latex": "x^{0}\\left(2\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "form_id": "power_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "power_poly"
+        ],
+        [
+          "openstax_form",
+          "power_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_poly",
+        "structure_id": "derivative_higher_order:power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "chain_depth": 0,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 0.0,
+        "form_id": "power_poly",
+        "openstax_form": "power_poly",
+        "openstax_case": "\u00a73.3 power",
+        "strategy": "power_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "power_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n))",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "power_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n))",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 0,
+          "chain_depth": 0,
+          "degree_max": 2,
+          "n_applies": 0,
+          "n_terms": 1,
+          "n_factors": 0,
+          "inner_kind": "var",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": false,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "var",
+        "inner_latex": "x",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[2x^{2}\\right]",
+      "answer_latex": "x^{0}\\left(2\\right)\\left(2\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "form_id": "power_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "power_poly"
+        ],
+        [
+          "openstax_form",
+          "power_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_poly",
+        "structure_id": "derivative_higher_order:power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "chain_depth": 0,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 0.0,
+        "form_id": "power_poly",
+        "openstax_form": "power_poly",
+        "openstax_case": "\u00a73.3 power",
+        "strategy": "power_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "power_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n))",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "power_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n))",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 0,
+          "chain_depth": 0,
+          "degree_max": 2,
+          "n_applies": 0,
+          "n_terms": 1,
+          "n_factors": 0,
+          "inner_kind": "var",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": false,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "var",
+        "inner_latex": "x",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[x^{2}\\right]",
+      "answer_latex": "x^{0}\\left(2\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "form_id": "power_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "power_poly"
+        ],
+        [
+          "openstax_form",
+          "power_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_poly",
+        "structure_id": "derivative_higher_order:power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "chain_depth": 0,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 0.0,
+        "form_id": "power_poly",
+        "openstax_form": "power_poly",
+        "openstax_case": "\u00a73.3 power",
+        "strategy": "power_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "power_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n))",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "power_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n))",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 0,
+          "chain_depth": 0,
+          "degree_max": 2,
+          "n_applies": 0,
+          "n_terms": 1,
+          "n_factors": 0,
+          "inner_kind": "var",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": false,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "var",
+        "inner_latex": "x",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(2x - 3\\right)^{3}\\right]",
+      "answer_latex": "2\\left(2x - 3\\right)^{1}\\left(2\\right)\\left(3\\right)\\left(2\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "form_id": "higher_order_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n)) order2"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "higher_order_2"
+        ],
+        [
+          "openstax_form",
+          "higher_order_2"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "higher_order_2",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 8.0,
+        "form_id": "higher_order_2",
+        "openstax_form": "higher_order_2",
+        "openstax_case": "\u00a73.3 higher-order",
+        "strategy": "higher_order",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "higher_order_2",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n)) order2",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "higher_order_2",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n)) order2",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 3,
+          "n_applies": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 3,
+          "poly_degree_min": 1,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "poly",
+        "inner_latex": "-x^{3} + 3x^{2} - x + 1",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-\\left(3x - 3\\right)^{3}\\right]",
+      "answer_latex": "2\\left(3x - 3\\right)^{1}\\left(3\\right)\\left(3\\right)\\left(3\\right)\\left(-1\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "form_id": "higher_order_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n)) order2"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "higher_order_2"
+        ],
+        [
+          "openstax_form",
+          "higher_order_2"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "higher_order_2",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 8.0,
+        "form_id": "higher_order_2",
+        "openstax_form": "higher_order_2",
+        "openstax_case": "\u00a73.3 higher-order",
+        "strategy": "higher_order",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "higher_order_2",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n)) order2",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "higher_order_2",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n)) order2",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 3,
+          "n_applies": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 3,
+          "poly_degree_min": 1,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "poly",
+        "inner_latex": "4x^{3} + x^{2} + 4",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(-3x^{2} - 3\\right)^{3}\\right]",
+      "answer_latex": "2\\left(-3x^{2} - 3\\right)^{1}\\left(2\\right)x^{1}\\left(-3\\right)\\left(3\\right)\\left(2\\right)x^{1}\\left(-3\\right) + x^{0}\\left(3\\right)\\left(-3x^{2} - 3\\right)^{2}\\left(2\\right)\\left(-3\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "form_id": "power_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n))"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "power_poly"
+        ],
+        [
+          "openstax_form",
+          "power_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_poly",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 8.0,
+        "form_id": "power_poly",
+        "openstax_form": "power_poly",
+        "openstax_case": "\u00a73.3 power",
+        "strategy": "power_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "power_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n))",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "power_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n))",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 3,
+          "n_applies": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "inner_kind": "affine",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 3,
+          "poly_degree_min": 1,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "affine",
+        "inner_latex": "3x - 3",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(4x + 3\\right)^{2}\\right]",
+      "answer_latex": "\\left(4x + 3\\right)^{0}\\left(4\\right)\\left(2\\right)\\left(4\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "form_id": "higher_order_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n)) order2"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "higher_order_2"
+        ],
+        [
+          "openstax_form",
+          "higher_order_2"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "higher_order_2",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 16.0,
+        "form_id": "higher_order_2",
+        "openstax_form": "higher_order_2",
+        "openstax_case": "\u00a73.3 higher-order",
+        "strategy": "higher_order",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "higher_order_2",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n)) order2",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "higher_order_2",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n)) order2",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 2,
+          "n_applies": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 5,
+          "poly_degree_min": 1,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "poly",
+        "inner_latex": "2x^{3} + 8x^{2} + 3x - 5",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\frac{d^{3}}{dx^{3}}\\left[\\left(x^{3} + 2x^{2} - 5\\right)^{4}\\right]",
+      "answer_latex": "2\\left(x^{3} + 2x^{2} - 5\\right)^{1}\\left(3x^{2} + 2x^{1}\\left(2\\right)\\right)\\left(3\\right)\\left(3x^{2} + 2x^{1}\\left(2\\right)\\right)\\left(4\\right)\\left(3x^{2} + 2x^{1}\\left(2\\right)\\right) + \\left(2x^{1}\\left(3\\right) + x^{0}\\left(2\\right)\\left(2\\right)\\right)\\left(3\\right)\\left(x^{3} + 2x^{2} - 5\\right)^{2}\\left(4\\right)\\left(3x^{2} + 2x^{1}\\left(2\\right)\\right) + \\left(2x^{1}\\left(3\\right) + x^{0}\\left(2\\right)\\left(2\\right)\\right)\\left(3\\right)\\left(x^{3} + 2x^{2} - 5\\right)^{2}\\left(3x^{2} + 2x^{1}\\left(2\\right)\\right)\\left(4\\right) + \\left(x^{0}\\left(2\\right)\\left(3\\right) + \\frac{022}{x}\\right)\\left(4\\right)\\left(x^{3} + 2x^{2} - 5\\right)^{3} + 3\\left(x^{3} + 2x^{2} - 5\\right)^{2}\\left(3x^{2} + 2x^{1}\\left(2\\right)\\right)\\left(2x^{1}\\left(3\\right) + x^{0}\\left(2\\right)\\left(2\\right)\\right)\\left(4\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n)) order3",
+      "form_id": "higher_order_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n)) order3"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "higher_order_3"
+        ],
+        [
+          "openstax_form",
+          "higher_order_3"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "higher_order_3",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 3,
+        "d_spend": 16.0,
+        "form_id": "higher_order_3",
+        "openstax_form": "higher_order_3",
+        "openstax_case": "\u00a73.3",
+        "strategy": "higher_order",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "higher_order_3",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n)) order3",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 3,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "higher_order_3",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n)) order3",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 4,
+          "n_applies": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 5,
+          "poly_degree_min": 1,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "poly",
+        "inner_latex": "-x^{3} - 2x^{2} + 6x - 5",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(-3x^{2} + 6x + 4\\right)^{5}\\right]",
+      "answer_latex": "4\\left(-3x^{2} + 6x + 4\\right)^{3}\\left(2x^{1}\\left(-3\\right) + 6\\right)\\left(5\\right)\\left(2x^{1}\\left(-3\\right) + 6\\right) + x^{0}\\left(2\\right)\\left(-3\\right)\\left(5\\right)\\left(-3x^{2} + 6x + 4\\right)^{4}",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "form_id": "power_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n))"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "power_poly"
+        ],
+        [
+          "openstax_form",
+          "power_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_poly",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 16.0,
+        "form_id": "power_poly",
+        "openstax_form": "power_poly",
+        "openstax_case": "\u00a73.3 power",
+        "strategy": "power_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "power_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n))",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "power_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n))",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 5,
+          "n_applies": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "inner_kind": "affine",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 5,
+          "poly_degree_min": 1,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "affine",
+        "inner_latex": "-5x + 5",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(9x^{3} + 9x^{2} + 2x + 6\\right)^{4}\\right]",
+      "answer_latex": "3\\left(9x^{3} + 9x^{2} + 2x + 6\\right)^{2}\\left(3x^{2}\\left(9\\right) + 2x^{1}\\left(9\\right) + 2\\right)\\left(4\\right)\\left(3x^{2}\\left(9\\right) + 2x^{1}\\left(9\\right) + 2\\right) + \\left(2x^{1}\\left(3\\right)\\left(9\\right) + x^{0}\\left(2\\right)\\left(9\\right)\\right)\\left(4\\right)\\left(9x^{3} + 9x^{2} + 2x + 6\\right)^{3}",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "form_id": "higher_order_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n)) order2"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "higher_order_2"
+        ],
+        [
+          "openstax_form",
+          "higher_order_2"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "higher_order_2",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "fn_power",
+          "higher_power",
+          "mix_classes",
+          "use_chain"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 22.0,
+        "form_id": "higher_order_2",
+        "openstax_form": "higher_order_2",
+        "openstax_case": "\u00a73.3 higher-order",
+        "strategy": "higher_order",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "higher_order_2",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n)) order2",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "higher_order_2",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n)) order2",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 4,
+          "n_applies": 0,
+          "n_terms": 4,
+          "n_factors": 0,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 7,
+          "poly_degree_min": 1,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "poly",
+        "inner_latex": "-x^{3} + 6x^{2} + 9x",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\frac{d^{3}}{dx^{3}}\\left[\\left(-5x^{3} - 5x^{2} - 6x - 5\\right)^{2}\\right]",
+      "answer_latex": "\\frac{0\\left(3x^{2}\\left(-5\\right) + 2x^{1}\\left(-5\\right) - 6\\right)\\left(1\\right)\\left(3x^{2}\\left(-5\\right) + 2x^{1}\\left(-5\\right) - 6\\right)\\left(2\\right)\\left(3x^{2}\\left(-5\\right) + 2x^{1}\\left(-5\\right) - 6\\right)}{-5x^{3} - 5x^{2} - 6x - 5} + \\left(2x^{1}\\left(3\\right)\\left(-5\\right) + x^{0}\\left(2\\right)\\left(-5\\right)\\right)\\left(1\\right)\\left(-5x^{3} - 5x^{2} - 6x - 5\\right)^{0}\\left(2\\right)\\left(3x^{2}\\left(-5\\right) + 2x^{1}\\left(-5\\right) - 6\\right) + \\left(2x^{1}\\left(3\\right)\\left(-5\\right) + x^{0}\\left(2\\right)\\left(-5\\right)\\right)\\left(1\\right)\\left(-5x^{3} - 5x^{2} - 6x - 5\\right)^{0}\\left(3x^{2}\\left(-5\\right) + 2x^{1}\\left(-5\\right) - 6\\right)\\left(2\\right) + \\left(x^{0}\\left(2\\right)\\left(3\\right)\\left(-5\\right) + \\frac{02\\left(-5\\right)}{x}\\right)\\left(2\\right)\\left(-5x^{3} - 5x^{2} - 6x - 5\\right)^{1} + \\left(-5x^{3} - 5x^{2} - 6x - 5\\right)^{0}\\left(3x^{2}\\left(-5\\right) + 2x^{1}\\left(-5\\right) - 6\\right)\\left(2x^{1}\\left(3\\right)\\left(-5\\right) + x^{0}\\left(2\\right)\\left(-5\\right)\\right)\\left(2\\right)",
+      "skeleton_pattern": "Diff(Pow(H,n)) order3",
+      "form_id": "higher_order_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n)) order3"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "higher_order_3"
+        ],
+        [
+          "openstax_form",
+          "higher_order_3"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "higher_order_3",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "fn_power",
+          "higher_power",
+          "mix_classes",
+          "use_chain"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 3,
+        "d_spend": 22.0,
+        "form_id": "higher_order_3",
+        "openstax_form": "higher_order_3",
+        "openstax_case": "\u00a73.3",
+        "strategy": "higher_order",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "higher_order_3",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n)) order3",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 3,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "higher_order_3",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n)) order3",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 3,
+          "n_applies": 0,
+          "n_terms": 4,
+          "n_factors": 0,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 7,
+          "poly_degree_min": 1,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "poly",
+        "inner_latex": "-3x^{3} + 9x^{2} + 7x + 10",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_diff_higher_order_derivatives",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[\\left(-4x^{2} + 8x + 3\\right)^{5}\\right]",
+      "answer_latex": "4\\left(-4x^{2} + 8x + 3\\right)^{3}\\left(2x^{1}\\left(-4\\right) + 8\\right)\\left(5\\right)\\left(2x^{1}\\left(-4\\right) + 8\\right) + x^{0}\\left(2\\right)\\left(-4\\right)\\left(5\\right)\\left(-4x^{2} + 8x + 3\\right)^{4}",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "form_id": "power_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Pow(H,n))"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "power_poly"
+        ],
+        [
+          "openstax_form",
+          "power_poly"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_poly",
+        "structure_id": "derivative_higher_order:chain+power",
+        "function_classes": [
+          "algebraic",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "chain_depth_2",
+          "class_exp",
+          "class_trig",
+          "extra_term",
+          "fn_power",
+          "higher_power",
+          "mix_classes",
+          "use_chain"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_higher_order",
+        "variable": "x",
+        "derivative_order": 2,
+        "d_spend": 22.0,
+        "form_id": "power_poly",
+        "openstax_form": "power_poly",
+        "openstax_case": "\u00a73.3 power",
+        "strategy": "power_rule",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "power_poly",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Pow(H,n))",
+          "skeleton_kind": "diff_pow_h_n",
+          "derivative_order": 2,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "power_poly",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Pow(H,n))",
+        "skeleton_kind": "diff_pow_h_n",
+        "productions": [
+          "Pow",
+          "H",
+          "n",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 5,
+          "n_applies": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "inner_kind": "affine",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "poly"
+          ],
+          "atom_fn_candidates_g": [
+            "poly"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "power: nest capped \u2014 harden poly/|n|"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": false,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 2,
+          "power_max": 7,
+          "poly_degree_min": 1,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "affine",
+        "inner_latex": "-7x + 10",
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the derivative.}"
+      }
+    }
+  ],
+  "failures": []
+}

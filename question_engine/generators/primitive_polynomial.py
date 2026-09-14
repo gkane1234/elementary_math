@@ -150,6 +150,75 @@ def _maybe_a2_poly_form(topic: str, settings: dict, leaf_id: str):
     return form, meta
 
 
+def _use_factor_product_skeleton(settings: dict) -> bool:
+    from question_engine.frameworks.primitives.poly_skeleton import use_factor_product_skeleton
+
+    return use_factor_product_skeleton(settings)
+
+
+def _sample_factor_product_item(
+    topic: str,
+    local: dict,
+    *,
+    task: str = "factor",
+    max_degree: int | None = None,
+    use_mixer: bool = False,
+    catalog_name: str | None = None,
+) -> tuple[Any, dict[str, Any]]:
+    from question_engine.frameworks.primitives.poly_skeleton import (
+        sample_factor_product_item,
+        sample_factor_product_mixer,
+    )
+
+    md = int(max_degree if max_degree is not None else local.get("max_degree", 3))
+    leaf = str(topic or "")
+    gcf_leaf = (
+        any(k in leaf for k in ("common_factor", "factor_gcf"))
+        or leaf in {"factor_gcf", "g6_factor_gcf"}
+    )
+    prims = (
+        [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_GCF]
+        if gcf_leaf
+        else [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY]
+    )
+    ctx = build_context(
+        local,
+        prims,
+        policy=polynomial_policy(max_degree=md),
+        leaf_id=leaf,
+    )
+    if use_mixer:
+        item = sample_factor_product_mixer(ctx, leaf_id=str(topic or ""))
+    else:
+        cat = catalog_name
+        if cat is None and str(topic or "").startswith("a2_"):
+            cat = "algebra2_polys"
+        item = sample_factor_product_item(
+            ctx,
+            task=task,  # type: ignore[arg-type]
+            leaf_id=str(topic or ""),
+            catalog_name=cat,
+        )
+    return item, ctx.metadata()
+
+
+def _factor_product_meta(
+    item,
+    ctx_meta: dict[str, Any],
+    *,
+    engine: str,
+) -> dict[str, Any]:
+    return {
+        **ctx_meta,
+        "primitive_engine": engine,
+        "method": item.method,
+        "degree": item.degree,
+        "upgrades": list(item.upgrades),
+        "effective_d": item.effective_d,
+        **item.metadata,
+    }
+
+
 def polynomial_naming(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
@@ -169,6 +238,7 @@ def polynomial_naming(topic: str, settings: dict) -> list[Question]:
         last["meta"] = {
             **ctx.metadata(),
             "primitive_engine": "polynomial_naming",
+            "skeleton_pattern": "PolyNaming",
             "degree": item.degree,
             "leading_coeff": str(item.leading_coeff),
             "n_terms": item.n_terms,
@@ -196,7 +266,11 @@ def polynomial_add_subtract(topic: str, settings: dict) -> list[Question]:
     local = _poly_settings(settings)
 
     def build() -> tuple[str, str, str | None]:
-        # apply_batch_seed sets settings["_batch_index"]; PrimitiveContext uses it.
+        from question_engine.frameworks.primitives.poly_skeleton import (
+            sample_poly_add_sub,
+            use_poly_add_sub_skeleton,
+        )
+
         live = dict(local)
         for k in ("seed", "difficulty", "_batch_index"):
             if k in settings:
@@ -209,25 +283,53 @@ def polynomial_add_subtract(topic: str, settings: dict) -> list[Question]:
             op_c = (form.get("constraints") or {}).get("op")
             if op_c in ("+", "-"):
                 preferred_op = op_c
+        if use_poly_add_sub_skeleton(settings):
+            skel_live = dict(live)
+            if preferred_op in ("+", "-"):
+                skel_live["poly_add_sub_op"] = preferred_op
+            if form is not None and form.get("form_id"):
+                skel_live["_openstax_form_id"] = form.get("form_id")
+            ctx = build_context(
+                skel_live,
+                [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_POLYNOMIALS],
+                policy=_policy_from(live),
+                leaf_id=str(topic or "polynomial_add_subtract"),
+            )
+            item = sample_poly_add_sub(ctx)
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = {
+                **ctx.metadata(),
+                "primitive_engine": "poly_skeleton",
+                "degree": item.degree,
+                "op": item.op,
+                "upgrades": list(item.upgrades),
+                **item.metadata,
+                **form_meta,
+            }
+            return (
+                f"\\text{{Simplify: }} {item.prompt_latex}",
+                f"Simplify: {item.prompt_text}",
+                answer,
+            )
         ctx = build_context(
             live,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_POLYNOMIALS],
             policy=_policy_from(live),
-            leaf_id="polynomial_add_subtract",
+            leaf_id=str(topic or "polynomial_add_subtract"),
         )
-        item = sample_polynomial_add_subtract(ctx, preferred_op=preferred_op)
-        answer = item.simplified_latex if include_answer_key else None
+        item_old = sample_polynomial_add_subtract(ctx, preferred_op=preferred_op)
+        answer = item_old.simplified_latex if include_answer_key else None
         last["meta"] = {
             **ctx.metadata(),
             "primitive_engine": "polynomial_add_subtract",
-            "degree": item.degree,
-            "op": item.op,
-            "upgrades": list(item.upgrades),
+            "degree": item_old.degree,
+            "op": item_old.op,
+            "upgrades": list(item_old.upgrades),
             **form_meta,
         }
         return (
-            f"\\text{{Simplify: }} {item.latex}",
-            f"Simplify: {item.text}",
+            f"\\text{{Simplify: }} {item_old.latex}",
+            f"Simplify: {item_old.text}",
             answer,
         )
 
@@ -242,8 +344,18 @@ def polynomial_multiply(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
     local = _poly_settings(settings)
+    use_skel = _use_factor_product_skeleton(settings)
 
     def build() -> tuple[str, str, str | None]:
+        if use_skel:
+            item, ctx_meta = _sample_factor_product_item(topic, local, task="multiply")
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return (
+                f"\\text{{Multiply: }} {item.prompt_latex}",
+                f"Multiply: {item.prompt_text}",
+                answer,
+            )
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_POLYNOMIALS],
@@ -278,8 +390,18 @@ def polynomial_multiply_special(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
     local = _poly_settings(settings)
+    use_skel = _use_factor_product_skeleton(settings)
 
     def build() -> tuple[str, str, str | None]:
+        if use_skel:
+            item, ctx_meta = _sample_factor_product_item(topic, local, task="multiply")
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return (
+                f"\\text{{Multiply: }} {item.prompt_latex}",
+                f"Multiply: {item.prompt_text}",
+                answer,
+            )
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_POLYNOMIALS],
@@ -554,6 +676,7 @@ def simplify_polynomials(topic: str, settings: dict) -> list[Question]:
         last["meta"] = {
             **ctx.metadata(),
             "primitive_engine": "construct_poly",
+            "skeleton_pattern": "PolySimplify",
             "poly_degree": surface.metadata.get("poly_degree"),
             "n_hot_terms": surface.metadata.get("n_hot_terms"),
             "n_terms": n_terms,
@@ -597,6 +720,20 @@ def factor_gcf_poly(topic: str, settings: dict) -> list[Question]:
     local = _poly_settings(settings)
 
     def build() -> tuple[str, str, str | None]:
+        if _use_factor_product_skeleton(settings):
+            item, ctx_meta = _sample_factor_product_item(
+                str(topic or "polynomial_factoring_common_factor"),
+                local,
+                task="factor",
+                catalog_name="algebra1_factoring",
+            )
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return (
+                f"\\text{{Factor: }} {item.prompt_latex}",
+                f"Factor: {item.prompt_text}",
+                answer,
+            )
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_GCF],
@@ -636,6 +773,14 @@ def quadratic_factoring(topic: str, settings: dict) -> list[Question]:
     }
 
     def build() -> tuple[str, str, str | None]:
+        if _use_factor_product_skeleton(settings):
+            cat = "algebra1_factoring" if use_catalog else None
+            item, ctx_meta = _sample_factor_product_item(
+                tid, local, task="factor", max_degree=2, catalog_name=cat
+            )
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return item.prompt_latex, item.prompt_text, answer
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY],
@@ -694,32 +839,56 @@ def quadratic_factoring_equations(topic: str, settings: dict) -> list[Question]:
     local["max_degree"] = 2
 
     def build() -> tuple[str, str, str | None]:
+        if _use_factor_product_skeleton(settings):
+            item, ctx_meta = _sample_factor_product_item(
+                str(topic or "quadratic_factoring_equations"),
+                local,
+                task="factor",
+                max_degree=2,
+                catalog_name="algebra1_factoring",
+            )
+            answer = None
+            if include_answer_key:
+                roots: list[Fraction] = []
+                for fac in item.factor_coeffs:
+                    p = fac.get(1, Fraction(0))
+                    q = fac.get(0, Fraction(0))
+                    if p != 0:
+                        roots.append(-q / p)
+                uniq = sorted(set(roots))
+                if uniq:
+                    answer = ", ".join(f"x = {num_latex(r)}" for r in uniq)
+                else:
+                    answer = item.answer_latex
+            last["meta"] = _factor_product_meta(
+                item, ctx_meta, engine="poly_skeleton"
+            )
+            return item.prompt_latex, item.prompt_text, answer
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY],
             policy=polynomial_policy(max_degree=2),
             leaf_id=str(topic or "quadratic_factoring_equations"),
         )
-        item = sample_quadratic_equation_by_factoring(ctx)
+        item_old = sample_quadratic_equation_by_factoring(ctx)
         answer = None
         if include_answer_key:
-            roots: list[Fraction] = []
-            for fac in item.factor_coeffs:
+            roots = []
+            for fac in item_old.factor_coeffs:
                 p = fac.get(1, Fraction(0))
                 q = fac.get(0, Fraction(0))
                 if p != 0:
                     roots.append(-q / p)
-            # Deduplicate while sorting
             uniq = sorted(set(roots))
             answer = ", ".join(f"x = {num_latex(r)}" for r in uniq)
         last["meta"] = {
             **ctx.metadata(),
             "primitive_engine": "quadratic_factoring_equations",
-            "method": item.method,
-            "upgrades": list(item.upgrades),
-            "effective_d": item.effective_d,
+            "method": item_old.method,
+            "upgrades": list(item_old.upgrades),
+            "effective_d": item_old.effective_d,
         }
-        return item.latex, item.text, answer
+        return item_old.latex, item_old.text, answer
 
     return make_questions(
         topic, count, include_answer_key, build,
@@ -736,8 +905,24 @@ def polynomial_factoring_special_cases(topic: str, settings: dict) -> list[Quest
     use_catalog = tid in {
         "polynomial_factoring_special_cases",
     }
+    use_a2_poly_catalog = tid.startswith("a2_") and (
+        "conjugate" in tid or "special" in tid
+    )
 
     def build() -> tuple[str, str, str | None]:
+        if _use_factor_product_skeleton(settings):
+            if use_catalog:
+                cat = "algebra1_factoring"
+            elif use_a2_poly_catalog:
+                cat = "algebra2_polys"
+            else:
+                cat = None
+            item, ctx_meta = _sample_factor_product_item(
+                tid, local, task="factor", catalog_name=cat
+            )
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return item.prompt_latex, item.prompt_text, answer
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY],
@@ -785,8 +970,16 @@ def polynomial_factoring_grouping(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
     local = _poly_settings(settings)
+    local["max_degree"] = max(3, int(local.get("max_degree", 3)))
 
     def build() -> tuple[str, str, str | None]:
+        if _use_factor_product_skeleton(settings):
+            item, ctx_meta = _sample_factor_product_item(
+                topic, local, task="factor", max_degree=3
+            )
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return item.prompt_latex, item.prompt_text, answer
         form, form_meta = _maybe_a2_poly_form(
             topic, local, "a2_polynomial_functions_factoring_by_grouping"
         )
@@ -828,6 +1021,13 @@ def polynomial_factoring_sum_diff_cubes(topic: str, settings: dict) -> list[Ques
     local["max_degree"] = max(3, int(local.get("max_degree", 3)))
 
     def build() -> tuple[str, str, str | None]:
+        if _use_factor_product_skeleton(settings):
+            item, ctx_meta = _sample_factor_product_item(
+                topic, local, task="factor", max_degree=3
+            )
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return item.prompt_latex, item.prompt_text, answer
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY],
@@ -860,6 +1060,13 @@ def polynomial_factoring_quadratic_form(topic: str, settings: dict) -> list[Ques
     local["max_degree"] = max(4, int(local.get("max_degree", 4)))
 
     def build() -> tuple[str, str, str | None]:
+        if _use_factor_product_skeleton(settings):
+            item, ctx_meta = _sample_factor_product_item(
+                topic, local, task="factor", max_degree=int(local["max_degree"])
+            )
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return item.prompt_latex, item.prompt_text, answer
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY],
@@ -902,6 +1109,21 @@ def polynomial_factoring_all_techniques(topic: str, settings: dict) -> list[Ques
         local["max_degree"] = min(3, max(2, int(local.get("max_degree", 3))))
 
     def build() -> tuple[str, str, str | None]:
+        if _use_factor_product_skeleton(settings):
+            if use_catalog:
+                item, ctx_meta = _sample_factor_product_item(
+                    tid,
+                    local,
+                    task="factor",
+                    catalog_name="algebra1_factoring",
+                )
+            else:
+                item, ctx_meta = _sample_factor_product_item(
+                    tid, local, task="factor", use_mixer=True, max_degree=int(local["max_degree"])
+                )
+            answer = item.answer_latex if include_answer_key else None
+            last["meta"] = _factor_product_meta(item, ctx_meta, engine="poly_skeleton")
+            return item.prompt_latex, item.prompt_text, answer
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_FACTOR_POLY, PRIM_FACTOR_GCF],
@@ -968,6 +1190,9 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "a2_polynomial_functions_solving_polynomial_equations": quadratic_factoring_equations,
     "polynomial_factoring_special_cases": polynomial_factoring_special_cases,
     "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions": (
+        polynomial_factoring_special_cases
+    ),
+    "a2_polynomial_functions_conjugate_roots_and_factoring": (
         polynomial_factoring_special_cases
     ),
     "polynomial_factoring_sum_diff_cubes": polynomial_factoring_sum_diff_cubes,

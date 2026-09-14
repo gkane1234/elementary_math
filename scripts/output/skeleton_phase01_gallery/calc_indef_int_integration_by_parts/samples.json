@@ -1,0 +1,2485 @@
+{
+  "section": {
+    "slug": "calc_indef_int_integration_by_parts",
+    "title": "Integral \u2014 by parts",
+    "pattern": "",
+    "engine": "integrals",
+    "type_id": "calc_indef_int_integration_by_parts",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "LIATE catalog: D=0 one-step (ln / xe^x / x sin x); mid D scales k; high D tabular + cyclic. OpenStax Vol 2 \u00a73.1."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\int \\ln(x)\\,dx",
+      "answer_latex": "x\\ln(x)-x+C",
+      "skeleton_pattern": "",
+      "form_id": "ln_alone",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "ln_alone"
+        ],
+        [
+          "openstax_form",
+          "ln_alone"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln_alone",
+        "structure_id": "integration_by_parts:ln_alone",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "use_parts"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "ln_alone",
+          "form_id": "ln_alone",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_ln"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 11,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln_alone",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "ln_alone",
+        "openstax_form": "ln_alone",
+        "form_id": "ln_alone",
+        "openstax_case": "\u00a73.1 classic \u222b ln x",
+        "strategy": "parts_ln",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\int x\\cos(x)\\,dx",
+      "answer_latex": "x\\sin(x)+\\cos(x)+C",
+      "skeleton_pattern": "",
+      "form_id": "poly1_cos",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "poly1_cos"
+        ],
+        [
+          "openstax_form",
+          "poly1_cos"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "poly1_cos",
+        "structure_id": "integration_by_parts:poly1_cos",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "use_parts"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "poly1_cos",
+          "form_id": "poly1_cos",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_poly_trig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 18,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "poly1_cos",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "poly1_cos",
+        "openstax_form": "poly1_cos",
+        "form_id": "poly1_cos",
+        "openstax_case": "\u00a73.1 poly \u00d7 cos",
+        "strategy": "parts_poly_trig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int x\\cos(x)\\,dx",
+      "answer_latex": "x\\sin(x)+\\cos(x)+C",
+      "skeleton_pattern": "",
+      "form_id": "poly1_cos",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "poly1_cos"
+        ],
+        [
+          "openstax_form",
+          "poly1_cos"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "poly1_cos",
+        "structure_id": "integration_by_parts:poly1_cos",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "use_parts"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "poly1_cos",
+          "form_id": "poly1_cos",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_poly_trig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 18,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "poly1_cos",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "poly1_cos",
+        "openstax_form": "poly1_cos",
+        "form_id": "poly1_cos",
+        "openstax_case": "\u00a73.1 poly \u00d7 cos",
+        "strategy": "parts_poly_trig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\int \\ln(2x)\\,dx",
+      "answer_latex": "x\\ln(2x)-x+C",
+      "skeleton_pattern": "",
+      "form_id": "ln_alone",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "ln_alone"
+        ],
+        [
+          "openstax_form",
+          "ln_alone"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln_alone",
+        "structure_id": "integration_by_parts:ln_alone",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "ln_alone",
+          "form_id": "ln_alone",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_ln"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 12,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln_alone",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "ln_alone",
+        "openstax_form": "ln_alone",
+        "form_id": "ln_alone",
+        "openstax_case": "\u00a73.1 classic \u222b ln x",
+        "strategy": "parts_ln",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int x\\cos(4x)\\,dx",
+      "answer_latex": "\\frac{1}{4}x\\sin(4x)+\\frac{1}{16}\\cos(4x)+C",
+      "skeleton_pattern": "",
+      "form_id": "poly1_cos",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "poly1_cos"
+        ],
+        [
+          "openstax_form",
+          "poly1_cos"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "poly1_cos",
+        "structure_id": "integration_by_parts:poly1_cos",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "poly1_cos",
+          "form_id": "poly1_cos",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_poly_trig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 43,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "poly1_cos",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "poly1_cos",
+        "openstax_form": "poly1_cos",
+        "form_id": "poly1_cos",
+        "openstax_case": "\u00a73.1 poly \u00d7 cos",
+        "strategy": "parts_poly_trig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\int x\\cos(2x)\\,dx",
+      "answer_latex": "\\frac{1}{2}x\\sin(2x)+\\frac{1}{4}\\cos(2x)+C",
+      "skeleton_pattern": "",
+      "form_id": "poly1_cos",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "poly1_cos"
+        ],
+        [
+          "openstax_form",
+          "poly1_cos"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "poly1_cos",
+        "structure_id": "integration_by_parts:poly1_cos",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "poly1_cos",
+          "form_id": "poly1_cos",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_poly_trig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 42,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "poly1_cos",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "poly1_cos",
+        "openstax_form": "poly1_cos",
+        "form_id": "poly1_cos",
+        "openstax_case": "\u00a73.1 poly \u00d7 cos",
+        "strategy": "parts_poly_trig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int x^{2}e^{3x}\\,dx",
+      "answer_latex": "\\frac{1}{27}e^{3x}(9x^{2}-6x+2)+C",
+      "skeleton_pattern": "",
+      "form_id": "poly2_exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "poly2_exp"
+        ],
+        [
+          "openstax_form",
+          "poly2_exp"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "poly2_exp",
+        "structure_id": "integration_by_parts:poly2_exp",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "exp"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "poly2_exp",
+          "form_id": "poly2_exp",
+          "catalog_id": "integration_by_parts",
+          "strategy": "tabular_parts"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 1,
+          "answer_len": 33,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "poly2_exp",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
+        "wrappers_applied": [],
+        "core_form_id": "poly2_exp",
+        "openstax_form": "poly2_exp",
+        "form_id": "poly2_exp",
+        "openstax_case": "\u00a73.1 repeated / tabular",
+        "strategy": "tabular_parts",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\arctan(x)\\,dx",
+      "answer_latex": "x\\arctan(x)-\\frac{1}{2}\\ln(1+x^{2})+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_alone",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "arctan_alone"
+        ],
+        [
+          "openstax_form",
+          "arctan_alone"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_alone",
+        "structure_id": "integration_by_parts:arctan_alone",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "arctan_alone",
+          "form_id": "arctan_alone",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_invtrig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 1,
+          "answer_len": 37,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_alone",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_alone",
+        "openstax_form": "arctan_alone",
+        "form_id": "arctan_alone",
+        "openstax_case": "\u00a73.1 invtrig \u00d7 1",
+        "strategy": "parts_invtrig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\arctan(x)\\,dx",
+      "answer_latex": "x\\arctan(x)-\\frac{1}{2}\\ln(1+x^{2})+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_alone",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "arctan_alone"
+        ],
+        [
+          "openstax_form",
+          "arctan_alone"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_alone",
+        "structure_id": "integration_by_parts:arctan_alone",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "arctan_alone",
+          "form_id": "arctan_alone",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_invtrig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 1,
+          "answer_len": 37,
+          "nest_depth": 1,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_alone",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_alone",
+        "openstax_form": "arctan_alone",
+        "form_id": "arctan_alone",
+        "openstax_case": "\u00a73.1 invtrig \u00d7 1",
+        "strategy": "parts_invtrig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int x^{2}e^{3x}\\,dx",
+      "answer_latex": "\\frac{1}{27}e^{3x}(9x^{2}-6x+2)+C",
+      "skeleton_pattern": "",
+      "form_id": "poly2_exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "poly2_exp"
+        ],
+        [
+          "openstax_form",
+          "poly2_exp"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "poly2_exp",
+        "structure_id": "integration_by_parts:poly2_exp",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "exp"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "parts_twice",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 2,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "poly2_exp",
+          "form_id": "poly2_exp",
+          "catalog_id": "integration_by_parts",
+          "strategy": "tabular_parts"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 1,
+          "answer_len": 33,
+          "nest_depth": 2,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "poly2_exp",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_parts",
+            "cost": 4.0
+          },
+          {
+            "source": "spec",
+            "feature": "parts_twice",
+            "cost": 4.0
+          }
+        ],
+        "difficulty_cost_total": 22.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "poly2_exp",
+        "openstax_form": "poly2_exp",
+        "form_id": "poly2_exp",
+        "openstax_case": "\u00a73.1 repeated / tabular",
+        "strategy": "tabular_parts",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\arctan(3x)\\,dx",
+      "answer_latex": "x\\arctan(3x)-\\frac{1}{6}\\ln(1+9x^{2})+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_alone",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "arctan_alone"
+        ],
+        [
+          "openstax_form",
+          "arctan_alone"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_alone",
+        "structure_id": "integration_by_parts:arctan_alone",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "parts_twice",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 2,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "arctan_alone",
+          "form_id": "arctan_alone",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_invtrig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 1,
+          "answer_len": 39,
+          "nest_depth": 2,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_alone",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_parts",
+            "cost": 4.0
+          },
+          {
+            "source": "spec",
+            "feature": "parts_twice",
+            "cost": 4.0
+          }
+        ],
+        "difficulty_cost_total": 22.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_alone",
+        "openstax_form": "arctan_alone",
+        "form_id": "arctan_alone",
+        "openstax_case": "\u00a73.1 invtrig \u00d7 1",
+        "strategy": "parts_invtrig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_integration_by_parts",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\arctan(3x)\\,dx",
+      "answer_latex": "x\\arctan(3x)-\\frac{1}{6}\\ln(1+9x^{2})+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_alone",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "arctan_alone"
+        ],
+        [
+          "openstax_form",
+          "arctan_alone"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_alone",
+        "structure_id": "integration_by_parts:arctan_alone",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "parts_twice",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integration_by_parts",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_parts",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "trig"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": false,
+          "allow_parts": true,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": true,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 2,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "arctan_alone",
+          "form_id": "arctan_alone",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_invtrig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 1,
+          "answer_len": 39,
+          "nest_depth": 2,
+          "pack": "integral_parts",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_alone",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_parts",
+            "cost": 4.0
+          },
+          {
+            "source": "spec",
+            "feature": "parts_twice",
+            "cost": 4.0
+          }
+        ],
+        "difficulty_cost_total": 22.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_alone",
+        "openstax_form": "arctan_alone",
+        "form_id": "arctan_alone",
+        "openstax_case": "\u00a73.1 invtrig \u00d7 1",
+        "strategy": "parts_invtrig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_parts": true,
+          "require_parts": true,
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    }
+  ],
+  "failures": []
+}

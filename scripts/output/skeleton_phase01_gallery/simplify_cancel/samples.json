@@ -1,0 +1,1880 @@
+{
+  "section": {
+    "slug": "simplify_cancel",
+    "title": "SimplifyCancel \u2014 single-fraction simplify",
+    "pattern": "SimplifyCancel",
+    "engine": "rational_skeleton",
+    "type_id": "rational_simplification",
+    "aliases": [
+      "a2_rational_expressions_simplifying"
+    ],
+    "blurb": "Single rational with planned cancellation; stamps <code>simplify_cancel</code> form."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=101",
+      "type_id": "rational_simplification",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Simplify: } \\frac{3x + 3}{x + 1}",
+      "answer_latex": "3,\\; x \\neq -1",
+      "skeleton_pattern": "SimplifyCancel",
+      "form_id": "simplify_cancel",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimplifyCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "simplify_cancel"
+        ],
+        [
+          "openstax_form",
+          "simplify_cancel"
+        ],
+        [
+          "k / cancel_factor_count",
+          1
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            -1
+          ]
+        ],
+        [
+          "factor_bias",
+          "monic_bias"
+        ],
+        [
+          "goal_mode",
+          "constant"
+        ],
+        [
+          "n_factors",
+          1
+        ],
+        [
+          "mode",
+          "simplify_rational"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.704,
+          "variable": 1.296
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2960990627735611,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2960990627735611,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.2961 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "rational_skeleton",
+        "level": "L2",
+        "mode": "simplify_rational",
+        "cancel_factor_count": 1,
+        "n_terms": 1,
+        "excluded_values": [
+          -1
+        ],
+        "constructive": {
+          "pattern": "SimplifyCancel",
+          "effective_d": 2.0,
+          "goal_mode": "constant",
+          "cancel_count": 1,
+          "dens_style": "factored",
+          "goal_num": {
+            "0": "3"
+          },
+          "factors": {
+            "n_factors": 1,
+            "degree": 1,
+            "dens_style": "factored",
+            "factor_kind": "linear",
+            "outer_gcf": "1",
+            "factors": [
+              {
+                "a": "1",
+                "b": "1",
+                "root": "-1",
+                "monic": true
+              }
+            ],
+            "poly_factors": [
+              {
+                "0": "1",
+                "1": "1"
+              }
+            ],
+            "effective_d": 2.0,
+            "factor_rrt": false,
+            "constraints": {
+              "allow_nonmonic": false,
+              "leading_max": 1,
+              "const_min": -5,
+              "const_max": 5,
+              "const_type": "int",
+              "max_product_degree": 2,
+              "factor_kind": "linear",
+              "require_gcf": false,
+              "nonmonic_weight": 0.0,
+              "coef_abs_bias": 0.05,
+              "expand_weight": 0.0
+            },
+            "bias_label": "monic_bias"
+          },
+          "cancel_factors": [
+            {
+              "a": "1",
+              "b": "1",
+              "root": "-1",
+              "monic": true
+            }
+          ],
+          "remain_factors": [],
+          "r_num": {
+            "0": "3",
+            "1": "3"
+          },
+          "r_den": {
+            "0": "1",
+            "1": "1"
+          },
+          "prompt_latex": "\\frac{3x + 3}{x + 1}",
+          "answer_latex": "3,\\; x \\neq -1",
+          "skeleton_pattern": "SimplifyCancel",
+          "skeleton_source": "rational_skeleton",
+          "cancel_factor_count": 1,
+          "display_normalize": true,
+          "display_intent": null,
+          "display_preset": "standard_rational",
+          "display_rules": [
+            "absorb_nested_numeric_coeff",
+            "factor_juxtaposition",
+            "omit_coeff_1"
+          ],
+          "factor_bias": "monic_bias",
+          "n_factors": 1,
+          "den_degree": 1,
+          "excluded_values": [
+            -1
+          ],
+          "form_id": "simplify_cancel",
+          "openstax_form": "simplify_cancel",
+          "shape_id": "simplify_cancel"
+        },
+        "skeleton_pattern": "SimplifyCancel",
+        "skeleton_source": "rational_skeleton",
+        "goal_mode": "constant",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "display_rules": [
+          "absorb_nested_numeric_coeff",
+          "factor_juxtaposition",
+          "omit_coeff_1"
+        ],
+        "factor_bias": "monic_bias",
+        "n_factors": 1,
+        "den_degree": 1,
+        "form_id": "simplify_cancel",
+        "openstax_form": "simplify_cancel",
+        "shape_id": "simplify_cancel",
+        "catalog_id": "algebra1_rationals",
+        "construction": "forward_form_catalog",
+        "generator": "rational_simplification",
+        "family": "simplify_rational",
+        "structure_id": "rational_simplification:simplify_rational",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "rational",
+          "cancel"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "generator": "rational_simplification",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "rational",
+            "cancel"
+          ],
+          "degree_max": 0,
+          "n_terms": 1,
+          "n_factors": 1,
+          "nest_depth": 0,
+          "cancel_factor_count": 1,
+          "level": "L2",
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 14,
+          "nest_depth": 0,
+          "n_terms": 1,
+          "n_factors": 1,
+          "degree_max": 0,
+          "methods": [
+            "rational",
+            "cancel"
+          ],
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "cancel_factor_count": 1
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "numerator_degree_min": 1,
+          "numerator_degree_max": 2,
+          "denominator_degree_min": 1,
+          "denominator_degree_max": 2,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "allow_constant_gcf": true,
+          "prefer_difference_of_squares": false,
+          "cancel_factor_count": 1,
+          "difficulty": 2.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Simplify. State any excluded values.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=207",
+      "type_id": "rational_simplification",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Simplify: } \\frac{x^{2} - 3x}{\\left(x + 5\\right)\\left(x - 3\\right)}",
+      "answer_latex": "\\frac{x}{x + 5},\\; x \\neq 3",
+      "skeleton_pattern": "SimplifyCancel",
+      "form_id": "simplify_cancel",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimplifyCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "simplify_cancel"
+        ],
+        [
+          "openstax_form",
+          "simplify_cancel"
+        ],
+        [
+          "k / cancel_factor_count",
+          1
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            3
+          ]
+        ],
+        [
+          "factor_bias",
+          "monic_bias"
+        ],
+        [
+          "goal_mode",
+          "fraction"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "mode",
+          "simplify_rational"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 1.09,
+          "variable": 0.91
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.9095116587062932,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.9095116587062932,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.909512 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "rational_skeleton",
+        "level": "L2",
+        "mode": "simplify_rational",
+        "cancel_factor_count": 1,
+        "n_terms": 1,
+        "excluded_values": [
+          3
+        ],
+        "constructive": {
+          "pattern": "SimplifyCancel",
+          "effective_d": 2.0,
+          "goal_mode": "fraction",
+          "cancel_count": 1,
+          "dens_style": "factored",
+          "goal_num": {
+            "1": "1"
+          },
+          "factors": {
+            "n_factors": 2,
+            "degree": 2,
+            "dens_style": "factored",
+            "factor_kind": "linear",
+            "outer_gcf": "1",
+            "factors": [
+              {
+                "a": "1",
+                "b": "5",
+                "root": "-5",
+                "monic": true
+              },
+              {
+                "a": "1",
+                "b": "-3",
+                "root": "3",
+                "monic": true
+              }
+            ],
+            "poly_factors": [
+              {
+                "0": "5",
+                "1": "1"
+              },
+              {
+                "0": "-3",
+                "1": "1"
+              }
+            ],
+            "effective_d": 2.0,
+            "factor_rrt": false,
+            "constraints": {
+              "allow_nonmonic": false,
+              "leading_max": 1,
+              "const_min": -5,
+              "const_max": 5,
+              "const_type": "int",
+              "max_product_degree": 2,
+              "factor_kind": "linear",
+              "require_gcf": false,
+              "nonmonic_weight": 0.0,
+              "coef_abs_bias": 0.05,
+              "expand_weight": 0.0
+            },
+            "bias_label": "monic_bias"
+          },
+          "cancel_factors": [
+            {
+              "a": "1",
+              "b": "-3",
+              "root": "3",
+              "monic": true
+            }
+          ],
+          "remain_factors": [
+            {
+              "a": "1",
+              "b": "5",
+              "root": "-5",
+              "monic": true
+            }
+          ],
+          "r_num": {
+            "1": "-3",
+            "2": "1"
+          },
+          "r_den": {
+            "0": "-15",
+            "1": "2",
+            "2": "1"
+          },
+          "prompt_latex": "\\frac{x^{2} - 3x}{\\left(x + 5\\right)\\left(x - 3\\right)}",
+          "answer_latex": "\\frac{x}{x + 5},\\; x \\neq 3",
+          "skeleton_pattern": "SimplifyCancel",
+          "skeleton_source": "rational_skeleton",
+          "cancel_factor_count": 1,
+          "display_normalize": true,
+          "display_intent": null,
+          "display_preset": "standard_rational",
+          "display_rules": [
+            "absorb_nested_numeric_coeff",
+            "factor_juxtaposition",
+            "omit_coeff_1"
+          ],
+          "factor_bias": "monic_bias",
+          "n_factors": 2,
+          "den_degree": 2,
+          "excluded_values": [
+            3
+          ],
+          "form_id": "simplify_cancel",
+          "openstax_form": "simplify_cancel",
+          "shape_id": "simplify_cancel"
+        },
+        "skeleton_pattern": "SimplifyCancel",
+        "skeleton_source": "rational_skeleton",
+        "goal_mode": "fraction",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "display_rules": [
+          "absorb_nested_numeric_coeff",
+          "factor_juxtaposition",
+          "omit_coeff_1"
+        ],
+        "factor_bias": "monic_bias",
+        "n_factors": 2,
+        "den_degree": 2,
+        "form_id": "simplify_cancel",
+        "openstax_form": "simplify_cancel",
+        "shape_id": "simplify_cancel",
+        "catalog_id": "algebra1_rationals",
+        "construction": "forward_form_catalog",
+        "generator": "rational_simplification",
+        "family": "simplify_rational",
+        "structure_id": "rational_simplification:simplify_rational",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "rational",
+          "cancel"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "generator": "rational_simplification",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "rational",
+            "cancel"
+          ],
+          "degree_max": 0,
+          "n_terms": 1,
+          "n_factors": 1,
+          "nest_depth": 0,
+          "cancel_factor_count": 1,
+          "level": "L2",
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 27,
+          "nest_depth": 0,
+          "n_terms": 1,
+          "n_factors": 1,
+          "degree_max": 0,
+          "methods": [
+            "rational",
+            "cancel"
+          ],
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "cancel_factor_count": 1
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "numerator_degree_min": 1,
+          "numerator_degree_max": 2,
+          "denominator_degree_min": 1,
+          "denominator_degree_max": 2,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "allow_constant_gcf": true,
+          "prefer_difference_of_squares": false,
+          "cancel_factor_count": 1,
+          "difficulty": 2.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Simplify. State any excluded values.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "rational_simplification",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Simplify: } \\frac{3x + 3}{x + 1}",
+      "answer_latex": "3,\\; x \\neq -1",
+      "skeleton_pattern": "SimplifyCancel",
+      "form_id": "simplify_cancel",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimplifyCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "simplify_cancel"
+        ],
+        [
+          "openstax_form",
+          "simplify_cancel"
+        ],
+        [
+          "k / cancel_factor_count",
+          1
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            -1
+          ]
+        ],
+        [
+          "factor_bias",
+          "monic_bias"
+        ],
+        [
+          "goal_mode",
+          "constant"
+        ],
+        [
+          "n_factors",
+          1
+        ],
+        [
+          "mode",
+          "simplify_rational"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.816,
+          "variable": 5.184
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 5.1843962510942445,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 5.1843962510942445,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=5.1844 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "rational_skeleton",
+        "level": "L2",
+        "mode": "simplify_rational",
+        "cancel_factor_count": 1,
+        "n_terms": 1,
+        "excluded_values": [
+          -1
+        ],
+        "constructive": {
+          "pattern": "SimplifyCancel",
+          "effective_d": 8.0,
+          "goal_mode": "constant",
+          "cancel_count": 1,
+          "dens_style": "factored",
+          "goal_num": {
+            "0": "3"
+          },
+          "factors": {
+            "n_factors": 1,
+            "degree": 1,
+            "dens_style": "factored",
+            "factor_kind": "linear",
+            "outer_gcf": "1",
+            "factors": [
+              {
+                "a": "1",
+                "b": "1",
+                "root": "-1",
+                "monic": true
+              }
+            ],
+            "poly_factors": [
+              {
+                "0": "1",
+                "1": "1"
+              }
+            ],
+            "effective_d": 8.0,
+            "factor_rrt": false,
+            "constraints": {
+              "allow_nonmonic": false,
+              "leading_max": 1,
+              "const_min": -8,
+              "const_max": 8,
+              "const_type": "int",
+              "max_product_degree": 2,
+              "factor_kind": "linear",
+              "require_gcf": false,
+              "nonmonic_weight": 0.0,
+              "coef_abs_bias": 0.4,
+              "expand_weight": 0.0
+            },
+            "bias_label": "monic_bias"
+          },
+          "cancel_factors": [
+            {
+              "a": "1",
+              "b": "1",
+              "root": "-1",
+              "monic": true
+            }
+          ],
+          "remain_factors": [],
+          "r_num": {
+            "0": "3",
+            "1": "3"
+          },
+          "r_den": {
+            "0": "1",
+            "1": "1"
+          },
+          "prompt_latex": "\\frac{3x + 3}{x + 1}",
+          "answer_latex": "3,\\; x \\neq -1",
+          "skeleton_pattern": "SimplifyCancel",
+          "skeleton_source": "rational_skeleton",
+          "cancel_factor_count": 1,
+          "display_normalize": true,
+          "display_intent": null,
+          "display_preset": "standard_rational",
+          "display_rules": [
+            "absorb_nested_numeric_coeff",
+            "factor_juxtaposition",
+            "omit_coeff_1"
+          ],
+          "factor_bias": "monic_bias",
+          "n_factors": 1,
+          "den_degree": 1,
+          "excluded_values": [
+            -1
+          ],
+          "form_id": "simplify_cancel",
+          "openstax_form": "simplify_cancel",
+          "shape_id": "simplify_cancel"
+        },
+        "skeleton_pattern": "SimplifyCancel",
+        "skeleton_source": "rational_skeleton",
+        "goal_mode": "constant",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "display_rules": [
+          "absorb_nested_numeric_coeff",
+          "factor_juxtaposition",
+          "omit_coeff_1"
+        ],
+        "factor_bias": "monic_bias",
+        "n_factors": 1,
+        "den_degree": 1,
+        "form_id": "simplify_cancel",
+        "openstax_form": "simplify_cancel",
+        "shape_id": "simplify_cancel",
+        "catalog_id": "algebra1_rationals",
+        "construction": "forward_form_catalog",
+        "generator": "rational_simplification",
+        "family": "simplify_rational",
+        "structure_id": "rational_simplification:simplify_rational",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "rational",
+          "cancel"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "generator": "rational_simplification",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "rational",
+            "cancel"
+          ],
+          "degree_max": 0,
+          "n_terms": 1,
+          "n_factors": 1,
+          "nest_depth": 0,
+          "cancel_factor_count": 1,
+          "level": "L2",
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 14,
+          "nest_depth": 0,
+          "n_terms": 1,
+          "n_factors": 1,
+          "degree_max": 0,
+          "methods": [
+            "rational",
+            "cancel"
+          ],
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "cancel_factor_count": 1
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -8,
+          "coef_max": 8,
+          "numerator_degree_min": 2,
+          "numerator_degree_max": 3,
+          "denominator_degree_min": 2,
+          "denominator_degree_max": 3,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "allow_constant_gcf": false,
+          "prefer_difference_of_squares": true,
+          "cancel_factor_count": 1,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Simplify. State any excluded values.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "rational_simplification",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Simplify: } \\frac{x^{2} - 6x}{\\left(x + 8\\right)\\left(x - 6\\right)}",
+      "answer_latex": "\\frac{x}{x + 8},\\; x \\neq 6",
+      "skeleton_pattern": "SimplifyCancel",
+      "form_id": "simplify_cancel",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimplifyCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "simplify_cancel"
+        ],
+        [
+          "openstax_form",
+          "simplify_cancel"
+        ],
+        [
+          "k / cancel_factor_count",
+          1
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            6
+          ]
+        ],
+        [
+          "factor_bias",
+          "monic_bias"
+        ],
+        [
+          "goal_mode",
+          "fraction"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "mode",
+          "simplify_rational"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 4.362,
+          "variable": 3.638
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 3.638046634825173,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 3.638046634825173,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=3.63805 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "rational_skeleton",
+        "level": "L2",
+        "mode": "simplify_rational",
+        "cancel_factor_count": 1,
+        "n_terms": 1,
+        "excluded_values": [
+          6
+        ],
+        "constructive": {
+          "pattern": "SimplifyCancel",
+          "effective_d": 8.0,
+          "goal_mode": "fraction",
+          "cancel_count": 1,
+          "dens_style": "factored",
+          "goal_num": {
+            "1": "1"
+          },
+          "factors": {
+            "n_factors": 2,
+            "degree": 2,
+            "dens_style": "factored",
+            "factor_kind": "linear",
+            "outer_gcf": "1",
+            "factors": [
+              {
+                "a": "1",
+                "b": "8",
+                "root": "-8",
+                "monic": true
+              },
+              {
+                "a": "1",
+                "b": "-6",
+                "root": "6",
+                "monic": true
+              }
+            ],
+            "poly_factors": [
+              {
+                "0": "8",
+                "1": "1"
+              },
+              {
+                "0": "-6",
+                "1": "1"
+              }
+            ],
+            "effective_d": 8.0,
+            "factor_rrt": false,
+            "constraints": {
+              "allow_nonmonic": false,
+              "leading_max": 1,
+              "const_min": -8,
+              "const_max": 8,
+              "const_type": "int",
+              "max_product_degree": 2,
+              "factor_kind": "linear",
+              "require_gcf": false,
+              "nonmonic_weight": 0.0,
+              "coef_abs_bias": 0.4,
+              "expand_weight": 0.0
+            },
+            "bias_label": "monic_bias"
+          },
+          "cancel_factors": [
+            {
+              "a": "1",
+              "b": "-6",
+              "root": "6",
+              "monic": true
+            }
+          ],
+          "remain_factors": [
+            {
+              "a": "1",
+              "b": "8",
+              "root": "-8",
+              "monic": true
+            }
+          ],
+          "r_num": {
+            "1": "-6",
+            "2": "1"
+          },
+          "r_den": {
+            "0": "-48",
+            "1": "2",
+            "2": "1"
+          },
+          "prompt_latex": "\\frac{x^{2} - 6x}{\\left(x + 8\\right)\\left(x - 6\\right)}",
+          "answer_latex": "\\frac{x}{x + 8},\\; x \\neq 6",
+          "skeleton_pattern": "SimplifyCancel",
+          "skeleton_source": "rational_skeleton",
+          "cancel_factor_count": 1,
+          "display_normalize": true,
+          "display_intent": null,
+          "display_preset": "standard_rational",
+          "display_rules": [
+            "absorb_nested_numeric_coeff",
+            "factor_juxtaposition",
+            "omit_coeff_1"
+          ],
+          "factor_bias": "monic_bias",
+          "n_factors": 2,
+          "den_degree": 2,
+          "excluded_values": [
+            6
+          ],
+          "form_id": "simplify_cancel",
+          "openstax_form": "simplify_cancel",
+          "shape_id": "simplify_cancel"
+        },
+        "skeleton_pattern": "SimplifyCancel",
+        "skeleton_source": "rational_skeleton",
+        "goal_mode": "fraction",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "display_rules": [
+          "absorb_nested_numeric_coeff",
+          "factor_juxtaposition",
+          "omit_coeff_1"
+        ],
+        "factor_bias": "monic_bias",
+        "n_factors": 2,
+        "den_degree": 2,
+        "form_id": "simplify_cancel",
+        "openstax_form": "simplify_cancel",
+        "shape_id": "simplify_cancel",
+        "catalog_id": "algebra1_rationals",
+        "construction": "forward_form_catalog",
+        "generator": "rational_simplification",
+        "family": "simplify_rational",
+        "structure_id": "rational_simplification:simplify_rational",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "rational",
+          "cancel"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "generator": "rational_simplification",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "rational",
+            "cancel"
+          ],
+          "degree_max": 0,
+          "n_terms": 1,
+          "n_factors": 1,
+          "nest_depth": 0,
+          "cancel_factor_count": 1,
+          "level": "L2",
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 27,
+          "nest_depth": 0,
+          "n_terms": 1,
+          "n_factors": 1,
+          "degree_max": 0,
+          "methods": [
+            "rational",
+            "cancel"
+          ],
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "cancel_factor_count": 1
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -8,
+          "coef_max": 8,
+          "numerator_degree_min": 2,
+          "numerator_degree_max": 3,
+          "denominator_degree_min": 2,
+          "denominator_degree_max": 3,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "allow_constant_gcf": false,
+          "prefer_difference_of_squares": true,
+          "cancel_factor_count": 1,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Simplify. State any excluded values.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "rational_simplification",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Simplify: } \\frac{7\\left(x - 2\\right)\\left(x - 5\\right)}{\\left(x + 4\\right)\\left(2x - 3\\right)\\left(x - 2\\right)\\left(x - 5\\right)}",
+      "answer_latex": "\\frac{7}{\\left(x + 4\\right)\\left(2x - 3\\right)},\\; x \\neq 2, 5",
+      "skeleton_pattern": "SimplifyCancel",
+      "form_id": "simplify_cancel",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimplifyCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "simplify_cancel"
+        ],
+        [
+          "openstax_form",
+          "simplify_cancel"
+        ],
+        [
+          "k / cancel_factor_count",
+          2
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            2,
+            5
+          ]
+        ],
+        [
+          "factor_bias",
+          "insert_cancel_pairs"
+        ],
+        [
+          "goal_mode",
+          "fraction"
+        ],
+        [
+          "n_factors",
+          4
+        ],
+        [
+          "mode",
+          "simplify_rational"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.631,
+          "variable": 10.369
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 10.368792502188489,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 10.368792502188489,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=10.3688 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "rational_skeleton",
+        "level": "L2",
+        "mode": "simplify_rational",
+        "cancel_factor_count": 2,
+        "n_terms": 1,
+        "excluded_values": [
+          2,
+          5
+        ],
+        "constructive": {
+          "pattern": "SimplifyCancel",
+          "effective_d": 16.0,
+          "goal_mode": "fraction",
+          "cancel_count": 2,
+          "dens_style": "factored",
+          "goal_num": {
+            "0": "7"
+          },
+          "factors": {
+            "n_factors": 1,
+            "degree": 1,
+            "dens_style": "factored",
+            "factor_kind": "linear",
+            "outer_gcf": "1",
+            "factors": [
+              {
+                "a": "1",
+                "b": "-3",
+                "root": "3",
+                "monic": true
+              }
+            ],
+            "poly_factors": [
+              {
+                "0": "-3",
+                "1": "1"
+              }
+            ],
+            "effective_d": 16.0,
+            "factor_rrt": false,
+            "constraints": {
+              "allow_nonmonic": true,
+              "leading_max": 3,
+              "const_min": -9,
+              "const_max": 9,
+              "const_type": "int",
+              "max_product_degree": 3,
+              "factor_kind": "linear",
+              "require_gcf": false,
+              "nonmonic_weight": 0.55,
+              "coef_abs_bias": 0.6,
+              "expand_weight": 0.45
+            },
+            "bias_label": "nonmonic"
+          },
+          "cancel_factors": [
+            {
+              "a": "1",
+              "b": "-2",
+              "root": "2",
+              "monic": true
+            },
+            {
+              "a": "1",
+              "b": "-5",
+              "root": "5",
+              "monic": true
+            }
+          ],
+          "remain_factors": [
+            {
+              "a": "1",
+              "b": "4",
+              "root": "-4",
+              "monic": true
+            },
+            {
+              "a": "2",
+              "b": "-3",
+              "root": "3/2",
+              "monic": false
+            }
+          ],
+          "r_num": {
+            "0": "70",
+            "1": "-49",
+            "2": "7"
+          },
+          "r_den": {
+            "0": "-120",
+            "1": "134",
+            "2": "-27",
+            "3": "-9",
+            "4": "2"
+          },
+          "prompt_latex": "\\frac{7\\left(x - 2\\right)\\left(x - 5\\right)}{\\left(x + 4\\right)\\left(2x - 3\\right)\\left(x - 2\\right)\\left(x - 5\\right)}",
+          "answer_latex": "\\frac{7}{\\left(x + 4\\right)\\left(2x - 3\\right)},\\; x \\neq 2, 5",
+          "skeleton_pattern": "SimplifyCancel",
+          "skeleton_source": "rational_skeleton",
+          "cancel_factor_count": 2,
+          "display_normalize": true,
+          "display_intent": null,
+          "display_preset": "standard_rational",
+          "display_rules": [
+            "absorb_nested_numeric_coeff",
+            "factor_juxtaposition",
+            "omit_coeff_1"
+          ],
+          "factor_bias": "insert_cancel_pairs",
+          "n_factors": 4,
+          "insert_cancel_pairs": true,
+          "excluded_values": [
+            2,
+            5
+          ]
+        },
+        "skeleton_pattern": "SimplifyCancel",
+        "skeleton_source": "rational_skeleton",
+        "goal_mode": "fraction",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "display_rules": [
+          "absorb_nested_numeric_coeff",
+          "factor_juxtaposition",
+          "omit_coeff_1"
+        ],
+        "factor_bias": "insert_cancel_pairs",
+        "n_factors": 4,
+        "insert_cancel_pairs": true,
+        "form_id": "simplify_cancel",
+        "openstax_form": "simplify_cancel",
+        "shape_id": "simplify_cancel",
+        "catalog_id": "algebra1_rationals",
+        "construction": "forward_form_catalog",
+        "generator": "rational_simplification",
+        "family": "simplify_rational",
+        "structure_id": "rational_simplification:simplify_rational",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "rational",
+          "cancel"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "generator": "rational_simplification",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "rational",
+            "cancel"
+          ],
+          "degree_max": 0,
+          "n_terms": 1,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "cancel_factor_count": 2,
+          "level": "L2",
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 62,
+          "nest_depth": 0,
+          "n_terms": 1,
+          "n_factors": 2,
+          "degree_max": 0,
+          "methods": [
+            "rational",
+            "cancel"
+          ],
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "cancel_factor_count": 2
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -9,
+          "coef_max": 9,
+          "numerator_degree_min": 3,
+          "numerator_degree_max": 4,
+          "denominator_degree_min": 2,
+          "denominator_degree_max": 4,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "allow_constant_gcf": false,
+          "prefer_difference_of_squares": true,
+          "cancel_factor_count": 2,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Simplify. State any excluded values.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "rational_simplification",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Simplify: } \\frac{2\\left(x - 1\\right)\\left(2x + 1\\right)}{\\left(x - 7\\right)\\left(x - 4\\right)\\left(x - 1\\right)\\left(2x + 1\\right)}",
+      "answer_latex": "\\frac{2}{\\left(x - 7\\right)\\left(x - 4\\right)},\\; x \\neq 1, -\\frac{1}{2}",
+      "skeleton_pattern": "SimplifyCancel",
+      "form_id": "simplify_cancel",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimplifyCancel"
+        ],
+        [
+          "primitive_engine",
+          "rational_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "simplify_cancel"
+        ],
+        [
+          "openstax_form",
+          "simplify_cancel"
+        ],
+        [
+          "k / cancel_factor_count",
+          2
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "excluded_values",
+          [
+            1,
+            "-1/2"
+          ]
+        ],
+        [
+          "factor_bias",
+          "insert_cancel_pairs"
+        ],
+        [
+          "goal_mode",
+          "fraction"
+        ],
+        [
+          "n_factors",
+          4
+        ],
+        [
+          "mode",
+          "simplify_rational"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 8.724,
+          "variable": 7.276
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 7.276093269650346,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 7.276093269650346,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=7.27609 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "rational_skeleton",
+        "level": "L2",
+        "mode": "simplify_rational",
+        "cancel_factor_count": 2,
+        "n_terms": 1,
+        "excluded_values": [
+          1,
+          "-1/2"
+        ],
+        "constructive": {
+          "pattern": "SimplifyCancel",
+          "effective_d": 16.0,
+          "goal_mode": "fraction",
+          "cancel_count": 2,
+          "dens_style": "factored",
+          "goal_num": {
+            "0": "2"
+          },
+          "factors": {
+            "n_factors": 1,
+            "degree": 1,
+            "dens_style": "factored",
+            "factor_kind": "linear",
+            "outer_gcf": "1",
+            "factors": [
+              {
+                "a": "1",
+                "b": "-5",
+                "root": "5",
+                "monic": true
+              }
+            ],
+            "poly_factors": [
+              {
+                "0": "-5",
+                "1": "1"
+              }
+            ],
+            "effective_d": 16.0,
+            "factor_rrt": false,
+            "constraints": {
+              "allow_nonmonic": true,
+              "leading_max": 3,
+              "const_min": -9,
+              "const_max": 9,
+              "const_type": "int",
+              "max_product_degree": 3,
+              "factor_kind": "linear",
+              "require_gcf": false,
+              "nonmonic_weight": 0.55,
+              "coef_abs_bias": 0.6,
+              "expand_weight": 0.45
+            },
+            "bias_label": "nonmonic"
+          },
+          "cancel_factors": [
+            {
+              "a": "1",
+              "b": "-1",
+              "root": "1",
+              "monic": true
+            },
+            {
+              "a": "2",
+              "b": "1",
+              "root": "-1/2",
+              "monic": false
+            }
+          ],
+          "remain_factors": [
+            {
+              "a": "1",
+              "b": "-7",
+              "root": "7",
+              "monic": true
+            },
+            {
+              "a": "1",
+              "b": "-4",
+              "root": "4",
+              "monic": true
+            }
+          ],
+          "r_num": {
+            "0": "-2",
+            "1": "-2",
+            "2": "4"
+          },
+          "r_den": {
+            "0": "-28",
+            "1": "-17",
+            "2": "66",
+            "3": "-23",
+            "4": "2"
+          },
+          "prompt_latex": "\\frac{2\\left(x - 1\\right)\\left(2x + 1\\right)}{\\left(x - 7\\right)\\left(x - 4\\right)\\left(x - 1\\right)\\left(2x + 1\\right)}",
+          "answer_latex": "\\frac{2}{\\left(x - 7\\right)\\left(x - 4\\right)},\\; x \\neq 1, -\\frac{1}{2}",
+          "skeleton_pattern": "SimplifyCancel",
+          "skeleton_source": "rational_skeleton",
+          "cancel_factor_count": 2,
+          "display_normalize": true,
+          "display_intent": null,
+          "display_preset": "standard_rational",
+          "display_rules": [
+            "absorb_nested_numeric_coeff",
+            "factor_juxtaposition",
+            "omit_coeff_1"
+          ],
+          "factor_bias": "insert_cancel_pairs",
+          "n_factors": 4,
+          "insert_cancel_pairs": true,
+          "excluded_values": [
+            1,
+            "-1/2"
+          ]
+        },
+        "skeleton_pattern": "SimplifyCancel",
+        "skeleton_source": "rational_skeleton",
+        "goal_mode": "fraction",
+        "dens_style": "factored",
+        "display_normalize": true,
+        "display_intent": null,
+        "display_preset": "standard_rational",
+        "display_rules": [
+          "absorb_nested_numeric_coeff",
+          "factor_juxtaposition",
+          "omit_coeff_1"
+        ],
+        "factor_bias": "insert_cancel_pairs",
+        "n_factors": 4,
+        "insert_cancel_pairs": true,
+        "form_id": "simplify_cancel",
+        "openstax_form": "simplify_cancel",
+        "shape_id": "simplify_cancel",
+        "catalog_id": "algebra1_rationals",
+        "construction": "forward_form_catalog",
+        "generator": "rational_simplification",
+        "family": "simplify_rational",
+        "structure_id": "rational_simplification:simplify_rational",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "rational",
+          "cancel"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "generator": "rational_simplification",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "rational",
+            "cancel"
+          ],
+          "degree_max": 0,
+          "n_terms": 1,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "cancel_factor_count": 2,
+          "level": "L2",
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 72,
+          "nest_depth": 0,
+          "n_terms": 1,
+          "n_factors": 2,
+          "degree_max": 0,
+          "methods": [
+            "rational",
+            "cancel"
+          ],
+          "pack": "structured_rational_simplify",
+          "family": "simplify_rational",
+          "cancel_factor_count": 2
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -9,
+          "coef_max": 9,
+          "numerator_degree_min": 3,
+          "numerator_degree_max": 4,
+          "denominator_degree_min": 2,
+          "denominator_degree_max": 4,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "allow_constant_gcf": false,
+          "prefer_difference_of_squares": true,
+          "cancel_factor_count": 2,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Simplify. State any excluded values.}"
+      }
+    }
+  ],
+  "failures": []
+}

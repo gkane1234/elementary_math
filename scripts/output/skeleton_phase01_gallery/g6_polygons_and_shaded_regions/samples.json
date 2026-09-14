@@ -1,0 +1,889 @@
+{
+  "section": {
+    "slug": "g6_polygons_and_shaded_regions",
+    "title": "GeometryMeasure \u2014 shaded composite (outer \u2212 inner)",
+    "pattern": "GeometryMeasure",
+    "engine": "geometry_skeleton",
+    "type_id": "g6_polygons_and_shaded_regions",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Shaded region = rectangle minus triangle / frame / L-cut."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "17\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "rect_minus_triangle",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 139 175 L 279 175 L 279 63 L 139 63 Z M 279 63 L 223 63 L 279 147 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"279,63 223,63 279,147\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "rect_minus_triangle"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "rect_minus_triangle"
+        ],
+        [
+          "shape_kind",
+          "rect_minus_triangle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "rect_minus_triangle",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 139 175 L 279 175 L 279 63 L 139 63 Z M 279 63 L 223 63 L 279 147 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"279,63 223,63 279,147\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "rect_minus_triangle",
+        "form_id": "rect_minus_triangle",
+        "area": "17",
+        "generation_settings": {
+          "difficulty_tier": "easy",
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "\\frac{27}{2}\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "rect_minus_triangle",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 55 119 L 195 119 L 195 35 L 55 35 Z M 195 35 L 111 35 L 195 63 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"195,35 111,35 195,63\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "rect_minus_triangle"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "rect_minus_triangle"
+        ],
+        [
+          "shape_kind",
+          "rect_minus_triangle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "rect_minus_triangle",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 55 119 L 195 119 L 195 35 L 55 35 Z M 195 35 L 111 35 L 195 63 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"195,35 111,35 195,63\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "rect_minus_triangle",
+        "form_id": "rect_minus_triangle",
+        "area": "27/2",
+        "generation_settings": {
+          "difficulty_tier": "easy",
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "19\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "rect_minus_triangle",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 139 175 L 279 175 L 279 63 L 139 63 Z M 279 63 L 223 63 L 279 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"279,63 223,63 279,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "rect_minus_triangle"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "rect_minus_triangle"
+        ],
+        [
+          "shape_kind",
+          "rect_minus_triangle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "rect_minus_triangle",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 139 175 L 279 175 L 279 63 L 139 63 Z M 279 63 L 223 63 L 279 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"279,63 223,63 279,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "rect_minus_triangle",
+        "form_id": "rect_minus_triangle",
+        "area": "19",
+        "generation_settings": {
+          "difficulty_tier": "easy",
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "\\frac{21}{2}\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "rect_minus_triangle",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 139 175 L 223 175 L 223 63 L 139 63 Z M 223 63 L 195 63 L 223 147 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"223,63 195,63 223,147\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "rect_minus_triangle"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "rect_minus_triangle"
+        ],
+        [
+          "shape_kind",
+          "rect_minus_triangle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "rect_minus_triangle",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 139 175 L 223 175 L 223 63 L 139 63 Z M 223 63 L 195 63 L 223 147 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"223,63 195,63 223,147\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "rect_minus_triangle",
+        "form_id": "rect_minus_triangle",
+        "area": "21/2",
+        "generation_settings": {
+          "difficulty_tier": "medium",
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "\\frac{27}{2}\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "rect_minus_triangle",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 223 175 L 223 91 L 83 91 Z M 223 91 L 139 91 L 223 119 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"223,91 139,91 223,119\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "rect_minus_triangle"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "rect_minus_triangle"
+        ],
+        [
+          "shape_kind",
+          "rect_minus_triangle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "rect_minus_triangle",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 223 175 L 223 91 L 83 91 Z M 223 91 L 139 91 L 223 119 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"223,91 139,91 223,119\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "rect_minus_triangle",
+        "form_id": "rect_minus_triangle",
+        "area": "27/2",
+        "generation_settings": {
+          "difficulty_tier": "medium",
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "\\frac{23}{2}\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "rect_minus_triangle",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 139 175 L 223 175 L 223 63 L 139 63 Z M 223 63 L 195 63 L 223 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"223,63 195,63 223,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "rect_minus_triangle"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "rect_minus_triangle"
+        ],
+        [
+          "shape_kind",
+          "rect_minus_triangle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "rect_minus_triangle",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 139 175 L 223 175 L 223 63 L 139 63 Z M 223 63 L 195 63 L 223 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"223,63 195,63 223,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "rect_minus_triangle",
+        "form_id": "rect_minus_triangle",
+        "area": "23/2",
+        "generation_settings": {
+          "difficulty_tier": "medium",
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "16\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "frame",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 251 175 L 251 63 L 83 63 Z M 111 147 L 223 147 L 223 91 L 111 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"111,147 223,147 223,91 111,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "frame"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "frame"
+        ],
+        [
+          "shape_kind",
+          "frame"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "frame",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 251 175 L 251 63 L 83 63 Z M 111 147 L 223 147 L 223 91 L 111 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"111,147 223,147 223,91 111,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "frame",
+        "form_id": "frame",
+        "area": "16",
+        "generation_settings": {
+          "difficulty_tier": "hard",
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "14\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "frame",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 55 119 L 223 119 L 223 35 L 55 35 Z M 83 91 L 195 91 L 195 63 L 83 63 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"83,91 195,91 195,63 83,63\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "frame"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "frame"
+        ],
+        [
+          "shape_kind",
+          "frame"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "frame",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 55 119 L 223 119 L 223 35 L 55 35 Z M 83 91 L 195 91 L 195 63 L 83 63 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"83,91 195,91 195,63 83,63\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "frame",
+        "form_id": "frame",
+        "area": "14",
+        "generation_settings": {
+          "difficulty_tier": "hard",
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "16\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "frame",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 251 175 L 251 63 L 83 63 Z M 111 147 L 223 147 L 223 91 L 111 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"111,147 223,147 223,91 111,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "frame"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "frame"
+        ],
+        [
+          "shape_kind",
+          "frame"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "frame",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 251 175 L 251 63 L 83 63 Z M 111 147 L 223 147 L 223 91 L 111 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"111,147 223,147 223,91 111,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "frame",
+        "form_id": "frame",
+        "area": "16",
+        "generation_settings": {
+          "difficulty_tier": "hard",
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "16\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "frame",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 251 175 L 251 63 L 83 63 Z M 111 147 L 223 147 L 223 91 L 111 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"111,147 223,147 223,91 111,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "frame"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "frame"
+        ],
+        [
+          "shape_kind",
+          "frame"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "frame",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 251 175 L 251 63 L 83 63 Z M 111 147 L 223 147 L 223 91 L 111 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"111,147 223,147 223,91 111,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "frame",
+        "form_id": "frame",
+        "area": "16",
+        "generation_settings": {
+          "difficulty_tier": "hard",
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "14\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "frame",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 55 119 L 223 119 L 223 35 L 55 35 Z M 83 91 L 195 91 L 195 63 L 83 63 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"83,91 195,91 195,63 83,63\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "frame"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "frame"
+        ],
+        [
+          "shape_kind",
+          "frame"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "frame",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 55 119 L 223 119 L 223 35 L 55 35 Z M 83 91 L 195 91 L 195 63 L 83 63 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"83,91 195,91 195,63 83,63\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "frame",
+        "form_id": "frame",
+        "area": "14",
+        "generation_settings": {
+          "difficulty_tier": "hard",
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "g6_polygons_and_shaded_regions",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the area of the shaded region on the grid.}",
+      "answer_latex": "16\\text{ square units}",
+      "skeleton_pattern": "GeometryMeasure",
+      "form_id": "frame",
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 251 175 L 251 63 L 83 63 Z M 111 147 L 223 147 L 223 91 L 111 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"111,147 223,147 223,91 111,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeometryMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "frame"
+        ],
+        [
+          "mode",
+          "shaded_composite"
+        ],
+        [
+          "construction",
+          "frame"
+        ],
+        [
+          "shape_kind",
+          "frame"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "GeometryMeasure",
+        "primitive_engine": "geometry_skeleton",
+        "mode": "shaded_composite",
+        "construction": "frame",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><line x1=\"55\" y1=\"35\" x2=\"55\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"83\" y1=\"35\" x2=\"83\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"111\" y1=\"35\" x2=\"111\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"139\" y1=\"35\" x2=\"139\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"167\" y1=\"35\" x2=\"167\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"195\" y1=\"35\" x2=\"195\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"223\" y1=\"35\" x2=\"223\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"251\" y1=\"35\" x2=\"251\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"279\" y1=\"35\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"147\" x2=\"279\" y2=\"147\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"119\" x2=\"279\" y2=\"119\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"91\" x2=\"279\" y2=\"91\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"63\" x2=\"279\" y2=\"63\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"35\" x2=\"279\" y2=\"35\" stroke=\"#d1d5db\"/><line x1=\"55\" y1=\"175\" x2=\"279\" y2=\"175\" stroke=\"#374151\"/><line x1=\"55\" y1=\"175\" x2=\"55\" y2=\"35\" stroke=\"#374151\"/><path d=\"M 83 175 L 251 175 L 251 63 L 83 63 Z M 111 147 L 223 147 L 223 91 L 111 91 Z\" fill=\"#93c5fd\" fill-rule=\"evenodd\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><polygon points=\"111,147 223,147 223,91 111,91\" fill=\"#fff\" fill-opacity=\"0.95\" stroke=\"#1e3a8a\" stroke-width=\"1.5\"/></svg>",
+        "shape_kind": "frame",
+        "form_id": "frame",
+        "area": "16",
+        "generation_settings": {
+          "difficulty_tier": "hard",
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    }
+  ],
+  "failures": []
+}

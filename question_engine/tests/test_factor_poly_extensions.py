@@ -98,7 +98,7 @@ def test_quadratic_form_generator_not_alias_to_quadratic():
         assert q.prompt_latex
         assert q.answer_latex
         meta = q.metadata or {}
-        assert meta.get("primitive_engine") == "polynomial_factoring_quadratic_form"
+        assert meta.get("primitive_engine") == "poly_skeleton"
         assert meta.get("degree") == 4
         assert "^{4}" in (q.prompt_latex or "") or "^4" in (q.prompt_latex or "")
 

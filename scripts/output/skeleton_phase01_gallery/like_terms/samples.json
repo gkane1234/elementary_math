@@ -1,0 +1,1637 @@
+{
+  "section": {
+    "slug": "like_terms",
+    "title": "AffineInflate \u2014 like terms",
+    "pattern": "AffineInflate",
+    "engine": "affine_skeleton",
+    "type_id": "g6_combining_like_terms",
+    "aliases": [
+      "combining_like_terms"
+    ],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "D=0 is $3x+2x$. Term counts follow the old like-terms sampler: extra likes/constants at D=8 (~4\u20135), then up to 8 at D=16, ~10 with a second variable at D=22. Opt out with <code>use_sample_like_terms=True</code>."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "x + 2x",
+      "answer_latex": "3x",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "like_terms": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "force",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=only_x"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 0.0,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:2",
+          "terms:2"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "n_likes": 2,
+        "n_const": 0,
+        "n_terms": 2,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "x + 2x",
+      "answer_latex": "3x",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "like_terms": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "force",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=only_x"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:2",
+          "terms:2"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "n_likes": 2,
+        "n_const": 0,
+        "n_terms": 2,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "x + 2x",
+      "answer_latex": "3x",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "like_terms": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "force",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=only_x"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:2",
+          "terms:2"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "n_likes": 2,
+        "n_const": 0,
+        "n_terms": 2,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "5x + 4 - 2 - 4x - 8x",
+      "answer_latex": "-7x + 2",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "like_terms": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:3",
+          "terms:5"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "n_likes": 3,
+        "n_const": 2,
+        "n_terms": 5,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "-4 + 8y - 3y - y + 3",
+      "answer_latex": "4y - 1",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "like_terms": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "y",
+            "latex": "y",
+            "d": 0.44792848098459526,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:3",
+          "terms:5"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "n_likes": 3,
+        "n_const": 2,
+        "n_terms": 5,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "3y - 2 + 7y + 7y + 1",
+      "answer_latex": "17y - 1",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.702,
+          "variable": 2.514,
+          "like_terms": 2.784
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "y",
+            "latex": "y",
+            "d": 2.51367228303639,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 2.51367228303639,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:3",
+          "terms:5"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "n_likes": 3,
+        "n_const": 2,
+        "n_terms": 5,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "8x - 3 + 5x + 4 - 8x - 3 - 4x - 4x",
+      "answer_latex": "-3x - 2",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "like_terms": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:5",
+          "terms:8"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "n_likes": 5,
+        "n_const": 3,
+        "n_terms": 8,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "6y - 5 - y - 8y - 1 + 8y + 4 - 3y",
+      "answer_latex": "2y - 2",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "like_terms": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "y",
+            "latex": "y",
+            "d": 0.8958569619691905,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:5",
+          "terms:8"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "n_likes": 5,
+        "n_const": 3,
+        "n_terms": 8,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "7y + 6 + 5 + 2y - 6 + 7y + 3y - 3y",
+      "answer_latex": "16y + 5",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.404,
+          "variable": 5.027,
+          "like_terms": 5.568
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "y",
+            "latex": "y",
+            "d": 5.02734456607278,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 5.02734456607278,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:5",
+          "terms:8"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "n_likes": 5,
+        "n_const": 3,
+        "n_terms": 8,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "15x - 6 + 10x + 7 - 15x - 6 - 7x - 7x",
+      "answer_latex": "-4x - 5",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 1.802,
+          "variable": 1.752,
+          "like_terms": 18.446
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.7521969627363239,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 1.7521969627363239,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:5",
+          "terms:8"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "n_likes": 5,
+        "n_const": 3,
+        "n_terms": 8,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "-4x + 7 - 2y + 11y - 6 + 9x + 16y - 15y + 3 - 5y",
+      "answer_latex": "5y + 5x + 4",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 0.532,
+          "variable": 1.232,
+          "like_terms": 20.236
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "y",
+            "latex": "y",
+            "d": 1.231803322707637,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 1.231803322707637,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.231803322707637,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 1.231803322707637,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:5",
+          "terms:10"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "n_likes": 5,
+        "n_const": 3,
+        "n_terms": 10,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "g6_combining_like_terms",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "13y - 5y + 5y + 4 + 10x - 7 - 13x + 6 + 3y + 13y",
+      "answer_latex": "29y - 3x + 3",
+      "skeleton_pattern": "AffineInflate",
+      "form_id": "like_terms_split",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AffineInflate"
+        ],
+        [
+          "primitive_engine",
+          "affine_skeleton"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "like_terms_split"
+        ],
+        [
+          "species",
+          "like_terms"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "mode",
+          "like_terms"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 7.431,
+          "variable": 6.913,
+          "like_terms": 7.657
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "y",
+            "latex": "y",
+            "d": 6.912598778350072,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 6.912598778350072,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 6.912598778350072,
+            "lane": "xyz",
+            "lane_selection": {
+              "profile": "xyz",
+              "source": "force",
+              "effective_d": 6.912598778350072,
+              "eligible": [
+                "xyz"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": false,
+                "max_variable_lane": null
+              },
+              "note": "forced lane=xyz"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "affine_skeleton",
+        "upgrades": [
+          "like_terms",
+          "likes:5",
+          "terms:10"
+        ],
+        "skeleton_pattern": "AffineInflate",
+        "skeleton_source": "affine_skeleton",
+        "mode": "like_terms",
+        "species": "like_terms",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "n_likes": 5,
+        "n_const": 3,
+        "n_terms": 10,
+        "form_id": "like_terms_split",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    }
+  ],
+  "failures": []
+}

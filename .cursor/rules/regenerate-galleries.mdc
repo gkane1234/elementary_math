@@ -1,0 +1,31 @@
+---
+description: Regenerate HTML example catalogs after question-generation changes (pairs with verify-changes)
+alwaysApply: true
+---
+
+# Regenerate example galleries
+
+After any change to question **generation** — skeletons, samplers, primitive generators, prompt display/print, form→pattern maps, default leaf wiring — regenerate the relevant HTML example catalog **before declaring done**.
+
+1. Identify which question family changed.
+2. Run the existing gallery for that family. Generate live via `_generate_for_type`, worksheet generators, or the gallery's `gen_examples.py` — **never invent LaTeX**.
+3. Prefer updating/running the catalog that already covers those types rather than creating a new folder each time.
+4. If no gallery exists for a new family, add one under `scripts/output/<family>_gallery/` in the same style as the catalogs below.
+
+## Gallery pattern
+
+- KaTeX cards with prompt + answer — see **`gallery-html-katex.mdc`** for asset paths, delimiters, and pre-done checklist (`scripts/output/GALLERY_KATEX.md` for copy-paste snippets). Phase-01 section pages also pull `notes/<slug>.md` / `notes/<type_id>.md` (red header if `UNCLEAR` / `LOW_VARIETY` / `LIMITATIONS` / `NOT_IMPLEMENTED`) — see `topic-notes-process.mdc`.
+- Several examples per type spanning difficulty bands
+- Debug panels: D, seed, pattern, exclusions, form_id (as applicable)
+- Output: `gallery.html`, `samples.json` (or `.jsonl`), optional `index.html`
+
+## Known catalogs
+
+- **Rational ± cancel:** `scripts/output/addsub_cancel_gallery/` — `python scripts/output/addsub_cancel_gallery/gen_examples.py`
+- **Derivative skeletons:** `scripts/output/diff_skeleton_gallery/` — `python scripts/output/diff_skeleton_gallery/gen_examples.py`
+- **Phase 0–2 poly skeletons:** `scripts/output/skeleton_phase01_gallery/` — `python scripts/output/skeleton_phase01_gallery/gen_examples.py` (or `--only <slug>`, `--type-id <id>`, `--ensure-stubs`). Section pages include notes when present; stubs work for catalog types not in `SECTIONS`.
+- **Per-type topic galleries:** `scripts/output/topic_fit/` — `python scripts/build_algebraic_topic_galleries.py` when leaf wiring or type-level generation changes
+
+## Verification
+
+This pairs with `verify-changes.mdc`; it is not a substitute for unit tests. Briefly report which gallery you regenerated and that it completed without errors.

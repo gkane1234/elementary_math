@@ -160,13 +160,13 @@ _TOPIC_DEFAULTS: dict[str, dict[str, bool]] = {
         "allow_rational": True,
         "allow_removable": True,
         "allow_rationalize": False,
-        "allow_trig": False,
+        "allow_trig": True,
         "allow_exp": False,
         "allow_log": False,
         "allow_roots": False,
         "allow_invtrig": False,
         "allow_piecewise": True,
-        "allow_essential": False,
+        "allow_essential": True,
         "allow_indet": False,
         "allow_one_sided": True,
         "apply_lhopital": False,
@@ -693,33 +693,36 @@ def _sample_removable_factor(
         prompt = rf"\lim_{{{var} \to {a}}} \frac{{{var}^{{2}}-{a * a}}}{{{var}-{a}}}"
         answer = str(2 * a)
         variant = "diff_sq"
+        wraps: list[str] = []
     elif kind == "linear_factor":
-        # (x-a)(x+b)/(x-a) = x+b
-        prompt = (
-            rf"\lim_{{{var} \to {a}}} "
-            rf"\frac{{({var}-{a})({var}+{b})}}{{{var}-{a}}}"
-        )
-        answer = str(a + b)
-        variant = "linear_factor"
-    else:
-        # (x^2+(c-a)x - a c)/(x-a) = x+c with c≠0
-        c = _coef(rng, max(2, spec.coef_abs_max))
-        # expand (x-a)(x+c) = x^2+(c-a)x - a c
-        mid = c - a
-        const = -a * c
-        # Avoid printing a bare 0x term when mid==0
+        # Expanded (x−a)(x+b) — never leave identical cancel factors visible.
+        mid = b - a
+        const = -a * b
         if mid == 0:
             body = f"{var}^{{2}}" + (f"+{const}" if const > 0 else str(const))
         else:
             mid_s = f"+{mid}" if mid > 0 else str(mid)
             const_s = f"+{const}" if const > 0 else str(const)
             body = f"{var}^{{2}}{mid_s}{var}{const_s}"
-        prompt = (
-            rf"\lim_{{{var} \to {a}}} "
-            rf"\frac{{{body}}}{{{var}-{a}}}"
-        )
+        prompt = rf"\lim_{{{var} \to {a}}} \frac{{{body}}}{{{var}-{a}}}"
+        answer = str(a + b)
+        variant = "linear_factor"
+        wraps = ["removable_expand"]
+    else:
+        # Expanded (x−a)(x+c)/(x−a) = x+c
+        c = _coef(rng, max(2, spec.coef_abs_max))
+        mid = c - a
+        const = -a * c
+        if mid == 0:
+            body = f"{var}^{{2}}" + (f"+{const}" if const > 0 else str(const))
+        else:
+            mid_s = f"+{mid}" if mid > 0 else str(mid)
+            const_s = f"+{const}" if const > 0 else str(const)
+            body = f"{var}^{{2}}{mid_s}{var}{const_s}"
+        prompt = rf"\lim_{{{var} \to {a}}} \frac{{{body}}}{{{var}-{a}}}"
         answer = str(a + c)
         variant = "quad_shared"
+        wraps = ["removable_expand"] if float(spec.d_spend) >= 8 else []
     form, tech = "removable_factor", "factor_cancel"
     effort = _effort(
         form=form, technique=tech, degree=2, coef_hi=spec.coef_abs_max,
@@ -732,6 +735,8 @@ def _sample_removable_factor(
         "variant": variant,
         "form_id": force_form_id or f"removable_{variant}",
         "openstax_form": force_form_id or f"removable_{variant}",
+        "core_form_id": force_form_id or f"removable_{variant}",
+        "wrappers_applied": wraps,
     }
 
 
@@ -757,6 +762,11 @@ def _sample_removable_rationalize(
         "function_classes": ["algebraic", "roots"],
         "effort_features": effort,
         "approach_value": a,
+        "variant": "rationalize",
+        "form_id": "removable_rationalize",
+        "openstax_form": "removable_rationalize",
+        "core_form_id": "removable_rationalize",
+        "wrappers_applied": [],
     }
 
 
@@ -785,13 +795,15 @@ def _sample_infinity(
         "inf_rational": ["rational"],
         "inf_sin_over_x": ["sin_over_x", "bounded_over_poly"],
         "inf_arctan": ["arctan_inf"],
-        "inf_exp_ratio": ["exp_ratio", "exp_over_poly"],
+        # Catalog text is (a+be^x)/(c+de^x) — not e^x/x^k (that is a separate family).
+        "inf_exp_ratio": ["exp_ratio"],
         "inf_ln_over_poly": ["ln_over_poly"],
     }
     if force_form_id and force_form_id in force_map:
         cand = [f for f in force_map[force_form_id] if f in families] or force_map[force_form_id]
         fam = rng.choice(cand)
     else:
+        # Prefer rotating distinct OpenStax §4.6 families at mid/high D.
         fam = rng.choice(families)
 
     if fam == "sin_over_x":
@@ -873,45 +885,113 @@ def _sample_infinity(
     }
 
 
+def _piece_latex_and_value(
+    rng: random.Random,
+    *,
+    var: str,
+    a: int,
+    kind: str,
+    coef_hi: int,
+) -> tuple[str, int, str]:
+    """Return (piece_latex, value_at_a, structural_tag)."""
+    hi = max(2, coef_hi)
+    if kind == "const":
+        val = _coef(rng, hi, exclude_zero=False)
+        return str(val), val, "jump_side_const"
+    if kind == "linear":
+        m = _coef(rng, hi)
+        b = _coef(rng, hi, exclude_zero=False)
+        body = format_linear_latex(m, b, variable=var)
+        return body, m * a + b, "jump_side_linear"
+    if kind == "quad":
+        # OpenStax-style: ±x² + c  (or ax²+bx+c with small a)
+        lead = rng.choice([-1, 1, -2, 2])
+        mid = _coef(rng, max(1, hi // 2), exclude_zero=False)
+        const = _coef(rng, hi, exclude_zero=False)
+        terms = [(lead, 2), (mid, 1), (const, 0)] if mid != 0 else [(lead, 2), (const, 0)]
+        body = _format_poly([(c, p) for c, p in terms if c != 0], var)
+        val = lead * (a**2) + mid * a + const
+        return body, val, "jump_side_quad"
+    # cubic fallback for high D
+    lead = rng.choice([-1, 1])
+    const = _coef(rng, hi, exclude_zero=False)
+    body = _format_poly([(lead, 3), (const, 0)], var)
+    return body, lead * (a**3) + const, "jump_side_cubic"
+
+
 def _sample_jump(
-    rng: random.Random, spec: LimitSpec
+    rng: random.Random,
+    spec: LimitSpec,
+    *,
+    force_form_id: str | None = None,
 ) -> tuple[str, str, str, str, dict[str, Any]]:
+    """Piecewise jump — const at D=0; linear/poly sides at mid/high D (OpenStax §2.4)."""
     var = spec.variable
     a = rng.randint(-spec.approach_abs_max, spec.approach_abs_max)
-    left_val = _coef(rng, spec.coef_abs_max, exclude_zero=False)
-    right_val = left_val + _coef(rng, max(2, spec.coef_abs_max))
-    # Piecewise constant sides: lim x→a- = L, lim x→a+ = R; two-sided DNE if L≠R
-    one_sided = spec.allow_one_sided and rng.random() < 0.55
+    d = float(spec.d_spend)
+    fid = force_form_id or ""
+
+    if fid == "piecewise_jump_poly" or (not fid and d >= 10):
+        left_kind = rng.choice(["quad", "linear", "quad"])
+        right_kind = rng.choice(["linear", "const", "quad"])
+        form_id = "piecewise_jump_poly"
+    elif fid == "piecewise_jump_linear" or (not fid and d >= 4):
+        left_kind = rng.choice(["linear", "const"])
+        right_kind = "linear" if left_kind == "const" else rng.choice(["linear", "const"])
+        if left_kind == "const" and right_kind == "const":
+            right_kind = "linear"
+        form_id = "piecewise_jump_linear"
+    else:
+        left_kind = right_kind = "const"
+        form_id = "piecewise_jump"
+
+    # Ensure one-sided values disagree for two-sided DNE (skill of the leaf).
+    left_tex, left_val, left_tag = _piece_latex_and_value(
+        rng, var=var, a=a, kind=left_kind, coef_hi=spec.coef_abs_max
+    )
+    for _ in range(24):
+        right_tex, right_val, right_tag = _piece_latex_and_value(
+            rng, var=var, a=a, kind=right_kind, coef_hi=spec.coef_abs_max
+        )
+        if right_val != left_val:
+            break
+    else:
+        # Force unequal constants on the right face
+        right_kind = "const"
+        right_val = left_val + (1 if left_val >= 0 else -1)
+        right_tex = str(right_val)
+        right_tag = "jump_side_const"
+
+    wraps: list[str] = []
+    if left_kind != "const":
+        wraps.append(left_tag)
+    if right_kind != "const":
+        wraps.append(right_tag)
+
+    cases = (
+        rf"f({var})=\begin{{cases}}{left_tex}&{var}<{a}\\"
+        rf"{right_tex}&{var}\ge {a}\end{{cases}}"
+    )
+    one_sided = spec.allow_one_sided and d >= 4 and rng.random() < (0.45 if d < 12 else 0.55)
     if one_sided:
         side = rng.choice(["left", "right"])
         if side == "left":
-            prompt = (
-                rf"\lim_{{{var} \to {a}^{{-}}}} f({var})\text{{ where }}"
-                rf"f({var})=\begin{{cases}}{left_val}&{var}<{a}\\"
-                rf"{right_val}&{var}\ge {a}\end{{cases}}"
-            )
+            prompt = rf"\lim_{{{var} \to {a}^{{-}}}} f({var})\text{{ where }}{cases}"
             answer = str(left_val)
             approach_mode = "left"
         else:
-            prompt = (
-                rf"\lim_{{{var} \to {a}^{{+}}}} f({var})\text{{ where }}"
-                rf"f({var})=\begin{{cases}}{left_val}&{var}<{a}\\"
-                rf"{right_val}&{var}\ge {a}\end{{cases}}"
-            )
+            prompt = rf"\lim_{{{var} \to {a}^{{+}}}} f({var})\text{{ where }}{cases}"
             answer = str(right_val)
             approach_mode = "right"
     else:
-        prompt = (
-            rf"\lim_{{{var} \to {a}}} f({var})\text{{ where }}"
-            rf"f({var})=\begin{{cases}}{left_val}&{var}<{a}\\"
-            rf"{right_val}&{var}\ge {a}\end{{cases}}"
-        )
+        prompt = rf"\lim_{{{var} \to {a}}} f({var})\text{{ where }}{cases}"
         answer = r"\text{DNE}" if left_val != right_val else str(left_val)
         approach_mode = "two_sided"
+
     form, tech = "piecewise_jump", "one_sided" if one_sided else "two_sided_compare"
     effort = _effort(
-        form=form, technique=tech, degree=0, coef_hi=spec.coef_abs_max,
-        n_terms=2, answer=answer, pack=spec.pack,
+        form=form, technique=tech, degree=2 if "quad" in (left_kind, right_kind) else 1,
+        coef_hi=spec.coef_abs_max, n_terms=2, answer=answer, pack=spec.pack,
     )
     return prompt, answer, form, tech, {
         "function_classes": ["algebraic", "piecewise"],
@@ -920,6 +1000,13 @@ def _sample_jump(
         "approach_mode": approach_mode,
         "left_value": left_val,
         "right_value": right_val,
+        "left_kind": left_kind,
+        "right_kind": right_kind,
+        "n_pieces": 2,
+        "wrappers_applied": wraps,
+        "form_id": form_id,
+        "openstax_form": form_id,
+        "core_form_id": form_id,
     }
 
 
@@ -929,58 +1016,146 @@ def _sample_essential(
     *,
     force_form_id: str | None = None,
 ) -> tuple[str, str, str, str, dict[str, Any]]:
+    """Essential / infinite / oscillating limits (OpenStax §2.2–2.4) with Spec dress."""
+    from question_engine.frameworks.primitives.complexity_wrap import (
+        CoreExpr,
+        complexity_wrap,
+        render_core_expr,
+        wrap_meta,
+    )
+
     var = spec.variable
-    a = 0
-    if force_form_id == "essential_sin_1_over_x":
-        kind = "oscillate"
-    elif force_form_id == "essential_1_over_x":
-        kind = "reciprocal"
-    else:
-        kind = rng.choice(["reciprocal", "oscillate"]) if spec.allow_trig else "reciprocal"
-    if kind == "reciprocal":
-        prompt = rf"\lim_{{{var} \to {a}}} \frac{{1}}{{{var}}}"
-        answer = r"\text{DNE}"
-        classes = ["algebraic"]
-        variant = "1/x"
-        fid = "essential_1_over_x"
-    else:
-        prompt = rf"\lim_{{{var} \to {a}}} \sin\left(\frac{{1}}{{{var}}}\right)"
+    d = float(spec.d_spend)
+    fid = force_form_id or ""
+
+    # Resolve catalog form → core kind
+    if fid == "essential_cos_1_over_x" or (
+        not fid and spec.allow_trig and d >= 6 and rng.random() < 0.25
+    ):
+        core_fid = "essential_cos_1_over_x"
+        core = CoreExpr(kind="trig_osc", var=var, coef=1, center=0, approach=0, trig="cos")
         answer = r"\text{DNE}"
         classes = ["trig"]
-        variant = "sin_1_over_x"
-        fid = "essential_sin_1_over_x"
+        allowed = ("sign", "constant_multiple", "horizontal_shift")
+    elif fid == "essential_sin_1_over_x" or (
+        not fid and spec.allow_trig and d >= 6 and rng.random() < 0.35
+    ):
+        core_fid = "essential_sin_1_over_x"
+        core = CoreExpr(kind="trig_osc", var=var, coef=1, center=0, approach=0, trig="sin")
+        answer = r"\text{DNE}"
+        classes = ["trig"]
+        allowed = ("sign", "constant_multiple", "horizontal_shift")
+    elif fid == "essential_tan_asymptote" or (not fid and spec.allow_trig and d >= 8 and rng.random() < 0.2):
+        core_fid = "essential_tan_asymptote"
+        core = CoreExpr(kind="trig_plain", var=var, coef=1, trig="tan", approach=r"\frac{\pi}{2}")
+        answer = r"\text{DNE}"
+        classes = ["trig"]
+        allowed = ("sign", "constant_multiple")  # no horizontal_shift
+    elif fid == "essential_1_over_x_sq" or (not fid and d >= 3 and rng.random() < 0.35):
+        core_fid = "essential_1_over_x_sq"
+        core = CoreExpr(kind="rational_pow", var=var, coef=1, power=2, center=0, approach=0)
+        answer = r"\infty"
+        classes = ["algebraic"]
+        allowed = ("sign", "constant_multiple", "horizontal_shift", "cancel_factor", "unfactored_form")
+    elif fid == "essential_rational_va" or (not fid and d >= 4 and rng.random() < 0.3):
+        core_fid = "essential_rational_va"
+        center = rng.randint(1, max(1, spec.approach_abs_max))
+        power = rng.choice([1, 2, 3, 4]) if d >= 8 else rng.choice([1, 2, 3])
+        core = CoreExpr(
+            kind="rational_pow", var=var, coef=1, power=power, center=center, approach=center
+        )
+        answer = r"\text{DNE}" if power % 2 == 1 else r"\infty"
+        classes = ["algebraic"]
+        allowed = ("sign", "constant_multiple", "cancel_factor", "unfactored_form")
+    else:
+        core_fid = "essential_1_over_x"
+        core = CoreExpr(kind="rational_pow", var=var, coef=1, power=1, center=0, approach=0)
+        answer = r"\text{DNE}"
+        classes = ["algebraic"]
+        allowed = ("sign", "constant_multiple", "horizontal_shift", "cancel_factor", "unfactored_form")
+
+    catalog_form = {"form_id": core_fid, "d_min": 0, "d_max": 20}
+    core = complexity_wrap(
+        core,
+        d,
+        rng,
+        allowed=allowed,
+        approach_abs_max=spec.approach_abs_max,
+        form=catalog_form,
+    )
+    body = render_core_expr(core)
+    approach = core.approach
+    if isinstance(approach, str):
+        approach_tex = approach
+    else:
+        approach_tex = str(int(approach))
+    prompt = rf"\lim_{{{var} \to {approach_tex}}} {body}"
+
+    # Sign dress on even-power ∞ still ∞; odd DNE unchanged; scale doesn't flip DNE
+    if answer == r"\infty" and core.coef < 0 and core.power % 2 == 0:
+        # (−k)/x² → −∞ when approaching from either side? Actually (−k)/x² → −∞
+        answer = r"-\infty"
+    elif answer == r"\infty" and core.power % 2 == 1:
+        answer = r"\text{DNE}"
+
     form, tech = "essential", "essential_dne"
     effort = _effort(
-        form=form, technique=tech, degree=1, coef_hi=1,
+        form=form, technique=tech, degree=max(1, int(core.power)), coef_hi=abs(core.coef) or 1,
         n_terms=1, answer=answer, pack=spec.pack,
     )
-    return prompt, answer, form, tech, {
+    meta = {
         "function_classes": classes,
         "effort_features": effort,
-        "approach_value": a,
-        "variant": variant,
-        "form_id": force_form_id or fid,
-        "openstax_form": force_form_id or fid,
+        "approach_value": approach if not isinstance(approach, str) else 0,
+        "variant": core_fid.replace("essential_", ""),
+        "form_id": core_fid,
+        "openstax_form": core_fid,
+        "core_form_id": core_fid,
+        **wrap_meta(core, core_form_id=core_fid),
     }
+    return prompt, answer, form, tech, meta
 
 
 def _sample_continuity(
     rng: random.Random, spec: LimitSpec
 ) -> tuple[str, str, str, str, dict[str, Any]]:
-    """Classify continuity at a point: continuous / removable / jump."""
+    """Classify continuity at a point: continuous / removable / jump / essential."""
     var = spec.variable
     a = rng.randint(-spec.approach_abs_max, spec.approach_abs_max)
-    kind = rng.choice(["continuous", "removable", "jump"])
+    d = float(spec.d_spend)
+
+    pool: list[str] = ["removable"]
+    if d < 4:
+        pool = ["removable", "continuous"]
+    elif d < 10:
+        pool = ["removable", "continuous", "jump"]
+    else:
+        pool = ["removable", "continuous", "jump"]
+        if spec.allow_essential:
+            pool.append("essential")
+    # Weight toward variety at mid/high D (avoid removable-only stuck seeds).
+    if d >= 8:
+        kind = rng.choice(pool)
+    else:
+        kind = rng.choice(pool if d >= 2 else ["removable", "continuous"])
+
     if kind == "continuous":
         b = _coef(rng, spec.coef_abs_max)
         c = _coef(rng, spec.coef_abs_max, exclude_zero=False)
-        body = format_linear_latex(b, c, variable=var)
+        if d >= 10 and rng.random() < 0.4:
+            body = _format_poly(
+                [(b, 2), (_coef(rng, spec.coef_abs_max, exclude_zero=False), 1), (c, 0)],
+                var,
+            )
+        else:
+            body = format_linear_latex(b, c, variable=var)
         prompt = (
             rf"\text{{Classify the continuity of }}f({var})={body}"
             rf"\text{{ at }}{var}={a}."
         )
         answer = r"\text{continuous}"
         form, tech = "poly_direct", "classify_continuous"
+        form_id = "continuity_classify_continuous"
     elif kind == "removable":
         prompt = (
             rf"\text{{Classify the continuity of }}"
@@ -989,26 +1164,64 @@ def _sample_continuity(
         )
         answer = r"\text{removable discontinuity}"
         form, tech = "removable_factor", "classify_removable"
+        form_id = "continuity_classify_removable"
+    elif kind == "essential":
+        prompt = (
+            rf"\text{{Classify the continuity of }}"
+            rf"f({var})=\frac{{1}}{{{var}-{a}}}"
+            rf"\text{{ at }}{var}={a}."
+        )
+        answer = r"\text{essential discontinuity}"
+        form, tech = "essential", "classify_essential"
+        form_id = "continuity_classify_essential"
     else:
         left_val = _coef(rng, spec.coef_abs_max, exclude_zero=False)
         right_val = left_val + _coef(rng, max(2, spec.coef_abs_max))
+        if d >= 8 and rng.random() < 0.5:
+            m = _coef(rng, spec.coef_abs_max)
+            b = left_val - m * a
+            left_tex = format_linear_latex(m, b, variable=var)
+            left_kind = "linear"
+        else:
+            left_tex = str(left_val)
+            left_kind = "const"
         prompt = (
             rf"\text{{Classify the continuity of }}"
-            rf"f({var})=\begin{{cases}}{left_val}&{var}<{a}\\"
+            rf"f({var})=\begin{{cases}}{left_tex}&{var}<{a}\\"
             rf"{right_val}&{var}\ge {a}\end{{cases}}"
             rf"\text{{ at }}{var}={a}."
         )
         answer = r"\text{jump discontinuity}"
         form, tech = "piecewise_jump", "classify_jump"
+        form_id = "continuity_classify_jump"
+        effort = _effort(
+            form=form, technique=tech, degree=2, coef_hi=spec.coef_abs_max,
+            n_terms=2, answer=answer, pack=spec.pack,
+        )
+        return prompt, answer, form, tech, {
+            "function_classes": ["algebraic", "piecewise"],
+            "effort_features": effort,
+            "approach_value": a,
+            "variant": kind,
+            "left_kind": left_kind,
+            "right_kind": "const",
+            "form_id": form_id,
+            "openstax_form": form_id,
+            "core_form_id": form_id,
+        }
+
     effort = _effort(
         form=form, technique=tech, degree=2, coef_hi=spec.coef_abs_max,
         n_terms=2, answer=answer, pack=spec.pack,
     )
     return prompt, answer, form, tech, {
-        "function_classes": ["algebraic", "piecewise"] if kind == "jump" else ["algebraic"],
+        "function_classes": ["algebraic"],
         "effort_features": effort,
         "approach_value": a,
         "variant": kind,
+        "form_id": form_id,
+        "openstax_form": form_id,
+        "core_form_id": form_id,
     }
 
 
@@ -1019,175 +1232,253 @@ def _sample_lhopital(
     purchased: set[str],
     force_form_id: str | None = None,
 ) -> tuple[str, str, str, str, dict[str, Any]]:
-    """OpenStax 4.8 — 1-pass at low D; 2+ passes (poly/exp/trig) at mid/high D."""
+    """OpenStax §4.8 — honor catalog form_id; 0/0, ∞/∞, rewrite, multipass."""
     var = spec.variable
+    fid = force_form_id or ""
     steps = 2 if "lhopital_twice" in purchased and spec.max_lhopital_steps >= 2 else 1
     if spec.d_spend >= 12 and spec.max_lhopital_steps >= 2 and rng.random() < 0.55:
         steps = max(steps, 2)
     if spec.d_spend >= 18 and rng.random() < 0.35:
         steps = max(steps, 3)
-    # Catalog forces
-    if force_form_id == "lhopital_multipass_exp":
-        steps = max(steps, 2)
-        use_inf = False
-        purchased = set(purchased) | {"lhopital_twice"}
-    elif force_form_id == "lhopital_multipass_trig":
-        steps = max(steps, 2)
-        use_inf = False
-    elif force_form_id == "lhopital_poly_over_exp":
-        steps = max(steps, 2)
-        use_inf = True
-        purchased = set(purchased) | {"indet_inf_inf", "lhopital_twice"}
-    elif force_form_id == "lhopital_inf_inf_poly":
-        use_inf = True
-        purchased = set(purchased) | {"indet_inf_inf"}
-    elif force_form_id == "lhopital_0_0_trig":
-        use_inf = False
-        steps = 1
-    elif force_form_id == "lhopital_0_0_poly":
-        use_inf = False
-        steps = 1
-    else:
-        use_inf = "indet_inf_inf" in purchased or (
-            spec.allow_indet and rng.random() < 0.35 and "indet_0_0" not in purchased
-        )
-    classes = ["algebraic"]
-    variant = "poly"
 
-    # Multi-pass OpenStax forms first when steps≥2
-    if steps >= 2 and not use_inf:
-        multi = []
-        if spec.allow_trig:
-            multi.append("sin_minus_x")  # (sin x − x)/x² → 0 (2 passes); /x³ needs 3
-        if spec.allow_exp:
-            multi.append("exp_taylor")  # (e^x−1−x)/x² → 1/2
-        multi.append("poly_high")  # (x^n−a^n) style still 1; use x² e^{-x} growth
-        if spec.allow_exp:
-            multi.append("poly_over_exp")  # x^k / e^x → 0 (k passes)
-        if spec.allow_log and steps >= 2:
-            multi.append("ln_over_power")
-        if force_form_id == "lhopital_multipass_trig":
-            fam = "sin_minus_x"
-        elif force_form_id == "lhopital_multipass_exp":
-            fam = "exp_taylor"
-        elif force_form_id == "lhopital_poly_over_exp":
-            fam = "poly_over_exp"
-        else:
-            fam = rng.choice(multi or ["exp_taylor"])
-        if fam == "sin_minus_x":
-            # OpenStax: lim (sin x − x)/x² = 0 (actually needs careful; (sinx-x)/x^3 = -1/6)
-            if steps >= 3:
-                prompt = rf"\lim_{{{var} \to 0}} \frac{{\sin({var})-{var}}}{{{var}^{{3}}}}"
-                answer = frac_latex(Fraction(-1, 6))
-                steps = 3
-            else:
-                prompt = rf"\lim_{{{var} \to 0}} \frac{{\sin({var})-{var}}}{{{var}^{{2}}}}"
-                answer = "0"
-                steps = 2
-            classes = ["trig"]
-            variant = fam
-            form, tech = "indet_0_0", "lhopital"
-        elif fam == "exp_taylor":
-            prompt = rf"\lim_{{{var} \to 0}} \frac{{e^{{{var}}}-1-{var}}}{{{var}^{{2}}}}"
-            answer = frac_latex(Fraction(1, 2))
-            classes = ["exp"]
-            variant = fam
-            form, tech = "indet_0_0", "lhopital"
-            steps = 2
-        elif fam == "poly_over_exp":
-            k = min(steps, rng.randint(2, 3))
-            prompt = rf"\lim_{{{var} \to \infty}} \frac{{{var}^{{{k}}}}}{{e^{{{var}}}}}"
-            answer = "0"
-            classes = ["exp"]
-            variant = fam
-            form, tech = "indet_inf_inf", "lhopital"
-            steps = k
-        elif fam == "ln_over_power":
-            k = rng.randint(1, 2)
-            prompt = rf"\lim_{{{var} \to \infty}} \frac{{\ln({var})}}{{{var}^{{{k}}}}}"
-            answer = "0"
-            classes = ["log"]
-            variant = fam
-            form, tech = "indet_inf_inf", "lhopital"
-            steps = 1 if k == 1 else 2
-        else:
-            # High-degree equal polys needing 2 L'H: (ax³+…)/(bx³+…)
-            a = rng.randint(1, max(1, spec.coef_abs_max))
-            c = rng.randint(1, max(1, spec.coef_abs_max))
+    def _pack(
+        prompt: str,
+        answer: str,
+        *,
+        form: str,
+        classes: list[str],
+        variant: str,
+        form_id: str,
+        indet: str,
+        lh_steps: int,
+        tech: str = "lhopital",
+    ) -> tuple[str, str, str, str, dict[str, Any]]:
+        effort = _effort(
+            form=form, technique=tech, degree=2, coef_hi=spec.coef_abs_max,
+            n_terms=2, answer=answer, pack=spec.pack, lhopital_steps=lh_steps,
+        )
+        effort["lhopital_passes"] = lh_steps
+        return prompt, answer, form, tech, {
+            "function_classes": classes,
+            "effort_features": effort,
+            "lhopital_steps": lh_steps,
+            "lhopital_passes": lh_steps,
+            "tricks_required": ["lhopital"] * max(1, lh_steps),
+            "indet_form": indet,
+            "indeterminate_form": indet,
+            "variant": variant,
+            "openstax_form": form_id,
+            "form_id": form_id,
+            "core_form_id": form_id,
+        }
+
+    # --- Forced catalog forms (OpenStax §4.8) ---
+    if fid == "lhopital_0_inf_product":
+        # 0·∞ → rewrite: x→0+ of x ln x, or x cot x, or x^k e^{-x} at ∞
+        kind = rng.choice(["x_ln", "x_cot", "poly_exp"])
+        if kind == "x_ln":
+            k = rng.randint(1, max(1, min(3, spec.coef_abs_max)))
             prompt = (
-                rf"\lim_{{{var} \to \infty}} "
-                rf"\frac{{{a}{var}^{{3}}+{var}}}{{{c}{var}^{{3}}+1}}"
+                rf"\lim_{{{var} \to 0^{{+}}}} {var} \ln({var})"
+                if k == 1
+                else rf"\lim_{{{var} \to 0^{{+}}}} {var}^{{{k}}} \ln({var})"
             )
-            answer = frac_latex(Fraction(a, c))
-            form, tech = "indet_inf_inf", "lhopital"
-            steps = 3
-            variant = "poly_deg3"
-    elif use_inf:
-        a = rng.randint(1, max(1, spec.coef_abs_max))
-        c = rng.randint(1, max(1, spec.coef_abs_max))
-        b = _coef(rng, spec.coef_abs_max, exclude_zero=False)
-        d = _coef(rng, spec.coef_abs_max, exclude_zero=False)
-        if steps >= 2 and spec.allow_exp and rng.random() < 0.4:
-            prompt = rf"\lim_{{{var} \to \infty}} \frac{{{var}^{{2}}}}{{e^{{{var}}}}}"
-            answer = "0"
-            classes = ["exp"]
-            form, tech = "indet_inf_inf", "lhopital"
-            steps = 2
-            variant = "x2_over_exp"
-        else:
+            return _pack(
+                prompt, "0", form="indet_0_inf", classes=["log"], variant="x_ln",
+                form_id=fid, indet="0·∞", lh_steps=1,
+            )
+        if kind == "x_cot":
+            prompt = rf"\lim_{{{var} \to 0^{{+}}}} {var} \cot({var})"
+            return _pack(
+                prompt, "1", form="indet_0_inf", classes=["trig"], variant="x_cot",
+                form_id=fid, indet="0·∞", lh_steps=1,
+            )
+        k = rng.randint(1, 3)
+        prompt = rf"\lim_{{{var} \to \infty}} {var}^{{{k}}} e^{{-{var}}}"
+        return _pack(
+            prompt, "0", form="indet_0_inf", classes=["exp"], variant="poly_exp_decay",
+            form_id=fid, indet="0·∞", lh_steps=max(1, k),
+        )
+
+    if fid == "lhopital_inf_minus_inf":
+        kind = rng.choice(["csc_cot", "recip_sin", "frac_diff"])
+        if kind == "csc_cot":
+            prompt = rf"\lim_{{{var} \to 0}} \left(\csc({var})-\cot({var})\right)"
+            return _pack(
+                prompt, "0", form="indet_inf_minus_inf", classes=["trig"],
+                variant="csc_cot", form_id=fid, indet="∞−∞", lh_steps=1,
+            )
+        if kind == "recip_sin":
             prompt = (
-                rf"\lim_{{{var} \to \infty}} "
-                rf"\frac{{{a}{var}^{{2}}+{b}}}{{{c}{var}^{{2}}+{d}}}"
+                rf"\lim_{{{var} \to 0^{{+}}}} "
+                rf"\left(\frac{{1}}{{{var}}}-\frac{{1}}{{\sin({var})}}\right)"
             )
-            answer = frac_latex(Fraction(a, c))
-            form, tech = "indet_inf_inf", "lhopital"
-            steps = min(2, max(1, steps))
-            variant = "poly_inf"
-    elif force_form_id == "lhopital_0_0_trig" or (spec.allow_trig and rng.random() < 0.45):
+            return _pack(
+                prompt, frac_latex(Fraction(-1, 6)), form="indet_inf_minus_inf",
+                classes=["trig"], variant="recip_sin", form_id=fid, indet="∞−∞", lh_steps=2,
+            )
+        prompt = (
+            rf"\lim_{{{var} \to \infty}} "
+            rf"\left({var}-\frac{{{var}^{{2}}+1}}{{{var}}}\right)"
+        )
+        return _pack(
+            prompt, "0", form="indet_inf_minus_inf", classes=["algebraic"],
+            variant="poly_diff", form_id=fid, indet="∞−∞", lh_steps=1,
+        )
+
+    if fid == "lhopital_1_inf_power":
+        aa = rng.randint(1, max(1, min(4, spec.coef_abs_max)))
+        prompt = rf"\lim_{{{var} \to \infty}} \left(1+\frac{{{aa}}}{{{var}}}\right)^{{{var}}}"
+        ans = "e" if aa == 1 else rf"e^{{{aa}}}"
+        return _pack(
+            prompt, ans, form="indet_1_inf", classes=["exp"], variant="one_plus_a_over_x",
+            form_id=fid, indet="1^∞", lh_steps=1,
+        )
+
+    if fid == "lhopital_0_0_power":
+        kind = rng.choice(["x_x", "x_sin", "x_kx"])
+        if kind == "x_x":
+            prompt = rf"\lim_{{{var} \to 0^{{+}}}} {var}^{{{var}}}"
+            return _pack(
+                prompt, "1", form="indet_0_0_pow", classes=["log", "exp"],
+                variant="x_x", form_id=fid, indet="0^0", lh_steps=1,
+            )
+        if kind == "x_sin":
+            prompt = rf"\lim_{{{var} \to 0^{{+}}}} {var}^{{\sin({var})}}"
+            return _pack(
+                prompt, "1", form="indet_0_0_pow", classes=["log", "trig"],
+                variant="x_sin", form_id=fid, indet="0^0", lh_steps=1,
+            )
+        k = rng.randint(2, 4)
+        prompt = rf"\lim_{{{var} \to 0^{{+}}}} {var}^{{{k}{var}}}"
+        return _pack(
+            prompt, "1", form="indet_0_0_pow", classes=["log", "exp"],
+            variant="x_kx", form_id=fid, indet="0^0", lh_steps=1,
+        )
+
+    if fid == "lhopital_inf_0_power":
+        kind = rng.choice(["x_1_x", "x_1_ln"])
+        if kind == "x_1_x":
+            prompt = rf"\lim_{{{var} \to \infty}} {var}^{{1/{var}}}"
+            return _pack(
+                prompt, "1", form="indet_inf_0", classes=["log", "exp"],
+                variant="x_1_x", form_id=fid, indet="∞^0", lh_steps=1,
+            )
+        prompt = rf"\lim_{{{var} \to \infty}} {var}^{{1/\ln({var})}}"
+        return _pack(
+            prompt, "e", form="indet_inf_0", classes=["log", "exp"],
+            variant="x_1_ln", form_id=fid, indet="∞^0", lh_steps=1,
+        )
+
+    if fid == "lhopital_0_inf_power":
+        k = rng.randint(1, 3)
+        prompt = (
+            rf"\lim_{{{var} \to 0^{{+}}}} {var}^{{1/{var}}}"
+            if k == 1
+            else rf"\lim_{{{var} \to 0^{{+}}}} {var}^{{{k}/{var}}}"
+        )
+        return _pack(
+            prompt, "0", form="indet_0_inf_pow", classes=["log", "exp"],
+            variant="x_k_over_x", form_id=fid, indet="0^∞", lh_steps=1,
+        )
+
+    if fid == "lhopital_multipass_exp":
+        prompt = rf"\lim_{{{var} \to 0}} \frac{{e^{{{var}}}-1-{var}}}{{{var}^{{2}}}}"
+        return _pack(
+            prompt, frac_latex(Fraction(1, 2)), form="indet_0_0", classes=["exp"],
+            variant="exp_taylor", form_id=fid, indet="0/0", lh_steps=2,
+        )
+
+    if fid == "lhopital_multipass_trig":
+        if steps >= 3 or spec.d_spend >= 16:
+            prompt = rf"\lim_{{{var} \to 0}} \frac{{\sin({var})-{var}}}{{{var}^{{3}}}}"
+            return _pack(
+                prompt, frac_latex(Fraction(-1, 6)), form="indet_0_0", classes=["trig"],
+                variant="sin_minus_x", form_id=fid, indet="0/0", lh_steps=3,
+            )
+        prompt = rf"\lim_{{{var} \to 0}} \frac{{\sin({var})-{var}}}{{{var}^{{2}}}}"
+        return _pack(
+            prompt, "0", form="indet_0_0", classes=["trig"],
+            variant="sin_minus_x", form_id=fid, indet="0/0", lh_steps=2,
+        )
+
+    if fid == "lhopital_poly_over_exp":
+        k = min(max(2, steps), rng.randint(2, 3))
+        prompt = rf"\lim_{{{var} \to \infty}} \frac{{{var}^{{{k}}}}}{{e^{{{var}}}}}"
+        return _pack(
+            prompt, "0", form="indet_inf_inf", classes=["exp"],
+            variant="poly_over_exp", form_id=fid, indet="∞/∞", lh_steps=k,
+        )
+
+    if fid == "lhopital_inf_inf_poly":
+        aa = rng.randint(1, max(1, spec.coef_abs_max))
+        cc = rng.randint(1, max(1, spec.coef_abs_max))
+        bb = _coef(rng, spec.coef_abs_max, exclude_zero=False)
+        dd = _coef(rng, spec.coef_abs_max, exclude_zero=False)
+        prompt = (
+            rf"\lim_{{{var} \to \infty}} "
+            rf"\frac{{{aa}{var}^{{2}}+{bb}}}{{{cc}{var}^{{2}}+{dd}}}"
+        )
+        return _pack(
+            prompt, frac_latex(Fraction(aa, cc)), form="indet_inf_inf",
+            classes=["algebraic"], variant="poly_inf", form_id=fid, indet="∞/∞",
+            lh_steps=min(2, max(1, steps)),
+        )
+
+    if fid == "lhopital_0_0_trig":
         k = rng.randint(2, max(2, min(6, spec.coef_abs_max)))
         arg = format_monomial_latex(k, variable=var) or f"{k}{var}"
         prompt = rf"\lim_{{{var} \to 0}} \frac{{\sin({arg})}}{{{var}}}"
-        answer = str(k)
-        form, tech = "indet_0_0", "lhopital"
-        classes = ["trig"]
-        steps = 1
-        variant = "sin_kx_over_x"
-    elif spec.allow_exp and rng.random() < 0.4:
-        k = rng.randint(1, max(1, min(5, spec.coef_abs_max)))
-        prompt = rf"\lim_{{{var} \to 0}} \frac{{e^{{{k}{var}}}-1}}{{{var}}}"
-        answer = str(k)
-        form, tech = "indet_0_0", "lhopital"
-        classes = ["exp"]
-        steps = 1
-        variant = "exp_kx"
-    else:
-        a = rng.randint(1, max(1, min(4, spec.approach_abs_max)))
-        n = 2 if steps == 1 else rng.randint(2, 3)
-        prompt = (
-            rf"\lim_{{{var} \to {a}}} "
-            rf"\frac{{{var}^{{{n}}}-{a ** n}}}{{{var}-{a}}}"
+        return _pack(
+            prompt, str(k), form="indet_0_0", classes=["trig"],
+            variant="sin_kx_over_x", form_id=fid, indet="0/0", lh_steps=1,
         )
-        answer = str(n * (a ** (n - 1)))
-        form, tech = "indet_0_0", "lhopital"
-        steps = 1
-        variant = "power_diff"
 
-    effort = _effort(
-        form=form, technique=tech, degree=2, coef_hi=spec.coef_abs_max,
-        n_terms=2, answer=answer, pack=spec.pack, lhopital_steps=steps,
+    if fid == "lhopital_0_0_poly":
+        # Prefer classic (e^{kx}-1)/x at low D; power-diff also OK
+        if spec.allow_exp and rng.random() < 0.55:
+            k = rng.randint(1, max(1, min(5, spec.coef_abs_max)))
+            prompt = rf"\lim_{{{var} \to 0}} \frac{{e^{{{k}{var}}}-1}}{{{var}}}"
+            return _pack(
+                prompt, str(k), form="indet_0_0", classes=["exp"],
+                variant="exp_kx", form_id=fid, indet="0/0", lh_steps=1,
+            )
+        aa = rng.randint(1, max(1, min(4, spec.approach_abs_max)))
+        prompt = rf"\lim_{{{var} \to {aa}}} \frac{{{var}^{{2}}-{aa ** 2}}}{{{var}-{aa}}}"
+        return _pack(
+            prompt, str(2 * aa), form="indet_0_0", classes=["algebraic"],
+            variant="power_diff", form_id=fid, indet="0/0", lh_steps=1,
+        )
+
+    # --- Unforced: D-weighted OpenStax ladder ---
+    use_inf = "indet_inf_inf" in purchased or (
+        spec.allow_indet and rng.random() < 0.35 and "indet_0_0" not in purchased
     )
-    effort["lhopital_passes"] = steps
-    return prompt, answer, form, tech, {
-        "function_classes": classes,
-        "effort_features": effort,
-        "lhopital_steps": steps,
-        "lhopital_passes": steps,
-        "tricks_required": ["lhopital"] * steps,
-        "indet_form": "inf_inf" if form == "indet_inf_inf" else "0_0",
-        "variant": variant,
-        "openstax_form": force_form_id or f"lhopital_{variant}_{steps}pass",
-        "form_id": force_form_id or f"lhopital_{variant}_{steps}pass",
-    }
+    if steps >= 2 and not use_inf and spec.allow_exp and rng.random() < 0.4:
+        return _sample_lhopital(
+            rng, spec, purchased=purchased | {"lhopital_twice"},
+            force_form_id="lhopital_multipass_exp",
+        )
+    if steps >= 2 and not use_inf and spec.allow_trig and rng.random() < 0.35:
+        return _sample_lhopital(
+            rng, spec, purchased=purchased | {"lhopital_twice"},
+            force_form_id="lhopital_multipass_trig",
+        )
+    if use_inf and spec.allow_exp and rng.random() < 0.35:
+        return _sample_lhopital(
+            rng, spec, purchased=purchased, force_form_id="lhopital_poly_over_exp",
+        )
+    if use_inf:
+        return _sample_lhopital(
+            rng, spec, purchased=purchased, force_form_id="lhopital_inf_inf_poly",
+        )
+    if spec.allow_trig and rng.random() < 0.45:
+        return _sample_lhopital(
+            rng, spec, purchased=purchased, force_form_id="lhopital_0_0_trig",
+        )
+    return _sample_lhopital(
+        rng, spec, purchased=purchased, force_form_id="lhopital_0_0_poly",
+    )
 
 
 def build_limit_spec(
@@ -1366,8 +1657,13 @@ def sample_limit_expression(
         prompt, answer, form, tech, extra = _sample_infinity(
             rng, spec, force_form_id=catalog_fid or None
         )
-    elif catalog_fid == "removable_rationalize" or form == "removable_rationalize":
+    elif catalog_fid == "removable_rationalize" or (
+        not catalog_fid and form == "removable_rationalize"
+    ):
         prompt, answer, form, tech, extra = _sample_removable_rationalize(rng, spec)
+        extra.setdefault("form_id", "removable_rationalize")
+        extra.setdefault("core_form_id", "removable_rationalize")
+        extra.setdefault("variant", "rationalize")
     elif catalog_fid.startswith("removable_") or form == "removable_factor" or key == "limit_removable":
         if catalog_fid == "removable_rationalize" or (
             not catalog_fid
@@ -1377,12 +1673,17 @@ def sample_limit_expression(
         ):
             prompt, answer, form, tech, extra = _sample_removable_rationalize(rng, spec)
             catalog_fid = catalog_fid or "removable_rationalize"
+            extra.setdefault("form_id", "removable_rationalize")
+            extra.setdefault("core_form_id", "removable_rationalize")
+            extra.setdefault("variant", "rationalize")
         else:
             prompt, answer, form, tech, extra = _sample_removable_factor(
                 rng, spec, force_form_id=catalog_fid or None
             )
-    elif catalog_fid == "piecewise_jump" or form == "piecewise_jump" or key == "limit_jump":
-        prompt, answer, form, tech, extra = _sample_jump(rng, spec)
+    elif catalog_fid.startswith("piecewise_jump") or form == "piecewise_jump" or key == "limit_jump":
+        prompt, answer, form, tech, extra = _sample_jump(
+            rng, spec, force_form_id=catalog_fid or None
+        )
     elif catalog_fid.startswith("essential_") or form == "essential" or key == "limit_essential":
         prompt, answer, form, tech, extra = _sample_essential(
             rng, spec, force_form_id=catalog_fid or None
@@ -1406,13 +1707,23 @@ def sample_limit_expression(
     if "indet_form" in extra:
         snap["indet_form"] = extra["indet_form"]
 
-    # Prefer catalog form_id; fall back to openstax_form / variant / coarse form
-    fid = (
-        catalog_fid
-        or str(extra.get("form_id") or "")
-        or str(extra.get("openstax_form") or "")
-        or form
-    )
+    # Prefer fleshed form_id when it matches/refines the catalog pick; else catalog.
+    fleshed_fid = str(extra.get("form_id") or extra.get("openstax_form") or "")
+    if fleshed_fid and (
+        not catalog_fid
+        or fleshed_fid == catalog_fid
+        or fleshed_fid.startswith(catalog_fid)
+        or catalog_fid.startswith(fleshed_fid.split("_")[0])
+        or catalog_fid in {"continuity_classify"}
+        or (catalog_fid.startswith("piecewise_jump") and fleshed_fid.startswith("piecewise_jump"))
+        or (catalog_fid.startswith("essential_") and fleshed_fid.startswith("essential_"))
+        or (catalog_fid.startswith("lhopital") and fleshed_fid.startswith("lhopital"))
+    ):
+        fid = fleshed_fid or catalog_fid or form
+    else:
+        fid = catalog_fid or fleshed_fid or form
+    core_fid = str(extra.get("core_form_id") or fid)
+
     meta: dict[str, Any] = {
         "generator": key,
         "variable": spec.variable,
@@ -1423,15 +1734,101 @@ def sample_limit_expression(
         "shape_id": form,
         "form_id": fid,
         "openstax_form": fid,
+        "core_form_id": core_fid,
         "catalog_id": "limits",
+        "wrappers_applied": list(extra.get("wrappers_applied") or []),
     }
     if catalog_form:
-        meta.update({k: v for k, v in catalog_form_meta(catalog_form, lim_catalog).items() if k not in meta or k in {"openstax_case", "strategy"}})
+        meta.update(
+            {
+                k: v
+                for k, v in catalog_form_meta(catalog_form, lim_catalog).items()
+                if k not in meta or k in {"openstax_case", "strategy", "indeterminate_form"}
+            }
+        )
+        # Keep fleshed / core ids — do not let catalog overwrite mismatched latex labels
         meta["form_id"] = fid
         meta["openstax_form"] = fid
-    for k in ("approach_value", "approach_mode", "left_value", "right_value", "variant", "lhopital_steps", "lhopital_passes", "indet_form", "expr_spec_snapshot"):
+        meta["core_form_id"] = core_fid
+        if extra.get("indeterminate_form"):
+            meta["indeterminate_form"] = extra["indeterminate_form"]
+        elif catalog_form.get("indeterminate_form") and fid == catalog_fid:
+            meta["indeterminate_form"] = catalog_form["indeterminate_form"]
+    for k in (
+        "approach_value",
+        "approach_mode",
+        "left_value",
+        "right_value",
+        "left_kind",
+        "right_kind",
+        "n_pieces",
+        "variant",
+        "lhopital_steps",
+        "lhopital_passes",
+        "indet_form",
+        "indeterminate_form",
+        "expr_spec_snapshot",
+        "wrappers_applied",
+        "dressing_spec",
+        "dressing_specs",
+    ):
         if k in extra:
             meta[k] = extra[k]
+
+    # Technique-safe post-dress (scale/sign) — skip jump/continuity/essential (in-sampler).
+    from question_engine.frameworks.primitives.complexity_wrap import (
+        allowed_wraps_for_limit,
+        n_wraps_for_d,
+        record_difficulty_shortfall,
+        sample_safe_scale,
+        scale_answer_latex,
+        scale_latex_body,
+        split_lim_prompt,
+    )
+
+    wraps = list(meta.get("wrappers_applied") or [])
+    allowed = allowed_wraps_for_limit(form=form, form_id=fid, technique=tech)
+    if allowed and key not in {"limit_jump", "limit_continuity", "limit_essential"}:
+        n_dress = n_wraps_for_d(d, rng, form=catalog_form)
+        # Removable: structural only (no scale) — allowed is empty via helper
+        for _ in range(n_dress):
+            candidates = [w for w in allowed if w not in {_w.split("#", 1)[0] for _w in wraps}]
+            if "constant_multiple" in candidates and any(
+                _w.split("#", 1)[0] == "constant_multiple" for _w in wraps
+            ):
+                candidates = [c for c in candidates if c != "constant_multiple"]
+            if not candidates:
+                break
+            kind = rng.choice(candidates)
+            if kind in {"sign", "constant_multiple"}:
+                split = split_lim_prompt(prompt)
+                if split is None:
+                    break
+                head, body = split
+                scale, snap_d = sample_safe_scale(d, rng, var=spec.variable)
+                if kind == "sign":
+                    scale = -1 if scale > 0 else scale
+                    if scale > 0:
+                        scale = -1
+                if abs(scale) == 1 and kind == "constant_multiple":
+                    continue
+                if kind == "sign" and scale > 0:
+                    scale = -1
+                prompt = head + scale_latex_body(body, scale)
+                answer = scale_answer_latex(answer, scale)
+                tag = kind if kind not in {_w.split("#", 1)[0] for _w in wraps} else f"{kind}#2"
+                wraps.append(tag if kind != "sign" or "sign" not in wraps else "sign")
+                if kind == "sign" and "sign" not in {_w.split("#", 1)[0] for _w in wraps[:-1]}:
+                    wraps[-1] = "sign"
+                meta.setdefault("dressing_specs", []).append(snap_d)
+    meta["wrappers_applied"] = wraps
+
+    record_difficulty_shortfall(
+        meta,
+        d,
+        catalog_form=catalog_form,
+        upgrades=sorted(purchased),
+    )
 
     return LimitSample(
         prompt_latex=prompt,

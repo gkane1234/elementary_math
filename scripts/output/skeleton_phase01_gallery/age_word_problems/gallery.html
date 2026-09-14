@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Word problem — ages (one equation) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Word problem — ages (one equation)</h1>
+<p class="sub"><code>age_word_problems</code> · live <code>_generate_for_type</code>
+ · pattern <strong>AgeWP</strong>
+ · 16/16 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313, 419</p>
+<p class="sub">OpenStax EA §3.1 / §5.37-style age stories as one equation. D=0 older-by-k and sum. High D past/future/three people. Not systems WP.</p>
+
+<div class='notes-block'><h1><code>age_word_problems</code> — Age word problems</h1>
+<ul>
+<li><strong>Course:</strong> Algebra 1 (A1 catalog)</li>
+<li><strong>Category:</strong> Algebra 1 — Equations</li>
+<li><strong>Generator:</strong> <code>wp_age</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Now / in-n-years / n-years-ago. D=0: one is k years older; sum is S. High D: both-in-the-future. Story, not “the equation is $x+(x+k)=S$”.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Taylor is 7 years older than Riley. The sum of their ages is 23 years. How old is Riley?}</code> - answer: <code>8</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Riley is 2 years older than Taylor. The sum of their ages is 22 years. How old is Taylor?}</code> - answer: <code>10</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Quinn is 5 years older than Alex. 6 years ago, the sum of their ages was 49 years. How old is Alex?}</code> - answer: <code>28</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Sam is twice as old as Alex. The sum of their ages is 54 years. How old is Alex?}</code> - answer: <code>18</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Quinn is 5 years older than Alex. 6 years ago, the sum of their ages was 49 years. How old is Quinn?}</code> - answer: <code>33</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Sam is 3 years older than Alex. Taylor is 7 years older than Alex. The sum of their ages is 79 years. How old is Alex?}</code> - answer: <code>23</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Quinn is 5 years older than Alex. 6 years ago, the sum of their ages was 49 years. How old is Quinn?}</code> - answer: <code>33</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Sam is 3 years older than Alex. Taylor is 7 years older than Alex. The sum of their ages is 79 years. How old is Alex?}</code> - answer: <code>23</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Elementary Algebra 2e — 3.1 Use a Problem-Solving Strategy</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/3-1-use-a-problem-solving-strategy</li>
+<li>Shape: Number/age translate-then-solve (one equation).</li>
+</ul>
+<h3>Elementary Algebra 2e — 5.4 Solve Applications with Systems of Equations</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/5-4-solve-applications-with-systems-of-equations</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 5.35: How to Translate to a System of Equations Translate to a system of equations: The sum of two numbers is negative fourteen. One number is four less than the other. Find the numbers. - Example 5.36: Translate to a system of equations: A married couple together earns $110,000 a year. The wife earns $16,000 less than twice what her husband earns. What does the husband earn? - Example 5.37: Translate to a system of equations and then solve: Devon is 26 years older than his son Cooper. The sum of their ages is 50. Find their ages. - Example 5.38: Translate to a system of equations and then solve: When Jenna spent 10 minutes on the elliptical trainer and then did circuit training for 20 minutes, her fitness app says she burned 278 calories. When she spent 20 minutes on the elliptical trainer and 30 minutes circuit train…</p>
+<ul>
+<li>Shape: Example 5.37 is an age *system* — keep two-variable ages on systems WP.</li>
+</ul>
+<h2>Variety notes</h2>
+<p>Old path shapes at D=0 vs D=22 are recorded above. Flag if a WP dump stub or a single Mad-Lib.</p>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse AgeProblemFramework / narrative_wp. One equation, not systems.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>AgeWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Taylor is 7 years older than Riley. The sum of their ages is 23 years. How old is Riley?}$$</div><div class='math'><div class='lab'>Answer</div>$$8$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_sum_older</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>AgeWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Riley is 2 years older than Taylor. The sum of their ages is 22 years. How old is Taylor?}$$</div><div class='math'><div class='lab'>Answer</div>$$10$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_sum_older</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>AgeWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Morgan is 3 years older than Riley. The sum of their ages is 19 years. How old is Riley?}$$</div><div class='math'><div class='lab'>Answer</div>$$8$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_sum_older</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈0 · seed=419</strong> <span class='pat'>AgeWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Sam is 7 years older than Quinn. The sum of their ages is 33 years. How old is Quinn?}$$</div><div class='math'><div class='lab'>Answer</div>$$13$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_sum_older</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=101</strong> <span class='pat'>AgeWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The mother is 5 years older than her daughter. 6 years ago, the sum of their ages was 49 years. How old is her daughter?}$$</div><div class='math'><div class='lab'>Answer</div>$$28$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_past_parent</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=207</strong> <span class='pat'>AgeWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The mother is twice as old as her daughter. The sum of their ages is 54 years. How old is her daughter?}$$</div><div class='math'><div class='lab'>Answer</div>$$18$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_times_parent</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈8 · seed=313</strong> <span class='pat'>AgeWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Riley is 2 years older than Morgan. 4 years ago, the sum of their ages was 26 years. How old is Morgan?}$$</div><div class='math'><div class='lab'>Answer</div>$$16$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_past</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈8 · seed=419</strong> <span class='pat'>AgeWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jordan is twice as old as Taylor. The sum of their ages is 24 years. How old is Taylor?}$$</div><div class='math'><div class='lab'>Answer</div>$$8$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_times</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=101</strong> <span class='pat'>AgeWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The mother is 5 years older than her daughter. 6 years ago, the sum of their ages was 49 years. How old is the mother?}$$</div><div class='math'><div class='lab'>Answer</div>$$33$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_past_parent</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈16 · seed=207</strong> <span class='pat'>AgeWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Sam is 3 years older than Alex. Taylor is 7 years older than Alex. The sum of their ages is 79 years. How old is Alex?}$$</div><div class='math'><div class='lab'>Answer</div>$$23$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_three</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈16 · seed=313</strong> <span class='pat'>AgeWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Riley is 2 years older than Morgan. 4 years ago, the sum of their ages was 26 years. How old is Riley?}$$</div><div class='math'><div class='lab'>Answer</div>$$18$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_past</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈16 · seed=419</strong> <span class='pat'>AgeWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jordan is 3 years older than Taylor. Alex is 2 years older than Taylor. The sum of their ages is 89 years. How old is Taylor?}$$</div><div class='math'><div class='lab'>Answer</div>$$28$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_three</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#13</span> <strong>D≈22 · seed=101</strong> <span class='pat'>AgeWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The mother is 5 years older than her daughter. 6 years ago, the sum of their ages was 49 years. How old is the mother?}$$</div><div class='math'><div class='lab'>Answer</div>$$33$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_past_parent</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#14</span> <strong>D≈22 · seed=207</strong> <span class='pat'>AgeWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Sam is 3 years older than Alex. Taylor is 7 years older than Alex. The sum of their ages is 79 years. How old is Alex?}$$</div><div class='math'><div class='lab'>Answer</div>$$23$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_three</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#15</span> <strong>D≈22 · seed=313</strong> <span class='pat'>AgeWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Riley is 2 years older than Morgan. 4 years ago, the sum of their ages was 26 years. How old is Riley?}$$</div><div class='math'><div class='lab'>Answer</div>$$18$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_past</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#16</span> <strong>D≈22 · seed=419</strong> <span class='pat'>AgeWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jordan is 3 years older than Taylor. Alex is 2 years older than Taylor. The sum of their ages is 89 years. How old is Taylor?}$$</div><div class='math'><div class='lab'>Answer</div>$$28$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>AgeWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>age_three</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>age</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>age_word_problems</code></p></article>
+</body></html>

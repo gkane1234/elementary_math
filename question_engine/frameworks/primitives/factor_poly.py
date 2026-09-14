@@ -17,9 +17,7 @@ from question_engine.frameworks.primitives.poly_helpers import (
     multiply_coeffs,
     poly_degree,
     render_poly,
-    sample_coeff,
     scale_coeffs,
-    target_poly_degree,
     wrap_parens,
 )
 from question_engine.frameworks.primitives.registry import PrimitiveContext
@@ -517,12 +515,11 @@ def _special(
 
 def _grouping(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
     """Four-term grouping from factors-first ``(px+q)(r x^2 + s)`` when cubic."""
-    deg_cap = target_poly_degree(eff, ctx.policy)
-    if deg_cap < 2:
-        raise ValueError("grouping requires poly policy")
+    if ctx.policy.max_degree < 3:
+        raise ValueError("grouping requires poly policy max_degree≥3")
     d = _topic_d(ctx, eff)
-    want_cubic = deg_cap >= 3 and d >= 4.0
-    ctx.policy.assert_degree(3 if want_cubic else 2, where="factoring_grouping")
+    # Four-term cubic at every D — OpenStax §7.1, not a quadratic trinomial.
+    ctx.policy.assert_degree(3, where="factoring_grouping")
     var = ctx.sample_variable()
 
     a = _small_pos(ctx, hi=4)
@@ -533,23 +530,15 @@ def _grouping(ctx: PrimitiveContext, eff: float) -> FactorPolyItem:
     if c == 0:
         c = 1
 
-    if want_cubic:
-        p = Fraction(1)
-        q = Fraction(c)
-        r = Fraction(a)
-        s = Fraction(b)
-        left = {1: p, 0: q}
-        right = {2: r, 0: s}
-        product = multiply_coeffs(left, right)
-        factors = [left, right]
-        method = "grouping_cubic"
-    else:
-        # Quadratic fallback still factors-first.
-        left = {1: Fraction(1), 0: Fraction(c)}
-        right = {1: Fraction(a), 0: Fraction(b)}
-        product = multiply_coeffs(left, right)
-        factors = [left, right]
-        method = "grouping_quadratic"
+    p = Fraction(1)
+    q = Fraction(c)
+    r = Fraction(a)
+    s = Fraction(b)
+    left = {1: p, 0: q}
+    right = {2: r, 0: s}
+    product = multiply_coeffs(left, right)
+    factors = [left, right]
+    method = "grouping_cubic"
 
     factors, gcf = _complete_factors(factors)
     used = poly_degree(product)

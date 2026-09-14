@@ -671,6 +671,8 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
     d = _continuous_d_or_none(settings)
     if d is None:
         return None
+    # related_frames: OpenStax §4.1 rotation (see related_rates_frames.FRAME_BANDS).
+    # related_shapes kept for volume/legacy callers (circle/sphere/cone).
     if d < 4.0:
         return {
             "difficulty": d,
@@ -679,6 +681,7 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
             "rate_max": 3,
             "bound_max": 4,
             "related_shapes": ("circle",),
+            "related_frames": ("expanding_circle",),
             "volume_methods": ("disk_linear",),
             "de_family": "poly",
             "opt_perimeter_max": 20,
@@ -692,6 +695,11 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
             "rate_max": 4 + int(d // 5),
             "bound_max": 5,
             "related_shapes": ("circle", "sphere"),
+            "related_frames": (
+                "expanding_circle",
+                "expanding_sphere",
+                "balloon_radius",
+            ),
             "volume_methods": ("disk_linear", "disk_quadratic"),
             "de_family": "exp",
             "opt_perimeter_max": 24 + int(d),
@@ -705,6 +713,15 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
             "rate_max": 6,
             "bound_max": 5 + int((d - 10) // 3),
             "related_shapes": ("circle", "sphere", "cone"),
+            "related_frames": (
+                "expanding_circle",
+                "expanding_sphere",
+                "balloon_radius",
+                "cone_similar",
+                "sliding_ladder",
+                "lamp_shadow",
+                "airplane_distance",
+            ),
             "volume_methods": ("disk_quadratic", "washer", "shell"),
             "de_family": "homogeneous",
             "opt_perimeter_max": 36 + int(d),
@@ -717,6 +734,15 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
         "rate_max": min(10, 6 + int((d - 16) // 4)),
         "bound_max": min(8, 5 + int((d - 16) // 3)),
         "related_shapes": ("circle", "sphere", "cone"),
+        "related_frames": (
+            "expanding_circle",
+            "expanding_sphere",
+            "balloon_radius",
+            "cone_similar",
+            "sliding_ladder",
+            "lamp_shadow",
+            "airplane_distance",
+        ),
         "volume_methods": ("washer", "shell", "cross_semi"),
         "de_family": "homogeneous",
         "opt_perimeter_max": min(80, 40 + int(d)),

@@ -20,135 +20,265 @@
       "form_id": "distinct_linear_2",
       "description": "∫ (Ax+B)/((x−r1)(x−r2)) — two distinct linear factors",
       "strategy": "pfd_linear",
-      "constraints": { "n_linear": 2, "quadratic": false },
+      "constraints": {
+        "n_linear": 2,
+        "quadratic": false
+      },
       "d_min": 0,
+      "d_max": 10,
       "d_weight": 2.2,
       "generation_status": "implemented",
-      "tricks": ["pfd"],
+      "tricks": [
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.4 distinct linear"
+      "openstax_case": "§3.4 distinct linear",
+      "requires_allows": [
+        "allow_pfd"
+      ]
     },
     {
       "form_id": "distinct_linear_3",
       "description": "∫ rational with three distinct linear factors",
       "strategy": "pfd_linear",
-      "constraints": { "n_linear": 3, "quadratic": false },
+      "constraints": {
+        "n_linear": 3,
+        "quadratic": false
+      },
       "d_min": 8,
       "d_weight": 1.8,
       "generation_status": "implemented",
-      "tricks": ["pfd"],
+      "tricks": [
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.4 three linears"
+      "openstax_case": "§3.4 three linears",
+      "requires_allows": [
+        "allow_pfd"
+      ]
     },
     {
       "form_id": "irreducible_quad_arctan",
       "description": "∫ C/(x²+a²) → (C/a) arctan(x/a)",
       "strategy": "pfd_arctan",
-      "constraints": { "kind": "pure_arctan" },
+      "constraints": {
+        "kind": "pure_arctan"
+      },
       "d_min": 6,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["pfd"],
+      "tricks": [
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.4 irreducible quadratic → arctan"
+      "openstax_case": "§3.4 irreducible quadratic → arctan",
+      "requires_allows": [
+        "allow_pfd"
+      ]
     },
     {
       "form_id": "irreducible_quad_ln",
       "description": "∫ Bx/(x²+a²) → (B/2) ln(x²+a²)",
       "strategy": "pfd_quad_ln",
-      "constraints": { "kind": "pure_quad_ln" },
+      "constraints": {
+        "kind": "pure_quad_ln"
+      },
       "d_min": 8,
       "d_weight": 1.6,
       "generation_status": "implemented",
-      "tricks": ["pfd"],
+      "tricks": [
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.4 Bx/(x²+a²)"
+      "openstax_case": "§3.4 Bx/(x²+a²)",
+      "requires_allows": [
+        "allow_pfd"
+      ]
     },
     {
       "form_id": "mixed_linear_quad",
       "description": "Linear factor(s) + irreducible quadratic",
       "strategy": "pfd_mixed",
-      "constraints": { "n_linear": ">=1", "quadratic": true },
+      "constraints": {
+        "n_linear": ">=1",
+        "quadratic": true
+      },
       "d_min": 10,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["pfd"],
+      "tricks": [
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.4 mixed"
+      "openstax_case": "§3.4 mixed",
+      "requires_allows": [
+        "allow_pfd"
+      ]
     },
     {
       "form_id": "repeated_linear_square",
       "description": "∫ A/(x−a)² dx (and optional B/(x−a))",
       "strategy": "pfd_repeated",
-      "constraints": { "multiplicity": 2 },
+      "constraints": {
+        "multiplicity": 2
+      },
       "d_min": 10,
       "d_weight": 1.8,
       "generation_status": "implemented",
-      "tricks": ["pfd"],
+      "tricks": [
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.4 repeated linear"
+      "openstax_case": "§3.4 repeated linear",
+      "requires_allows": [
+        "allow_pfd"
+      ]
     },
     {
       "form_id": "u_sub_then_pfd_exp",
       "description": "∫ R(e^x) e^x dx — u=e^x then PFD",
       "strategy": "pipeline_u_pfd",
-      "constraints": { "u_inner": "exp" },
+      "constraints": {
+        "u_inner": "exp"
+      },
       "d_min": 12,
       "d_weight": 1.6,
       "generation_status": "implemented",
-      "tricks": ["u_sub", "pfd"],
+      "tricks": [
+        "u_sub",
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "Multi-trick leaf / §3.4 after sub"
+      "openstax_case": "Multi-trick leaf / §3.4 after sub",
+      "requires_allows": [
+        "allow_pfd",
+        "allow_substitution",
+        "allow_exp"
+      ]
     },
     {
       "form_id": "u_sub_then_pfd_trig",
       "description": "∫ R(sin x) cos x dx — u=sin then PFD",
       "strategy": "pipeline_u_pfd",
-      "constraints": { "u_inner": "trig" },
+      "constraints": {
+        "u_inner": "trig"
+      },
       "d_min": 12,
       "d_weight": 1.6,
       "generation_status": "implemented",
-      "tricks": ["u_sub", "pfd"],
+      "tricks": [
+        "u_sub",
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "Multi-trick leaf"
+      "openstax_case": "Multi-trick leaf",
+      "requires_allows": [
+        "allow_pfd",
+        "allow_substitution",
+        "allow_trig"
+      ]
     },
     {
       "form_id": "u_sub_then_pfd_log",
       "description": "∫ R(ln x)/x dx — u=ln then PFD",
       "strategy": "pipeline_u_pfd",
-      "constraints": { "u_inner": "log" },
+      "constraints": {
+        "u_inner": "log"
+      },
       "d_min": 14,
       "d_weight": 1.3,
       "generation_status": "implemented",
-      "tricks": ["u_sub", "pfd"],
+      "tricks": [
+        "u_sub",
+        "pfd"
+      ],
       "example_item_ids": [],
-      "openstax_case": "Multi-trick leaf"
+      "openstax_case": "Multi-trick leaf",
+      "requires_allows": [
+        "allow_pfd",
+        "allow_substitution",
+        "allow_log"
+      ]
     },
     {
       "form_id": "repeated_linear_cube",
       "description": "∫ A/(x−a)³ + B/(x−a)² + C/(x−a)",
       "strategy": "pfd_repeated",
-      "constraints": { "multiplicity": 3 },
+      "constraints": {
+        "multiplicity": 3
+      },
       "d_min": 16,
       "d_weight": 1.0,
       "generation_status": "stub",
-      "tricks": ["pfd"],
+      "tricks": [
+        "pfd"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.4 multiplicity 3",
-      "gap_reason": "Constructive PFD spine does not yet emit multiplicity≥3 dens"
+      "gap_reason": "Constructive PFD spine does not yet emit multiplicity≥3 dens",
+      "requires_allows": [
+        "allow_pfd"
+      ]
     },
     {
       "form_id": "improper_long_division",
       "description": "Improper rational: divide then PFD",
       "strategy": "long_division_then_pfd",
-      "constraints": { "deg_num": ">=deg_den" },
+      "constraints": {
+        "deg_num": ">=deg_den"
+      },
       "d_min": 14,
       "d_weight": 1.2,
       "generation_status": "stub",
-      "tricks": ["pfd"],
+      "tricks": [
+        "pfd"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.4 improper rationals",
-      "gap_reason": "Need long-division front-end before seed_partial_fraction_target"
+      "gap_reason": "Need long-division front-end before seed_partial_fraction_target",
+      "requires_allows": [
+        "allow_pfd"
+      ]
+    },
+    {
+      "form_id": "repeated_quad_square",
+      "description": "∫ R(x)/(x²+a²)² — repeated irreducible quadratic",
+      "strategy": "pfd_repeated_quad",
+      "constraints": {
+        "quad_multiplicity": 2
+      },
+      "d_min": 16,
+      "d_weight": 0.8,
+      "generation_status": "deferred",
+      "tricks": [
+        "pfd"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "BC bank §4 (x²+1)²",
+      "gap_reason": "Constructive PFD spine does not emit repeated quadratic factors",
+      "requires_allows": [
+        "allow_pfd"
+      ]
+    },
+    {
+      "form_id": "x4_plus_1",
+      "description": "∫ dx/(x⁴+1) — factor x⁴+1 then PFD",
+      "strategy": "pfd_biquadratic",
+      "constraints": {
+        "kind": "x4_plus_1"
+      },
+      "d_min": 18,
+      "d_weight": 0.5,
+      "generation_status": "deferred",
+      "tricks": [
+        "pfd"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "BC bank §4 / §10 1/(x⁴+1)",
+      "gap_reason": "No honest factorization of x⁴+1 in the PFD core yet",
+      "requires_allows": [
+        "allow_pfd"
+      ]
     }
   ]
 }

@@ -1,10 +1,7 @@
-"""Direct and inverse variation — framework-backed with variation settings profile."""
+"""A1 direct/inverse variation — VariationEq via primitive_a2 (OpenStax EA §8.9).
 
-from question_engine.frameworks.linear import DirectVariationFramework
-from question_engine.types._linear_type import register_linear_type
+Do not re-bind DirectVariationFramework; that path was inverse-only and D-flat.
+Live default: ``sample_variation_packaged``. Opt out with ``use_legacy_variation=True``.
+"""
 
-register_linear_type(
-    "direct_inverse_variation",
-    DirectVariationFramework(),
-    profile="variation",
-)
+# Catalog + primitive_a2; packaging rotates direct + inverse frames.

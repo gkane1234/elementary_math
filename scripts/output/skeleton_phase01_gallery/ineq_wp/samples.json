@@ -1,0 +1,2473 @@
+{
+  "section": {
+    "slug": "ineq_wp",
+    "title": "Word problem \u2014 inequalities",
+    "pattern": "SolveInequality",
+    "engine": "wp_packaging",
+    "type_id": "g6_inequalities_word_problems",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313,
+      419,
+      523,
+      631
+    ],
+    "blurb": "D=0 compare / height / checkout / points (no two-step budget). Car-rental / phone / tablet budget frames unlock at format_tier \u2265 1. Opt out with <code>use_sample_linear_inequality=True</code>."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Will wants a score at most 10. Write an inequality for the score.}",
+      "answer_latex": "x \\le 10",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          []
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\le"
+        ],
+        [
+          "frame_id",
+          "ineq_score"
+        ],
+        [
+          "frame_variant",
+          "score"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [],
+        "rhs": "10",
+        "leading": "1",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "\\le",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_score",
+        "frame_variant": "score",
+        "units": "points",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "x \\le 10",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Kevin had some points, lost 1, and now has at least 3. What starting scores work?}",
+      "answer_latex": "x \\ge 4",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "sub"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\ge"
+        ],
+        [
+          "frame_id",
+          "ineq_lost"
+        ],
+        [
+          "frame_variant",
+          "lost_points"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "sub"
+        ],
+        "rhs": "3",
+        "leading": "1",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "\\ge",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_lost",
+        "frame_variant": "lost_points",
+        "units": "points",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "x - 1 \\ge 3",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Mia had some points, lost 2, and now has more than 3. What starting scores work?}",
+      "answer_latex": "x > 5",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "sub"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          ">"
+        ],
+        [
+          "frame_id",
+          "ineq_lost"
+        ],
+        [
+          "frame_variant",
+          "lost_points"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "sub"
+        ],
+        "rhs": "3",
+        "leading": "1",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": ">",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_lost",
+        "frame_variant": "lost_points",
+        "units": "points",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "x - 2 > 3",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=419",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 419,
+      "prompt_latex": "\\text{The number of items a shopper can have in the express check-out lane is at most 9. Write an inequality for the number of items n.}",
+      "answer_latex": "n \\le 9",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          []
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\le"
+        ],
+        [
+          "frame_id",
+          "ineq_checkout"
+        ],
+        [
+          "frame_variant",
+          "checkout"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [],
+        "rhs": "9",
+        "leading": "1",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "\\le",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_checkout",
+        "frame_variant": "checkout",
+        "units": "items",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "n \\le 9",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=523",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 523,
+      "prompt_latex": "\\text{Yves already has 6 points and needs more than 11 points in total. What scores on the next round work?}",
+      "answer_latex": "x > 5",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "add"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          ">"
+        ],
+        [
+          "frame_id",
+          "ineq_points"
+        ],
+        [
+          "frame_variant",
+          "add_points"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "add"
+        ],
+        "rhs": "11",
+        "leading": "1",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": ">",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_points",
+        "frame_variant": "add_points",
+        "units": "points",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "x + 6 > 11",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=631",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 631,
+      "prompt_latex": "\\text{Markers cost \\$4 each. Yuri can spend more than \\$8. How many markers can Yuri buy?}",
+      "answer_latex": "x > 2",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          631
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          ">"
+        ],
+        [
+          "frame_id",
+          "ineq_tickets"
+        ],
+        [
+          "frame_variant",
+          "ineq_tickets"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "rhs": "8",
+        "leading": "4",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": ">",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_tickets",
+        "frame_variant": "ineq_tickets",
+        "units": "markers",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "4x > 8",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 631,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{The number of items a shopper can have in the express check-out lane is less than 5. Write an inequality for the number of items n.}",
+      "answer_latex": "n < 5",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          []
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "<"
+        ],
+        [
+          "frame_id",
+          "ineq_checkout"
+        ],
+        [
+          "frame_variant",
+          "checkout"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "inequalities": 6.708
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [],
+        "rhs": "5",
+        "leading": "1",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "<",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_checkout",
+        "frame_variant": "checkout",
+        "units": "items",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "n < 5",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Tickets cost \\$4 each. Kevin can spend at least \\$44. How many tickets can Kevin buy?}",
+      "answer_latex": "x \\ge 11",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\ge"
+        ],
+        [
+          "frame_id",
+          "ineq_tickets"
+        ],
+        [
+          "frame_variant",
+          "ineq_tickets"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "inequalities": 7.359
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "rhs": "44",
+        "leading": "4",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "\\ge",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_tickets",
+        "frame_variant": "ineq_tickets",
+        "units": "tickets",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "4x \\ge 44",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{A child's height must be more than 44 inches to ride in the front seat. Write an inequality for the height h.}",
+      "answer_latex": "h > 44",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          []
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          ">"
+        ],
+        [
+          "frame_id",
+          "ineq_height"
+        ],
+        [
+          "frame_variant",
+          "height"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.702,
+          "variable": 2.514,
+          "inequalities": 2.784
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [],
+        "rhs": "44",
+        "leading": "1",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": ">",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_height",
+        "frame_variant": "height",
+        "units": "inches",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "h > 44",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=419",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 419,
+      "prompt_latex": "\\text{Iris already has 12 points and needs more than 15 points in total. What scores on the next round work?}",
+      "answer_latex": "x > 3",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "add"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          ">"
+        ],
+        [
+          "frame_id",
+          "ineq_points"
+        ],
+        [
+          "frame_variant",
+          "add_points"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.782,
+          "variable": 6.318,
+          "inequalities": 0.9
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "add"
+        ],
+        "rhs": "15",
+        "leading": "1",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": ">",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_points",
+        "frame_variant": "add_points",
+        "units": "points",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "x + 12 > 15",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=523",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 523,
+      "prompt_latex": "\\text{The number of items a shopper can have in the express check-out lane is less than 11. Write an inequality for the number of items n.}",
+      "answer_latex": "n < 11",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          []
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "<"
+        ],
+        [
+          "frame_id",
+          "ineq_checkout"
+        ],
+        [
+          "frame_variant",
+          "checkout"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.539,
+          "variable": 1.954,
+          "inequalities": 3.507
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [],
+        "rhs": "11",
+        "leading": "1",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "<",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_checkout",
+        "frame_variant": "checkout",
+        "units": "items",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "n < 11",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=631",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 631,
+      "prompt_latex": "\\text{Yuri already has 18 points and needs at least 20 points in total. What scores on the next round work?}",
+      "answer_latex": "x \\ge 2",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          631
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "add"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\ge"
+        ],
+        [
+          "frame_id",
+          "ineq_points"
+        ],
+        [
+          "frame_variant",
+          "add_points"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.97,
+          "variable": 3.004,
+          "inequalities": 4.026
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "add"
+        ],
+        "rhs": "20",
+        "leading": "1",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "\\ge",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_points",
+        "frame_variant": "add_points",
+        "units": "points",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "x + 18 \\ge 20",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 631,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Hannah has \\$65 to buy tablets that cost \\$7 each, plus a \\$2 delivery fee. How many tablets can Hannah buy?}",
+      "answer_latex": "x < 9",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "steps",
+          "two"
+        ],
+        [
+          "n_ops",
+          2
+        ],
+        [
+          "species",
+          "two"
+        ],
+        [
+          "transforms",
+          [
+            "add",
+            "mul"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "<"
+        ],
+        [
+          "frame_id",
+          "ineq_budget"
+        ],
+        [
+          "frame_variant",
+          "tablets"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "inequalities": 13.415
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "two",
+        "n_ops": 2,
+        "steps": "two",
+        "transforms": [
+          "add",
+          "mul"
+        ],
+        "rhs": "65",
+        "leading": "7",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "flipped": false,
+        "relation": "<",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_budget",
+        "frame_variant": "tablets",
+        "units": "tablets",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "7x + 2 < 65",
+        "upgrades": [
+          "two_step"
+        ],
+        "generation_settings": {
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Wesley rents a car for \\$3 plus \\$7 per mile. Wesley can spend at most \\$52. For how many miles can Wesley drive?}",
+      "answer_latex": "x \\le 7",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "steps",
+          "two"
+        ],
+        [
+          "n_ops",
+          2
+        ],
+        [
+          "species",
+          "two"
+        ],
+        [
+          "transforms",
+          [
+            "add",
+            "mul"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\le"
+        ],
+        [
+          "frame_id",
+          "ineq_budget"
+        ],
+        [
+          "frame_variant",
+          "car_rental"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "inequalities": 14.717
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "two",
+        "n_ops": 2,
+        "steps": "two",
+        "transforms": [
+          "add",
+          "mul"
+        ],
+        "rhs": "52",
+        "leading": "7",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "flipped": false,
+        "relation": "\\le",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_budget",
+        "frame_variant": "car_rental",
+        "units": "miles",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "7x + 3 \\le 52",
+        "upgrades": [
+          "two_step"
+        ],
+        "generation_settings": {
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Avery's phone plan costs \\$7 plus \\$9 per text. Avery wants the bill at most \\$106. How many texts can Avery send?}",
+      "answer_latex": "x \\le 11",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "steps",
+          "two"
+        ],
+        [
+          "n_ops",
+          2
+        ],
+        [
+          "species",
+          "two"
+        ],
+        [
+          "transforms",
+          [
+            "add",
+            "mul"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\le"
+        ],
+        [
+          "frame_id",
+          "ineq_budget"
+        ],
+        [
+          "frame_variant",
+          "phone"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.404,
+          "variable": 5.027,
+          "inequalities": 5.568
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "two",
+        "n_ops": 2,
+        "steps": "two",
+        "transforms": [
+          "add",
+          "mul"
+        ],
+        "rhs": "106",
+        "leading": "9",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "flipped": false,
+        "relation": "\\le",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_budget",
+        "frame_variant": "phone",
+        "units": "texts",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "9x + 7 \\le 106",
+        "upgrades": [
+          "two_step"
+        ],
+        "generation_settings": {
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=419",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 419,
+      "prompt_latex": "\\text{Zane's phone plan costs \\$1 plus \\$9 per text. Zane wants the bill at most \\$55. How many texts can Zane send?}",
+      "answer_latex": "x \\le 6",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "steps",
+          "two"
+        ],
+        [
+          "n_ops",
+          2
+        ],
+        [
+          "species",
+          "two"
+        ],
+        [
+          "transforms",
+          [
+            "add",
+            "mul"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\le"
+        ],
+        [
+          "frame_id",
+          "ineq_budget"
+        ],
+        [
+          "frame_variant",
+          "phone"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.564,
+          "variable": 12.635,
+          "inequalities": 1.801
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "two",
+        "n_ops": 2,
+        "steps": "two",
+        "transforms": [
+          "add",
+          "mul"
+        ],
+        "rhs": "55",
+        "leading": "9",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "flipped": false,
+        "relation": "\\le",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_budget",
+        "frame_variant": "phone",
+        "units": "texts",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "9x + 1 \\le 55",
+        "upgrades": [
+          "two_step"
+        ],
+        "generation_settings": {
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=523",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 523,
+      "prompt_latex": "\\text{Yves wants a score at most 25. Write an inequality for the score.}",
+      "answer_latex": "x \\le 25",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          []
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\le"
+        ],
+        [
+          "frame_id",
+          "ineq_score"
+        ],
+        [
+          "frame_variant",
+          "score"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.078,
+          "variable": 3.909,
+          "inequalities": 7.014
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [],
+        "rhs": "25",
+        "leading": "1",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "flipped": false,
+        "relation": "\\le",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_score",
+        "frame_variant": "score",
+        "units": "points",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "x \\le 25",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=631",
+      "type_id": "g6_inequalities_word_problems",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 631,
+      "prompt_latex": "\\text{A child's height must be at least 56 inches to ride in the front seat. Write an inequality for the height h.}",
+      "answer_latex": "h \\ge 56",
+      "skeleton_pattern": "SolveInequality",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveInequality"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          631
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          []
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "flipped",
+          false
+        ],
+        [
+          "relation",
+          "\\ge"
+        ],
+        [
+          "frame_id",
+          "ineq_height"
+        ],
+        [
+          "frame_variant",
+          "height"
+        ],
+        [
+          "wp_kind",
+          "inequality"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.939,
+          "variable": 6.008,
+          "inequalities": 8.052
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveInequality",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [],
+        "rhs": "56",
+        "leading": "1",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "flipped": false,
+        "relation": "\\ge",
+        "construction": "wp_packaging",
+        "frame_id": "ineq_height",
+        "frame_variant": "height",
+        "units": "inches",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "inequality",
+        "equation_latex": "h \\ge 56",
+        "upgrades": [
+          "one_step"
+        ],
+        "generation_settings": {
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 631,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve the problem.}"
+      }
+    }
+  ],
+  "failures": []
+}

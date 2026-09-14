@@ -9,6 +9,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from typing import Any, Callable
 
 from .base import QuestionFramework
+from .primitives import a1_narrative_frames as a1f
 from ..generators.utils import random_int_range
 from ..word_problems.names import pick_name, pick_names
 
@@ -97,6 +98,21 @@ def _format_answer(value: float | int, settings: dict) -> str:
     if abs(value - round(value)) < 1e-9:
         return str(int(round(value)))
     return f"{value:.1f}".rstrip("0").rstrip(".")
+
+
+def _as_text_prompt(inner: str) -> tuple[str, str]:
+    """Wrap a story sentence as prompt latex + plain text."""
+    return rf"\text{{{inner}}}", inner
+
+
+def _stamp_wp(pattern: str, engine: str, frame_id: str, **extra: Any) -> dict[str, Any]:
+    meta = {
+        "frame_id": frame_id,
+        "skeleton_pattern": pattern,
+        "primitive_engine": engine,
+    }
+    meta.update(extra)
+    return meta
 
 
 def _append_units(answer: str, settings: dict) -> str:
@@ -282,16 +298,17 @@ def _drt_time_bounds(settings: dict) -> tuple[int, int]:
 
 
 def _drt_variants_for_d(d: float) -> list[str]:
-    """Core DRT skills from curriculum examples: d=rt, round-trip, catch-up.
+    """Core DRT skills from OpenStax EA 3.4: missing piece, round-trip, catch-up, opposite.
 
-    two_segments / opposite stay available only when explicitly allowed in settings
-    (genuine DRT, but outside the example families we prioritize).
+    two_segments stays opt-in (not an OpenStax 3.4 lead family).
     """
     out = ["find_missing"]
     if d >= 3.0:
         out.append("round_trip")
     if d >= 6.0:
         out.append("same_direction")
+    if d >= 10.0:
+        out.append("opposite")
     return out
 
 
@@ -303,7 +320,7 @@ def _enabled_drt_variants(settings: dict) -> list[str]:
     extra: list[str] = []
     if bool(settings.get("allow_drt_two_segments", False)):
         extra.append("two_segments")
-    if bool(settings.get("allow_drt_opposite", False)):
+    if bool(settings.get("allow_drt_opposite", False)) and "opposite" not in core:
         extra.append("opposite")
 
     # If the caller narrowed structure toggles, respect that filter.
@@ -375,6 +392,28 @@ class DistanceRateTimeFramework(WordProblemFramework):
     """Genuine d = r·t word problems: basic missing piece, round-trip, catch-up."""
 
     problem_kind = "distance_rate_time"
+
+    def __init__(self, template: WordProblemTemplate | None = None):
+        super().__init__(template)
+        self._last_meta: dict[str, Any] = {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        return dict(self._last_meta)
+
+    def _stamp(self, frame_id: str, **extra: Any) -> None:
+        self._last_meta = _stamp_wp(
+            "DistanceRateTime",
+            "wp_distance_rate_time",
+            frame_id,
+            **extra,
+        )
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         # Prefer mi/hr classroom units for round-trip / catch-up story frames.
@@ -453,6 +492,11 @@ class DistanceRateTimeFramework(WordProblemFramework):
     ) -> tuple[str, str, str | None]:
         name = _pick_name(settings)
         ask = random.choice(["find_time", "find_distance", "find_rate"])
+        vehicle, verb, _role = a1f.pick_drt_vehicle(random)
+        band = _band_from_d(_topic_d(settings))
+        vbounds = a1f.vehicle_rate_bounds(vehicle, time_unit=time_u, band=band)
+        if vbounds:
+            rate_lo, rate_hi = vbounds
         rate = _random_value(settings, lo=rate_lo, hi=rate_hi)
         time = _random_value(settings, lo=time_lo, hi=time_hi)
         distance = rate * time
@@ -460,39 +504,27 @@ class DistanceRateTimeFramework(WordProblemFramework):
         if ask == "find_time":
             answer = _format_answer(time, settings)
             unit_suffix = f" {time_u}" if show_units else ""
-            latex = (
-                rf"\text{{{name} travels {distance} {distance_u} at {rate} {speed_u}. "
-                rf"How many {time_u} does the trip take?}}"
-            )
-            text = (
-                f"{name} travels {distance} {distance_u} at {rate} {speed_u}. "
-                f"How many {time_u} does the trip take?"
-            )
-            return latex, text, f"{answer}{unit_suffix}" if show_units else answer
-
-        if ask == "find_distance":
+        elif ask == "find_distance":
             answer = _format_answer(distance, settings)
             unit_suffix = f" {distance_u}" if show_units else ""
-            latex = (
-                rf"\text{{{name} travels at {rate} {speed_u} for {time} {time_u}. "
-                rf"How many {distance_u} does {name} travel?}}"
-            )
-            text = (
-                f"{name} travels at {rate} {speed_u} for {time} {time_u}. "
-                f"How many {distance_u} does {name} travel?"
-            )
-            return latex, text, f"{answer}{unit_suffix}" if show_units else answer
+        else:
+            answer = _format_answer(rate, settings)
+            unit_suffix = f" {speed_u}" if show_units else ""
 
-        answer = _format_answer(rate, settings)
-        unit_suffix = f" {speed_u}" if show_units else ""
-        latex = (
-            rf"\text{{{name} travels {distance} {distance_u} in {time} {time_u}. "
-            rf"What is the average speed in {speed_u}?}}"
+        fid, inner, text = a1f.missing_piece_stems(
+            name=name,
+            vehicle=vehicle,
+            verb=verb,
+            distance=distance,
+            rate=rate,
+            time=time,
+            distance_u=distance_u,
+            time_u=time_u,
+            speed_u=speed_u,
+            ask=ask,
         )
-        text = (
-            f"{name} travels {distance} {distance_u} in {time} {time_u}. "
-            f"What is the average speed in {speed_u}?"
-        )
+        self._stamp(fid, vehicle=vehicle, ask=ask)
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _round_trip(
@@ -510,6 +542,10 @@ class DistanceRateTimeFramework(WordProblemFramework):
         name = _pick_name(settings)
         d = _topic_d(settings)
         band = _band_from_d(d)
+        vehicle, _verb, _role = a1f.pick_drt_vehicle(random)
+        vbounds = a1f.vehicle_rate_bounds(vehicle, time_unit=time_u, band=band)
+        if vbounds:
+            rate_lo, rate_hi = vbounds
         # Prefer hour-based classroom wording when units allow.
         if band == "easy":
             asks = ["find_speed_there", "find_time_there", "find_total_time"]
@@ -545,48 +581,63 @@ class DistanceRateTimeFramework(WordProblemFramework):
             # Given: time there, time back, speed back → speed there
             answer = _format_answer(r_there, settings)
             unit_suffix = f" {speed_u}" if show_units else ""
-            latex = (
-                rf"\text{{{name} drives to a destination in {t_there} {time_u} and "
-                rf"returns in {t_back} {time_u} at {r_back} {speed_u}. "
-                rf"What was {name}'s speed on the way there?}}"
+            fid, inner, text = a1f.round_trip_stems(
+                name=name,
+                vehicle=vehicle,
+                t_there=t_there,
+                t_back=t_back,
+                r_there=r_there,
+                r_back=r_back,
+                distance=distance,
+                distance_u=distance_u,
+                time_u=time_u,
+                speed_u=speed_u,
+                ask=ask,
             )
-            text = (
-                f"{name} drives to a destination in {t_there} {time_u} and "
-                f"returns in {t_back} {time_u} at {r_back} {speed_u}. "
-                f"What was {name}'s speed on the way there?"
-            )
+            self._stamp(fid, vehicle=vehicle, ask=ask)
+            latex, _ = _as_text_prompt(inner)
             return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
         if ask == "find_time_there":
             # Given: speed there, speed back, time back → time there
             answer = _format_answer(t_there, settings)
             unit_suffix = f" {time_u}" if show_units else ""
-            latex = (
-                rf"\text{{{name} drives to a destination at {r_there} {speed_u} and "
-                rf"returns at {r_back} {speed_u}, taking {t_back} {time_u} on the way back. "
-                rf"How long did the trip there take?}}"
+            fid, inner, text = a1f.round_trip_stems(
+                name=name,
+                vehicle=vehicle,
+                t_there=t_there,
+                t_back=t_back,
+                r_there=r_there,
+                r_back=r_back,
+                distance=distance,
+                distance_u=distance_u,
+                time_u=time_u,
+                speed_u=speed_u,
+                ask=ask,
             )
-            text = (
-                f"{name} drives to a destination at {r_there} {speed_u} and "
-                f"returns at {r_back} {speed_u}, taking {t_back} {time_u} on the way back. "
-                f"How long did the trip there take?"
-            )
+            self._stamp(fid, vehicle=vehicle, ask=ask)
+            latex, _ = _as_text_prompt(inner)
             return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
         # find_total_time — both speeds and one-way distance known
         total = t_there + t_back
         answer = _format_answer(total, settings)
         unit_suffix = f" {time_u}" if show_units else ""
-        latex = (
-            rf"\text{{{name} drives {distance} {distance_u} at {r_there} {speed_u}, "
-            rf"then returns the same distance at {r_back} {speed_u}. "
-            rf"How many {time_u} does the round trip take?}}"
+        fid, inner, text = a1f.round_trip_stems(
+            name=name,
+            vehicle=vehicle,
+            t_there=t_there,
+            t_back=t_back,
+            r_there=r_there,
+            r_back=r_back,
+            distance=distance,
+            distance_u=distance_u,
+            time_u=time_u,
+            speed_u=speed_u,
+            ask="find_total_time",
         )
-        text = (
-            f"{name} drives {distance} {distance_u} at {r_there} {speed_u}, "
-            f"then returns the same distance at {r_back} {speed_u}. "
-            f"How many {time_u} does the round trip take?"
-        )
+        self._stamp(fid, vehicle=vehicle, ask="find_total_time")
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _two_segments(
@@ -603,6 +654,12 @@ class DistanceRateTimeFramework(WordProblemFramework):
         time_hi: int,
     ) -> tuple[str, str, str | None]:
         name = _pick_name(settings)
+        vehicle, verb, _role = a1f.pick_drt_vehicle(random)
+        vbounds = a1f.vehicle_rate_bounds(
+            vehicle, time_unit=time_u, band=_band_from_d(_topic_d(settings))
+        )
+        if vbounds:
+            rate_lo, rate_hi = vbounds
         rate1 = _random_value(settings, lo=rate_lo, hi=rate_hi)
         rate2 = _random_value(settings, lo=rate_lo, hi=rate_hi)
         while rate2 == rate1:
@@ -613,16 +670,20 @@ class DistanceRateTimeFramework(WordProblemFramework):
         total = d1 + d2
         answer = _format_answer(total, settings)
         unit_suffix = f" {distance_u}" if show_units else ""
-        latex = (
-            rf"\text{{{name} travels at {rate1} {speed_u} for {t1} {time_u}, then "
-            rf"at {rate2} {speed_u} for {t2} {time_u}. "
-            rf"How many {distance_u} does {name} travel in all?}}"
+        fid, inner, text = a1f.two_segment_stems(
+            name=name,
+            vehicle=vehicle,
+            verb=verb,
+            rate1=rate1,
+            rate2=rate2,
+            t1=t1,
+            t2=t2,
+            distance_u=distance_u,
+            time_u=time_u,
+            speed_u=speed_u,
         )
-        text = (
-            f"{name} travels at {rate1} {speed_u} for {t1} {time_u}, then "
-            f"at {rate2} {speed_u} for {t2} {time_u}. "
-            f"How many {distance_u} does {name} travel in all?"
-        )
+        self._stamp(fid, vehicle=vehicle, ask="total_distance")
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _opposite(
@@ -637,6 +698,12 @@ class DistanceRateTimeFramework(WordProblemFramework):
         rate_hi: int,
     ) -> tuple[str, str, str | None]:
         a_name, b_name = _pick_names(settings, 2)
+        vehicle, _verb, _role = a1f.pick_drt_vehicle(random)
+        vbounds = a1f.vehicle_rate_bounds(
+            vehicle, time_unit=time_u, band=_band_from_d(_topic_d(settings))
+        )
+        if vbounds:
+            rate_lo, rate_hi = vbounds
         rate_a = _random_value(settings, lo=rate_lo, hi=rate_hi)
         rate_b = _random_value(settings, lo=rate_lo, hi=rate_hi)
         while rate_b == rate_a:
@@ -644,37 +711,29 @@ class DistanceRateTimeFramework(WordProblemFramework):
         meet_time = _random_value(settings, lo=2, hi=6)
         distance = (rate_a + rate_b) * meet_time
         ask = random.choice(["time", "distance"])
+        toward = random.random() < 0.5
         if ask == "time":
             answer = _format_answer(meet_time, settings)
             unit_suffix = f" {time_u}" if show_units else ""
-            latex = (
-                rf"\text{{{a_name} and {b_name} leave the same place at the same time "
-                rf"and travel in opposite directions at {rate_a} {speed_u} and "
-                rf"{rate_b} {speed_u}. They are {distance} {distance_u} apart when they "
-                rf"stop. How many {time_u} did they travel?}}"
-            )
-            text = (
-                f"{a_name} and {b_name} leave the same place at the same time "
-                f"and travel in opposite directions at {rate_a} {speed_u} and "
-                f"{rate_b} {speed_u}. They are {distance} {distance_u} apart when they "
-                f"stop. How many {time_u} did they travel?"
-            )
-            return latex, text, f"{answer}{unit_suffix}" if show_units else answer
-
-        answer = _format_answer(distance, settings)
-        unit_suffix = f" {distance_u}" if show_units else ""
-        latex = (
-            rf"\text{{{a_name} and {b_name} leave the same place at the same time "
-            rf"and travel in opposite directions at {rate_a} {speed_u} and "
-            rf"{rate_b} {speed_u} for {meet_time} {time_u}. "
-            rf"How many {distance_u} apart are they?}}"
+        else:
+            answer = _format_answer(distance, settings)
+            unit_suffix = f" {distance_u}" if show_units else ""
+        fid, inner, text = a1f.opposite_stems(
+            a_name=a_name,
+            b_name=b_name,
+            vehicle=vehicle,
+            rate_a=rate_a,
+            rate_b=rate_b,
+            meet_time=meet_time,
+            distance=distance,
+            distance_u=distance_u,
+            time_u=time_u,
+            speed_u=speed_u,
+            ask=ask,
+            toward=toward,
         )
-        text = (
-            f"{a_name} and {b_name} leave the same place at the same time "
-            f"and travel in opposite directions at {rate_a} {speed_u} and "
-            f"{rate_b} {speed_u} for {meet_time} {time_u}. "
-            f"How many {distance_u} apart are they?"
-        )
+        self._stamp(fid, vehicle=vehicle, ask=ask)
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _same_direction(
@@ -690,8 +749,13 @@ class DistanceRateTimeFramework(WordProblemFramework):
     ) -> tuple[str, str, str | None]:
         """Catch-up: slower traveler leaves first; faster catches up later."""
         a_name, b_name = _pick_names(settings, 2)
+        vehicle, verb, _role = a1f.pick_drt_vehicle(random)
         d = _topic_d(settings)
         band = _band_from_d(d)
+        slow_b, fast_b = a1f.catchup_rate_bounds(vehicle, time_unit=time_u, band=band)
+        if slow_b:
+            rate_lo, rate_hi = slow_b
+        fast_lo, fast_hi = fast_b if fast_b else (rate_lo, rate_hi)
         # Asks matching textbook catch-up frames.
         if band == "easy":
             asks = ["find_catch_time", "find_slow_speed", "find_leader_total_time"]
@@ -705,37 +769,34 @@ class DistanceRateTimeFramework(WordProblemFramework):
         catch = random.randint(2, 4 if band == "easy" else 7)
         # Pick fast and factor so slow is an integer in range.
         for _ in range(40):
-            fast = _random_value(settings, lo=max(rate_lo + 5, rate_lo), hi=rate_hi)
+            fast = _random_value(settings, lo=fast_lo, hi=fast_hi)
             total_leader = head + catch
             if (fast * catch) % total_leader != 0:
                 continue
             slow = (fast * catch) // total_leader
-            if rate_lo <= slow < fast:
+            if rate_lo <= slow <= rate_hi and slow < fast:
                 break
         else:
             # Guaranteed clean fallback: catch=head, fast=2*slow
             head = 2
             catch = 2
-            slow = max(rate_lo, min(rate_hi - 10, 30))
+            slow = max(rate_lo, min(rate_hi, max(1, fast_lo // 2)))
             fast = 2 * slow
 
         if ask == "find_slow_speed":
             # Slow left earlier; after catch hours the fast one catches up → find slow speed
             answer = _format_answer(slow, settings)
             unit_suffix = f" {speed_u}" if show_units else ""
-            vehicle = random.choice(["train", "bus", "car"])
-            latex = (
-                rf"\text{{A slow {vehicle} leaves a station traveling at an unknown speed. "
-                rf"{head} {time_u} later a faster {vehicle} leaves the same station at "
-                rf"{fast} {speed_u} and catches up after {catch} {time_u}. "
-                rf"What is the slow {vehicle}'s speed?}}"
+            fid, inner, text = a1f.catchup_slow_stems(
+                vehicle=vehicle,
+                head=head,
+                fast=fast,
+                catch=catch,
+                time_u=time_u,
+                speed_u=speed_u,
             )
-            text = (
-                f"A slow {vehicle} leaves a station traveling at an unknown speed. "
-                f"{head} {time_u} later a faster {vehicle} leaves the same station at "
-                f"{fast} {speed_u} and catches up after {catch} {time_u}. "
-                f"What is the slow {vehicle}'s speed?"
-            )
+            self._stamp(fid, vehicle=vehicle, ask=ask)
+            latex, _ = _as_text_prompt(inner)
             return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
         if ask == "find_leader_total_time":
@@ -743,40 +804,63 @@ class DistanceRateTimeFramework(WordProblemFramework):
             leader_total = head + catch
             answer = _format_answer(leader_total, settings)
             unit_suffix = f" {time_u}" if show_units else ""
-            latex = (
-                rf"\text{{{a_name} leaves traveling at {slow} {speed_u}. {b_name} leaves "
-                rf"later from the same place at {fast} {speed_u} in the same direction and "
-                rf"catches up {catch} {time_u} after starting. "
-                rf"How long had {a_name} been traveling when caught?}}"
+            fid, inner, text = a1f.catchup_named_stems(
+                a_name=a_name,
+                b_name=b_name,
+                vehicle=vehicle,
+                verb=verb,
+                slow=slow,
+                fast=fast,
+                head=head,
+                catch=catch,
+                time_u=time_u,
+                speed_u=speed_u,
+                ask=ask,
             )
-            text = (
-                f"{a_name} leaves traveling at {slow} {speed_u}. {b_name} leaves "
-                f"later from the same place at {fast} {speed_u} in the same direction and "
-                f"catches up {catch} {time_u} after starting. "
-                f"How long had {a_name} been traveling when caught?"
-            )
+            self._stamp(fid, vehicle=vehicle, ask=ask)
+            latex, _ = _as_text_prompt(inner)
             return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
         # find_catch_time — both speeds and head start known
         answer = _format_answer(catch, settings)
         unit_suffix = f" {time_u}" if show_units else ""
-        latex = (
-            rf"\text{{{a_name} leaves traveling at {slow} {speed_u}. {b_name} leaves "
-            rf"from the same place {head} {time_u} later at {fast} {speed_u} "
-            rf"in the same direction. How many {time_u} after {b_name} starts does "
-            rf"{b_name} catch up to {a_name}?}}"
+        fid, inner, text = a1f.catchup_named_stems(
+            a_name=a_name,
+            b_name=b_name,
+            vehicle=vehicle,
+            verb=verb,
+            slow=slow,
+            fast=fast,
+            head=head,
+            catch=catch,
+            time_u=time_u,
+            speed_u=speed_u,
+            ask="find_catch_time",
         )
-        text = (
-            f"{a_name} leaves traveling at {slow} {speed_u}. {b_name} leaves "
-            f"from the same place {head} {time_u} later at {fast} {speed_u} "
-            f"in the same direction. How many {time_u} after {b_name} starts does "
-            f"{b_name} catch up to {a_name}?"
-        )
+        self._stamp(fid, vehicle=vehicle, ask="find_catch_time")
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
 
 class WorkProblemFramework(WordProblemFramework):
     problem_kind = "work"
+
+    def __init__(self, template: WordProblemTemplate | None = None):
+        super().__init__(template)
+        self._last_meta: dict[str, Any] = {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        return dict(self._last_meta)
+
+    def _stamp(self, frame_id: str, **extra: Any) -> None:
+        self._last_meta = _stamp_wp("WorkWP", "wp_work", frame_id, **extra)
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         time_u = self._pick_time_unit(settings)
@@ -807,10 +891,10 @@ class WorkProblemFramework(WordProblemFramework):
 
     @staticmethod
     def _time_bounds(settings: dict) -> tuple[int, int]:
-        difficulty = str(settings.get("difficulty", "medium"))
-        if difficulty == "easy":
+        band = _band_from_d(_topic_d(settings))
+        if band == "easy":
             return 2, 12
-        if difficulty == "hard":
+        if band == "hard":
             return 4, 24
         return 3, 18
 
@@ -824,16 +908,19 @@ class WorkProblemFramework(WordProblemFramework):
         together = (a_time * b_time) // (a_time + b_time)
         answer = _format_answer(together, settings)
         unit_suffix = f" {time_u}" if show_units else ""
-        latex = (
-            rf"\text{{{a_name} can finish a job in {a_time} {time_u} and {b_name} "
-            rf"can finish the same job in {b_time} {time_u}. Working together, "
-            rf"how many {time_u} will it take them to finish the job?}}"
+        frame = a1f.pick_work_job(random)
+        fid, inner, text = a1f.work_two_people(
+            frame=frame,
+            a_name=a_name,
+            b_name=b_name,
+            a_time=a_time,
+            b_time=b_time,
+            together=together,
+            time_u=time_u,
+            ask="together",
         )
-        text = (
-            f"{a_name} can finish a job in {a_time} {time_u} and {b_name} "
-            f"can finish the same job in {b_time} {time_u}. Working together, "
-            f"how many {time_u} will it take them to finish the job?"
-        )
+        self._stamp(fid)
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _find_one_rate(
@@ -846,16 +933,19 @@ class WorkProblemFramework(WordProblemFramework):
         together = (a_time * b_time) // (a_time + b_time)
         answer = _format_answer(b_time, settings)
         unit_suffix = f" {time_u}" if show_units else ""
-        latex = (
-            rf"\text{{{a_name} can finish a job in {a_time} {time_u}. Working with "
-            rf"{b_name}, they finish in {together} {time_u}. How many {time_u} would "
-            rf"it take {b_name} working alone?}}"
+        frame = a1f.pick_work_job(random)
+        fid, inner, text = a1f.work_two_people(
+            frame=frame,
+            a_name=a_name,
+            b_name=b_name,
+            a_time=a_time,
+            b_time=b_time,
+            together=together,
+            time_u=time_u,
+            ask="find_one",
         )
-        text = (
-            f"{a_name} can finish a job in {a_time} {time_u}. Working with "
-            f"{b_name}, they finish in {together} {time_u}. How many {time_u} would "
-            f"it take {b_name} working alone?"
-        )
+        self._stamp(fid)
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _three(
@@ -870,16 +960,19 @@ class WorkProblemFramework(WordProblemFramework):
             a_time, b_time, c_time, together = triple
         answer = _format_answer(together, settings)
         unit_suffix = f" {time_u}" if show_units else ""
-        latex = (
-            rf"\text{{{a_name}, {b_name}, and {c_name} can finish a job in "
-            rf"{a_time}, {b_time}, and {c_time} {time_u} respectively. Working "
-            rf"together, how many {time_u} will it take them?}}"
+        frame = a1f.pick_work_job(random)
+        if frame[0] == "work_press":
+            frame = a1f.WORK_JOBS[0]
+        fid, inner, text = a1f.work_three_people(
+            frame=frame,
+            names=(a_name, b_name, c_name),
+            times=(a_time, b_time, c_time),
+            together=together,
+            time_u=time_u,
+            ask="together",
         )
-        text = (
-            f"{a_name}, {b_name}, and {c_name} can finish a job in "
-            f"{a_time}, {b_time}, and {c_time} {time_u} respectively. Working "
-            f"together, how many {time_u} will it take them?"
-        )
+        self._stamp(fid)
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _find_one_time(
@@ -894,16 +987,19 @@ class WorkProblemFramework(WordProblemFramework):
             a_time, b_time, c_time, together = triple
         answer = _format_answer(c_time, settings)
         unit_suffix = f" {time_u}" if show_units else ""
-        latex = (
-            rf"\text{{{a_name} and {b_name} can finish a job in {a_time} and "
-            rf"{b_time} {time_u}. With {c_name} helping, the three finish in "
-            rf"{together} {time_u}. How many {time_u} would {c_name} need alone?}}"
+        frame = a1f.pick_work_job(random)
+        if frame[0] == "work_press":
+            frame = a1f.WORK_JOBS[0]
+        fid, inner, text = a1f.work_three_people(
+            frame=frame,
+            names=(a_name, b_name, c_name),
+            times=(a_time, b_time, c_time),
+            together=together,
+            time_u=time_u,
+            ask="find_one_time",
         )
-        text = (
-            f"{a_name} and {b_name} can finish a job in {a_time} and "
-            f"{b_time} {time_u}. With {c_name} helping, the three finish in "
-            f"{together} {time_u}. How many {time_u} would {c_name} need alone?"
-        )
+        self._stamp(fid)
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _starts_later(
@@ -922,16 +1018,19 @@ class WorkProblemFramework(WordProblemFramework):
         )
         answer = _format_answer(total, settings)
         unit_suffix = f" {time_u}" if show_units else ""
-        latex = (
-            rf"\text{{{a_name} can finish a job in {a_time} {time_u} and {b_name} "
-            rf"in {b_time} {time_u}. {a_name} works alone for {delay} {time_u}, then "
-            rf"{b_name} joins. How many {time_u} from the start until the job is done?}}"
+        frame = a1f.pick_work_job(random)
+        fid, inner, text = a1f.work_starts_later(
+            frame=frame,
+            a_name=a_name,
+            b_name=b_name,
+            a_time=a_time,
+            b_time=b_time,
+            delay=delay,
+            total=total,
+            time_u=time_u,
         )
-        text = (
-            f"{a_name} can finish a job in {a_time} {time_u} and {b_name} "
-            f"in {b_time} {time_u}. {a_name} works alone for {delay} {time_u}, then "
-            f"{b_name} joins. How many {time_u} from the start until the job is done?"
-        )
+        self._stamp(fid)
+        latex, _ = _as_text_prompt(inner)
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
     def _pipes(
@@ -958,6 +1057,7 @@ class WorkProblemFramework(WordProblemFramework):
             f"{fill_b} {time_u}, and a drain empties it in {drain} {time_u}. "
             f"With all three open, how many {time_u} to fill the tank?"
         )
+        self._stamp("work_pipes")
         return latex, text, f"{answer}{unit_suffix}" if show_units else answer
 
 
@@ -1136,16 +1236,38 @@ class MixtureProblemFramework(WordProblemFramework):
     Skill: combine two amounts with two rates → mixture rate
     ``(a1·r1 + a2·r2) / (a1 + a2)``. Story frames match classroom examples
     (soil/sand, nuts/peanuts, alcohol solutions, spice cost blends).
+    High D can ask for an unknown amount given a target blend (OpenStax EA 3.3).
     """
 
     problem_kind = "mixture"
+
+    def __init__(self, template: WordProblemTemplate | None = None):
+        super().__init__(template)
+        self._last_meta: dict[str, Any] = {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        return dict(self._last_meta)
+
+    def _stamp(self, frame_id: str, **extra: Any) -> None:
+        self._last_meta = _stamp_wp("MixtureWP", "wp_mixture", frame_id, **extra)
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         d = _topic_d(settings)
         band = _band_from_d(d)
         variant = self._pick_variant(settings, d)
         if variant == "cost":
+            if band == "hard" and random.random() < 0.45:
+                return self._cost_find_amount(settings, band)
             return self._cost_mixture(settings, band)
+        if d >= 8.0 and random.random() < 0.45:
+            return self._percent_find_amount(settings, band)
         return self._percent_mixture(settings, band)
 
     @staticmethod
@@ -1211,44 +1333,13 @@ class MixtureProblemFramework(WordProblemFramework):
         else:
             a1, a2, p1, p2, mix_disp = 4, 6, 20, 50, "38"
 
-        frame = random.choice(["soil", "nuts", "alcohol"])
+        frame = random.choice(list(a1f.MIX_PERCENT_FRAMES))
         name = _pick_name(settings)
-
-        if frame == "soil":
-            latex = (
-                rf"\text{{{name} mixes {a1} cubic yards of soil that is {p1}\% sand with "
-                rf"{a2} cubic yards of soil that is {p2}\% sand. "
-                rf"What percent of the mixture is sand?}}"
-            )
-            text = (
-                f"{name} mixes {a1} cubic yards of soil that is {p1}% sand with "
-                f"{a2} cubic yards of soil that is {p2}% sand. "
-                f"What percent of the mixture is sand?"
-            )
-        elif frame == "nuts":
-            latex = (
-                rf"\text{{{name} mixes {a1} lb of nuts that are {p1}\% peanuts with "
-                rf"{a2} lb of nuts that are {p2}\% peanuts. "
-                rf"What percent of the new mixture is peanuts?}}"
-            )
-            text = (
-                f"{name} mixes {a1} lb of nuts that are {p1}% peanuts with "
-                f"{a2} lb of nuts that are {p2}% peanuts. "
-                f"What percent of the new mixture is peanuts?"
-            )
-        else:
-            unit = "fl oz"
-            latex = (
-                rf"\text{{{name} mixes {a1} {unit} of a {p1}\% alcohol solution with "
-                rf"{a2} {unit} of a {p2}\% alcohol solution. "
-                rf"What is the concentration of the new mixture?}}"
-            )
-            text = (
-                f"{name} mixes {a1} {unit} of a {p1}% alcohol solution with "
-                f"{a2} {unit} of a {p2}% alcohol solution. "
-                f"What is the concentration of the new mixture?"
-            )
-
+        fid, latex_inner, text = a1f.mix_percent_blend(
+            frame=frame, name=name, a1=a1, a2=a2, p1=p1, p2=p2
+        )
+        self._stamp(fid, ask="blend_percent")
+        latex, _ = _as_text_prompt(latex_inner)
         answer = f"{mix_disp}\\%"
         return latex, text, answer
 
@@ -1291,19 +1382,88 @@ class MixtureProblemFramework(WordProblemFramework):
         brand_b = random.choice(["Thai", "Indian", "Mexican"])
         while brand_b == brand_a:
             brand_b = random.choice(["Thai", "Indian", "Mexican", "Chinese"])
-        product = random.choice(["cinnamon", "coffee", "tea"])
-
-        latex = (
-            rf"\text{{{name} blends {w1} lb of {brand_a} {product} costing "
-            rf"\${c1} per lb with {w2} lb of {brand_b} {product} costing "
-            rf"\${c2} per lb. What is the cost per pound of the mixture?}}"
+        product = random.choice([p for p in a1f.MIX_COST_PRODUCTS if p != "trail mix"])
+        fid, latex_inner, text = a1f.mix_cost_blend(
+            name=name,
+            product=product,
+            brand_a=brand_a,
+            brand_b=brand_b,
+            w1=w1,
+            w2=w2,
+            c1=c1,
+            c2=c2,
         )
-        text = (
-            f"{name} blends {w1} lb of {brand_a} {product} costing "
-            f"${c1} per lb with {w2} lb of {brand_b} {product} costing "
-            f"${c2} per lb. What is the cost per pound of the mixture?"
-        )
+        self._stamp(fid, ask="blend_cost")
+        latex, _ = _as_text_prompt(latex_inner)
         return latex, text, f"\\${cost_disp}"
+
+    def _percent_find_amount(
+        self, settings: dict, band: str
+    ) -> tuple[str, str, str | None]:
+        """Find unknown amount given a target mixture percent (one linear equation)."""
+        name = _pick_name(settings)
+        frame = random.choice(list(a1f.MIX_PERCENT_FRAMES))
+        for _ in range(80):
+            known, unknown = self._sample_amounts(band)
+            p_known, p_unknown = self._sample_percents(band)
+            if p_known == p_unknown:
+                continue
+            total = known + unknown
+            mix = (known * p_known + unknown * p_unknown) / total
+            if abs(mix - round(mix)) > 1e-9:
+                continue
+            p_mix = int(round(mix))
+            if p_mix == p_known or p_mix == p_unknown:
+                continue
+            lo, hi = (p_known, p_unknown) if p_known < p_unknown else (p_unknown, p_known)
+            if not (lo < p_mix < hi):
+                continue
+            break
+        else:
+            known, unknown, p_known, p_unknown, p_mix = 4, 6, 20, 50, 38
+        fid, latex_inner, text = a1f.mix_percent_find_amount(
+            frame=frame,
+            name=name,
+            known=known,
+            unknown=unknown,
+            p_known=p_known,
+            p_unknown=p_unknown,
+            p_mix=p_mix,
+        )
+        self._stamp(fid, ask="find_amount")
+        latex, _ = _as_text_prompt(latex_inner)
+        return latex, text, str(unknown)
+
+    def _cost_find_amount(
+        self, settings: dict, band: str
+    ) -> tuple[str, str, str | None]:
+        """IA 2.4 trail-mix: given total weight and target $/lb, find raisins lb."""
+        name = _pick_name(settings)
+        for _ in range(80):
+            raisins, nuts = self._sample_amounts("medium" if band == "easy" else band)
+            c1 = random.choice([3, 4, 5])
+            c2 = random.choice([x for x in (6, 7, 8, 9, 10) if x != c1])
+            total_w = raisins + nuts
+            total_cost = raisins * c1 + nuts * c2
+            if total_cost % total_w != 0:
+                continue
+            target = total_cost // total_w
+            if target == c1 or target == c2:
+                continue
+            break
+        else:
+            raisins, nuts, c1, c2, total_w, target = 10, 15, 4, 8, 25, 6
+        fid, latex_inner, text = a1f.mix_cost_find_amount(
+            name=name,
+            total_w=total_w,
+            c1=c1,
+            c2=c2,
+            target=str(target),
+            unknown=raisins,
+        )
+        self._stamp(fid, ask="find_amount")
+        latex, _ = _as_text_prompt(latex_inner)
+        return latex, text, str(raisins)
 
 
 class PerimeterAreaFramework(WordProblemFramework):
@@ -1346,7 +1506,7 @@ class PerimeterAreaFramework(WordProblemFramework):
 
 
 class PercentWordProblemFramework(WordProblemFramework):
-    """Markup / discount / tax / tip money percents.
+    """OpenStax EA 3.2 percent applications: percent-of, discount, markup, tax, interest.
 
     Easy/Medium are calculator-appropriate: sensible prices and retail rates,
     with answers keyed to half-up-to-cents arithmetic (not integer truncation).
@@ -1355,10 +1515,69 @@ class PercentWordProblemFramework(WordProblemFramework):
 
     problem_kind = "percent"
 
+    def __init__(self, template: WordProblemTemplate | None = None):
+        super().__init__(template)
+        self._last_meta: dict[str, Any] = {}
+
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        meta = dict(self._last_meta)
+        meta.setdefault("skeleton_pattern", "PercentWP")
+        meta.setdefault("primitive_engine", "percent_wp")
+        return meta
+
+    def _stamp(self, frame_id: str) -> None:
+        self._last_meta = _stamp_wp("PercentWP", "percent_wp", frame_id)
+
+    def _done(
+        self, frame_id: str, latex: str, text: str, answer: str | None
+    ) -> tuple[str, str, str | None]:
+        self._stamp(frame_id)
+        return latex, text, answer
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        settings = dict(settings)
+        topic = str(settings.get("_topic_id") or "")
+        pa_retail = topic.startswith("pa_markup")
+        a1_pct = topic.endswith("percent_word_problems")
+        if pa_retail:
+            settings.setdefault("allow_commission", True)
+            settings["allow_tip"] = False
+            settings.setdefault("allow_percent_of", False)
+            settings.setdefault("allow_interest", False)
+        elif a1_pct:
+            settings.setdefault("allow_percent_of", True)
+            settings.setdefault("allow_interest", True)
+            if _tier(settings) == "easy":
+                # EA 3.2 D=0: percent-of, discount, simple interest — not only markup/tax.
+                settings["allow_markup"] = False
+                settings["allow_tax"] = False
+                settings["allow_tip"] = False
+                settings["allow_commission"] = False
         name = _pick_name(settings)
         tier = _tier(settings)
-        variant = self._pick_variant(settings)
+        variant = self._pick_variant(settings, a1_easy=a1_pct and _tier(settings) == "easy")
+        if variant == "percent_of":
+            return self._build_percent_of(name, settings, tier)
+        if variant == "interest":
+            return self._build_interest(name, settings, tier)
+        if variant == "commission":
+            return self._build_commission(name, settings, tier)
+        if pa_retail and variant == "tax" and random.random() < 0.4:
+            return self._build_tax_amount_or_rate(name, settings, tier)
+        if (
+            a1_pct
+            and tier == "hard"
+            and variant == "discount"
+            and random.random() < 0.4
+        ):
+            return self._build_original(name, settings, tier)
         if (
             tier == "hard"
             and bool(settings.get("allow_multi_step", True))
@@ -1382,6 +1601,7 @@ class PercentWordProblemFramework(WordProblemFramework):
                 f"{name} buys an item priced at ${price_disp}. "
                 f"It is on sale for {rate_disp}% off. What is the sale price?"
             )
+            fid = "pct_discount"
         elif variant == "tax":
             answer = _apply_rate_factor(price, (Decimal(100) + rate) / Decimal(100))
             latex = (
@@ -1392,6 +1612,7 @@ class PercentWordProblemFramework(WordProblemFramework):
                 f"A ${price_disp} purchase has {rate_disp}% sales tax added. "
                 f"What is the total cost?"
             )
+            fid = "pct_tax"
         elif variant == "markup":
             answer = _apply_rate_factor(price, (Decimal(100) + rate) / Decimal(100))
             latex = (
@@ -1402,6 +1623,7 @@ class PercentWordProblemFramework(WordProblemFramework):
                 f"A store marks up a ${price_disp} item by {rate_disp}%. "
                 f"What is the selling price?"
             )
+            fid = "pct_markup"
         else:  # tip
             if random.random() < 0.5:
                 answer = _percent_of(price, rate)
@@ -1413,6 +1635,7 @@ class PercentWordProblemFramework(WordProblemFramework):
                     f"{name} leaves a {rate_disp}% tip on a ${price_disp} bill. "
                     f"How much is the tip?"
                 )
+                fid = "pct_tip_amount"
             else:
                 answer = _apply_rate_factor(price, (Decimal(100) + rate) / Decimal(100))
                 latex = (
@@ -1423,24 +1646,218 @@ class PercentWordProblemFramework(WordProblemFramework):
                     f"{name} leaves a {rate_disp}% tip on a ${price_disp} bill. "
                     f"What is the total, including tip?"
                 )
+                fid = "pct_tip_total"
 
         money = _format_money(answer)
         if str(settings.get("answer_units", "")):
-            return latex, text, _append_units(money, settings)
-        return latex, text, f"\\${money}"
+            return self._done(fid, latex, text, _append_units(money, settings))
+        return self._done(fid, latex, text, f"\\${money}")
 
     @staticmethod
-    def _pick_variant(settings: dict) -> str:
+    def _pick_variant(settings: dict, *, a1_easy: bool = False) -> str:
         flags = (
+            ("percent_of", bool(settings.get("allow_percent_of", False))),
+            ("interest", bool(settings.get("allow_interest", False))),
             ("discount", bool(settings.get("allow_discount", True))),
             ("tax", bool(settings.get("allow_tax", True))),
             ("markup", bool(settings.get("allow_markup", True))),
             ("tip", bool(settings.get("allow_tip", True))),
+            ("commission", bool(settings.get("allow_commission", False))),
         )
         allowed = [name for name, on in flags if on]
         if not allowed:
             allowed = ["discount", "tax", "markup"]
+        if a1_easy:
+            # Rotate OpenStax EA 3.2 frames (percent-of / discount / interest).
+            preferred = [n for n in ("percent_of", "discount", "interest") if n in allowed]
+            if preferred:
+                seed = settings.get("seed")
+                try:
+                    idx = int(seed) % len(preferred)
+                except (TypeError, ValueError):
+                    idx = random.randrange(len(preferred))
+                return preferred[idx]
         return random.choice(allowed)
+
+    def _build_percent_of(
+        self, name: str, settings: dict, tier: str
+    ) -> tuple[str, str, str | None]:
+        """EA 3.2: find the part given a percent of a whole."""
+        if tier == "easy":
+            for _ in range(40):
+                rate = Decimal(random.choice([10, 20, 25, 40, 50]))
+                whole = Decimal(random.choice([20, 40, 50, 60, 80, 100]))
+                if (whole * rate) % 100 == 0:
+                    break
+            else:
+                rate, whole = Decimal(25), Decimal(80)
+        elif tier == "medium":
+            rate = Decimal(random.choice([15, 20, 25, 30, 40, 60]))
+            whole = Decimal(random.choice([40, 50, 80, 120, 150, 200]))
+        else:
+            rate = Decimal(random.choice([12, 15, 18, 22, 35, 45]))
+            whole = Decimal(random.choice([80, 120, 160, 200, 250]))
+        part = _percent_of(whole, rate)
+        # Prefer integer-part stories when the product is whole.
+        if part == part.to_integral_value():
+            part_disp = str(int(part))
+        else:
+            part_disp = _format_money(part)
+        rate_disp = _display_rate(rate)
+        whole_i = int(whole)
+        story = random.choice(["students", "questions", "survey"])
+        if story == "students":
+            latex = (
+                rf"\text{{{rate_disp}\% of the {whole_i} students in a class passed "
+                rf"a test. How many students passed?}}"
+            )
+            text = (
+                f"{rate_disp}% of the {whole_i} students in a class passed "
+                f"a test. How many students passed?"
+            )
+            fid = "pct_percent_of_students"
+        elif story == "questions":
+            latex = (
+                rf"\text{{{name} answered {rate_disp}\% of {whole_i} questions "
+                rf"correctly. How many questions did {name} get right?}}"
+            )
+            text = (
+                f"{name} answered {rate_disp}% of {whole_i} questions "
+                f"correctly. How many questions did {name} get right?"
+            )
+            fid = "pct_percent_of_questions"
+        else:
+            latex = (
+                rf"\text{{A survey of {whole_i} people found that {rate_disp}\% "
+                rf"prefer tea. How many people prefer tea?}}"
+            )
+            text = (
+                f"A survey of {whole_i} people found that {rate_disp}% "
+                f"prefer tea. How many people prefer tea?"
+            )
+            fid = "pct_percent_of_survey"
+        return self._done(fid, latex, text, part_disp)
+
+    def _build_interest(
+        self, name: str, settings: dict, tier: str
+    ) -> tuple[str, str, str | None]:
+        """EA 3.2 simple interest I = Prt (years)."""
+        if tier == "easy":
+            principal = Decimal(random.choice([200, 400, 500, 800, 1000]))
+            rate = Decimal(random.choice([3, 4, 5, 6, 8, 10]))
+            years = Decimal(random.choice([1, 2, 3]))
+        elif tier == "medium":
+            principal = Decimal(random.choice([750, 1200, 2500, 4000, 6500]))
+            rate = Decimal(random.choice([3.5, 4, 4.5, 5, 6, 7]))
+            years = Decimal(random.choice([2, 3, 4, 5]))
+        else:
+            principal = Decimal(random.choice([1500, 2800, 5400, 8200]))
+            rate = Decimal(random.choice([3.25, 4.5, 5.5, 6.25]))
+            years = Decimal(random.choice([3, 4, 6, 8]))
+        interest = _round_money(principal * rate * years / Decimal(100))
+        p_disp = _display_money(principal)
+        r_disp = _display_rate(rate)
+        y_disp = str(int(years)) if years == years.to_integral_value() else str(years)
+        y_word = "year" if years == 1 else "years"
+        latex = (
+            rf"\text{{{name} deposits \${p_disp} in an account that earns "
+            rf"{r_disp}\% simple interest. How much interest is earned in "
+            rf"{y_disp} {y_word}?}}"
+        )
+        text = (
+            f"{name} deposits ${p_disp} in an account that earns "
+            f"{r_disp}% simple interest. How much interest is earned in "
+            f"{y_disp} {y_word}?"
+        )
+        return self._done("pct_interest", latex, text, f"\\${_format_money(interest)}")
+
+    def _build_original(
+        self, name: str, settings: dict, tier: str
+    ) -> tuple[str, str, str | None]:
+        """High D: given sale price after a discount, find the original."""
+        rate = self._sample_rate(settings, tier, "discount")
+        # Pick an original so sale cents are clean: orig * (100-r) / 100.
+        orig = self._sample_price(settings, "medium")
+        sale = _apply_rate_factor(orig, (Decimal(100) - rate) / Decimal(100))
+        sale_disp = _display_money(sale)
+        rate_disp = _display_rate(rate)
+        latex = (
+            rf"\text{{{name} bought an item on sale for \${sale_disp} after a "
+            rf"{rate_disp}\% discount. What was the original price?}}"
+        )
+        text = (
+            f"{name} bought an item on sale for ${sale_disp} after a "
+            f"{rate_disp}% discount. What was the original price?"
+        )
+        return self._done("pct_original", latex, text, f"\\${_format_money(orig)}")
+
+    def _build_commission(
+        self, name: str, settings: dict, tier: str
+    ) -> tuple[str, str, str | None]:
+        """OpenStax Prealgebra 2e §6.3 commission (find amount or rate)."""
+        if tier == "easy":
+            price = Decimal(random.choice([400, 800, 1200, 1450, 2000, 2500]))
+            rate = Decimal(random.choice([3, 4, 5, 6, 8, 10]))
+        elif tier == "medium":
+            price = Decimal(random.choice([5000, 12000, 26000, 48000, 85000]))
+            rate = Decimal(random.choice([2, 3, 4, 5, 6]))
+        else:
+            price = Decimal(random.choice([125000, 260000, 345000, 480000]))
+            rate = _as_decimal(random.choice([2.5, 3, 3.5, 4, 5, 6]))
+        commission = _percent_of(price, rate)
+        price_disp = _display_money(price)
+        rate_disp = _display_rate(rate)
+        find_rate = random.random() < 0.35
+        if find_rate:
+            comm_disp = _display_money(commission)
+            latex = (
+                rf"\text{{{name} earned \${comm_disp} commission on a "
+                rf"\${price_disp} sale. What was the commission rate?}}"
+            )
+            text = (
+                f"{name} earned ${comm_disp} commission on a "
+                f"${price_disp} sale. What was the commission rate?"
+            )
+            return self._done("pct_commission_rate", latex, text, f"{rate_disp}\\%")
+        latex = (
+            rf"\text{{{name} earns a {rate_disp}\% commission on a "
+            rf"\${price_disp} sale. How much commission is earned?}}"
+        )
+        text = (
+            f"{name} earns a {rate_disp}% commission on a "
+            f"${price_disp} sale. How much commission is earned?"
+        )
+        return self._done("pct_commission", latex, text, f"\\${_format_money(commission)}")
+
+    def _build_tax_amount_or_rate(
+        self, name: str, settings: dict, tier: str
+    ) -> tuple[str, str, str | None]:
+        """OpenStax §6.3: find the tax amount, or find the tax rate from tax paid."""
+        price = self._sample_price(settings, tier)
+        rate = self._sample_rate(settings, tier, "tax")
+        tax = _percent_of(price, rate)
+        price_disp = _display_money(price)
+        rate_disp = _display_rate(rate)
+        if random.random() < 0.5:
+            tax_disp = _display_money(tax)
+            latex = (
+                rf"\text{{{name} bought an item for \${price_disp} plus tax. "
+                rf"The tax was \${tax_disp}. What was the sales tax rate?}}"
+            )
+            text = (
+                f"{name} bought an item for ${price_disp} plus tax. "
+                f"The tax was ${tax_disp}. What was the sales tax rate?"
+            )
+            return self._done("pct_tax_rate", latex, text, f"{rate_disp}\\%")
+        latex = (
+            rf"\text{{{name} bought an item priced at \${price_disp}. "
+            rf"The sales tax rate is {rate_disp}\%. How much is the sales tax?}}"
+        )
+        text = (
+            f"{name} bought an item priced at ${price_disp}. "
+            f"The sales tax rate is {rate_disp}%. How much is the sales tax?"
+        )
+        return self._done("pct_tax_amount", latex, text, f"\\${_format_money(tax)}")
 
     @staticmethod
     def _sample_price(settings: dict, tier: str) -> Decimal:
@@ -1525,8 +1942,10 @@ class PercentWordProblemFramework(WordProblemFramework):
         )
         money = _format_money(total)
         if str(settings.get("answer_units", "")):
-            return latex, text, _append_units(money, settings)
-        return latex, text, f"\\${money}"
+            return self._done(
+                "pct_discount_then_tax", latex, text, _append_units(money, settings)
+            )
+        return self._done("pct_discount_then_tax", latex, text, f"\\${money}")
 
 
 
@@ -1564,19 +1983,36 @@ class InterestWordProblemFramework(WordProblemFramework):
 
     problem_kind = "interest"
 
+    def build_question_metadata(
+        self,
+        settings: dict,
+        *,
+        prompt_latex: str,
+        prompt_text: str,
+        answer: str | None,
+    ) -> dict[str, Any]:
+        return {
+            "skeleton_pattern": "InterestWP",
+            "primitive_engine": "interest_wp",
+        }
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         d = _topic_d(settings)
         band = _band_from_d(d)
         name = _pick_name(settings)
-        kind = self._pick_kind(settings, band)
+        kind = self._pick_kind(settings, band, d)
         if kind == "simple":
             return self._simple(settings, name, band, d)
         return self._compound(settings, name, band, d)
 
-    def _pick_kind(self, settings: dict, band: str) -> str:
+    def _pick_kind(self, settings: dict, band: str, d: float = 0.0) -> str:
         forced = str(settings.get("interest_kind", "mixed")).lower()
         if forced in ("simple", "compound"):
             return forced
+        topic = str(settings.get("_topic_id") or "")
+        # OpenStax PA 6.4 is simple interest; compound is extra at high D.
+        if topic.startswith("pa_simple") and d < 16.0:
+            return "simple"
         if band == "easy":
             return "simple" if random.random() < 0.75 else "compound"
         if band == "hard":
@@ -1639,28 +2075,84 @@ class InterestWordProblemFramework(WordProblemFramework):
         amount = p + interest
         years = "year" if t == 1 else "years"
         rate_show = int(r) if float(r).is_integer() else r
+        topic = str(settings.get("_topic_id") or "")
+        pa_leaf = topic.startswith("pa_simple")
         find = self._forward_ask(band)
+        if pa_leaf:
+            if d < 8:
+                find = "interest"
+            else:
+                find = random.choice(
+                    ["interest", "amount", "principal", "rate", "time"]
+                )
+        time_phrase = f"{t} {years}"
+        if (
+            pa_leaf
+            and d >= 16
+            and find in {"interest", "amount"}
+            and float(r).is_integer()
+        ):
+            for months in random.sample([3, 4, 6, 8, 9, 18], k=6):
+                if (p * int(r) * months) % 1200 == 0:
+                    t = months / 12.0
+                    interest = p * rate_decimal * t
+                    amount = p + interest
+                    time_phrase = f"{months} months"
+                    break
 
+        if find == "principal":
+            latex = (
+                rf"\text{{Find the principal invested if \${_money_display(interest)} "
+                rf"interest was earned in {t} {years} at {rate_show}\% simple interest.}}"
+            )
+            text = (
+                f"Find the principal invested if ${_money_display(interest)} "
+                f"interest was earned in {t} {years} at {rate_show}% simple interest."
+            )
+            return latex, text, _money_answer(p)
+        if find == "rate":
+            latex = (
+                rf"\text{{A principal of \${_money_display(p)} earned "
+                rf"\${_money_display(interest)} interest in {t} {years}. "
+                rf"What was the simple interest rate?}}"
+            )
+            text = (
+                f"A principal of ${_money_display(p)} earned "
+                f"${_money_display(interest)} interest in {t} {years}. "
+                f"What was the simple interest rate?"
+            )
+            return latex, text, f"{rate_show}\\%"
+        if find == "time":
+            latex = (
+                rf"\text{{{name} invested \${_money_display(p)} at {rate_show}\% "
+                rf"simple interest and earned \${_money_display(interest)}. "
+                rf"How many years was the money invested?}}"
+            )
+            text = (
+                f"{name} invested ${_money_display(p)} at {rate_show}% "
+                f"simple interest and earned ${_money_display(interest)}. "
+                f"How many years was the money invested?"
+            )
+            return latex, text, str(int(t) if float(t).is_integer() else t)
         if find == "interest":
             latex = (
                 rf"\text{{{name} invests \${_money_display(p)} at {rate_show}\% "
-                rf"simple interest for {t} {years}. How much interest is earned?}}"
+                rf"simple interest for {time_phrase}. How much interest is earned?}}"
             )
             text = (
                 f"{name} invests ${_money_display(p)} at {rate_show}% "
-                f"simple interest for {t} {years}. How much interest is earned?"
+                f"simple interest for {time_phrase}. How much interest is earned?"
             )
             return latex, text, _money_answer(interest)
 
-        # find == "amount" — A = P(1 + rt)
         latex = (
             rf"\text{{{name} deposits \${_money_display(p)} in an account that earns "
-            rf"{rate_show}\% simple interest for {t} {years}. "
+            rf"{rate_show}\% simple interest for {time_phrase}. "
             rf"What is the account balance at the end of the term?}}"
         )
         text = (
             f"{name} deposits ${_money_display(p)} in an account that earns "
-            f"{rate_show}% simple interest for {t} {years}. "
+            f"{rate_show}% simple interest for {time_phrase}. "
             f"What is the account balance at the end of the term?"
         )
         return latex, text, _money_answer(amount)

@@ -94,7 +94,7 @@ def test_drt_presets_differ_by_structure():
     assert hard["allow_drt_find_missing"] is False
     assert hard["allow_drt_round_trip"] is True
     assert hard["allow_drt_same_direction"] is True
-    assert hard["allow_drt_opposite"] is False
+    assert hard["allow_drt_opposite"] is True
 
 
 def test_work_presets_differ_by_structure():

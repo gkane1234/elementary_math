@@ -1,0 +1,1751 @@
+{
+  "topic": "derivative_chain_rule",
+  "rows": [
+    {
+      "form_id": "chain_power_linear",
+      "skeleton_pattern": "Diff(Pow(H,n)) chain-linear",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 2.0,
+      "band": "low",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(2x\\right)^{2}\\right]",
+      "body_latex": "\\left(2x\\right)^{2}",
+      "answer_latex": "2\\left(2x\\right)^{1}\\left(2\\right)",
+      "note": "diff_pow_h_n; C=2; band=low; inner=affine; nest=1; deg=2; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2086,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 2.0,
+        "band": "low",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": false,
+        "power_min": 2,
+        "power_max": 2,
+        "poly_degree_min": 1,
+        "coef_abs_max": 3
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 2,
+        "n_applies": 0,
+        "n_terms": 1,
+        "n_factors": 0,
+        "inner_kind": "affine",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "affine",
+      "inner_latex": "-x - 2",
+      "independent_inners": null,
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "chain_power_linear",
+      "skeleton_pattern": "Diff(Pow(H,n)) chain-linear",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 8.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(-3x^{3} - 3x^{2} + 3x + 4\\right)^{3}\\right]",
+      "body_latex": "\\left(-3x^{3} - 3x^{2} + 3x + 4\\right)^{3}",
+      "answer_latex": "3\\left(-3x^{3} - 3x^{2} + 3x + 4\\right)^{2}\\left(3x^{2}\\left(-3\\right) + 2x^{1}\\left(-3\\right) + 3\\right)",
+      "note": "diff_pow_h_n; C=8; band=mid; inner=nested_apply; nest=1; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2093,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 8.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 3,
+        "poly_degree_min": 2,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 3,
+        "n_applies": 0,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\arctan\\left(-4x + 2\\right)",
+      "independent_inners": null,
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "chain_power_linear",
+      "skeleton_pattern": "Diff(Pow(H,n)) chain-linear",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(-2x^{2} + 4\\right)^{4}\\right]",
+      "body_latex": "\\left(-2x^{2} + 4\\right)^{4}",
+      "answer_latex": "4\\left(-2x^{2} + 4\\right)^{3}\\left(2\\right)x^{1}\\left(-2\\right)",
+      "note": "diff_pow_h_n; C=14; band=high; inner=nested_apply; nest=1; deg=4; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2100,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 4,
+        "n_applies": 0,
+        "n_terms": 2,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 2,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\tan\\left(7x^{2} + 5\\right)",
+      "independent_inners": null,
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "chain_power_linear",
+      "skeleton_pattern": "Diff(Pow(H,n)) chain-linear",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\left(9x^{3} - 7x^{2} - 6x - 7\\right)^{4}\\right]",
+      "body_latex": "\\left(9x^{3} - 7x^{2} - 6x - 7\\right)^{4}",
+      "answer_latex": "4\\left(9x^{3} - 7x^{2} - 6x - 7\\right)^{3}\\left(3x^{2}\\left(9\\right) + 2x^{1}\\left(-7\\right) - 6\\right)",
+      "note": "diff_pow_h_n; C=20; band=elite; inner=nested_apply; nest=1; deg=4; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2107,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 2,
+        "force_min_nest": 2,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 4,
+        "power_max": 7,
+        "poly_degree_min": 2,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 2,
+        "nest_budget_forced_min": 2,
+        "nest_left_at_sample": 2,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 4,
+        "n_applies": 0,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 4,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "e^{\\sin\\left(7x^{4} - 2x^{3} + 7x^{2} - 8x - 10\\right)}",
+      "independent_inners": null,
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "chain_trig_poly",
+      "skeleton_pattern": "Diff(Apply(fn,u)) chain-trig",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 8.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\sin\\left(-3x^{3} - 4x^{2} - 3x - 4\\right)\\right]",
+      "body_latex": "\\sin\\left(-3x^{3} - 4x^{2} - 3x - 4\\right)",
+      "answer_latex": "\\cos\\left(-3x^{3} - 4x^{2} - 3x - 4\\right)\\left(3x^{2}\\left(-3\\right) + 2x^{1}\\left(-4\\right) - 3\\right)",
+      "note": "diff_apply_fn_u; C=8; band=mid; inner=poly; nest=1; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2193,
+      "productions": [
+        "Apply",
+        "sin",
+        "u"
+      ],
+      "chosen_outer": "sin",
+      "richness_knobs": {
+        "conceptual_d": 8.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 3,
+        "poly_degree_min": 2,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 3,
+        "n_applies": 1,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "-3x^{3} - 4x^{2} - 3x - 4",
+      "independent_inners": null,
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "chain_trig_poly",
+      "skeleton_pattern": "Diff(Apply(fn,u)) chain-trig",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\tan\\left(\\sin\\left(8x^{3} - x^{2} + 5\\right)\\right)\\right]",
+      "body_latex": "\\tan\\left(\\sin\\left(8x^{3} - x^{2} + 5\\right)\\right)",
+      "answer_latex": "\\sec^{2}(\\sin\\left(8x^{3} - x^{2} + 5\\right))\\cos\\left(8x^{3} - x^{2} + 5\\right)\\left(3x^{2}\\left(8\\right) + 2x^{1}\\left(-1\\right)\\right)",
+      "note": "diff_apply_fn_u; C=14; band=high; inner=nested_apply; nest=2; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2200,
+      "productions": [
+        "Apply",
+        "tan",
+        "u"
+      ],
+      "chosen_outer": "tan",
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 2,
+        "chain_depth": 2,
+        "degree_max": 3,
+        "n_applies": 2,
+        "n_terms": 3,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\sin\\left(8x^{3} - x^{2} + 5\\right)",
+      "independent_inners": null,
+      "chain_depth": 2,
+      "ok": true
+    },
+    {
+      "form_id": "chain_trig_poly",
+      "skeleton_pattern": "Diff(Apply(fn,u)) chain-trig",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\sin^{3}\\left(\\cos\\left(e^{-x + 4}\\right)\\right)\\right]",
+      "body_latex": "\\sin^{3}\\left(\\cos\\left(e^{-x + 4}\\right)\\right)",
+      "answer_latex": "-3\\sin^{2}\\left(\\cos\\left(e^{-x + 4}\\right)\\right)\\cos\\left(\\cos\\left(e^{-x + 4}\\right)\\right)\\sin\\left(e^{-x + 4}\\right)e^{-x + 4}\\left(-1\\right)",
+      "note": "diff_apply_fn_u; C=20; band=elite; inner=nested_apply; nest=4; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "exp",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2207,
+      "productions": [
+        "Apply",
+        "sin",
+        "u"
+      ],
+      "chosen_outer": "sin",
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 2,
+        "force_min_nest": 2,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 4,
+        "power_max": 7,
+        "poly_degree_min": 2,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 2,
+        "nest_budget_forced_min": 2,
+        "nest_left_at_sample": 2,
+        "nest_depth_expr": 4,
+        "chain_depth": 4,
+        "degree_max": 3,
+        "n_applies": 3,
+        "n_terms": 2,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\cos\\left(e^{-x + 4}\\right)",
+      "independent_inners": null,
+      "chain_depth": 4,
+      "ok": true
+    },
+    {
+      "form_id": "chain_exp_poly",
+      "skeleton_pattern": "Diff(Apply(exp,u)) chain",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 8.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d}{dx}\\left[e^{-2x^{3} + 5x^{2} - 4x + 4}\\right]",
+      "body_latex": "e^{-2x^{3} + 5x^{2} - 4x + 4}",
+      "answer_latex": "e^{-2x^{3} + 5x^{2} - 4x + 4}\\left(3x^{2}\\left(-2\\right) + 2x^{1}\\left(5\\right) - 4\\right)",
+      "note": "diff_apply_fn_u; C=8; band=mid; inner=poly; nest=1; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "exp",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2293,
+      "productions": [
+        "Apply",
+        "exp",
+        "u"
+      ],
+      "chosen_outer": "exp",
+      "richness_knobs": {
+        "conceptual_d": 8.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 3,
+        "poly_degree_min": 2,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 3,
+        "n_applies": 1,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "exp"
+        ],
+        "atom_fn_candidates_g": [
+          "exp"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "exp"
+      ],
+      "atom_fn_candidates_g": [
+        "exp"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "-2x^{3} + 5x^{2} - 4x + 4",
+      "independent_inners": null,
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "chain_exp_poly",
+      "skeleton_pattern": "Diff(Apply(exp,u)) chain",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[e^{\\cos\\left(-2x^{2} - 5\\right)}\\right]",
+      "body_latex": "e^{\\cos\\left(-2x^{2} - 5\\right)}",
+      "answer_latex": "e^{\\cos\\left(-2x^{2} - 5\\right)}\\left(-\\sin\\left(-2x^{2} - 5\\right)\\right)\\left(2x^{1}\\left(-2\\right)\\right)",
+      "note": "diff_apply_fn_u; C=14; band=high; inner=nested_apply; nest=2; deg=2; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "exp",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2300,
+      "productions": [
+        "Apply",
+        "exp",
+        "u"
+      ],
+      "chosen_outer": "exp",
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 2,
+        "chain_depth": 2,
+        "degree_max": 2,
+        "n_applies": 2,
+        "n_terms": 2,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 2,
+        "atom_fn_candidates": [
+          "exp"
+        ],
+        "atom_fn_candidates_g": [
+          "exp"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "exp"
+      ],
+      "atom_fn_candidates_g": [
+        "exp"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\cos\\left(-2x^{2} - 5\\right)",
+      "independent_inners": null,
+      "chain_depth": 2,
+      "ok": true
+    },
+    {
+      "form_id": "chain_exp_poly",
+      "skeleton_pattern": "Diff(Apply(exp,u)) chain",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d}{dx}\\left[e^{\\arcsin\\left(x^{4} + 7x^{3} + 8x^{2} + x - 9\\right)}\\right]",
+      "body_latex": "e^{\\arcsin\\left(x^{4} + 7x^{3} + 8x^{2} + x - 9\\right)}",
+      "answer_latex": "e^{\\arcsin\\left(x^{4} + 7x^{3} + 8x^{2} + x - 9\\right)}\\frac{1}{\\sqrt{1-(x^{4} + 7x^{3} + 8x^{2} + x - 9)^{2}}}\\left(4x^{3} + 3x^{2}\\left(7\\right) + 2x^{1}\\left(8\\right) + 1\\right)",
+      "note": "diff_apply_fn_u; C=20; band=elite; inner=nested_apply; nest=2; deg=4; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "exp",
+        "invtrig",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2307,
+      "productions": [
+        "Apply",
+        "exp",
+        "u"
+      ],
+      "chosen_outer": "exp",
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 4,
+        "power_max": 7,
+        "poly_degree_min": 2,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 2,
+        "chain_depth": 2,
+        "degree_max": 4,
+        "n_applies": 2,
+        "n_terms": 5,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 4,
+        "atom_fn_candidates": [
+          "exp"
+        ],
+        "atom_fn_candidates_g": [
+          "exp"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "exp"
+      ],
+      "atom_fn_candidates_g": [
+        "exp"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\arcsin\\left(x^{4} + 7x^{3} + 8x^{2} + x - 9\\right)",
+      "independent_inners": null,
+      "chain_depth": 2,
+      "ok": true
+    },
+    {
+      "form_id": "chain_ln_poly",
+      "skeleton_pattern": "Diff(Apply(ln,u)) chain",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 8.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\ln\\left(e^{x}\\right)\\right]",
+      "body_latex": "\\ln\\left(e^{x}\\right)",
+      "answer_latex": "\\frac{e^{x}}{e^{x}}",
+      "note": "diff_apply_fn_u; C=8; band=mid; inner=nested_apply; nest=1; deg=1; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "exp",
+        "log"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2393,
+      "productions": [
+        "Apply",
+        "ln",
+        "u"
+      ],
+      "chosen_outer": "ln",
+      "richness_knobs": {
+        "conceptual_d": 8.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 3,
+        "poly_degree_min": 2,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 1,
+        "n_applies": 2,
+        "n_terms": 1,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "ln"
+        ],
+        "atom_fn_candidates_g": [
+          "ln"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "ln"
+      ],
+      "atom_fn_candidates_g": [
+        "ln"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "e^{x}",
+      "independent_inners": null,
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "chain_ln_poly",
+      "skeleton_pattern": "Diff(Apply(ln,u)) chain",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\ln\\left(\\cos\\left(\\arcsin(-4x)\\right)\\right)\\right]",
+      "body_latex": "\\ln\\left(\\cos\\left(\\arcsin(-4x)\\right)\\right)",
+      "answer_latex": "\\frac{\\left(-\\sin\\left(\\arcsin(-4x)\\right)\\right)\\frac{1}{\\sqrt{1-(-4x)^{2}}}\\left(-4\\right)}{\\cos\\left(\\arcsin(-4x)\\right)}",
+      "note": "diff_apply_fn_u; C=14; band=high; inner=nested_apply; nest=3; deg=1; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "invtrig",
+        "log",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2400,
+      "productions": [
+        "Apply",
+        "ln",
+        "u"
+      ],
+      "chosen_outer": "ln",
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 3,
+        "chain_depth": 3,
+        "degree_max": 1,
+        "n_applies": 3,
+        "n_terms": 1,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "ln"
+        ],
+        "atom_fn_candidates_g": [
+          "ln"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "ln"
+      ],
+      "atom_fn_candidates_g": [
+        "ln"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\cos\\left(\\arcsin(-4x)\\right)",
+      "independent_inners": null,
+      "chain_depth": 3,
+      "ok": true
+    },
+    {
+      "form_id": "chain_ln_poly",
+      "skeleton_pattern": "Diff(Apply(ln,u)) chain",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\ln\\left(e^{-6x^{3} - 5x^{2} + 9x + 9}\\right)\\right]",
+      "body_latex": "\\ln\\left(e^{-6x^{3} - 5x^{2} + 9x + 9}\\right)",
+      "answer_latex": "\\frac{e^{-6x^{3} - 5x^{2} + 9x + 9}\\left(3x^{2}\\left(-6\\right) + 2x^{1}\\left(-5\\right) + 9\\right)}{e^{-6x^{3} - 5x^{2} + 9x + 9}}",
+      "note": "diff_apply_fn_u; C=20; band=elite; inner=nested_apply; nest=2; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "exp",
+        "log",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2407,
+      "productions": [
+        "Apply",
+        "ln",
+        "u"
+      ],
+      "chosen_outer": "ln",
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 4,
+        "power_max": 7,
+        "poly_degree_min": 2,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 2,
+        "chain_depth": 2,
+        "degree_max": 3,
+        "n_applies": 2,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "ln"
+        ],
+        "atom_fn_candidates_g": [
+          "ln"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "ln"
+      ],
+      "atom_fn_candidates_g": [
+        "ln"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "e^{-6x^{3} - 5x^{2} + 9x + 9}",
+      "independent_inners": null,
+      "chain_depth": 2,
+      "ok": true
+    },
+    {
+      "form_id": "chain_power_trig",
+      "skeleton_pattern": "Diff(Pow(Apply(fn,u),n)) power-trig",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 8.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\cos^{3}\\left(-3x^{3} + 4x^{2} + 5x + 1\\right)\\right]",
+      "body_latex": "\\cos^{3}\\left(-3x^{3} + 4x^{2} + 5x + 1\\right)",
+      "answer_latex": "-3\\cos^{2}\\left(-3x^{3} + 4x^{2} + 5x + 1\\right)\\sin\\left(-3x^{3} + 4x^{2} + 5x + 1\\right)\\left(3x^{2}\\left(-3\\right) + 2x^{1}\\left(4\\right) + 5\\right)",
+      "note": "diff_apply_fn_u; C=8; band=mid; inner=poly; nest=2; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2493,
+      "productions": [
+        "Apply",
+        "cos",
+        "u"
+      ],
+      "chosen_outer": "cos",
+      "richness_knobs": {
+        "conceptual_d": 8.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 3,
+        "poly_degree_min": 2,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 2,
+        "chain_depth": 2,
+        "degree_max": 3,
+        "n_applies": 1,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "-3x^{3} + 4x^{2} + 5x + 1",
+      "independent_inners": null,
+      "chain_depth": 2,
+      "ok": true
+    },
+    {
+      "form_id": "chain_power_trig",
+      "skeleton_pattern": "Diff(Pow(Apply(fn,u),n)) power-trig",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\sin^{2}\\left(\\tan\\left(8x^{4} - 7x^{3} - 7x + 2\\right)\\right)\\right]",
+      "body_latex": "\\sin^{2}\\left(\\tan\\left(8x^{4} - 7x^{3} - 7x + 2\\right)\\right)",
+      "answer_latex": "2\\sin^{1}\\left(\\tan\\left(8x^{4} - 7x^{3} - 7x + 2\\right)\\right)\\cos\\left(\\tan\\left(8x^{4} - 7x^{3} - 7x + 2\\right)\\right)\\sec^{2}(8x^{4} - 7x^{3} - 7x + 2)\\left(4x^{3}\\left(8\\right) + 3x^{2}\\left(-7\\right) - 7\\right)",
+      "note": "diff_apply_fn_u; C=14; band=high; inner=nested_apply; nest=3; deg=4; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2500,
+      "productions": [
+        "Apply",
+        "sin",
+        "u"
+      ],
+      "chosen_outer": "sin",
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 3,
+        "chain_depth": 3,
+        "degree_max": 4,
+        "n_applies": 2,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 4,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\tan\\left(8x^{4} - 7x^{3} - 7x + 2\\right)",
+      "independent_inners": null,
+      "chain_depth": 3,
+      "ok": true
+    },
+    {
+      "form_id": "chain_power_trig",
+      "skeleton_pattern": "Diff(Pow(Apply(fn,u),n)) power-trig",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\tan^{2}\\left(e^{\\cos\\left(10x^{3} + 3x^{2} - 2x + 6\\right)}\\right)\\right]",
+      "body_latex": "\\tan^{2}\\left(e^{\\cos\\left(10x^{3} + 3x^{2} - 2x + 6\\right)}\\right)",
+      "answer_latex": "-2\\tan^{1}\\left(e^{\\cos\\left(10x^{3} + 3x^{2} - 2x + 6\\right)}\\right)\\sec^{2}(e^{\\cos\\left(10x^{3} + 3x^{2} - 2x + 6\\right)})e^{\\cos\\left(10x^{3} + 3x^{2} - 2x + 6\\right)}\\sin\\left(10x^{3} + 3x^{2} - 2x + 6\\right)\\left(3x^{2}\\left(10\\right) + 2x^{1}\\left(3\\right) - 2\\right)",
+      "note": "diff_apply_fn_u; C=20; band=elite; inner=nested_apply; nest=4; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "exp",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2507,
+      "productions": [
+        "Apply",
+        "tan",
+        "u"
+      ],
+      "chosen_outer": "tan",
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 2,
+        "force_min_nest": 2,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 4,
+        "power_max": 7,
+        "poly_degree_min": 2,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 2,
+        "nest_budget_forced_min": 2,
+        "nest_left_at_sample": 2,
+        "nest_depth_expr": 4,
+        "chain_depth": 4,
+        "degree_max": 3,
+        "n_applies": 3,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "e^{\\cos\\left(10x^{3} + 3x^{2} - 2x + 6\\right)}",
+      "independent_inners": null,
+      "chain_depth": 4,
+      "ok": true
+    },
+    {
+      "form_id": "chain_nested",
+      "skeleton_pattern": "Diff(Apply(fn,u)) nested unlike",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 12.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\arctan\\left(\\sin\\left(4x^{3} - 6x^{2} - 6x - 5\\right)\\right)\\right]",
+      "body_latex": "\\arctan\\left(\\sin\\left(4x^{3} - 6x^{2} - 6x - 5\\right)\\right)",
+      "answer_latex": "\\frac{1}{1+(\\sin\\left(4x^{3} - 6x^{2} - 6x - 5\\right))^{2}}\\cos\\left(4x^{3} - 6x^{2} - 6x - 5\\right)\\left(3x^{2}\\left(4\\right) + 2x^{1}\\left(-6\\right) - 6\\right)",
+      "note": "diff_apply_fn_u; C=12; band=high; inner=nested_apply; nest=2; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "invtrig",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2593,
+      "productions": [
+        "Apply",
+        "arctan",
+        "u"
+      ],
+      "chosen_outer": "arctan",
+      "richness_knobs": {
+        "conceptual_d": 12.0,
+        "band": "high",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 2,
+        "chain_depth": 2,
+        "degree_max": 3,
+        "n_applies": 2,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan",
+          "exp",
+          "ln",
+          "arcsin",
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan",
+          "exp",
+          "ln",
+          "arcsin",
+          "arctan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan",
+        "exp",
+        "ln",
+        "arcsin",
+        "arctan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan",
+        "exp",
+        "ln",
+        "arcsin",
+        "arctan"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\sin\\left(4x^{3} - 6x^{2} - 6x - 5\\right)",
+      "independent_inners": null,
+      "chain_depth": 2,
+      "ok": true
+    },
+    {
+      "form_id": "chain_nested",
+      "skeleton_pattern": "Diff(Apply(fn,u)) nested unlike",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\arcsin\\left(\\tan\\left(-4x^{3} - 3x - 1\\right)\\right)\\right]",
+      "body_latex": "\\arcsin\\left(\\tan\\left(-4x^{3} - 3x - 1\\right)\\right)",
+      "answer_latex": "\\frac{1}{\\sqrt{1-(\\tan\\left(-4x^{3} - 3x - 1\\right))^{2}}}\\sec^{2}(-4x^{3} - 3x - 1)\\left(3x^{2}\\left(-4\\right) - 3\\right)",
+      "note": "diff_apply_fn_u; C=14; band=high; inner=nested_apply; nest=2; deg=3; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "invtrig",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2600,
+      "productions": [
+        "Apply",
+        "arcsin",
+        "u"
+      ],
+      "chosen_outer": "arcsin",
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 1,
+        "force_min_nest": 1,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 1,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 2,
+        "chain_depth": 2,
+        "degree_max": 3,
+        "n_applies": 2,
+        "n_terms": 3,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan",
+          "exp",
+          "ln",
+          "arcsin",
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan",
+          "exp",
+          "ln",
+          "arcsin",
+          "arctan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan",
+        "exp",
+        "ln",
+        "arcsin",
+        "arctan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan",
+        "exp",
+        "ln",
+        "arcsin",
+        "arctan"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\tan\\left(-4x^{3} - 3x - 1\\right)",
+      "independent_inners": null,
+      "chain_depth": 2,
+      "ok": true
+    },
+    {
+      "form_id": "chain_nested",
+      "skeleton_pattern": "Diff(Apply(fn,u)) nested unlike",
+      "skeleton_kind": "diff_apply_fn_u",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\tan^{2}\\left(\\arctan\\left(e^{\\cos\\left(6x^{2} - 7x + 5\\right)}\\right)\\right)\\right]",
+      "body_latex": "\\tan^{2}\\left(\\arctan\\left(e^{\\cos\\left(6x^{2} - 7x + 5\\right)}\\right)\\right)",
+      "answer_latex": "-2\\tan^{1}\\left(\\arctan\\left(e^{\\cos\\left(6x^{2} - 7x + 5\\right)}\\right)\\right)\\sec^{2}(\\arctan\\left(e^{\\cos\\left(6x^{2} - 7x + 5\\right)}\\right))\\frac{1}{1+(e^{\\cos\\left(6x^{2} - 7x + 5\\right)})^{2}}e^{\\cos\\left(6x^{2} - 7x + 5\\right)}\\sin\\left(6x^{2} - 7x + 5\\right)\\left(2x^{1}\\left(6\\right) - 7\\right)",
+      "note": "diff_apply_fn_u; C=20; band=elite; inner=nested_apply; nest=5; deg=2; shared u; chain=used/allow=True/req=True",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "exp",
+        "invtrig",
+        "roots",
+        "trig"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_trig": true,
+        "allow_exp": true,
+        "allow_log": true,
+        "allow_roots": true,
+        "allow_chain": true,
+        "require_chain": true
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2607,
+      "productions": [
+        "Apply",
+        "tan",
+        "u"
+      ],
+      "chosen_outer": "tan",
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 2,
+        "force_min_nest": 2,
+        "allow_form_min_nest": true,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 4,
+        "power_max": 7,
+        "poly_degree_min": 2,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 2,
+        "nest_budget_forced_min": 2,
+        "nest_left_at_sample": 2,
+        "nest_depth_expr": 5,
+        "chain_depth": 5,
+        "degree_max": 2,
+        "n_applies": 4,
+        "n_terms": 3,
+        "n_factors": 0,
+        "inner_kind": "nested_apply",
+        "inner_degree": 2,
+        "atom_fn_candidates": [
+          "sin",
+          "cos",
+          "tan",
+          "exp",
+          "ln",
+          "arcsin",
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "sin",
+          "cos",
+          "tan",
+          "exp",
+          "ln",
+          "arcsin",
+          "arctan"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "sin",
+        "cos",
+        "tan",
+        "exp",
+        "ln",
+        "arcsin",
+        "arctan"
+      ],
+      "atom_fn_candidates_g": [
+        "sin",
+        "cos",
+        "tan",
+        "exp",
+        "ln",
+        "arcsin",
+        "arctan"
+      ],
+      "inner_kind": "nested_apply",
+      "inner_latex": "\\arctan\\left(e^{\\cos\\left(6x^{2} - 7x + 5\\right)}\\right)",
+      "independent_inners": null,
+      "chain_depth": 5,
+      "ok": true
+    }
+  ],
+  "failures": []
+}

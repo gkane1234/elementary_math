@@ -109,7 +109,7 @@ def _simple_trig_equations(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = trigonometry_params_from_settings(settings)
     use_pc = str(topic).startswith("pc_")
-    difficulty = float(settings.get("difficulty") or 6)
+    difficulty = float(settings["difficulty"] if settings.get("difficulty") is not None else 6)
     last: dict[str, Any] = {"meta": {}}
 
     # Exact unit-circle solutions in [0, 360) for common RHS values.
@@ -228,7 +228,7 @@ def _trig_basic_identities(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = trigonometry_params_from_settings(settings)
     use_pc = str(topic).startswith("pc_")
-    d = float(settings.get("difficulty") or 6)
+    d = float(settings["difficulty"] if settings.get("difficulty") is not None else 6)
     last: dict[str, Any] = {"meta": {}}
 
     pythagorean = [
@@ -368,7 +368,7 @@ def _log_change_of_base(topic: str, settings: dict) -> list[Question]:
     params = logarithm_params_from_settings(settings)
     use_pc = str(topic).startswith("pc_")
     use_a2 = str(topic).startswith("a2_")
-    d = float(settings.get("difficulty") or 6)
+    d = float(settings["difficulty"] if settings.get("difficulty") is not None else 6)
     last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
@@ -495,6 +495,202 @@ def _log_change_of_base(topic: str, settings: dict) -> list[Question]:
     )
 
 
+def _int_log_base(params) -> tuple[int, str]:
+    """Prefer integer bases for clean equation answers (OpenStax §4.6 / IA §10.5)."""
+    lo, hi = int(params.base_min), int(params.base_max)
+    candidates = [b for b in range(max(2, lo), max(hi, 2) + 1) if b != 1]
+    if not candidates:
+        candidates = [2, 3, 4, 5, 10]
+    base = random.choice(candidates)
+    return base, str(base)
+
+
+def _format_log_eq_answer(
+    valid: list[int],
+    extraneous: list[int] | None = None,
+    *,
+    include_answer_key: bool,
+) -> str | None:
+    if not include_answer_key:
+        return None
+    extra = [e for e in (extraneous or []) if e not in valid]
+    valid_parts = [f"x = {v}" for v in sorted(set(valid))]
+    extra_parts = [f"x = {e}" for e in sorted(set(extra))]
+    if not valid_parts:
+        if extra_parts:
+            discarded = r" \text{ or } ".join(extra_parts)
+            return rf"\text{{no solution}};\ {discarded} \text{{ (extraneous)}}"
+        return r"\text{no solution}"
+    body = r" \text{ or } ".join(valid_parts)
+    if extra_parts:
+        discarded = r" \text{ or } ".join(extra_parts)
+        return rf"{body};\ {discarded} \text{{ (extraneous)}}"
+    return body
+
+
+def _build_log_definition(params, include_answer_key: bool) -> tuple[str, str, str | None, str]:
+    base_key, base_label = _int_log_base(params)
+    # Keep modest exponents so D=0 stays textbook-easy.
+    exponent = random.randint(1, 4)
+    solution = base_key**exponent
+    log_latex = _log_base_latex(base_key, base_label)
+    prompt = f"{log_latex}(x) = {exponent}"
+    answer = _format_log_eq_answer([solution], include_answer_key=include_answer_key)
+    return prompt, "log equation", answer, "definition"
+
+
+def _build_log_linear_argument(
+    params, include_answer_key: bool, *, d: float
+) -> tuple[str, str, str | None, str]:
+    """OpenStax §4.6: log_b(ax + c) = k."""
+    base, base_label = _int_log_base(params)
+    k = random.randint(1, 3 if d < 12 else 4)
+    a = random.choice([1, 2, 3, 4, 5, 7])
+    rhs = base**k
+    sol = random.randint(1, 8)
+    c = rhs - a * sol
+    if c == 0:
+        c = -a
+        sol = (rhs - c) // a
+    log_latex = _log_base_latex(base, base_label)
+    arg = format_linear_latex(a, c, variable="x")
+    prompt = f"{log_latex}\\left({arg}\\right) = {k}"
+    answer = _format_log_eq_answer([sol], include_answer_key=include_answer_key)
+    return prompt, "log equation", answer, "linear_argument"
+
+
+def _build_log_algebra_coeff(
+    params, include_answer_key: bool
+) -> tuple[str, str, str | None, str]:
+    """OpenStax §4.6 Ex. 9: a log_b(x) + c = d."""
+    base, base_label = _int_log_base(params)
+    a = random.choice([2, 3, 4, 5, 6])
+    expo = random.randint(1, 3)
+    c = random.randint(1, 6)
+    d_val = a * expo + c
+    sol = base**expo
+    log_latex = _log_base_latex(base, base_label)
+    prompt = f"{a} {log_latex}(x) + {c} = {d_val}"
+    answer = _format_log_eq_answer([sol], include_answer_key=include_answer_key)
+    return prompt, "log equation", answer, "algebra_coeff"
+
+
+def _build_log_product_sum(
+    params, include_answer_key: bool, *, d: float
+) -> tuple[str, str, str | None, str]:
+    """OpenStax IA §10.5 Ex. 10.39: log_b(x) + log_b(x − p) = k; discard extraneous."""
+    base, base_label = _int_log_base(params)
+    p = random.randint(2, 6 if d < 12 else 9)
+    for _ in range(40):
+        expo = random.randint(1, 3 if d < 14 else 4)
+        product = base**expo
+        disc = p * p + 4 * product
+        root = int(round(disc**0.5))
+        if root * root != disc or (p + root) % 2 != 0:
+            continue
+        r = (p + root) // 2
+        if r <= p:
+            continue
+        extra = (p - root) // 2
+        log_latex = _log_base_latex(base, base_label)
+        prompt = f"{log_latex}(x) + {log_latex}(x - {p}) = {expo}"
+        answer = _format_log_eq_answer(
+            [r],
+            [extra] if extra != r else None,
+            include_answer_key=include_answer_key,
+        )
+        return prompt, "log equation", answer, "product_sum"
+    # Fallback: log_2(x) + log_2(x − 2) = 3 → x=4; x=-2 extraneous
+    log_latex = _log_base_latex(2, "2")
+    prompt = f"{log_latex}(x) + {log_latex}(x - 2) = 3"
+    answer = _format_log_eq_answer([4], [-2], include_answer_key=include_answer_key)
+    return prompt, "log equation", answer, "product_sum"
+
+
+def _build_log_one_to_one(
+    params, include_answer_key: bool, *, d: float
+) -> tuple[str, str, str | None, str]:
+    """log_b(ax+c) = log_b(dx+e) — equate linear arguments; check domain."""
+    _ = d
+    base, base_label = _int_log_base(params)
+    log_latex = _log_base_latex(base, base_label)
+    # Plant a valid root; choose slopes so algebra is one-step.
+    sol = random.randint(2, 8)
+    a = random.choice([1, 2, 3])
+    d_coef = random.choice([1, 2, 3])
+    while d_coef == a:
+        d_coef = random.choice([1, 2, 3, 4])
+    c = random.randint(1, 10)
+    # a*sol + c = d_coef*sol + e  ⇒  e = a*sol + c - d_coef*sol
+    e = a * sol + c - d_coef * sol
+    left = format_linear_latex(a, c, variable="x")
+    right = format_linear_latex(d_coef, e, variable="x")
+    prompt = f"{log_latex}\\left({left}\\right) = {log_latex}\\left({right}\\right)"
+    # Domain: both linear args > 0 at sol (by construction equal and positive if we force).
+    left_val = a * sol + c
+    if left_val <= 0:
+        # Flip constants to keep positive argument.
+        c = abs(c) + 1
+        e = a * sol + c - d_coef * sol
+        left = format_linear_latex(a, c, variable="x")
+        right = format_linear_latex(d_coef, e, variable="x")
+        prompt = f"{log_latex}\\left({left}\\right) = {log_latex}\\left({right}\\right)"
+    answer = _format_log_eq_answer([sol], include_answer_key=include_answer_key)
+    return prompt, "log equation", answer, "one_to_one"
+
+
+def _build_log_one_to_one_quadratic(
+    params, include_answer_key: bool
+) -> tuple[str, str, str | None, str]:
+    """OpenStax §4.6 Ex. 12: log_b(x^2 − p) = log_b(q x); one root fails domain."""
+    base, base_label = _int_log_base(params)
+    log_latex = _log_base_latex(base, base_label)
+    # Roots r > 0 and s < 0 of x^2 − q x + p = 0 with p = r*s < 0:
+    # log(x^2 − |p|) wait: x^2 + p = q x with p = r s < 0 ⇒ log(x^2 − |p|) = log(q x).
+    r = random.randint(3, 8)
+    s = -random.randint(1, 4)
+    if r + s == 0:
+        s = -1 if r != 1 else -2
+    q = r + s
+    p = r * s  # negative
+    left = rf"x^{{2}} - {abs(p)}"
+    right = format_linear_latex(q, 0, variable="x")
+    prompt = f"{log_latex}\\left({left}\\right) = {log_latex}\\left({right}\\right)"
+    valid: list[int] = []
+    extraneous: list[int] = []
+    for cand in (r, s):
+        left_val = cand * cand + p
+        right_val = q * cand
+        if left_val > 0 and right_val > 0:
+            valid.append(cand)
+        else:
+            extraneous.append(cand)
+    if not valid:
+        # Guaranteed fallback: log(x^2 - 6) = log(x) → roots of x^2 - x - 6 = 0 → 3, -2
+        prompt = f"{log_latex}\\left(x^{{2}} - 6\\right) = {log_latex}(x)"
+        valid, extraneous = [3], [-2]
+    answer = _format_log_eq_answer(
+        valid, extraneous, include_answer_key=include_answer_key
+    )
+    return prompt, "log equation", answer, "one_to_one_quadratic"
+
+
+def _build_log_quotient_diff(
+    params, include_answer_key: bool
+) -> tuple[str, str, str | None, str]:
+    """OpenStax exercises: log_b(x + a) − log_b(x) = log_b(k)."""
+    base, base_label = _int_log_base(params)
+    k = random.choice([2, 3, 4, 5])
+    a = random.randint(2, 12) * (k - 1)
+    sol = a // (k - 1)
+    log_latex = _log_base_latex(base, base_label)
+    prompt = (
+        f"{log_latex}\\left(x + {a}\\right) - {log_latex}(x) = {log_latex}({k})"
+    )
+    answer = _format_log_eq_answer([sol], include_answer_key=include_answer_key)
+    return prompt, "log equation", answer, "quotient_diff"
+
+
 def _log_equation_simple(topic: str, settings: dict) -> list[Question]:
     from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
 
@@ -502,45 +698,103 @@ def _log_equation_simple(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
     params = logarithm_params_from_settings(settings)
     use_a2 = str(topic).startswith("a2_")
-    d = float(settings.get("difficulty") or 6)
+    use_pc = str(topic).startswith("pc_")
+    # Do not use `or 6` — difficulty 0 is valid and must stay 0.
+    _raw_d = settings.get("difficulty")
+    d = float(6 if _raw_d is None else _raw_d)
+    leaf = str(topic or "")
+    hard_leaf = leaf.endswith("logarithmic_equations_hard") or leaf.endswith(
+        "_logarithmic_equations_hard"
+    )
     last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
         form_stamp: dict[str, Any] = {}
+        kind = "definition"
         if use_a2:
-            from question_engine.frameworks.primitives.openstax_a2 import select_a2_form
+            from question_engine.frameworks.primitives.openstax_a2 import (
+                a2_form_constraints,
+                select_a2_form,
+            )
 
-            _, form_stamp = select_a2_form(
+            form, form_stamp = select_a2_form(
                 "algebra2_exp_log",
                 d=d,
-                leaf_id=str(topic or ""),
+                leaf_id=leaf,
+                rng=random,
             )
-        base_key, base_label = _random_log_base(params)
-        exponent = random.randint(1, 5)
-        if isinstance(base_key, int):
-            solution = base_key**exponent
-        elif base_key == "e":
-            solution = round(math.e**exponent, 4)
-        else:
-            solution = 10**exponent
-        log_latex = _log_base_latex(base_key, base_label)
-        prompt = f"{log_latex}(x) = {exponent}"
-        answer = f"x = {solution}" if include_answer_key else None
+            kind = str(a2_form_constraints(form).get("kind") or "definition")
+        elif use_pc:
+            from question_engine.frameworks.primitives.openstax_precalc import (
+                pc_form_constraints,
+                select_pc_form,
+            )
+
+            form, form_stamp = select_pc_form(
+                "precalculus_exp_log",
+                d=d,
+                leaf_id=leaf,
+                rng=random,
+            )
+            kind = str(pc_form_constraints(form).get("kind") or "definition")
+        elif hard_leaf:
+            # Non-catalog hard leaf: still avoid definition-only stamps.
+            kind = "product_sum" if d < 8 else ("one_to_one" if d < 14 else "quotient_diff")
+
+        kind_aliases = {
+            "basic_log_eq": "definition",
+            "linear_arg": "linear_argument",
+            "algebra_steps": "algebra_coeff",
+            "product_equation": "product_sum",
+            "log_eq_properties": "product_sum",
+        }
+        kind = kind_aliases.get(kind, kind)
+        builders = {
+            "definition": lambda: _build_log_definition(params, include_answer_key),
+            "linear_argument": lambda: _build_log_linear_argument(
+                params, include_answer_key, d=d
+            ),
+            "algebra_coeff": lambda: _build_log_algebra_coeff(
+                params, include_answer_key
+            ),
+            "product_sum": lambda: _build_log_product_sum(
+                params, include_answer_key, d=d
+            ),
+            "one_to_one": lambda: _build_log_one_to_one(
+                params, include_answer_key, d=d
+            ),
+            "one_to_one_quadratic": lambda: _build_log_one_to_one_quadratic(
+                params, include_answer_key
+            ),
+            "quotient_diff": lambda: _build_log_quotient_diff(
+                params, include_answer_key
+            ),
+        }
+        builder = builders.get(kind) or builders["definition"]
+        prompt, topic_label, answer, mode = builder()
+        methods = ["log_equation"]
+        if mode in {"product_sum", "quotient_diff"}:
+            methods.append("log_properties")
+        if mode in {"one_to_one", "one_to_one_quadratic"}:
+            methods.append("log_1to1")
+        if answer and "extraneous" in answer:
+            methods.append("extraneous_check")
         last["meta"] = {
             "primitive_engine": "log_equation_simple",
-            "mode": "basic_log_eq",
+            "mode": mode,
+            "methods_used": methods,
             **form_stamp,
         }
-        return prompt, "log equation", answer
+        return prompt, topic_label, answer
 
     def metadata_builder(_p: str, _t: str, answer: str | None) -> dict[str, Any]:
         return enrich_algebraic_meta(
             last.get("meta"),
             pack="structured_log_equation",
             generator="log_equation_simple",
-            methods_used=["log_equation"],
+            methods_used=list(last.get("meta", {}).get("methods_used") or ["log_equation"]),
             answer=answer,
-            course_tag="a2" if use_a2 else "pc",
+            course_tag="a2" if use_a2 else ("pc" if use_pc else None),
         )
 
     return _make_questions(
@@ -548,7 +802,7 @@ def _log_equation_simple(topic: str, settings: dict) -> list[Question]:
         count,
         include_answer_key,
         build,
-        metadata_builder=metadata_builder if use_a2 else None,
+        metadata_builder=metadata_builder if (use_a2 or use_pc) else None,
         settings=settings,
     )
 
@@ -561,7 +815,7 @@ def _exponential_equation_simple(topic: str, settings: dict) -> list[Question]:
     params = exponential_params_from_settings(settings)
     use_pc = str(topic).startswith("pc_")
     use_a2 = str(topic).startswith("a2_")
-    d = float(settings.get("difficulty") or 6)
+    d = float(settings["difficulty"] if settings.get("difficulty") is not None else 6)
     last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
@@ -654,6 +908,7 @@ def _exponential_equation_simple(topic: str, settings: dict) -> list[Question]:
 
 
 def _exponential_equation_with_log(topic: str, settings: dict) -> list[Question]:
+    """OpenStax §4.6 — exponential equations that need logarithms (bases differ)."""
     from question_engine.frameworks.primitives.algebraic_ml import enrich_algebraic_meta
 
     count = int(settings.get("count", 10))
@@ -661,7 +916,7 @@ def _exponential_equation_with_log(topic: str, settings: dict) -> list[Question]
     params = exponential_params_from_settings(settings)
     use_pc = str(topic).startswith("pc_")
     use_a2 = str(topic).startswith("a2_")
-    d = float(settings.get("difficulty") or 6)
+    d = float(settings["difficulty"] if settings.get("difficulty") is not None else 6)
     last: dict[str, Any] = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
@@ -682,15 +937,75 @@ def _exponential_equation_with_log(topic: str, settings: dict) -> list[Question]
                 d=d,
                 leaf_id=str(topic or ""),
             )
-        base = random.randint(params.base_min, params.base_max)
-        coef = random_int_range(params.coef_min, params.coef_max, exclude={0})
-        exponent = random.randint(params.exponent_min, params.exponent_max)
-        rhs = base ** (coef * exponent)
-        prompt = f"{base}^{{{format_monomial_latex(coef) or '0'}}} = {rhs}"
-        answer = f"x = {exponent}" if include_answer_key else None
+
+        # Honest "needs log": RHS is not a pure power of the same base.
+        # OpenStax shapes: b^{cx} = k, or a^{x+c} = b^{x}, or A e^{kt} = B.
+        mode = "needs_log"
+        if d < 8:
+            base = random.randint(max(2, params.base_min), max(params.base_max, 5))
+            coef = random.choice([1, 2, 3]) if d >= 4 else 1
+            # Pick k that is NOT a pure power of base.
+            k = random.choice([3, 5, 6, 7, 10, 12, 15, 20, 24, 30])
+            while k > 1:
+                # reject if k is base^n for small n
+                pure = False
+                pwr = base
+                for _ in range(1, 8):
+                    if pwr == k:
+                        pure = True
+                        break
+                    if pwr > k:
+                        break
+                    pwr *= base
+                if not pure:
+                    break
+                k += 1
+            expo_tex = format_monomial_latex(coef) or "x"
+            prompt = f"{base}^{{{expo_tex}}} = {k}"
+            if include_answer_key:
+                if coef == 1:
+                    answer = rf"x = \log_{{{base}}}({k})"
+                else:
+                    answer = rf"x = \dfrac{{\log_{{{base}}}({k})}}{{{coef}}}"
+            else:
+                answer = None
+        elif d < 16:
+            # Different bases: a^{x+c} = b^{x} (OpenStax Ex. 5 style)
+            a = random.choice([2, 3, 4, 5])
+            b = random.choice([2, 3, 4, 5, 6, 7])
+            while b == a:
+                b = random.choice([2, 3, 4, 5, 6, 7, 10])
+            c = random.randint(1, 3)
+            prompt = f"{a}^{{x + {c}}} = {b}^{{x}}"
+            if include_answer_key:
+                if c == 1:
+                    answer = rf"x = \dfrac{{\ln({a})}}{{\ln({b}) - \ln({a})}}"
+                else:
+                    answer = rf"x = \dfrac{{{c}\ln({a})}}{{\ln({b}) - \ln({a})}}"
+            else:
+                answer = None
+            mode = "different_bases"
+        else:
+            # Continuous form: A e^{kt} = B (OpenStax Ex. 6)
+            A = random.choice([2, 3, 4, 5, 10, 20])
+            B = random.choice([6, 11, 12, 15, 20, 50, 100])
+            while B == A:
+                B = random.choice([7, 11, 15, 25, 50])
+            k = random.choice([1, 2, 3, 5])
+            # Prefer variable x for leaf consistency (catalog says solve for x).
+            prompt = f"{A} e^{{{k} x}} = {B}"
+            if include_answer_key:
+                if A == 1:
+                    answer = rf"x = \dfrac{{\ln({B})}}{{{k}}}"
+                else:
+                    answer = rf"x = \dfrac{{\ln\!\left(\dfrac{{{B}}}{{{A}}}\right)}}{{{k}}}"
+            else:
+                answer = None
+            mode = "exp_ae_kt"
+
         last["meta"] = {
             "primitive_engine": "exponential_equation_with_log",
-            "mode": "needs_log",
+            "mode": mode,
             "function_classes": ["exp", "log", "algebraic"],
             "methods_used": ["take_log"],
             **form_stamp,
@@ -854,7 +1169,11 @@ def _trig_sum_difference(topic: str, settings: dict) -> list[Question]:
 
     local = apply_trigonometry_continuous_knobs(settings)
     use_pc = str(topic).startswith("pc_")
-    difficulty = float(local.get("difficulty") or settings.get("difficulty") or 6)
+    difficulty = float(
+        local["difficulty"]
+        if local.get("difficulty") is not None
+        else (settings["difficulty"] if settings.get("difficulty") is not None else 6)
+    )
     last: dict[str, Any] = {"meta": {}}
     pool = [
         (r"\sin(\alpha+\beta)", r"\sin\alpha\cos\beta+\cos\alpha\sin\beta"),
@@ -923,7 +1242,11 @@ def _trig_multiple_angle(topic: str, settings: dict) -> list[Question]:
 
     local = apply_trigonometry_continuous_knobs(settings)
     use_pc = str(topic).startswith("pc_")
-    difficulty = float(local.get("difficulty") or settings.get("difficulty") or 6)
+    difficulty = float(
+        local["difficulty"]
+        if local.get("difficulty") is not None
+        else (settings["difficulty"] if settings.get("difficulty") is not None else 6)
+    )
     last: dict[str, Any] = {"meta": {}}
     pool = [
         (r"\sin(2\theta)", r"2\sin\theta\cos\theta"),
@@ -987,7 +1310,11 @@ def _trig_product_to_sum(topic: str, settings: dict) -> list[Question]:
 
     local = apply_trigonometry_continuous_knobs(settings)
     use_pc = str(topic).startswith("pc_")
-    difficulty = float(local.get("difficulty") or settings.get("difficulty") or 6)
+    difficulty = float(
+        local["difficulty"]
+        if local.get("difficulty") is not None
+        else (settings["difficulty"] if settings.get("difficulty") is not None else 6)
+    )
     last: dict[str, Any] = {"meta": {}}
     # At low continuous D, product-to-sum is locked; fall back to a single
     # sin·cos identity so the generator still produces valid prompts.
@@ -1060,7 +1387,7 @@ def _trig_factoring_equations(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     keyed = bool(settings.get("include_answer_key", False))
     use_pc = str(topic).startswith("pc_")
-    difficulty = float(settings.get("difficulty") or 6)
+    difficulty = float(settings["difficulty"] if settings.get("difficulty") is not None else 6)
     last: dict[str, Any] = {"meta": {}}
 
     templates = {
@@ -1319,7 +1646,7 @@ def _precalc_foundations(topic: str, settings: dict) -> list[Question]:
                 rf"\text{{Find the distance from }}(0,0,0)\text{{ to }}({x},{y},{z}).",
                 ans,
             )
-        elif "cross_products" in topic or "3d_vectors_operations" in topic:
+        elif "cross_products" in topic:
             a = [random.randint(-3, 3) for _ in range(3)]
             b = [random.randint(-3, 3) for _ in range(3)]
             cx = a[1] * b[2] - a[2] * b[1]
@@ -1329,6 +1656,25 @@ def _precalc_foundations(topic: str, settings: dict) -> list[Question]:
                 rf"\text{{Find }}({a[0]},{a[1]},{a[2]})\times({b[0]},{b[1]},{b[2]}).",
                 rf"({cx},{cy},{cz})",
             )
+        elif "3d_vectors_operations" in topic:
+            # Kept for opt-out / legacy; live catalog uses vector_3d_operations (add/sub).
+            a = [random.randint(-3, 3) for _ in range(3)]
+            b = [random.randint(-3, 3) for _ in range(3)]
+            op_add = random.choice([True, False])
+            if op_add:
+                c = [a[i] + b[i] for i in range(3)]
+                prompt, value = (
+                    rf"\text{{Find }}\langle {a[0]},{a[1]},{a[2]}\rangle+"
+                    rf"\langle {b[0]},{b[1]},{b[2]}\rangle.",
+                    rf"\langle {c[0]},{c[1]},{c[2]}\rangle",
+                )
+            else:
+                c = [a[i] - b[i] for i in range(3)]
+                prompt, value = (
+                    rf"\text{{Find }}\langle {a[0]},{a[1]},{a[2]}\rangle-"
+                    rf"\langle {b[0]},{b[1]},{b[2]}\rangle.",
+                    rf"\langle {c[0]},{c[1]},{c[2]}\rangle",
+                )
         elif "3d_vectors" in topic:
             # Basics fallback: magnitude
             x, y, z = random.choice([(3, 4, 0), (2, 3, 6), (1, 2, 2)])

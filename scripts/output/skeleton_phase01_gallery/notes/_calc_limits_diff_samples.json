@@ -1,0 +1,1055 @@
+{
+  "calc_limits_by_direct_evaluation": {
+    "0": {
+      "prompt": "\\lim_{x \\to 1} \\left(2x^{2} - 3x + 3\\right)",
+      "answer": "2",
+      "form_id": "poly_direct",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_direct",
+      "methods": [
+        "direct_eval"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\lim_{x \\to 4} \\frac{3x^{3} - 3x}{2x - 1}",
+      "answer": "\\frac{180}{7}",
+      "form_id": "direct_sqrt",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_direct",
+      "methods": [
+        "direct_eval"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\lim_{x \\to 4} \\frac{2x^{3} + 6x}{-4x + 7}",
+      "answer": "-\\frac{152}{9}",
+      "form_id": "direct_sqrt",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_direct",
+      "methods": [
+        "direct_eval"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\lim_{x \\to 4} \\frac{-2x^{3} + 3x}{6x - 7}",
+      "answer": "-\\frac{116}{17}",
+      "form_id": "direct_sqrt",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_direct",
+      "methods": [
+        "direct_eval"
+      ],
+      "error": null
+    }
+  },
+  "calc_limits_at_jump_discontinuities_and_kinks": {
+    "0": {
+      "prompt": "\\lim_{x \\to 5} f(x)\\text{ where }f(x)=\\begin{cases}3&x<5\\\\0&x\\ge 5\\end{cases}",
+      "answer": "\\text{DNE}",
+      "form_id": "piecewise_jump",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_jump",
+      "methods": [
+        "two_sided_compare"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\lim_{x \\to 5} f(x)\\text{ where }f(x)=\\begin{cases}3&x<5\\\\0&x\\ge 5\\end{cases}",
+      "answer": "\\text{DNE}",
+      "form_id": "piecewise_jump_linear",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_jump",
+      "methods": [
+        "two_sided_compare"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\lim_{x \\to 5} f(x)\\text{ where }f(x)=\\begin{cases}2&x<5\\\\8&x\\ge 5\\end{cases}",
+      "answer": "\\text{DNE}",
+      "form_id": "piecewise_jump_poly",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_jump",
+      "methods": [
+        "two_sided_compare"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\lim_{x \\to 5} f(x)\\text{ where }f(x)=\\begin{cases}-2&x<5\\\\1&x\\ge 5\\end{cases}",
+      "answer": "\\text{DNE}",
+      "form_id": "piecewise_jump_poly",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_jump",
+      "methods": [
+        "two_sided_compare"
+      ],
+      "error": null
+    }
+  },
+  "calc_limits_at_removable_discontinuities": {
+    "0": {
+      "prompt": "\\lim_{x \\to 2} \\frac{x^{2}-4}{x-2}",
+      "answer": "4",
+      "form_id": "removable_diff_sq",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_removable",
+      "methods": [
+        "factor_cancel"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\lim_{x \\to 2} \\frac{x^{2}-5x+6}{x-2}",
+      "answer": "-1",
+      "form_id": "removable_quad_shared",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_removable",
+      "methods": [
+        "factor_cancel"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\lim_{x \\to 2} \\frac{\\sqrt{x}-\\sqrt{2}}{x-2}",
+      "answer": "\\frac{1}{2\\sqrt{2}}",
+      "form_id": "removable_rationalize",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_removable",
+      "methods": [
+        "rationalize"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\lim_{x \\to 2} \\frac{\\sqrt{x}-\\sqrt{2}}{x-2}",
+      "answer": "\\frac{1}{2\\sqrt{2}}",
+      "form_id": "removable_rationalize",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_removable",
+      "methods": [
+        "rationalize"
+      ],
+      "error": null
+    }
+  },
+  "calc_limits_at_essential_discontinuities": {
+    "0": {
+      "prompt": "\\lim_{x \\to 0} \\frac{1}{x}",
+      "answer": "\\text{DNE}",
+      "form_id": "essential_1_over_x",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_essential",
+      "methods": [
+        "essential_dne"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\lim_{x \\to 0} \\frac{1}{x}",
+      "answer": "\\text{DNE}",
+      "form_id": "essential_cos_1_over_x",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_essential",
+      "methods": [
+        "essential_dne"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\lim_{x \\to 0} \\frac{1}{x}",
+      "answer": "\\text{DNE}",
+      "form_id": "essential_cos_1_over_x",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_essential",
+      "methods": [
+        "essential_dne"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\lim_{x \\to 0} \\frac{1}{x}",
+      "answer": "\\text{DNE}",
+      "form_id": "essential_cos_1_over_x",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_essential",
+      "methods": [
+        "essential_dne"
+      ],
+      "error": null
+    }
+  },
+  "calc_limits_at_infinity": {
+    "0": {
+      "prompt": "\\lim_{x \\to \\infty} \\frac{3x^{2} - 3x}{5x^{2}}",
+      "answer": "\\frac{3}{5}",
+      "form_id": "inf_rational",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_infinity",
+      "methods": [
+        "compare_degrees"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\lim_{x \\to \\infty} \\frac{e^{x}}{x^{2}}",
+      "answer": "\\infty",
+      "form_id": "inf_exp_ratio",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_infinity",
+      "methods": [
+        "end_behavior"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\lim_{x \\to \\infty} \\frac{e^{x}}{x^{2}}",
+      "answer": "\\infty",
+      "form_id": "inf_exp_ratio",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_infinity",
+      "methods": [
+        "end_behavior"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\lim_{x \\to \\infty} \\frac{e^{x}}{x^{2}}",
+      "answer": "\\infty",
+      "form_id": "inf_exp_ratio",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_infinity",
+      "methods": [
+        "end_behavior"
+      ],
+      "error": null
+    }
+  },
+  "calc_continuity_determining_and_classifying": {
+    "0": {
+      "prompt": "\\text{Classify the continuity of }f(x)=\\frac{x^{2}-16}{x-4}\\text{ at }x=4.",
+      "answer": "\\text{removable discontinuity}",
+      "form_id": "continuity_classify",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_continuity",
+      "methods": [
+        "classify_removable"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Classify the continuity of }f(x)=\\frac{x^{2}-16}{x-4}\\text{ at }x=4.",
+      "answer": "\\text{removable discontinuity}",
+      "form_id": "continuity_classify",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_continuity",
+      "methods": [
+        "classify_removable"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\text{Classify the continuity of }f(x)=\\frac{x^{2}-16}{x-4}\\text{ at }x=4.",
+      "answer": "\\text{removable discontinuity}",
+      "form_id": "continuity_classify",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_continuity",
+      "methods": [
+        "classify_removable"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\text{Classify the continuity of }f(x)=\\frac{x^{2}-16}{x-4}\\text{ at }x=4.",
+      "answer": "\\text{removable discontinuity}",
+      "form_id": "continuity_classify",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_continuity",
+      "methods": [
+        "classify_removable"
+      ],
+      "error": null
+    }
+  },
+  "calc_app_diff_lhopitals_rule": {
+    "0": {
+      "prompt": "\\lim_{x \\to 0} \\frac{e^{4x}-1}{x}",
+      "answer": "4",
+      "form_id": "lhopital_0_0_poly",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_lhopital",
+      "methods": [
+        "lhopital"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\lim_{x \\to 0} \\frac{\\sin(5x)}{x}",
+      "answer": "5",
+      "form_id": "lhopital_0_inf_product",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_lhopital",
+      "methods": [
+        "lhopital"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\lim_{x \\to 4} \\frac{x^{2}-16}{x-4}",
+      "answer": "8",
+      "form_id": "lhopital_0_inf_power",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_lhopital",
+      "methods": [
+        "lhopital"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\lim_{x \\to \\infty} \\frac{8x^{2}-2}{8x^{2}+3}",
+      "answer": "1",
+      "form_id": "lhopital_0_inf_power",
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "limit_lhopital",
+      "methods": [
+        "lhopital"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_power_rule": {
+    "0": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(2x^{2}\\right)",
+      "answer": "2x^{1}\\left(2\\right)",
+      "form_id": "power_poly",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(5x^{3} + 5x^{2} + x + 3\\right)",
+      "answer": "3x^{2}\\left(5\\right) + 2x^{1}\\left(5\\right) + 1",
+      "form_id": "power_root",
+      "skeleton_pattern": "Diff(Pow(H,n)) roots",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\frac{d}{dx}\\left[x^{\\frac{5}{2}}\\right]",
+      "answer": "\\frac{5}{2}x^{\\frac{3}{2}}",
+      "form_id": "power_root",
+      "skeleton_pattern": "Diff(Pow(H,n)) roots",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[9x^{3} + 9x^{2} + 2x + 6\\right]",
+      "answer": "2x^{1}\\left(3\\right)\\left(9\\right) + x^{0}\\left(2\\right)\\left(9\\right)",
+      "form_id": "power_root",
+      "skeleton_pattern": "Diff(Pow(H,n)) roots",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_product_rule": {
+    "0": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(x\\left(2x\\right)\\right)",
+      "answer": "2x + 2x",
+      "form_id": "product_two_poly",
+      "skeleton_pattern": "Diff(Prod(F,G)) fn×fn",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "power",
+        "product"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\frac{d}{dx}\\left[\\left(5x^{3} + 5x^{2} + x + 3\\right)\\left(-2x + 2\\right)\\right]",
+      "answer": "\\left(3x^{2}\\left(5\\right) + 2x^{1}\\left(5\\right) + 1\\right)\\left(-2x + 2\\right) - 2\\left(5x^{3} + 5x^{2} + x + 3\\right)",
+      "form_id": "product_two_poly",
+      "skeleton_pattern": "Diff(Prod(F,G)) fn×fn",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "power",
+        "product"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\frac{d}{dx}\\left[\\left(-2\\left(8x^{3} + 5x^{2} - 3x - 3\\right)^{3}\\right)\\left(7x^{3} + 6x - 4\\right)\\right]",
+      "answer": "3\\left(8x^{3} + 5x^{2} - 3x - 3\\right)^{2}\\left(3x^{2}\\left(8\\right) + 2x^{1}\\left(5\\right) - 3\\right)\\left(-2\\right)\\left(7x^{3} + 6x - 4\\right) + \\left(3x^{2}\\left(7\\right) + 6\\right)\\left(-2\\right)\\left(8x^{3} + 5x^{2} - 3x - 3\\right)^{3}",
+      "form_id": "product_two_poly",
+      "skeleton_pattern": "Diff(Prod(F,G)) fn×fn",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "product"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d}{dx}\\left[\\left(-10x^{4} + 2x^{3} + 2x^{2} + 6x - 6\\right)\\left(6\\left(-5x^{4} - 4x^{3} + x + 4\\right)^{4}\\right)\\right]",
+      "answer": "\\left(4x^{3}\\left(-10\\right) + 3x^{2}\\left(2\\right) + 2x^{1}\\left(2\\right) + 6\\right)\\left(6\\right)\\left(-5x^{4} - 4x^{3} + x + 4\\right)^{4} + 4\\left(-5x^{4} - 4x^{3} + x + 4\\right)^{3}\\left(4x^{3}\\left(-5\\right) + 3x^{2}\\left(-4\\right) + 1\\right)\\left(6\\right)\\left(-10x^{4} + 2x^{3} + 2x^{2} + 6x - 6\\right)",
+      "form_id": "product_two_poly",
+      "skeleton_pattern": "Diff(Prod(F,G)) fn×fn",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "product"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_quotient_rule": {
+    "0": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\frac{x}{2x}\\right)",
+      "answer": "\\frac{1}{2x} - \\left(2x\\right)^{-2}\\left(2\\right)x",
+      "form_id": "quotient_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) poly/poly",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\frac{d}{dx}\\left[\\frac{5x^{3} + 5x^{2} + x + 3}{-2x + 2}\\right]",
+      "answer": "\\frac{3x^{2}\\left(5\\right) + 2x^{1}\\left(5\\right) + 1}{-2x + 2} - \\left(-2x + 2\\right)^{-2}\\left(-2\\right)\\left(5x^{3} + 5x^{2} + x + 3\\right)",
+      "form_id": "quotient_exp_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) exp/poly",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\frac{d}{dx}\\left[\\frac{-2\\left(8x^{3} + 5x^{2} - 3x - 3\\right)^{3}}{7x^{3} + 6x - 4}\\right]",
+      "answer": "\\frac{3\\left(8x^{3} + 5x^{2} - 3x - 3\\right)^{2}\\left(3x^{2}\\left(8\\right) + 2x^{1}\\left(5\\right) - 3\\right)\\left(-2\\right)}{7x^{3} + 6x - 4} - \\left(7x^{3} + 6x - 4\\right)^{-2}\\left(3x^{2}\\left(7\\right) + 6\\right)\\left(-2\\right)\\left(8x^{3} + 5x^{2} - 3x - 3\\right)^{3}",
+      "form_id": "quotient_log_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) log/…",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d}{dx}\\left[\\frac{-10x^{4} + 2x^{3} + 2x^{2} + 6x - 6}{6\\left(-5x^{4} - 4x^{3} + x + 4\\right)^{4}}\\right]",
+      "answer": "\\frac{4x^{3}\\left(-10\\right) + 3x^{2}\\left(2\\right) + 2x^{1}\\left(2\\right) + 6}{6\\left(-5x^{4} - 4x^{3} + x + 4\\right)^{4}} - \\left(6\\left(-5x^{4} - 4x^{3} + x + 4\\right)^{4}\\right)^{-2}\\left(4\\right)\\left(-5x^{4} - 4x^{3} + x + 4\\right)^{3}\\left(4x^{3}\\left(-5\\right) + 3x^{2}\\left(-4\\right) + 1\\right)\\left(6\\right)\\left(-10x^{4} + 2x^{3} + 2x^{2} + 6x - 6\\right)",
+      "form_id": "quotient_log_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) log/…",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_chain_rule": {
+    "0": {
+      "prompt": "\\frac{d}{dx}\\left[\\left(2x\\right)^{2}\\right]",
+      "answer": "2\\left(2x\\right)^{1}\\left(2\\right)",
+      "form_id": "chain_power_linear",
+      "skeleton_pattern": "Diff(Pow(H,n)) chain-linear",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\left(5x^{3} + 5x^{2} + x + 3\\right)^{3}\\right)",
+      "answer": "3\\left(5x^{3} + 5x^{2} + x + 3\\right)^{2}\\left(3x^{2}\\left(5\\right) + 2x^{1}\\left(5\\right) + 1\\right)",
+      "form_id": "chain_power_linear",
+      "skeleton_pattern": "Diff(Pow(H,n)) chain-linear",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\frac{d}{dx}\\left[8\\left(-8\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)^{3}\\right)^{3}\\right]",
+      "answer": "3\\left(-8\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)^{3}\\right)^{2}\\left(3\\right)\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)^{2}\\left(4x^{3} + 3x^{2}\\left(7\\right) + 2x^{1}\\left(2\\right) + 3\\right)\\left(-8\\right)\\left(8\\right)",
+      "form_id": "chain_nested",
+      "skeleton_pattern": "Diff(Apply(fn,u)) nested",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[9\\left(4x + 3\\right)^{2}\\right]",
+      "answer": "\\left(4x + 3\\right)^{0}\\left(4\\right)\\left(2\\right)\\left(4\\right)\\left(9\\right)",
+      "form_id": "chain_nested",
+      "skeleton_pattern": "Diff(Apply(fn,u)) nested",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_trigonometric": {
+    "0": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\tan\\left(3x + 3\\right)\\right)",
+      "answer": "\\sec^{2}(3x + 3)\\left(3\\right)",
+      "form_id": "trig_basic",
+      "skeleton_pattern": "Diff(Apply(fn,u))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\cos^{3}\\left(-x^{3} + 3x^{2} + 4\\right)\\right)",
+      "answer": "-3\\cos^{2}\\left(-x^{3} + 3x^{2} + 4\\right)\\sin\\left(-x^{3} + 3x^{2} + 4\\right)\\left(3x^{2}\\left(-1\\right) + 2x^{1}\\left(3\\right)\\right)",
+      "form_id": "trig_basic",
+      "skeleton_pattern": "Diff(Apply(fn,u))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\cos\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\sin\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\right)",
+      "answer": "\\sin\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\sin\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\left(4x^{3} + 3x^{2}\\left(7\\right) + 2x^{1}\\left(2\\right) + 3\\right)\\sin\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right) - \\cos\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\sin\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\left(4x^{3} + 3x^{2}\\left(7\\right) + 2x^{1}\\left(2\\right) + 3\\right)\\cos\\left(\\cos\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)",
+      "form_id": "trig_product_chain",
+      "skeleton_pattern": "Diff(Prod(F,G)(u)) trig×trig",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "product"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[\\cos(x)\\cos(x)\\right]",
+      "answer": "-\\cos(x)\\cos(x) + \\sin(x)\\sin(x) - \\cos(x)\\cos(x) + \\sin(x)\\sin(x)",
+      "form_id": "trig_product_chain",
+      "skeleton_pattern": "Diff(Prod(F,G)(u)) trig×trig",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "power",
+        "product"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_inverse_trigonometric": {
+    "0": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\arctan\\left(3x + 3\\right)\\right)",
+      "answer": "\\frac{1}{1+(3x + 3)^{2}}\\left(3\\right)",
+      "form_id": "invtrig_arctan",
+      "skeleton_pattern": "Diff(Apply(arctan,u))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\arctan\\left(-x^{3} + 3x^{2} + 4\\right)\\right)",
+      "answer": "\\frac{1}{1+(-x^{3} + 3x^{2} + 4)^{2}}\\left(3x^{2}\\left(-1\\right) + 2x^{1}\\left(3\\right)\\right)",
+      "form_id": "invtrig_arctan",
+      "skeleton_pattern": "Diff(Apply(arctan,u))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\arctan\\left(\\arctan\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\right)",
+      "answer": "\\frac{1}{1+(\\arctan\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right))^{2}}\\frac{1}{1+(x^{4} + 7x^{3} + 2x^{2} + 3x - 5)^{2}}\\left(4x^{3} + 3x^{2}\\left(7\\right) + 2x^{1}\\left(2\\right) + 3\\right)",
+      "form_id": "invtrig_chained",
+      "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[\\arctan\\left(4x + 3\\right)\\right]",
+      "answer": "-2\\left(4x + 3\\right)\\left(1 + \\left(4x + 3\\right)^{2}\\right)^{-2}\\left(4\\right)\\left(4\\right)",
+      "form_id": "invtrig_chained",
+      "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_natural_logarithms_and_exponentials": {
+    "0": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(e^{3x + 3}\\right)",
+      "answer": "e^{3x + 3}\\left(3\\right)",
+      "form_id": "exp_basic",
+      "skeleton_pattern": "Diff(Apply(exp,u))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\frac{d}{dx}\\left[\\frac{\\ln\\left(5x^{3} + 5x^{2} + x + 3\\right)}{-2x + 2}\\right]",
+      "answer": "\\frac{3x^{2}\\left(5\\right) + 2x^{1}\\left(5\\right) + 1}{\\left(5x^{3} + 5x^{2} + x + 3\\right)\\left(-2x + 2\\right)} - \\left(-2x + 2\\right)^{-2}\\left(-2\\right)\\ln\\left(5x^{3} + 5x^{2} + x + 3\\right)",
+      "form_id": "quotient_log_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) log/…",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\ln\\left(\\ln\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\right)",
+      "answer": "\\frac{\\frac{4x^{3} + 3x^{2}\\left(7\\right) + 2x^{1}\\left(2\\right) + 3}{x^{4} + 7x^{3} + 2x^{2} + 3x - 5}}{\\ln\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)}",
+      "form_id": "ln_basic",
+      "skeleton_pattern": "Diff(Apply(ln,u))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[\\ln\\left(4x + 3\\right)\\right]",
+      "answer": "-\\left(4x + 3\\right)^{-2}\\left(4\\right)\\left(4\\right)",
+      "form_id": "ln_basic",
+      "skeleton_pattern": "Diff(Apply(ln,u))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_general": {
+    "0": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\sin\\left(x - 1\\right)\\right)",
+      "answer": "\\cos\\left(x - 1\\right)",
+      "form_id": "trig_basic",
+      "skeleton_pattern": "Diff(Apply(fn,u))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Find }\\frac{d}{dx}\\left(\\frac{\\ln\\left(5x^{3} + 5x^{2} + x + 3\\right)}{\\sin\\left(4x - 2\\right)}\\right)",
+      "answer": "\\frac{3x^{2}\\left(5\\right) + 2x^{1}\\left(5\\right) + 1}{\\left(5x^{3} + 5x^{2} + x + 3\\right)\\sin\\left(4x - 2\\right)} - \\sin^{-2}\\left(4x - 2\\right)\\cos\\left(4x - 2\\right)\\left(4\\right)\\ln\\left(5x^{3} + 5x^{2} + x + 3\\right)",
+      "form_id": "quotient_log_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) log/…",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\frac{d}{dx}\\left[\\left(4x^{3} + 8x^{2} + 5x - 3\\right)^{5}\\right]",
+      "answer": "5\\left(4x^{3} + 8x^{2} + 5x - 3\\right)^{4}\\left(3x^{2}\\left(4\\right) + 2x^{1}\\left(8\\right) + 5\\right)",
+      "form_id": "chain_power_linear",
+      "skeleton_pattern": "Diff(Pow(H,n)) chain-linear",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[\\left(4x\\right)^{5}\\right]",
+      "answer": "4\\left(4x\\right)^{3}\\left(4\\right)\\left(5\\right)\\left(4\\right)",
+      "form_id": "chain_power_linear",
+      "skeleton_pattern": "Diff(Pow(H,n)) chain-linear",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_higher_order_derivatives": {
+    "0": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[x^{2}\\right]",
+      "answer": "x^{0}\\left(2\\right)",
+      "form_id": "power_poly",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[\\left(2x - 3\\right)^{3}\\right]",
+      "answer": "2\\left(2x - 3\\right)^{1}\\left(2\\right)\\left(3\\right)\\left(2\\right)",
+      "form_id": "higher_order_2",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[\\left(4x + 3\\right)^{2}\\right]",
+      "answer": "\\left(4x + 3\\right)^{0}\\left(4\\right)\\left(2\\right)\\left(4\\right)",
+      "form_id": "higher_order_2",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d^{2}}{dx^{2}}\\left[\\left(9x^{3} + 9x^{2} + 2x + 6\\right)^{4}\\right]",
+      "answer": "3\\left(9x^{3} + 9x^{2} + 2x + 6\\right)^{2}\\left(3x^{2}\\left(9\\right) + 2x^{1}\\left(9\\right) + 2\\right)\\left(4\\right)\\left(3x^{2}\\left(9\\right) + 2x^{1}\\left(9\\right) + 2\\right) + \\left(2x^{1}\\left(3\\right)\\left(9\\right) + x^{0}\\left(2\\right)\\left(9\\right)\\right)\\left(4\\right)\\left(9x^{3} + 9x^{2} + 2x + 6\\right)^{3}",
+      "form_id": "higher_order_2",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "skeleton_source": "expr_skeleton",
+      "pack": "expr_skeleton",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_implicit": {
+    "0": {
+      "prompt": "\\text{Differentiate implicitly: }y^{2}+x^{2}=3.\\text{ Solve for }\\frac{dy}{dx}.",
+      "answer": "\\frac{dy}{dx}=-\\frac{x}{y}",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_implicit",
+      "methods": [
+        "implicit",
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Differentiate implicitly: }5x^{2}+y^{2}=2.\\text{ Solve for }\\frac{dy}{dx}.",
+      "answer": "\\frac{dy}{dx}=-\\frac{10x}{y}",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_implicit",
+      "methods": [
+        "implicit",
+        "power"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\text{Differentiate implicitly: }y^{3}+x^{3}=2.\\text{ Solve for }\\frac{dy}{dx}.",
+      "answer": "\\frac{dy}{dx}=-\\frac{x^{2}}{y^{2}}",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_implicit",
+      "methods": [
+        "implicit",
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\text{Differentiate implicitly: }y^{3}+x^{3}=2.\\text{ Solve for }\\frac{dy}{dx}.",
+      "answer": "\\frac{dy}{dx}=-\\frac{x^{2}}{y^{2}}",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_implicit",
+      "methods": [
+        "implicit",
+        "power"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_other_base_logarithms_and_exponentials": {
+    "0": {
+      "prompt": "\\frac{d}{dx}\\log_{2}(x)",
+      "answer": "\\frac{1}{x\\ln(2)}",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_other_base",
+      "methods": [
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\frac{d}{dx}3^{5x}",
+      "answer": "53^{5x}\\ln(3)",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_other_base",
+      "methods": [
+        "chain"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\frac{d}{dx}\\left[3\\log_{3}(x)\\right]",
+      "answer": "\\frac{3}{x\\ln(3)}",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_other_base",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\frac{d}{dx}\\left[3\\log_{3}(x)\\right]",
+      "answer": "\\frac{3}{x\\ln(3)}",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_other_base",
+      "methods": [
+        "chain",
+        "power"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_logarithmic": {
+    "0": {
+      "prompt": "\\text{Use logarithmic differentiation to find }\\frac{d}{dx}\\left[x^{4}\\right].",
+      "answer": "4x^{3}",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_logarithmic",
+      "methods": [
+        "logarithmic",
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Use logarithmic differentiation: }y=x^{4}(x+1)^{3}.\\ \\text{Find }y'.",
+      "answer": "x^{4}(x+1)^{3}\\left(\\frac{4}{x}+\\frac{3}{x+1}\\right)",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_logarithmic",
+      "methods": [
+        "logarithmic",
+        "product",
+        "power"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\text{Use logarithmic differentiation: }y=x^{x}.\\ \\text{Find }y'.",
+      "answer": "x^{x}\\left(\\ln(x)+1\\right)",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_logarithmic",
+      "methods": [
+        "logarithmic",
+        "chain"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\text{Use logarithmic differentiation: }y=x^{x}.\\ \\text{Find }y'.",
+      "answer": "x^{x}\\left(\\ln(x)+1\\right)",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_logarithmic",
+      "methods": [
+        "logarithmic",
+        "chain"
+      ],
+      "error": null
+    }
+  },
+  "calc_diff_definition_of_the_derivative": {
+    "0": {
+      "prompt": "\\lim_{x\\to 1}\\frac{x^{2}-1}{x-1}",
+      "answer": "2",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_definition_of_derivative",
+      "methods": [
+        "power"
+      ],
+      "error": null
+    },
+    "8": {
+      "prompt": "\\text{Use the definition to find }f'(2)\\text{ for }f(x)=3x^{2}.",
+      "answer": "12",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_definition_of_derivative",
+      "methods": [
+        "power"
+      ],
+      "error": null
+    },
+    "16": {
+      "prompt": "\\lim_{h\\to 0}\\frac{4(5+h)^{2}-100}{h}",
+      "answer": "40",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_definition_of_derivative",
+      "methods": [
+        "power"
+      ],
+      "error": null
+    },
+    "22": {
+      "prompt": "\\lim_{h\\to 0}\\frac{4(5+h)^{2}-100}{h}",
+      "answer": "40",
+      "form_id": null,
+      "skeleton_pattern": null,
+      "skeleton_source": null,
+      "pack": "structured_definition_of_derivative",
+      "methods": [
+        "power"
+      ],
+      "error": null
+    }
+  }
+}

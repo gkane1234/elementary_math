@@ -44,16 +44,29 @@
       "form_id": "log_equation_basic",
       "description": "log_b(x) = k → x = b^k",
       "strategy": "log_definition",
-      "constraints": { "kind": "basic_log_eq" },
+      "constraints": { "kind": "definition" },
       "d_min": 0,
       "d_weight": 2.0,
       "generation_status": "implemented",
       "leaves": [
-        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_simple",
-        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_hard"
+        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_simple"
       ],
       "example_item_ids": [],
       "openstax_case": "§10.3 Solve logarithmic equations"
+    },
+    {
+      "form_id": "log_equation_linear_argument",
+      "description": "log_b(ax+c) = k → isolate linear argument",
+      "strategy": "log_definition",
+      "constraints": { "kind": "linear_argument" },
+      "d_min": 6,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_simple"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§10.5 Solve logarithmic equations (linear argument)"
     },
     {
       "form_id": "log_properties_condense",
@@ -80,16 +93,73 @@
       "openstax_case": "§10.4 Use the Change of Base Formula"
     },
     {
-      "form_id": "log_equation_properties",
-      "description": "log equations needing product/quotient properties first",
-      "strategy": "properties_then_solve",
-      "constraints": { "kind": "log_eq_properties" },
+      "form_id": "log_equation_hard_linear",
+      "description": "log_b(ax+c) = k — multi-step definition (hard D=0)",
+      "strategy": "log_definition",
+      "constraints": { "kind": "linear_argument" },
+      "d_min": 0,
+      "d_max": 10,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_hard"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§10.5 linear argument — hard low D"
+    },
+    {
+      "form_id": "log_equation_hard_algebra",
+      "description": "a log_b(x) + c = k or k log_b(x) = log_b(m)",
+      "strategy": "log_algebra",
+      "constraints": { "kind": "algebra_coeff" },
+      "d_min": 4,
+      "d_max": 12,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_hard"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§10.5 algebra / power property"
+    },
+    {
+      "form_id": "log_equation_one_to_one",
+      "description": "log_b(f)=log_b(g) linear arguments",
+      "strategy": "log_1to1",
+      "constraints": { "kind": "one_to_one" },
       "d_min": 8,
-      "d_weight": 1.6,
-      "generation_status": "stub",
+      "d_max": 18,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_exponential_and_logarithmic_expressions_logarithmic_equations_hard"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§10.5 one-to-one property"
+    },
+    {
+      "form_id": "log_equation_properties",
+      "description": "log_b(x)+log_b(x-p)=k — product property + domain check",
+      "strategy": "properties_then_solve",
+      "constraints": { "kind": "product_sum" },
+      "d_min": 12,
+      "d_weight": 2.4,
+      "generation_status": "implemented",
       "leaves": ["a2_exponential_and_logarithmic_expressions_logarithmic_equations_hard"],
       "example_item_ids": [],
       "openstax_case": "§10.5 Solve logarithmic equations using properties"
+    },
+    {
+      "form_id": "log_equation_quadratic_1to1",
+      "description": "log_b(x^2)=log_b(mx+n) with extraneous discard",
+      "strategy": "log_1to1_quadratic",
+      "constraints": { "kind": "one_to_one_quadratic" },
+      "d_min": 16,
+      "d_weight": 2.6,
+      "generation_status": "implemented",
+      "leaves": ["a2_exponential_and_logarithmic_expressions_logarithmic_equations_hard"],
+      "example_item_ids": [],
+      "openstax_case": "§10.5 quadratic one-to-one / extraneous"
     },
     {
       "form_id": "exp_growth_decay",

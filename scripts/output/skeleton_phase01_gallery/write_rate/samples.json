@@ -1,0 +1,2567 @@
+{
+  "section": {
+    "slug": "write_rate",
+    "title": "Word problem \u2014 write a constant-rate equation",
+    "pattern": "SolveLinear",
+    "engine": "wp_packaging",
+    "type_id": "g6_constant_rate_equations",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313,
+      419,
+      523
+    ],
+    "blurb": "OpenStax EA \u00a72.6: D=0 is $d = r\\cdot t$ (bike/car/walk/bus/train). Find time / rate later. Opt out with <code>use_sample_linear_equation=True</code>."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Julian drives at }2\\text{ miles per hour. Write an equation for the distance d after }6\\text{ hours, then find d.}",
+      "answer_latex": "d = 2\\cdot 6;\\; d = 12",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "car_distance"
+        ],
+        [
+          "vehicle",
+          "car"
+        ],
+        [
+          "ask",
+          "distance"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "car_distance",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "units": "miles",
+        "vehicle": "car",
+        "ask": "distance",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "d = 2\\cdot 6",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Casey rides a bus at }3\\text{ miles per hour. Write an equation for the distance d after }3\\text{ hours, then find d.}",
+      "answer_latex": "d = 3\\cdot 3;\\; d = 9",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bus_distance"
+        ],
+        [
+          "vehicle",
+          "bus"
+        ],
+        [
+          "ask",
+          "distance"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bus_distance",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "units": "miles",
+        "vehicle": "bus",
+        "ask": "distance",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "d = 3\\cdot 3",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Evan rides a bike at }3\\text{ miles per hour. Write an equation for the distance d after }4\\text{ hours, then find d.}",
+      "answer_latex": "d = 3\\cdot 4;\\; d = 12",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bike_distance"
+        ],
+        [
+          "vehicle",
+          "bike"
+        ],
+        [
+          "ask",
+          "distance"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bike_distance",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "units": "miles",
+        "vehicle": "bike",
+        "ask": "distance",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "d = 3\\cdot 4",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=419",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 419,
+      "prompt_latex": "\\text{Carlos drives at }2\\text{ miles per hour. Write an equation for the distance d after }6\\text{ hours, then find d.}",
+      "answer_latex": "d = 2\\cdot 6;\\; d = 12",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "car_distance"
+        ],
+        [
+          "vehicle",
+          "car"
+        ],
+        [
+          "ask",
+          "distance"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "car_distance",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "units": "miles",
+        "vehicle": "car",
+        "ask": "distance",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "d = 2\\cdot 6",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "difficulty": 0.0,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=523",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 523,
+      "prompt_latex": "\\text{Ava rides a train at }4\\text{ miles per hour. Write an equation for the distance d after }6\\text{ hours, then find d.}",
+      "answer_latex": "d = 4\\cdot 6;\\; d = 24",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "train_distance"
+        ],
+        [
+          "vehicle",
+          "train"
+        ],
+        [
+          "ask",
+          "distance"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "train_distance",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "units": "miles",
+        "vehicle": "train",
+        "ask": "distance",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "d = 4\\cdot 6",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "difficulty": 0.0,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Julian drives at }3\\text{ miles per hour and covers }33\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 33\\div 3;\\; t = 11",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "car_time"
+        ],
+        [
+          "vehicle",
+          "car"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "equations": 6.708
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "car_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "car",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "33 = 3t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Casey rides a bus at }4\\text{ miles per hour. Write an equation for the distance d after }4\\text{ hours, then find d.}",
+      "answer_latex": "d = 4\\cdot 4;\\; d = 16",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bus_distance"
+        ],
+        [
+          "vehicle",
+          "bus"
+        ],
+        [
+          "ask",
+          "distance"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "equations": 7.359
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bus_distance",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "units": "miles",
+        "vehicle": "bus",
+        "ask": "distance",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "d = 4\\cdot 4",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Evan rides a bike at }4\\text{ miles per hour and covers }28\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 28\\div 4;\\; t = 7",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bike_time"
+        ],
+        [
+          "vehicle",
+          "bike"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.702,
+          "variable": 2.514,
+          "equations": 2.784
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bike_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "bike",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "28 = 4t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=419",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 419,
+      "prompt_latex": "\\text{Finn rides a train at }2\\text{ miles per hour. Write an equation for the distance d after }12\\text{ hours, then find d.}",
+      "answer_latex": "d = 2\\cdot 12;\\; d = 24",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "train_distance"
+        ],
+        [
+          "vehicle",
+          "train"
+        ],
+        [
+          "ask",
+          "distance"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.782,
+          "variable": 6.318,
+          "equations": 0.9
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "train_distance",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "units": "miles",
+        "vehicle": "train",
+        "ask": "distance",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "d = 2\\cdot 12",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "difficulty": 8.0,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=523",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 523,
+      "prompt_latex": "\\text{Riley rides a train at }8\\text{ miles per hour. Write an equation for the distance d after }11\\text{ hours, then find d.}",
+      "answer_latex": "d = 8\\cdot 11;\\; d = 88",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "mul"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "train_distance"
+        ],
+        [
+          "vehicle",
+          "train"
+        ],
+        [
+          "ask",
+          "distance"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.539,
+          "variable": 1.954,
+          "equations": 3.507
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "train_distance",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "units": "miles",
+        "vehicle": "train",
+        "ask": "distance",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "d = 8\\cdot 11",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "difficulty": 8.0,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Julian drives and covers }55\\text{ miles in }11\\text{ hours at a constant rate. Write an equation for the speed r in mph, then find r.}",
+      "answer_latex": "r = 55\\div 11;\\; r = 5",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "car_rate"
+        ],
+        [
+          "vehicle",
+          "car"
+        ],
+        [
+          "ask",
+          "rate"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "equations": 13.415
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "car_rate",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "car",
+        "ask": "rate",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "55 = r\\cdot 11",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Casey rides a bus at }7\\text{ miles per hour and covers }28\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 28\\div 7;\\; t = 4",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bus_time"
+        ],
+        [
+          "vehicle",
+          "bus"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "equations": 14.717
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bus_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "bus",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "28 = 7t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Evan rides a bike at }7\\text{ miles per hour and covers }49\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 49\\div 7;\\; t = 7",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bike_time"
+        ],
+        [
+          "vehicle",
+          "bike"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.404,
+          "variable": 5.027,
+          "equations": 5.568
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bike_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "bike",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "49 = 7t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=419",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 419,
+      "prompt_latex": "\\text{Finn rides a train at }2\\text{ miles per hour and covers }24\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 24\\div 2;\\; t = 12",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "train_time"
+        ],
+        [
+          "vehicle",
+          "train"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.564,
+          "variable": 12.635,
+          "equations": 1.801
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "train_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "train",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "24 = 2t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 16.0,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=523",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 523,
+      "prompt_latex": "\\text{Ximena rides a bus at }10\\text{ miles per hour and covers }20\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 20\\div 10;\\; t = 2",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bus_time"
+        ],
+        [
+          "vehicle",
+          "bus"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.078,
+          "variable": 3.909,
+          "equations": 7.014
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bus_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "bus",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "20 = 10t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 16.0,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Julian drives and covers }105\\text{ miles in }21\\text{ hours at a constant rate. Write an equation for the speed r in mph, then find r.}",
+      "answer_latex": "r = 105\\div 21;\\; r = 5",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "car_rate"
+        ],
+        [
+          "vehicle",
+          "car"
+        ],
+        [
+          "ask",
+          "rate"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 1.802,
+          "variable": 1.752,
+          "equations": 18.446
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "car_rate",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "car",
+        "ask": "rate",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "105 = r\\cdot 21",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Casey rides a bus at }7\\text{ miles per hour and covers }42\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 42\\div 7;\\; t = 6",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bus_time"
+        ],
+        [
+          "vehicle",
+          "bus"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 0.532,
+          "variable": 1.232,
+          "equations": 20.236
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bus_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "bus",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "42 = 7t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Evan rides a bike at }7\\text{ miles per hour and covers }84\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 84\\div 7;\\; t = 12",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "bike_time"
+        ],
+        [
+          "vehicle",
+          "bike"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 7.431,
+          "variable": 6.913,
+          "equations": 7.657
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "bike_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "bike",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "84 = 7t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=419",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 419,
+      "prompt_latex": "\\text{Finn rides a train at }2\\text{ miles per hour and covers }46\\text{ miles at a constant rate. Write an equation for the time t in hours, then find t.}",
+      "answer_latex": "t = 46\\div 2;\\; t = 23",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "train_time"
+        ],
+        [
+          "vehicle",
+          "train"
+        ],
+        [
+          "ask",
+          "time"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 2.15,
+          "variable": 17.373,
+          "equations": 2.476
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "train_time",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "train",
+        "ask": "time",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "46 = 2t",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 22.0,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=523",
+      "type_id": "g6_constant_rate_equations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 523,
+      "prompt_latex": "\\text{Ava rides a train and covers }231\\text{ miles in }21\\text{ hours at a constant rate. Write an equation for the speed r in mph, then find r.}",
+      "answer_latex": "r = 231\\div 21;\\; r = 11",
+      "skeleton_pattern": "SolveLinear",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SolveLinear"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "steps",
+          "one"
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "one"
+        ],
+        [
+          "transforms",
+          [
+            "div"
+          ]
+        ],
+        [
+          "frame_id",
+          "write_rate"
+        ],
+        [
+          "frame_variant",
+          "train_rate"
+        ],
+        [
+          "vehicle",
+          "train"
+        ],
+        [
+          "ask",
+          "rate"
+        ],
+        [
+          "wp_kind",
+          "write_one_step"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 6.982,
+          "variable": 5.374,
+          "equations": 9.644
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "frame_id": "write_rate",
+        "frame_variant": "train_rate",
+        "construction": "wp_packaging",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "div"
+        ],
+        "units": "miles",
+        "vehicle": "train",
+        "ask": "rate",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "write_one_step",
+        "equation_latex": "231 = r\\cdot 21",
+        "upgrades": [
+          "write_one_step"
+        ],
+        "generation_settings": {
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 22.0,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Write the equation.}"
+      }
+    }
+  ],
+  "failures": []
+}

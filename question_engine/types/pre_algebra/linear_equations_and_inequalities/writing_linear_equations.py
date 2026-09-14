@@ -1,14 +1,4 @@
-"""Writing linear equations — form conversions, simplify, or read from a graph."""
+"""Writing linear equations — catalog + GENERATORS['writing_linear_equations']."""
 
-from question_engine.frameworks.linear import WritingLinearEquationsFramework
-from question_engine.types._graphing_type import register_graphing_type
-
-register_graphing_type(
-    "writing_linear_equations",
-    WritingLinearEquationsFramework(),
-    setting_defaults={
-        "include_graph_metadata": True,
-        "show_points": False,
-        "ask_mode": "mixed",
-    },
-)
+# Catalog registration uses GENERATORS. This module does not re-bind
+# WritingLinearEquationsFramework.

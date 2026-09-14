@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Inverse trig — Diff skeleton</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.1rem; margin-top: 1.4rem; border-bottom: 1px solid #d8d2c4;
+  padding-bottom: 0.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 52rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.35rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.band { background: #e8efe6; padding: 0.05rem 0.35rem; border-radius: 3px;
+  font-size: 0.75rem; }
+.band.low { background: #e8efe6; }
+.band.mid { background: #e6ebe8; }
+.band.high { background: #dde8f0; }
+.band.elite { background: #e8dde8; }
+.meta { font-size: 0.78rem; color: #555; margin: 0.3rem 0; }
+.debug { margin-top: 0.55rem; font-size: 0.72rem; background: #f3efe7;
+  border: 1px solid #e0d8cc; padding: 0.55rem 0.65rem; }
+.debug h3 { margin: 0 0 0.35rem; font-size: 0.78rem; font-weight: 600;
+  color: #444; letter-spacing: 0.02em; text-transform: uppercase; }
+.debug dl { display: grid; grid-template-columns: 11rem 1fr; gap: 0.15rem 0.6rem;
+  margin: 0; }
+.debug dt { color: #666; font-family: ui-monospace, Consolas, monospace; }
+.debug dd { margin: 0; font-family: ui-monospace, Consolas, monospace;
+  word-break: break-word; }
+.debug .section { margin-top: 0.45rem; padding-top: 0.35rem;
+  border-top: 1px dashed #d8d2c4; }
+.debug .section:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.raw { font-size: 0.72rem; white-space: pre-wrap; background: #f0ebe3; padding: 0.45rem; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.err { color: #a20; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; border: 0; padding: 0; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.7; }
+.katex .katex-mathml {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  padding: 0 !important; border: 0 !important;
+  height: 1px !important; width: 1px !important;
+  overflow: hidden !important; white-space: nowrap !important;
+}
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head>
+<body>
+
+<p class="nav"><a href="../index.html">← all topics</a>
+  <a href="../DIFFICULTY_SCALE.md">difficulty scale</a></p>
+<h1>Inverse trig</h1>
+<p class="sub"><code>derivative_inverse_trig</code> · live <code>sample_from_form</code>
+ · 11/11 ok · C ladder 2, 8, 14, 20
+ · each card shows richness knobs + honest cost/spend</p>
+<div class='notes-block'><h1>Notes — <code>calc_diff_inverse_trigonometric</code> (<code>Inverse trigonometric</code>)</h1>
+<ul>
+<li><strong>Course:</strong> Calculus</li>
+<li><strong>Category:</strong> Calculus — Differentiation</li>
+<li><strong>Generator:</strong> <code>derivative_inverse_trig</code></li>
+<li><strong>Suggested family:</strong> other (calc limits / Diff)</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Status:</strong> shipped — Diff expr_skeleton</li>
+<li><strong>Generator:</strong> <code>derivative_inverse_trig</code></li>
+<li><strong>Remaining limits:</strong> Live on Diff <code>expr_skeleton</code> + derivatives.json forms. Gaps: allow_* checkboxes gate class unlocks; some leaves still stamp soft patterns; OpenStax mixed-rule drill richer than general pack at mid-D.</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Differentiate arcsin/arctan/… of an inner.</li>
+<li><strong>D=0:</strong> arctan(affine).</li>
+<li><strong>High D (≈16–22):</strong> arctan(poly); nested invtrig; first derivative preferred.</li>
+<li><strong>Must not:</strong> Plain trig without inv; second-deriv-only unlock.</li>
+</ul>
+<h2>What old / live path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> at default path (Diff leaves → <code>expr_skeleton</code> when form maps; limits → LimitSpec packs). No <code>use_sample_*</code> / Mad-Lib opt-out found for these generators.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td><code>$\text{Find }\frac{d}{dx}\left(\arctan\left(3x + 3\right)\right)$</code></td><td><code>$\frac{1}{1+(3x + 3)^{2}}\left(3\right)$</code></td><td>form=<code>invtrig_arctan</code>; skel=<code>Diff(Apply(arctan,u))</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>8</td><td>101</td><td><code>$\text{Find }\frac{d}{dx}\left(\arctan\left(-x^{3} + 3x^{2} + 4\right)\right)$</code></td><td><code>$\frac{1}{1+(-x^{3} + 3x^{2} + 4)^{2}}\left(3x^{2}\left(-1\right) + 2x^{1}\left(3\right)\right)$</code></td><td>form=<code>invtrig_arctan</code>; skel=<code>Diff(Apply(arctan,u))</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>16</td><td>101</td><td><code>$\text{Find }\frac{d}{dx}\left(\arctan\left(\arctan\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\right)\right)\right)$</code></td><td><code>$\frac{1}{1+(\arctan\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\right))^{2}}\frac{1}{1+(x^{4} + 7x^{3} + 2x^{2} + 3x - 5)^{2}}\left(4x^{3} + 3x^{2}\left(7\right) + 2x^{1}\left(2\right) + 3\right)$</code></td><td>form=<code>invtrig_chained</code>; skel=<code>Diff(Apply(invtrig,u)) chain</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>22</td><td>101</td><td><code>$\frac{d^{2}}{dx^{2}}\left[\arctan\left(4x + 3\right)\right]$</code></td><td><code>$-2\left(4x + 3\right)\left(1 + \left(4x + 3\right)^{2}\right)^{-2}\left(4\right)\left(4\right)$</code></td><td>form=<code>invtrig_chained</code>; skel=<code>Diff(Apply(invtrig,u)) chain</code>; pack=<code>expr_skeleton</code></td></tr></tbody></table>
+<p>Opt-out flag used: _none — expr_skeleton default_</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Calculus Volume 1 §3.7 Derivatives of Inverse Functions</td><td>https://openstax.org/books/calculus-volume-1/pages/3-7-derivatives-of-inverse-functions</td><td>arcsin/arctan formulas + chain</td></tr></tbody></table>
+<p>Local HTML / mining: <code>diff_skeleton_gallery/inverse_trig/; 3-7-….md</code></p>
+<h2>Variety notes / flags</h2>
+<p>Good D=0→16. Fixed former issue: D=22 second derivative — keep on higher-order or deepen nest.</p>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<p><strong>Reuse:</strong> <code>expr_skeleton</code> <code>Diff(Apply(arctan,u))</code> / invtrig chained. Gallery: <code>diff_skeleton_gallery/inverse_trig/</code>.</p>
+<ul>
+<li><strong>Shipped:</strong> first-deriv order lock + form/flesh gates; phase-01 gallery wired.</li>
+</ul>
+<p>Coverage: Diff algebraic families also cataloged in <code>scripts/output/diff_skeleton_gallery/</code> (power, product, quotient, chain, trig, invtrig, ln/exp, general, higher_order).</p></div>
+
+
+<article class="card">
+  <header><span class="n">#1</span> <code>invtrig_arcsin</code>
+    <span class="pat">Diff(Apply(arcsin,u))</span>
+    <span class="band low">C=2.0 · low</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arcsin(-2x)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{\sqrt{1-(-2x)^{2}}}\left(-2\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=2; band=low; inner=affine; nest=1; deg=1; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_arcsin</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(arcsin,u))</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arcsin, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arcsin</dd><dt>rng_seed</dt><dd>2042</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>2</dd><dt>band</dt><dd>low</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>false</dd><dt>prefer_poly_u</dt><dd>false</dd><dt>power_min / power_max</dt><dd>2 / 2</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>3</dd><dt>atom_fn_candidates</dt><dd>[arcsin]</dd><dt>atom_fn_candidates_g</dt><dd>[arcsin]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>affine</dd><dt>inner_latex</dt><dd>-2x</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>1</dd><dt>n_applies</dt><dd>1</dd><dt>n_terms</dt><dd>1</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arcsin(-2x)\right]</pre>
+    <p>answer: <code>\frac{1}{\sqrt{1-(-2x)^{2}}}\left(-2\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#2</span> <code>invtrig_arcsin</code>
+    <span class="pat">Diff(Apply(arcsin,u))</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arcsin\left(5x^{3} + 5x^{2} + 1\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{\sqrt{1-(5x^{3} + 5x^{2} + 1)^{2}}}\left(3x^{2}\left(5\right) + 2x^{1}\left(5\right)\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=8; band=mid; inner=poly; nest=1; deg=3; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_arcsin</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(arcsin,u))</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arcsin, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arcsin</dd><dt>rng_seed</dt><dd>2049</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 3</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[arcsin]</dd><dt>atom_fn_candidates_g</dt><dd>[arcsin]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>5x^{3} + 5x^{2} + 1</dd><dt>inner_degree</dt><dd>3</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>1</dd><dt>n_terms</dt><dd>3</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arcsin\left(5x^{3} + 5x^{2} + 1\right)\right]</pre>
+    <p>answer: <code>\frac{1}{\sqrt{1-(5x^{3} + 5x^{2} + 1)^{2}}}\left(3x^{2}\left(5\right) + 2x^{1}\left(5\right)\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#3</span> <code>invtrig_arcsin</code>
+    <span class="pat">Diff(Apply(arcsin,u))</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arcsin\left(\sin\left(x^{4} + 6x^{3} - 5x^{2} + 5x - 1\right)\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{\sqrt{1-(\sin\left(x^{4} + 6x^{3} - 5x^{2} + 5x - 1\right))^{2}}}\cos\left(x^{4} + 6x^{3} - 5x^{2} + 5x - 1\right)\left(4x^{3} + 3x^{2}\left(6\right) + 2x^{1}\left(-5\right) + 5\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=14; band=high; inner=nested_apply; nest=2; deg=4; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig, roots, trig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_arcsin</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(arcsin,u))</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arcsin, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arcsin</dd><dt>rng_seed</dt><dd>2056</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>1</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 5</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[arcsin]</dd><dt>atom_fn_candidates_g</dt><dd>[arcsin]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\sin\left(x^{4} + 6x^{3} - 5x^{2} + 5x - 1\right)</dd><dt>inner_degree</dt><dd>4</dd><dt>nest_depth_expr</dt><dd>2</dd><dt>chain_depth</dt><dd>2</dd><dt>degree_max</dt><dd>4</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>5</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arcsin\left(\sin\left(x^{4} + 6x^{3} - 5x^{2} + 5x - 1\right)\right)\right]</pre>
+    <p>answer: <code>\frac{1}{\sqrt{1-(\sin\left(x^{4} + 6x^{3} - 5x^{2} + 5x - 1\right))^{2}}}\cos\left(x^{4} + 6x^{3} - 5x^{2} + 5x - 1\right)\left(4x^{3} + 3x^{2}\left(6\right) + 2x^{1}\left(-5\right) + 5\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#4</span> <code>invtrig_arcsin</code>
+    <span class="pat">Diff(Apply(arcsin,u))</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arcsin\left(\cos\left(2x^{4} - 7x^{3} - 8x^{2} + x - 6\right)\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{\sqrt{1-(\cos\left(2x^{4} - 7x^{3} - 8x^{2} + x - 6\right))^{2}}}\left(-\sin\left(2x^{4} - 7x^{3} - 8x^{2} + x - 6\right)\right)\left(4x^{3}\left(2\right) + 3x^{2}\left(-7\right) + 2x^{1}\left(-8\right) + 1\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=20; band=elite; inner=nested_apply; nest=2; deg=4; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig, roots, trig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_arcsin</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(arcsin,u))</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arcsin, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arcsin</dd><dt>rng_seed</dt><dd>2063</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>1</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>4 / 7</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[arcsin]</dd><dt>atom_fn_candidates_g</dt><dd>[arcsin]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\cos\left(2x^{4} - 7x^{3} - 8x^{2} + x - 6\right)</dd><dt>inner_degree</dt><dd>4</dd><dt>nest_depth_expr</dt><dd>2</dd><dt>chain_depth</dt><dd>2</dd><dt>degree_max</dt><dd>4</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>5</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arcsin\left(\cos\left(2x^{4} - 7x^{3} - 8x^{2} + x - 6\right)\right)\right]</pre>
+    <p>answer: <code>\frac{1}{\sqrt{1-(\cos\left(2x^{4} - 7x^{3} - 8x^{2} + x - 6\right))^{2}}}\left(-\sin\left(2x^{4} - 7x^{3} - 8x^{2} + x - 6\right)\right)\left(4x^{3}\left(2\right) + 3x^{2}\left(-7\right) + 2x^{1}\left(-8\right) + 1\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#5</span> <code>invtrig_arctan</code>
+    <span class="pat">Diff(Apply(arctan,u))</span>
+    <span class="band low">C=2.0 · low</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arctan(2x)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{1+(2x)^{2}}\left(2\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=2; band=low; inner=affine; nest=1; deg=1; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_arctan</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(arctan,u))</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arctan, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arctan</dd><dt>rng_seed</dt><dd>2142</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>2</dd><dt>band</dt><dd>low</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>false</dd><dt>prefer_poly_u</dt><dd>false</dd><dt>power_min / power_max</dt><dd>2 / 2</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>3</dd><dt>atom_fn_candidates</dt><dd>[arctan]</dd><dt>atom_fn_candidates_g</dt><dd>[arctan]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>affine</dd><dt>inner_latex</dt><dd>2x</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>1</dd><dt>n_applies</dt><dd>1</dd><dt>n_terms</dt><dd>1</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arctan(2x)\right]</pre>
+    <p>answer: <code>\frac{1}{1+(2x)^{2}}\left(2\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#6</span> <code>invtrig_arctan</code>
+    <span class="pat">Diff(Apply(arctan,u))</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arctan\left(x + 4\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{1+(x + 4)^{2}}$$</div>
+  <p class="meta">diff_apply_fn_u; C=8; band=mid; inner=affine; nest=1; deg=1; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_arctan</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(arctan,u))</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arctan, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arctan</dd><dt>rng_seed</dt><dd>2149</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 3</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[arctan]</dd><dt>atom_fn_candidates_g</dt><dd>[arctan]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>affine</dd><dt>inner_latex</dt><dd>x + 4</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>1</dd><dt>n_applies</dt><dd>1</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arctan\left(x + 4\right)\right]</pre>
+    <p>answer: <code>\frac{1}{1+(x + 4)^{2}}</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#7</span> <code>invtrig_arctan</code>
+    <span class="pat">Diff(Apply(arctan,u))</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arctan\left(\arcsin\left(5x^{2} - 5x - 1\right)\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{1+(\arcsin\left(5x^{2} - 5x - 1\right))^{2}}\frac{1}{\sqrt{1-(5x^{2} - 5x - 1)^{2}}}\left(2x^{1}\left(5\right) - 5\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=14; band=high; inner=nested_apply; nest=2; deg=2; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_arctan</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(arctan,u))</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arctan, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arctan</dd><dt>rng_seed</dt><dd>2156</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>1</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 5</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[arctan]</dd><dt>atom_fn_candidates_g</dt><dd>[arctan]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\arcsin\left(5x^{2} - 5x - 1\right)</dd><dt>inner_degree</dt><dd>2</dd><dt>nest_depth_expr</dt><dd>2</dd><dt>chain_depth</dt><dd>2</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>3</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arctan\left(\arcsin\left(5x^{2} - 5x - 1\right)\right)\right]</pre>
+    <p>answer: <code>\frac{1}{1+(\arcsin\left(5x^{2} - 5x - 1\right))^{2}}\frac{1}{\sqrt{1-(5x^{2} - 5x - 1)^{2}}}\left(2x^{1}\left(5\right) - 5\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#8</span> <code>invtrig_arctan</code>
+    <span class="pat">Diff(Apply(arctan,u))</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arctan\left(\arcsin\left(-5x^{3} + 4x + 1\right)\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{1+(\arcsin\left(-5x^{3} + 4x + 1\right))^{2}}\frac{1}{\sqrt{1-(-5x^{3} + 4x + 1)^{2}}}\left(3x^{2}\left(-5\right) + 4\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=20; band=elite; inner=nested_apply; nest=2; deg=3; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_arctan</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(arctan,u))</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arctan, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arctan</dd><dt>rng_seed</dt><dd>2163</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>1</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>4 / 7</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[arctan]</dd><dt>atom_fn_candidates_g</dt><dd>[arctan]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\arcsin\left(-5x^{3} + 4x + 1\right)</dd><dt>inner_degree</dt><dd>3</dd><dt>nest_depth_expr</dt><dd>2</dd><dt>chain_depth</dt><dd>2</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>3</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arctan\left(\arcsin\left(-5x^{3} + 4x + 1\right)\right)\right]</pre>
+    <p>answer: <code>\frac{1}{1+(\arcsin\left(-5x^{3} + 4x + 1\right))^{2}}\frac{1}{\sqrt{1-(-5x^{3} + 4x + 1)^{2}}}\left(3x^{2}\left(-5\right) + 4\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#9</span> <code>invtrig_chained</code>
+    <span class="pat">Diff(Apply(invtrig,u)) chain</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arcsin\left(\arctan(-2x)\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{\sqrt{1-(\arctan(-2x))^{2}}}\frac{1}{1+(-2x)^{2}}\left(-2\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=8; band=mid; inner=nested_apply; nest=2; deg=1; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_chained</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(invtrig,u)) chain</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arcsin, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arcsin</dd><dt>rng_seed</dt><dd>2249</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 3</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[arcsin, arctan]</dd><dt>atom_fn_candidates_g</dt><dd>[arcsin, arctan]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\arctan(-2x)</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>2</dd><dt>chain_depth</dt><dd>2</dd><dt>degree_max</dt><dd>1</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>1</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arcsin\left(\arctan(-2x)\right)\right]</pre>
+    <p>answer: <code>\frac{1}{\sqrt{1-(\arctan(-2x))^{2}}}\frac{1}{1+(-2x)^{2}}\left(-2\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#10</span> <code>invtrig_chained</code>
+    <span class="pat">Diff(Apply(invtrig,u)) chain</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arcsin\left(e^{x^{4} - 4}\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{\sqrt{1-(e^{x^{4} - 4})^{2}}}e^{x^{4} - 4}\left(4x^{3}\right)$$</div>
+  <p class="meta">diff_apply_fn_u; C=14; band=high; inner=nested_apply; nest=2; deg=4; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, exp, invtrig, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_chained</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(invtrig,u)) chain</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arcsin, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arcsin</dd><dt>rng_seed</dt><dd>2256</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>1</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 5</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[arcsin, arctan]</dd><dt>atom_fn_candidates_g</dt><dd>[arcsin, arctan]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>e^{x^{4} - 4}</dd><dt>inner_degree</dt><dd>4</dd><dt>nest_depth_expr</dt><dd>2</dd><dt>chain_depth</dt><dd>2</dd><dt>degree_max</dt><dd>4</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arcsin\left(e^{x^{4} - 4}\right)\right]</pre>
+    <p>answer: <code>\frac{1}{\sqrt{1-(e^{x^{4} - 4})^{2}}}e^{x^{4} - 4}\left(4x^{3}\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#11</span> <code>invtrig_chained</code>
+    <span class="pat">Diff(Apply(invtrig,u)) chain</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\arctan\left(\cos\left(\arctan\left(\arcsin\left(x - 4\right)\right)\right)\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\frac{1}{1+(\cos\left(\arctan\left(\arcsin\left(x - 4\right)\right)\right))^{2}}\left(-\sin\left(\arctan\left(\arcsin\left(x - 4\right)\right)\right)\right)\frac{1}{1+(\arcsin\left(x - 4\right))^{2}}\frac{1}{\sqrt{1-(x - 4)^{2}}}$$</div>
+  <p class="meta">diff_apply_fn_u; C=20; band=elite; inner=nested_apply; nest=4; deg=1; shared u; chain=used/allow=True/req=False · methods: chain, power · classes: algebraic, invtrig, trig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>invtrig_chained</dd><dt>skeleton_pattern</dt><dd>Diff(Apply(invtrig,u)) chain</dd><dt>skeleton_kind</dt><dd>diff_apply_fn_u</dd><dt>productions</dt><dd>[Apply, arctan, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>chosen_outer</dt><dd>arctan</dd><dt>rng_seed</dt><dd>2263</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_invtrig&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>2</dd><dt>force_min_nest</dt><dd>2</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>4 / 7</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[arcsin, arctan]</dd><dt>atom_fn_candidates_g</dt><dd>[arcsin, arctan]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\cos\left(\arctan\left(\arcsin\left(x - 4\right)\right)\right)</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>4</dd><dt>chain_depth</dt><dd>4</dd><dt>degree_max</dt><dd>1</dd><dt>n_applies</dt><dd>4</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\arctan\left(\cos\left(\arctan\left(\arcsin\left(x - 4\right)\right)\right)\right)\right]</pre>
+    <p>answer: <code>\frac{1}{1+(\cos\left(\arctan\left(\arcsin\left(x - 4\right)\right)\right))^{2}}\left(-\sin\left(\arctan\left(\arcsin\left(x - 4\right)\right)\right)\right)\frac{1}{1+(\arcsin\left(x - 4\right))^{2}}\frac{1}{\sqrt{1-(x - 4)^{2}}}</code></p>
+  </details>
+</article>
+</body></html>

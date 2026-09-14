@@ -1,0 +1,356 @@
+{
+  "topic": "derivative_quotient_rule",
+  "rows": [
+    {
+      "form_id": "quotient_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) poly/poly",
+      "skeleton_kind": "diff_quot_fg",
+      "conceptual_d": 2.0,
+      "band": "low",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\frac{2x}{x}\\right]",
+      "body_latex": "\\frac{2x}{x}",
+      "answer_latex": "\\frac{2}{x} - x^{-2}\\left(2\\right)x",
+      "note": "diff_quot_fg; C=2; band=low; inner=affine; nest=0; deg=1; independent inners; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "quotient"
+      ],
+      "classes": [
+        "algebraic"
+      ],
+      "shared_inner": false,
+      "allows": {
+        "allow_trig": false,
+        "allow_exp": false,
+        "allow_log": false,
+        "allow_invtrig": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2072,
+      "productions": [
+        "Quot",
+        "F",
+        "G"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 2.0,
+        "band": "low",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": false,
+        "prefer_poly_u": false,
+        "power_min": 2,
+        "power_max": 2,
+        "poly_degree_min": 1,
+        "coef_abs_max": 3
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 1,
+        "n_applies": 0,
+        "n_terms": 1,
+        "n_factors": 0,
+        "inner_kind": "affine",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "independent",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "affine",
+      "inner_latex": "2x",
+      "independent_inners": {
+        "u_f_kind": "affine",
+        "u_g_kind": "var",
+        "u_f_latex": "2x",
+        "u_g_latex": "x"
+      },
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "quotient_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) poly/poly",
+      "skeleton_kind": "diff_quot_fg",
+      "conceptual_d": 8.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\frac{\\left(-3x + 4\\right)^{3}}{-x - 1}\\right]",
+      "body_latex": "\\frac{\\left(-3x + 4\\right)^{3}}{-x - 1}",
+      "answer_latex": "\\frac{3\\left(-3x + 4\\right)^{2}\\left(-3\\right)}{-x - 1} - \\left(-x - 1\\right)^{-2}\\left(-1\\right)\\left(-3x + 4\\right)^{3}",
+      "note": "diff_quot_fg; C=8; band=mid; inner=nested_pow; nest=1; deg=3; independent inners; chain=used/allow=False/req=False",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": false,
+      "allows": {
+        "allow_trig": false,
+        "allow_exp": false,
+        "allow_log": false,
+        "allow_invtrig": false
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2079,
+      "productions": [
+        "Quot",
+        "F",
+        "G"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 8.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 3,
+        "poly_degree_min": 2,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 3,
+        "n_applies": 0,
+        "n_terms": 2,
+        "n_factors": 0,
+        "inner_kind": "nested_pow",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "independent",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "nested_pow",
+      "inner_latex": "\\left(-3x + 4\\right)^{3}",
+      "independent_inners": {
+        "u_f_kind": "nested_pow",
+        "u_g_kind": "affine",
+        "u_f_latex": "\\left(-3x + 4\\right)^{3}",
+        "u_g_latex": "-x - 1"
+      },
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "quotient_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) poly/poly",
+      "skeleton_kind": "diff_quot_fg",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\frac{8x^{3} - x^{2} - x - 8}{-4x^{2} + 7x - 1}\\right]",
+      "body_latex": "\\frac{8x^{3} - x^{2} - x - 8}{-4x^{2} + 7x - 1}",
+      "answer_latex": "\\frac{3x^{2}\\left(8\\right) + 2x^{1}\\left(-1\\right) - 1}{-4x^{2} + 7x - 1} - \\left(-4x^{2} + 7x - 1\\right)^{-2}\\left(2x^{1}\\left(-4\\right) + 7\\right)\\left(8x^{3} - x^{2} - x - 8\\right)",
+      "note": "diff_quot_fg; C=14; band=high; inner=poly; nest=1; deg=3; independent inners; chain=used/allow=False/req=False",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": false,
+      "allows": {
+        "allow_trig": false,
+        "allow_exp": false,
+        "allow_log": false,
+        "allow_invtrig": false
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2086,
+      "productions": [
+        "Quot",
+        "F",
+        "G"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 1,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 3,
+        "n_applies": 0,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "independent",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "8x^{3} - x^{2} - x - 8",
+      "independent_inners": {
+        "u_f_kind": "poly",
+        "u_g_kind": "poly",
+        "u_f_latex": "8x^{3} - x^{2} - x - 8",
+        "u_g_latex": "-4x^{2} + 7x - 1"
+      },
+      "chain_depth": 1,
+      "ok": true
+    },
+    {
+      "form_id": "quotient_poly",
+      "skeleton_pattern": "Diff(Quot(F,G)) poly/poly",
+      "skeleton_kind": "diff_quot_fg",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d}{dx}\\left[\\frac{9x^{3} - x - 6}{-9x^{4} - 2x^{3} - x + 8}\\right]",
+      "body_latex": "\\frac{9x^{3} - x - 6}{-9x^{4} - 2x^{3} - x + 8}",
+      "answer_latex": "\\frac{3x^{2}\\left(9\\right) - 1}{-9x^{4} - 2x^{3} - x + 8} - \\left(-9x^{4} - 2x^{3} - x + 8\\right)^{-2}\\left(4x^{3}\\left(-9\\right) + 3x^{2}\\left(-2\\right) - 1\\right)\\left(9x^{3} - x - 6\\right)",
+      "note": "diff_quot_fg; C=20; band=elite; inner=poly; nest=1; deg=4; independent inners; chain=used/allow=False/req=False",
+      "methods": [
+        "chain",
+        "power",
+        "quotient"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": false,
+      "allows": {
+        "allow_trig": false,
+        "allow_exp": false,
+        "allow_log": false,
+        "allow_invtrig": false
+      },
+      "chain_used": true,
+      "shared_u_ok": null,
+      "seed": 2093,
+      "productions": [
+        "Quot",
+        "F",
+        "G"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 1,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 4,
+        "power_max": 7,
+        "poly_degree_min": 2,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 1,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 1,
+        "nest_depth_expr": 1,
+        "chain_depth": 1,
+        "degree_max": 4,
+        "n_applies": 0,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "independent",
+        "pattern_locks_top_structure": true,
+        "note": "C densifies holes only; pattern kind is form-locked"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "9x^{3} - x - 6",
+      "independent_inners": {
+        "u_f_kind": "poly",
+        "u_g_kind": "poly",
+        "u_f_latex": "9x^{3} - x - 6",
+        "u_g_latex": "-9x^{4} - 2x^{3} - x + 8"
+      },
+      "chain_depth": 1,
+      "ok": true
+    }
+  ],
+  "failures": []
+}

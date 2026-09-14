@@ -346,8 +346,8 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Numeric Expressions, Exponents, and the Order of Operations",
         "g6_distributive_property_area_diagrams_numeric",
         "Distributive property with area diagrams, numeric",
-        generator="g6_divisibility",
-        instruction_text="Evaluate.",
+        generator="distributive_property",
+        instruction_text="Rewrite using the distributive property.",
     ),
     _g6(
         "Numeric Expressions, Exponents, and the Order of Operations",

@@ -1,0 +1,1461 @@
+{
+  "section": {
+    "slug": "abs_eq",
+    "title": "AbsEquation \u2014 split |inner| = k",
+    "pattern": "AbsEquation",
+    "engine": "equation_skeleton",
+    "type_id": "absolute_value_equations",
+    "aliases": [
+      "a2_equations_and_inequalities_absolute_value_equations"
+    ],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "D=0 is $|x|=k$ or $|x+b|=k$ (a=1), matching old simple/shifted. D\u22658 is $|ax+b|=k$ with $|a|\\ge 2$ (old medium linear inner). Opt out with <code>use_sample_absolute_value_equation=True</code>."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "absolute_value_equations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Solve: } \\left|x - 1\\right| = 2",
+      "answer_latex": "x = -1 \\text{ or } x = 3",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "1"
+        ],
+        [
+          "inner_b",
+          "-1"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:0"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "2",
+        "inner_a": "1",
+        "inner_b": "-1",
+        "generation_settings": {
+          "allow_basic": true,
+          "allow_isolated_right": true,
+          "allow_simple": true,
+          "allow_abs_plus_constant": false,
+          "allow_factored_inside": false,
+          "allow_coeff_outside": false,
+          "allow_abs_equals_abs": false,
+          "allow_abs_equals_linear": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "absolute_value_equations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Solve: } \\left|x - 2\\right| = 5",
+      "answer_latex": "x = -3 \\text{ or } x = 7",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "1"
+        ],
+        [
+          "inner_b",
+          "-2"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:0"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "5",
+        "inner_a": "1",
+        "inner_b": "-2",
+        "generation_settings": {
+          "allow_basic": true,
+          "allow_isolated_right": true,
+          "allow_simple": true,
+          "allow_abs_plus_constant": false,
+          "allow_factored_inside": false,
+          "allow_coeff_outside": false,
+          "allow_abs_equals_abs": false,
+          "allow_abs_equals_linear": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "absolute_value_equations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Solve: } \\left|x\\right| = 2",
+      "answer_latex": "x = -2 \\text{ or } x = 2",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "1"
+        ],
+        [
+          "inner_b",
+          "0"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:0"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "2",
+        "inner_a": "1",
+        "inner_b": "0",
+        "generation_settings": {
+          "allow_basic": true,
+          "allow_isolated_right": true,
+          "allow_simple": true,
+          "allow_abs_plus_constant": false,
+          "allow_factored_inside": false,
+          "allow_coeff_outside": false,
+          "allow_abs_equals_abs": false,
+          "allow_abs_equals_linear": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "absolute_value_equations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Solve: } \\left|-2x + 2\\right| = 14",
+      "answer_latex": "x = -6 \\text{ or } x = 8",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "-2"
+        ],
+        [
+          "inner_b",
+          "2"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "equations": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.637163 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 0.6551778390838696,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.6551778390838696,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.655178 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:0"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "14",
+        "inner_a": "-2",
+        "inner_b": "2",
+        "generation_settings": {
+          "allow_basic": false,
+          "allow_isolated_right": false,
+          "allow_simple": false,
+          "allow_abs_plus_constant": true,
+          "allow_factored_inside": true,
+          "allow_coeff_outside": false,
+          "allow_abs_equals_abs": false,
+          "allow_abs_equals_linear": false,
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "absolute_value_equations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Solve: } \\left|-3x + 6\\right| = 24",
+      "answer_latex": "x = -6 \\text{ or } x = 10",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "-3"
+        ],
+        [
+          "inner_b",
+          "6"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "equations": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.44792848098459526,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.447928 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 0.19350663405422858,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.19350663405422858,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.193507 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:0"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "24",
+        "inner_a": "-3",
+        "inner_b": "6",
+        "generation_settings": {
+          "allow_basic": false,
+          "allow_isolated_right": false,
+          "allow_simple": false,
+          "allow_abs_plus_constant": true,
+          "allow_factored_inside": true,
+          "allow_coeff_outside": false,
+          "allow_abs_equals_abs": false,
+          "allow_abs_equals_linear": false,
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "absolute_value_equations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Solve: } \\left|4x\\right| = 28",
+      "answer_latex": "x = -7 \\text{ or } x = 7",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "4"
+        ],
+        [
+          "inner_b",
+          "0"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.702,
+          "variable": 2.514,
+          "equations": 2.784
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 2.51367228303639,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 2.51367228303639,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=2.51367 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 2.702118076839401,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.702118076839401,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.70212 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:0"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "28",
+        "inner_a": "4",
+        "inner_b": "0",
+        "generation_settings": {
+          "allow_basic": false,
+          "allow_isolated_right": false,
+          "allow_simple": false,
+          "allow_abs_plus_constant": true,
+          "allow_factored_inside": true,
+          "allow_coeff_outside": false,
+          "allow_abs_equals_abs": false,
+          "allow_abs_equals_linear": false,
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "absolute_value_equations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Solve: } \\left|3x - 3\\right| = 12",
+      "answer_latex": "x = -3 \\text{ or } x = 5",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "inner_a",
+          "3"
+        ],
+        [
+          "inner_b",
+          "-3"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "equations": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.27433 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 1.3103556781677392,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 1.3103556781677392,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.31036 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:2"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "12",
+        "inner_a": "3",
+        "inner_b": "-3",
+        "generation_settings": {
+          "allow_basic": false,
+          "allow_isolated_right": false,
+          "allow_simple": false,
+          "allow_abs_plus_constant": false,
+          "allow_factored_inside": false,
+          "allow_coeff_outside": true,
+          "allow_abs_equals_abs": true,
+          "allow_abs_equals_linear": true,
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "absolute_value_equations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Solve: } \\left|-3x + 6\\right| = 21",
+      "answer_latex": "x = -5 \\text{ or } x = 9",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "inner_a",
+          "-3"
+        ],
+        [
+          "inner_b",
+          "6"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "equations": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.8958569619691905,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.895857 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 0.38701326810845715,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.38701326810845715,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.387013 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:2"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "21",
+        "inner_a": "-3",
+        "inner_b": "6",
+        "generation_settings": {
+          "allow_basic": false,
+          "allow_isolated_right": false,
+          "allow_simple": false,
+          "allow_abs_plus_constant": false,
+          "allow_factored_inside": false,
+          "allow_coeff_outside": true,
+          "allow_abs_equals_abs": true,
+          "allow_abs_equals_linear": true,
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "absolute_value_equations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Solve: } \\left|7x + 14\\right| = 42",
+      "answer_latex": "x = -8 \\text{ or } x = 4",
+      "skeleton_pattern": "AbsEquation",
+      "form_id": "absolute_value_equation",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsEquation"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "absolute_value_equation"
+        ],
+        [
+          "species",
+          "abs_eq"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "inner_a",
+          "7"
+        ],
+        [
+          "inner_b",
+          "14"
+        ],
+        [
+          "construction",
+          "abs_split_solve_linear"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.404,
+          "variable": 5.027,
+          "equations": 5.568
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 5.02734456607278,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 5.02734456607278,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=5.02734 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "7",
+            "d": 5.404236153678802,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 5.404236153678802,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.40424 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "upgrades": [
+          "abs_eq",
+          "ft:2"
+        ],
+        "solution_kind": "two_roots",
+        "skeleton_pattern": "AbsEquation",
+        "species": "abs_eq",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "construction": "abs_split_solve_linear",
+        "form_id": "absolute_value_equation",
+        "k": "42",
+        "inner_a": "7",
+        "inner_b": "14",
+        "generation_settings": {
+          "allow_basic": false,
+          "allow_isolated_right": false,
+          "allow_simple": false,
+          "allow_abs_plus_constant": false,
+          "allow_factored_inside": false,
+          "allow_coeff_outside": true,
+          "allow_abs_equals_abs": true,
+          "allow_abs_equals_linear": true,
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve.}"
+      }
+    }
+  ],
+  "failures": []
+}

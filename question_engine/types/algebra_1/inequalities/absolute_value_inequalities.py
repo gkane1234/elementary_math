@@ -1,11 +1,4 @@
-"""Absolute value inequalities — framework-backed type."""
+"""Absolute value inequalities — primitive generator (catalog + GENERATORS override)."""
 
-from question_engine.frameworks.equation import AbsoluteValueInequalitiesFramework
-from question_engine.types._framework_type import register_framework_type
-
-register_framework_type(
-    "absolute_value_inequalities",
-    AbsoluteValueInequalitiesFramework(),
-    setting_profile="inequality",
-    exclude_settings=("steps", "min_terms", "max_terms", "phrase_complexity", "max_phrase_operations"),
-)
+# Catalog registration uses GENERATORS["absolute_value_inequalities"] (primitive_linear).
+# This module intentionally does not re-bind AbsoluteValueInequalitiesFramework.

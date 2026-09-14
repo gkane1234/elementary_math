@@ -1,0 +1,1319 @@
+{
+  "section": {
+    "slug": "factor_all_techniques",
+    "title": "FactorProduct \u2014 all-techniques mixer",
+    "pattern": "FactorProduct",
+    "engine": "poly_skeleton",
+    "type_id": "polynomial_factoring_general_strategy",
+    "aliases": [
+      "a2_polynomial_functions_factoring_all_techniques"
+    ],
+    "task": "factor",
+    "blurb": "D-weighted mixer (A1 catalog or A2 all-techniques pool)."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_general_strategy",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "x^{3} - x^{2} + 3x - 3",
+      "answer_latex": "\\left(x - 1\\right)\\left(x^{2} + 3\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "factor_by_grouping",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "factor_by_grouping"
+        ],
+        [
+          "openstax_form",
+          "factor_by_grouping"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "grouping"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "grouping_cubic"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.164,
+          "variable": 0.159,
+          "factor_poly": 1.677
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.15929063297602944,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.15929063297602944,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.159291 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "grouping_cubic",
+        "degree": 3,
+        "upgrades": [
+          "grouping_cubic",
+          "degree:3",
+          "kind:grouping",
+          "task:factor",
+          "d:2.0"
+        ],
+        "effective_d": 2.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "grouping",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 3,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "factor_by_grouping",
+        "openstax_form": "factor_by_grouping",
+        "openstax_case": "\u00a77.1 factor by grouping",
+        "strategy": "grouping",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "factor_by_grouping",
+        "family": "grouping_cubic",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:grouping_cubic",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "grouping_cubic",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "grouping_cubic",
+          "upgrades": [
+            "grouping_cubic",
+            "degree:3",
+            "kind:grouping",
+            "task:factor",
+            "d:2.0"
+          ],
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 40,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "grouping_cubic",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_rrt": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "min_degree": 3,
+          "max_degree": 3,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "factor_normal": false,
+          "factor_grouping": true,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "difficulty": 2.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_general_strategy",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "x^{2} - 2x - 15",
+      "answer_latex": "\\left(x + 3\\right)\\left(x - 5\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "trinomial_x2_bx_c",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "trinomial_x2_bx_c"
+        ],
+        [
+          "openstax_form",
+          "trinomial_x2_bx_c"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "linear"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "monic_simple"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.048,
+          "variable": 0.112,
+          "factor_poly": 1.84
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.11198212024614881,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.11198212024614881,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.111982 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "monic_simple",
+        "degree": 2,
+        "upgrades": [
+          "monic_simple",
+          "degree:2",
+          "kind:linear",
+          "task:factor",
+          "d:2.0"
+        ],
+        "effective_d": 2.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "linear",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "trinomial_x2_bx_c",
+        "openstax_form": "trinomial_x2_bx_c",
+        "openstax_case": "\u00a77.2 Example 7.17\u20137.19",
+        "strategy": "trial_factors",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "trinomial_x2_bx_c",
+        "family": "monic_simple",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:monic_simple",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "monic_simple",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "monic_simple",
+          "upgrades": [
+            "monic_simple",
+            "degree:2",
+            "kind:linear",
+            "task:factor",
+            "d:2.0"
+          ],
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 36,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "monic_simple",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_rrt": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "min_degree": 3,
+          "max_degree": 3,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "factor_normal": false,
+          "factor_grouping": true,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "difficulty": 2.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_general_strategy",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "2x^{3} + 12x^{2} - 9x - 54",
+      "answer_latex": "\\left(x + 6\\right)\\left(2x^{2} - 9\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "factor_by_grouping",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "factor_by_grouping"
+        ],
+        [
+          "openstax_form",
+          "factor_by_grouping"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "grouping"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "grouping_cubic"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "factor_poly": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.637163 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "grouping_cubic",
+        "degree": 3,
+        "upgrades": [
+          "grouping_cubic",
+          "degree:3",
+          "kind:grouping",
+          "task:factor",
+          "d:8.0"
+        ],
+        "effective_d": 8.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "grouping",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 3,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "factor_by_grouping",
+        "openstax_form": "factor_by_grouping",
+        "openstax_case": "\u00a77.1 factor by grouping",
+        "strategy": "grouping",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "factor_by_grouping",
+        "family": "grouping_cubic",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:grouping_cubic",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "grouping_cubic",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "grouping_cubic",
+          "upgrades": [
+            "grouping_cubic",
+            "degree:3",
+            "kind:grouping",
+            "task:factor",
+            "d:8.0"
+          ],
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 41,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "grouping_cubic",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_rrt": false,
+          "coef_min": -10,
+          "coef_max": 10,
+          "min_degree": 3,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "factor_normal": false,
+          "factor_grouping": true,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_general_strategy",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "x^{2} - 2x - 63",
+      "answer_latex": "\\left(x + 7\\right)\\left(x - 9\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "trinomial_x2_bx_c",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "trinomial_x2_bx_c"
+        ],
+        [
+          "openstax_form",
+          "trinomial_x2_bx_c"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "linear"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "monic_simple"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "factor_poly": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.44792848098459526,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.447928 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "monic_simple",
+        "degree": 2,
+        "upgrades": [
+          "monic_simple",
+          "degree:2",
+          "kind:linear",
+          "task:factor",
+          "d:8.0"
+        ],
+        "effective_d": 8.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "linear",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "trinomial_x2_bx_c",
+        "openstax_form": "trinomial_x2_bx_c",
+        "openstax_case": "\u00a77.2 Example 7.17\u20137.19",
+        "strategy": "trial_factors",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "trinomial_x2_bx_c",
+        "family": "monic_simple",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:monic_simple",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "monic_simple",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "monic_simple",
+          "upgrades": [
+            "monic_simple",
+            "degree:2",
+            "kind:linear",
+            "task:factor",
+            "d:8.0"
+          ],
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 36,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "monic_simple",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_rrt": false,
+          "coef_min": -10,
+          "coef_max": 10,
+          "min_degree": 3,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "factor_normal": false,
+          "factor_grouping": true,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_general_strategy",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "3x^{2} - 16x + 13",
+      "answer_latex": "\\left(3x - 13\\right)\\left(x - 1\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "trinomial_ax2_bx_c",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "trinomial_ax2_bx_c"
+        ],
+        [
+          "openstax_form",
+          "trinomial_ax2_bx_c"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "linear"
+        ],
+        [
+          "factor_bias",
+          "nonmonic+expanded"
+        ],
+        [
+          "method",
+          "ac_method"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "factor_poly": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.27433 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "ac_method",
+        "degree": 2,
+        "upgrades": [
+          "ac_method",
+          "degree:2",
+          "kind:linear",
+          "task:factor",
+          "d:16.0"
+        ],
+        "effective_d": 16.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "linear",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "nonmonic+expanded",
+        "form_id": "trinomial_ax2_bx_c",
+        "openstax_form": "trinomial_ax2_bx_c",
+        "openstax_case": "\u00a77.3 Example 7.29+",
+        "strategy": "ac_method",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "trinomial_ax2_bx_c",
+        "family": "ac_method",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:ac_method",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "ac_method",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "ac_method",
+          "upgrades": [
+            "ac_method",
+            "degree:2",
+            "kind:linear",
+            "task:factor",
+            "d:16.0"
+          ],
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 38,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "ac_method",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_rrt": false,
+          "coef_min": -15,
+          "coef_max": 15,
+          "min_degree": 3,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "factor_normal": false,
+          "factor_grouping": true,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_general_strategy",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "2x^{2} - 15x + 13",
+      "answer_latex": "\\left(2x - 13\\right)\\left(x - 1\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "trinomial_ax2_bx_c",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "trinomial_ax2_bx_c"
+        ],
+        [
+          "openstax_form",
+          "trinomial_ax2_bx_c"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "linear"
+        ],
+        [
+          "factor_bias",
+          "nonmonic+expanded"
+        ],
+        [
+          "method",
+          "ac_method"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "factor_poly": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.8958569619691905,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.895857 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "ac_method",
+        "degree": 2,
+        "upgrades": [
+          "ac_method",
+          "degree:2",
+          "kind:linear",
+          "task:factor",
+          "d:16.0"
+        ],
+        "effective_d": 16.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "linear",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "nonmonic+expanded",
+        "form_id": "trinomial_ax2_bx_c",
+        "openstax_form": "trinomial_ax2_bx_c",
+        "openstax_case": "\u00a77.3 Example 7.29+",
+        "strategy": "ac_method",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "trinomial_ax2_bx_c",
+        "family": "ac_method",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:ac_method",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "ac_method",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "ac_method",
+          "upgrades": [
+            "ac_method",
+            "degree:2",
+            "kind:linear",
+            "task:factor",
+            "d:16.0"
+          ],
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 38,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "ac_method",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_rrt": false,
+          "coef_min": -15,
+          "coef_max": 15,
+          "min_degree": 3,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "factor_normal": false,
+          "factor_grouping": true,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    }
+  ],
+  "failures": []
+}

@@ -98,53 +98,99 @@ def test_clamp_cancel_to_available():
 
 
 def test_low_d_defaults_to_one_cancel_for_both_generators():
-    for fn, topic in (
-        (rational_simplify, "a2_rational_expressions_simplifying"),
-        (rational_add_subtract, "a2_rational_expressions_adding_and_subtracting"),
-    ):
-        qs = fn(
-            topic,
-            {
-                "count": 8,
-                "include_answer_key": True,
-                "difficulty": 0,
-                "integers_only": True,
-                "cancel_factor_count": "auto",
-            },
-        )
-        assert len(qs) == 8
-        for q in qs:
-            assert q.metadata.get("cancel_factor_count") == 1
+    # Simplify (skeleton): cancel_factor_count="1" forces k=1.
+    qs = rational_simplify(
+        "a2_rational_expressions_simplifying",
+        {
+            "count": 8,
+            "include_answer_key": True,
+            "difficulty": 0,
+            "integers_only": True,
+            "cancel_factor_count": "1",
+        },
+    )
+    assert len(qs) == 8
+    for q in qs:
+        assert q.metadata.get("cancel_factor_count") == 1
+        assert q.metadata.get("primitive_engine") == "rational_skeleton"
+        assert q.metadata.get("skeleton_pattern") == "SimplifyCancel"
+
+    # ± skeleton: profile default is cancel_factor_count="1" (not constructive auto).
+    qs_add = rational_add_subtract(
+        "a2_rational_expressions_adding_and_subtracting",
+        {
+            "count": 8,
+            "include_answer_key": True,
+            "difficulty": 0,
+            "integers_only": True,
+            "cancel_factor_count": "1",
+        },
+    )
+    assert len(qs_add) == 8
+    for q in qs_add:
+        assert q.metadata.get("cancel_factor_count") == 1
+        assert q.metadata.get("primitive_engine") == "rational_skeleton"
 
 
 def test_forced_cancel_counts_on_both_generators():
+    from question_engine.frameworks.primitives.rational_skeleton import (
+        MAX_CANCEL_K,
+        rational_skeleton_caps,
+    )
+
+    caps_hi = rational_skeleton_caps(20.0)
     for k in (0, 1, 2, 3, 4):
-        for fn, topic in (
-            (rational_simplify, "a2_rational_expressions_simplifying"),
-            (rational_add_subtract, "a2_rational_expressions_adding_and_subtracting"),
-        ):
-            qs = fn(
-                topic,
-                {
-                    "count": 3,
-                    "include_answer_key": True,
-                    "difficulty": 20,
-                    "integers_only": True,
-                    "cancel_factor_count": k,
-                },
-            )
-            assert len(qs) == 3
-            for q in qs:
-                assert q.metadata.get("cancel_factor_count") == k
-                assert q.answer_latex
-                constructive = q.metadata.get("constructive") or {}
-                assert constructive.get("cancel_factor_count") == k
+        expected_simp = min(k, caps_hi.max_cancel_k)
+        qs = rational_simplify(
+            "a2_rational_expressions_simplifying",
+            {
+                "count": 3,
+                "include_answer_key": True,
+                "difficulty": 20,
+                "integers_only": True,
+                "cancel_factor_count": k,
+                "n_factors": 2,
+            },
+        )
+        assert len(qs) == 3
+        for q in qs:
+            assert q.metadata.get("cancel_factor_count") == expected_simp
+            assert q.metadata.get("primitive_engine") == "rational_skeleton"
+            assert q.metadata.get("skeleton_pattern") == "SimplifyCancel"
+            assert q.answer_latex
+
+        expected_add = min(k, caps_hi.max_cancel_k)
+        qs_add = rational_add_subtract(
+            "a2_rational_expressions_adding_and_subtracting",
+            {
+                "count": 3,
+                "include_answer_key": True,
+                "difficulty": 20,
+                "integers_only": True,
+                "cancel_factor_count": k,
+            },
+        )
+        assert len(qs_add) == 3
+        for q in qs_add:
+            assert q.metadata.get("cancel_factor_count") == expected_add
+            assert q.metadata.get("primitive_engine") == "rational_skeleton"
+            assert q.answer_latex
+
+    # Low D still caps at phase-0/1 box.
+    caps_lo = rational_skeleton_caps(4.0)
+    assert caps_lo.max_cancel_k == MAX_CANCEL_K
 
 
 def test_high_d_samples_only_unlocked_counts():
-    allowed = set(allowed_rational_cancel_counts(14))
+    """Skeleton auto draws respect D-scaled caps ∩ continuous unlocks."""
+    from question_engine.frameworks.primitives.rational_skeleton import rational_skeleton_caps
+
+    caps = rational_skeleton_caps(14.0)
+    allowed = set(allowed_rational_cancel_counts(14)) & set(
+        range(0, caps.max_cancel_k + 1)
+    )
     seen: set[int] = set()
-    for seed_offset in range(40):
+    for seed in range(40):
         qs = rational_simplify(
             "a2_rational_expressions_simplifying",
             {
@@ -153,12 +199,12 @@ def test_high_d_samples_only_unlocked_counts():
                 "difficulty": 14,
                 "integers_only": True,
                 "cancel_factor_count": "auto",
+                "seed": seed,
             },
         )
         k = qs[0].metadata.get("cancel_factor_count")
         assert k in allowed
         seen.add(int(k))
-    # With 40 draws over a 5-count pool, expect more than just the default.
     assert len(seen) >= 2
 
 
@@ -187,6 +233,7 @@ def test_d40_and_d1000_structure_possible():
     assert surface40.metadata.get("n_terms") == 8
     assert surface40.latex
 
+    # High-k ± stress stays on constructive opt-out (skeleton caps k≤2).
     qs40 = rational_add_subtract(
         "a2_rational_expressions_adding_and_subtracting",
         {
@@ -195,6 +242,7 @@ def test_d40_and_d1000_structure_possible():
             "difficulty": 40,
             "integers_only": True,
             "cancel_factor_count": 6,
+            "use_constructive_rational": True,
         },
     )
     assert len(qs40) == 1
@@ -202,6 +250,7 @@ def test_d40_and_d1000_structure_possible():
     assert qs40[0].prompt_latex
 
     # Absurd but factors-first: many cancel inserts on a single L2 fraction.
+    # Skeleton caps k≤2 — high-k stress uses constructive opt-out.
     qs1000 = rational_simplify(
         "a2_rational_expressions_simplifying",
         {
@@ -210,6 +259,7 @@ def test_d40_and_d1000_structure_possible():
             "difficulty": 1000,
             "integers_only": True,
             "cancel_factor_count": 40,
+            "use_constructive_rational": True,
         },
     )
     assert len(qs1000) == 1
@@ -235,6 +285,7 @@ def test_a1_add_subtract_honors_cancel_counts():
                 "max_lcd_factors": 3,
                 "allow_polynomial_terms": True,
                 "allow_full_lcd_terms": True,
+                "use_constructive_rational": True,
             }
         )
         assert len(qs) == 3
@@ -271,6 +322,7 @@ def test_a1_add_subtract_clamps_when_not_enough_lcd_factors():
             "allow_polynomial_terms": False,
             "allow_full_lcd_terms": False,
             "inflation_chance": 0,
+            "use_constructive_rational": True,
         }
     )
     assert len(qs) == 4
@@ -321,6 +373,7 @@ def test_a1_continuous_d_overrides_emh_lcd_plateau():
             "allow_polynomial_terms": True,
             "allow_full_lcd_terms": True,
             "factor_rrt": False,
+            "use_constructive_rational": True,
         }
     )
     assert len(qs) == 1
@@ -352,6 +405,7 @@ def test_a1_high_cancel_with_rrt_can_exceed_hand_factorable_cap():
             "allow_polynomial_terms": True,
             "allow_full_lcd_terms": True,
             "factor_rrt": True,
+            "use_constructive_rational": True,
         }
     )
     assert len(qs) == 1
@@ -386,6 +440,7 @@ def test_ui_all_available_returns_quickly_and_stays_capped():
                 "add_subtract_structure": "complex",
                 "allow_polynomial_terms": True,
                 "allow_full_lcd_terms": True,
+                "use_constructive_rational": True,
             }
         )
         elapsed = time.perf_counter() - t0
@@ -465,6 +520,7 @@ def test_canceled_factors_appear_in_domain_restrictions():
                 "max_lcd_factors": 3,
                 "allow_polynomial_terms": True,
                 "allow_full_lcd_terms": True,
+                "use_constructive_rational": True,
             }
         )
         q = qs[0]

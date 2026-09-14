@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>SimplifyCancel — single-fraction simplify — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>SimplifyCancel — single-fraction simplify</h1>
+<p class="sub"><code>rational_simplification</code> · live <code>_generate_for_type</code>
+ · pattern <strong>SimplifyCancel</strong>
+ · 6/6 ok · D ladder 2, 8, 16
+ · seeds 101, 207</p>
+<p class="sub">Single rational with planned cancellation; stamps <code>simplify_cancel</code> form.</p>
+<p class='sub'>Also wired: <code>a2_rational_expressions_simplifying</code></p>
+<div class='notes-alert'>UNCLEAR — gold look not locked; see notes below.</div><div class='notes-block'><h1>Notes — <code>simplify_cancel</code> (<code>rational_simplification</code>)</h1>
+<p>Also covers: <code>rational_simplification</code></p>
+<p>Flags:</p>
+<ul>
+<li>_(none)_</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Simplify a single rational expression and state excluded values.</li>
+<li><strong>D=0:</strong> Cancel a linear common factor; monomial or simple binomial dens.</li>
+<li><strong>High D (≈16–22):</strong> Quadratic factors; more excluded values. Not add/subtract unlike dens.</li>
+<li><strong>Must not:</strong> Add/subtract two rationals; complex fractions (A2 leaf).</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> with <code>use_constructive_rational=True</code>.</p>
+<ul>
+<li><strong>D=0 seed=101:</strong> $\text{Simplify: } \frac{2x^{2} - 4x - 6}{x^{2} - 4x + 3}$ → $\frac{2x + 2}{x - 1},\; x \neq 3$ — form_id=simplify_cancel</li>
+<li><strong>D=0 seed=207:</strong> $\text{Simplify: } \frac{x^{2} - 5x + 6}{x^{2} + x - 6}$ → $\frac{x - 3}{x + 3},\; x \neq 2$ — form_id=simplify_cancel</li>
+<li><strong>D=8 seed=101:</strong> $\text{Simplify: } \frac{4x^{2} - 12x + 8}{x^{2} + x - 2}$ → $\frac{4x - 8}{x + 2},\; x \neq 1$ — form_id=simplify_cancel</li>
+<li><strong>D=8 seed=207:</strong> $\text{Simplify: } \frac{y^{2} - 2y - 3}{y^{2} - y - 6}$ → $\frac{y + 1}{y + 2},\; y \neq 3$ — form_id=simplify_cancel</li>
+<li><strong>D=16 seed=101:</strong> $\text{Simplify: } \frac{-2\left(g - 2\right)\left(g + 2\right)\left(g + 3\right)}{\left(g + 1\right)\left(g + 4\right)\left(g + 2\right)\left(g + 3\right)}$ → $\frac{-2g + 4}{g^{2} + 5g + 4},\; g \neq -3, -2$ — form_id=simplify_cancel</li>
+<li><strong>D=16 seed=207:</strong> $\text{Simplify: } \frac{12\left(t - 2\right)\left(t - 1\right)\left(t - 9\right)}{\left(t + 2\right)\left(t + 1\right)\left(t - 1\right)\left(t - 9\right)}$ → $\frac{12t - 24}{t^{2} + 3t + 2},\; t \neq 1, 9$ — form_id=simplify_cancel</li>
+<li><strong>D=22 seed=101:</strong> $\text{Simplify: } \frac{-8\left(\delta - 2\right)\left(\delta + 2\right)\left(\delta + 5\right)}{\left(\delta + 1\right)\left(\delta - 3\right)\left(\delta + 2\right)\left(\delta + 5\right)}$ → $\frac{-8\delta + 16}{\delta^{2} - 2\delta - 3},\; \delta \neq -5, -2$ — form_id=simplify_cancel</li>
+<li><strong>D=22 seed=207:</strong> $\text{Simplify: } \frac{\left(\left(-4 + 6\right)\right)\left(6\left(l + 5\right)\left(l - 5\right)\left(l - 7\right)\right)}{\left(\left(-4 + 6\right)\right)\left(\left(l - 1\right)\left(l\right)\left(l - 5\right)\left(l - 7\right)\right)}$ → $\frac{6l + 30}{l^{2} - l},\; l \neq 5, 7$ — form_id=simplify_cancel</li>
+</ul>
+<p>Opt-out flag used: <code>use_constructive_rational=True</code></p>
+<h2>Current default (same D/seeds)</h2>
+<ul>
+<li><strong>D=0 seed=101:</strong> $\text{Simplify: } \frac{3x + 3}{x + 1}$ → $3,\; x \neq -1$ — form_id=simplify_cancel, pattern=SimplifyCancel</li>
+<li><strong>D=0 seed=207:</strong> $\text{Simplify: } \frac{x^{2} - 3x}{\left(x + 5\right)\left(x - 3\right)}$ → $\frac{x}{x + 5},\; x \neq 3$ — form_id=simplify_cancel, pattern=SimplifyCancel</li>
+<li><strong>D=8 seed=101:</strong> $\text{Simplify: } \frac{3x + 3}{x + 1}$ → $3,\; x \neq -1$ — form_id=simplify_cancel, pattern=SimplifyCancel</li>
+<li><strong>D=8 seed=207:</strong> $\text{Simplify: } \frac{x^{2} - 6x}{\left(x + 8\right)\left(x - 6\right)}$ → $\frac{x}{x + 8},\; x \neq 6$ — form_id=simplify_cancel, pattern=SimplifyCancel</li>
+<li><strong>D=16 seed=101:</strong> $\text{Simplify: } \frac{7\left(c - 2\right)\left(c - 5\right)}{\left(c + 4\right)\left(2c - 3\right)\left(c - 2\right)\left(c - 5\right)}$ → $\frac{7}{\left(c + 4\right)\left(2c - 3\right)},\; c \neq 2, 5$ — form_id=simplify_cancel, pattern=SimplifyCancel</li>
+<li><strong>D=16 seed=207:</strong> $\text{Simplify: } \frac{2\left(y - 1\right)\left(2y + 1\right)}{\left(y - 7\right)\left(y - 4\right)\left(y - 1\right)\left(2y + 1\right)}$ → $\frac{2}{\left(y - 7\right)\left(y - 4\right)},\; y \neq 1, -\frac{1}{2}$ — form_id=simplify_cancel, pattern=SimplifyCancel</li>
+<li><strong>D=22 seed=101:</strong> $\text{Simplify: } \frac{-2\left(3p - 8\right)\left(2p - 1\right)}{\left(4p - 5\right)\left(2p + 3\right)\left(3p - 8\right)\left(2p - 1\right)}$ → $\frac{-2}{\left(4p - 5\right)\left(2p + 3\right)},\; p \neq \frac{8}{3}, \frac{1}{2}$ — form_id=simplify_cancel, pattern=SimplifyCancel</li>
+<li><strong>D=22 seed=207:</strong> $\text{Simplify: } \frac{2\left(q - 2\right)\left(2q + 1\right)}{\left(q - 7\right)\left(q - 4\right)\left(q - 2\right)\left(2q + 1\right)}$ → $\frac{2}{\left(q - 7\right)\left(q - 4\right)},\; q \neq 2, -\frac{1}{2}$ — form_id=simplify_cancel, pattern=SimplifyCancel</li>
+</ul>
+<h2>OpenStax examples + chapter/section cites</h2>
+<p>Paraphrase stems; cite book + chapter/section + URL. Do not dump copyrighted problem text wholesale.</p>
+<p>| Cite | URL | What to copy (shape / frame, not wording) | |------|-----|-------------------------------------------| | OpenStax Elementary Algebra 2e §8.1 | https://openstax.org/books/elementary-algebra-2e/pages/8-1-simplify-rational-expressions | Factor numerator and denominator; cancel; state $x eq$ excluded. |</p>
+<p>Local HTML (if mined): <code>textbooks/openstax/html/elementary-algebra-2e/</code> or <code>intermediate-algebra-2e/</code>.</p>
+<h2>Variety notes / UNCLEAR flag</h2>
+<p>Not a WP. Old D=0 is already quadratic/quadratic cancel (harder than OpenStax §8.1 easy). Default D=0 is linear cancel $\frac{3x+3}{x+1}$ — simpler, closer to “as simple as old easy” than the constructive opt-out.</p>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<ul>
+<li><strong>Reuse:</strong> SimplifyCancel / rational_skeleton (already wired). Opt-out: <code>use_constructive_rational</code>.</li>
+<li><strong>New:</strong> not this pass (already on skeleton).</li>
+<li><strong>Not this pass:</strong> do not re-implement generators.</li>
+</ul>
+<p>Suggested family from <code>A1_INDEX.md</code>: <code>other</code></p>
+<p>_Catalog:_ Algebra 1 — Rational Expressions — Simplifying and excluded values. Generator <code>rational_simplification</code>.</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈2 · seed=101</strong> <span class='pat'>SimplifyCancel</span> <span class='tag band low'>D≈2.0</span><span class='tag'>seed=101</span><span class='tag fid'>simplify_cancel</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Simplify: } \frac{3x + 3}{x + 1}$$</div><div class='math'><div class='lab'>Answer</div>$$3,\; x \neq -1$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SimplifyCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>2</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>k / cancel_factor_count</span><span class='v'>1</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>factored</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[-1]</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>monic_bias</span></div><div class='kv'><span class='k'>goal_mode</span><span class='v'>constant</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>1</span></div><div class='kv'><span class='k'>mode</span><span class='v'>simplify_rational</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_simplification</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈2 · seed=207</strong> <span class='pat'>SimplifyCancel</span> <span class='tag band low'>D≈2.0</span><span class='tag'>seed=207</span><span class='tag fid'>simplify_cancel</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Simplify: } \frac{x^{2} - 3x}{\left(x + 5\right)\left(x - 3\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{x}{x + 5},\; x \neq 3$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SimplifyCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>2</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>k / cancel_factor_count</span><span class='v'>1</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>factored</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[3]</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>monic_bias</span></div><div class='kv'><span class='k'>goal_mode</span><span class='v'>fraction</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>2</span></div><div class='kv'><span class='k'>mode</span><span class='v'>simplify_rational</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_simplification</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈8 · seed=101</strong> <span class='pat'>SimplifyCancel</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>simplify_cancel</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Simplify: } \frac{3x + 3}{x + 1}$$</div><div class='math'><div class='lab'>Answer</div>$$3,\; x \neq -1$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SimplifyCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>k / cancel_factor_count</span><span class='v'>1</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>factored</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[-1]</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>monic_bias</span></div><div class='kv'><span class='k'>goal_mode</span><span class='v'>constant</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>1</span></div><div class='kv'><span class='k'>mode</span><span class='v'>simplify_rational</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_simplification</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=207</strong> <span class='pat'>SimplifyCancel</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>simplify_cancel</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Simplify: } \frac{x^{2} - 6x}{\left(x + 8\right)\left(x - 6\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{x}{x + 8},\; x \neq 6$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SimplifyCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>k / cancel_factor_count</span><span class='v'>1</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>factored</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[6]</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>monic_bias</span></div><div class='kv'><span class='k'>goal_mode</span><span class='v'>fraction</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>2</span></div><div class='kv'><span class='k'>mode</span><span class='v'>simplify_rational</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_simplification</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈16 · seed=101</strong> <span class='pat'>SimplifyCancel</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>simplify_cancel</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Simplify: } \frac{7\left(x - 2\right)\left(x - 5\right)}{\left(x + 4\right)\left(2x - 3\right)\left(x - 2\right)\left(x - 5\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{7}{\left(x + 4\right)\left(2x - 3\right)},\; x \neq 2, 5$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SimplifyCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>k / cancel_factor_count</span><span class='v'>2</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>factored</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[2, 5]</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>insert_cancel_pairs</span></div><div class='kv'><span class='k'>goal_mode</span><span class='v'>fraction</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>4</span></div><div class='kv'><span class='k'>mode</span><span class='v'>simplify_rational</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_simplification</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈16 · seed=207</strong> <span class='pat'>SimplifyCancel</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>simplify_cancel</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Simplify: } \frac{2\left(x - 1\right)\left(2x + 1\right)}{\left(x - 7\right)\left(x - 4\right)\left(x - 1\right)\left(2x + 1\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{2}{\left(x - 7\right)\left(x - 4\right)},\; x \neq 1, -\frac{1}{2}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SimplifyCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>simplify_cancel</span></div><div class='kv'><span class='k'>k / cancel_factor_count</span><span class='v'>2</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>factored</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[1, &quot;-1/2&quot;]</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>insert_cancel_pairs</span></div><div class='kv'><span class='k'>goal_mode</span><span class='v'>fraction</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>4</span></div><div class='kv'><span class='k'>mode</span><span class='v'>simplify_rational</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_simplification</code></p></article>
+</body></html>

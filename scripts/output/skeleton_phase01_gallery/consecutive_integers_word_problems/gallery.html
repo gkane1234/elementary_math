@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Word problem — consecutive integers — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Word problem — consecutive integers</h1>
+<p class="sub"><code>consecutive_integers_word_problems</code> · live <code>_generate_for_type</code>
+ · pattern <strong>ConsecutiveWP</strong>
+ · 16/16 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313, 419</p>
+<p class="sub">OpenStax EA §3.1 / IA §2.2. D=0 sum of two consecutive. High D even/odd, first+last, or product. Does not dump $n+(n+1)=S$.</p>
+
+<div class='notes-block'><h1><code>consecutive_integers_word_problems</code> — Consecutive integers word problems</h1>
+<ul>
+<li><strong>Course:</strong> Algebra 1 (A1 catalog)</li>
+<li><strong>Category:</strong> Algebra 1 — Equations</li>
+<li><strong>Generator:</strong> <code>wp_consecutive_integers</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>D=0: two or three consecutive integers, sum. High D: consecutive even/odd, or first+last. Translate the phrase; do not dump $n+(n+1)+(n+2)=S$.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{The sum of two consecutive integers is 37. Find the smallest integer.}</code> - answer: <code>18</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{The sum of two consecutive integers is 17. Find the smallest integer.}</code> - answer: <code>8</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{The sum of the first and last of four consecutive odd integers is 40. Find the smallest integer.}</code> - answer: <code>17</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{The sum of the first and last of three consecutive odd integers is 54. Find the smallest integer.}</code> - answer: <code>25</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{The product of the first and last of five consecutive odd integers is 425. Find the smallest integer.}</code> - answer: <code>17</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{The product of the first and last of four consecutive odd integers is 775. Find the smallest integer.}</code> - answer: <code>25</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{The product of the first and last of five consecutive odd integers is 425. Find the smallest integer.}</code> - answer: <code>17</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{The product of the first and last of four consecutive odd integers is 775. Find the smallest integer.}</code> - answer: <code>25</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Elementary Algebra 2e — 3.1 Use a Problem-Solving Strategy</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/3-1-use-a-problem-solving-strategy</li>
+<li>Shape: Consecutive integer number problems (sum of three consecutive…).</li>
+</ul>
+<h3>Intermediate Algebra 2e — 2.2 Use a Problem Solving Strategy</h3>
+<ul>
+<li>https://openstax.org/books/intermediate-algebra-2e/pages/2-2-use-a-problem-solving-strategy</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 2.14: Normal yearly snowfall at the local ski resort is 12 inches more than twice the amount it received last season. The normal yearly snowfall is 62 inches. What was the snowfall last season at the ski resort? - Example 2.15: The sum of seven times a number and eight is thirty-six. Find the number. - Example 2.16: The sum of two numbers is negative fifteen. One number is nine less than the other. Find the numbers. - Example 2.17: Find three consecutive integers whose sum is $−54 .$</p>
+<h2>Variety notes</h2>
+<p>D=0 is one OpenStax-like sum-of-two-consecutive frame (IA 2.2 Example 2.17). High D already unlocks odd integers, first+last, and product — not a dump stub. Keep the one-skill phrase family.</p>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse ConsecutiveIntegersFramework / narrative_wp. SolveLinear only as reverse algebra after a real stem.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The sum of two consecutive integers is 37. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$18$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_any_sum</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The sum of two consecutive integers is 17. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$8$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_any_sum</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The sum of two consecutive integers is 29. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$14$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_any_sum</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈0 · seed=419</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The sum of two consecutive integers is 11. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$5$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_any_sum</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=101</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The sum of the first and last of four consecutive odd integers is 40. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$17$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_odd_sum_first_last</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=207</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The sum of the first and last of three consecutive odd integers is 54. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$25$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_odd_sum_first_last</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈8 · seed=313</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The sum of the first and last of three consecutive even integers is 20. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$8$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_even_sum_first_last</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈8 · seed=419</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The sum of the first and last of four consecutive even integers is 34. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$14$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_even_sum_first_last</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=101</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The product of the first and last of five consecutive odd integers is 425. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$17$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_odd_product</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈16 · seed=207</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The product of the first and last of four consecutive odd integers is 775. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$25$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_odd_product</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈16 · seed=313</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The product of the first and last of four consecutive even integers is 112. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$8$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_even_product</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈16 · seed=419</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The product of the first and last of five consecutive even integers is 308. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$14$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_even_product</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#13</span> <strong>D≈22 · seed=101</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The product of the first and last of five consecutive odd integers is 425. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$17$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_odd_product</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#14</span> <strong>D≈22 · seed=207</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The product of the first and last of four consecutive odd integers is 775. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$25$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_odd_product</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#15</span> <strong>D≈22 · seed=313</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The product of the first and last of four consecutive even integers is 112. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$8$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_even_product</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#16</span> <strong>D≈22 · seed=419</strong> <span class='pat'>ConsecutiveWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{The product of the first and last of five consecutive even integers is 308. Find the smallest integer.}$$</div><div class='math'><div class='lab'>Answer</div>$$14$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ConsecutiveWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>narrative_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>consec_even_product</span></div><div class='kv'><span class='k'>wp_kind</span><span class='v'>consecutive</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>consecutive_integers_word_problems</code></p></article>
+</body></html>

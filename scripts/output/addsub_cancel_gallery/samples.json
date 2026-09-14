@@ -1,0 +1,5749 @@
+[
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=0 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 2.0,
+      "seed": 100,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": false
+    },
+    "prompt": "\\frac{2}{x - 1} + \\frac{-8}{x + 2} + \\frac{6x - 3}{\\left(x - 1\\right)\\left(x + 2\\right)}",
+    "answer": "\\frac{9}{\\left(x + 2\\right)\\left(x - 1\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 2.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 3,
+      "goal_latex": "\\frac{9}{\\left(x + 2\\right)\\left(x - 1\\right)}",
+      "goal_num": {
+        "0": "9"
+      },
+      "goal_num_unscaled": {
+        "0": "3"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-3",
+        "b": "6",
+        "dim": 2,
+        "is_zero": false,
+        "latex": "6x - 3"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-1",
+            "root": "1",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          }
+        ],
+        "effective_d": 2.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -4,
+          "const_max": 4,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.1,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "-1",
+          "root": "1",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "9"
+      },
+      "r_den": {
+        "0": "-2",
+        "1": "1",
+        "2": "1"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-8"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-3",
+            "1": "6"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "1",
+            "-2"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{2}{x - 1} + \\frac{-8}{x + 2} + \\frac{6x - 3}{\\left(x - 1\\right)\\left(x + 2\\right)}",
+      "answer_latex": "\\frac{9}{\\left(x + 2\\right)\\left(x - 1\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 2,
+      "kernel_a": "-3",
+      "kernel_b": "6",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=0 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 2.5,
+      "seed": 101,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": false
+    },
+    "prompt": "\\frac{-2}{x - 4} + \\frac{2}{x + 1}",
+    "answer": "\\frac{-10}{\\left(x - 4\\right)\\left(x + 1\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 2.5,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "pure_pfd",
+      "dens_style": "factored",
+      "clear_factor": 5,
+      "goal_latex": "\\frac{-10}{\\left(x - 4\\right)\\left(x + 1\\right)}",
+      "goal_num": {
+        "0": "-10"
+      },
+      "goal_num_unscaled": {
+        "0": "-2"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "0",
+        "b": "0",
+        "dim": 0,
+        "is_zero": true,
+        "latex": "0"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-4",
+            "root": "4",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "1",
+            "root": "-1",
+            "monic": true
+          }
+        ],
+        "effective_d": 2.5,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -4,
+          "const_max": 4,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.125,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "-4",
+          "root": "4",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "1",
+          "root": "-1",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "-10"
+      },
+      "r_den": {
+        "0": "-4",
+        "1": "-3",
+        "2": "1"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{-2}{x - 4} + \\frac{2}{x + 1}",
+      "answer_latex": "\\frac{-10}{\\left(x - 4\\right)\\left(x + 1\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 0,
+      "kernel_a": "0",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=0 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 3.0,
+      "seed": 102,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": false
+    },
+    "prompt": "\\frac{-2}{x - 1} + \\frac{2}{x + 1}",
+    "answer": "\\frac{-4}{\\left(x + 1\\right)\\left(x - 1\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 3.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "pure_pfd",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "\\frac{-4}{\\left(x + 1\\right)\\left(x - 1\\right)}",
+      "goal_num": {
+        "0": "-4"
+      },
+      "goal_num_unscaled": {
+        "0": "-4"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "0",
+        "b": "0",
+        "dim": 0,
+        "is_zero": true,
+        "latex": "0"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-1",
+            "root": "1",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "1",
+            "root": "-1",
+            "monic": true
+          }
+        ],
+        "effective_d": 3.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -5,
+          "const_max": 5,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.15,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "1",
+          "root": "-1",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "-1",
+          "root": "1",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "-4"
+      },
+      "r_den": {
+        "0": "-1",
+        "2": "1"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{-2}{x - 1} + \\frac{2}{x + 1}",
+      "answer_latex": "\\frac{-4}{\\left(x + 1\\right)\\left(x - 1\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 0,
+      "kernel_a": "0",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=1 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 2.0,
+      "seed": 103,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": false
+    },
+    "prompt": "1 + \\frac{-2}{x + 2} + \\frac{-2x}{\\left(x + 2\\right)\\left(x + 4\\right)}",
+    "answer": "\\frac{x}{x + 4},\\; x \\neq -2",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 2.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "\\frac{x}{x + 4}",
+      "goal_num": {
+        "1": "1"
+      },
+      "goal_num_unscaled": {
+        "1": "1"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "0",
+        "b": "-2",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-2x"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "4",
+            "root": "-4",
+            "monic": true
+          }
+        ],
+        "effective_d": 2.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -4,
+          "const_max": 4,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.1,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "4",
+          "root": "-4",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "1": "2",
+        "2": "1"
+      },
+      "r_den": {
+        "0": "8",
+        "1": "6",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "1"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "1": "-2"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-2",
+            "-4"
+          ]
+        }
+      ],
+      "prompt_latex": "1 + \\frac{-2}{x + 2} + \\frac{-2x}{\\left(x + 2\\right)\\left(x + 4\\right)}",
+      "answer_latex": "\\frac{x}{x + 4},\\; x \\neq -2",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "0",
+      "kernel_b": "-2",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -2
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=1 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 2.5,
+      "seed": 104,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": false
+    },
+    "prompt": "1 + \\frac{2}{x - 4} + \\frac{2}{x - 3} + \\frac{2}{\\left(x - 4\\right)\\left(x - 3\\right)}",
+    "answer": "\\frac{x}{x - 4},\\; x \\neq 3",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 2.5,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "\\frac{x}{x - 4}",
+      "goal_num": {
+        "1": "1"
+      },
+      "goal_num_unscaled": {
+        "1": "1"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "2",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "2"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-4",
+            "root": "4",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "-3",
+            "root": "3",
+            "monic": true
+          }
+        ],
+        "effective_d": 2.5,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -4,
+          "const_max": 4,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.125,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-3",
+          "root": "3",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "-4",
+          "root": "4",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "1": "-3",
+        "2": "1"
+      },
+      "r_den": {
+        "0": "12",
+        "1": "-7",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "1"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "3"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "4",
+            "3"
+          ]
+        }
+      ],
+      "prompt_latex": "1 + \\frac{2}{x - 4} + \\frac{2}{x - 3} + \\frac{2}{\\left(x - 4\\right)\\left(x - 3\\right)}",
+      "answer_latex": "\\frac{x}{x - 4},\\; x \\neq 3",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "2",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        3
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=1 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 3.0,
+      "seed": 105,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": false
+    },
+    "prompt": "3 + \\frac{-13}{x + 1} + \\frac{1}{x - 2} + \\frac{-3}{\\left(x + 1\\right)\\left(x - 2\\right)}",
+    "answer": "\\frac{3x - 9}{x + 1},\\; x \\neq 2",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 3.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 3,
+      "goal_latex": "\\frac{3x - 9}{x + 1}",
+      "goal_num": {
+        "0": "-9",
+        "1": "3"
+      },
+      "goal_num_unscaled": {
+        "0": "-3",
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-3",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-3"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "1",
+            "root": "-1",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "-2",
+            "root": "2",
+            "monic": true
+          }
+        ],
+        "effective_d": 3.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -5,
+          "const_max": 5,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.15,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-2",
+          "root": "2",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "1",
+          "root": "-1",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "18",
+        "1": "-15",
+        "2": "3"
+      },
+      "r_den": {
+        "0": "-2",
+        "1": "-1",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "3"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-13"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-3"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-1",
+            "2"
+          ]
+        }
+      ],
+      "prompt_latex": "3 + \\frac{-13}{x + 1} + \\frac{1}{x - 2} + \\frac{-3}{\\left(x + 1\\right)\\left(x - 2\\right)}",
+      "answer_latex": "\\frac{3x - 9}{x + 1},\\; x \\neq 2",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-3",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        2
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=2 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 2.0,
+      "seed": 106,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": false
+    },
+    "prompt": "-21 + \\frac{3}{x - 4} + \\frac{-3}{x + 3} + \\frac{-21}{\\left(x - 4\\right)\\left(x + 3\\right)}",
+    "answer": "-21,\\; x \\neq -3, 4",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 2.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 7,
+      "goal_latex": "-21",
+      "goal_num": {
+        "0": "-21"
+      },
+      "goal_num_unscaled": {
+        "0": "-3"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-21",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-21"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-4",
+            "root": "4",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "3",
+            "root": "-3",
+            "monic": true
+          }
+        ],
+        "effective_d": 2.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -4,
+          "const_max": 4,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.1,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "3",
+          "root": "-3",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "-4",
+          "root": "4",
+          "monic": true
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "252",
+        "1": "21",
+        "2": "-21"
+      },
+      "r_den": {
+        "0": "-12",
+        "1": "-1",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "-21"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "-21"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-3"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-21"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "4",
+            "-3"
+          ]
+        }
+      ],
+      "prompt_latex": "-21 + \\frac{3}{x - 4} + \\frac{-3}{x + 3} + \\frac{-21}{\\left(x - 4\\right)\\left(x + 3\\right)}",
+      "answer_latex": "-21,\\; x \\neq -3, 4",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 1,
+      "kernel_a": "-21",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -3,
+        4
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=2 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 2.5,
+      "seed": 107,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": false
+    },
+    "prompt": "6 + \\frac{3}{x + 2} + \\frac{-3}{x + 4} + \\frac{-6}{\\left(x + 2\\right)\\left(x + 4\\right)}",
+    "answer": "6,\\; x \\neq -4, -2",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 2.5,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 2,
+      "goal_latex": "6",
+      "goal_num": {
+        "0": "6"
+      },
+      "goal_num_unscaled": {
+        "0": "3"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-6",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-6"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "4",
+            "root": "-4",
+            "monic": true
+          }
+        ],
+        "effective_d": 2.5,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -4,
+          "const_max": 4,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.125,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "4",
+          "root": "-4",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "48",
+        "1": "36",
+        "2": "6"
+      },
+      "r_den": {
+        "0": "8",
+        "1": "6",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "6"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "6"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-4"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-6"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-2",
+            "-4"
+          ]
+        }
+      ],
+      "prompt_latex": "6 + \\frac{3}{x + 2} + \\frac{-3}{x + 4} + \\frac{-6}{\\left(x + 2\\right)\\left(x + 4\\right)}",
+      "answer_latex": "6,\\; x \\neq -4, -2",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 1,
+      "kernel_a": "-6",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -4,
+        -2
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "low D \u00b7 k=2 \u00b7 auto kernel",
+    "settings": {
+      "difficulty": 3.0,
+      "seed": 108,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": false
+    },
+    "prompt": "-12 + \\frac{-1}{x - 1} + \\frac{1}{x + 5} + \\frac{6}{\\left(x - 1\\right)\\left(x + 5\\right)}",
+    "answer": "-12,\\; x \\neq -5, 1",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 3.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 6,
+      "goal_latex": "-12",
+      "goal_num": {
+        "0": "-12"
+      },
+      "goal_num_unscaled": {
+        "0": "-2"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "6",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "6"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-1",
+            "root": "1",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "5",
+            "root": "-5",
+            "monic": true
+          }
+        ],
+        "effective_d": 3.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -5,
+          "const_max": 5,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.15,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "5",
+          "root": "-5",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "-1",
+          "root": "1",
+          "monic": true
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "60",
+        "1": "-48",
+        "2": "-12"
+      },
+      "r_den": {
+        "0": "-5",
+        "1": "4",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "-12"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "-12"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-5"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "6"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "1",
+            "-5"
+          ]
+        }
+      ],
+      "prompt_latex": "-12 + \\frac{-1}{x - 1} + \\frac{1}{x + 5} + \\frac{6}{\\left(x - 1\\right)\\left(x + 5\\right)}",
+      "answer_latex": "-12,\\; x \\neq -5, 1",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 1,
+      "kernel_a": "6",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -5,
+        1
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=0 \u00b7 kernel=zero",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 109,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": true,
+      "kernel_mode": "zero"
+    },
+    "prompt": "\\frac{-4}{y + 1} + \\frac{10}{y + 4}",
+    "answer": "\\frac{6y - 6}{\\left(y + 1\\right)\\left(y + 4\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "pure_pfd",
+      "dens_style": "factored",
+      "clear_factor": 3,
+      "goal_latex": "\\frac{6y - 6}{\\left(y + 1\\right)\\left(y + 4\\right)}",
+      "goal_num": {
+        "0": "-6",
+        "1": "6"
+      },
+      "goal_num_unscaled": {
+        "0": "-2",
+        "1": "2"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "0",
+        "b": "0",
+        "dim": 0,
+        "is_zero": true,
+        "latex": "0"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "1",
+            "root": "-1",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "4",
+            "root": "-4",
+            "monic": true
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "1",
+          "root": "-1",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "4",
+          "root": "-4",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "-6",
+        "1": "6"
+      },
+      "r_den": {
+        "0": "4",
+        "1": "5",
+        "2": "1"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-4"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "10"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-4"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{-4}{y + 1} + \\frac{10}{y + 4}",
+      "answer_latex": "\\frac{6y - 6}{\\left(y + 1\\right)\\left(y + 4\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 0,
+      "kernel_a": "0",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=0 \u00b7 kernel=constant",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 110,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": true,
+      "kernel_mode": "constant"
+    },
+    "prompt": "\\frac{6}{x + 2} + \\frac{-4}{x + 1} + \\frac{-1}{\\left(x + 2\\right)\\left(x + 1\\right)}",
+    "answer": "\\frac{2x - 3}{\\left(x + 1\\right)\\left(x + 2\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "\\frac{2x - 3}{\\left(x + 1\\right)\\left(x + 2\\right)}",
+      "goal_num": {
+        "0": "-3",
+        "1": "2"
+      },
+      "goal_num_unscaled": {
+        "0": "-3",
+        "1": "2"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "-1",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-1"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "1",
+            "root": "-1",
+            "monic": true
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "1",
+          "root": "-1",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "-3",
+        "1": "2"
+      },
+      "r_den": {
+        "0": "2",
+        "1": "3",
+        "2": "1"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "6"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-4"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-1"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-2",
+            "-1"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{6}{x + 2} + \\frac{-4}{x + 1} + \\frac{-1}{\\left(x + 2\\right)\\left(x + 1\\right)}",
+      "answer_latex": "\\frac{2x - 3}{\\left(x + 1\\right)\\left(x + 2\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 1,
+      "kernel_a": "-1",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=0 \u00b7 kernel=a0",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 111,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": true,
+      "kernel_mode": "a0"
+    },
+    "prompt": "\\frac{-1}{x + 1} + \\frac{3}{3x - 1} + \\frac{4x}{3x^{2} + 2x - 1}",
+    "answer": "\\frac{4x + 4}{\\left(x + 1\\right)\\left(3x - 1\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 2,
+      "goal_latex": "\\frac{4x + 4}{\\left(x + 1\\right)\\left(3x - 1\\right)}",
+      "goal_num": {
+        "0": "4",
+        "1": "4"
+      },
+      "goal_num_unscaled": {
+        "0": "2",
+        "1": "2"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "0",
+        "b": "4",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "4x"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "1",
+            "b": "1",
+            "root": "-1",
+            "monic": true
+          },
+          {
+            "a": "3",
+            "b": "-1",
+            "root": "1/3",
+            "monic": false
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "1",
+          "root": "-1",
+          "monic": true
+        },
+        {
+          "a": "3",
+          "b": "-1",
+          "root": "1/3",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "0": "4",
+        "1": "4"
+      },
+      "r_den": {
+        "0": "-1",
+        "1": "2",
+        "2": "3"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "1/3"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "1": "4"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-1",
+            "1/3"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{-1}{x + 1} + \\frac{3}{3x - 1} + \\frac{4x}{3x^{2} + 2x - 1}",
+      "answer_latex": "\\frac{4x + 4}{\\left(x + 1\\right)\\left(3x - 1\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 1,
+      "kernel_a": "0",
+      "kernel_b": "4",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=0 \u00b7 kernel=full",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 112,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": true,
+      "kernel_mode": "full"
+    },
+    "prompt": "\\frac{-15}{m - 5} + \\frac{29}{3m - 7} + \\frac{16m + 16}{\\left(m - 5\\right)\\left(3m - 7\\right)}",
+    "answer": "\\frac{-24}{\\left(3m - 7\\right)\\left(m - 5\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 8,
+      "goal_latex": "\\frac{-24}{\\left(3m - 7\\right)\\left(m - 5\\right)}",
+      "goal_num": {
+        "0": "-24"
+      },
+      "goal_num_unscaled": {
+        "0": "-3"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "16",
+        "b": "16",
+        "dim": 2,
+        "is_zero": false,
+        "latex": "16x + 16"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-5",
+            "root": "5",
+            "monic": true
+          },
+          {
+            "a": "3",
+            "b": "-7",
+            "root": "7/3",
+            "monic": false
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "3",
+          "b": "-7",
+          "root": "7/3",
+          "monic": false
+        },
+        {
+          "a": "1",
+          "b": "-5",
+          "root": "5",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "-24"
+      },
+      "r_den": {
+        "0": "35",
+        "1": "-22",
+        "2": "3"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-15"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "5"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "29"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "7/3"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "16",
+            "1": "16"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "5",
+            "7/3"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{-15}{m - 5} + \\frac{29}{3m - 7} + \\frac{16m + 16}{\\left(m - 5\\right)\\left(3m - 7\\right)}",
+      "answer_latex": "\\frac{-24}{\\left(3m - 7\\right)\\left(m - 5\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 2,
+      "kernel_a": "16",
+      "kernel_b": "16",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=1 \u00b7 kernel=zero",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 113,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": true,
+      "kernel_mode": "zero"
+    },
+    "prompt": "1 + \\frac{1}{3x - 1}",
+    "answer": "\\frac{3x}{3x - 1},\\; x \\neq -\\frac{5}{2}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "pure_pfd",
+      "dens_style": "expanded",
+      "clear_factor": 3,
+      "goal_latex": "\\frac{3x}{3x - 1}",
+      "goal_num": {
+        "1": "3"
+      },
+      "goal_num_unscaled": {
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "0",
+        "b": "0",
+        "dim": 0,
+        "is_zero": true,
+        "latex": "0"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "2",
+            "b": "5",
+            "root": "-5/2",
+            "monic": false
+          },
+          {
+            "a": "3",
+            "b": "-1",
+            "root": "1/3",
+            "monic": false
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "2",
+          "b": "5",
+          "root": "-5/2",
+          "monic": false
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "3",
+          "b": "-1",
+          "root": "1/3",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "1": "15",
+        "2": "6"
+      },
+      "r_den": {
+        "0": "-5",
+        "1": "13",
+        "2": "6"
+      },
+      "poly_part": {
+        "0": "1"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "1/3"
+          ]
+        }
+      ],
+      "prompt_latex": "1 + \\frac{1}{3x - 1}",
+      "answer_latex": "\\frac{3x}{3x - 1},\\; x \\neq -\\frac{5}{2}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 0,
+      "kernel_a": "0",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "-5/2"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=1 \u00b7 kernel=constant",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 114,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": true,
+      "kernel_mode": "constant"
+    },
+    "prompt": "11 + \\frac{40}{3z + 1} + \\frac{-6}{z + 4} + \\frac{-66}{3z^{2} + 13z + 4}",
+    "answer": "\\frac{33z + 33}{3z + 1},\\; z \\neq -4",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 33,
+      "goal_latex": "\\frac{33z + 33}{3z + 1}",
+      "goal_num": {
+        "0": "33",
+        "1": "33"
+      },
+      "goal_num_unscaled": {
+        "0": "1",
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-66",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-66"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "3",
+            "b": "1",
+            "root": "-1/3",
+            "monic": false
+          },
+          {
+            "a": "1",
+            "b": "4",
+            "root": "-4",
+            "monic": true
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "4",
+          "root": "-4",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "3",
+          "b": "1",
+          "root": "-1/3",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "0": "132",
+        "1": "165",
+        "2": "33"
+      },
+      "r_den": {
+        "0": "4",
+        "1": "13",
+        "2": "3"
+      },
+      "poly_part": {
+        "0": "11"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "11"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "40"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1/3"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-6"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-4"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-66"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-1/3",
+            "-4"
+          ]
+        }
+      ],
+      "prompt_latex": "11 + \\frac{40}{3z + 1} + \\frac{-6}{z + 4} + \\frac{-66}{3z^{2} + 13z + 4}",
+      "answer_latex": "\\frac{33z + 33}{3z + 1},\\; z \\neq -4",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-66",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -4
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=1 \u00b7 kernel=a0",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 115,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": true,
+      "kernel_mode": "a0"
+    },
+    "prompt": "3 + \\frac{-10}{x + 2} + \\frac{-2}{x - 1} + \\frac{6x}{\\left(x + 2\\right)\\left(x - 1\\right)}",
+    "answer": "\\frac{3x}{x + 2},\\; x \\neq 1",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 3,
+      "goal_latex": "\\frac{3x}{x + 2}",
+      "goal_num": {
+        "1": "3"
+      },
+      "goal_num_unscaled": {
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "0",
+        "b": "6",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "6x"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "-1",
+            "root": "1",
+            "monic": true
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-1",
+          "root": "1",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "1": "-3",
+        "2": "3"
+      },
+      "r_den": {
+        "0": "-2",
+        "1": "1",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "3"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-10"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "1"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "1": "6"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-2",
+            "1"
+          ]
+        }
+      ],
+      "prompt_latex": "3 + \\frac{-10}{x + 2} + \\frac{-2}{x - 1} + \\frac{6x}{\\left(x + 2\\right)\\left(x - 1\\right)}",
+      "answer_latex": "\\frac{3x}{x + 2},\\; x \\neq 1",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "0",
+      "kernel_b": "6",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        1
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=1 \u00b7 kernel=full",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 116,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": true,
+      "kernel_mode": "full"
+    },
+    "prompt": "1 + \\frac{1}{x - 1} + \\frac{2}{x - 4} + \\frac{2x + 1}{\\left(x - 1\\right)\\left(x - 4\\right)}",
+    "answer": "\\frac{x + 1}{x - 4},\\; x \\neq 1",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "\\frac{x + 1}{x - 4}",
+      "goal_num": {
+        "0": "1",
+        "1": "1"
+      },
+      "goal_num_unscaled": {
+        "0": "1",
+        "1": "1"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "1",
+        "b": "2",
+        "dim": 2,
+        "is_zero": false,
+        "latex": "2x + 1"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-1",
+            "root": "1",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "-4",
+            "root": "4",
+            "monic": true
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-1",
+          "root": "1",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "-4",
+          "root": "4",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "-1",
+        "2": "1"
+      },
+      "r_den": {
+        "0": "4",
+        "1": "-5",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "1"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "4"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "1",
+            "1": "2"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "1",
+            "4"
+          ]
+        }
+      ],
+      "prompt_latex": "1 + \\frac{1}{x - 1} + \\frac{2}{x - 4} + \\frac{2x + 1}{\\left(x - 1\\right)\\left(x - 4\\right)}",
+      "answer_latex": "\\frac{x + 1}{x - 4},\\; x \\neq 1",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 2,
+      "kernel_a": "1",
+      "kernel_b": "2",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        1
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=2 \u00b7 kernel=zero",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 117,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": true,
+      "kernel_mode": "zero"
+    },
+    "prompt": "2",
+    "answer": "2,\\; y \\neq 3, -3",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "pure_pfd",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "2",
+      "goal_num": {
+        "0": "2"
+      },
+      "goal_num_unscaled": {
+        "0": "2"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "0",
+        "b": "0",
+        "dim": 0,
+        "is_zero": true,
+        "latex": "0"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "3",
+            "root": "-3",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "-3",
+            "root": "3",
+            "monic": true
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-3",
+          "root": "3",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "3",
+          "root": "-3",
+          "monic": true
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "-18",
+        "2": "2"
+      },
+      "r_den": {
+        "0": "-9",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "2"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        }
+      ],
+      "prompt_latex": "2",
+      "answer_latex": "2,\\; y \\neq 3, -3",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 0,
+      "kernel_a": "0",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        3,
+        -3
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=2 \u00b7 kernel=constant",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 118,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": true,
+      "kernel_mode": "constant"
+    },
+    "prompt": "1 + \\frac{1}{u + 1} + \\frac{-1}{u + 2} + \\frac{-1}{\\left(u + 1\\right)\\left(u + 2\\right)}",
+    "answer": "1,\\; u \\neq -2, -1",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "1",
+      "goal_num": {
+        "0": "1"
+      },
+      "goal_num_unscaled": {
+        "0": "1"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "-1",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-1"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "1",
+            "root": "-1",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        },
+        {
+          "a": "1",
+          "b": "1",
+          "root": "-1",
+          "monic": true
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "2",
+        "1": "3",
+        "2": "1"
+      },
+      "r_den": {
+        "0": "2",
+        "1": "3",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "1"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-1"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-1",
+            "-2"
+          ]
+        }
+      ],
+      "prompt_latex": "1 + \\frac{1}{u + 1} + \\frac{-1}{u + 2} + \\frac{-1}{\\left(u + 1\\right)\\left(u + 2\\right)}",
+      "answer_latex": "1,\\; u \\neq -2, -1",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 1,
+      "kernel_a": "-1",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -2,
+        -1
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=2 \u00b7 kernel=a0",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 119,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": true,
+      "kernel_mode": "a0"
+    },
+    "prompt": "-12 + \\frac{-3}{3x + 2} + \\frac{-3}{x - 2} + \\frac{12x}{\\left(3x + 2\\right)\\left(x - 2\\right)}",
+    "answer": "-12,\\; x \\neq 2, -\\frac{2}{3}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 4,
+      "goal_latex": "-12",
+      "goal_num": {
+        "0": "-12"
+      },
+      "goal_num_unscaled": {
+        "0": "-3"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "0",
+        "b": "12",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "12x"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "3",
+            "b": "2",
+            "root": "-2/3",
+            "monic": false
+          },
+          {
+            "a": "1",
+            "b": "-2",
+            "root": "2",
+            "monic": true
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-2",
+          "root": "2",
+          "monic": true
+        },
+        {
+          "a": "3",
+          "b": "2",
+          "root": "-2/3",
+          "monic": false
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "48",
+        "1": "48",
+        "2": "-36"
+      },
+      "r_den": {
+        "0": "-4",
+        "1": "-4",
+        "2": "3"
+      },
+      "poly_part": {
+        "0": "-12"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "-12"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2/3"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "1": "12"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-2/3",
+            "2"
+          ]
+        }
+      ],
+      "prompt_latex": "-12 + \\frac{-3}{3x + 2} + \\frac{-3}{x - 2} + \\frac{12x}{\\left(3x + 2\\right)\\left(x - 2\\right)}",
+      "answer_latex": "-12,\\; x \\neq 2, -\\frac{2}{3}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 1,
+      "kernel_a": "0",
+      "kernel_b": "12",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        2,
+        "-2/3"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "mid D \u00b7 k=2 \u00b7 kernel=full",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 120,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": true,
+      "kernel_mode": "full"
+    },
+    "prompt": "4 + \\frac{1}{3y - 2} + \\frac{-y + 2}{3y^{2} - 8y + 4}",
+    "answer": "4,\\; y \\neq \\frac{2}{3}, 2",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 1,
+      "goal_latex": "4",
+      "goal_num": {
+        "0": "4"
+      },
+      "goal_num_unscaled": {
+        "0": "4"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "2",
+        "b": "-1",
+        "dim": 2,
+        "is_zero": false,
+        "latex": "-x + 2"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-2",
+            "root": "2",
+            "monic": true
+          },
+          {
+            "a": "3",
+            "b": "-2",
+            "root": "2/3",
+            "monic": false
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "3",
+          "b": "-2",
+          "root": "2/3",
+          "monic": false
+        },
+        {
+          "a": "1",
+          "b": "-2",
+          "root": "2",
+          "monic": true
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "16",
+        "1": "-32",
+        "2": "12"
+      },
+      "r_den": {
+        "0": "4",
+        "1": "-8",
+        "2": "3"
+      },
+      "poly_part": {
+        "0": "4"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "4"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "2/3"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "2",
+            "1": "-1"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "2",
+            "2/3"
+          ]
+        }
+      ],
+      "prompt_latex": "4 + \\frac{1}{3y - 2} + \\frac{-y + 2}{3y^{2} - 8y + 4}",
+      "answer_latex": "4,\\; y \\neq \\frac{2}{3}, 2",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 2,
+      "kernel_a": "2",
+      "kernel_b": "-1",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "2/3",
+        2
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=0 \u00b7 auto",
+    "settings": {
+      "difficulty": 16.0,
+      "seed": 121,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": true,
+      "dens_style": "auto"
+    },
+    "prompt": "\\frac{1}{5z - 8} + \\frac{-1}{5z + 6} + \\frac{14}{25z^{2} - 10z - 48}",
+    "answer": "\\frac{28}{\\left(5z - 8\\right)\\left(5z + 6\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 16.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 7,
+      "goal_latex": "\\frac{28}{\\left(5z - 8\\right)\\left(5z + 6\\right)}",
+      "goal_num": {
+        "0": "28"
+      },
+      "goal_num_unscaled": {
+        "0": "4"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "14",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "14"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "5",
+            "b": "-8",
+            "root": "8/5",
+            "monic": false
+          },
+          {
+            "a": "5",
+            "b": "6",
+            "root": "-6/5",
+            "monic": false
+          }
+        ],
+        "effective_d": 16.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -9,
+          "const_max": 9,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.8,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "5",
+          "b": "-8",
+          "root": "8/5",
+          "monic": false
+        },
+        {
+          "a": "5",
+          "b": "6",
+          "root": "-6/5",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "0": "28"
+      },
+      "r_den": {
+        "0": "-48",
+        "1": "-10",
+        "2": "25"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "8/5"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-6/5"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "14"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "8/5",
+            "-6/5"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{1}{5z - 8} + \\frac{-1}{5z + 6} + \\frac{14}{25z^{2} - 10z - 48}",
+      "answer_latex": "\\frac{28}{\\left(5z - 8\\right)\\left(5z + 6\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 1,
+      "kernel_a": "14",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=0 \u00b7 auto",
+    "settings": {
+      "difficulty": 17.0,
+      "seed": 122,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": true,
+      "dens_style": "expanded"
+    },
+    "prompt": "\\frac{2}{3z - 8} + \\frac{-2}{3z + 1}",
+    "answer": "\\frac{18}{\\left(3z - 8\\right)\\left(3z + 1\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 17.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "pure_pfd",
+      "dens_style": "expanded",
+      "clear_factor": 9,
+      "goal_latex": "\\frac{18}{\\left(3z - 8\\right)\\left(3z + 1\\right)}",
+      "goal_num": {
+        "0": "18"
+      },
+      "goal_num_unscaled": {
+        "0": "2"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "0",
+        "b": "0",
+        "dim": 0,
+        "is_zero": true,
+        "latex": "0"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "3",
+            "b": "-8",
+            "root": "8/3",
+            "monic": false
+          },
+          {
+            "a": "3",
+            "b": "1",
+            "root": "-1/3",
+            "monic": false
+          }
+        ],
+        "effective_d": 17.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -9,
+          "const_max": 9,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.85,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "3",
+          "b": "-8",
+          "root": "8/3",
+          "monic": false
+        },
+        {
+          "a": "3",
+          "b": "1",
+          "root": "-1/3",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "0": "18"
+      },
+      "r_den": {
+        "0": "-8",
+        "1": "-21",
+        "2": "9"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "8/3"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1/3"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{2}{3z - 8} + \\frac{-2}{3z + 1}",
+      "answer_latex": "\\frac{18}{\\left(3z - 8\\right)\\left(3z + 1\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 0,
+      "kernel_a": "0",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=0 \u00b7 auto",
+    "settings": {
+      "difficulty": 18.0,
+      "seed": 123,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": true,
+      "dens_style": "auto"
+    },
+    "prompt": "\\frac{-2}{w + 2} + \\frac{4}{2w + 1} + \\frac{3w + 3}{\\left(w + 2\\right)\\left(2w + 1\\right)}",
+    "answer": "\\frac{3w + 9}{\\left(2w + 1\\right)\\left(w + 2\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 18.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 3,
+      "goal_latex": "\\frac{3w + 9}{\\left(2w + 1\\right)\\left(w + 2\\right)}",
+      "goal_num": {
+        "0": "9",
+        "1": "3"
+      },
+      "goal_num_unscaled": {
+        "0": "3",
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "3",
+        "b": "3",
+        "dim": 2,
+        "is_zero": false,
+        "latex": "3x + 3"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          },
+          {
+            "a": "2",
+            "b": "1",
+            "root": "-1/2",
+            "monic": false
+          }
+        ],
+        "effective_d": 18.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -10,
+          "const_max": 10,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.9,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "2",
+          "b": "1",
+          "root": "-1/2",
+          "monic": false
+        },
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "9",
+        "1": "3"
+      },
+      "r_den": {
+        "0": "2",
+        "1": "5",
+        "2": "2"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "4"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1/2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "3",
+            "1": "3"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-2",
+            "-1/2"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{-2}{w + 2} + \\frac{4}{2w + 1} + \\frac{3w + 3}{\\left(w + 2\\right)\\left(2w + 1\\right)}",
+      "answer_latex": "\\frac{3w + 9}{\\left(2w + 1\\right)\\left(w + 2\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 2,
+      "kernel_a": "3",
+      "kernel_b": "3",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=0 \u00b7 auto",
+    "settings": {
+      "difficulty": 19.0,
+      "seed": 124,
+      "n_factors": 2,
+      "cancel_factor_count": 0,
+      "allow_nonmonic": true,
+      "dens_style": "expanded"
+    },
+    "prompt": "\\frac{4}{4e - 7} + \\frac{-1}{e + 7} + \\frac{-10}{4e^{2} + 21e - 49}",
+    "answer": "\\frac{25}{\\left(e + 7\\right)\\left(4e - 7\\right)}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 19.0,
+      "goal_mode": "fraction",
+      "cancel_count": 0,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 5,
+      "goal_latex": "\\frac{25}{\\left(e + 7\\right)\\left(4e - 7\\right)}",
+      "goal_num": {
+        "0": "25"
+      },
+      "goal_num_unscaled": {
+        "0": "5"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-10",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-10"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "4",
+            "b": "-7",
+            "root": "7/4",
+            "monic": false
+          },
+          {
+            "a": "1",
+            "b": "7",
+            "root": "-7",
+            "monic": true
+          }
+        ],
+        "effective_d": 19.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -10,
+          "const_max": 10,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.95,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "7",
+          "root": "-7",
+          "monic": true
+        },
+        {
+          "a": "4",
+          "b": "-7",
+          "root": "7/4",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "0": "25"
+      },
+      "r_den": {
+        "0": "-49",
+        "1": "21",
+        "2": "4"
+      },
+      "poly_part": {},
+      "terms": [
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "4"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "7/4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-7"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-10"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "7/4",
+            "-7"
+          ]
+        }
+      ],
+      "prompt_latex": "\\frac{4}{4e - 7} + \\frac{-1}{e + 7} + \\frac{-10}{4e^{2} + 21e - 49}",
+      "answer_latex": "\\frac{25}{\\left(e + 7\\right)\\left(4e - 7\\right)}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 0,
+      "kernel_dim": 1,
+      "kernel_a": "-10",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": []
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=1 \u00b7 auto",
+    "settings": {
+      "difficulty": 16.0,
+      "seed": 125,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": true,
+      "dens_style": "auto"
+    },
+    "prompt": "42 + \\frac{128}{b - 4} + \\frac{-10}{5b + 1} + \\frac{-42}{\\left(b - 4\\right)\\left(5b + 1\\right)}",
+    "answer": "\\frac{42b - 42}{b - 4},\\; b \\neq -\\frac{1}{5}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 16.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 21,
+      "goal_latex": "\\frac{42b - 42}{b - 4}",
+      "goal_num": {
+        "0": "-42",
+        "1": "42"
+      },
+      "goal_num_unscaled": {
+        "0": "-2",
+        "1": "2"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-42",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-42"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-4",
+            "root": "4",
+            "monic": true
+          },
+          {
+            "a": "5",
+            "b": "1",
+            "root": "-1/5",
+            "monic": false
+          }
+        ],
+        "effective_d": 16.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -9,
+          "const_max": 9,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.8,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "5",
+          "b": "1",
+          "root": "-1/5",
+          "monic": false
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "-4",
+          "root": "4",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "-42",
+        "1": "-168",
+        "2": "210"
+      },
+      "r_den": {
+        "0": "-4",
+        "1": "-19",
+        "2": "5"
+      },
+      "poly_part": {
+        "0": "42"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "42"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "128"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-10"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1/5"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-42"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "4",
+            "-1/5"
+          ]
+        }
+      ],
+      "prompt_latex": "42 + \\frac{128}{b - 4} + \\frac{-10}{5b + 1} + \\frac{-42}{\\left(b - 4\\right)\\left(5b + 1\\right)}",
+      "answer_latex": "\\frac{42b - 42}{b - 4},\\; b \\neq -\\frac{1}{5}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-42",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "-1/5"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=1 \u00b7 auto",
+    "settings": {
+      "difficulty": 17.0,
+      "seed": 126,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": true,
+      "dens_style": "expanded"
+    },
+    "prompt": "29 + \\frac{-24}{3\\xi + 8} + \\frac{3}{4\\xi + 1} + \\frac{-232}{12\\xi^{2} + 35\\xi + 8}",
+    "answer": "\\frac{116\\xi}{4\\xi + 1},\\; \\xi \\neq -\\frac{8}{3}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 17.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 116,
+      "goal_latex": "\\frac{116\\xi}{4\\xi + 1}",
+      "goal_num": {
+        "1": "116"
+      },
+      "goal_num_unscaled": {
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-232",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-232"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "3",
+            "b": "8",
+            "root": "-8/3",
+            "monic": false
+          },
+          {
+            "a": "4",
+            "b": "1",
+            "root": "-1/4",
+            "monic": false
+          }
+        ],
+        "effective_d": 17.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -9,
+          "const_max": 9,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.85,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "3",
+          "b": "8",
+          "root": "-8/3",
+          "monic": false
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "4",
+          "b": "1",
+          "root": "-1/4",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "1": "928",
+        "2": "348"
+      },
+      "r_den": {
+        "0": "8",
+        "1": "35",
+        "2": "12"
+      },
+      "poly_part": {
+        "0": "29"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "29"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-24"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-8/3"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1/4"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-232"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-8/3",
+            "-1/4"
+          ]
+        }
+      ],
+      "prompt_latex": "29 + \\frac{-24}{3\\xi + 8} + \\frac{3}{4\\xi + 1} + \\frac{-232}{12\\xi^{2} + 35\\xi + 8}",
+      "answer_latex": "\\frac{116\\xi}{4\\xi + 1},\\; \\xi \\neq -\\frac{8}{3}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-232",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "-8/3"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=1 \u00b7 auto",
+    "settings": {
+      "difficulty": 18.0,
+      "seed": 127,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": true,
+      "dens_style": "auto"
+    },
+    "prompt": "7 + \\frac{-36}{3t - 4} + \\frac{97}{4t - 3} + \\frac{84}{12t^{2} - 25t + 12}",
+    "answer": "\\frac{28t + 28}{4t - 3},\\; t \\neq \\frac{4}{3}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 18.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 28,
+      "goal_latex": "\\frac{28t + 28}{4t - 3}",
+      "goal_num": {
+        "0": "28",
+        "1": "28"
+      },
+      "goal_num_unscaled": {
+        "0": "1",
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "84",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "84"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "3",
+            "b": "-4",
+            "root": "4/3",
+            "monic": false
+          },
+          {
+            "a": "4",
+            "b": "-3",
+            "root": "3/4",
+            "monic": false
+          }
+        ],
+        "effective_d": 18.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -10,
+          "const_max": 10,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.9,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "3",
+          "b": "-4",
+          "root": "4/3",
+          "monic": false
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "4",
+          "b": "-3",
+          "root": "3/4",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "0": "-112",
+        "1": "-28",
+        "2": "84"
+      },
+      "r_den": {
+        "0": "12",
+        "1": "-25",
+        "2": "12"
+      },
+      "poly_part": {
+        "0": "7"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "7"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-36"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "4/3"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "97"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "3/4"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "84"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "4/3",
+            "3/4"
+          ]
+        }
+      ],
+      "prompt_latex": "7 + \\frac{-36}{3t - 4} + \\frac{97}{4t - 3} + \\frac{84}{12t^{2} - 25t + 12}",
+      "answer_latex": "\\frac{28t + 28}{4t - 3},\\; t \\neq \\frac{4}{3}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "84",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "4/3"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=1 \u00b7 auto",
+    "settings": {
+      "difficulty": 19.0,
+      "seed": 128,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "allow_nonmonic": true,
+      "dens_style": "expanded"
+    },
+    "prompt": "1 + \\frac{-4}{4x + 3} + \\frac{1}{4x - 9} + \\frac{-12}{16x^{2} - 24x - 27}",
+    "answer": "\\frac{4x}{4x + 3},\\; x \\neq \\frac{9}{4}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 19.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 4,
+      "goal_latex": "\\frac{4x}{4x + 3}",
+      "goal_num": {
+        "1": "4"
+      },
+      "goal_num_unscaled": {
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-12",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-12"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "4",
+            "b": "3",
+            "root": "-3/4",
+            "monic": false
+          },
+          {
+            "a": "4",
+            "b": "-9",
+            "root": "9/4",
+            "monic": false
+          }
+        ],
+        "effective_d": 19.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -10,
+          "const_max": 10,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.95,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "4",
+          "b": "-9",
+          "root": "9/4",
+          "monic": false
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "4",
+          "b": "3",
+          "root": "-3/4",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "1": "-36",
+        "2": "16"
+      },
+      "r_den": {
+        "0": "-27",
+        "1": "-24",
+        "2": "16"
+      },
+      "poly_part": {
+        "0": "1"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-4"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-3/4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "9/4"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-12"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-3/4",
+            "9/4"
+          ]
+        }
+      ],
+      "prompt_latex": "1 + \\frac{-4}{4x + 3} + \\frac{1}{4x - 9} + \\frac{-12}{16x^{2} - 24x - 27}",
+      "answer_latex": "\\frac{4x}{4x + 3},\\; x \\neq \\frac{9}{4}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-12",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "9/4"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=2 \u00b7 auto",
+    "settings": {
+      "difficulty": 16.0,
+      "seed": 129,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": true,
+      "dens_style": "auto"
+    },
+    "prompt": "66 + \\frac{13}{3\\theta - 7} + \\frac{-2}{3\\theta + 4} + \\frac{-33\\theta - 66}{9\\theta^{2} - 9\\theta - 28}",
+    "answer": "66,\\; \\theta \\neq -\\frac{4}{3}, \\frac{7}{3}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 16.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 33,
+      "goal_latex": "66",
+      "goal_num": {
+        "0": "66"
+      },
+      "goal_num_unscaled": {
+        "0": "2"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-66",
+        "b": "-33",
+        "dim": 2,
+        "is_zero": false,
+        "latex": "-33x - 66"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "3",
+            "b": "-7",
+            "root": "7/3",
+            "monic": false
+          },
+          {
+            "a": "3",
+            "b": "4",
+            "root": "-4/3",
+            "monic": false
+          }
+        ],
+        "effective_d": 16.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -9,
+          "const_max": 9,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.8,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "3",
+          "b": "4",
+          "root": "-4/3",
+          "monic": false
+        },
+        {
+          "a": "3",
+          "b": "-7",
+          "root": "7/3",
+          "monic": false
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "-1848",
+        "1": "-594",
+        "2": "594"
+      },
+      "r_den": {
+        "0": "-28",
+        "1": "-9",
+        "2": "9"
+      },
+      "poly_part": {
+        "0": "66"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "66"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "13"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "7/3"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-4/3"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-66",
+            "1": "-33"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "7/3",
+            "-4/3"
+          ]
+        }
+      ],
+      "prompt_latex": "66 + \\frac{13}{3\\theta - 7} + \\frac{-2}{3\\theta + 4} + \\frac{-33\\theta - 66}{9\\theta^{2} - 9\\theta - 28}",
+      "answer_latex": "66,\\; \\theta \\neq -\\frac{4}{3}, \\frac{7}{3}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 2,
+      "kernel_a": "-66",
+      "kernel_b": "-33",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "-4/3",
+        "7/3"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=2 \u00b7 auto",
+    "settings": {
+      "difficulty": 17.0,
+      "seed": 130,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": true,
+      "dens_style": "expanded"
+    },
+    "prompt": "36 + \\frac{-8}{4x - 5} + \\frac{2}{x + 1} + \\frac{18}{4x^{2} - x - 5}",
+    "answer": "36,\\; x \\neq -1, \\frac{5}{4}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 17.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 9,
+      "goal_latex": "36",
+      "goal_num": {
+        "0": "36"
+      },
+      "goal_num_unscaled": {
+        "0": "4"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "18",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "18"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "4",
+            "b": "-5",
+            "root": "5/4",
+            "monic": false
+          },
+          {
+            "a": "1",
+            "b": "1",
+            "root": "-1",
+            "monic": true
+          }
+        ],
+        "effective_d": 17.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -9,
+          "const_max": 9,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.85,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "1",
+          "root": "-1",
+          "monic": true
+        },
+        {
+          "a": "4",
+          "b": "-5",
+          "root": "5/4",
+          "monic": false
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "-180",
+        "1": "-36",
+        "2": "144"
+      },
+      "r_den": {
+        "0": "-5",
+        "1": "-1",
+        "2": "4"
+      },
+      "poly_part": {
+        "0": "36"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "36"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-8"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "5/4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-1"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "18"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "5/4",
+            "-1"
+          ]
+        }
+      ],
+      "prompt_latex": "36 + \\frac{-8}{4x - 5} + \\frac{2}{x + 1} + \\frac{18}{4x^{2} - x - 5}",
+      "answer_latex": "36,\\; x \\neq -1, \\frac{5}{4}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 1,
+      "kernel_a": "18",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -1,
+        "5/4"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=2 \u00b7 auto",
+    "settings": {
+      "difficulty": 18.0,
+      "seed": 131,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": true,
+      "dens_style": "auto"
+    },
+    "prompt": "1 + \\frac{-21}{2\\delta + 5} + \\frac{9}{\\delta + 2} + \\frac{3\\delta - 3}{\\left(2\\delta + 5\\right)\\left(\\delta + 2\\right)}",
+    "answer": "1,\\; \\delta \\neq -2, -\\frac{5}{2}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 18.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "1",
+      "goal_num": {
+        "0": "1"
+      },
+      "goal_num_unscaled": {
+        "0": "1"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "-3",
+        "b": "3",
+        "dim": 2,
+        "is_zero": false,
+        "latex": "3x - 3"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "2",
+            "b": "5",
+            "root": "-5/2",
+            "monic": false
+          },
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          }
+        ],
+        "effective_d": 18.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -10,
+          "const_max": 10,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.9,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        },
+        {
+          "a": "2",
+          "b": "5",
+          "root": "-5/2",
+          "monic": false
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "10",
+        "1": "9",
+        "2": "2"
+      },
+      "r_den": {
+        "0": "10",
+        "1": "9",
+        "2": "2"
+      },
+      "poly_part": {
+        "0": "1"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-21"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-5/2"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "9"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-3",
+            "1": "3"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-5/2",
+            "-2"
+          ]
+        }
+      ],
+      "prompt_latex": "1 + \\frac{-21}{2\\delta + 5} + \\frac{9}{\\delta + 2} + \\frac{3\\delta - 3}{\\left(2\\delta + 5\\right)\\left(\\delta + 2\\right)}",
+      "answer_latex": "1,\\; \\delta \\neq -2, -\\frac{5}{2}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 2,
+      "kernel_a": "-3",
+      "kernel_b": "3",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -2,
+        "-5/2"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "high D \u00b7 k=2 \u00b7 auto",
+    "settings": {
+      "difficulty": 19.0,
+      "seed": 132,
+      "n_factors": 2,
+      "cancel_factor_count": 2,
+      "allow_nonmonic": true,
+      "dens_style": "expanded"
+    },
+    "prompt": "-2 + \\frac{-3}{\\delta + 3} + \\frac{9}{3\\delta + 10} + \\frac{3}{3\\delta^{2} + 19\\delta + 30}",
+    "answer": "-2,\\; \\delta \\neq -3, -\\frac{10}{3}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 19.0,
+      "goal_mode": "constant",
+      "cancel_count": 2,
+      "package_mode": "residual",
+      "dens_style": "expanded",
+      "clear_factor": 1,
+      "goal_latex": "-2",
+      "goal_num": {
+        "0": "-2"
+      },
+      "goal_num_unscaled": {
+        "0": "-2"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "3",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "3"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "expanded",
+        "factors": [
+          {
+            "a": "1",
+            "b": "3",
+            "root": "-3",
+            "monic": true
+          },
+          {
+            "a": "3",
+            "b": "10",
+            "root": "-10/3",
+            "monic": false
+          }
+        ],
+        "effective_d": 19.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 5,
+          "const_min": -10,
+          "const_max": 10,
+          "const_type": "int",
+          "nonmonic_weight": 0.75,
+          "coef_abs_bias": 0.95,
+          "expand_weight": 0.7
+        },
+        "bias_label": "nonmonic+expanded"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "3",
+          "root": "-3",
+          "monic": true
+        },
+        {
+          "a": "3",
+          "b": "10",
+          "root": "-10/3",
+          "monic": false
+        }
+      ],
+      "remain_factors": [],
+      "r_num": {
+        "0": "-60",
+        "1": "-38",
+        "2": "-6"
+      },
+      "r_den": {
+        "0": "30",
+        "1": "19",
+        "2": "3"
+      },
+      "poly_part": {
+        "0": "-2"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "-2"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-3"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "9"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-10/3"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-3",
+            "-10/3"
+          ]
+        }
+      ],
+      "prompt_latex": "-2 + \\frac{-3}{\\delta + 3} + \\frac{9}{3\\delta + 10} + \\frac{3}{3\\delta^{2} + 19\\delta + 30}",
+      "answer_latex": "-2,\\; \\delta \\neq -3, -\\frac{10}{3}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 2,
+      "kernel_dim": 1,
+      "kernel_a": "3",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic+expanded",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -3,
+        "-10/3"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "goal showcase \u00b7 prefer linear num",
+    "settings": {
+      "difficulty": 4.0,
+      "seed": 133,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "prefer_linear_goal": true,
+      "kernel_mode": "constant",
+      "allow_nonmonic": false
+    },
+    "prompt": "2 + \\frac{-4}{x + 4} + \\frac{-1}{x + 2} + \\frac{2}{\\left(x + 4\\right)\\left(x + 2\\right)}",
+    "answer": "\\frac{2x + 3}{x + 4},\\; x \\neq -2",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 4.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 1,
+      "goal_latex": "\\frac{2x + 3}{x + 4}",
+      "goal_num": {
+        "0": "3",
+        "1": "2"
+      },
+      "goal_num_unscaled": {
+        "0": "3",
+        "1": "2"
+      },
+      "scaling_convention": "answer=G",
+      "kernel": {
+        "a": "2",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "2"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "4",
+            "root": "-4",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "2",
+            "root": "-2",
+            "monic": true
+          }
+        ],
+        "effective_d": 4.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -5,
+          "const_max": 5,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.2,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "2",
+          "root": "-2",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "4",
+          "root": "-4",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "6",
+        "1": "7",
+        "2": "2"
+      },
+      "r_den": {
+        "0": "8",
+        "1": "6",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "2"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-4"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-4",
+            "-2"
+          ]
+        }
+      ],
+      "prompt_latex": "2 + \\frac{-4}{x + 4} + \\frac{-1}{x + 2} + \\frac{2}{\\left(x + 4\\right)\\left(x + 2\\right)}",
+      "answer_latex": "\\frac{2x + 3}{x + 4},\\; x \\neq -2",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "2",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        -2
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "goal showcase \u00b7 prefer linear num",
+    "settings": {
+      "difficulty": 5.0,
+      "seed": 134,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "prefer_linear_goal": true,
+      "kernel_mode": "constant",
+      "allow_nonmonic": false
+    },
+    "prompt": "8 + \\frac{1}{y - 5} + \\frac{-25}{y + 3} + \\frac{-8}{\\left(y - 5\\right)\\left(y + 3\\right)}",
+    "answer": "\\frac{8y}{y + 3},\\; y \\neq 5",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 5.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 8,
+      "goal_latex": "\\frac{8y}{y + 3}",
+      "goal_num": {
+        "1": "8"
+      },
+      "goal_num_unscaled": {
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-8",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-8"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-5",
+            "root": "5",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "3",
+            "root": "-3",
+            "monic": true
+          }
+        ],
+        "effective_d": 5.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -5,
+          "const_max": 5,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.25,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-5",
+          "root": "5",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "3",
+          "root": "-3",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "1": "-40",
+        "2": "8"
+      },
+      "r_den": {
+        "0": "-15",
+        "1": "-2",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "8"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "8"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "5"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-25"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-3"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-8"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "5",
+            "-3"
+          ]
+        }
+      ],
+      "prompt_latex": "8 + \\frac{1}{y - 5} + \\frac{-25}{y + 3} + \\frac{-8}{\\left(y - 5\\right)\\left(y + 3\\right)}",
+      "answer_latex": "\\frac{8y}{y + 3},\\; y \\neq 5",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-8",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        5
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "goal showcase \u00b7 prefer linear num",
+    "settings": {
+      "difficulty": 6.0,
+      "seed": 135,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "prefer_linear_goal": true,
+      "kernel_mode": "constant",
+      "allow_nonmonic": false
+    },
+    "prompt": "10 + \\frac{2}{y - 1} + \\frac{53}{y - 6} + \\frac{10}{\\left(y - 1\\right)\\left(y - 6\\right)}",
+    "answer": "\\frac{10y - 5}{y - 6},\\; y \\neq 1",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 6.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 5,
+      "goal_latex": "\\frac{10y - 5}{y - 6}",
+      "goal_num": {
+        "0": "-5",
+        "1": "10"
+      },
+      "goal_num_unscaled": {
+        "0": "-1",
+        "1": "2"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "10",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "10"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-1",
+            "root": "1",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "-6",
+            "root": "6",
+            "monic": true
+          }
+        ],
+        "effective_d": 6.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": false,
+          "leading_max": 1,
+          "const_min": -6,
+          "const_max": 6,
+          "const_type": "int",
+          "nonmonic_weight": 0.0,
+          "coef_abs_bias": 0.3,
+          "expand_weight": 0.1
+        },
+        "bias_label": "monic_bias"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-1",
+          "root": "1",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "-6",
+          "root": "6",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "5",
+        "1": "-15",
+        "2": "10"
+      },
+      "r_den": {
+        "0": "6",
+        "1": "-7",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "10"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "10"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "2"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "1"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "53"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "6"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "10"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "1",
+            "6"
+          ]
+        }
+      ],
+      "prompt_latex": "10 + \\frac{2}{y - 1} + \\frac{53}{y - 6} + \\frac{10}{\\left(y - 1\\right)\\left(y - 6\\right)}",
+      "answer_latex": "\\frac{10y - 5}{y - 6},\\; y \\neq 1",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "10",
+      "kernel_b": "0",
+      "factor_bias": "monic_bias",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        1
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "goal showcase \u00b7 prefer linear num",
+    "settings": {
+      "difficulty": 7.0,
+      "seed": 136,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "prefer_linear_goal": true,
+      "kernel_mode": "constant",
+      "allow_nonmonic": true
+    },
+    "prompt": "6 + \\frac{3}{x - 4} + \\frac{11}{x - 2} + \\frac{-6}{\\left(x - 4\\right)\\left(x - 2\\right)}",
+    "answer": "\\frac{6x + 2}{x - 2},\\; x \\neq 4",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 7.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 2,
+      "goal_latex": "\\frac{6x + 2}{x - 2}",
+      "goal_num": {
+        "0": "2",
+        "1": "6"
+      },
+      "goal_num_unscaled": {
+        "0": "1",
+        "1": "3"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-6",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-6"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "1",
+            "b": "-4",
+            "root": "4",
+            "monic": true
+          },
+          {
+            "a": "1",
+            "b": "-2",
+            "root": "2",
+            "monic": true
+          }
+        ],
+        "effective_d": 7.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -6,
+          "const_max": 6,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.35,
+          "expand_weight": 0.1
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "1",
+          "b": "-4",
+          "root": "4",
+          "monic": true
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "-2",
+          "root": "2",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "0": "-8",
+        "1": "-22",
+        "2": "6"
+      },
+      "r_den": {
+        "0": "8",
+        "1": "-6",
+        "2": "1"
+      },
+      "poly_part": {
+        "0": "6"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "6"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "4"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "11"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-6"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "4",
+            "2"
+          ]
+        }
+      ],
+      "prompt_latex": "6 + \\frac{3}{x - 4} + \\frac{11}{x - 2} + \\frac{-6}{\\left(x - 4\\right)\\left(x - 2\\right)}",
+      "answer_latex": "\\frac{6x + 2}{x - 2},\\; x \\neq 4",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-6",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        4
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "goal showcase \u00b7 prefer linear num",
+    "settings": {
+      "difficulty": 8.0,
+      "seed": 137,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "prefer_linear_goal": true,
+      "kernel_mode": "constant",
+      "allow_nonmonic": true
+    },
+    "prompt": "13 + \\frac{6}{3y + 5} + \\frac{-80}{y + 6} + \\frac{-26}{\\left(3y + 5\\right)\\left(y + 6\\right)}",
+    "answer": "\\frac{13y}{y + 6},\\; y \\neq -\\frac{5}{3}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 8.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 13,
+      "goal_latex": "\\frac{13y}{y + 6}",
+      "goal_num": {
+        "1": "13"
+      },
+      "goal_num_unscaled": {
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-26",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-26"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "3",
+            "b": "5",
+            "root": "-5/3",
+            "monic": false
+          },
+          {
+            "a": "1",
+            "b": "6",
+            "root": "-6",
+            "monic": true
+          }
+        ],
+        "effective_d": 8.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -6,
+          "const_max": 6,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.4,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "3",
+          "b": "5",
+          "root": "-5/3",
+          "monic": false
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "1",
+          "b": "6",
+          "root": "-6",
+          "monic": true
+        }
+      ],
+      "r_num": {
+        "1": "65",
+        "2": "39"
+      },
+      "r_den": {
+        "0": "30",
+        "1": "23",
+        "2": "3"
+      },
+      "poly_part": {
+        "0": "13"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "13"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "6"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-5/3"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-80"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-6"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-26"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-5/3",
+            "-6"
+          ]
+        }
+      ],
+      "prompt_latex": "13 + \\frac{6}{3y + 5} + \\frac{-80}{y + 6} + \\frac{-26}{\\left(3y + 5\\right)\\left(y + 6\\right)}",
+      "answer_latex": "\\frac{13y}{y + 6},\\; y \\neq -\\frac{5}{3}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-26",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "-5/3"
+      ]
+    }
+  },
+  {
+    "ok": true,
+    "label": "goal showcase \u00b7 prefer linear num",
+    "settings": {
+      "difficulty": 9.0,
+      "seed": 138,
+      "n_factors": 2,
+      "cancel_factor_count": 1,
+      "prefer_linear_goal": true,
+      "kernel_mode": "constant",
+      "allow_nonmonic": true
+    },
+    "prompt": "1 + \\frac{3}{2y + 5} + \\frac{-14}{2y + 7} + \\frac{-6}{\\left(2y + 5\\right)\\left(2y + 7\\right)}",
+    "answer": "\\frac{2y - 4}{2y + 7},\\; y \\neq -\\frac{5}{2}",
+    "debug": {
+      "pattern": "AddSubCancel",
+      "effective_d": 9.0,
+      "goal_mode": "fraction",
+      "cancel_count": 1,
+      "package_mode": "residual",
+      "dens_style": "factored",
+      "clear_factor": 2,
+      "goal_latex": "\\frac{2y - 4}{2y + 7}",
+      "goal_num": {
+        "0": "-4",
+        "1": "2"
+      },
+      "goal_num_unscaled": {
+        "0": "-2",
+        "1": "1"
+      },
+      "scaling_convention": "answer=M*G",
+      "kernel": {
+        "a": "-6",
+        "b": "0",
+        "dim": 1,
+        "is_zero": false,
+        "latex": "-6"
+      },
+      "factors": {
+        "n_factors": 2,
+        "degree": 2,
+        "dens_style": "factored",
+        "factors": [
+          {
+            "a": "2",
+            "b": "5",
+            "root": "-5/2",
+            "monic": false
+          },
+          {
+            "a": "2",
+            "b": "7",
+            "root": "-7/2",
+            "monic": false
+          }
+        ],
+        "effective_d": 9.0,
+        "factor_rrt": false,
+        "constraints": {
+          "allow_nonmonic": true,
+          "leading_max": 3,
+          "const_min": -7,
+          "const_max": 7,
+          "const_type": "int",
+          "nonmonic_weight": 0.45,
+          "coef_abs_bias": 0.45,
+          "expand_weight": 0.4
+        },
+        "bias_label": "nonmonic"
+      },
+      "cancel_factors": [
+        {
+          "a": "2",
+          "b": "5",
+          "root": "-5/2",
+          "monic": false
+        }
+      ],
+      "remain_factors": [
+        {
+          "a": "2",
+          "b": "7",
+          "root": "-7/2",
+          "monic": false
+        }
+      ],
+      "r_num": {
+        "0": "-20",
+        "1": "2",
+        "2": "4"
+      },
+      "r_den": {
+        "0": "35",
+        "1": "24",
+        "2": "4"
+      },
+      "poly_part": {
+        "0": "1"
+      },
+      "terms": [
+        {
+          "kind": "polynomial",
+          "num": {
+            "0": "1"
+          },
+          "n_den_factors": 0,
+          "den_roots": []
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "3"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-5/2"
+          ]
+        },
+        {
+          "kind": "atomic",
+          "num": {
+            "0": "-14"
+          },
+          "n_den_factors": 1,
+          "den_roots": [
+            "-7/2"
+          ]
+        },
+        {
+          "kind": "kernel",
+          "num": {
+            "0": "-6"
+          },
+          "n_den_factors": 2,
+          "den_roots": [
+            "-5/2",
+            "-7/2"
+          ]
+        }
+      ],
+      "prompt_latex": "1 + \\frac{3}{2y + 5} + \\frac{-14}{2y + 7} + \\frac{-6}{\\left(2y + 5\\right)\\left(2y + 7\\right)}",
+      "answer_latex": "\\frac{2y - 4}{2y + 7},\\; y \\neq -\\frac{5}{2}",
+      "skeleton_pattern": "AddSubCancel",
+      "skeleton_source": "rational_skeleton",
+      "cancel_factor_count": 1,
+      "kernel_dim": 1,
+      "kernel_a": "-6",
+      "kernel_b": "0",
+      "factor_bias": "nonmonic",
+      "n_factors": 2,
+      "den_degree": 2,
+      "excluded_values": [
+        "-5/2"
+      ]
+    }
+  }
+]

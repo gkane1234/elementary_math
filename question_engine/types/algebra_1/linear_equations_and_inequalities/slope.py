@@ -1,6 +1,3 @@
-"""Slope — framework-backed with linear settings profile."""
+"""Slope — catalog + GENERATORS['slope'] (primitive linear_forms)."""
 
-from question_engine.frameworks.linear import SlopeFramework
-from question_engine.types._linear_type import register_linear_type
-
-register_linear_type("slope", SlopeFramework())
+# Catalog registration uses GENERATORS. This module does not re-bind SlopeFramework.

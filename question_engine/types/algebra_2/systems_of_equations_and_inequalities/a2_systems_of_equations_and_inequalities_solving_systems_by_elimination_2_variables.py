@@ -1,10 +1,3 @@
-"""A2 systems elimination — framework-backed with systems settings profile."""
+"""A2 systems elimination — primitive LinearSystem via GENERATORS['systems_elimination']."""
 
-from question_engine.frameworks.linear import SystemsEliminationFramework
-from question_engine.types._linear_type import register_linear_type
-
-register_linear_type(
-    "a2_systems_of_equations_and_inequalities_solving_systems_by_elimination_2_variables",
-    SystemsEliminationFramework(),
-    profile="systems",
-)
+# Catalog + primitive_linear / primitive_a2; do not re-bind SystemsEliminationFramework.

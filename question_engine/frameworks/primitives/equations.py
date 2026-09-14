@@ -1,6 +1,9 @@
 """One-step / two-step / multi-step linear equations — Layer 1 on numbers + variables.
 
-**One- / two-step** use discrete upgrades (``two_step``, ``multiply_divide``,
+**Live leaf default** is the SolveLinear skeleton in ``equation_skeleton.py``
+(goal solution → reverse ops). Opt out with ``use_sample_linear_equation=True``.
+
+**One- / two-step** (this module) use discrete upgrades (``two_step``, ``multiply_divide``,
 ``negative_coeff``). Catalog leaves force ``force_steps`` to ``one`` or ``two``.
 
 **Multi-step** (``force_steps="multi"``) composes the shared expand/simplify

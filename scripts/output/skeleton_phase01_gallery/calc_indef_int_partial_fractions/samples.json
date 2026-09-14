@@ -1,0 +1,2764 @@
+{
+  "section": {
+    "slug": "calc_indef_int_partial_fractions",
+    "title": "Integral \u2014 PFD",
+    "pattern": "",
+    "engine": "integrals",
+    "type_id": "calc_indef_int_partial_fractions",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Reuse <code>partial_fractions</code> constructive core then integrate. OpenStax Vol 2 \u00a73.4."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{6x}{x^{2} - 9}\\,dx",
+      "answer_latex": "3\\ln|x - 3|+3\\ln|x + 3|+C",
+      "skeleton_pattern": "",
+      "form_id": "distinct_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "distinct_linear_2"
+        ],
+        [
+          "openstax_form",
+          "distinct_linear_2"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "distinct_linear_2",
+        "structure_id": "integral_partial_fractions:distinct_linear_2",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "use_pfd"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "distinct_linear_2",
+          "form_id": "distinct_linear_2",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_linear"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 25,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "distinct_linear_2",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "distinct_linear_2",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "3",
+              "root": "3",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "3",
+              "root": "-3",
+              "multiplicity": 1,
+              "kind": "linear"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": false
+        },
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "3",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "3",
+                "root": "-3",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "openstax_form": "distinct_linear_2",
+        "form_id": "distinct_linear_2",
+        "openstax_case": "\u00a73.4 distinct linear",
+        "strategy": "pfd_linear",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{5x - 3}{x^{2} - 9}\\,dx",
+      "answer_latex": "2\\ln|x - 3|+3\\ln|x + 3|+C",
+      "skeleton_pattern": "",
+      "form_id": "distinct_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "distinct_linear_2"
+        ],
+        [
+          "openstax_form",
+          "distinct_linear_2"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "distinct_linear_2",
+        "structure_id": "integral_partial_fractions:distinct_linear_2",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "use_pfd"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "distinct_linear_2",
+          "form_id": "distinct_linear_2",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_linear"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 25,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "distinct_linear_2",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "distinct_linear_2",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "2",
+              "root": "3",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "3",
+              "root": "-3",
+              "multiplicity": 1,
+              "kind": "linear"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": false
+        },
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "2",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "3",
+                "root": "-3",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "openstax_form": "distinct_linear_2",
+        "form_id": "distinct_linear_2",
+        "openstax_case": "\u00a73.4 distinct linear",
+        "strategy": "pfd_linear",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{3x - 1}{x^{2} - 1}\\,dx",
+      "answer_latex": "\\ln|x - 1|+2\\ln|x + 1|+C",
+      "skeleton_pattern": "",
+      "form_id": "distinct_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "distinct_linear_2"
+        ],
+        [
+          "openstax_form",
+          "distinct_linear_2"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "distinct_linear_2",
+        "structure_id": "integral_partial_fractions:distinct_linear_2",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "use_pfd"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "distinct_linear_2",
+          "form_id": "distinct_linear_2",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_linear"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 24,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "distinct_linear_2",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "distinct_linear_2",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "1",
+              "root": "1",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "2",
+              "root": "-1",
+              "multiplicity": 1,
+              "kind": "linear"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": false
+        },
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "1",
+                "root": "1",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "2",
+                "root": "-1",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "openstax_form": "distinct_linear_2",
+        "form_id": "distinct_linear_2",
+        "openstax_case": "\u00a73.4 distinct linear",
+        "strategy": "pfd_linear",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{16x - 32}{2x^{2} - 8x + 6}\\,dx",
+      "answer_latex": "4\\ln|x - 3|+4\\ln|x - 1|+C",
+      "skeleton_pattern": "",
+      "form_id": "distinct_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "distinct_linear_2"
+        ],
+        [
+          "openstax_form",
+          "distinct_linear_2"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "distinct_linear_2",
+        "structure_id": "integral_partial_fractions:distinct_linear_2",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "distinct_linear_2",
+          "form_id": "distinct_linear_2",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_linear"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 25,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "distinct_linear_2",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "distinct_linear_2",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "4",
+              "root": "3",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "4",
+              "root": "1",
+              "multiplicity": 1,
+              "kind": "linear"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": false
+        },
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "4",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "4",
+                "root": "1",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "openstax_form": "distinct_linear_2",
+        "form_id": "distinct_linear_2",
+        "openstax_case": "\u00a73.4 distinct linear",
+        "strategy": "pfd_linear",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{-4x}{x^{2} + 1}\\,dx",
+      "answer_latex": "-2\\ln|x^{2}+1|+C",
+      "skeleton_pattern": "",
+      "form_id": "irreducible_quad_ln",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "irreducible_quad_ln"
+        ],
+        [
+          "openstax_form",
+          "irreducible_quad_ln"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "irreducible_quad_ln",
+        "structure_id": "integral_partial_fractions:irreducible_quad_ln",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log",
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "irreducible_quad_ln",
+          "form_id": "irreducible_quad_ln",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_quad_ln"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 16,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "irreducible_quad_ln",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "irreducible_quad_ln",
+        "has_quadratic": true,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "0",
+              "root": "0",
+              "multiplicity": 1,
+              "kind": "quadratic",
+              "lin_coef": "-4",
+              "quad_a2": "1"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": true
+        },
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 1,
+          "has_quadratic": true,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "0",
+                "root": "0",
+                "multiplicity": 1,
+                "kind": "quadratic",
+                "lin_coef": "-4",
+                "quad_a2": "1"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": true
+          },
+          "recurse_hits": 0
+        },
+        "openstax_form": "irreducible_quad_ln",
+        "form_id": "irreducible_quad_ln",
+        "openstax_case": "\u00a73.4 Bx/(x\u00b2+a\u00b2)",
+        "strategy": "pfd_quad_ln",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{2x}{x^{2} + 4}\\,dx",
+      "answer_latex": "\\ln|x^{2}+4|+C",
+      "skeleton_pattern": "",
+      "form_id": "irreducible_quad_ln",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "irreducible_quad_ln"
+        ],
+        [
+          "openstax_form",
+          "irreducible_quad_ln"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "irreducible_quad_ln",
+        "structure_id": "integral_partial_fractions:irreducible_quad_ln",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log",
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "irreducible_quad_ln",
+          "form_id": "irreducible_quad_ln",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_quad_ln"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 14,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "irreducible_quad_ln",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "irreducible_quad_ln",
+        "has_quadratic": true,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "0",
+              "root": "0",
+              "multiplicity": 1,
+              "kind": "quadratic",
+              "lin_coef": "2",
+              "quad_a2": "4"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": true
+        },
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 1,
+          "has_quadratic": true,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "0",
+                "root": "0",
+                "multiplicity": 1,
+                "kind": "quadratic",
+                "lin_coef": "2",
+                "quad_a2": "4"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": true
+          },
+          "recurse_hits": 0
+        },
+        "openstax_form": "irreducible_quad_ln",
+        "form_id": "irreducible_quad_ln",
+        "openstax_case": "\u00a73.4 Bx/(x\u00b2+a\u00b2)",
+        "strategy": "pfd_quad_ln",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{9x^{2} - 51x + 68}{\\left(x - 2\\right)\\left(x - 3\\right)\\left(x - 4\\right)}\\,dx",
+      "answer_latex": "\\ln|x - 2|+4\\ln|x - 3|+4\\ln|x - 4|+C",
+      "skeleton_pattern": "",
+      "form_id": "distinct_linear_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "distinct_linear_3"
+        ],
+        [
+          "openstax_form",
+          "distinct_linear_3"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "distinct_linear_3",
+        "structure_id": "integral_partial_fractions:distinct_linear_3",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "distinct_linear_3",
+          "form_id": "distinct_linear_3",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_linear"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 3,
+          "answer_len": 36,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "distinct_linear_3",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_pfd",
+            "cost": 4.5
+          }
+        ],
+        "difficulty_cost_total": 12.0,
+        "difficulty_shortfall": 4.0,
+        "wrappers_applied": [],
+        "core_form_id": "distinct_linear_3",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "1",
+              "root": "2",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "4",
+              "root": "3",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "4",
+              "root": "4",
+              "multiplicity": 1,
+              "kind": "linear"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": false
+        },
+        "constructive": {
+          "effective_d": 16.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 3,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "1",
+                "root": "2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "4",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "4",
+                "root": "4",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "openstax_form": "distinct_linear_3",
+        "form_id": "distinct_linear_3",
+        "openstax_case": "\u00a73.4 three linears",
+        "strategy": "pfd_linear",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{-4x - 12}{\\left(x + 2\\right)^{2}}\\,dx",
+      "answer_latex": "-4\\ln|x + 2|+4\\frac{1}{x + 2}+C",
+      "skeleton_pattern": "",
+      "form_id": "repeated_linear_square",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "repeated_linear_square"
+        ],
+        [
+          "openstax_form",
+          "repeated_linear_square"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "repeated_linear_square",
+        "structure_id": "integral_partial_fractions:repeated_linear_square",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "repeated_linear_square",
+          "form_id": "repeated_linear_square",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_repeated"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 2,
+          "answer_len": 31,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "repeated_linear_square",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_pfd",
+            "cost": 4.5
+          }
+        ],
+        "difficulty_cost_total": 12.0,
+        "difficulty_shortfall": 4.0,
+        "wrappers_applied": [],
+        "core_form_id": "repeated_linear_square",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "openstax_form": "repeated_linear_square",
+        "form_id": "repeated_linear_square",
+        "openstax_case": "\u00a73.4 repeated linear",
+        "strategy": "pfd_repeated",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{2x - 2}{\\left(x\\right)^{2}}\\,dx",
+      "answer_latex": "2\\ln|x|+2\\frac{1}{x}+C",
+      "skeleton_pattern": "",
+      "form_id": "repeated_linear_square",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "repeated_linear_square"
+        ],
+        [
+          "openstax_form",
+          "repeated_linear_square"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "repeated_linear_square",
+        "structure_id": "integral_partial_fractions:repeated_linear_square",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "repeated_linear_square",
+          "form_id": "repeated_linear_square",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_repeated"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 2,
+          "answer_len": 22,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "repeated_linear_square",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_pfd",
+            "cost": 4.5
+          }
+        ],
+        "difficulty_cost_total": 12.0,
+        "difficulty_shortfall": 4.0,
+        "wrappers_applied": [],
+        "core_form_id": "repeated_linear_square",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "openstax_form": "repeated_linear_square",
+        "form_id": "repeated_linear_square",
+        "openstax_case": "\u00a73.4 repeated linear",
+        "strategy": "pfd_repeated",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{10x^{2} - 18x + 4}{2\\left(x - 1\\right)\\left(x - 2\\right)\\left(x\\right)}\\,dx",
+      "answer_latex": "2\\ln|x - 1|+2\\ln|x - 2|+\\ln|x|+C",
+      "skeleton_pattern": "",
+      "form_id": "distinct_linear_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "distinct_linear_3"
+        ],
+        [
+          "openstax_form",
+          "distinct_linear_3"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "distinct_linear_3",
+        "structure_id": "integral_partial_fractions:distinct_linear_3",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "distinct_linear_3",
+          "form_id": "distinct_linear_3",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_linear"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 3,
+          "answer_len": 32,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "distinct_linear_3",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_pfd",
+            "cost": 4.5
+          }
+        ],
+        "difficulty_cost_total": 12.0,
+        "difficulty_shortfall": 10.0,
+        "wrappers_applied": [],
+        "core_form_id": "distinct_linear_3",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "2",
+              "root": "1",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "2",
+              "root": "2",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "1",
+              "root": "0",
+              "multiplicity": 1,
+              "kind": "linear"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": false
+        },
+        "constructive": {
+          "effective_d": 22.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 3,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "2",
+                "root": "1",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "2",
+                "root": "2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "1",
+                "root": "0",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "openstax_form": "distinct_linear_3",
+        "form_id": "distinct_linear_3",
+        "openstax_case": "\u00a73.4 three linears",
+        "strategy": "pfd_linear",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{-4x - 12}{\\left(x + 2\\right)^{2}}\\,dx",
+      "answer_latex": "-4\\ln|x + 2|+4\\frac{1}{x + 2}+C",
+      "skeleton_pattern": "",
+      "form_id": "repeated_linear_square",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "repeated_linear_square"
+        ],
+        [
+          "openstax_form",
+          "repeated_linear_square"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "repeated_linear_square",
+        "structure_id": "integral_partial_fractions:repeated_linear_square",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "repeated_linear_square",
+          "form_id": "repeated_linear_square",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_repeated"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 2,
+          "answer_len": 31,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "repeated_linear_square",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_pfd",
+            "cost": 4.5
+          }
+        ],
+        "difficulty_cost_total": 12.0,
+        "difficulty_shortfall": 10.0,
+        "wrappers_applied": [],
+        "core_form_id": "repeated_linear_square",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "openstax_form": "repeated_linear_square",
+        "form_id": "repeated_linear_square",
+        "openstax_case": "\u00a73.4 repeated linear",
+        "strategy": "pfd_repeated",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_partial_fractions",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{2x - 2}{\\left(x\\right)^{2}}\\,dx",
+      "answer_latex": "2\\ln|x|+2\\frac{1}{x}+C",
+      "skeleton_pattern": "",
+      "form_id": "repeated_linear_square",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "repeated_linear_square"
+        ],
+        [
+          "openstax_form",
+          "repeated_linear_square"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "repeated_linear_square",
+        "structure_id": "integral_partial_fractions:repeated_linear_square",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_pfd"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_partial_fractions",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_pfd",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "repeated_linear_square",
+          "form_id": "repeated_linear_square",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_repeated"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 2,
+          "answer_len": 22,
+          "nest_depth": 0,
+          "pack": "integral_pfd",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "repeated_linear_square",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_pfd",
+            "cost": 4.5
+          }
+        ],
+        "difficulty_cost_total": 12.0,
+        "difficulty_shortfall": 10.0,
+        "wrappers_applied": [],
+        "core_form_id": "repeated_linear_square",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "openstax_form": "repeated_linear_square",
+        "form_id": "repeated_linear_square",
+        "openstax_case": "\u00a73.4 repeated linear",
+        "strategy": "pfd_repeated",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_pfd": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    }
+  ],
+  "failures": []
+}

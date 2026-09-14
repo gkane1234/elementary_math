@@ -1748,6 +1748,13 @@ class GraphQuadraticInequalityFramework(QuestionFramework):
 class NumberLinePlotFramework(QuestionFramework):
     instruction_latex = r"\text{Plot the following numbers on the number line.}"
     instruction_text = "Plot the following numbers on the number line."
+    skeleton_pattern = "NumberLinePlot"
+
+    def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {
+            "skeleton_pattern": "NumberLinePlot",
+            "primitive_engine": "number",
+        }
 
     def __init__(self) -> None:
         self._last_value: float | None = None

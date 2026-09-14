@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Integral — by parts — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Integral — by parts</h1>
+<p class="sub"><code>calc_indef_int_integration_by_parts</code> · live <code>_generate_for_type</code>
+ · pattern <em>(none / stub)</em>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">LIATE catalog: D=0 one-step (ln / xe^x / x sin x); mid D scales k; high D tabular + cyclic. OpenStax Vol 2 §3.1.</p>
+
+<div class='notes-alert'>LIMITATIONS — see Limitations in notes below.</div><div class='notes-block'><h1>Notes — <code>calc_indef_int_integration_by_parts</code></h1>
+<ul>
+<li><strong>Display name:</strong> Integration by parts</li>
+<li><strong>Category:</strong> Calculus — Indefinite Integration</li>
+<li><strong>Generator:</strong> <code>integration_by_parts</code></li>
+<li><strong>Suggested family:</strong> <code>other</code></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Evaluate an indefinite integral with integration by parts (LIATE).</li>
+<li><strong>D=0:</strong> One parts step, coefficient 1 — rotate OpenStax easy shapes: \(\int \ln x\,dx\), \(\int x e^x\,dx\), \(\int x\sin x\,dx\), \(\int x\cos x\,dx\).</li>
+<li><strong>Mid D (≈8):</strong> Same one-step families with real inner scale: \(\ln(ax)\), \(x e^{kx}\), \(x\sin(kx)\).</li>
+<li><strong>High D (≈16–22):</strong> Tabular / repeated parts \(\int x^2 e^{kx}\), cyclic \(\int e^{ax}\sin(bx)\), \(\int \arctan(ax)\). Not \(\int \ln x\) again.</li>
+<li><strong>Must not:</strong> u-sub-only power chains; PFD rationals; derivative prompts.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> <strong>before</strong> this pass. Frozen templates; seed 101 stayed \(\int\ln x\) at every D.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td>$\int \ln(x)\,dx$</td><td>$x\ln(x)-x+C$</td><td>form=<code>ln_alone</code> — only D=0 form</td></tr><tr><td>0</td><td>207</td><td>$\int \ln(x)\,dx$</td><td>$x\ln(x)-x+C$</td><td>same</td></tr><tr><td>8</td><td>101</td><td>$\int \ln(x)\,dx$</td><td>$x\ln(x)-x+C$</td><td>still <code>ln_alone</code></td></tr><tr><td>8</td><td>207</td><td>$\int x\cos(x)\,dx$</td><td>$x\sin(x)+\cos(x)+C$</td><td>form=<code>poly1_cos</code>, k=1</td></tr><tr><td>16</td><td>101</td><td>$\int \ln(x)\,dx$</td><td>$x\ln(x)-x+C$</td><td>high D still easy leftover</td></tr><tr><td>16</td><td>207</td><td>$\int e^{x}\cos(x)\,dx$</td><td>$\frac{1}{2}e^{x}(\sin(x)+\cos(x))+C$</td><td>form=<code>cyclic_exp_cos</code></td></tr><tr><td>22</td><td>101</td><td>$\int \ln(x)\,dx$</td><td>$x\ln(x)-x+C$</td><td>no numeric hardness</td></tr><tr><td>22</td><td>207</td><td>$\int e^{x}\cos(x)\,dx$</td><td>$\frac{1}{2}e^{x}(\sin(x)+\cos(x))+C$</td><td>same as D=16</td></tr></tbody></table>
+<p>Opt-out flag used: <code>(none — live default is old path)</code></p>
+<h2>What live path produces now (real latex)</h2>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td>$\int \ln(x)\,dx$</td><td>$x\ln(x)-x+C$</td><td><code>ln_alone</code>, k=1</td></tr><tr><td>0</td><td>207</td><td>$\int x\cos(x)\,dx$</td><td>$x\sin(x)+\cos(x)+C$</td><td><code>poly1_cos</code></td></tr><tr><td>0</td><td>44</td><td>$\int x\sin(x)\,dx$</td><td>$-x\cos(x)+\sin(x)+C$</td><td><code>poly1_sin</code></td></tr><tr><td>8</td><td>101</td><td>$\int \ln(2x)\,dx$</td><td>$x\ln(2x)-x+C$</td><td>same family, scaled inner</td></tr><tr><td>8</td><td>207</td><td>$\int x\cos(4x)\,dx$</td><td>$\frac{1}{4}x\sin(4x)+\frac{1}{16}\cos(4x)+C$</td><td>k=4</td></tr><tr><td>8</td><td>44</td><td>$\int xe^{4x}\,dx$</td><td>$\frac{1}{16}e^{4x}(4x-1)+C$</td><td><code>poly1_exp</code></td></tr><tr><td>16</td><td>101</td><td>$\int x^{2}e^{3x}\,dx$</td><td>$\frac{1}{27}e^{3x}(9x^{2}-6x+2)+C$</td><td>tabular <code>poly2_exp</code></td></tr><tr><td>16</td><td>207</td><td>$\int \arctan(x)\,dx$</td><td>$x\arctan(x)-\frac{1}{2}\ln(1+x^{2})+C$</td><td><code>arctan_alone</code></td></tr><tr><td>16</td><td>44</td><td>$\int e^{2x}\sin(x)\,dx$</td><td>$\frac{e^{2x}(2\sin(x)-\cos(x))}{5}+C$</td><td>cyclic</td></tr><tr><td>22</td><td>207</td><td>$\int \arctan(3x)\,dx$</td><td>$x\arctan(3x)-\frac{1}{6}\ln(1+9x^{2})+C$</td><td>scaled invtrig</td></tr></tbody></table>
+<h2>OpenStax examples + chapter/section cites</h2>
+<p>Paraphrase stems; cite Calculus Volume 2 + URL. Do not dump copyrighted text wholesale.</p>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Calculus Volume 2 §3.1</td><td>https://openstax.org/books/calculus-volume-2/pages/3-1-integration-by-parts</td><td>∫ u dv = uv − ∫ v du; LIATE: ln, x e^x, x sin/cos, tabular x² e^x, cyclic e^{ax}sin(bx), arctan</td></tr></tbody></table>
+<p>Local HTML / mine: <code>textbooks/openstax/html/calculus-volume-2/</code> · <code>scripts/output/example_mining/calculus-volume-2/form_catalogs/integration_by_parts.json</code>.</p>
+<h2>Variety notes</h2>
+<p>Not a WP. D=0 rotates several one-step LIATE frames (old path was ln-only). High D uses catalog <code>d_max</code> so <code>ln_alone</code> cannot dominate.</p>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Status:</strong> shipped — catalog + coefficient scale. Remaining <code>LIMITATIONS</code>: \(\int x\arcsin x\) still stub; \(\sec^3\) owned by the trig-integrals leaf; no definite-parts evaluation on this indefinite leaf.</li>
+<li><strong>Generator:</strong> <code>integration_by_parts</code></li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<ul>
+<li><strong>Reuse:</strong> <code>integrals.py</code> <code>_sample_parts</code> + <code>integration_by_parts.json</code>. Numeric hardness is inner \(k\) / \(a,b\), not padded <code>difficulty_costs</code>.</li>
+<li><strong>Shipped this pass:</strong> D=0 form rotation; <code>d_max</code> on easy leftovers; scaled \(k\); allow_log / allow_invtrig on so ln and arctan are honest LIATE.</li>
+</ul></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>ln_alone</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \ln(x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\ln(x)-x+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>ln_alone</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>ln_alone</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>poly1_cos</span></header><div class='math'><div class='lab'>Prompt</div>$$\int x\cos(x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\sin(x)+\cos(x)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>poly1_cos</span></header><div class='math'><div class='lab'>Prompt</div>$$\int x\cos(x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\sin(x)+\cos(x)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>ln_alone</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \ln(2x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\ln(2x)-x+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>ln_alone</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>ln_alone</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>poly1_cos</span></header><div class='math'><div class='lab'>Prompt</div>$$\int x\cos(4x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{4}x\sin(4x)+\frac{1}{16}\cos(4x)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>poly1_cos</span></header><div class='math'><div class='lab'>Prompt</div>$$\int x\cos(2x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{2}x\sin(2x)+\frac{1}{4}\cos(2x)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>poly2_exp</span></header><div class='math'><div class='lab'>Prompt</div>$$\int x^{2}e^{3x}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{27}e^{3x}(9x^{2}-6x+2)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>poly2_exp</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>poly2_exp</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>arctan_alone</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \arctan(x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\arctan(x)-\frac{1}{2}\ln(1+x^{2})+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>arctan_alone</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>arctan_alone</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>arctan_alone</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \arctan(x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\arctan(x)-\frac{1}{2}\ln(1+x^{2})+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>arctan_alone</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>arctan_alone</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span><span class='tag fid'>poly2_exp</span></header><div class='math'><div class='lab'>Prompt</div>$$\int x^{2}e^{3x}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{27}e^{3x}(9x^{2}-6x+2)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>poly2_exp</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>poly2_exp</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span><span class='tag fid'>arctan_alone</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \arctan(3x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\arctan(3x)-\frac{1}{6}\ln(1+9x^{2})+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>arctan_alone</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>arctan_alone</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span><span class='tag fid'>arctan_alone</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \arctan(3x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\arctan(3x)-\frac{1}{6}\ln(1+9x^{2})+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>arctan_alone</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>arctan_alone</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_integration_by_parts</code></p></article>
+</body></html>

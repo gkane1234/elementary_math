@@ -55,21 +55,21 @@ def test_trig_topic_defaults_include_trig_only() -> None:
     assert defaults["allow_product"] is True
 
 
-def test_chain_topic_requires_chain_specials_opt_in() -> None:
+def test_chain_topic_requires_chain_specials_on_by_default() -> None:
     allow = resolve_derivative_allows({}, generator_key="derivative_chain_rule")
     assert allow.require_chain is True
     assert allow.allow_chain is True
-    # Algebraic leaf: specials OFF by default (checkbox opt-in)
-    assert allow.allow_trig is False
-    assert allow.allow_exp is False
-    assert allow.allow_log is False
-    on = resolve_derivative_allows(
-        {"allow_trig": True, "allow_exp": True, "allow_log": True},
+    # OpenStax §3.6 leaf: specials ON; D-unlocks keep D=0 algebraic.
+    assert allow.allow_trig is True
+    assert allow.allow_exp is True
+    assert allow.allow_log is True
+    off = resolve_derivative_allows(
+        {"allow_trig": False, "allow_exp": False, "allow_log": False},
         generator_key="derivative_chain_rule",
     )
-    assert on.allow_trig is True
-    assert on.allow_exp is True
-    assert on.allow_log is True
+    assert off.allow_trig is False
+    assert off.allow_exp is False
+    assert off.allow_log is False
 
 
 def test_product_topic_specials_opt_in() -> None:
@@ -308,9 +308,14 @@ def test_quotient_default_stays_algebraic_at_any_d() -> None:
 
 
 def test_quotient_allow_trig_at_d0_can_emit_trig() -> None:
-    hits = 0
+    """allow_trig is a hard gate; at D=0 trig is rare (C schedule), not free.
+
+    Opt-in + modest D should be able to emit trig; D=0 may still be mostly algebraic.
+    """
+    hits_low = 0
+    hits_mid = 0
     for seed in range(50):
-        sample = sample_derivative_expression(
+        low = sample_derivative_expression(
             {
                 "difficulty": 0,
                 "seed": seed,
@@ -319,10 +324,24 @@ def test_quotient_allow_trig_at_d0_can_emit_trig() -> None:
             },
             generator_key="derivative_quotient_rule",
         )
-        assert "quotient" in sample.methods_used
-        if "trig" in sample.function_classes:
-            hits += 1
-    assert hits >= 8
+        mid = sample_derivative_expression(
+            {
+                "difficulty": 8,
+                "seed": seed,
+                "allow_trig": True,
+                "include_answer_key": True,
+            },
+            generator_key="derivative_quotient_rule",
+        )
+        assert "quotient" in low.methods_used
+        assert "quotient" in mid.methods_used
+        if "trig" in low.function_classes:
+            hits_low += 1
+        if "trig" in mid.function_classes:
+            hits_mid += 1
+    # Mid D with allow_trig should reliably surface trig; low D stays mostly core.
+    assert hits_mid >= 8
+    assert hits_low <= hits_mid
 
 
 def test_quotient_allow_trig_false_at_d20_never_trig() -> None:
@@ -548,6 +567,66 @@ def test_higher_order_uses_spec_order_at_least_two() -> None:
         assert "d^{" in sample.prompt_latex or "''" in sample.prompt_latex
 
 
+def test_first_deriv_leaves_stay_order_one_at_d22() -> None:
+    """Specialty Diff leaves must not bleed d²/dx² at high D (notes flag)."""
+    keys = (
+        "derivative_power_rule",
+        "derivative_product_rule",
+        "derivative_quotient_rule",
+        "derivative_chain_rule",
+        "derivative_trigonometric",
+        "derivative_ln_exp",
+        "derivative_inverse_trig",
+        "derivative_general",
+    )
+    for key in keys:
+        for seed in range(8):
+            sample = sample_derivative_expression(
+                {"difficulty": 22, "seed": seed, "include_answer_key": True},
+                generator_key=key,
+            )
+            assert int(sample.metadata.get("derivative_order") or 0) == 1, key
+            assert "d^{2}" not in sample.prompt_latex
+            assert "d^{3}" not in sample.prompt_latex
+            assert sample.metadata.get("skeleton_pattern")
+
+
+def test_quotient_leaf_form_id_matches_algebraic_flesh() -> None:
+    """Without allow_exp/log, quotient forms must stay poly (not mislabeled)."""
+    for seed in range(16):
+        sample = sample_derivative_expression(
+            {"difficulty": 16, "seed": seed, "include_answer_key": True},
+            generator_key="derivative_quotient_rule",
+        )
+        fid = str(sample.metadata.get("form_id") or "")
+        assert fid in {"", "quotient_poly"} or fid.startswith("quotient_poly"), (
+            f"unexpected form_id={fid!r} seed={seed} body={sample.prompt_latex}"
+        )
+        assert "quotient_exp" not in fid
+        assert "quotient_log" not in fid
+        assert "mixed_special" not in fid
+        body = sample.prompt_latex
+        assert r"e^{" not in body
+        assert r"\ln" not in body
+        assert r"\sin" not in body
+
+
+def test_power_root_form_keeps_fractional_power() -> None:
+    from question_engine.frameworks.primitives.expr_skeleton import sample_from_form
+
+    for seed in range(12):
+        _e, _d, body, _der, inv = sample_from_form(
+            "power_root",
+            conceptual_d=8.0,
+            allows={"allow_roots": True, "allow_chain": False},
+            seed=seed,
+        )
+        assert inv.get("skeleton_pattern")
+        assert r"\frac{" in body or "^{" in body
+        # Fractional exponent marker (p/q) — not a bare poly sum alone.
+        assert "/" in body or r"\frac" in body
+
+
 def test_structured_gap_packs_emit_ml_metadata() -> None:
     for key, type_id, pack_token in (
         ("derivative_other_base", "calc_diff_other_base_logarithms_and_exponentials", "structured_other_base"),
@@ -568,3 +647,340 @@ def test_structured_gap_packs_emit_ml_metadata() -> None:
             assert snap.get("pack") == pack_token
             assert "effort_features" in meta
             assert q.prompt_latex
+
+
+def test_implicit_d0_circle_only() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    forms: set[str] = set()
+    for seed in range(20):
+        q = _generate_for_type(
+            "calc_diff_implicit",
+            {"difficulty": 0, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        forms.add(str(fid))
+        assert fid == "implicit_basic", (seed, fid, q.prompt_latex)
+        assert r"^{2}" in (q.prompt_latex or "")
+        assert r"^{3}" not in (q.prompt_latex or "")
+    assert forms == {"implicit_basic"}
+
+
+def test_implicit_high_d_catalog_variety() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    forms: set[str] = set()
+    for seed in range(36):
+        q = _generate_for_type(
+            "calc_diff_implicit",
+            {"difficulty": 22, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = str((q.metadata or {}).get("form_id") or "")
+        assert fid != "implicit_basic", (seed, q.prompt_latex)
+        assert fid.startswith("implicit_"), (seed, fid)
+        forms.add(fid)
+        assert q.answer_latex
+    assert len(forms) >= 3, forms
+    assert forms & {"implicit_trig", "implicit_exp", "implicit_folium", "implicit_cubes"}
+
+
+def test_logdiff_d0_power_only() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    forms: set[str] = set()
+    for seed in range(20):
+        q = _generate_for_type(
+            "calc_diff_logarithmic",
+            {"difficulty": 0, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        forms.add(str(fid))
+        assert fid == "logdiff_power", (seed, fid, q.prompt_latex)
+        assert r"^{x}" not in (q.prompt_latex or "")
+        assert r"\sin" not in (q.prompt_latex or "")
+        assert r"\sqrt" not in (q.prompt_latex or "")
+        assert "logarithmic" in (q.prompt_latex or "").lower()
+    assert forms == {"logdiff_power"}
+
+
+def test_logdiff_mid_d_product_root_quotient() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    allowed = {
+        "logdiff_product_powers",
+        "logdiff_quotient_powers",
+        "logdiff_root",
+    }
+    forms: set[str] = set()
+    for seed in range(24):
+        q = _generate_for_type(
+            "calc_diff_logarithmic",
+            {"difficulty": 8, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = str((q.metadata or {}).get("form_id") or "")
+        assert fid in allowed, (seed, fid, q.prompt_latex)
+        forms.add(fid)
+    assert len(forms) >= 2, forms
+
+
+def test_logdiff_high_d_catalog_variety() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    forms: set[str] = set()
+    for seed in range(36):
+        q = _generate_for_type(
+            "calc_diff_logarithmic",
+            {"difficulty": 22, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = str((q.metadata or {}).get("form_id") or "")
+        assert fid != "logdiff_power", (seed, q.prompt_latex)
+        assert fid.startswith("logdiff_"), (seed, fid)
+        forms.add(fid)
+        assert q.answer_latex
+    assert len(forms) >= 2, forms
+    assert forms & {"logdiff_x_x", "logdiff_a_x", "logdiff_trig_x"}
+
+
+def test_other_base_d0_a_x_or_log_x_only() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    forms: set[str] = set()
+    for seed in range(20):
+        q = _generate_for_type(
+            "calc_diff_other_base_logarithms_and_exponentials",
+            {"difficulty": 0, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = str((q.metadata or {}).get("form_id") or "")
+        forms.add(fid)
+        assert fid in {"other_base_a_x", "other_base_log_x"}, (seed, fid, q.prompt_latex)
+        p = q.prompt_latex or ""
+        assert r"^{2}" not in p
+        assert r"\cdot" not in p or r"\log_" in p
+    assert forms == {"other_base_a_x", "other_base_log_x"}
+
+
+def test_other_base_mid_d_chain_only() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    allowed = {"other_base_a_kx", "other_base_log_linear"}
+    forms: set[str] = set()
+    for seed in range(24):
+        q = _generate_for_type(
+            "calc_diff_other_base_logarithms_and_exponentials",
+            {"difficulty": 8, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = str((q.metadata or {}).get("form_id") or "")
+        assert fid in allowed, (seed, fid, q.prompt_latex)
+        if fid == "other_base_a_kx":
+            assert r"\cdot" in (q.answer_latex or ""), (seed, q.answer_latex)
+        forms.add(fid)
+    assert forms == allowed
+
+
+def test_other_base_high_d_catalog_variety() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    forms: set[str] = set()
+    for seed in range(36):
+        q = _generate_for_type(
+            "calc_diff_other_base_logarithms_and_exponentials",
+            {"difficulty": 22, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = str((q.metadata or {}).get("form_id") or "")
+        assert fid not in {"other_base_a_x", "other_base_log_x"}, (seed, q.prompt_latex)
+        assert fid.startswith("other_base_"), (seed, fid)
+        forms.add(fid)
+        assert q.answer_latex
+    assert len(forms) >= 2, forms
+    assert forms & {"other_base_a_poly", "other_base_log_power", "other_base_product"}
+
+
+def test_invfn_d0_power_only() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    forms: set[str] = set()
+    for seed in range(20):
+        q = _generate_for_type(
+            "calc_diff_inverse_functions",
+            {"difficulty": 0, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        forms.add(str(fid))
+        assert fid == "invfn_power", (seed, fid, q.prompt_latex)
+        p = q.prompt_latex or ""
+        assert r"e^{" not in p
+        assert r"\sin" not in p
+        assert r"\ln" not in p
+    assert forms == {"invfn_power"}
+
+
+def test_invfn_mid_d_table_linear() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    allowed = {"invfn_table", "invfn_linear"}
+    forms: set[str] = set()
+    for seed in range(24):
+        q = _generate_for_type(
+            "calc_diff_inverse_functions",
+            {"difficulty": 8, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = str((q.metadata or {}).get("form_id") or "")
+        assert fid in allowed, (seed, fid, q.prompt_latex)
+        forms.add(fid)
+    assert forms == allowed
+
+
+def test_invfn_high_d_not_exp_leftover() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    forms: set[str] = set()
+    for seed in range(36):
+        q = _generate_for_type(
+            "calc_diff_inverse_functions",
+            {"difficulty": 22, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        fid = str((q.metadata or {}).get("form_id") or "")
+        assert fid not in {"invfn_power", "invfn_exp"}, (seed, fid, q.prompt_latex)
+        assert fid.startswith("invfn_"), (seed, fid)
+        forms.add(fid)
+        assert q.answer_latex
+    assert len(forms) >= 2, forms
+    assert forms & {"invfn_trig", "invfn_ln", "invfn_cubic"}
+
+
+def _chain_specials(sample) -> set[str]:
+    return set(sample.function_classes) - {"algebraic", "roots"}
+
+
+def test_chain_d0_stays_simple_one_composition() -> None:
+    """D=0 matches old easy: one power of an affine, no unlike nest."""
+    for seed in range(24):
+        sample = sample_derivative_expression(
+            {"difficulty": 0, "seed": seed, "include_answer_key": True},
+            generator_key="derivative_chain_rule",
+        )
+        fid = str(sample.metadata.get("form_id") or "")
+        assert fid == "chain_power_linear", (seed, fid, sample.prompt_latex)
+        assert sample.chain_depth <= 1
+        layers = sample.metadata.get("compose_layers") or []
+        assert layers.count("pow") <= 1
+        assert not _chain_specials(sample)
+        assert "d^{2}" not in sample.prompt_latex
+
+
+def test_chain_mid_d_rotates_unlike_classes() -> None:
+    """D=8: still f(g(x)), but trig/exp/ln appear when defaults are on."""
+    forms: set[str] = set()
+    specials: set[str] = set()
+    deep = 0
+    for seed in range(50):
+        sample = sample_derivative_expression(
+            {"difficulty": 8, "seed": seed, "include_answer_key": True},
+            generator_key="derivative_chain_rule",
+        )
+        fid = str(sample.metadata.get("form_id") or "")
+        forms.add(fid)
+        specials |= _chain_specials(sample)
+        layers = list(sample.metadata.get("compose_layers") or [])
+        if len(layers) >= 3:
+            deep += 1
+        assert fid != "chain_nested_power"
+        assert sample.metadata.get("form_id")
+        assert sample.function_classes
+    assert "chain_trig_poly" in forms or "trig" in specials
+    assert specials & {"trig", "exp", "log"}
+    assert deep <= 8
+
+
+def test_chain_high_d_not_dominated_by_nested_power() -> None:
+    """D=16/22: unlike nests; chain_nested_power must not dominate."""
+    counts: dict[str, int] = {}
+    specials: set[str] = set()
+    deep = 0
+    mixed = 0
+    for d in (16, 22):
+        for seed in range(40):
+            sample = sample_derivative_expression(
+                {"difficulty": d, "seed": seed, "include_answer_key": True},
+                generator_key="derivative_chain_rule",
+            )
+            fid = str(sample.metadata.get("form_id") or "")
+            counts[fid] = counts.get(fid, 0) + 1
+            spec = _chain_specials(sample)
+            specials |= spec
+            layers = list(sample.metadata.get("compose_layers") or [])
+            if len(layers) >= 2 or sample.chain_depth >= 2:
+                deep += 1
+            if len(spec) >= 2 or (
+                spec and "pow" in layers and spec
+            ):
+                mixed += 1
+            body = sample.prompt_latex
+            assert sample.metadata.get("form_id")
+            assert "d^{2}" not in body
+    assert counts.get("chain_nested_power", 0) == 0
+    assert specials & {"trig", "exp", "log"}
+    assert len(specials) >= 2
+    assert deep >= 20
+    # At least one non-power form must appear often.
+    unlike_forms = sum(
+        n for fid, n in counts.items() if fid != "chain_power_linear"
+    )
+    assert unlike_forms >= 20, counts
+
+
+def test_chain_nest_depth_scales_with_d() -> None:
+    """More compositions at high D — not just nastier coefficients."""
+    def layer_counts(d: float, n: int = 36) -> list[int]:
+        out = []
+        for seed in range(n):
+            sample = sample_derivative_expression(
+                {"difficulty": d, "seed": seed, "include_answer_key": True},
+                generator_key="derivative_chain_rule",
+            )
+            layers = list(sample.metadata.get("compose_layers") or [])
+            out.append(max(len(layers), int(sample.chain_depth or 0)))
+        return out
+
+    d0 = layer_counts(0)
+    d8 = layer_counts(8)
+    d16 = layer_counts(16)
+    d22 = layer_counts(22)
+    assert max(d0) <= 1
+    assert sum(1 for n in d8 if n <= 2) >= 24
+    assert sum(1 for n in d16 if n >= 2) >= 8
+    assert max(d22) >= max(d0)
+    assert sum(1 for n in d22 if n >= 2) >= sum(1 for n in d0 if n >= 2)
+
+
+def test_live_product_d0_no_three_deep_nest() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    for seed in range(16):
+        q = _generate_for_type(
+            "calc_diff_product_rule",
+            {"difficulty": 0, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        meta = q.metadata or {}
+        fid = str(meta.get("form_id") or "")
+        assert fid in {"", "product_two_poly"}, (seed, fid, q.prompt_latex)
+        assert int(meta.get("chain_depth") or 0) < 3, q.prompt_latex
+        assert "product" in (meta.get("methods_used") or [])
+
+
+def test_live_product_high_d_can_emit_nested_factor() -> None:
+    from question_engine.api.handler import _generate_for_type
+
+    hits = 0
+    for seed in range(40):
+        q = _generate_for_type(
+            "calc_diff_product_rule",
+            {"difficulty": 16, "seed": seed, "count": 1, "include_answer_key": True},
+        )[0]
+        meta = q.metadata or {}
+        methods = set(meta.get("methods_used") or [])
+        assert "product" in methods, q.prompt_latex
+        assert int(meta.get("chain_depth") or 0) < 3, q.prompt_latex
+        if "chain" in methods and int(meta.get("chain_depth") or 0) >= 1:
+            hits += 1
+    assert hits >= 5, hits

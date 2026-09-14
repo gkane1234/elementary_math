@@ -1,0 +1,2505 @@
+{
+  "section": {
+    "slug": "u_sub_preset_exp_chain",
+    "title": "u-sub preset \u2014 exp_chain",
+    "pattern": "",
+    "engine": "integrals",
+    "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Forced <code>exp_chain</code> (e^{g} g'). OpenStax Vol 1 \u00a75.6.",
+    "extra_settings": {
+      "u_sub_form_preset": "exp_chain",
+      "u_sub_construction": "catalog"
+    }
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\int 2e^{2x + 2}\\,dx",
+      "answer_latex": "e^{2x + 2}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "exp_of_poly"
+        ],
+        [
+          "openstax_form",
+          "exp_of_poly"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_poly",
+        "structure_id": "integral_log_exp_substitution:exp_of_poly",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_poly",
+          "form_id": "exp_of_poly",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 4,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 12,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_poly",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_poly",
+        "openstax_form": "exp_of_poly",
+        "form_id": "exp_of_poly",
+        "openstax_case": "\u00a75.6 exponential substitution",
+        "strategy": "exp_linear",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\int 3x^{2}e^{x^{3}}\\,dx",
+      "answer_latex": "e^{x^{3}}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_cubic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "exp_of_cubic"
+        ],
+        [
+          "openstax_form",
+          "exp_of_cubic"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_cubic",
+        "structure_id": "integral_log_exp_substitution:exp_of_cubic",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "algebraic"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_cubic",
+          "form_id": "exp_of_cubic",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_cubic"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 4,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 11,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_cubic",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_cubic",
+        "openstax_form": "exp_of_cubic",
+        "form_id": "exp_of_cubic",
+        "openstax_case": "Example 5.39 / Checkpoint 5.31 \u2014 \u222b 3x\u00b2 e^{2x\u00b3} / x\u00b2 e^{-2x\u00b3}",
+        "strategy": "exp_cubic",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "omit_du_constant": false,
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int 3x^{2}e^{2x^{3}}\\,dx",
+      "answer_latex": "\\frac{1}{2}e^{2x^{3}}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_cubic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "exp_of_cubic"
+        ],
+        [
+          "openstax_form",
+          "exp_of_cubic"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_cubic",
+        "structure_id": "integral_log_exp_substitution:exp_of_cubic",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "algebraic"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_cubic",
+          "form_id": "exp_of_cubic",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_cubic"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 4,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 23,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_cubic",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_cubic",
+        "openstax_form": "exp_of_cubic",
+        "form_id": "exp_of_cubic",
+        "openstax_case": "Example 5.39 / Checkpoint 5.31 \u2014 \u222b 3x\u00b2 e^{2x\u00b3} / x\u00b2 e^{-2x\u00b3}",
+        "strategy": "exp_cubic",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "omit_du_constant": false,
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\int e^{\\sin(x)}\\cos(x)\\,dx",
+      "answer_latex": "e^{\\sin(x)}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "exp_of_trig"
+        ],
+        [
+          "openstax_form",
+          "exp_of_trig"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_trig",
+        "structure_id": "integral_log_exp_substitution:exp_of_trig",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_trig",
+          "form_id": "exp_of_trig",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_composite_trig"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 13,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_trig",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_trig",
+        "openstax_form": "exp_of_trig",
+        "form_id": "exp_of_trig",
+        "openstax_case": "\u00a75.6 composite e^{g} g'",
+        "strategy": "exp_composite_trig",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int 2x^{3}e^{-2x^{4}}\\,dx",
+      "answer_latex": "-\\frac{1}{4}e^{-2x^{4}}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_quartic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "exp_of_quartic"
+        ],
+        [
+          "openstax_form",
+          "exp_of_quartic"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_quartic",
+        "structure_id": "integral_log_exp_substitution:exp_of_quartic",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_quartic",
+          "form_id": "exp_of_quartic",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_quartic"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 25,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_quartic",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_quartic",
+        "openstax_form": "exp_of_quartic",
+        "form_id": "exp_of_quartic",
+        "openstax_case": "Checkpoint 5.33 \u2014 \u222b 2x\u00b3 e^{x\u2074} dx",
+        "strategy": "exp_quartic",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "omit_du_constant": false,
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\int 2x^{3}e^{x^{4}}\\,dx",
+      "answer_latex": "\\frac{1}{2}e^{x^{4}}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_quartic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "exp_of_quartic"
+        ],
+        [
+          "openstax_form",
+          "exp_of_quartic"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_quartic",
+        "structure_id": "integral_log_exp_substitution:exp_of_quartic",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_quartic",
+          "form_id": "exp_of_quartic",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_quartic"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 22,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_quartic",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_quartic",
+        "openstax_form": "exp_of_quartic",
+        "form_id": "exp_of_quartic",
+        "openstax_case": "Checkpoint 5.33 \u2014 \u222b 2x\u00b3 e^{x\u2074} dx",
+        "strategy": "exp_quartic",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "omit_du_constant": false,
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int e^{\\sin(x)}\\cos(x)\\,dx",
+      "answer_latex": "e^{\\sin(x)}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "exp_of_trig"
+        ],
+        [
+          "openstax_form",
+          "exp_of_trig"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_trig",
+        "structure_id": "integral_log_exp_substitution:exp_of_trig",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_trig",
+          "form_id": "exp_of_trig",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_composite_trig"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 13,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_trig",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.5,
+        "difficulty_shortfall": 1.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_trig",
+        "openstax_form": "exp_of_trig",
+        "form_id": "exp_of_trig",
+        "openstax_case": "\u00a75.6 composite e^{g} g'",
+        "strategy": "exp_composite_trig",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{e^{\\sqrt{x}}}{\\sqrt{x}}\\,dx",
+      "answer_latex": "2e^{\\sqrt{x}}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "exp_of_sqrt"
+        ],
+        [
+          "openstax_form",
+          "exp_of_sqrt"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_sqrt",
+        "structure_id": "integral_log_exp_substitution:exp_of_sqrt",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_sqrt",
+          "form_id": "exp_of_sqrt",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_of_sqrt"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 15,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_sqrt",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.5,
+        "difficulty_shortfall": 1.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_sqrt",
+        "openstax_form": "exp_of_sqrt",
+        "form_id": "exp_of_sqrt",
+        "openstax_case": "\u00a75.6 exp of root",
+        "strategy": "exp_of_sqrt",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "omit_du_constant": true,
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{e^{\\sqrt{x}}}{\\sqrt{x}}\\,dx",
+      "answer_latex": "2e^{\\sqrt{x}}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "exp_of_sqrt"
+        ],
+        [
+          "openstax_form",
+          "exp_of_sqrt"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_sqrt",
+        "structure_id": "integral_log_exp_substitution:exp_of_sqrt",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_sqrt",
+          "form_id": "exp_of_sqrt",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_of_sqrt"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 15,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_sqrt",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.5,
+        "difficulty_shortfall": 1.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_sqrt",
+        "openstax_form": "exp_of_sqrt",
+        "form_id": "exp_of_sqrt",
+        "openstax_case": "\u00a75.6 exp of root",
+        "strategy": "exp_of_sqrt",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "omit_du_constant": true,
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int e^{\\cos(x)}\\sin(x)\\,dx",
+      "answer_latex": "-e^{\\cos(x)}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "exp_of_trig"
+        ],
+        [
+          "openstax_form",
+          "exp_of_trig"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_trig",
+        "structure_id": "integral_log_exp_substitution:exp_of_trig",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_trig",
+          "form_id": "exp_of_trig",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_composite_trig"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 14,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_trig",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.5,
+        "difficulty_shortfall": 7.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_trig",
+        "openstax_form": "exp_of_trig",
+        "form_id": "exp_of_trig",
+        "openstax_case": "\u00a75.6 composite e^{g} g'",
+        "strategy": "exp_composite_trig",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{e^{\\sqrt{x}}}{\\sqrt{x}}\\,dx",
+      "answer_latex": "2e^{\\sqrt{x}}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "exp_of_sqrt"
+        ],
+        [
+          "openstax_form",
+          "exp_of_sqrt"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_sqrt",
+        "structure_id": "integral_log_exp_substitution:exp_of_sqrt",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_sqrt",
+          "form_id": "exp_of_sqrt",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_of_sqrt"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 15,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_sqrt",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.5,
+        "difficulty_shortfall": 7.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_sqrt",
+        "openstax_form": "exp_of_sqrt",
+        "form_id": "exp_of_sqrt",
+        "openstax_case": "\u00a75.6 exp of root",
+        "strategy": "exp_of_sqrt",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "omit_du_constant": true,
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{e^{\\sqrt{x}}}{\\sqrt{x}}\\,dx",
+      "answer_latex": "2e^{\\sqrt{x}}+C",
+      "skeleton_pattern": "",
+      "form_id": "exp_of_sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "exp_of_sqrt"
+        ],
+        [
+          "openstax_form",
+          "exp_of_sqrt"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "exp_of_sqrt",
+        "structure_id": "integral_log_exp_substitution:exp_of_sqrt",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "exp",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_exp_log",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_log_exp_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_log_exp_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "exp_of_sqrt",
+          "form_id": "exp_of_sqrt",
+          "catalog_id": "u_substitution",
+          "strategy": "exp_of_sqrt"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 15,
+          "nest_depth": 0,
+          "pack": "integral_log_exp_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "exp_of_sqrt",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.5,
+        "difficulty_shortfall": 7.5,
+        "wrappers_applied": [],
+        "core_form_id": "exp_of_sqrt",
+        "openstax_form": "exp_of_sqrt",
+        "form_id": "exp_of_sqrt",
+        "openstax_case": "\u00a75.6 exp of root",
+        "strategy": "exp_of_sqrt",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "exp_chain",
+        "omit_du_constant": true,
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "exp_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    }
+  ],
+  "failures": []
+}

@@ -1094,7 +1094,7 @@ _DISTANCE_RATE_TIME_TIERS: TierPresets = {
         "allow_drt_find_missing": False,
         "allow_drt_round_trip": True,
         "allow_drt_two_segments": False,
-        "allow_drt_opposite": False,
+        "allow_drt_opposite": True,
         "allow_drt_same_direction": True,
         "allow_distance_mi": True,
         "allow_distance_km": True,
@@ -2860,6 +2860,155 @@ GENERATOR_DIFFICULTY_PRESETS["find_missing_sides_of_triangles"] = {
 }
 GENERATOR_DIFFICULTY_PRESETS["finding_sine_cosine_tangent"] = dict(
     GENERATOR_DIFFICULTY_PRESETS["find_missing_sides_of_triangles"]
+)
+
+# OpenStax Vol 1 §5.5–5.7 u-sub families (real form_id sets, not metadata pads).
+_INTEGRAL_USUB_POWER_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": 3,
+        "u_sub_form_preset": "power_linear",
+        "u_sub_construction": "catalog",
+        "coef_min": -4,
+        "coef_max": 4,
+        "power_max": 3,
+        "term_count": 1,
+    },
+    "medium": {
+        "difficulty": 8,
+        "u_sub_form_preset": "power_quadratic",
+        "u_sub_construction": "catalog",
+        "coef_min": -6,
+        "coef_max": 6,
+        "power_max": 4,
+        "term_count": 1,
+    },
+    "hard": {
+        "difficulty": 16,
+        "u_sub_form_preset": "challenging",
+        "u_sub_construction": "auto",
+        "coef_min": -10,
+        "coef_max": 10,
+        "power_max": 6,
+        "term_count": 1,
+    },
+}
+_INTEGRAL_USUB_LN_EXP_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": 3,
+        "u_sub_form_preset": "du_over_u",
+        "u_sub_construction": "catalog",
+        "coef_min": -4,
+        "coef_max": 4,
+    },
+    "medium": {
+        "difficulty": 8,
+        "u_sub_form_preset": "exp_chain",
+        "u_sub_construction": "catalog",
+        "coef_min": -6,
+        "coef_max": 6,
+    },
+    "hard": {
+        "difficulty": 16,
+        "u_sub_form_preset": "challenging",
+        "u_sub_construction": "auto",
+        "coef_min": -10,
+        "coef_max": 10,
+    },
+}
+_INTEGRAL_USUB_INVTRIG_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": 3,
+        "u_sub_form_preset": "arctan_chain",
+        "u_sub_construction": "catalog",
+        "coef_min": -4,
+        "coef_max": 4,
+    },
+    "medium": {
+        "difficulty": 10,
+        "u_sub_form_preset": "arctan_chain",
+        "u_sub_construction": "catalog",
+        "coef_min": -6,
+        "coef_max": 6,
+    },
+    "hard": {
+        "difficulty": 16,
+        "u_sub_form_preset": "arctan_chain",
+        "u_sub_construction": "reverse_chain",
+        "coef_min": -10,
+        "coef_max": 10,
+    },
+}
+GENERATOR_DIFFICULTY_PRESETS["integral_substitution"] = dict(_INTEGRAL_USUB_POWER_TIERS)
+GENERATOR_DIFFICULTY_PRESETS["calc_indef_int_power_rule_with_substitution"] = dict(
+    _INTEGRAL_USUB_POWER_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS["integral_log_exp_substitution"] = dict(
+    _INTEGRAL_USUB_LN_EXP_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS[
+    "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution"
+] = dict(_INTEGRAL_USUB_LN_EXP_TIERS)
+GENERATOR_DIFFICULTY_PRESETS["integral_invtrig_substitution"] = dict(
+    _INTEGRAL_USUB_INVTRIG_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS[
+    "calc_indef_int_inverse_trigonometric_with_substitution"
+] = dict(_INTEGRAL_USUB_INVTRIG_TIERS)
+GENERATOR_DIFFICULTY_PRESETS["integral_definite_substitution"] = dict(
+    _INTEGRAL_USUB_POWER_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS["calc_def_int_substitution_with_change_of_variables"] = dict(
+    _INTEGRAL_USUB_POWER_TIERS
+)
+
+# Calc BC bank §2 / §4 named form presets (real catalog form_id sets).
+_INTEGRAL_PARTS_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": 3,
+        "parts_form_preset": "auto",
+        "coef_min": -4,
+        "coef_max": 4,
+    },
+    "medium": {
+        "difficulty": 8,
+        "parts_form_preset": "auto",
+        "coef_min": -6,
+        "coef_max": 6,
+    },
+    "hard": {
+        "difficulty": 16,
+        "parts_form_preset": "bc_bank",
+        "coef_min": -10,
+        "coef_max": 10,
+    },
+}
+_INTEGRAL_PFD_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": 3,
+        "pfd_form_preset": "auto",
+        "coef_min": -4,
+        "coef_max": 4,
+    },
+    "medium": {
+        "difficulty": 10,
+        "pfd_form_preset": "auto",
+        "coef_min": -6,
+        "coef_max": 6,
+    },
+    "hard": {
+        "difficulty": 16,
+        "pfd_form_preset": "bc_bank",
+        "coef_min": -10,
+        "coef_max": 10,
+    },
+}
+GENERATOR_DIFFICULTY_PRESETS["integration_by_parts"] = dict(_INTEGRAL_PARTS_TIERS)
+GENERATOR_DIFFICULTY_PRESETS["calc_indef_int_integration_by_parts"] = dict(
+    _INTEGRAL_PARTS_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS["integral_partial_fractions"] = dict(_INTEGRAL_PFD_TIERS)
+GENERATOR_DIFFICULTY_PRESETS["calc_indef_int_partial_fractions"] = dict(
+    _INTEGRAL_PFD_TIERS
 )
 
 

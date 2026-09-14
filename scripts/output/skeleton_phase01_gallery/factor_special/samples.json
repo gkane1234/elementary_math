@@ -1,0 +1,1301 @@
+{
+  "section": {
+    "slug": "factor_special",
+    "title": "FactorProduct \u2014 special products",
+    "pattern": "FactorProduct",
+    "engine": "poly_skeleton",
+    "type_id": "polynomial_factoring_special_cases",
+    "aliases": [
+      "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions"
+    ],
+    "task": "factor",
+    "blurb": "Difference of squares, perfect-square trinomial, etc."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_special_cases",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "x^{2} - 16",
+      "answer_latex": "\\left(x + 4\\right)\\left(x - 4\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "difference_of_squares",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "difference_of_squares"
+        ],
+        [
+          "openstax_form",
+          "difference_of_squares"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "diff_squares"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "difference_of_squares"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.164,
+          "variable": 0.159,
+          "factor_poly": 1.677
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.15929063297602944,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.15929063297602944,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.159291 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "difference_of_squares",
+        "degree": 2,
+        "upgrades": [
+          "difference_of_squares",
+          "degree:2",
+          "kind:diff_squares",
+          "task:factor",
+          "d:2.0"
+        ],
+        "effective_d": 2.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "diff_squares",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "difference_of_squares",
+        "openstax_form": "difference_of_squares",
+        "openstax_case": "\u00a77.4 difference of squares",
+        "strategy": "difference_of_squares",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "difference_of_squares",
+        "family": "difference_of_squares",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:difference_of_squares",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "difference_of_squares",
+          "upgrades": [
+            "difference_of_squares",
+            "degree:2",
+            "kind:diff_squares",
+            "task:factor",
+            "d:2.0"
+          ],
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 36,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_difference_of_squares": true,
+          "factor_perfect_square_trinomial": true,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "allow_higher_even_powers": false,
+          "max_even_power": 4,
+          "require_gcf": false,
+          "factor_rrt": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "leading_coefficient_one": true,
+          "difficulty": 2.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor using special products.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_special_cases",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "x^{2} - 9",
+      "answer_latex": "\\left(x + 3\\right)\\left(x - 3\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "difference_of_squares",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "difference_of_squares"
+        ],
+        [
+          "openstax_form",
+          "difference_of_squares"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "diff_squares"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "difference_of_squares"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.048,
+          "variable": 0.112,
+          "factor_poly": 1.84
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.11198212024614881,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.11198212024614881,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.111982 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "difference_of_squares",
+        "degree": 2,
+        "upgrades": [
+          "difference_of_squares",
+          "degree:2",
+          "kind:diff_squares",
+          "task:factor",
+          "d:2.0"
+        ],
+        "effective_d": 2.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "diff_squares",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "difference_of_squares",
+        "openstax_form": "difference_of_squares",
+        "openstax_case": "\u00a77.4 difference of squares",
+        "strategy": "difference_of_squares",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "difference_of_squares",
+        "family": "difference_of_squares",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:difference_of_squares",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "difference_of_squares",
+          "upgrades": [
+            "difference_of_squares",
+            "degree:2",
+            "kind:diff_squares",
+            "task:factor",
+            "d:2.0"
+          ],
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 36,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_difference_of_squares": true,
+          "factor_perfect_square_trinomial": true,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "allow_higher_even_powers": false,
+          "max_even_power": 4,
+          "require_gcf": false,
+          "factor_rrt": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "leading_coefficient_one": true,
+          "difficulty": 2.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor using special products.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_special_cases",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "x^{2} - 1",
+      "answer_latex": "\\left(x - 1\\right)\\left(x + 1\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "difference_of_squares",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "difference_of_squares"
+        ],
+        [
+          "openstax_form",
+          "difference_of_squares"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "diff_squares"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "difference_of_squares"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "factor_poly": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.637163 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "difference_of_squares",
+        "degree": 2,
+        "upgrades": [
+          "difference_of_squares",
+          "degree:2",
+          "kind:diff_squares",
+          "task:factor",
+          "d:8.0"
+        ],
+        "effective_d": 8.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "diff_squares",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "difference_of_squares",
+        "openstax_form": "difference_of_squares",
+        "openstax_case": "\u00a77.4 difference of squares",
+        "strategy": "difference_of_squares",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "difference_of_squares",
+        "family": "difference_of_squares",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:difference_of_squares",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "difference_of_squares",
+          "upgrades": [
+            "difference_of_squares",
+            "degree:2",
+            "kind:diff_squares",
+            "task:factor",
+            "d:8.0"
+          ],
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 36,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_difference_of_squares": true,
+          "factor_perfect_square_trinomial": true,
+          "factor_difference_of_cubes": true,
+          "factor_sum_of_cubes": true,
+          "allow_higher_even_powers": false,
+          "max_even_power": 4,
+          "require_gcf": false,
+          "factor_rrt": false,
+          "coef_min": -10,
+          "coef_max": 10,
+          "leading_coefficient_one": false,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor using special products.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_special_cases",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "x^{2} - 81",
+      "answer_latex": "\\left(x - 9\\right)\\left(x + 9\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "difference_of_squares",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "difference_of_squares"
+        ],
+        [
+          "openstax_form",
+          "difference_of_squares"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "diff_squares"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "difference_of_squares"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "factor_poly": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.44792848098459526,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.447928 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "difference_of_squares",
+        "degree": 2,
+        "upgrades": [
+          "difference_of_squares",
+          "degree:2",
+          "kind:diff_squares",
+          "task:factor",
+          "d:8.0"
+        ],
+        "effective_d": 8.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "diff_squares",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "difference_of_squares",
+        "openstax_form": "difference_of_squares",
+        "openstax_case": "\u00a77.4 difference of squares",
+        "strategy": "difference_of_squares",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "difference_of_squares",
+        "family": "difference_of_squares",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:difference_of_squares",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "difference_of_squares",
+          "upgrades": [
+            "difference_of_squares",
+            "degree:2",
+            "kind:diff_squares",
+            "task:factor",
+            "d:8.0"
+          ],
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 36,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_difference_of_squares": true,
+          "factor_perfect_square_trinomial": true,
+          "factor_difference_of_cubes": true,
+          "factor_sum_of_cubes": true,
+          "allow_higher_even_powers": false,
+          "max_even_power": 4,
+          "require_gcf": false,
+          "factor_rrt": false,
+          "coef_min": -10,
+          "coef_max": 10,
+          "leading_coefficient_one": false,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor using special products.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_special_cases",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "x^{2} - 1",
+      "answer_latex": "\\left(x - 1\\right)\\left(x + 1\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "difference_of_squares",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "difference_of_squares"
+        ],
+        [
+          "openstax_form",
+          "difference_of_squares"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "diff_squares"
+        ],
+        [
+          "factor_bias",
+          "nonmonic+expanded"
+        ],
+        [
+          "method",
+          "difference_of_squares"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "factor_poly": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.27433 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "difference_of_squares",
+        "degree": 2,
+        "upgrades": [
+          "difference_of_squares",
+          "degree:2",
+          "kind:diff_squares",
+          "task:factor",
+          "d:16.0"
+        ],
+        "effective_d": 16.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "diff_squares",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "nonmonic+expanded",
+        "form_id": "difference_of_squares",
+        "openstax_form": "difference_of_squares",
+        "openstax_case": "\u00a77.4 difference of squares",
+        "strategy": "difference_of_squares",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "difference_of_squares",
+        "family": "difference_of_squares",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:difference_of_squares",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "difference_of_squares",
+          "upgrades": [
+            "difference_of_squares",
+            "degree:2",
+            "kind:diff_squares",
+            "task:factor",
+            "d:16.0"
+          ],
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 36,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_difference_of_squares": true,
+          "factor_perfect_square_trinomial": true,
+          "factor_difference_of_cubes": true,
+          "factor_sum_of_cubes": true,
+          "allow_higher_even_powers": true,
+          "max_even_power": 8,
+          "require_gcf": false,
+          "factor_rrt": false,
+          "coef_min": -12,
+          "coef_max": 12,
+          "leading_coefficient_one": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor using special products.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_special_cases",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "x^{2} - 121",
+      "answer_latex": "\\left(x - 11\\right)\\left(x + 11\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "difference_of_squares",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "difference_of_squares"
+        ],
+        [
+          "openstax_form",
+          "difference_of_squares"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "diff_squares"
+        ],
+        [
+          "factor_bias",
+          "nonmonic+expanded"
+        ],
+        [
+          "method",
+          "difference_of_squares"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "factor_poly": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.8958569619691905,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.895857 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "difference_of_squares",
+        "degree": 2,
+        "upgrades": [
+          "difference_of_squares",
+          "degree:2",
+          "kind:diff_squares",
+          "task:factor",
+          "d:16.0"
+        ],
+        "effective_d": 16.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "diff_squares",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 2,
+        "factor_bias": "nonmonic+expanded",
+        "form_id": "difference_of_squares",
+        "openstax_form": "difference_of_squares",
+        "openstax_case": "\u00a77.4 difference of squares",
+        "strategy": "difference_of_squares",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "difference_of_squares",
+        "family": "difference_of_squares",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:difference_of_squares",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "difference_of_squares",
+          "upgrades": [
+            "difference_of_squares",
+            "degree:2",
+            "kind:diff_squares",
+            "task:factor",
+            "d:16.0"
+          ],
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 38,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "difference_of_squares",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "factor_difference_of_squares": true,
+          "factor_perfect_square_trinomial": true,
+          "factor_difference_of_cubes": true,
+          "factor_sum_of_cubes": true,
+          "allow_higher_even_powers": true,
+          "max_even_power": 8,
+          "require_gcf": false,
+          "factor_rrt": false,
+          "coef_min": -12,
+          "coef_max": 12,
+          "leading_coefficient_one": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor using special products.}"
+      }
+    }
+  ],
+  "failures": []
+}

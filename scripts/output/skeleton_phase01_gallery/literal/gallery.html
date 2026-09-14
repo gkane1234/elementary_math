@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>SolveLiteral — literal equations — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>SolveLiteral — literal equations</h1>
+<p class="sub"><code>literal_equations</code> · live <code>_generate_for_type</code>
+ · pattern <strong>SolveLiteral</strong>
+ · 9/9 ok · D ladder 0, 8, 16
+ · seeds 101, 207, 313</p>
+<p class="sub">D=0 one-step isolate ($d=rt$ for $t$). More letters, two-step $ax+by=c$, perimeter / fractions later. Opt out with <code>use_sample_literal_equation=True</code>.</p>
+<p class='sub'>Also wired: <code>a2_equations_and_inequalities_literal_equations</code></p>
+<div class='notes-block'><h1>Notes — <code>literal</code> (<code>literal_equations</code>)</h1>
+<p>Also covers: <code>literal_equations</code></p>
+<p>Flags:</p>
+<ul>
+<li>_(none)_</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Solve a formula for a specified variable.</li>
+<li><strong>D=0:</strong> One-step isolate: $d=rt$, $A=\ell w$, $C=\pi d$.</li>
+<li><strong>High D (≈16–22):</strong> Multi-term formulas; fractions; isolate a var that is not already alone.</li>
+<li><strong>Must not:</strong> Numeric linear equations in one unknown; word-problem stories.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> with <code>use_sample_literal_equation=True</code>.</p>
+<ul>
+<li><strong>D=0 seed=101:</strong> $A = \ell w \quad \text{Solve for } w.$ → $w = \frac{A}{\ell}$</li>
+<li><strong>D=0 seed=207:</strong> $d = r t \quad \text{Solve for } t.$ → $t = \frac{d}{r}$</li>
+<li><strong>D=8 seed=101:</strong> $A = \frac{1}{2} b h \quad \text{Solve for } h.$ → $h = \frac{2A}{b}$</li>
+<li><strong>D=8 seed=207:</strong> $V = \ell w h \quad \text{Solve for } w.$ → $w = \frac{V}{\ell h}$</li>
+<li><strong>D=16 seed=101:</strong> $A = \frac{1}{2} b h \quad \text{Solve for } h.$ → $h = \frac{2A}{b}$</li>
+<li><strong>D=16 seed=207:</strong> $V = \ell w h \quad \text{Solve for } w.$ → $w = \frac{V}{\ell h}$</li>
+<li><strong>D=22 seed=101:</strong> $A = \frac{1}{2} b h \quad \text{Solve for } h.$ → $h = \frac{2A}{b}$</li>
+<li><strong>D=22 seed=207:</strong> $V = \ell w h \quad \text{Solve for } w.$ → $w = \frac{V}{\ell h}$</li>
+</ul>
+<p>Opt-out flag used: <code>use_sample_literal_equation=True</code></p>
+<h2>Current default (same D/seeds)</h2>
+<ul>
+<li><strong>D=0 seed=101:</strong> $d = r t \quad \text{Solve for } r.$ → $r = \frac{d}{t}$ — form_id=literal_equation, pattern=SolveLiteral</li>
+<li><strong>D=0 seed=207:</strong> $C = \pi d \quad \text{Solve for } d.$ → $d = \frac{C}{\pi}$ — form_id=literal_equation, pattern=SolveLiteral</li>
+<li><strong>D=8 seed=101:</strong> $C = \pi d \quad \text{Solve for } d.$ → $d = \frac{C}{\pi}$ — form_id=literal_equation, pattern=SolveLiteral</li>
+<li><strong>D=8 seed=207:</strong> $P = a + b + c \quad \text{Solve for } a.$ → $a = P - b - c$ — form_id=literal_equation, pattern=SolveLiteral</li>
+<li><strong>D=16 seed=101:</strong> $P = 2L + 2W \quad \text{Solve for } W.$ → $W = \frac{P - 2L}{2}$ — form_id=literal_equation, pattern=SolveLiteral</li>
+<li><strong>D=16 seed=207:</strong> $y = 3x + 12 \quad \text{Solve for } x.$ → $x = \frac{y - 12}{3}$ — form_id=literal_equation, pattern=SolveLiteral</li>
+<li><strong>D=22 seed=101:</strong> $V = L W H \quad \text{Solve for } H.$ → $H = \frac{V}{L W}$ — form_id=literal_equation, pattern=SolveLiteral</li>
+<li><strong>D=22 seed=207:</strong> $P = 2L + 2W \quad \text{Solve for } W.$ → $W = \frac{P - 2L}{2}$ — form_id=literal_equation, pattern=SolveLiteral</li>
+</ul>
+<h2>OpenStax examples + chapter/section cites</h2>
+<p>Paraphrase stems; cite book + chapter/section + URL. Do not dump copyrighted problem text wholesale.</p>
+<p>| Cite | URL | What to copy (shape / frame, not wording) | |------|-----|-------------------------------------------| | OpenStax Elementary Algebra 2e §2.6 | https://openstax.org/books/elementary-algebra-2e/pages/2-6-solve-a-formula-for-a-specific-variable | Solve $d=rt$ for $t$; $A=\tfrac12 bh$ for $h$; $P=2L+2W$ for $W$. |</p>
+<p>Local HTML (if mined): <code>textbooks/openstax/html/elementary-algebra-2e/</code> or <code>intermediate-algebra-2e/</code>.</p>
+<h2>Variety notes</h2>
+<p>Not a WP. Old D=0 is $A=\ell w$ / $d=rt$; D≥8 is $A=\tfrac12 bh$ / $V=\ell wh$ and does not climb further in these seeds. Default unlocks $P=2L+2W$ and $y=mx+b$ isolate at D≥16 (OpenStax EA §2.6).</p>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<ul>
+<li><strong>Reuse:</strong> SolveLiteral / equation_skeleton (already wired). Opt-out: <code>use_sample_literal_equation</code>.</li>
+<li><strong>New:</strong> not this pass (already on skeleton).</li>
+<li><strong>Not this pass:</strong> do not re-implement generators.</li>
+</ul>
+<p>Suggested family from <code>A1_INDEX.md</code>: <code>solve</code></p>
+<p>_Catalog:_ Algebra 1 — Equations — Literal equations. Generator <code>literal_equations</code>.</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>SolveLiteral</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$d = r t \quad \text{Solve for } r.$$</div><div class='math'><div class='lab'>Answer</div>$$r = \frac{d}{t}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>r</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>product2</span></div><div class='kv'><span class='k'>form</span><span class='v'>distance</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>SolveLiteral</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$C = \pi d \quad \text{Solve for } d.$$</div><div class='math'><div class='lab'>Answer</div>$$d = \frac{C}{\pi}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>d</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>circ</span></div><div class='kv'><span class='k'>form</span><span class='v'>circumference</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>SolveLiteral</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$C = \pi d \quad \text{Solve for } d.$$</div><div class='math'><div class='lab'>Answer</div>$$d = \frac{C}{\pi}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>d</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>circ</span></div><div class='kv'><span class='k'>form</span><span class='v'>circumference</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>SolveLiteral</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$C = \pi d \quad \text{Solve for } d.$$</div><div class='math'><div class='lab'>Answer</div>$$d = \frac{C}{\pi}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>d</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>circ</span></div><div class='kv'><span class='k'>form</span><span class='v'>circumference</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>SolveLiteral</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$P = a + b + c \quad \text{Solve for } a.$$</div><div class='math'><div class='lab'>Answer</div>$$a = P - b - c$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>a</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>sum3</span></div><div class='kv'><span class='k'>form</span><span class='v'>perimeter_tri</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>SolveLiteral</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$P = a + b + c \quad \text{Solve for } b.$$</div><div class='math'><div class='lab'>Answer</div>$$b = P - a - c$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>b</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>sum3</span></div><div class='kv'><span class='k'>form</span><span class='v'>perimeter_tri</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>SolveLiteral</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$P = 2L + 2W \quad \text{Solve for } W.$$</div><div class='math'><div class='lab'>Answer</div>$$W = \frac{P - 2L}{2}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>2</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>W</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>perimeter</span></div><div class='kv'><span class='k'>form</span><span class='v'>rectangle</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>SolveLiteral</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$y = 3x + 12 \quad \text{Solve for } x.$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{y - 12}{3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>2</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>x</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>slope_x</span></div><div class='kv'><span class='k'>form</span><span class='v'>slope_intercept_x</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>SolveLiteral</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>literal_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$y = 6x + 1 \quad \text{Solve for } x.$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{y - 1}{6}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLiteral</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>literal_equation</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>2</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>target_var</span><span class='v'>x</span></div><div class='kv'><span class='k'>literal_shape</span><span class='v'>slope_x</span></div><div class='kv'><span class='k'>form</span><span class='v'>slope_intercept_x</span></div><div class='kv'><span class='k'>construction</span><span class='v'>reverse_skeleton</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>literal_equations</code></p></article>
+</body></html>

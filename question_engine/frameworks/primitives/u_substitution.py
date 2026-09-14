@@ -30,11 +30,115 @@ from question_engine.generators.utils import (
     random_int_range,
 )
 
+# Diff AST latex uses integer-valued Fraction exponents, so d/dx[x^2] can
+# render as 2x^{1}. Reverse-chain strips that; chain-rule leaves keep it.
+_UNIT_EXPONENT = "^{1}"
+
 InnerClass = Literal["poly", "trig", "exp", "log", "invtrig", "composite"]
 OuterClass = Literal["power", "exp", "ln", "trig", "invtrig"]
 
 DEFAULT_INNERS: frozenset[str] = frozenset({"poly", "trig", "exp", "log"})
 DEFAULT_OUTERS: frozenset[str] = frozenset({"power", "exp", "ln", "trig"})
+
+# Teacher-facing families from ``u_substitution.json`` (OpenStax Vol 1 §5.5–5.7).
+# Values are catalog ``form_id`` sets; ``auto`` / ``None`` = D-weighted catalog mix.
+U_SUB_FORM_PRESETS: dict[str, frozenset[str] | None] = {
+    "auto": None,
+    "power_linear": frozenset({"power_linear_du"}),
+    "power_quadratic": frozenset({"power_quad_x_du", "root_quad_x_du"}),
+    "power_cubic": frozenset({"power_cubic_x2_du"}),
+    "du_over_u": frozenset({"du_over_u_linear", "du_over_u_trig"}),
+    "exp_chain": frozenset(
+        {
+            "exp_of_poly",
+            "exp_of_trig",
+            "nested_trig_exp",
+            "exp_of_cubic",
+            "exp_of_quartic",
+            "exp_over_power_of_exp",
+            "exp_of_sqrt",
+        }
+    ),
+    "trig_chain": frozenset(
+        {
+            "trig_of_linear",
+            "sec2_of_u",
+            "du_over_u_trig",
+            "composite_ln_of_trig",
+            "trig_over_linear_trig_power",
+        }
+    ),
+    "arctan_chain": frozenset({"arctan_of_linear", "arctan_of_ln"}),
+    "ln_power_chain": frozenset(
+        {"ln_squared_chain", "ln_power_over_x", "power_of_one_plus_ln"}
+    ),
+    "alteration": frozenset({"alteration_linear_over_root"}),
+    "challenging": frozenset(
+        {
+            "alteration_linear_over_root",
+            "nested_trig_exp",
+            "ln_squared_chain",
+            "arctan_of_linear",
+            "sec2_of_u",
+            "root_quad_x_du",
+            "power_cubic_x2_du",
+            "exp_of_cubic",
+            "exp_of_quartic",
+            "exp_root_chain",
+            "exp_power_of_exp",
+            "composite_ln_of_trig",
+        }
+    ),
+    # Calc BC drill bank §1 (not OpenStax). Mid/high D; D=0 auto stays easy.
+    "bc_bank": frozenset(
+        {
+            "power_quad_neg",
+            "power_cubic_neg",
+            "root_quad_minus",
+            "power_quad_m3_2",
+            "ln_power_over_x",
+            "power_of_one_plus_ln",
+            "exp_over_power_of_exp",
+            "exp_e2x_over_power",
+            "trig_over_linear_trig_power",
+            "ln_ln_nested",
+            "ln_over_x_sqrt",
+            "arctan_of_ln",
+            "du_over_u_quadratic",
+            "du_over_ln_of_poly",
+            "cos_of_ln_over_x",
+            "sin_of_sqrt",
+            "exp_of_sqrt",
+            "root_ln_of_linear",
+            "ln_sq_over_root_ln_cube",
+            "power_hex_neg",
+            "root_of_x4",
+        }
+    ),
+}
+
+U_SUB_FORM_PRESET_OPTIONS: tuple[str, ...] = tuple(U_SUB_FORM_PRESETS.keys())
+
+# Diff ``FORM_PATTERNS`` ids that reverse to honest Calc-1 u-sub (F(g), integrand F'g').
+_REVERSE_CHAIN_FORMS: dict[str, tuple[tuple[int, tuple[str, ...]], ...]] = {
+    "power": (
+        (0, ("chain_power_linear",)),
+    ),
+    "ln_exp": (
+        (0, ("exp_basic", "ln_basic")),
+        (2, ("exp_basic", "ln_basic", "chain_nested")),
+        (3, ("chain_nested", "exp_basic", "ln_basic")),
+    ),
+    "trig": (
+        (0, ("chain_trig_poly", "trig_basic")),
+        (2, ("chain_trig_poly", "chain_nested", "trig_basic")),
+        (3, ("chain_nested", "chain_trig_poly")),
+    ),
+    "invtrig": (
+        (0, ("invtrig_arctan",)),
+        (2, ("invtrig_arctan", "invtrig_arcsin")),
+    ),
+}
 
 
 @dataclass
@@ -511,3 +615,184 @@ def usub_spec_from_integral_flavor(
     if flavor == "pfd_wrap":
         return pack_u_sub_for_pfd_wrap(d, **kw)
     return pack_u_sub_general(d, **kw)
+
+
+def resolve_u_sub_form_preset(name: str | None) -> frozenset[str] | None:
+    """Return catalog form_ids for a named preset, or None for auto."""
+    key = str(name or "auto").strip().lower()
+    if key in {"", "none", "auto"}:
+        return None
+    if key not in U_SUB_FORM_PRESETS:
+        return None
+    return U_SUB_FORM_PRESETS[key]
+
+
+def _elide_unit_exponents(tex: str) -> str:
+    """Drop a trailing integer exponent 1 (``x^{1}`` → ``x``).
+
+    ``^{10}`` / ``^{12}`` are left alone because they are not the substring
+    ``^{1}`` (the ``1`` is not followed by ``}``).
+    """
+    return tex.replace(_UNIT_EXPONENT, "")
+
+
+def _reverse_chain_form_ids(flavor: str, format_tier: int) -> tuple[str, ...]:
+    table = _REVERSE_CHAIN_FORMS.get(flavor) or _REVERSE_CHAIN_FORMS["power"]
+    chosen: tuple[str, ...] = table[0][1]
+    for min_tier, forms in table:
+        if format_tier >= min_tier:
+            chosen = forms
+    return chosen
+
+
+def _peel_integer_const(expr: Any) -> tuple[int | None, Any]:
+    from question_engine.frameworks.primitives.poly_expression import Const, Mul
+
+    if not isinstance(expr, Mul):
+        return None, expr
+    consts: list[int] = []
+    rest: list[Any] = []
+    for factor in expr.factors:
+        if isinstance(factor, Const) and isinstance(factor.value, int):
+            consts.append(int(factor.value))
+        elif isinstance(factor, Const) and isinstance(factor.value, Fraction) and factor.value.denominator == 1:
+            consts.append(int(factor.value))
+        else:
+            rest.append(factor)
+    if not consts:
+        return None, expr
+    k = 1
+    for c in consts:
+        k *= c
+    if abs(k) <= 1:
+        return None, expr
+    if not rest:
+        return k, Const(1)
+    if len(rest) == 1:
+        return k, rest[0]
+    return k, Mul(tuple(rest))
+
+
+def sample_reverse_chain_integral(
+    *,
+    d: float,
+    flavor: str = "power",
+    variable: str = "x",
+    include_plus_c: bool = True,
+    allow_trig: bool = False,
+    allow_exp: bool = False,
+    allow_log: bool = False,
+    allow_invtrig: bool = False,
+    omit_du_constant: bool | None = None,
+    rng: random.Random | None = None,
+    seed: int | None = None,
+) -> USubSample:
+    """Build ∫ F'(g(x)) g'(x) dx by sampling F∘g from Diff ``expr_skeleton``.
+
+    Antiderivative is the undressed ``F(g)`` (plus +C). Numeric hardness follows
+    ``skeleton_numeric_tier``; nested inners / missing chain constants follow
+    ``skeleton_format_tier``.
+    """
+    from question_engine.frameworks.primitives.expr_skeleton import sample_from_form
+    from question_engine.frameworks.primitives.poly_expression import (
+        Const,
+        Mul,
+        differentiate,
+        render_latex,
+    )
+    from question_engine.frameworks.primitives.skeleton_difficulty import (
+        SkeletonDifficultyBands,
+    )
+
+    rng = rng or (random.Random(seed) if seed is not None else random.Random())
+    bands = SkeletonDifficultyBands.from_d(d)
+    flavor_key = flavor if flavor in _REVERSE_CHAIN_FORMS else "power"
+    form_ids = _reverse_chain_form_ids(flavor_key, bands.format_tier)
+    form_id = rng.choice(form_ids)
+    # Numeric hardness first; cap C so Calc-1 u-sub stays F(g) with affine/poly
+    # inner — not arctan(arctan(poly)) or power towers (OpenStax Vol 1 §5.5–5.7).
+    conceptual_raw = float((0, 4, 8, 14, 20)[bands.numeric_tier])
+    cap = {
+        "power": 8.0,
+        "ln_exp": 8.0 if bands.format_tier < 3 else 12.0,
+        "trig": 8.0 if bands.format_tier < 3 else 12.0,
+        "invtrig": 4.0,
+    }.get(flavor_key, 8.0)
+    conceptual = min(conceptual_raw, cap)
+    allows = {
+        "allow_trig": bool(allow_trig) or flavor_key == "trig" or form_id.startswith("trig") or form_id == "chain_trig_poly" or form_id == "chain_nested",
+        "allow_exp": bool(allow_exp) or flavor_key == "ln_exp" or form_id in {"exp_basic", "chain_nested"},
+        "allow_log": bool(allow_log) or flavor_key == "ln_exp" or form_id in {"ln_basic", "chain_nested"},
+        "allow_invtrig": bool(allow_invtrig) or flavor_key == "invtrig" or form_id.startswith("invtrig"),
+        "allow_chain": True,
+        "allow_roots": bands.format_tier >= 1 and flavor_key == "power",
+        "require_chain": True,
+    }
+    # Chain-nested with specials off stays algebraic.
+    if flavor_key == "power" and form_id == "chain_nested":
+        allows["allow_trig"] = False
+        allows["allow_exp"] = False
+        allows["allow_log"] = False
+        form_id = "chain_nested_power"
+
+    F, Fp, f_latex, fp_latex, inv = sample_from_form(
+        form_id,
+        conceptual_d=conceptual,
+        allows=allows,
+        rng=rng,
+        var=variable,
+        seed=seed,
+    )
+    hide = omit_du_constant
+    if hide is None:
+        hide = bands.format_tier >= 2
+    integ_expr = Fp
+    ans_expr = F
+    peeled_k: int | None = None
+    if hide:
+        peeled_k, rest = _peel_integer_const(Fp)
+        if peeled_k is not None:
+            integ_expr = rest
+            ans_expr = Mul((Const(Fraction(1, peeled_k)), F))
+            # Keep +C on the scaled antiderivative of the shown integrand.
+            fp_latex = render_latex(integ_expr, paren_style="minimal")
+            f_latex = render_latex(ans_expr, paren_style="minimal")
+
+    f_latex = _elide_unit_exponents(f_latex)
+    fp_latex = _elide_unit_exponents(fp_latex)
+
+    # Construction check: d/dx of undressed F (before peel) matches full Fp.
+    check = differentiate(F, variable)
+    prompt = rf"\int {fp_latex}\,d{variable}"
+    answer = rf"{f_latex}+C" if include_plus_c else f_latex
+    meta = {
+        "construction": "reverse_chain_expr_skeleton",
+        "form_id": form_id,
+        "core_form_id": form_id,
+        "openstax_form": form_id,
+        "family": form_id,
+        "u_latex": inv.get("inner_latex"),
+        "outer_family": form_id,
+        "inner_family": inv.get("inner_kind"),
+        "function_classes": inv.get("function_classes") or ["algebraic"],
+        "tricks_required": ["u_sub"],
+        "skeleton_source": "expr_skeleton",
+        "omit_du_constant": bool(peeled_k is not None),
+        "du_constant_omitted": peeled_k,
+        "numeric_tier": bands.numeric_tier,
+        "format_tier": bands.format_tier,
+        "conceptual_difficulty": conceptual,
+        "deriv_check_latex": _elide_unit_exponents(
+            render_latex(check, paren_style="minimal")
+        ),
+        **{k: v for k, v in inv.items() if k not in {"form_id", "core_form_id"}},
+    }
+    return USubSample(
+        prompt_latex=prompt,
+        answer_latex=answer,
+        u_latex=str(inv.get("inner_latex") or ""),
+        du_latex="",
+        outer_family=form_id,
+        inner_family=str(inv.get("inner_kind") or ""),
+        metadata=meta,
+    )

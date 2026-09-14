@@ -506,9 +506,21 @@ def test_layer1_primitives_generate_smoke():
         assert len(qs) == 2
         assert all(q.answer_latex for q in qs)
         assert "spend" in qs[0].metadata
-        assert qs[0].metadata.get("primitive_engine") == engine or engine in str(
-            qs[0].metadata.get("primitive_engine")
-        )
+        got_engine = str(qs[0].metadata.get("primitive_engine") or "")
+        if engine == "equations":
+            assert got_engine in {"equations", "equation_skeleton"}
+        elif engine == "inequalities":
+            assert got_engine in {"inequalities", "equation_skeleton"}
+        elif engine == "like_terms":
+            assert got_engine in {"like_terms", "affine_skeleton"}
+        elif engine == "evaluate":
+            assert got_engine in {"evaluate", "affine_skeleton"}
+        elif engine == "expand_simplify":
+            assert got_engine in {"expand_simplify", "affine_skeleton"}
+        elif engine == "factor_gcf":
+            assert got_engine in {"factor_gcf", "poly_skeleton"}
+        else:
+            assert got_engine == engine or engine in got_engine
 
 
 def test_layer1_constraints_integers_and_lock_x():
@@ -535,7 +547,9 @@ def test_layer1_constraints_integers_and_lock_x():
             assert vars_
             assert all(e.get("name") == "x" for e in vars_)
             nums = [e for e in log if e.get("primitive") == PRIM_NUMBERS]
-            assert nums
+            # AffineInflate like-terms draws classroom coeffs from the D box.
+            if str(q.metadata.get("primitive_engine") or "") != "affine_skeleton":
+                assert nums
             assert "spend" in q.metadata
 
 
@@ -834,10 +848,28 @@ def test_multistep_ops_formula_and_smoke():
         assert len(qs) == 3
         assert all(q.answer_latex for q in qs)
         assert "spend" in qs[0].metadata
-        assert qs[0].metadata.get("primitive_engine") == engine
+        got_engine = qs[0].metadata.get("primitive_engine")
+        if engine == "equations":
+            assert got_engine in {"equations", "equation_skeleton"}
+        elif engine == "inequalities":
+            assert got_engine in {"inequalities", "equation_skeleton"}
+        elif engine == "expand_simplify":
+            assert got_engine in {"expand_simplify", "affine_skeleton"}
+        else:
+            assert got_engine == engine
         if engine != "expand_simplify":
             assert all(q.metadata.get("steps") == "multi" for q in qs)
-            assert all(int(q.metadata.get("n_ops") or 0) >= 3 for q in qs)
+            if engine == "equations":
+                # Default SolveLinear; n_ops is honest (D=8 multi is still a simple extra structure).
+                assert qs[0].metadata.get("primitive_engine") in {
+                    "equations",
+                    "equation_skeleton",
+                }
+                assert all(int(q.metadata.get("n_ops") or 0) >= 2 for q in qs)
+            elif engine == "inequalities":
+                assert all(int(q.metadata.get("n_ops") or 0) >= 2 for q in qs)
+            else:
+                assert all(int(q.metadata.get("n_ops") or 0) >= 3 for q in qs)
         if engine == "inequalities":
             assert qs[0].metadata.get("number_line_spec")
             assert qs[0].metadata.get("answer_number_line_spec")
@@ -1298,6 +1330,7 @@ def test_linear_family_generators_smoke():
         "solving_proportions",
         "literal_equations",
         "slope",
+        "more_on_slope",
         "writing_linear_equations",
         "graphing_linear_equations",
         "graphing_linear_inequalities",
@@ -1536,7 +1569,7 @@ def _count_signed_terms(latex: str) -> int:
 
 
 def test_like_terms_difficulty_term_anchors():
-    """D=0 = 2 like + 2 unlike; D≈5 stays around 3–4 terms (not huge)."""
+    """AffineInflate D=0 is two like terms (3x+2x); mid D stays that shape."""
     from collections import Counter
 
     from question_engine.generators.primitive_g6 import combining_like_terms
@@ -1552,13 +1585,11 @@ def test_like_terms_difficulty_term_anchors():
         },
     )
     counts0 = [_count_signed_terms(q.prompt_latex or q.prompt) for q in qs0]
-    # Simplest shape: always 4 display terms (2 alike + 2 different).
-    assert all(n == 4 for n in counts0), Counter(counts0)
-    # No structure upgrades / no negatives at D=0.
+    assert all(n == 2 for n in counts0), Counter(counts0)
     for q in qs0:
-        ups = q.metadata.get("upgrades") or []
-        assert ups == []
+        assert q.metadata.get("skeleton_pattern") == "AffineInflate"
         prompt = q.prompt_latex or ""
+        assert r"\left(" not in prompt
         assert " - " not in prompt
         assert not prompt.lstrip().startswith("-")
 
@@ -1566,21 +1597,113 @@ def test_like_terms_difficulty_term_anchors():
         "Combining like terms",
         {
             "difficulty": 5,
-            "count": 50,
+            "count": 20,
             "include_answer_key": True,
             "seed": 11,
             "integers_only": True,
         },
     )
     counts5 = [_count_signed_terms(q.prompt_latex or q.prompt) for q in qs5]
-    dist5 = Counter(counts5)
-    assert set(dist5) <= {3, 4}, dist5
-    # Typical feel: 3 or 4 terms (prefer 3, but allow near-even RNG).
-    assert dist5[3] + dist5[4] == len(counts5)
-    assert dist5[3] >= len(counts5) // 3, dist5
+    # D=5: extra constant (old mid band 3–4), not many_terms (8).
+    assert set(counts5) <= {2, 3, 4}, Counter(counts5)
     assert max(counts5) <= 4
-    # Mild band: no sign/structure upgrades yet.
     for q in qs5:
-        assert (q.metadata.get("upgrades") or []) == []
-        assert " - " not in (q.prompt_latex or "")
+        assert q.metadata.get("skeleton_pattern") == "AffineInflate"
+
+    qs8 = combining_like_terms(
+        "Combining like terms",
+        {
+            "difficulty": 8,
+            "count": 20,
+            "include_answer_key": True,
+            "seed": 13,
+            "integers_only": True,
+        },
+    )
+    counts8 = [_count_signed_terms(q.prompt_latex or q.prompt) for q in qs8]
+    # D=8: old more_like 4–5; do not dump 8 here.
+    assert set(counts8) <= {4, 5}, Counter(counts8)
+    assert max(counts8) < 8
+
+    qs16 = combining_like_terms(
+        "Combining like terms",
+        {
+            "difficulty": 16,
+            "count": 24,
+            "include_answer_key": True,
+            "seed": 19,
+            "integers_only": True,
+        },
+    )
+    counts16 = [_count_signed_terms(q.prompt_latex or q.prompt) for q in qs16]
+    # Old many_terms reached 8 at D=16 — not every seed.
+    assert max(counts16) >= 8, Counter(counts16)
+    assert max(counts16) <= 10, Counter(counts16)
+    assert min(counts16) >= 4
+
+    qs22 = combining_like_terms(
+        "Combining like terms",
+        {
+            "difficulty": 22,
+            "count": 24,
+            "include_answer_key": True,
+            "seed": 23,
+            "integers_only": True,
+        },
+    )
+    counts22 = [_count_signed_terms(q.prompt_latex or q.prompt) for q in qs22]
+    assert max(counts22) >= 8, Counter(counts22)
+    assert max(counts22) <= 10, Counter(counts22)
+
+
+def test_distribute_difficulty_term_anchors():
+    """Old distributive maxed at ~4 display terms; D=0 stays one binomial."""
+    from collections import Counter
+
+    from question_engine.generators.primitive_g6 import distributive_property_algebraic
+
+    qs0 = distributive_property_algebraic(
+        "g6_distributive_property_algebraic",
+        {
+            "difficulty": 0,
+            "count": 20,
+            "include_answer_key": True,
+            "seed": 7,
+            "integers_only": True,
+        },
+    )
+    counts0 = [_count_signed_terms(q.prompt_latex or q.prompt) for q in qs0]
+    assert all(n == 2 for n in counts0), Counter(counts0)
+    for q in qs0:
+        assert q.metadata.get("skeleton_pattern") == "AffineInflate"
+        assert r"\left(" in (q.prompt_latex or "")
+
+    qs8 = distributive_property_algebraic(
+        "g6_distributive_property_algebraic",
+        {
+            "difficulty": 8,
+            "count": 20,
+            "include_answer_key": True,
+            "seed": 13,
+            "integers_only": True,
+        },
+    )
+    counts8 = [_count_signed_terms(q.prompt_latex or q.prompt) for q in qs8]
+    # Old three_terms: 2–4 display terms, not 8.
+    assert max(counts8) <= 4, Counter(counts8)
+    assert min(counts8) >= 2
+    assert any(n >= 3 for n in counts8), Counter(counts8)
+
+    qs16 = distributive_property_algebraic(
+        "g6_distributive_property_algebraic",
+        {
+            "difficulty": 16,
+            "count": 20,
+            "include_answer_key": True,
+            "seed": 19,
+            "integers_only": True,
+        },
+    )
+    counts16 = [_count_signed_terms(q.prompt_latex or q.prompt) for q in qs16]
+    assert max(counts16) <= 6, Counter(counts16)
 

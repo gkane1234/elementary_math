@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Number — distributive numeric + area (was miswired) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Number — distributive numeric + area (was miswired)</h1>
+<p class="sub"><code>g6_distributive_property_area_diagrams_numeric</code> · live <code>_generate_for_type</code>
+ · pattern <strong>Distributive</strong>
+ · 12/12 ok · 12 pattern warnings · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">Catalog was g6_divisibility — fixed to distributive_property + area_model. UNCLEAR gold (rewrite vs evaluate).</p>
+
+<div class='notes-alert'>UNCLEAR · LIMITATIONS — see Limitations in notes below.</div><div class='notes-block'><h1>Notes — <code>g6_distributive_property_area_diagrams_numeric</code> (<code>g6_distributive_property_area_diagrams_numeric</code>)</h1>
+<ul>
+<li><strong>Display name:</strong> Distributive property with area diagrams, numeric</li>
+<li><strong>Catalog chapter:</strong> Grade 6 — Numeric Expressions, Exponents, and the Order of Operations</li>
+<li><strong>Generator key:</strong> <code>g6_distributive_property_area_diagrams_numeric</code> (registry → <code>PRIM_DISTRIBUTIVE</code>; live path currently wrong)</li>
+<li><strong>Already on skeleton:</strong> no</li>
+<li><strong>Flags:</strong> <code>UNCLEAR</code></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Use an area model to expand / evaluate a <strong>numeric</strong> distributive product $a(b+c)$.</li>
+<li><strong>D=0:</strong> small integers with a 1×2 area diagram.</li>
+<li><strong>High D:</strong> larger integers / more addends; still numeric (no $x$).</li>
+<li><strong>Must not:</strong> divisibility Yes/No; algebraic area model (sibling leaf); bare arithmetic with no diagram.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> with <code>include_answer_key=True</code>, seed 101.</p>
+<p><strong>Pre-fix (catalog miswire to <code>g6_divisibility</code>):</strong> Yes/No divisibility stems at every D — wrong topic.</p>
+<p><strong>Post-fix:</strong> should match <code>g6_distributive_property_numeric</code> shapes (distribute rewrite) with area-model metadata. Re-sample in gallery after regen.</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Prealgebra 2e <strong>§7.3</strong></td><td>https://openstax.org/books/prealgebra-2e/pages/7-3-distributive-property</td><td>Area / model distribution + numeric expand</td></tr></tbody></table>
+<h2>Variety notes / UNCLEAR flag</h2>
+<p><strong>UNCLEAR:</strong> gold is numeric area-model distribute. Catalog miswire to divisibility is <strong>fixed</strong>; live prompts now match the numeric distributive sibling. Still UNCLEAR on rewrite-vs-evaluate keys, and area SVG was missing in a D=0 spot-check.</p>
+<h2>Limitations</h2>
+<ul>
+<li>Flags: <strong>UNCLEAR</strong>.</li>
+<li>Token: <strong>LIMITATIONS</strong>.</li>
+<li><strong>Miswire fixed in catalog:</strong> was <code>generator=g6_divisibility</code>; now <code>distributive_property</code> + area_model family (same core as numeric sibling).</li>
+<li>Gold still UNCLEAR on rewrite-vs-evaluate (uncombined product keys), same as the non-diagram sibling.</li>
+<li>Diagram-named leaf: live sample at D=0 still had <strong>no</strong> <code>diagram_svg</code> after the wiring fix — confirm area SVG attachment.</li>
+</ul>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<ul>
+<li><strong>Reuse:</strong> <code>sample_distributive_numeric</code> + area-model presentation. No new skeleton.</li>
+<li><strong>New:</strong> none.</li>
+<li><strong>Not this pass:</strong> no further generator redesign until rewrite-vs-evaluate gold is locked; also verify SVG path.</li>
+</ul>
+<p>Suggested family: <strong>affine</strong>.</p></div>
+
+
+<article class='card warn'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(1 + 2\right)\left(-2\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-2\cdot 2 - 2\cdot 1$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$-1\left(1 + 2\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-1\cdot 2 - 1\cdot 1$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$2\left(2 + 1\right)$$</div><div class='math'><div class='lab'>Answer</div>$$2\cdot 1 + 2\cdot 2$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(-1 + 2 + 4\right)\left(-2\right)$$</div><div class='math'><div class='lab'>Answer</div>$$- -2\cdot 1 - 2\cdot 2 - 2\cdot 4$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(2 - 7 + 4\right)\left(-2\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-2\cdot 4 + 2\cdot 7 - 2\cdot 2$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$2\left(2 + 1 + 2\right)$$</div><div class='math'><div class='lab'>Answer</div>$$2\cdot 1 + 2\cdot 2 + 2\cdot 2$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(1 + 8 + 4\right)\left(-2\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-2\cdot 1 - 2\cdot 4 - 2\cdot 8$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(-9 + 6 + 2\right)\left(-1\right)$$</div><div class='math'><div class='lab'>Answer</div>$$- -1\cdot 9 - 1\cdot 6 - 1\cdot 2$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$3 * \left(2 + 4 + 4\right)$$</div><div class='math'><div class='lab'>Answer</div>$$3\cdot 2 + 3\cdot 4 + 3\cdot 4$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(8 - 1 + 4\right)\left(-4\right)$$</div><div class='math'><div class='lab'>Answer</div>$$- -4\cdot 1 - 4\cdot 4 - 4\cdot 8$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(-13 + 3 + 8\right)\left(-3\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-3\cdot 8 + 3\cdot 13 - 3\cdot 3$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+<article class='card warn'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span><span class='tag fid'>scaled_sum</span><span class='tag warn-tag'>pattern mismatch</span></header><div class='math'><div class='lab'>Prompt</div>$$3 * \left(2 + 4 + 4\right)$$</div><div class='math'><div class='lab'>Answer</div>$$3\cdot 2 + 3\cdot 4 + 3\cdot 4$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>distributive</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>scaled_sum</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>g6_distributive_property_area_diagrams_numeric</code></p></article>
+</body></html>

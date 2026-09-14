@@ -275,6 +275,20 @@ def percent_word_problem_settings() -> list[SettingField]:
             group="percent_wp",
         ),
         SettingField(
+            "allow_percent_of",
+            "Allow percent-of (part = percent × whole)",
+            "bool",
+            False,
+            group="percent_wp",
+        ),
+        SettingField(
+            "allow_interest",
+            "Allow simple interest I=Prt",
+            "bool",
+            False,
+            group="percent_wp",
+        ),
+        SettingField(
             "allow_price_cents",
             "Allow non-whole-dollar prices",
             "bool",

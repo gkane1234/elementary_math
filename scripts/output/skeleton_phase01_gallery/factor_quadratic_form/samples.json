@@ -1,0 +1,1323 @@
+{
+  "section": {
+    "slug": "factor_quadratic_form",
+    "title": "FactorProduct \u2014 quadratic form",
+    "pattern": "FactorProduct",
+    "engine": "poly_skeleton",
+    "type_id": "a2_polynomial_functions_factoring_quadratic_form",
+    "aliases": [],
+    "task": "factor",
+    "blurb": "Substitution-style (ax\u00b2+b)(cx\u00b2+d); degree up to 4."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=101",
+      "type_id": "a2_polynomial_functions_factoring_quadratic_form",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "x^{4} + 2x^{2} - 3",
+      "answer_latex": "\\left(x^{2} - 1\\right)\\left(x^{2} + 3\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "quadratic_form",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "quadratic_form"
+        ],
+        [
+          "openstax_form",
+          "quadratic_form"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "quadratic_form"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "quadratic_form_simple"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          4
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.164,
+          "variable": 0.159,
+          "factor_poly": 1.677
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.15929063297602944,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.15929063297602944,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.159291 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 4,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "quadratic_form_simple",
+        "degree": 4,
+        "upgrades": [
+          "quadratic_form_simple",
+          "degree:4",
+          "kind:quadratic_form",
+          "task:factor",
+          "d:2.0"
+        ],
+        "effective_d": 2.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "quadratic_form",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 4,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "quadratic_form",
+        "openstax_form": "quadratic_form",
+        "openstax_case": "\u00a76.2 / \u00a76.3 quadratic form substitution",
+        "strategy": "quadratic_form",
+        "catalog_id": "algebra2_polys",
+        "construction": "forward_form_catalog",
+        "shape_id": "quadratic_form",
+        "family": "quadratic_form_simple",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:quadratic_form_simple",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "generator": "poly_skeleton",
+          "course_tag": "a2",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "quadratic_form_simple",
+          "upgrades": [
+            "quadratic_form_simple",
+            "degree:4",
+            "kind:quadratic_form",
+            "task:factor",
+            "d:2.0"
+          ],
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 44,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a2",
+        "generation_settings": {
+          "min_degree": 2,
+          "max_degree": 2,
+          "factor_rrt": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "factor_normal": true,
+          "factor_grouping": false,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "require_gcf": false,
+          "difficulty": 2.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=207",
+      "type_id": "a2_polynomial_functions_factoring_quadratic_form",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "x^{4} - 6x^{2} + 5",
+      "answer_latex": "\\left(x^{2} - 5\\right)\\left(x^{2} - 1\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "quadratic_form",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "quadratic_form"
+        ],
+        [
+          "openstax_form",
+          "quadratic_form"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "quadratic_form"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "quadratic_form_simple"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          4
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.048,
+          "variable": 0.112,
+          "factor_poly": 1.84
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.11198212024614881,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.11198212024614881,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.111982 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 4,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "quadratic_form_simple",
+        "degree": 4,
+        "upgrades": [
+          "quadratic_form_simple",
+          "degree:4",
+          "kind:quadratic_form",
+          "task:factor",
+          "d:2.0"
+        ],
+        "effective_d": 2.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "quadratic_form",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 4,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "quadratic_form",
+        "openstax_form": "quadratic_form",
+        "openstax_case": "\u00a76.2 / \u00a76.3 quadratic form substitution",
+        "strategy": "quadratic_form",
+        "catalog_id": "algebra2_polys",
+        "construction": "forward_form_catalog",
+        "shape_id": "quadratic_form",
+        "family": "quadratic_form_simple",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:quadratic_form_simple",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "generator": "poly_skeleton",
+          "course_tag": "a2",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "quadratic_form_simple",
+          "upgrades": [
+            "quadratic_form_simple",
+            "degree:4",
+            "kind:quadratic_form",
+            "task:factor",
+            "d:2.0"
+          ],
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 44,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a2",
+        "generation_settings": {
+          "min_degree": 2,
+          "max_degree": 2,
+          "factor_rrt": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "factor_normal": true,
+          "factor_grouping": false,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "require_gcf": false,
+          "difficulty": 2.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "a2_polynomial_functions_factoring_quadratic_form",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "x^{4} - 4x^{2} + 3",
+      "answer_latex": "\\left(x^{2} - 3\\right)\\left(x^{2} - 1\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "quadratic_form",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "quadratic_form"
+        ],
+        [
+          "openstax_form",
+          "quadratic_form"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "quadratic_form"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "quadratic_form_simple"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          4
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "factor_poly": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.637163 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 4,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "quadratic_form_simple",
+        "degree": 4,
+        "upgrades": [
+          "quadratic_form_simple",
+          "degree:4",
+          "kind:quadratic_form",
+          "task:factor",
+          "d:8.0"
+        ],
+        "effective_d": 8.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "quadratic_form",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 4,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "quadratic_form",
+        "openstax_form": "quadratic_form",
+        "openstax_case": "\u00a76.2 / \u00a76.3 quadratic form substitution",
+        "strategy": "quadratic_form",
+        "catalog_id": "algebra2_polys",
+        "construction": "forward_form_catalog",
+        "shape_id": "quadratic_form",
+        "family": "quadratic_form_simple",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:quadratic_form_simple",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "generator": "poly_skeleton",
+          "course_tag": "a2",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "quadratic_form_simple",
+          "upgrades": [
+            "quadratic_form_simple",
+            "degree:4",
+            "kind:quadratic_form",
+            "task:factor",
+            "d:8.0"
+          ],
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 44,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a2",
+        "generation_settings": {
+          "min_degree": 2,
+          "max_degree": 2,
+          "factor_rrt": false,
+          "coef_min": -10,
+          "coef_max": 10,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "factor_normal": true,
+          "factor_grouping": false,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "require_gcf": false,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "a2_polynomial_functions_factoring_quadratic_form",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "x^{4} - 9x^{2} + 18",
+      "answer_latex": "\\left(x^{2} - 6\\right)\\left(x^{2} - 3\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "quadratic_form",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "quadratic_form"
+        ],
+        [
+          "openstax_form",
+          "quadratic_form"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "quadratic_form"
+        ],
+        [
+          "factor_bias",
+          "monic_bias+expanded"
+        ],
+        [
+          "method",
+          "quadratic_form_simple"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          4
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "factor_poly": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.44792848098459526,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.447928 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 4,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "quadratic_form_simple",
+        "degree": 4,
+        "upgrades": [
+          "quadratic_form_simple",
+          "degree:4",
+          "kind:quadratic_form",
+          "task:factor",
+          "d:8.0"
+        ],
+        "effective_d": 8.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "quadratic_form",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 4,
+        "factor_bias": "monic_bias+expanded",
+        "form_id": "quadratic_form",
+        "openstax_form": "quadratic_form",
+        "openstax_case": "\u00a76.2 / \u00a76.3 quadratic form substitution",
+        "strategy": "quadratic_form",
+        "catalog_id": "algebra2_polys",
+        "construction": "forward_form_catalog",
+        "shape_id": "quadratic_form",
+        "family": "quadratic_form_simple",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:quadratic_form_simple",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "generator": "poly_skeleton",
+          "course_tag": "a2",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "quadratic_form_simple",
+          "upgrades": [
+            "quadratic_form_simple",
+            "degree:4",
+            "kind:quadratic_form",
+            "task:factor",
+            "d:8.0"
+          ],
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 44,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a2",
+        "generation_settings": {
+          "min_degree": 2,
+          "max_degree": 2,
+          "factor_rrt": false,
+          "coef_min": -10,
+          "coef_max": 10,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "factor_normal": true,
+          "factor_grouping": false,
+          "factor_substitution": false,
+          "factor_difference_of_squares": false,
+          "factor_perfect_square_trinomial": false,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "require_gcf": false,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "a2_polynomial_functions_factoring_quadratic_form",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "x^{4} - 7x^{2} + 10",
+      "answer_latex": "\\left(x^{2} - 5\\right)\\left(x^{2} - 2\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "quadratic_form",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "quadratic_form"
+        ],
+        [
+          "openstax_form",
+          "quadratic_form"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "quadratic_form"
+        ],
+        [
+          "factor_bias",
+          "nonmonic+expanded"
+        ],
+        [
+          "method",
+          "quadratic_form_simple"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          4
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "factor_poly": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.27433 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 4,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "quadratic_form_simple",
+        "degree": 4,
+        "upgrades": [
+          "quadratic_form_simple",
+          "degree:4",
+          "kind:quadratic_form",
+          "task:factor",
+          "d:16.0"
+        ],
+        "effective_d": 16.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "quadratic_form",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 4,
+        "factor_bias": "nonmonic+expanded",
+        "form_id": "quadratic_form",
+        "openstax_form": "quadratic_form",
+        "openstax_case": "\u00a76.2 / \u00a76.3 quadratic form substitution",
+        "strategy": "quadratic_form",
+        "catalog_id": "algebra2_polys",
+        "construction": "forward_form_catalog",
+        "shape_id": "quadratic_form",
+        "family": "quadratic_form_simple",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:quadratic_form_simple",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "generator": "poly_skeleton",
+          "course_tag": "a2",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "quadratic_form_simple",
+          "upgrades": [
+            "quadratic_form_simple",
+            "degree:4",
+            "kind:quadratic_form",
+            "task:factor",
+            "d:16.0"
+          ],
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 44,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a2",
+        "generation_settings": {
+          "min_degree": 2,
+          "max_degree": 2,
+          "factor_rrt": false,
+          "coef_min": -15,
+          "coef_max": 15,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "factor_normal": true,
+          "factor_grouping": false,
+          "factor_substitution": false,
+          "factor_difference_of_squares": true,
+          "factor_perfect_square_trinomial": true,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "require_gcf": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "a2_polynomial_functions_factoring_quadratic_form",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "2x^{4} - 24x^{2} - 26",
+      "answer_latex": "\\left(x^{2} - 13\\right)\\left(2x^{2} + 2\\right)",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "quadratic_form",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "quadratic_form"
+        ],
+        [
+          "openstax_form",
+          "quadratic_form"
+        ],
+        [
+          "dens_style",
+          "expanded"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "factor_kind",
+          "quadratic_form"
+        ],
+        [
+          "factor_bias",
+          "nonmonic+expanded"
+        ],
+        [
+          "method",
+          "quadratic_form_simple"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          4
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "factor_poly": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.8958569619691905,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.895857 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 4,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "quadratic_form_simple",
+        "degree": 4,
+        "upgrades": [
+          "quadratic_form_simple",
+          "degree:4",
+          "kind:quadratic_form",
+          "task:factor",
+          "d:16.0"
+        ],
+        "effective_d": 16.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "factor",
+        "dens_style": "expanded",
+        "factor_kind": "quadratic_form",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 4,
+        "factor_bias": "nonmonic+expanded",
+        "form_id": "quadratic_form",
+        "openstax_form": "quadratic_form",
+        "openstax_case": "\u00a76.2 / \u00a76.3 quadratic form substitution",
+        "strategy": "quadratic_form",
+        "catalog_id": "algebra2_polys",
+        "construction": "forward_form_catalog",
+        "shape_id": "quadratic_form",
+        "family": "quadratic_form_simple",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:quadratic_form_simple",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "generator": "poly_skeleton",
+          "course_tag": "a2",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "quadratic_form_simple",
+          "upgrades": [
+            "quadratic_form_simple",
+            "degree:4",
+            "kind:quadratic_form",
+            "task:factor",
+            "d:16.0"
+          ],
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 46,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "quadratic_form_simple",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a2",
+        "generation_settings": {
+          "min_degree": 2,
+          "max_degree": 2,
+          "factor_rrt": false,
+          "coef_min": -15,
+          "coef_max": 15,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "factor_normal": true,
+          "factor_grouping": false,
+          "factor_substitution": false,
+          "factor_difference_of_squares": true,
+          "factor_perfect_square_trinomial": true,
+          "factor_difference_of_cubes": false,
+          "factor_sum_of_cubes": false,
+          "require_gcf": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor.}"
+      }
+    }
+  ],
+  "failures": []
+}

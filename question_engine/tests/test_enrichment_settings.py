@@ -100,6 +100,7 @@ def test_rational_expression_force_lcd():
             "force_lcd": True,
             "allow_polynomial_terms": False,
             "term_count": 3,
+            "use_constructive_rational": True,
         }
     )
     assert questions

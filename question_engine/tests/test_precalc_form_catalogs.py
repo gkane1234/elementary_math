@@ -89,6 +89,8 @@ def test_pc_exp_log_and_trig_emit_form_ids():
     cases = [
         ("exponential_equation_simple", "pc_exponential_equations_not_requiring_logarithms"),
         ("log_change_of_base", "pc_properties_of_logarithms"),
+        ("log_equation_simple", "pc_logarithmic_equations_hard"),
+        ("log_equation_simple", "pc_logarithmic_equations_simple"),
         ("trig_basic_identities", "pc_fundamental_identities"),
         ("trig_factoring_equations", "pc_equations_with_factoring_and_fundamental_identities"),
         ("simple_trig_equations", "pc_simple_trig_equations"),
@@ -102,6 +104,59 @@ def test_pc_exp_log_and_trig_emit_form_ids():
         meta = qs[0].metadata or {}
         assert meta.get("form_id"), (gen_key, leaf, meta)
         assert meta.get("openstax_form") == meta.get("form_id")
+
+
+def test_pc_log_equation_hard_d_ladder_shapes():
+    """Hard leaf must not stamp bare definition at high D; D=0 stays multi-step."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        load_form_catalog,
+    )
+
+    load_form_catalog.cache_clear()
+    gen = PC_GENERATORS["log_equation_simple"]
+    easy_modes = set()
+    hard_modes = set()
+    for seed in range(200, 260):
+        q0 = gen(
+            "pc_logarithmic_equations_hard",
+            {"difficulty": 0, "count": 1, "seed": seed, "include_answer_key": True},
+        )[0]
+        easy_modes.add(str((q0.metadata or {}).get("mode") or ""))
+        qh = gen(
+            "pc_logarithmic_equations_hard",
+            {"difficulty": 22, "count": 1, "seed": seed, "include_answer_key": True},
+        )[0]
+        hard_modes.add(str((qh.metadata or {}).get("mode") or ""))
+    assert "definition" not in easy_modes, easy_modes
+    assert easy_modes <= {"linear_argument", "algebra_coeff"}, easy_modes
+    assert "definition" not in hard_modes, hard_modes
+    assert hard_modes & {
+        "product_sum",
+        "quotient_diff",
+        "one_to_one_quadratic",
+    }, hard_modes
+
+
+def test_pc_log_equation_simple_d0_is_definition():
+    """D=0 must not be coerced to 6 (falsy `or 6` bug) — stay definition-only."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        load_form_catalog,
+    )
+
+    load_form_catalog.cache_clear()
+    gen = PC_GENERATORS["log_equation_simple"]
+    modes = set()
+    for seed in range(100, 140):
+        q = gen(
+            "pc_logarithmic_equations_simple",
+            {"difficulty": 0, "count": 1, "seed": seed, "include_answer_key": True},
+        )[0]
+        modes.add(str((q.metadata or {}).get("mode") or ""))
+        assert "\\log" in q.prompt_latex or "ln" in q.prompt_latex
+        # Bare argument x, not linear ax+c / product of logs
+        assert "+ \\log" not in q.prompt_latex.replace(" ", "")
+        assert q.prompt_latex.count("x") == 1
+    assert modes == {"definition"}, modes
 
 
 def test_pc_log_props_diversifies_rules():

@@ -1,11 +1,4 @@
-"""Algebra 2 compound inequalities — framework-backed type."""
+"""A2 compound inequalities — primitive generator (catalog + GENERATORS override)."""
 
-from question_engine.frameworks.equation import CompoundInequalitiesFramework
-from question_engine.types._framework_type import register_framework_type
-
-register_framework_type(
-    "a2_equations_and_inequalities_compound_inequalities",
-    CompoundInequalitiesFramework(),
-    setting_profile="compound_inequality",
-    exclude_settings=("min_terms", "max_terms", "phrase_complexity", "max_phrase_operations"),
-)
+# Catalog registration uses GENERATORS last-wins (primitive_linear).
+# This module intentionally does not re-bind CompoundInequalitiesFramework.

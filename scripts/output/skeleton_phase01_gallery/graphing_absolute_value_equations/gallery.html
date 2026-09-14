@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Graph $y=a|x-h|+k$ (UNCLEAR gold) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Graph $y=a|x-h|+k$ (UNCLEAR gold)</h1>
+<p class="sub"><code>graphing_absolute_value_equations</code> · live <code>_generate_for_type</code>
+ · pattern <em>(none / stub)</em>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">UNCLEAR: not in Elementary Algebra TOC. Gold is College Algebra §3.6 + old vertex/V-shape. Red-header samples of existing graph engine.</p>
+<p class='sub'>Also wired: <code>a2_linear_relations_and_functions_graphing_absolute_value_equations</code></p>
+<div class='notes-alert'>UNCLEAR · LIMITATIONS — see Limitations in notes below.</div><div class='notes-block'><h1><code>graphing_absolute_value_equations</code> — Graphing absolute value equations</h1>
+<p>&gt; <strong>UNCLEAR</strong> — Not in Elementary Algebra TOC; gold is College Algebra 3.6 + old vertex/V-shape.</p>
+<ul>
+<li><strong>Course:</strong> Algebra 1</li>
+<li><strong>Category:</strong> Algebra 1 — Linear Equations and Inequalities</li>
+<li><strong>Generator:</strong> <code>graph_absolute_value</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Graph y=a|x−h|+k. D=0: y=|x|. High D: vertex shift and a≠1.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>y = |x + 2|</code> - answer: <code>y = |x + 2|</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>y = |x - 5|</code> - answer: <code>y = |x - 5|</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>y = |x| + 3</code> - answer: <code>y = |x| + 3</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>y = |x + 6| + 5</code> - answer: <code>y = |x + 6| + 5</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>y = |x| + 3</code> - answer: <code>y = |x| + 3</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>y = |x + 8| + 3</code> - answer: <code>y = |x + 8| + 3</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>y = \frac{3}{2}|x - 3| + 6</code> - answer: <code>y = \frac{3}{2}|x - 3| + 6</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>y = \frac{3}{2}|x + 3| - 8</code> - answer: <code>y = \frac{3}{2}|x + 3| - 8</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>College Algebra 2e — 3.6 Absolute Value Functions</h3>
+<ul>
+<li>https://openstax.org/books/college-algebra-2e/pages/3-6-absolute-value-functions</li>
+<li>Shape: Graph y=|x−2|−1; vertex (h,k), V shape.</li>
+</ul>
+<h3>Intermediate Algebra 2e — 3.6 Graphs of Functions</h3>
+<ul>
+<li>https://openstax.org/books/intermediate-algebra-2e/pages/3-6-graphs-of-functions</li>
+<li>Shape: IA graphs functions; dedicated abs-value graph is College Algebra.</li>
+</ul>
+<h2>Variety notes</h2>
+<p>Not in Elementary Algebra TOC; gold is College Algebra 3.6 + old vertex/V-shape.</p>
+<h2>Limitations</h2>
+<ul>
+<li>UNCLEAR / LIMITATIONS: not in EA TOC; College Algebra §3.6 vertex/V-shape. Red-header samples.</li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse graph_absolute_value. EA has no abs-value graph section — copy old path.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x + 2|$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x + 2|$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x - 5|$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x - 5|$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x - 5|$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x - 5|$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x| + 3$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x| + 3$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x + 6| + 5$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x + 6| + 5$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x| + 1$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x| + 1$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x| + 3$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x| + 3$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x + 8| + 3$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x + 8| + 3$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$y = |x| + 5$$</div><div class='math'><div class='lab'>Answer</div>$$y = |x| + 5$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$y = \frac{3}{2}|x - 3| + 6$$</div><div class='math'><div class='lab'>Answer</div>$$y = \frac{3}{2}|x - 3| + 6$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$y = \frac{3}{2}|x + 3| - 8$$</div><div class='math'><div class='lab'>Answer</div>$$y = \frac{3}{2}|x + 3| - 8$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$y = \frac{3}{2}|x - 5| + 7$$</div><div class='math'><div class='lab'>Answer</div>$$y = \frac{3}{2}|x - 5| + 7$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>graphing_absolute_value_equations</code></p></article>
+</body></html>

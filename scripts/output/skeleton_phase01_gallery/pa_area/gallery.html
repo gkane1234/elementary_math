@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Geometry — area / quads / circles / solids — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Geometry — area / quads / circles / solids</h1>
+<p class="sub"><code>pa_area_of_triangles_and_quadrilaterals</code> · live <code>_generate_for_type</code>
+ · pattern <strong>GeoMeasure</strong>
+ · 9/9 ok · D ladder 0, 8, 16
+ · seeds 101, 207, 313</p>
+<p class="sub">D=0 rectangle or right triangle. Circles $C=2\pi r$. OpenStax PA §9.4–9.6.</p>
+<p class='sub'>Also wired: <code>pa_circles</code>, <code>pa_classifying_volume_and_surface_area</code></p>
+<div class='notes-block'><h1><code>pa_area_of_triangles_and_quadrilaterals</code> — Area of triangles and quadrilaterals</h1>
+<ul>
+<li><strong>Course:</strong> Prealgebra (PA catalog)</li>
+<li><strong>Category:</strong> Pre-Algebra — Plane Figures</li>
+<li><strong>Generator:</strong> <code>geo_triangles_and_quadrilaterals_area</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Find area. D=0: rectangle or right triangle with integer sides. High D: parallelogram / trapezoid; composite later only if old path already does.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Find the area of the parallelogram.}</code> - answer: <code>24\text{ cm}^2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Find the area of the parallelogram.}</code> - answer: <code>48\text{ cm}^2</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Find the area of the square.}</code> - answer: <code>144\text{ cm}^2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Find the area of the kite.}</code> - answer: <code>12\text{ cm}^2</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Find the area of the square.}</code> - answer: <code>256\text{ cm}^2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Find the area of the kite.}</code> - answer: <code>52.5\text{ cm}^2</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Find the area of the square.}</code> - answer: <code>400\text{ cm}^2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Find the area of the kite.}</code> - answer: <code>71.5\text{ cm}^2</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Prealgebra 2e — 9.4 Use Properties of Rectangles, Triangles, and Trapezoids</h3>
+<ul>
+<li>https://openstax.org/books/prealgebra-2e/pages/9-4-use-properties-of-rectangles-triangles-and-trapezoids</li>
+<li>Shape: A=bh, A=½bh, trapezoid formula.</li>
+</ul>
+<h2>Variety notes</h2>
+<p>Old path shapes at D=0 vs D=22 are recorded above. Flag if a WP dump stub or a single Mad-Lib.</p>
+<h2>Limitations</h2>
+<ul>
+<li>Old path can dump a bare equation / identity instead of the named skill.</li>
+<li>Story variety thin (one Mad-Lib / single vehicle) vs OpenStax frames.</li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse geo_triangles_and_quadrilaterals_area.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>GeoMeasure</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the parallelogram.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 219.2 143.2" width="219.2" height="143.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,102.0 142.0,102.0 178.0,22.0 58.0,22.0" fill="#dbeafe" fill-opacity="0.25" stroke="#1f2937" stroke-width="1.75"/><text x="82.0" y="121.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">6 cm</text><text x="197.2" y="62.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">4 cm</text><circle cx="22.0" cy="102.0" r="3" fill="#1f2937"/><text x="10.6" y="107.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="142.0" cy="102.0" r="3" fill="#1f2937"/><text x="151.3" y="110.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="178.0" cy="22.0" r="3" fill="#1f2937"/><text x="189.4" y="16.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="58.0" cy="22.0" r="3" fill="#1f2937"/><text x="48.7" y="13.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div><div class='math'><div class='lab'>Answer</div>$$24\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>parallelogram</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>GeoMeasure</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the parallelogram.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180.2 183.2" width="180.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,142.0 112.0,142.0 139.0,22.0 49.0,22.0" fill="#dbeafe" fill-opacity="0.25" stroke="#1f2937" stroke-width="1.75"/><text x="67.0" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">6 cm</text><text x="158.2" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">8 cm</text><circle cx="22.0" cy="142.0" r="3" fill="#1f2937"/><text x="13.1" y="151.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="112.0" cy="142.0" r="3" fill="#1f2937"/><text x="117.9" y="153.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="139.0" cy="22.0" r="3" fill="#1f2937"/><text x="147.9" y="12.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="49.0" cy="22.0" r="3" fill="#1f2937"/><text x="43.1" y="10.7" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div><div class='math'><div class='lab'>Answer</div>$$48\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>parallelogram</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>GeoMeasure</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the parallelogram.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160.7 183.2" width="160.7" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,142.0 97.0,142.0 119.5,22.0 44.5,22.0" fill="#dbeafe" fill-opacity="0.25" stroke="#1f2937" stroke-width="1.75"/><text x="59.5" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">5 cm</text><text x="138.7" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">8 cm</text><circle cx="22.0" cy="142.0" r="3" fill="#1f2937"/><text x="13.9" y="151.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="97.0" cy="142.0" r="3" fill="#1f2937"/><text x="102.1" y="153.7" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="119.5" cy="22.0" r="3" fill="#1f2937"/><text x="127.6" y="12.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="44.5" cy="22.0" r="3" fill="#1f2937"/><text x="39.4" y="10.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div><div class='math'><div class='lab'>Answer</div>$$40\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>parallelogram</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>GeoMeasure</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the square.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 183.2 183.2" width="183.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,142.0 142.0,142.0 142.0,22.0 22.0,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="82.0" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">12 cm</text><text x="161.2" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">12 cm</text><circle cx="22.0" cy="142.0" r="3" fill="#1f2937"/><text x="12.9" y="151.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="142.0" cy="142.0" r="3" fill="#1f2937"/><text x="151.1" y="151.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="142.0" cy="22.0" r="3" fill="#1f2937"/><text x="151.1" y="12.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="12.9" y="12.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div><div class='math'><div class='lab'>Answer</div>$$144\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>square</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>GeoMeasure</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the kite.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 183.2 143.2" width="183.2" height="143.2" role="img" aria-label="Geometry diagram"><polygon points="82.0,22.0 142.0,62.0 82.0,102.0 22.0,62.0" fill="#dbeafe" fill-opacity="0.25" stroke="#1f2937" stroke-width="1.75"/><text x="104.0" y="121.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">6 cm</text><text x="161.2" y="84.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">4 cm</text><circle cx="82.0" cy="22.0" r="3" fill="#1f2937"/><text x="82.0" y="9.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="142.0" cy="62.0" r="3" fill="#1f2937"/><text x="154.8" y="62.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="82.0" cy="102.0" r="3" fill="#1f2937"/><text x="82.0" y="114.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="62.0" r="3" fill="#1f2937"/><text x="9.2" y="62.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div><div class='math'><div class='lab'>Answer</div>$$12\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>kite</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>GeoMeasure</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the triangle.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160.4 191.2" width="160.4" height="191.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,150.0 138.4,150.0 96.1,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><line x1="96.1" y1="22.0" x2="96.1" y2="150.0" stroke="#1f2937" stroke-width="1.75" stroke-dasharray="6 4" fill="none"/><polyline points="96.1,137.2 108.9,137.2 108.9,150.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="80.2" y="169.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">10 cm</text><text x="104.6" y="68.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">11 cm</text><circle cx="22.0" cy="150.0" r="3" fill="#1f2937"/><text x="11.4" y="157.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="138.4" cy="150.0" r="3" fill="#1f2937"/><text x="148.3" y="158.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="96.1" cy="22.0" r="3" fill="#1f2937"/><text x="97.6" y="9.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text></svg></div><div class='math'><div class='lab'>Answer</div>$$55\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>triangle_area</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>GeoMeasure</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the square.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 183.2 183.2" width="183.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,142.0 142.0,142.0 142.0,22.0 22.0,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="82.0" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">16 cm</text><text x="161.2" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">16 cm</text><circle cx="22.0" cy="142.0" r="3" fill="#1f2937"/><text x="12.9" y="151.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="142.0" cy="142.0" r="3" fill="#1f2937"/><text x="151.1" y="151.1" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="142.0" cy="22.0" r="3" fill="#1f2937"/><text x="151.1" y="12.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="12.9" y="12.9" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div><div class='math'><div class='lab'>Answer</div>$$256\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>square</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>GeoMeasure</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the kite.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 119.2 183.2" width="119.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="50.0,22.0 78.0,82.0 50.0,142.0 22.0,82.0" fill="#dbeafe" fill-opacity="0.25" stroke="#1f2937" stroke-width="1.75"/><text x="72.0" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">7 cm</text><text x="97.2" y="104.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">15 cm</text><circle cx="50.0" cy="22.0" r="3" fill="#1f2937"/><text x="50.0" y="9.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="78.0" cy="82.0" r="3" fill="#1f2937"/><text x="90.8" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="50.0" cy="142.0" r="3" fill="#1f2937"/><text x="50.0" y="154.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="22.0" cy="82.0" r="3" fill="#1f2937"/><text x="9.2" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">D</text></svg></div><div class='math'><div class='lab'>Answer</div>$$52.5\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>kite</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>GeoMeasure</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find the area of the triangle.}$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 159.2 191.2" width="159.2" height="191.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,150.0 137.2,150.0 103.2,22.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><line x1="103.2" y1="22.0" x2="103.2" y2="150.0" stroke="#1f2937" stroke-width="1.75" stroke-dasharray="6 4" fill="none"/><polyline points="103.2,137.2 116.0,137.2 116.0,150.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="79.6" y="169.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">18 cm</text><text x="114.6" y="70.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">20 cm</text><circle cx="22.0" cy="150.0" r="3" fill="#1f2937"/><text x="11.3" y="157.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text><circle cx="137.2" cy="150.0" r="3" fill="#1f2937"/><text x="146.9" y="158.3" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="103.2" cy="22.0" r="3" fill="#1f2937"/><text x="105.5" y="9.4" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text></svg></div><div class='math'><div class='lab'>Answer</div>$$180\text{ cm}^2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>GeoMeasure</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>geometry_reuse</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>triangle_area</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>pa_area_of_triangles_and_quadrilaterals</code></p></article>
+</body></html>

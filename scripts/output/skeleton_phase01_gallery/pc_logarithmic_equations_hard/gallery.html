@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>PC — Logarithmic equations, hard — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>PC — Logarithmic equations, hard</h1>
+<p class="sub"><code>pc_logarithmic_equations_hard</code> · live <code>_generate_for_type</code>
+ · pattern <em>(none / stub)</em>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">Live <code>log_equation_simple</code> engine (reuse, no rewrite-skeleton). D=0 simple per <code>notes/pc_logarithmic_equations_hard.md</code>. OpenStax PC cite in notes.</p>
+
+<div class='notes-block'><h1>Notes — <code>pc_logarithmic_equations_hard</code> (<code>Logarithmic equations, hard</code>)</h1>
+<ul>
+<li><strong>Course:</strong> Precalculus</li>
+<li><strong>Category:</strong> Precalculus — Exponential and Logarithmic Expressions</li>
+<li><strong>Generator:</strong> <code>log_equation_simple</code> (OpenStax form catalog <code>precalculus_exp_log</code>)</li>
+<li><strong>Suggested family:</strong> other</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Solve multi-step logarithmic equations (definition with linear argument → one-to-one → product/quotient properties → quadratic with extraneous).</li>
+<li><strong>D=0:</strong> Multi-step but simplest hard shapes — <code>log_b(ax+c)=k</code> or <code>a log_b(x)+c=d</code> (OpenStax §4.6 Ex. 9–10 / easy hard exercises). Not bare <code>log_b(x)=k</code> (that is the simple leaf).</li>
+<li><strong>High D (≈16–22):</strong> Format unlocks — product <code>log(x)+log(x−p)=k</code> with extraneous discard; quotient difference; one-to-one with <code>x^2</code> (OpenStax §4.6 Ex. 12). Numeric hardness via bases/coefficients first.</li>
+<li><strong>Must not:</strong> Same easy definition stamp as the simple leaf at every D; wrong-topic shapes.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p><strong>Before (flat easy — same as simple leaf):</strong> live default stamped <code>log_b(x)=k</code> at all D.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td><code>$\log_{3}(x) = 5$</code></td><td><code>$x = 243$</code></td><td>definition only</td></tr><tr><td>8</td><td>101</td><td><code>$\log(x) = 2$</code></td><td><code>$x = 100$</code></td><td>definition only</td></tr><tr><td>16</td><td>101</td><td><code>$\log_{11}(x) = 2$</code></td><td><code>$x = 121$</code></td><td>definition only</td></tr><tr><td>22</td><td>101</td><td><code>$\log_{11}(x) = 2$</code></td><td><code>$x = 121$</code></td><td>definition only</td></tr></tbody></table>
+<p><strong>After (form-driven D ladder):</strong> live <code>_generate_for_type</code> seed=101.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td><code>$\log_{3}\left(3x + 3\right) = 3$</code></td><td><code>$x = 8$</code></td><td>linear argument</td></tr><tr><td>8</td><td>101</td><td><code>$\log_{5}\left(2x + 9\right) = \log_{5}\left(x + 15\right)$</code></td><td><code>$x = 6$</code></td><td>one-to-one</td></tr><tr><td>16</td><td>101</td><td><code>$\log_{5}\left(x + 27\right) - \log_{5}(x) = \log_{5}(4)$</code></td><td><code>$x = 9$</code></td><td>quotient / condense</td></tr><tr><td>22</td><td>101</td><td><code>$\log_{5}\left(x + 27\right) - \log_{5}(x) = \log_{5}(4)$</code></td><td><code>$x = 9$</code></td><td>quotient (also product / quadratic across seeds)</td></tr></tbody></table>
+<p>Opt-out flag used: _none (default live generator)_</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Precalculus 2e §4.6</td><td>https://openstax.org/books/precalculus-2e/pages/4-6-exponential-and-logarithmic-equations</td><td>linear-arg definition; algebra around log; one-to-one; product/quotient; <code>log(x^2)=log(linear)</code> + extraneous</td></tr><tr><td>OpenStax Intermediate Algebra 2e §10.5</td><td>https://openstax.org/books/intermediate-algebra-2e/pages/10-5-solve-exponential-and-logarithmic-equations</td><td>product property equations with domain check</td></tr></tbody></table>
+<p>Local HTML (if mined): <code>scripts/output/example_mining/precalculus-2e/stage1/4-6-exponential-and-logarithmic-equations.md</code></p>
+<h2>Variety notes / flags</h2>
+<ul>
+<li>Hard leaf forms rotate by D (linear → 1-to-1 / algebra → product / quotient / quadratic). Across seeds at D=22: product_sum, quotient_diff, one_to_one_quadratic.</li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<ul>
+<li><strong>Reuse:</strong> <code>log_equation_simple</code> + <code>precalculus_exp_log</code> form kinds (<code>linear_argument</code>, <code>algebra_coeff</code>, <code>one_to_one</code>, <code>product_sum</code>, <code>quotient_diff</code>, <code>one_to_one_quadratic</code>).</li>
+<li><strong>New:</strong> not needed.</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Variety:</strong> Quotient / product / quadratic dominate high D; linear one-to-one is capped (<code>d_max</code>) so it does not crowd D≥16. Change-of-base *as an equation* and applied log models remain out of scope (separate leaves / deferred <code>exp_log_models</code>).</li>
+<li><strong>Difficulty scaling:</strong> Real structural unlocks (not cost-pad). Residual: at a fixed seed, D=16 and D=22 can share a quotient stem; across seeds high-D modes diversify.</li>
+<li><strong>OpenStax:</strong> §4.6 / IA §10.5 shapes covered; no applied radioactive-decay word problems on this leaf.</li>
+<li><strong>Engine:</strong> Wired. Simple leaf stays on definition → linear → algebra (no product/extraneous).</li>
+</ul></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>log_hard_linear_argument</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{3}\left(3x + 3\right) = 3$$</div><div class='math'><div class='lab'>Answer</div>$$x = 8$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_hard_linear_argument</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_hard_linear_argument</span></div><div class='kv'><span class='k'>mode</span><span class='v'>linear_argument</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>log_hard_linear_argument</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{3}\left(2x + 25\right) = 3$$</div><div class='math'><div class='lab'>Answer</div>$$x = 1$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_hard_linear_argument</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_hard_linear_argument</span></div><div class='kv'><span class='k'>mode</span><span class='v'>linear_argument</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>log_hard_linear_argument</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{5}\left(x + 21\right) = 2$$</div><div class='math'><div class='lab'>Answer</div>$$x = 4$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_hard_linear_argument</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_hard_linear_argument</span></div><div class='kv'><span class='k'>mode</span><span class='v'>linear_argument</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>log_one_to_one</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{5}\left(2x + 9\right) = \log_{5}\left(x + 15\right)$$</div><div class='math'><div class='lab'>Answer</div>$$x = 6$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_one_to_one</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_one_to_one</span></div><div class='kv'><span class='k'>mode</span><span class='v'>one_to_one</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>log_hard_algebra_coeff</span></header><div class='math'><div class='lab'>Prompt</div>$$3 \log_{5}(x) + 6 = 9$$</div><div class='math'><div class='lab'>Answer</div>$$x = 5$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_hard_algebra_coeff</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_hard_algebra_coeff</span></div><div class='kv'><span class='k'>mode</span><span class='v'>algebra_coeff</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>log_hard_algebra_coeff</span></header><div class='math'><div class='lab'>Prompt</div>$$5 \log_{8}(x) + 2 = 7$$</div><div class='math'><div class='lab'>Answer</div>$$x = 8$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_hard_algebra_coeff</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_hard_algebra_coeff</span></div><div class='kv'><span class='k'>mode</span><span class='v'>algebra_coeff</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>log_quotient_sum_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{5}\left(x + 27\right) - \log_{5}(x) = \log_{5}(4)$$</div><div class='math'><div class='lab'>Answer</div>$$x = 9$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>mode</span><span class='v'>quotient_diff</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>log_quotient_sum_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{12}\left(x + 8\right) - \log_{12}(x) = \log_{12}(3)$$</div><div class='math'><div class='lab'>Answer</div>$$x = 4$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>mode</span><span class='v'>quotient_diff</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>log_quotient_sum_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{12}\left(x + 36\right) - \log_{12}(x) = \log_{12}(5)$$</div><div class='math'><div class='lab'>Answer</div>$$x = 9$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>mode</span><span class='v'>quotient_diff</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span><span class='tag fid'>log_quotient_sum_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{5}\left(x + 27\right) - \log_{5}(x) = \log_{5}(4)$$</div><div class='math'><div class='lab'>Answer</div>$$x = 9$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>mode</span><span class='v'>quotient_diff</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span><span class='tag fid'>log_quotient_sum_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{12}\left(x + 8\right) - \log_{12}(x) = \log_{12}(3)$$</div><div class='math'><div class='lab'>Answer</div>$$x = 4$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>mode</span><span class='v'>quotient_diff</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span><span class='tag fid'>log_quotient_sum_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\log_{12}\left(x + 36\right) - \log_{12}(x) = \log_{12}(5)$$</div><div class='math'><div class='lab'>Answer</div>$$x = 9$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>log_equation_simple</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>log_quotient_sum_equation</span></div><div class='kv'><span class='k'>mode</span><span class='v'>quotient_diff</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_logarithmic_equations_hard</code></p></article>
+</body></html>

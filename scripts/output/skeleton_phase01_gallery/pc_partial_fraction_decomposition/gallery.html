@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>PC — Partial fraction decomposition — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>PC — Partial fraction decomposition</h1>
+<p class="sub"><code>pc_partial_fraction_decomposition</code> · live <code>_generate_for_type</code>
+ · pattern <em>(none / stub)</em>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">Live <code>partial_fraction_decomposition</code> engine (reuse, no rewrite-skeleton). D=0 simple per <code>notes/pc_partial_fraction_decomposition.md</code>. OpenStax PC cite in notes.</p>
+
+<div class='notes-block'><h1>Notes — <code>pc_partial_fraction_decomposition</code> (<code>Partial fraction decomposition</code>)</h1>
+<ul>
+<li><strong>Course:</strong> Precalculus</li>
+<li><strong>Category:</strong> Precalculus — Matrices and Systems</li>
+<li><strong>Generator:</strong> <code>partial_fraction_decomposition</code></li>
+<li><strong>Suggested family:</strong> other</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Student decompose the expression for partial fraction decomposition.</li>
+<li><strong>D=0:</strong> decompose proper rational; simplest numeric/instance (per OpenStax § easy exercises).</li>
+<li><strong>High D (≈16–22):</strong> harder coefficients, more factors/steps, or extra format (e.g. general solution for trig, higher-degree PFD).</li>
+<li><strong>Must not:</strong> wrong-topic shapes, equation dump without context on WP leaves, calc topics on algebra-only skeletons.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> at default path. No skeleton opt-out — live generator <strong>is</strong> the old path for Precalc leaves.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td><code>$\text{Decompose } \frac{x + 5}{x^{2} + x - 2}$</code></td><td><code>$\frac{-1}{x + 2}+\frac{2}{x - 1}$</code></td><td>PFD</td></tr><tr><td>8</td><td>101</td><td><code>$\text{Decompose } \frac{6x^{2} - 3x - 75}{3\left(x + 2\right)\left(x - 1\right)\left(x - 3\right)}$</code></td><td><code>$\frac{-1}{x + 2}+\frac{4}{x - 1}+\frac{-1}{x - 3}$</code></td><td>PFD</td></tr><tr><td>16</td><td>101</td><td><code>$\text{Decompose } \frac{3x^{2} + 24x + 96}{3x^{3} + 6x^{2} + 48x + 96}$</code></td><td><code>$\frac{1}{x + 2}+\frac{8}{x^{2} + 16}$</code></td><td>PFD</td></tr><tr><td>22</td><td>101</td><td><code>$\text{Decompose } \frac{-3x^{2} + 24x + 48}{3x^{3} + 12x^{2} + 48x + 192}$</code></td><td><code>$\frac{-1}{x + 4}+\frac{8}{x^{2} + 16}$</code></td><td>PFD</td></tr></tbody></table>
+<p>Opt-out flag used: _none (default live generator)_</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Precalculus 2e §3.7</td><td>https://openstax.org/books/precalculus-2e/pages/3-7-rational-functions</td><td>decompose proper rational</td></tr></tbody></table>
+<p>Local HTML (if mined): <code>textbooks/openstax/html/precalculus-2e/…</code> or <code>scripts/output/example_mining/precalculus-2e/stage1/3-7-rational-functions.md</code></p>
+<h2>Variety notes / flags</h2>
+<ul>
+<li>Live generator produces topic-shaped prompts; OpenStax frames for WP/application leaves.</li>
+</ul>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<ul>
+<li><strong>Reuse:</strong> Reuse constructive_pfd / rational reverse.</li>
+<li><strong>New:</strong> only if no honest skeleton match — otherwise leave leaf (see <code>benchmark-old-path.mdc</code>).</li>
+<li><strong>Not this pass:</strong> notes only — no generator wiring.</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Variety:</strong> Notes claim topic-shaped live stems; re-check seed diversity beyond seed=101 before treating as gold-locked.</li>
+<li><strong>Difficulty scaling:</strong> Notes table shows stem changes with D at seed=101; confirm numeric hardness before format unlocks.</li>
+<li><strong>OpenStax:</strong> Cite present; gold shapes in cite column — do not invent new algebra beyond old-path + cite.</li>
+<li><strong>Engine:</strong> Notes still say notes-only / not this pass, but catalog generator is live (old path = default). No new skeleton this audit unless gold locks.</li>
+<li><strong>This pass:</strong> Gallery + Limitations audit only. Implement leftover only if notes lock gold (not for flat-D / red-header variety leaves).</li>
+</ul>
+<p>_topic-fit galleries: <code>scripts/output/topic_fit/pc_algebraic_gallery/</code> (log/exp/pfd/function ops/rational); <code>scripts/output/topic_fit/difficulty_sweep/by_course/precalculus.html</code> (continuous-D subset)._</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>nonrepeated_linear_2</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{x + 5}{x^{2} + x - 2}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{-1}{x + 2}+\frac{2}{x - 1}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>nonrepeated_linear_2</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{3x + 7}{x^{2} + 4x + 3}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{2}{x + 1}+\frac{1}{x + 3}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>nonrepeated_linear_2</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{3x - 7}{x^{2} - 5x + 6}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{x - 2}+\frac{2}{x - 3}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>nonrepeated_linear_3</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{6x^{2} - 3x - 75}{3\left(x + 2\right)\left(x - 1\right)\left(x - 3\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{-1}{x + 2}+\frac{4}{x - 1}+\frac{-1}{x - 3}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>nonrepeated_linear_2</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{6x + 32}{x^{2} + 9x + 14}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{4}{x + 2}+\frac{2}{x + 7}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>nonrepeated_linear_2</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{6x - 14}{2x^{2} - 10x + 12}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{x - 2}+\frac{2}{x - 3}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_2</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>nonrepeated_irreducible_quadratic</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{3x^{2} + 24x + 96}{3x^{3} + 6x^{2} + 48x + 96}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{x + 2}+\frac{8}{x^{2} + 16}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_irreducible_quadratic</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_irreducible_quadratic</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>nonrepeated_linear_3</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{14x^{2} + 55x - 400}{\left(x\right)\left(x + 10\right)\left(x - 5\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{8}{x}+\frac{3}{x + 10}+\frac{3}{x - 5}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>nonrepeated_linear_3</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{7x^{2} - 7x - 22}{\left(x - 2\right)\left(x - 3\right)\left(x + 2\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{2}{x - 2}+\frac{4}{x - 3}+\frac{1}{x + 2}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span><span class='tag fid'>nonrepeated_irreducible_quadratic</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{-3x^{2} + 24x + 48}{3x^{3} + 12x^{2} + 48x + 192}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{-1}{x + 4}+\frac{8}{x^{2} + 16}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_irreducible_quadratic</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_irreducible_quadratic</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span><span class='tag fid'>nonrepeated_linear_3</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{10x^{2} + 42x - 604}{\left(x + 3\right)\left(x + 13\right)\left(x - 5\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{8}{x + 3}+\frac{3}{x + 13}+\frac{-1}{x - 5}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span><span class='tag fid'>nonrepeated_linear_3</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Decompose } \frac{7x^{2} - x - 36}{\left(x - 2\right)\left(x - 3\right)\left(x + 3\right)}$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{2}{x - 2}+\frac{4}{x - 3}+\frac{1}{x + 3}$$</div><div class='debug'><div class='kv'><span class='k'>primitive_engine</span><span class='v'>constructive_pfd</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>nonrepeated_linear_3</span></div><div class='kv'><span class='k'>mode</span><span class='v'>pfd</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pc_partial_fraction_decomposition</code></p></article>
+</body></html>

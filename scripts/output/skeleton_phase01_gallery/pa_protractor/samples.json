@@ -1,0 +1,1149 @@
+{
+  "section": {
+    "slug": "pa_protractor",
+    "title": "Geometry \u2014 draw / measure angles (UNCLEAR)",
+    "pattern": "GeoMeasure",
+    "engine": "geometry_reuse",
+    "type_id": "pa_drawing_and_measuring_angles",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "UNCLEAR gold (protractor vs properties). Reuse geo_angles \u2014 no new engine. OpenStax PA \u00a79.3."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Find } m\\angle CDB\\text{ using the diagram.}",
+      "answer_latex": "108^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 189.7 141.0\" width=\"189.7\" height=\"141.0\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"66.7\" y1=\"119.0\" x2=\"167.7\" y2=\"104.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"66.7\" y1=\"119.0\" x2=\"98.2\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"66.7\" y1=\"119.0\" x2=\"22.0\" y2=\"27.3\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 83.4 116.7 A 16.8 16.8 0 0 0 71.9 103.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"89.4\" y=\"100.0\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">64\u00b0</text><path d=\"M 74.1 96.2 A 24.0 24.0 0 0 0 56.2 97.4\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"64.1\" y=\"82.3\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">44\u00b0</text><path d=\"M 113.1 112.5 A 46.8 46.8 0 0 0 46.2 76.9\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"95.1\" y=\"65.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"66.7\" cy=\"119.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"55.5\" y=\"127.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"174.9\" y=\"103.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><text x=\"100.5\" y=\"15.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text><text x=\"18.8\" y=\"20.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "adjacent_angles"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "C",
+            "D",
+            "B",
+            "C",
+            "H",
+            "B"
+          ],
+          "dimensions": {
+            "angle_deg": 108.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "adjacent_angles",
+          "labels": [
+            "D",
+            "C",
+            "H",
+            "B"
+          ],
+          "segments": [
+            [
+              "D",
+              "C"
+            ],
+            [
+              "D",
+              "H"
+            ],
+            [
+              "D",
+              "B"
+            ]
+          ],
+          "angles": [
+            "64\u00b0",
+            "44\u00b0",
+            "?"
+          ],
+          "points": {
+            "D": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "D"
+            },
+            "C": {
+              "x": 2.5251835752910043,
+              "y": 0.35489140744816683,
+              "label": "C"
+            },
+            "H": {
+              "x": 0.787993335656116,
+              "y": 2.425194116552641,
+              "label": "H"
+            },
+            "B": {
+              "x": -1.1178464243121475,
+              "y": 2.2919248180628755,
+              "label": "B"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (D) at (0.000,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (-0.280,-0.220) {D};\n  \\coordinate (C) at (2.525,0.355);\n  \\node at (2.703,0.380) {C};\n  \\coordinate (H) at (0.788,2.425);\n  \\node at (0.844,2.596) {H};\n  \\coordinate (B) at (-1.118,2.292);\n  \\node at (-1.197,2.454) {B};\n  \\draw[thick] (D) -- (C);\n  \\draw[thick] (D) -- (H);\n  \\draw[thick] (D) -- (B);\n  \\draw[#2563eb] (D) ++(8.00:0.420) arc (8.00:72.00:0.420);\n  \\node at (0.567,0.476) {64\u00b0};\n  \\draw[#2563eb] (D) ++(72.00:0.600) arc (72.00:116.00:0.600);\n  \\node at (-0.064,0.918) {44\u00b0};\n  \\draw[#2563eb] (D) ++(8.00:1.170) arc (8.00:116.00:1.170);\n  \\node at (0.709,1.333) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 189.7 141.0\" width=\"189.7\" height=\"141.0\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"66.7\" y1=\"119.0\" x2=\"167.7\" y2=\"104.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"66.7\" y1=\"119.0\" x2=\"98.2\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"66.7\" y1=\"119.0\" x2=\"22.0\" y2=\"27.3\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 83.4 116.7 A 16.8 16.8 0 0 0 71.9 103.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"89.4\" y=\"100.0\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">64\u00b0</text><path d=\"M 74.1 96.2 A 24.0 24.0 0 0 0 56.2 97.4\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"64.1\" y=\"82.3\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">44\u00b0</text><path d=\"M 113.1 112.5 A 46.8 46.8 0 0 0 46.2 76.9\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"95.1\" y=\"65.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"66.7\" cy=\"119.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"55.5\" y=\"127.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"174.9\" y=\"103.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><text x=\"100.5\" y=\"15.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text><text x=\"18.8\" y=\"20.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text></svg>",
+        "difficulty": 0.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Ray } DF\\text{ is drawn. Draw ray } DB\\text{ so that } m\\angle FDB = 20^\\circ.",
+      "answer_latex": "20^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 196.0 44.0\" width=\"196.0\" height=\"44.0\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"22.0\" x2=\"174.0\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"30.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"118.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"126.8\" y=\"26.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "draw_angle_ray"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "D",
+            "F",
+            "B"
+          ],
+          "dimensions": {
+            "angle_deg": 20.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "draw_angle_ray",
+          "labels": [
+            "D",
+            "F"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "D": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "D"
+            },
+            "F": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (D) at (0.000,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (-0.280,-0.220) {D};\n  \\coordinate (F) at (2.400,0.000);\n  \\fill (F) circle (1.2pt);\n  \\node at (2.620,-0.120) {F};\n  \\draw[thick] (D) -- (3.800,0.000);\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 196.0 44.0\" width=\"196.0\" height=\"44.0\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"22.0\" x2=\"174.0\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"30.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"118.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"126.8\" y=\"26.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "difficulty": 0.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Find } m\\angle BAF\\text{ using the diagram.}",
+      "answer_latex": "30^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 145.0 106.8\" width=\"145.0\" height=\"106.8\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"84.8\" x2=\"123.0\" y2=\"70.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"84.8\" x2=\"116.6\" y2=\"46.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"84.8\" x2=\"102.4\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 38.6 82.5 A 16.8 16.8 0 0 0 37.6 78.5\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"50.6\" y=\"77.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">14\u00b0</text><path d=\"M 44.3 75.8 A 24.0 24.0 0 0 0 40.9 70.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"53.9\" y=\"66.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">16\u00b0</text><path d=\"M 68.3 78.3 A 46.8 46.8 0 0 0 58.9 56.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"77.6\" y=\"61.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"22.0\" cy=\"84.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"93.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"130.1\" y=\"69.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"123.2\" y=\"43.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"108.1\" y=\"17.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "adjacent_angles"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "B",
+            "A",
+            "F",
+            "B",
+            "D",
+            "F"
+          ],
+          "dimensions": {
+            "angle_deg": 30.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "adjacent_angles",
+          "labels": [
+            "A",
+            "B",
+            "D",
+            "F"
+          ],
+          "segments": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "A",
+              "F"
+            ]
+          ],
+          "angles": [
+            "14\u00b0",
+            "16\u00b0",
+            "?"
+          ],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.5251835752910043,
+              "y": 0.35489140744816683,
+              "label": "B"
+            },
+            "D": {
+              "x": 2.364318829145308,
+              "y": 0.9552468132105756,
+              "label": "D"
+            },
+            "F": {
+              "x": 2.009427421697141,
+              "y": 1.5699367620804285,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.280,-0.220) {A};\n  \\coordinate (B) at (2.525,0.355);\n  \\node at (2.703,0.380) {B};\n  \\coordinate (D) at (2.364,0.955);\n  \\node at (2.531,1.023) {D};\n  \\coordinate (F) at (2.009,1.570);\n  \\node at (2.151,1.681) {F};\n  \\draw[thick] (A) -- (B);\n  \\draw[thick] (A) -- (D);\n  \\draw[thick] (A) -- (F);\n  \\draw[#2563eb] (A) ++(8.00:0.420) arc (8.00:22.00:0.420);\n  \\node at (0.715,0.192) {14\u00b0};\n  \\draw[#2563eb] (A) ++(22.00:0.600) arc (22.00:38.00:0.600);\n  \\node at (0.797,0.460) {16\u00b0};\n  \\draw[#2563eb] (A) ++(8.00:1.170) arc (8.00:38.00:1.170);\n  \\node at (1.390,0.590) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 145.0 106.8\" width=\"145.0\" height=\"106.8\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"84.8\" x2=\"123.0\" y2=\"70.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"84.8\" x2=\"116.6\" y2=\"46.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"84.8\" x2=\"102.4\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 38.6 82.5 A 16.8 16.8 0 0 0 37.6 78.5\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"50.6\" y=\"77.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">14\u00b0</text><path d=\"M 44.3 75.8 A 24.0 24.0 0 0 0 40.9 70.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"53.9\" y=\"66.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">16\u00b0</text><path d=\"M 68.3 78.3 A 46.8 46.8 0 0 0 58.9 56.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"77.6\" y=\"61.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"22.0\" cy=\"84.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"93.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"130.1\" y=\"69.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"123.2\" y=\"43.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"108.1\" y=\"17.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "difficulty": 0.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Find } m\\angle DEC\\text{ using the diagram.}",
+      "answer_latex": "120^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 207.8 143.4\" width=\"207.8\" height=\"143.4\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"84.8\" y1=\"121.4\" x2=\"185.8\" y2=\"107.2\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"84.8\" y1=\"121.4\" x2=\"170.3\" y2=\"65.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"84.8\" y1=\"121.4\" x2=\"107.7\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"84.8\" y1=\"121.4\" x2=\"22.0\" y2=\"41.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 101.4 119.0 A 16.8 16.8 0 0 0 98.9 112.2\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"112.5\" y=\"111.0\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">25\u00b0</text><path d=\"M 104.9 108.3 A 24.0 24.0 0 0 0 90.2 98.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"105.9\" y=\"91.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">44\u00b0</text><path d=\"M 91.8 91.0 A 31.2 31.2 0 0 0 65.6 96.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"75.3\" y=\"78.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">51\u00b0</text><path d=\"M 139.9 113.6 A 55.6 55.6 0 0 0 50.6 77.6\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"110.7\" y=\"57.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"84.8\" cy=\"121.4\" r=\"3\" fill=\"#1f2937\"/><text x=\"73.6\" y=\"130.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><text x=\"192.9\" y=\"106.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"176.4\" y=\"61.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><text x=\"109.4\" y=\"15.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"17.6\" y=\"35.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "adjacent_angles"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "D",
+            "E",
+            "C",
+            "D",
+            "F",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "angle_deg": 120.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "adjacent_angles",
+          "labels": [
+            "E",
+            "D",
+            "F",
+            "B",
+            "C"
+          ],
+          "segments": [
+            [
+              "E",
+              "D"
+            ],
+            [
+              "E",
+              "F"
+            ],
+            [
+              "E",
+              "B"
+            ],
+            [
+              "E",
+              "C"
+            ]
+          ],
+          "angles": [
+            "25\u00b0",
+            "44\u00b0",
+            "51\u00b0",
+            "?"
+          ],
+          "points": {
+            "E": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "E"
+            },
+            "D": {
+              "x": 2.5251835752910043,
+              "y": 0.35489140744816683,
+              "label": "D"
+            },
+            "F": {
+              "x": 2.1386099482608314,
+              "y": 1.388829539288319,
+              "label": "F"
+            },
+            "B": {
+              "x": 0.5736251885768555,
+              "y": 2.48464366520235,
+              "label": "B"
+            },
+            "C": {
+              "x": -1.5699367620804285,
+              "y": 2.009427421697141,
+              "label": "C"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (E) at (0.000,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (-0.280,-0.220) {E};\n  \\coordinate (D) at (2.525,0.355);\n  \\node at (2.703,0.380) {D};\n  \\coordinate (F) at (2.139,1.389);\n  \\node at (2.290,1.487) {F};\n  \\coordinate (B) at (0.574,2.485);\n  \\node at (0.614,2.660) {B};\n  \\coordinate (C) at (-1.570,2.009);\n  \\node at (-1.681,2.151) {C};\n  \\draw[thick] (E) -- (D);\n  \\draw[thick] (E) -- (F);\n  \\draw[thick] (E) -- (B);\n  \\draw[thick] (E) -- (C);\n  \\draw[#2563eb] (E) ++(8.00:0.420) arc (8.00:33.00:0.420);\n  \\node at (0.693,0.259) {25\u00b0};\n  \\draw[#2563eb] (E) ++(33.00:0.600) arc (33.00:77.00:0.600);\n  \\node at (0.528,0.754) {44\u00b0};\n  \\draw[#2563eb] (E) ++(77.00:0.780) arc (77.00:128.00:0.780);\n  \\node at (-0.238,1.074) {51\u00b0};\n  \\draw[#2563eb] (E) ++(8.00:1.390) arc (8.00:128.00:1.390);\n  \\node at (0.648,1.604) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 207.8 143.4\" width=\"207.8\" height=\"143.4\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"84.8\" y1=\"121.4\" x2=\"185.8\" y2=\"107.2\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"84.8\" y1=\"121.4\" x2=\"170.3\" y2=\"65.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"84.8\" y1=\"121.4\" x2=\"107.7\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"84.8\" y1=\"121.4\" x2=\"22.0\" y2=\"41.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 101.4 119.0 A 16.8 16.8 0 0 0 98.9 112.2\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"112.5\" y=\"111.0\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">25\u00b0</text><path d=\"M 104.9 108.3 A 24.0 24.0 0 0 0 90.2 98.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"105.9\" y=\"91.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">44\u00b0</text><path d=\"M 91.8 91.0 A 31.2 31.2 0 0 0 65.6 96.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"75.3\" y=\"78.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">51\u00b0</text><path d=\"M 139.9 113.6 A 55.6 55.6 0 0 0 50.6 77.6\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"110.7\" y=\"57.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"84.8\" cy=\"121.4\" r=\"3\" fill=\"#1f2937\"/><text x=\"73.6\" y=\"130.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><text x=\"192.9\" y=\"106.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"176.4\" y=\"61.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><text x=\"109.4\" y=\"15.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"17.6\" y=\"35.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+        "difficulty": 8.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Find } m\\angle GHF\\text{ using the diagram.}",
+      "answer_latex": "145^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 235.9 145.2\" width=\"235.9\" height=\"145.2\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"112.9\" y1=\"123.2\" x2=\"213.9\" y2=\"109.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"112.9\" y1=\"123.2\" x2=\"100.5\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"112.9\" y1=\"123.2\" x2=\"22.0\" y2=\"76.9\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 129.5 120.9 A 16.8 16.8 0 0 0 110.8 106.6\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"130.9\" y=\"99.8\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">89\u00b0</text><path d=\"M 110.0 99.4 A 24.0 24.0 0 0 0 91.5 112.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"91.8\" y=\"93.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">56\u00b0</text><path d=\"M 159.2 116.7 A 46.8 46.8 0 0 0 71.2 102.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"122.9\" y=\"63.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"112.9\" cy=\"123.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"101.7\" y=\"132.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text><text x=\"221.0\" y=\"108.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><text x=\"99.6\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"15.6\" y=\"73.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "adjacent_angles"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "G",
+            "H",
+            "F",
+            "G",
+            "A",
+            "F"
+          ],
+          "dimensions": {
+            "angle_deg": 145.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "adjacent_angles",
+          "labels": [
+            "H",
+            "G",
+            "A",
+            "F"
+          ],
+          "segments": [
+            [
+              "H",
+              "G"
+            ],
+            [
+              "H",
+              "A"
+            ],
+            [
+              "H",
+              "F"
+            ]
+          ],
+          "angles": [
+            "89\u00b0",
+            "56\u00b0",
+            "?"
+          ],
+          "points": {
+            "H": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "H"
+            },
+            "G": {
+              "x": 2.5251835752910043,
+              "y": 0.35489140744816683,
+              "label": "G"
+            },
+            "A": {
+              "x": -0.31076682568312575,
+              "y": 2.530992686685371,
+              "label": "A"
+            },
+            "F": {
+              "x": -2.2720666366803375,
+              "y": 1.1576757743358443,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (H) at (0.000,0.000);\n  \\fill (H) circle (1.2pt);\n  \\node at (-0.280,-0.220) {H};\n  \\coordinate (G) at (2.525,0.355);\n  \\node at (2.703,0.380) {G};\n  \\coordinate (A) at (-0.311,2.531);\n  \\node at (-0.333,2.710) {A};\n  \\coordinate (F) at (-2.272,1.158);\n  \\node at (-2.432,1.239) {F};\n  \\draw[thick] (H) -- (G);\n  \\draw[thick] (H) -- (A);\n  \\draw[thick] (H) -- (F);\n  \\draw[#2563eb] (H) ++(8.00:0.420) arc (8.00:97.00:0.420);\n  \\node at (0.450,0.587) {89\u00b0};\n  \\draw[#2563eb] (H) ++(97.00:0.600) arc (97.00:153.00:0.600);\n  \\node at (-0.528,0.754) {56\u00b0};\n  \\draw[#2563eb] (H) ++(8.00:1.170) arc (8.00:153.00:1.170);\n  \\node at (0.249,1.489) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 235.9 145.2\" width=\"235.9\" height=\"145.2\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"112.9\" y1=\"123.2\" x2=\"213.9\" y2=\"109.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"112.9\" y1=\"123.2\" x2=\"100.5\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"112.9\" y1=\"123.2\" x2=\"22.0\" y2=\"76.9\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 129.5 120.9 A 16.8 16.8 0 0 0 110.8 106.6\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"130.9\" y=\"99.8\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">89\u00b0</text><path d=\"M 110.0 99.4 A 24.0 24.0 0 0 0 91.5 112.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"91.8\" y=\"93.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">56\u00b0</text><path d=\"M 159.2 116.7 A 46.8 46.8 0 0 0 71.2 102.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"122.9\" y=\"63.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"112.9\" cy=\"123.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"101.7\" y=\"132.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text><text x=\"221.0\" y=\"108.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><text x=\"99.6\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"15.6\" y=\"73.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "difficulty": 8.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Find } m\\angle BAF\\text{ using the diagram.}",
+      "answer_latex": "30^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 145.0 106.8\" width=\"145.0\" height=\"106.8\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"84.8\" x2=\"123.0\" y2=\"70.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"84.8\" x2=\"116.6\" y2=\"46.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"84.8\" x2=\"102.4\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 38.6 82.5 A 16.8 16.8 0 0 0 37.6 78.5\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"50.6\" y=\"77.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">14\u00b0</text><path d=\"M 44.3 75.8 A 24.0 24.0 0 0 0 40.9 70.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"53.9\" y=\"66.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">16\u00b0</text><path d=\"M 68.3 78.3 A 46.8 46.8 0 0 0 58.9 56.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"77.6\" y=\"61.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"22.0\" cy=\"84.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"93.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"130.1\" y=\"69.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"123.2\" y=\"43.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"108.1\" y=\"17.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "adjacent_angles"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "B",
+            "A",
+            "F",
+            "B",
+            "D",
+            "F"
+          ],
+          "dimensions": {
+            "angle_deg": 30.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "adjacent_angles",
+          "labels": [
+            "A",
+            "B",
+            "D",
+            "F"
+          ],
+          "segments": [
+            [
+              "A",
+              "B"
+            ],
+            [
+              "A",
+              "D"
+            ],
+            [
+              "A",
+              "F"
+            ]
+          ],
+          "angles": [
+            "14\u00b0",
+            "16\u00b0",
+            "?"
+          ],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.5251835752910043,
+              "y": 0.35489140744816683,
+              "label": "B"
+            },
+            "D": {
+              "x": 2.364318829145308,
+              "y": 0.9552468132105756,
+              "label": "D"
+            },
+            "F": {
+              "x": 2.009427421697141,
+              "y": 1.5699367620804285,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.280,-0.220) {A};\n  \\coordinate (B) at (2.525,0.355);\n  \\node at (2.703,0.380) {B};\n  \\coordinate (D) at (2.364,0.955);\n  \\node at (2.531,1.023) {D};\n  \\coordinate (F) at (2.009,1.570);\n  \\node at (2.151,1.681) {F};\n  \\draw[thick] (A) -- (B);\n  \\draw[thick] (A) -- (D);\n  \\draw[thick] (A) -- (F);\n  \\draw[#2563eb] (A) ++(8.00:0.420) arc (8.00:22.00:0.420);\n  \\node at (0.715,0.192) {14\u00b0};\n  \\draw[#2563eb] (A) ++(22.00:0.600) arc (22.00:38.00:0.600);\n  \\node at (0.797,0.460) {16\u00b0};\n  \\draw[#2563eb] (A) ++(8.00:1.170) arc (8.00:38.00:1.170);\n  \\node at (1.390,0.590) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 145.0 106.8\" width=\"145.0\" height=\"106.8\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"84.8\" x2=\"123.0\" y2=\"70.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"84.8\" x2=\"116.6\" y2=\"46.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"84.8\" x2=\"102.4\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 38.6 82.5 A 16.8 16.8 0 0 0 37.6 78.5\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"50.6\" y=\"77.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">14\u00b0</text><path d=\"M 44.3 75.8 A 24.0 24.0 0 0 0 40.9 70.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"53.9\" y=\"66.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">16\u00b0</text><path d=\"M 68.3 78.3 A 46.8 46.8 0 0 0 58.9 56.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"77.6\" y=\"61.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"22.0\" cy=\"84.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"93.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"130.1\" y=\"69.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"123.2\" y=\"43.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"108.1\" y=\"17.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "difficulty": 8.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find } m\\angle AFB\\text{ using the diagram.}",
+      "answer_latex": "52^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 179.9 144.1\" width=\"179.9\" height=\"144.1\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"56.9\" y1=\"122.1\" x2=\"157.9\" y2=\"107.9\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"56.9\" y1=\"122.1\" x2=\"147.8\" y2=\"75.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"56.9\" y1=\"122.1\" x2=\"110.9\" y2=\"35.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"56.9\" y1=\"122.1\" x2=\"76.3\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"56.9\" y1=\"122.1\" x2=\"22.0\" y2=\"26.3\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 73.5 119.8 A 16.8 16.8 0 0 0 71.9 114.5\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"85.1\" y=\"113.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">19\u00b0</text><path d=\"M 78.3 111.2 A 24.0 24.0 0 0 0 69.6 101.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"84.0\" y=\"97.3\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">31\u00b0</text><path d=\"M 73.4 95.7 A 31.2 31.2 0 0 0 62.8 91.5\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"73.0\" y=\"81.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">21\u00b0</text><path d=\"M 60.1 105.6 A 16.8 16.8 0 0 0 51.1 106.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"54.6\" y=\"92.6\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">31\u00b0</text><path d=\"M 98.6 100.9 A 46.8 46.8 0 0 0 65.8 76.2\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"93.2\" y=\"73.9\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><path d=\"M 120.7 113.2 A 64.4 64.4 0 0 0 34.9 61.6\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"97.1\" y=\"55.3\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">102\u00b0</text><circle cx=\"56.9\" cy=\"122.1\" r=\"3\" fill=\"#1f2937\"/><text x=\"45.7\" y=\"130.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><text x=\"165.0\" y=\"106.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"154.2\" y=\"72.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"114.8\" y=\"29.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><text x=\"77.7\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"19.5\" y=\"19.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "adjacent_angles"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "A",
+            "F",
+            "B",
+            "D",
+            "A",
+            "C",
+            "B",
+            "H"
+          ],
+          "dimensions": {
+            "angle_deg": 52.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "adjacent_angles",
+          "labels": [
+            "F",
+            "D",
+            "A",
+            "C",
+            "B",
+            "H"
+          ],
+          "segments": [
+            [
+              "F",
+              "D"
+            ],
+            [
+              "F",
+              "A"
+            ],
+            [
+              "F",
+              "C"
+            ],
+            [
+              "F",
+              "B"
+            ],
+            [
+              "F",
+              "H"
+            ]
+          ],
+          "angles": [
+            "19\u00b0",
+            "31\u00b0",
+            "21\u00b0",
+            "31\u00b0",
+            "?",
+            "102\u00b0"
+          ],
+          "points": {
+            "F": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "F"
+            },
+            "D": {
+              "x": 2.5251835752910043,
+              "y": 0.35489140744816683,
+              "label": "D"
+            },
+            "A": {
+              "x": 2.272066636680338,
+              "y": 1.1576757743358441,
+              "label": "A"
+            },
+            "C": {
+              "x": 1.3512941237946725,
+              "y": 2.1625226451988864,
+              "label": "C"
+            },
+            "B": {
+              "x": 0.4865629382101895,
+              "y": 2.503149317791543,
+              "label": "B"
+            },
+            "H": {
+              "x": -0.8721513654804551,
+              "y": 2.3962161830040665,
+              "label": "H"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (F) at (0.000,0.000);\n  \\fill (F) circle (1.2pt);\n  \\node at (-0.280,-0.220) {F};\n  \\coordinate (D) at (2.525,0.355);\n  \\node at (2.703,0.380) {D};\n  \\coordinate (A) at (2.272,1.158);\n  \\node at (2.432,1.239) {A};\n  \\coordinate (C) at (1.351,2.163);\n  \\node at (1.447,2.315) {C};\n  \\coordinate (B) at (0.487,2.503);\n  \\node at (0.521,2.680) {B};\n  \\coordinate (H) at (-0.872,2.396);\n  \\node at (-0.934,2.565) {H};\n  \\draw[thick] (F) -- (D);\n  \\draw[thick] (F) -- (A);\n  \\draw[thick] (F) -- (C);\n  \\draw[thick] (F) -- (B);\n  \\draw[thick] (F) -- (H);\n  \\draw[#2563eb] (F) ++(8.00:0.420) arc (8.00:27.00:0.420);\n  \\node at (0.706,0.223) {19\u00b0};\n  \\draw[#2563eb] (F) ++(27.00:0.600) arc (27.00:58.00:0.600);\n  \\node at (0.678,0.622) {31\u00b0};\n  \\draw[#2563eb] (F) ++(58.00:0.780) arc (58.00:79.00:0.780);\n  \\node at (0.403,1.023) {21\u00b0};\n  \\draw[#2563eb] (F) ++(79.00:0.420) arc (79.00:110.00:0.420);\n  \\node at (-0.058,0.738) {31\u00b0};\n  \\draw[#2563eb] (F) ++(27.00:1.170) arc (27.00:79.00:1.170);\n  \\node at (0.909,1.206) {?};\n  \\draw[#2563eb] (F) ++(8.00:1.610) arc (8.00:110.00:1.610);\n  \\node at (1.004,1.671) {102\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 179.9 144.1\" width=\"179.9\" height=\"144.1\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"56.9\" y1=\"122.1\" x2=\"157.9\" y2=\"107.9\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"56.9\" y1=\"122.1\" x2=\"147.8\" y2=\"75.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"56.9\" y1=\"122.1\" x2=\"110.9\" y2=\"35.6\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"56.9\" y1=\"122.1\" x2=\"76.3\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"56.9\" y1=\"122.1\" x2=\"22.0\" y2=\"26.3\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 73.5 119.8 A 16.8 16.8 0 0 0 71.9 114.5\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"85.1\" y=\"113.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">19\u00b0</text><path d=\"M 78.3 111.2 A 24.0 24.0 0 0 0 69.6 101.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"84.0\" y=\"97.3\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">31\u00b0</text><path d=\"M 73.4 95.7 A 31.2 31.2 0 0 0 62.8 91.5\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"73.0\" y=\"81.2\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">21\u00b0</text><path d=\"M 60.1 105.6 A 16.8 16.8 0 0 0 51.1 106.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"54.6\" y=\"92.6\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">31\u00b0</text><path d=\"M 98.6 100.9 A 46.8 46.8 0 0 0 65.8 76.2\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"93.2\" y=\"73.9\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><path d=\"M 120.7 113.2 A 64.4 64.4 0 0 0 34.9 61.6\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"97.1\" y=\"55.3\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">102\u00b0</text><circle cx=\"56.9\" cy=\"122.1\" r=\"3\" fill=\"#1f2937\"/><text x=\"45.7\" y=\"130.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><text x=\"165.0\" y=\"106.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"154.2\" y=\"72.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"114.8\" y=\"29.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><text x=\"77.7\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"19.5\" y=\"19.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+        "difficulty": 16.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Find } m\\angle BFA\\text{ using the diagram.}",
+      "answer_latex": "47^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 145.0 145.0\" width=\"145.0\" height=\"145.0\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"123.0\" x2=\"123.0\" y2=\"108.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"123.0\" x2=\"99.0\" y2=\"56.1\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"123.0\" x2=\"80.5\" y2=\"39.5\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"123.0\" x2=\"36.2\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 38.6 120.7 A 16.8 16.8 0 0 0 34.7 112.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"48.9\" y=\"110.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">33\u00b0</text><path d=\"M 40.1 107.3 A 24.0 24.0 0 0 0 35.8 103.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"46.6\" y=\"95.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">14\u00b0</text><path d=\"M 39.9 97.4 A 31.2 31.2 0 0 0 26.3 92.1\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"38.1\" y=\"82.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">27\u00b0</text><path d=\"M 68.3 116.5 A 46.8 46.8 0 0 0 48.8 84.7\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"73.5\" y=\"91.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"22.0\" cy=\"123.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"131.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><text x=\"130.1\" y=\"107.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"104.4\" y=\"51.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><text x=\"84.6\" y=\"33.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"37.2\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "adjacent_angles"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "B",
+            "F",
+            "A",
+            "B",
+            "G",
+            "A",
+            "C"
+          ],
+          "dimensions": {
+            "angle_deg": 47.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "adjacent_angles",
+          "labels": [
+            "F",
+            "B",
+            "G",
+            "A",
+            "C"
+          ],
+          "segments": [
+            [
+              "F",
+              "B"
+            ],
+            [
+              "F",
+              "G"
+            ],
+            [
+              "F",
+              "A"
+            ],
+            [
+              "F",
+              "C"
+            ]
+          ],
+          "angles": [
+            "33\u00b0",
+            "14\u00b0",
+            "27\u00b0",
+            "?"
+          ],
+          "points": {
+            "F": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "F"
+            },
+            "B": {
+              "x": 2.5251835752910043,
+              "y": 0.35489140744816683,
+              "label": "B"
+            },
+            "G": {
+              "x": 1.9245094295680685,
+              "y": 1.6729505239257934,
+              "label": "G"
+            },
+            "A": {
+              "x": 1.4626199126951673,
+              "y": 2.088837712936929,
+              "label": "A"
+            },
+            "C": {
+              "x": 0.35489140744816694,
+              "y": 2.5251835752910043,
+              "label": "C"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (F) at (0.000,0.000);\n  \\fill (F) circle (1.2pt);\n  \\node at (-0.280,-0.220) {F};\n  \\coordinate (B) at (2.525,0.355);\n  \\node at (2.703,0.380) {B};\n  \\coordinate (G) at (1.925,1.673);\n  \\node at (2.060,1.791) {G};\n  \\coordinate (A) at (1.463,2.089);\n  \\node at (1.566,2.236) {A};\n  \\coordinate (C) at (0.355,2.525);\n  \\node at (0.380,2.703) {C};\n  \\draw[thick] (F) -- (B);\n  \\draw[thick] (F) -- (G);\n  \\draw[thick] (F) -- (A);\n  \\draw[thick] (F) -- (C);\n  \\draw[#2563eb] (F) ++(8.00:0.420) arc (8.00:41.00:0.420);\n  \\node at (0.673,0.307) {33\u00b0};\n  \\draw[#2563eb] (F) ++(41.00:0.600) arc (41.00:55.00:0.600);\n  \\node at (0.616,0.684) {14\u00b0};\n  \\draw[#2563eb] (F) ++(55.00:0.780) arc (55.00:82.00:0.780);\n  \\node at (0.403,1.023) {27\u00b0};\n  \\draw[#2563eb] (F) ++(8.00:1.170) arc (8.00:55.00:1.170);\n  \\node at (1.287,0.789) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 145.0 145.0\" width=\"145.0\" height=\"145.0\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"123.0\" x2=\"123.0\" y2=\"108.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"123.0\" x2=\"99.0\" y2=\"56.1\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"123.0\" x2=\"80.5\" y2=\"39.5\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"123.0\" x2=\"36.2\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 38.6 120.7 A 16.8 16.8 0 0 0 34.7 112.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"48.9\" y=\"110.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">33\u00b0</text><path d=\"M 40.1 107.3 A 24.0 24.0 0 0 0 35.8 103.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"46.6\" y=\"95.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">14\u00b0</text><path d=\"M 39.9 97.4 A 31.2 31.2 0 0 0 26.3 92.1\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"38.1\" y=\"82.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">27\u00b0</text><path d=\"M 68.3 116.5 A 46.8 46.8 0 0 0 48.8 84.7\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"73.5\" y=\"91.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"22.0\" cy=\"123.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"131.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><text x=\"130.1\" y=\"107.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"104.4\" y=\"51.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><text x=\"84.6\" y=\"33.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><text x=\"37.2\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+        "difficulty": 16.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "pa_drawing_and_measuring_angles",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find } m\\angle EHB\\text{ using the diagram.}",
+      "answer_latex": "69^\\circ",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 146.0 146.0\" width=\"146.0\" height=\"146.0\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"124.0\" x2=\"124.0\" y2=\"124.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"124.0\" x2=\"121.4\" y2=\"101.1\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"124.0\" x2=\"58.6\" y2=\"28.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"124.0\" x2=\"22.0\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 33.2 94.9 A 31.2 31.2 0 0 0 22.0 92.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"30.0\" y=\"80.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">21\u00b0</text><polyline points=\"34.8,124.0 34.8,111.2 22.0,111.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><path d=\"M 68.8 124.0 A 46.8 46.8 0 0 0 38.8 80.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"71.8\" y=\"89.8\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"22.0\" cy=\"124.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"132.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text><text x=\"131.2\" y=\"124.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><text x=\"128.4\" y=\"99.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"61.1\" y=\"22.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"22.0\" y=\"14.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "adjacent_angles"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "composite",
+          "labels": [
+            "E",
+            "H",
+            "B",
+            "E",
+            "D",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "angle_deg": 69.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "adjacent_angles",
+          "labels": [
+            "H",
+            "E",
+            "D",
+            "B",
+            "C"
+          ],
+          "segments": [
+            [
+              "H",
+              "E"
+            ],
+            [
+              "H",
+              "D"
+            ],
+            [
+              "H",
+              "B"
+            ],
+            [
+              "H",
+              "C"
+            ]
+          ],
+          "angles": [
+            "21\u00b0",
+            "?"
+          ],
+          "points": {
+            "H": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "H"
+            },
+            "E": {
+              "x": 2.55,
+              "y": 0.0,
+              "label": "E"
+            },
+            "D": {
+              "x": 2.48464366520235,
+              "y": 0.5736251885768557,
+              "label": "D"
+            },
+            "B": {
+              "x": 0.9138382713405159,
+              "y": 2.380630087567864,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.5614246689128752e-16,
+              "y": 2.55,
+              "label": "C"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (H) at (0.000,0.000);\n  \\fill (H) circle (1.2pt);\n  \\node at (-0.280,-0.220) {H};\n  \\coordinate (E) at (2.550,0.000);\n  \\node at (2.730,0.000) {E};\n  \\coordinate (D) at (2.485,0.574);\n  \\node at (2.660,0.614) {D};\n  \\coordinate (B) at (0.914,2.381);\n  \\node at (0.978,2.549) {B};\n  \\coordinate (C) at (0.000,2.550);\n  \\node at (0.000,2.730) {C};\n  \\draw[thick] (H) -- (E);\n  \\draw[thick] (H) -- (D);\n  \\draw[thick] (H) -- (B);\n  \\draw[thick] (H) -- (C);\n  \\draw[#2563eb] (H) ++(69.00:0.780) arc (69.00:90.00:0.780);\n  \\node at (0.200,1.082) {21\u00b0};\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\draw[#2563eb] (H) ++(0.00:1.170) arc (0.00:69.00:1.170);\n  \\node at (1.244,0.855) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 146.0 146.0\" width=\"146.0\" height=\"146.0\" role=\"img\" aria-label=\"Geometry diagram\"><line x1=\"22.0\" y1=\"124.0\" x2=\"124.0\" y2=\"124.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"124.0\" x2=\"121.4\" y2=\"101.1\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"124.0\" x2=\"58.6\" y2=\"28.8\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><line x1=\"22.0\" y1=\"124.0\" x2=\"22.0\" y2=\"22.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" fill=\"none\"/><path d=\"M 33.2 94.9 A 31.2 31.2 0 0 0 22.0 92.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"30.0\" y=\"80.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">21\u00b0</text><polyline points=\"34.8,124.0 34.8,111.2 22.0,111.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><path d=\"M 68.8 124.0 A 46.8 46.8 0 0 0 38.8 80.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"71.8\" y=\"89.8\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">?</text><circle cx=\"22.0\" cy=\"124.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.8\" y=\"132.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text><text x=\"131.2\" y=\"124.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><text x=\"128.4\" y=\"99.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><text x=\"61.1\" y=\"22.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><text x=\"22.0\" y=\"14.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+        "difficulty": 16.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Measure or draw the angle.}"
+      }
+    }
+  ],
+  "failures": []
+}

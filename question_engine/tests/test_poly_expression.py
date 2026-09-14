@@ -92,6 +92,8 @@ def test_render_mul_fn_factors_omit_outer_parens() -> None:
 
 
 def test_render_mul_keeps_parens_for_sums_and_negatives() -> None:
+    from fractions import Fraction
+
     from question_engine.frameworks.primitives.poly_expression import (
         Add,
         Const,
@@ -113,6 +115,17 @@ def test_render_mul_keeps_parens_for_sums_and_negatives() -> None:
     # Digit glue: 3x · 4x^3 must not become 34x^3
     glued = Mul((Mul((Const(3), x)), Mul((Const(4), Pow(x, 3)))))
     assert render_latex(glued, paren_style="always_factors") == r"3x\left(4x^{3}\right)"
+    # Coef · Add must not digit-glue leading term (55x² bug)
+    u = Add(
+        (
+            Mul((Const(Fraction(5)), Pow(x, Fraction(2)))),
+            Mul((Const(Fraction(2)), x)),
+            Const(Fraction(-4)),
+        )
+    )
+    scaled = render_latex(Mul((Const(Fraction(5)), u)))
+    assert "55x" not in scaled
+    assert scaled.startswith(r"5\left(")
 
 
 def test_chain_pack_power_of_poly() -> None:

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Word problem — percent applications — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Word problem — percent applications</h1>
+<p class="sub"><code>percent_word_problems</code> · live <code>_generate_for_type</code>
+ · pattern <strong>PercentWP</strong>
+ · 20/20 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313, 419, 523</p>
+<p class="sub">OpenStax EA §3.2: percent-of, discount, simple interest (markup/tax later). D=0 is a part of a whole. PA retail markup stays on <code>pa_markup_discount_and_tax</code>.</p>
+
+<div class='notes-block'><h1><code>percent_word_problems</code> — Percent word problems</h1>
+<ul>
+<li><strong>Course:</strong> Algebra 1 (A1 catalog)</li>
+<li><strong>Category:</strong> Algebra 1 — Equations</li>
+<li><strong>Generator:</strong> <code>wp_percent</code></li>
+<li><strong>Already on skeleton?</strong> yes (OpenStax EA 3.2 percent-of / discount / interest on PercentWordProblemFramework)</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>D=0: find the part given percent of a whole (simple interest or discount). High D: mark-up then tax, or solve for the original. Retail/interest stories, not “the equation is $0.2x=12$”.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101 (pattern=<code>PercentWP</code>):</li>
+</ul>
+<p>- prompt: <code>\text{A store marks up a \$74 item by 10\%. What is the selling price?}</code> - answer: <code>\$81.40</code></p>
+<ul>
+<li>seed 207 (pattern=<code>PercentWP</code>):</li>
+</ul>
+<p>- prompt: <code>\text{A \$109 purchase has 6\% sales tax added. What is the total cost?}</code> - answer: <code>\$115.54</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101 (pattern=<code>PercentWP</code>):</li>
+</ul>
+<p>- prompt: <code>\text{A store marks up a \$139.99 item by 10\%. What is the selling price?}</code> - answer: <code>\$153.99</code></p>
+<ul>
+<li>seed 207 (pattern=<code>PercentWP</code>):</li>
+</ul>
+<p>- prompt: <code>\text{A \$60.95 purchase has 7\% sales tax added. What is the total cost?}</code> - answer: <code>\$65.22</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101 (pattern=<code>PercentWP</code>):</li>
+</ul>
+<p>- prompt: <code>\text{A store marks up a \$144.50 item by 22.5\%. What is the selling price?}</code> - answer: <code>\$177.01</code></p>
+<ul>
+<li>seed 207 (pattern=<code>PercentWP</code>):</li>
+</ul>
+<p>- prompt: <code>\text{A \$31.89 purchase has 6.25\% sales tax added. What is the total cost?}</code> - answer: <code>\$33.88</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101 (pattern=<code>PercentWP</code>):</li>
+</ul>
+<p>- prompt: <code>\text{A store marks up a \$144.50 item by 22.5\%. What is the selling price?}</code> - answer: <code>\$177.01</code></p>
+<ul>
+<li>seed 207 (pattern=<code>PercentWP</code>):</li>
+</ul>
+<p>- prompt: <code>\text{A \$31.89 purchase has 6.25\% sales tax added. What is the total cost?}</code> - answer: <code>\$33.88</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Elementary Algebra 2e — 3.2 Solve Percent Applications</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/3-2-solve-percent-applications</li>
+<li>Shape: Percent of, discount, mark-up, simple interest.</li>
+</ul>
+<h3>Intermediate Algebra 2e — 2.2 Use a Problem Solving Strategy</h3>
+<ul>
+<li>https://openstax.org/books/intermediate-algebra-2e/pages/2-2-use-a-problem-solving-strategy</li>
+<li>Shape: Percent applications subsection (discount, mark-up, simple interest). Early mined examples in this JSON are number WPs — not this leaf.</li>
+</ul>
+<h2>Variety notes</h2>
+<p>Live A1 path uses OpenStax EA 3.2 percent-of, discount, and simple interest at D=0. Markup/tax/original unlock later. PA retail markup stays on <code>pa_markup_discount_and_tax</code>.</p>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse PercentWordProblemFramework. Keep A1 as EA 3.2 percent applications, not a new engine.</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>PercentWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Sofia deposits \$1000 in an account that earns 5\% simple interest. How much interest is earned in 2 years?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$100.00$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_interest</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>PercentWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{A survey of 40 people found that 50\% prefer tea. How many people prefer tea?}$$</div><div class='math'><div class='lab'>Answer</div>$$20$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_percent_of_survey</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>PercentWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Sofia buys an item priced at \$100. It is on sale for 25\% off. What is the sale price?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$75.00$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_discount</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈0 · seed=419</strong> <span class='pat'>PercentWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Tara deposits \$400 in an account that earns 4\% simple interest. How much interest is earned in 2 years?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$32.00$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_interest</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈0 · seed=523</strong> <span class='pat'>PercentWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=523</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Violet buys an item priced at \$117. It is on sale for 25\% off. What is the sale price?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$87.75$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>523</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_discount</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=101</strong> <span class='pat'>PercentWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{A store marks up a \$111.99 item by 20\%. What is the selling price?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$134.39$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_markup</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈8 · seed=207</strong> <span class='pat'>PercentWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Queenie leaves a 18\% tip on a \$175 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$206.50$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈8 · seed=313</strong> <span class='pat'>PercentWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Sofia leaves a 18\% tip on a \$129.50 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$152.81$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈8 · seed=419</strong> <span class='pat'>PercentWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Tara leaves a 20\% tip on a \$52.95 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$63.54$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈8 · seed=523</strong> <span class='pat'>PercentWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=523</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{A store marks up a \$116.50 item by 20\%. What is the selling price?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$139.80$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>523</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_markup</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈16 · seed=101</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{A store marks up a \$116.50 item by 22.5\%. What is the selling price?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$142.71$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_markup</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈16 · seed=207</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Queenie leaves a 18\% tip on a \$180 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$212.40$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#13</span> <strong>D≈16 · seed=313</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Sofia leaves a 18\% tip on a \$134.19 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$158.34$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#14</span> <strong>D≈16 · seed=419</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Tara leaves a 18.5\% tip on a \$57.75 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$68.43$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#15</span> <strong>D≈16 · seed=523</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=523</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{A store marks up a \$121.49 item by 22.5\%. What is the selling price?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$148.83$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>523</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_markup</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#16</span> <strong>D≈22 · seed=101</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{A store marks up a \$116.50 item by 22.5\%. What is the selling price?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$142.71$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_markup</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#17</span> <strong>D≈22 · seed=207</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Queenie leaves a 18\% tip on a \$180 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$212.40$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#18</span> <strong>D≈22 · seed=313</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Sofia leaves a 18\% tip on a \$134.19 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$158.34$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#19</span> <strong>D≈22 · seed=419</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Tara leaves a 18.5\% tip on a \$57.75 bill. What is the total, including tip?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$68.43$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_tip_total</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#20</span> <strong>D≈22 · seed=523</strong> <span class='pat'>PercentWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=523</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{A store marks up a \$121.49 item by 22.5\%. What is the selling price?}$$</div><div class='math'><div class='lab'>Answer</div>$$\$148.83$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PercentWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>percent_wp</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>523</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>pct_markup</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>percent_word_problems</code></p></article>
+</body></html>

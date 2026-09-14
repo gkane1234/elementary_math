@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>EqCancel — rational equations — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>EqCancel — rational equations</h1>
+<p class="sub"><code>rational_expressions_equations</code> · live <code>_generate_for_type</code>
+ · pattern <strong>EqCancel</strong>
+ · 9/9 ok · D ladder 0, 8, 16
+ · seeds 101, 207, 313</p>
+<p class="sub">D=0 is a proportion. Then one linear den, LCD, extraneous. Opt out with <code>use_hand_rational_equations=True</code>.</p>
+<p class='sub'>Also wired: <code>a2_rational_expressions_equations</code>, <code>pc_rational_equations</code></p>
+<div class='notes-block'><h1><code>rational_expressions_equations</code> — Rational equations</h1>
+<ul>
+<li><strong>Course:</strong> Algebra 1</li>
+<li><strong>Category:</strong> Algebra 1 — Rational Expressions</li>
+<li><strong>Generator:</strong> <code>rational_equations</code></li>
+<li><strong>Already on skeleton?</strong> yes</li>
+<li><strong>Old-path extra settings: <code>{&quot;use_constructive_rational&quot;: true}</code>.</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Solve a rational equation; check extraneous. D=0: 1/x=1/2 or a/x=b. High D: LCD of two binomials.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\frac{x - 6}{4} = 1</code> - answer: <code>x = 10</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\frac{x + 4}{3} = -6</code> - answer: <code>x = -22</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\frac{15}{x} = \frac{5}{3}</code> - answer: <code>x = 9</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\frac{-15}{x - 6} - 5 = -10</code> - answer: <code>x = 9</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\frac{-4}{x + 10} + \frac{4}{x - 6} = -1</code> - answer: <code>x = -2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\frac{-3}{x + 7} - \frac{5}{x - 1} = 2</code> - answer: <code>x = -9 \text{ or } x = -1</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\frac{-4}{x + 10} + \frac{4}{x - 6} = -1</code> - answer: <code>x = -2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\frac{-3}{x + 7} - \frac{5}{x - 1} = 2</code> - answer: <code>x = -9 \text{ or } x = -1</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Elementary Algebra 2e — 8.6 Solve Rational Equations</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/8-6-solve-rational-equations</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 8.59: How to Solve Equations with Rational Expressions Solve: $\frac{1}{x} + \frac{1}{3} = \frac{5}{6} .$ - Example 8.60: Solve: $1 - \frac{5}{y} = - \frac{6}{y^{2}} .$ - Example 8.61: Solve: $\frac{5}{3 u - 2} = \frac{3}{2 u} .$ - Example 8.62: Solve: $\frac{2}{p + 2} + \frac{4}{p - 2} = \frac{p - 1}{p^{2} - 4} .$</p>
+<h2>Variety notes</h2>
+<p>Old path shapes at D=0 vs D=22 are recorded above. Flag if a WP dump stub or a single Mad-Lib.</p>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse EqCancel / rational_skeleton (already skeletoned).</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>EqCancel</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{1}{2} = \frac{x}{3}$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{3}{2}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>(none)</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>EqCancel</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{2}{3} = \frac{x}{4}$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{8}{3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>(none)</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>EqCancel</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{2}{3} = \frac{x}{4}$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{8}{3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>(none)</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>EqCancel</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{5}{3} = \frac{x}{4}$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{20}{3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>(none)</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>EqCancel</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{2}{5} = \frac{x}{2}$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{4}{5}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>(none)</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>EqCancel</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{1}{4} = \frac{x}{4}$$</div><div class='math'><div class='lab'>Answer</div>$$x = 1$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>(none)</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>EqCancel</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{4}{x + 10} = \frac{1}{x - 2}$$</div><div class='math'><div class='lab'>Answer</div>$$x = 6,\; x \neq -10, 2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[&quot;-10&quot;, &quot;2&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>EqCancel</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{1}{x + 3} = \frac{3}{x - 3}$$</div><div class='math'><div class='lab'>Answer</div>$$x = -6,\; x \neq -3, 3$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[&quot;-3&quot;, &quot;3&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>EqCancel</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>rational_equation</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve: } \frac{4}{x - 4} = \frac{6}{3x - 1}$$</div><div class='math'><div class='lab'>Answer</div>$$x = -\frac{10}{3},\; x \neq \frac{1}{3}, 4$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>EqCancel</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>rational_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rational_equation</span></div><div class='kv'><span class='k'>excluded_values</span><span class='v'>[&quot;1/3&quot;, &quot;4&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>clear_dens</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>rational_expressions_equations</code></p></article>
+</body></html>

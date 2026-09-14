@@ -137,6 +137,16 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
         include_answer_key = bool(settings.get("include_answer_key", False))
         include_solution_details = bool(settings.get("include_solution_details", True))
 
+        # Live default: AddSubCancel via primitive_rational (same as GENERATORS).
+        # Legacy hand / polynomial_core path: use_constructive_rational=True.
+        from question_engine.generators.primitive_rational import (
+            _use_add_sub_cancel_skeleton,
+            rational_add_subtract,
+        )
+
+        if _use_add_sub_cancel_skeleton(settings):
+            return rational_add_subtract(self.id, settings)
+
         questions: list[Question] = []
         for _ in range(count):
             structured = _resolve_add_subtract_structure(settings)
@@ -346,4 +356,50 @@ class RationalExpressionSimplificationQuestionType(QuestionType):
                 )
             )
 
+        return questions
+
+    def _generate_add_sub_cancel(
+        self,
+        settings: dict,
+        count: int,
+        include_answer_key: bool,
+    ) -> list[Question]:
+        """Goal → inflate → PFD + multidimensional residual kernel path."""
+        from question_engine.frameworks.primitives.rational_skeleton import (
+            generate_add_sub_cancel_question,
+        )
+
+        questions: list[Question] = []
+        base_seed = settings.get("seed")
+        for i in range(count):
+            local = dict(settings)
+            if base_seed is not None:
+                try:
+                    local["seed"] = int(base_seed) + i * 1009
+                except (TypeError, ValueError):
+                    pass
+            local["count"] = 1
+            result = generate_add_sub_cancel_question(local)
+            metadata = merge_enrichment_metadata(
+                local,
+                {
+                    **result.metadata,
+                    "term_count": len(result.terms),
+                    "cancel_factor_count": result.cancel_count,
+                    "excluded_values": result.metadata.get("excluded_values") or [],
+                    "primitive_engine": "rational_skeleton",
+                    "add_sub_cancel_debug": result.debug_dict(),
+                },
+                answer=result.answer_latex if include_answer_key else None,
+            )
+            questions.append(
+                Question(
+                    id=str(uuid.uuid4()),
+                    topic=self.id,
+                    prompt_latex=result.prompt_latex,
+                    prompt_text=result.prompt_text,
+                    answer_latex=result.answer_latex if include_answer_key else None,
+                    metadata=metadata,
+                )
+            )
         return questions

@@ -41,15 +41,33 @@ def test_a2_catalogs_load_and_have_implemented_forms():
     assert len(totals) == 5
 
 
-def test_a2_rational_add_emits_form_id():
+def test_a2_rational_add_defaults_to_add_sub_cancel_skeleton():
     qs = rational_add_subtract(
         "a2_rational_expressions_adding_and_subtracting",
         {"difficulty": 6, "count": 8, "include_answer_key": True, "seed": 42},
     )
     assert len(qs) == 8
+    for q in qs:
+        meta = q.metadata or {}
+        assert meta.get("primitive_engine") == "rational_skeleton"
+        assert meta.get("skeleton_pattern") == "AddSubCancel"
+
+
+def test_a2_rational_add_constructive_opt_out_emits_form_id():
+    qs = rational_add_subtract(
+        "a2_rational_expressions_adding_and_subtracting",
+        {
+            "difficulty": 6,
+            "count": 8,
+            "include_answer_key": True,
+            "seed": 42,
+            "use_constructive_rational": True,
+        },
+    )
+    assert len(qs) == 8
     ids = {str((q.metadata or {}).get("form_id") or "") for q in qs}
     ids.discard("")
-    assert ids, "expected form_id metadata on A2 rational add"
+    assert ids, "expected form_id metadata on constructive A2 rational add"
     assert ids <= {
         "add_common_den",
         "add_unlike_dens",
@@ -69,6 +87,8 @@ def test_a2_rational_simplify_emits_form_id():
     meta = qs[0].metadata or {}
     assert meta.get("form_id") == "simplify_cancel"
     assert meta.get("openstax_form") == "simplify_cancel"
+    assert meta.get("skeleton_pattern") == "SimplifyCancel"
+    assert meta.get("primitive_engine") == "rational_skeleton"
 
 
 def test_a2_poly_add_respects_form_op():
@@ -128,11 +148,52 @@ def test_a2_radical_equations_catalog_form_ids():
 
 
 def test_a2_catalog_gaps_document_stubs():
-    """PFD / apps / GCF remain non-implemented gaps in IntAlg catalogs."""
+    """PFD / apps / long division remain non-implemented gaps in IntAlg catalogs."""
     rats = load_form_catalog("algebra2_rationals")
     gap_ids = {f["form_id"] for f in catalog_gaps(rats)}
     assert "pfd_linear_factors" in gap_ids
     assert "rational_apps" in gap_ids
     polys = load_form_catalog("algebra2_polys")
     poly_gaps = {f["form_id"] for f in catalog_gaps(polys)}
-    assert "gcf_factor" in poly_gaps or "long_division" in poly_gaps
+    assert "long_division" in poly_gaps
+    impl = {f["form_id"] for f in implemented_forms(polys)}
+    assert "trinomial_a_gt_1" in impl
+    assert "quadratic_form" in impl
+
+
+def test_a2_factoring_emits_catalog_form_ids():
+    from question_engine.generators import GENERATORS
+
+    qs = GENERATORS["a2_polynomial_functions_factoring_all_techniques"](
+        "a2_polynomial_functions_factoring_all_techniques",
+        {"difficulty": 12, "count": 16, "seed": 7, "include_answer_key": True},
+    )
+    ids = {str((q.metadata or {}).get("form_id") or "") for q in qs}
+    ids.discard("")
+    assert ids
+    assert ids <= {
+        "trinomial_x2_bx_c",
+        "trinomial_a_gt_1",
+        "difference_of_squares",
+        "perfect_square_trinomial",
+        "factor_by_grouping",
+        "sum_diff_cubes",
+        "gcf_then_pattern",
+        "gcf_factor",
+    }
+
+
+def test_a2_rational_muldiv_defaults_to_skeleton():
+    from question_engine.generators.rational_multiply_divide import (
+        generate_rational_expression_multiply_divide,
+    )
+
+    qs = generate_rational_expression_multiply_divide(
+        "a2_rational_expressions_multiplying_and_dividing",
+        {"difficulty": 6, "count": 4, "seed": 5, "include_answer_key": True},
+    )
+    for q in qs:
+        meta = q.metadata or {}
+        assert meta.get("skeleton_pattern") == "MulDivCancel"
+        assert meta.get("primitive_engine") == "rational_skeleton"
+        assert meta.get("form_id") in {"multiply_rationals", "divide_rationals"}

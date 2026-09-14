@@ -1,10 +1,4 @@
-"""PA plotting points — coordinate-plane settings profile."""
+"""PA plotting points — catalog + GENERATORS['pa_plotting_points']."""
 
-from question_engine.frameworks.linear import PlottingPointsFramework
-from question_engine.types._linear_type import register_linear_type
-
-register_linear_type(
-    "pa_plotting_points",
-    PlottingPointsFramework(),
-    profile="coordinate_plane",
-)
+# Catalog registration uses GENERATORS. This module does not re-bind
+# PlottingPointsFramework.

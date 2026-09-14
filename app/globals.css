@@ -701,16 +701,23 @@ button:disabled {
   max-width: 100%;
 }
 
-.question-content .katex .base,
-.question-list li .katex .base,
-.mc-choice-latex .katex .base,
-.question-instruction .katex .base,
-.worksheet-section-instruction .katex .base,
-.worksheet-instruction .katex .base {
+/* Only soften \text{...} word-problem runs — do not override .base for \sqrt and
+   other vlist math (inline + normal white-space breaks radical SVG layout). */
+.question-content .katex:has(.text) .base,
+.question-list li .katex:has(.text) .base,
+.mc-choice-latex .katex:has(.text) .base,
+.question-instruction .katex:has(.text) .base,
+.worksheet-section-instruction .katex:has(.text) .base,
+.worksheet-instruction .katex:has(.text) .base {
   display: inline;
   white-space: normal;
   width: auto;
   max-width: 100%;
+}
+
+/* KaTeX sqrt uses inline SVG; height:auto on svg zeroes the radical (see KaTeX #2260). */
+.katex-html svg {
+  height: inherit;
 }
 
 .question-content .katex-html,
@@ -1826,15 +1833,40 @@ button:disabled {
   }
 
   .question-list li .katex,
-  .question-list li .katex .base,
   .question-list li .katex-html {
-    white-space: normal;
     max-width: 100%;
   }
 
-  .question-list li .katex .base {
+  .question-list li .katex:has(.text) .base {
     display: inline;
+    white-space: normal;
     width: auto;
+    max-width: 100%;
+  }
+
+  /* Chrome print: thin KaTeX SVG lines (sqrt tail, fractions) vanish on page 2+. */
+  .katex .hide-tail svg,
+  .katex .mfrac .frac-line,
+  .katex .overline .overline-line,
+  .katex .underline .underline-line,
+  .katex .hline,
+  .katex .hdashline,
+  .katex .rule {
+    min-height: 1px;
+  }
+
+  .katex,
+  .katex .mord.sqrt,
+  .katex .vlist-t,
+  .question-list li {
+    overflow: visible;
+  }
+
+  .worksheet-workspace,
+  .worksheet-main,
+  .worksheet-page-layout-root {
+    overflow: visible !important;
+    max-height: none !important;
   }
 
   .question-list li .katex .text,

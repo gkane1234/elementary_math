@@ -626,6 +626,7 @@ def _integral_substitution(topic: str, settings: dict) -> list[Question]:
 
 
 def _riemann_approximate_area(topic: str, settings: dict) -> list[Question]:
+    """Mid/left/right Riemann sums — OpenStax Calc Vol 1 §5.1."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     structure = _topic_structure(settings)
@@ -634,7 +635,6 @@ def _riemann_approximate_area(topic: str, settings: dict) -> list[Question]:
     def build() -> tuple[str, str, str | None]:
         n_max = max(2, int(structure.get("riemann_n_max", 4)))
         L_max = max(4, int(structure.get("riemann_L_max", 4)))
-        # Continuous: more intervals and longer intervals as D rises.
         choices = [(2, 4)]
         if structure.get("unlock_medium"):
             choices.append((min(4, n_max), 4))
@@ -644,32 +644,85 @@ def _riemann_approximate_area(topic: str, settings: dict) -> list[Question]:
             choices.append((n_max, L_max))
         n_intervals, L = random.choice(choices)
         dx = Fraction(L, n_intervals)
-        total = sum((Fraction(2 * i + 1, 2) * dx) * dx for i in range(n_intervals))
+
+        curve_choices = ["linear"]
+        if structure.get("unlock_medium"):
+            curve_choices.append("affine")
+        if structure.get("unlock_hard"):
+            curve_choices.append("quad")
+        curve = random.choice(curve_choices)
+
+        methods = ["midpoint"]
+        if structure.get("unlock_medium"):
+            methods.extend(["left", "right"])
+        method = random.choice(methods)
+
+        def f_at(t: Fraction) -> Fraction:
+            if curve == "linear":
+                return t
+            if curve == "affine":
+                return t + 1
+            return t * t
+
+        if method == "midpoint":
+            sample_pts = [Fraction(2 * i + 1, 2) * dx for i in range(n_intervals)]
+            method_words = "midpoint"
+        elif method == "left":
+            sample_pts = [i * dx for i in range(n_intervals)]
+            method_words = "left"
+        else:
+            sample_pts = [(i + 1) * dx for i in range(n_intervals)]
+            method_words = "right"
+
+        total = sum(f_at(t) * dx for t in sample_pts)
+        if curve == "linear":
+            f_tex = x
+            curve_kind = "linear"
+            a_coef, b_coef, c_coef = 1.0, 0.0, 0.0
+        elif curve == "affine":
+            f_tex = rf"{x}+1"
+            curve_kind = "linear"
+            a_coef, b_coef, c_coef = 1.0, 1.0, 0.0
+        else:
+            f_tex = rf"{x}^{{2}}"
+            curve_kind = "quadratic"
+            a_coef, b_coef, c_coef = 0.0, 0.0, 1.0
+
         prompt = (
-            rf"\text{{Use a midpoint Riemann sum with }}{n_intervals}"
+            rf"\text{{Use a {method_words} Riemann sum with }}{n_intervals}"
             rf"\text{{ equal intervals to approximate the area under }}"
-            rf"f({x})={x}\text{{ on }}[0,{L}]."
+            rf"f({x})={f_tex}\text{{ on }}[0,{L}]."
         )
+        # stash sketch params on the closure for metadata
+        build._last_sketch = {  # type: ignore[attr-defined]
+            "n": n_intervals,
+            "L": float(L),
+            "curve_kind": curve_kind,
+            "a": a_coef,
+            "b": b_coef,
+            "c": c_coef,
+        }
         answer = frac_latex(total)
         return prompt, "approximate area", answer if include_answer_key else None
 
     def _sketch_meta(prompt_latex: str, prompt_text: str, answer: str | None) -> dict:
         from question_engine.diagrams.figure_families import sample_figure_from_settings
 
-        n_m = re.search(r"with \}(\d+)", prompt_latex or "")
-        n_rect = int(n_m.group(1)) if n_m else 4
+        sk = getattr(build, "_last_sketch", None) or {}
+        n_rect = int(sk.get("n") or 4)
+        L = float(sk.get("L") or 4.0)
         sample = sample_figure_from_settings(
             "function_sketch",
             settings,
             features=["curve", "riemann"],
-            curve_kind="linear",
-            a=1.0,
-            b=0.0,
-            c=0.0,
+            curve_kind=str(sk.get("curve_kind") or "linear"),
+            a=float(sk.get("a") or 1.0),
+            b=float(sk.get("b") or 0.0),
+            c=float(sk.get("c") or 0.0),
             riemann_n=n_rect,
             shade_a=0.0,
-            shade_b=3.0,
-            window=(-0.5, 5),
+            shade_b=L,
+            window=(-0.5, max(5.0, L + 1.0)),
         )
         return sample.to_metadata_extras()
 
@@ -1366,6 +1419,87 @@ def _separable_diff_eq(topic: str, settings: dict) -> list[Question]:
     return _make_questions(topic, count, include_answer_key, build)
 
 
+def _calc_continuous_growth_decay(topic: str, settings: dict) -> list[Question]:
+    """Continuous y'=ky models — OpenStax Calc Vol 1 §6.8 / Vol 2 §4.x.
+
+    Distinct from Algebra discrete ``exponential_growth_decay`` (% per period).
+    """
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import calc_application_structure_from_continuous
+
+    structure = calc_application_structure_from_continuous(settings)
+    tier = _difficulty_tier(settings)
+    band = str(structure["band"]) if structure is not None else tier
+
+    # (article, name, unit, time_unit)
+    contexts_growth = (
+        ("A", "population", "people", "years"),
+        ("A", "bacterial culture", "cells", "hours"),
+        ("An", "investment", "dollars", "years"),
+    )
+    contexts_decay = (
+        ("A", "radioactive sample", "grams", "years"),
+        ("A", "medicine dose", "mg", "hours"),
+        ("A", "population", "people", "years"),
+    )
+
+    def build() -> tuple[str, str, str | None]:
+        if band == "easy":
+            k = random.randint(1, 3)
+            y0 = random.choice([10, 20, 50, 100])
+            t = random.randint(1, 3)
+            art, name, unit, time_unit = random.choice(contexts_growth)
+            prompt = (
+                rf"\text{{{art} {name} of }}{y0}\text{{ {unit} grows continuously according to }}"
+                rf"y'={k}y.\text{{ Find }}y({t})\text{{ ({time_unit}).}}"
+            )
+            answer = rf"{y0}e^{{{k * t}}}"
+        elif band == "medium":
+            if random.choice([True, False]):
+                # decay
+                k = random.randint(1, 3)
+                y0 = random.choice([80, 100, 200])
+                t = random.randint(1, 4)
+                art, name, unit, time_unit = random.choice(contexts_decay)
+                prompt = (
+                    rf"\text{{{art} {name} of }}{y0}\text{{ {unit} decays continuously according to }}"
+                    rf"y'=-{k}y.\text{{ Find }}y({t})\text{{ ({time_unit}).}}"
+                )
+                answer = rf"{y0}e^{{-{k * t}}}"
+            else:
+                # solve IVP for formula
+                k = random.randint(2, 4)
+                y0 = random.randint(2, 8)
+                prompt = (
+                    rf"\text{{Solve }}y'={k}y,\ y(0)={y0}."
+                )
+                answer = rf"y={y0}e^{{{k}x}}"
+        else:
+            # doubling / half-life style: find amount after n doubling times
+            if random.choice([True, False]):
+                y0 = random.choice([50, 100, 200])
+                n_dbl = random.randint(2, 4)
+                art, name, unit, _tu = random.choice(contexts_growth)
+                prompt = (
+                    rf"\text{{{art} {name} of }}{y0}\text{{ {unit} doubles continuously every }}"
+                    rf"T\text{{ years. How much is present after }}{n_dbl}T\text{{ years?}}"
+                )
+                answer = str(y0 * (2**n_dbl))
+            else:
+                y0 = random.choice([64, 128, 256])
+                n_half = random.randint(2, 4)
+                art, name, unit, _tu = random.choice(contexts_decay)
+                prompt = (
+                    rf"\text{{{art} {name} of }}{y0}\text{{ {unit} has continuous half-life }}"
+                    rf"T.\text{{ How much remains after }}{n_half}T?"
+                )
+                answer = str(y0 // (2**n_half))
+        return prompt, "continuous growth/decay", answer if include_answer_key else None
+
+    return _make_questions(topic, count, include_answer_key, build)
+
+
 def _calculus_foundations(topic: str, settings: dict) -> list[Question]:
     """Fallback for remaining thin calc topics not yet given dedicated generators."""
     count = int(settings.get("count", 10))
@@ -1577,5 +1711,6 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "volume_cross_sections": _volume_cross_sections,
     "slope_field_interpret": _slope_field_interpret,
     "separable_diff_eq": _separable_diff_eq,
+    "calc_continuous_growth_decay": _calc_continuous_growth_decay,
     "calculus_foundations": _calculus_foundations,
 }

@@ -145,6 +145,8 @@ class PolynomialLongDivisionQuestionType(QuestionType):
                     prompt_text=f"({dividend}) / ({divisor})",
                     answer_latex=answer_latex,
                     metadata={
+                        "skeleton_pattern": "PolyLongDiv",
+                        "primitive_engine": "poly_long_division",
                         "numerator_degree": dividend.deg(),
                         "denominator_degree": divisor.deg(),
                         "has_remainder": not remainder.is_zero(),

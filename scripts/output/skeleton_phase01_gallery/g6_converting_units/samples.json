@@ -1,0 +1,1125 @@
+{
+  "section": {
+    "slug": "g6_converting_units",
+    "title": "Number \u2014 converting units",
+    "pattern": "ConvertUnits",
+    "engine": "number",
+    "type_id": "g6_converting_units",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Given equivalence. Double number line in metadata. Keep UNCLEAR if DNL is display-only."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "g6_converting_units",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{A beetle is 30 mm long. Given that 10 mm $=$ 1 cm. How long is the beetle in cm?}",
+      "answer_latex": "3",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Beetle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mm</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">cm</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"48.0\" x2=\"190.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"190.0\" y1=\"96.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"190.0\" y1=\"62.0\" x2=\"190.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"48.0\" x2=\"310.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"310.0\" y1=\"96.0\" x2=\"310.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"310.0\" y1=\"62.0\" x2=\"310.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Beetle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mm</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">cm</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"48.0\" x2=\"190.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"190.0\" y1=\"96.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"190.0\" y1=\"62.0\" x2=\"190.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"48.0\" x2=\"310.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"310.0\" y1=\"96.0\" x2=\"310.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"310.0\" y1=\"62.0\" x2=\"310.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Beetle",
+          "top": {
+            "unit": "mm",
+            "values": [
+              0,
+              10,
+              20,
+              30
+            ]
+          },
+          "bottom": {
+            "unit": "cm",
+            "values": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "mm",
+          "to_unit": "cm",
+          "from_step": 10,
+          "to_step": 1,
+          "amount": 30,
+          "approx": false
+        },
+        "difficulty": 0.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 8,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 5,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "g6_converting_units",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{A beetle is 20 mm long. Given that 10 mm $=$ 1 cm. How long is the beetle in cm?}",
+      "answer_latex": "2",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Beetle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mm</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">cm</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Beetle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mm</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">cm</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Beetle",
+          "top": {
+            "unit": "mm",
+            "values": [
+              0,
+              10,
+              20
+            ]
+          },
+          "bottom": {
+            "unit": "cm",
+            "values": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "mm",
+          "to_unit": "cm",
+          "from_step": 10,
+          "to_step": 1,
+          "amount": 20,
+          "approx": false
+        },
+        "difficulty": 0.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 8,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 5,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "g6_converting_units",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{A beetle is 30 mm long. Given that 10 mm $=$ 1 cm. How long is the beetle in cm?}",
+      "answer_latex": "3",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Beetle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mm</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">cm</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"48.0\" x2=\"190.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"190.0\" y1=\"96.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"190.0\" y1=\"62.0\" x2=\"190.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"48.0\" x2=\"310.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"310.0\" y1=\"96.0\" x2=\"310.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"310.0\" y1=\"62.0\" x2=\"310.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Beetle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mm</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">cm</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"48.0\" x2=\"190.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"190.0\" y1=\"96.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"190.0\" y1=\"62.0\" x2=\"190.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"48.0\" x2=\"310.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"310.0\" y1=\"96.0\" x2=\"310.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"310.0\" y1=\"62.0\" x2=\"310.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Beetle",
+          "top": {
+            "unit": "mm",
+            "values": [
+              0,
+              10,
+              20,
+              30
+            ]
+          },
+          "bottom": {
+            "unit": "cm",
+            "values": [
+              0,
+              1,
+              2,
+              3
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "mm",
+          "to_unit": "cm",
+          "from_step": 10,
+          "to_step": 1,
+          "amount": 30,
+          "approx": false
+        },
+        "difficulty": 0.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 8,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 5,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "g6_converting_units",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{A bottle holds 6000 mL of water. Given that 1000 mL $=$ 1 L. How many liters is that?}",
+      "answer_latex": "6",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Bottle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mL</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">L</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"130.0\" y1=\"48.0\" x2=\"130.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"130.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1000</text><line x1=\"130.0\" y1=\"96.0\" x2=\"130.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"130.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"130.0\" y1=\"62.0\" x2=\"130.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"48.0\" x2=\"190.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2000</text><line x1=\"190.0\" y1=\"96.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"190.0\" y1=\"62.0\" x2=\"190.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3000</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"48.0\" x2=\"310.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4000</text><line x1=\"310.0\" y1=\"96.0\" x2=\"310.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"310.0\" y1=\"62.0\" x2=\"310.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"370.0\" y1=\"48.0\" x2=\"370.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"370.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5000</text><line x1=\"370.0\" y1=\"96.0\" x2=\"370.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"370.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5</text><line x1=\"370.0\" y1=\"62.0\" x2=\"370.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6000</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Bottle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mL</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">L</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"130.0\" y1=\"48.0\" x2=\"130.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"130.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1000</text><line x1=\"130.0\" y1=\"96.0\" x2=\"130.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"130.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"130.0\" y1=\"62.0\" x2=\"130.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"48.0\" x2=\"190.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2000</text><line x1=\"190.0\" y1=\"96.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"190.0\" y1=\"62.0\" x2=\"190.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3000</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"48.0\" x2=\"310.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4000</text><line x1=\"310.0\" y1=\"96.0\" x2=\"310.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"310.0\" y1=\"62.0\" x2=\"310.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"370.0\" y1=\"48.0\" x2=\"370.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"370.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5000</text><line x1=\"370.0\" y1=\"96.0\" x2=\"370.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"370.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5</text><line x1=\"370.0\" y1=\"62.0\" x2=\"370.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6000</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Bottle",
+          "top": {
+            "unit": "mL",
+            "values": [
+              0,
+              1000,
+              2000,
+              3000,
+              4000,
+              5000,
+              6000
+            ]
+          },
+          "bottom": {
+            "unit": "L",
+            "values": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "mL",
+          "to_unit": "L",
+          "from_step": 1000,
+          "to_step": 1,
+          "amount": 6000,
+          "approx": false
+        },
+        "difficulty": 8.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 12,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 10,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "g6_converting_units",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{A bottle holds 7000 mL of water. Given that 1000 mL $=$ 1 L. How many liters is that?}",
+      "answer_latex": "7",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Bottle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mL</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">L</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"48.0\" x2=\"121.4\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1000</text><line x1=\"121.4\" y1=\"96.0\" x2=\"121.4\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"121.4\" y1=\"62.0\" x2=\"121.4\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"48.0\" x2=\"172.9\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2000</text><line x1=\"172.9\" y1=\"96.0\" x2=\"172.9\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"172.9\" y1=\"62.0\" x2=\"172.9\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"48.0\" x2=\"224.3\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3000</text><line x1=\"224.3\" y1=\"96.0\" x2=\"224.3\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"224.3\" y1=\"62.0\" x2=\"224.3\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"48.0\" x2=\"275.7\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4000</text><line x1=\"275.7\" y1=\"96.0\" x2=\"275.7\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"275.7\" y1=\"62.0\" x2=\"275.7\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"48.0\" x2=\"327.1\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5000</text><line x1=\"327.1\" y1=\"96.0\" x2=\"327.1\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5</text><line x1=\"327.1\" y1=\"62.0\" x2=\"327.1\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"48.0\" x2=\"378.6\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6000</text><line x1=\"378.6\" y1=\"96.0\" x2=\"378.6\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"378.6\" y1=\"62.0\" x2=\"378.6\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">7000</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">7</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Bottle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mL</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">L</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"48.0\" x2=\"121.4\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1000</text><line x1=\"121.4\" y1=\"96.0\" x2=\"121.4\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"121.4\" y1=\"62.0\" x2=\"121.4\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"48.0\" x2=\"172.9\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2000</text><line x1=\"172.9\" y1=\"96.0\" x2=\"172.9\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"172.9\" y1=\"62.0\" x2=\"172.9\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"48.0\" x2=\"224.3\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3000</text><line x1=\"224.3\" y1=\"96.0\" x2=\"224.3\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"224.3\" y1=\"62.0\" x2=\"224.3\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"48.0\" x2=\"275.7\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4000</text><line x1=\"275.7\" y1=\"96.0\" x2=\"275.7\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"275.7\" y1=\"62.0\" x2=\"275.7\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"48.0\" x2=\"327.1\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5000</text><line x1=\"327.1\" y1=\"96.0\" x2=\"327.1\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5</text><line x1=\"327.1\" y1=\"62.0\" x2=\"327.1\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"48.0\" x2=\"378.6\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6000</text><line x1=\"378.6\" y1=\"96.0\" x2=\"378.6\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"378.6\" y1=\"62.0\" x2=\"378.6\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">7000</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">7</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Bottle",
+          "top": {
+            "unit": "mL",
+            "values": [
+              0,
+              1000,
+              2000,
+              3000,
+              4000,
+              5000,
+              6000,
+              7000
+            ]
+          },
+          "bottom": {
+            "unit": "L",
+            "values": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "mL",
+          "to_unit": "L",
+          "from_step": 1000,
+          "to_step": 1,
+          "amount": 7000,
+          "approx": false
+        },
+        "difficulty": 8.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 12,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 10,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "g6_converting_units",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{A bottle holds 7000 mL of water. Given that 1000 mL $=$ 1 L. How many liters is that?}",
+      "answer_latex": "7",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Bottle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mL</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">L</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"48.0\" x2=\"121.4\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1000</text><line x1=\"121.4\" y1=\"96.0\" x2=\"121.4\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"121.4\" y1=\"62.0\" x2=\"121.4\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"48.0\" x2=\"172.9\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2000</text><line x1=\"172.9\" y1=\"96.0\" x2=\"172.9\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"172.9\" y1=\"62.0\" x2=\"172.9\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"48.0\" x2=\"224.3\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3000</text><line x1=\"224.3\" y1=\"96.0\" x2=\"224.3\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"224.3\" y1=\"62.0\" x2=\"224.3\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"48.0\" x2=\"275.7\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4000</text><line x1=\"275.7\" y1=\"96.0\" x2=\"275.7\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"275.7\" y1=\"62.0\" x2=\"275.7\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"48.0\" x2=\"327.1\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5000</text><line x1=\"327.1\" y1=\"96.0\" x2=\"327.1\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5</text><line x1=\"327.1\" y1=\"62.0\" x2=\"327.1\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"48.0\" x2=\"378.6\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6000</text><line x1=\"378.6\" y1=\"96.0\" x2=\"378.6\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"378.6\" y1=\"62.0\" x2=\"378.6\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">7000</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">7</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Bottle</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">mL</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">L</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"48.0\" x2=\"121.4\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1000</text><line x1=\"121.4\" y1=\"96.0\" x2=\"121.4\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"121.4\" y1=\"62.0\" x2=\"121.4\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"48.0\" x2=\"172.9\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2000</text><line x1=\"172.9\" y1=\"96.0\" x2=\"172.9\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"172.9\" y1=\"62.0\" x2=\"172.9\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"48.0\" x2=\"224.3\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3000</text><line x1=\"224.3\" y1=\"96.0\" x2=\"224.3\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"224.3\" y1=\"62.0\" x2=\"224.3\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"48.0\" x2=\"275.7\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4000</text><line x1=\"275.7\" y1=\"96.0\" x2=\"275.7\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"275.7\" y1=\"62.0\" x2=\"275.7\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"48.0\" x2=\"327.1\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5000</text><line x1=\"327.1\" y1=\"96.0\" x2=\"327.1\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">5</text><line x1=\"327.1\" y1=\"62.0\" x2=\"327.1\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"48.0\" x2=\"378.6\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6000</text><line x1=\"378.6\" y1=\"96.0\" x2=\"378.6\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"378.6\" y1=\"62.0\" x2=\"378.6\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">7000</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">7</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Bottle",
+          "top": {
+            "unit": "mL",
+            "values": [
+              0,
+              1000,
+              2000,
+              3000,
+              4000,
+              5000,
+              6000,
+              7000
+            ]
+          },
+          "bottom": {
+            "unit": "L",
+            "values": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "mL",
+          "to_unit": "L",
+          "from_step": 1000,
+          "to_step": 1,
+          "amount": 7000,
+          "approx": false
+        },
+        "difficulty": 8.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 12,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 10,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "g6_converting_units",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{A fence is 50 meters long. Given that 5 meters }\\approx\\text{ 16 feet. About how many feet is that?}",
+      "answer_latex": "160",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Fence</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">meters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">feet</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"142.0\" y1=\"48.0\" x2=\"142.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"142.0\" y1=\"96.0\" x2=\"142.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"142.0\" y1=\"62.0\" x2=\"142.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"214.0\" y1=\"48.0\" x2=\"214.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"214.0\" y1=\"96.0\" x2=\"214.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"214.0\" y1=\"62.0\" x2=\"214.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"286.0\" y1=\"48.0\" x2=\"286.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"286.0\" y1=\"96.0\" x2=\"286.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"286.0\" y1=\"62.0\" x2=\"286.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"358.0\" y1=\"48.0\" x2=\"358.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">40</text><line x1=\"358.0\" y1=\"96.0\" x2=\"358.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"358.0\" y1=\"62.0\" x2=\"358.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">50</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Fence</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">meters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">feet</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"142.0\" y1=\"48.0\" x2=\"142.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"142.0\" y1=\"96.0\" x2=\"142.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"142.0\" y1=\"62.0\" x2=\"142.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"214.0\" y1=\"48.0\" x2=\"214.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"214.0\" y1=\"96.0\" x2=\"214.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"214.0\" y1=\"62.0\" x2=\"214.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"286.0\" y1=\"48.0\" x2=\"286.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"286.0\" y1=\"96.0\" x2=\"286.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"286.0\" y1=\"62.0\" x2=\"286.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"358.0\" y1=\"48.0\" x2=\"358.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">40</text><line x1=\"358.0\" y1=\"96.0\" x2=\"358.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"358.0\" y1=\"62.0\" x2=\"358.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">50</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Fence",
+          "top": {
+            "unit": "meters",
+            "values": [
+              0,
+              10,
+              20,
+              30,
+              40,
+              50
+            ]
+          },
+          "bottom": {
+            "unit": "feet",
+            "values": [
+              0,
+              32,
+              64,
+              96,
+              128,
+              160
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "meters",
+          "to_unit": "feet",
+          "from_step": 5,
+          "to_step": 16,
+          "amount": 50,
+          "approx": true
+        },
+        "difficulty": 16.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 25,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 15,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "g6_converting_units",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{A tank holds 189 liters of water. Given that 15 liters }\\approx\\text{ 4 gallons. About how many gallons is that?}",
+      "answer_latex": "50.4",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Tank</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">liters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">gallons</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">15</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">189</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">50.4</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Tank</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">liters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">gallons</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">15</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">189</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">50.4</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Tank",
+          "top": {
+            "unit": "liters",
+            "values": [
+              0,
+              15,
+              189
+            ]
+          },
+          "bottom": {
+            "unit": "gallons",
+            "values": [
+              0,
+              4,
+              50.4
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "liters",
+          "to_unit": "gallons",
+          "from_step": 15,
+          "to_step": 4,
+          "amount": 189,
+          "approx": true
+        },
+        "difficulty": 16.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 25,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 15,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "g6_converting_units",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{A fence is 60 meters long. Given that 5 meters }\\approx\\text{ 16 feet. About how many feet is that?}",
+      "answer_latex": "192",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Fence</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">meters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">feet</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"130.0\" y1=\"48.0\" x2=\"130.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"130.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"130.0\" y1=\"96.0\" x2=\"130.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"130.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"130.0\" y1=\"62.0\" x2=\"130.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"48.0\" x2=\"190.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"190.0\" y1=\"96.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"190.0\" y1=\"62.0\" x2=\"190.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"48.0\" x2=\"310.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">40</text><line x1=\"310.0\" y1=\"96.0\" x2=\"310.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"310.0\" y1=\"62.0\" x2=\"310.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"370.0\" y1=\"48.0\" x2=\"370.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"370.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">50</text><line x1=\"370.0\" y1=\"96.0\" x2=\"370.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"370.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"370.0\" y1=\"62.0\" x2=\"370.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Fence</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">meters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">feet</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"130.0\" y1=\"48.0\" x2=\"130.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"130.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"130.0\" y1=\"96.0\" x2=\"130.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"130.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"130.0\" y1=\"62.0\" x2=\"130.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"48.0\" x2=\"190.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"190.0\" y1=\"96.0\" x2=\"190.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"190.0\" y1=\"62.0\" x2=\"190.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"48.0\" x2=\"310.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">40</text><line x1=\"310.0\" y1=\"96.0\" x2=\"310.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"310.0\" y1=\"62.0\" x2=\"310.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"370.0\" y1=\"48.0\" x2=\"370.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"370.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">50</text><line x1=\"370.0\" y1=\"96.0\" x2=\"370.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"370.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"370.0\" y1=\"62.0\" x2=\"370.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Fence",
+          "top": {
+            "unit": "meters",
+            "values": [
+              0,
+              10,
+              20,
+              30,
+              40,
+              50,
+              60
+            ]
+          },
+          "bottom": {
+            "unit": "feet",
+            "values": [
+              0,
+              32,
+              64,
+              96,
+              128,
+              160,
+              192
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "meters",
+          "to_unit": "feet",
+          "from_step": 5,
+          "to_step": 16,
+          "amount": 60,
+          "approx": true
+        },
+        "difficulty": 16.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 25,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 15,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "g6_converting_units",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{A fence is 95 meters long. Given that 5 meters }\\approx\\text{ 16 feet. About how many feet is that?}",
+      "answer_latex": "304",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Fence</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">meters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">feet</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"48.0\" x2=\"121.4\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">15</text><line x1=\"121.4\" y1=\"96.0\" x2=\"121.4\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"121.4\" y1=\"62.0\" x2=\"121.4\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"48.0\" x2=\"172.9\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"172.9\" y1=\"96.0\" x2=\"172.9\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"172.9\" y1=\"62.0\" x2=\"172.9\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"48.0\" x2=\"224.3\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">45</text><line x1=\"224.3\" y1=\"96.0\" x2=\"224.3\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"224.3\" y1=\"62.0\" x2=\"224.3\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"48.0\" x2=\"275.7\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"275.7\" y1=\"96.0\" x2=\"275.7\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"275.7\" y1=\"62.0\" x2=\"275.7\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"48.0\" x2=\"327.1\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">75</text><line x1=\"327.1\" y1=\"96.0\" x2=\"327.1\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">240</text><line x1=\"327.1\" y1=\"62.0\" x2=\"327.1\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"48.0\" x2=\"378.6\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"378.6\" y1=\"96.0\" x2=\"378.6\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">288</text><line x1=\"378.6\" y1=\"62.0\" x2=\"378.6\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">95</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">304</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Fence</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">meters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">feet</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"48.0\" x2=\"121.4\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">15</text><line x1=\"121.4\" y1=\"96.0\" x2=\"121.4\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"121.4\" y1=\"62.0\" x2=\"121.4\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"48.0\" x2=\"172.9\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"172.9\" y1=\"96.0\" x2=\"172.9\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"172.9\" y1=\"62.0\" x2=\"172.9\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"48.0\" x2=\"224.3\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">45</text><line x1=\"224.3\" y1=\"96.0\" x2=\"224.3\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"224.3\" y1=\"62.0\" x2=\"224.3\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"48.0\" x2=\"275.7\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"275.7\" y1=\"96.0\" x2=\"275.7\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"275.7\" y1=\"62.0\" x2=\"275.7\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"48.0\" x2=\"327.1\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">75</text><line x1=\"327.1\" y1=\"96.0\" x2=\"327.1\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">240</text><line x1=\"327.1\" y1=\"62.0\" x2=\"327.1\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"48.0\" x2=\"378.6\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"378.6\" y1=\"96.0\" x2=\"378.6\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">288</text><line x1=\"378.6\" y1=\"62.0\" x2=\"378.6\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">95</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">304</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Fence",
+          "top": {
+            "unit": "meters",
+            "values": [
+              0,
+              15,
+              30,
+              45,
+              60,
+              75,
+              90,
+              95
+            ]
+          },
+          "bottom": {
+            "unit": "feet",
+            "values": [
+              0,
+              48,
+              96,
+              144,
+              192,
+              240,
+              288,
+              304
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "meters",
+          "to_unit": "feet",
+          "from_step": 5,
+          "to_step": 16,
+          "amount": 95,
+          "approx": true
+        },
+        "difficulty": 22.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 25,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 15,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "g6_converting_units",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{A tank holds 99 liters of water. Given that 15 liters }\\approx\\text{ 4 gallons. About how many gallons is that?}",
+      "answer_latex": "26.4",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Tank</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">liters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">gallons</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">15</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">99</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">26.4</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Tank</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">liters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">gallons</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">15</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">99</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">26.4</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Tank",
+          "top": {
+            "unit": "liters",
+            "values": [
+              0,
+              15,
+              99
+            ]
+          },
+          "bottom": {
+            "unit": "gallons",
+            "values": [
+              0,
+              4,
+              26.4
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "liters",
+          "to_unit": "gallons",
+          "from_step": 15,
+          "to_step": 4,
+          "amount": 99,
+          "approx": true
+        },
+        "difficulty": 22.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 25,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 15,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "g6_converting_units",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{A fence is 75 meters long. Given that 5 meters }\\approx\\text{ 16 feet. About how many feet is that?}",
+      "answer_latex": "240",
+      "skeleton_pattern": "ConvertUnits",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Fence</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">meters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">feet</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"115.0\" y1=\"48.0\" x2=\"115.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"115.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"115.0\" y1=\"96.0\" x2=\"115.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"115.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"115.0\" y1=\"62.0\" x2=\"115.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"48.0\" x2=\"160.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"160.0\" y1=\"96.0\" x2=\"160.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"160.0\" y1=\"62.0\" x2=\"160.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"205.0\" y1=\"48.0\" x2=\"205.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"205.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"205.0\" y1=\"96.0\" x2=\"205.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"205.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"205.0\" y1=\"62.0\" x2=\"205.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">40</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"295.0\" y1=\"48.0\" x2=\"295.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"295.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">50</text><line x1=\"295.0\" y1=\"96.0\" x2=\"295.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"295.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"295.0\" y1=\"62.0\" x2=\"295.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"48.0\" x2=\"340.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"340.0\" y1=\"96.0\" x2=\"340.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"340.0\" y1=\"62.0\" x2=\"340.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"385.0\" y1=\"48.0\" x2=\"385.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"385.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">70</text><line x1=\"385.0\" y1=\"96.0\" x2=\"385.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"385.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">224</text><line x1=\"385.0\" y1=\"62.0\" x2=\"385.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">75</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">240</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "ConvertUnits"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "ConvertUnits",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"140\" viewBox=\"0 0 460 140\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"33.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Fence</text><text x=\"62.0\" y=\"60.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">meters</text><text x=\"62.0\" y=\"108.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">feet</text><line x1=\"70.0\" y1=\"55.0\" x2=\"430.0\" y2=\"55.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"103.0\" x2=\"430.0\" y2=\"103.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"48.0\" x2=\"70.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"96.0\" x2=\"70.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"62.0\" x2=\"70.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"115.0\" y1=\"48.0\" x2=\"115.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"115.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">10</text><line x1=\"115.0\" y1=\"96.0\" x2=\"115.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"115.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"115.0\" y1=\"62.0\" x2=\"115.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"48.0\" x2=\"160.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">20</text><line x1=\"160.0\" y1=\"96.0\" x2=\"160.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"160.0\" y1=\"62.0\" x2=\"160.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"205.0\" y1=\"48.0\" x2=\"205.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"205.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"205.0\" y1=\"96.0\" x2=\"205.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"205.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"205.0\" y1=\"62.0\" x2=\"205.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"48.0\" x2=\"250.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">40</text><line x1=\"250.0\" y1=\"96.0\" x2=\"250.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"250.0\" y1=\"62.0\" x2=\"250.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"295.0\" y1=\"48.0\" x2=\"295.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"295.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">50</text><line x1=\"295.0\" y1=\"96.0\" x2=\"295.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"295.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"295.0\" y1=\"62.0\" x2=\"295.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"48.0\" x2=\"340.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"340.0\" y1=\"96.0\" x2=\"340.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"340.0\" y1=\"62.0\" x2=\"340.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"385.0\" y1=\"48.0\" x2=\"385.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"385.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">70</text><line x1=\"385.0\" y1=\"96.0\" x2=\"385.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"385.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">224</text><line x1=\"385.0\" y1=\"62.0\" x2=\"385.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"48.0\" x2=\"430.0\" y2=\"62.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"43.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">75</text><line x1=\"430.0\" y1=\"96.0\" x2=\"430.0\" y2=\"110.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"123.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">240</text><line x1=\"430.0\" y1=\"62.0\" x2=\"430.0\" y2=\"96.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "double_number_line_spec": {
+          "title": "Fence",
+          "top": {
+            "unit": "meters",
+            "values": [
+              0,
+              10,
+              20,
+              30,
+              40,
+              50,
+              60,
+              70,
+              75
+            ]
+          },
+          "bottom": {
+            "unit": "feet",
+            "values": [
+              0,
+              32,
+              64,
+              96,
+              128,
+              160,
+              192,
+              224,
+              240
+            ]
+          }
+        },
+        "conversion": {
+          "from_unit": "meters",
+          "to_unit": "feet",
+          "from_step": 5,
+          "to_step": 16,
+          "amount": 75,
+          "approx": true
+        },
+        "difficulty": 22.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 25,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 15,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Convert each measurement using the given equivalence. A double number line is provided.}"
+      }
+    }
+  ],
+  "failures": []
+}

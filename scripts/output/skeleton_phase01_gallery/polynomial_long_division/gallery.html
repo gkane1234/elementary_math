@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>PolyLongDiv — divide polynomials (UNCLEAR) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>PolyLongDiv — divide polynomials (UNCLEAR)</h1>
+<p class="sub"><code>polynomial_long_division</code> · live <code>_generate_for_type</code>
+ · pattern <strong>PolyLongDiv</strong>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">UNCLEAR: OpenStax splits monomial ÷ (§6.5) vs long division (§6.6). One A1 leaf covers both. Red-header samples of the old mix.</p>
+<p class='sub'>Also wired: <code>a2_polynomial_functions_dividing</code>, <code>pc_dividing_polynomial_functions</code></p>
+<div class='notes-alert'>UNCLEAR · LIMITATIONS — see Limitations in notes below.</div><div class='notes-block'><h1><code>polynomial_long_division</code> — Dividing</h1>
+<p>&gt; <strong>UNCLEAR</strong> — OpenStax splits 6.5 monomial ÷ vs 6.6 long division; one A1 leaf covers both. Confirm old-path mix.</p>
+<ul>
+<li><strong>Course:</strong> Algebra 1</li>
+<li><strong>Category:</strong> Algebra 1 — Polynomials</li>
+<li><strong>Generator:</strong> <code>polynomial_long_division</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Divide polynomials. D=0: linear÷linear or monomial÷monomial if old path is that easy; else quadratic÷linear with no remainder. High D: missing terms, remainder.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\frac{15x^{2}+25x+10}{5x+5}</code> - answer: <code>3x+2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\frac{12x^{2}-12}{3x-3}</code> - answer: <code>4x+4</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\frac{14x^{2}+14x-28}{2x^{2}+2x-4}</code> - answer: <code>7</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\frac{45x^{2}-33x-42}{9x+6}</code> - answer: <code>5x-7</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\frac{15x^{4}-3x^{3}-157x^{2}-56x+158}{5x^{2}+9x-11}</code> - answer: <code>3x^{2}-6x-14+\frac{4x+4}{5x^{2}+9x-11}</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\frac{8x^{4}+54x^{3}+114x^{2}+55x-40}{4x^{2}+7x-4}</code> - answer: <code>2x^{2}+10x+13+\frac{4x+12}{4x^{2}+7x-4}</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\frac{117x^{4}-207x^{3}+20x^{2}+88x-82}{9x^{2}-9x+5}</code> - answer: <code>13x^{2}-10x-15+\frac{3x-7}{9x^{2}-9x+5}</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\frac{24x^{5}+119x^{4}+66x^{3}-100x^{2}-193x-40}{3x^{2}+13x+2}</code> - answer: <code>8x^{3}+5x^{2}-5x-15+\frac{12x-10}{3x^{2}+13x+2}</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Elementary Algebra 2e — 6.5 Divide Monomials</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/6-5-divide-monomials</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 6.59: Simplify: ⓐ $\frac{x^{9}}{x^{7}}$ ⓑ $\frac{3^{10}}{3^{2}} .$ - Example 6.60: Simplify: ⓐ $\frac{b^{8}}{b^{12}}$ ⓑ $\frac{7^{3}}{7^{5}} .$ - Example 6.61: Simplify: ⓐ $\frac{a^{5}}{a^{9}}$ ⓑ $\frac{x^{11}}{x^{7}} .$ - Example 6.62: Simplify: ⓐ $9^{0}$ ⓑ $n^{0} .$</p>
+<ul>
+<li>Shape: OpenStax splits monomial ÷ from long division.</li>
+</ul>
+<h3>Elementary Algebra 2e — 6.6 Divide Polynomials</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/6-6-divide-polynomials</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 6.77: Find the quotient: $\frac{7 y^{2} + 21}{7} .$ - Example 6.78: Find the quotient: $\left(\right. 18 x^{3} - 36 x^{2} \left.\right) \div 6 x .$ - Example 6.79: Find the quotient: $\frac{12 d^{2} - 16 d}{−4} .$ - Example 6.80: Find the quotient: $\frac{105 y^{5} + 75 y^{3}}{5 y^{2}} .$</p>
+<h2>Variety notes</h2>
+<p>OpenStax splits 6.5 monomial ÷ vs 6.6 long division; one A1 leaf covers both. Confirm old-path mix.</p>
+<h2>Limitations</h2>
+<ul>
+<li>UNCLEAR / LIMITATIONS: one leaf covers EA §6.5 monomial ÷ and §6.6 long division.</li>
+<li>Confirm D ladder mixes both honestly; do not fake difficulty with bigger dividends alone.</li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse polynomial_long_division. New engine only if old path cannot match 6.6 honestly — leave the leaf if stuck.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{15x^{3}-31x^{2}-15x+10}{5x-2}$$</div><div class='math'><div class='lab'>Answer</div>$$3x^{2}-5x-5$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{4x^{3}+9x^{2}-x-6}{x+2}$$</div><div class='math'><div class='lab'>Answer</div>$$4x^{2}+x-3$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{20x^{2}+35x+15}{4x+3}$$</div><div class='math'><div class='lab'>Answer</div>$$5x+5$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{12x^{4}-39x^{3}+24x^{2}+18x-15}{3x-3}$$</div><div class='math'><div class='lab'>Answer</div>$$4x^{3}-9x^{2}-x+5$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{45x^{2}-40x-5}{9x^{2}-8x-1}$$</div><div class='math'><div class='lab'>Answer</div>$$5$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{18x^{2}+15x-12}{6x-3}$$</div><div class='math'><div class='lab'>Answer</div>$$3x+4$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{140x^{3}-108x^{2}-189x+28}{14x-1}$$</div><div class='math'><div class='lab'>Answer</div>$$10x^{2}-7x-14+\frac{14}{14x-1}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{143x^{5}-136x^{4}+52x^{3}+203x^{2}-101x-23}{13x+3}$$</div><div class='math'><div class='lab'>Answer</div>$$11x^{4}-13x^{3}+7x^{2}+14x-11+\frac{10}{13x+3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{104x^{5}-43x^{4}-36x^{3}-184x^{2}-110x-108}{8x^{2}+x+7}$$</div><div class='math'><div class='lab'>Answer</div>$$13x^{3}-7x^{2}-15x-15+\frac{10x-3}{8x^{2}+x+7}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{6x^{5}-12x^{4}-125x^{3}-18x^{2}+39x+13}{3x^{2}+12x+5}$$</div><div class='math'><div class='lab'>Answer</div>$$2x^{3}-12x^{2}+3x+2+\frac{3}{3x^{2}+12x+5}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{135x^{4}-156x^{3}-178x^{2}+114x+74}{9x^{2}-8x-8}$$</div><div class='math'><div class='lab'>Answer</div>$$15x^{2}-4x-10+\frac{2x-6}{9x^{2}-8x-8}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'>PolyLongDiv</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{91x^{5}-234x^{4}+303x^{3}-192x^{2}-8x+7}{13x^{2}-13x-5}$$</div><div class='math'><div class='lab'>Answer</div>$$7x^{3}-11x^{2}+15x-4+\frac{15x-13}{13x^{2}-13x-5}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolyLongDiv</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_long_division</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_long_division</code></p></article>
+</body></html>

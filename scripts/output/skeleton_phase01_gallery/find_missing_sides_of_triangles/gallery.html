@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>A1 — Find missing sides of triangles (UNCLEAR / stub) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>A1 — Find missing sides of triangles (UNCLEAR / stub)</h1>
+<p class="sub"><code>find_missing_sides_of_triangles</code> · live <code>_generate_for_type</code>
+ · pattern <em>(none / stub)</em>
+ · 6/6 ok · D ladder 0, 8, 16
+ · seeds 101, 207</p>
+<p class="sub">UNCLEAR / NOT_IMPLEMENTED or notes-limited Algebra 1 leaf. Red-header stub — see <code>notes/find_missing_sides_of_triangles.md</code> Limitations. Live samples when <code>_generate_for_type</code> works.</p>
+
+<div class='notes-alert'>UNCLEAR · LIMITATIONS — see Limitations in notes below.</div><div class='notes-block'><h1><code>find_missing_sides_of_triangles</code> — Find missing sides of triangles</h1>
+<p>&gt; <strong>UNCLEAR</strong> — Not in EA TOC. Must not become pythagorean_theorem.</p>
+<ul>
+<li><strong>Course:</strong> Algebra 1</li>
+<li><strong>Category:</strong> Algebra 1 — Beginning Trigonometry</li>
+<li><strong>Generator:</strong> <code>geo_right_triangle_trig_side</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Right triangle: missing side via sin/cos/tan (not only Pythagorean). D=0: 30-60-90 or given one acute + one side.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ BC = 5\text{ cm}.\ \text{Find } AC.</code> - answer: <code>\frac{5}{\tan 60^\circ}</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ AC = 12\text{ cm}.\ \text{Find } BC.</code> - answer: <code>12\tan 60^\circ</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{In right } \triangle ABC,\ m\angle A = 30^\circ,\ BC = 9\text{ cm}.\ \text{Find } AB.</code> - answer: <code>\frac{9}{\sin 30^\circ}</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ BC = 9\text{ cm}.\ \text{Find } AB.</code> - answer: <code>\frac{9}{\sin 60^\circ}</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ BC = 7\text{ cm}.\ \text{Find } AC.</code> - answer: <code>\frac{7}{\tan 60^\circ}</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ AC = 24\text{ cm}.\ \text{Find } BC.</code> - answer: <code>24\tan 60^\circ</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ BC = 7\text{ cm}.\ \text{Find } AC.</code> - answer: <code>\frac{7}{\tan 60^\circ}</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ AC = 24\text{ cm}.\ \text{Find } BC.</code> - answer: <code>24\tan 60^\circ</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Algebra and Trigonometry 2e — 7.2 Right Triangle Trigonometry</h3>
+<ul>
+<li>https://openstax.org/books/algebra-and-trigonometry-2e/pages/7-2-right-triangle-trigonometry</li>
+<li>Shape: Given an acute angle and a side, find another side.</li>
+</ul>
+<h3>Prealgebra 2e — 9.3 Use Properties of Angles, Triangles, and the Pythagorean Theorem</h3>
+<ul>
+<li>https://openstax.org/books/prealgebra-2e/pages/9-3-use-properties-of-angles-triangles-and-the-pythagorean-theorem</li>
+<li>Shape: Pythagorean is a different leaf; this one is trig.</li>
+</ul>
+<h2>Variety notes</h2>
+<p>Not in EA TOC. Must not become pythagorean_theorem.</p>
+<h2>Limitations</h2>
+<ul>
+<li>UNCLEAR / LIMITATIONS: must not become <code>pythagorean_theorem</code> leaf.</li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse geo_right_triangle_trig_side. Do not dump Pythagorean-only items here.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ BC = 5\text{ cm}.\ \text{Find } AC.$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 113.2 183.2" width="113.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="41.2,22.0 91.2,142.0 41.2,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="54.0,142.0 54.0,129.2 41.2,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="66.2" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">5 cm</text><text x="22.0" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><path d="M 41.2 38.0 A 16.0 16.0 0 0 0 47.4 36.8" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="47.1" y="51.4" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">60°</text><circle cx="41.2" cy="142.0" r="3" fill="#1f2937"/><text x="31.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="91.2" cy="142.0" r="3" fill="#1f2937"/><text x="99.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="41.2" cy="22.0" r="3" fill="#1f2937"/><text x="31.2" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div><div class='math'><div class='lab'>Answer</div>$$\frac{5}{\tan 60^\circ}$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>right_triangle_trig</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>find_missing_sides_of_triangles</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ AC = 12\text{ cm}.\ \text{Find } BC.$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 113.2 183.2" width="113.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="41.2,22.0 91.2,142.0 41.2,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="54.0,142.0 54.0,129.2 41.2,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="22.0" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">12 cm</text><text x="66.2" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><path d="M 41.2 38.0 A 16.0 16.0 0 0 0 47.4 36.8" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="47.1" y="51.4" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">60°</text><circle cx="41.2" cy="142.0" r="3" fill="#1f2937"/><text x="31.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="91.2" cy="142.0" r="3" fill="#1f2937"/><text x="99.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="41.2" cy="22.0" r="3" fill="#1f2937"/><text x="31.2" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div><div class='math'><div class='lab'>Answer</div>$$12\tan 60^\circ$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>right_triangle_trig</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>find_missing_sides_of_triangles</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈8 · seed=101</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{In right } \triangle ABC,\ m\angle A = 30^\circ,\ BC = 9\text{ cm}.\ \text{Find } AB.$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134.0 183.2" width="134.0" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,22.0 112.0,142.0 22.0,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="34.8,142.0 34.8,129.2 22.0,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="67.0" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">9 cm</text><text x="82.4" y="70.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><path d="M 22.0 38.0 A 16.0 16.0 0 0 0 31.6 34.8" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="31.5" y="50.5" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">30°</text><circle cx="22.0" cy="142.0" r="3" fill="#1f2937"/><text x="12.0" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="112.0" cy="142.0" r="3" fill="#1f2937"/><text x="120.0" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="12.0" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div><div class='math'><div class='lab'>Answer</div>$$\frac{9}{\sin 30^\circ}$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>right_triangle_trig</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>find_missing_sides_of_triangles</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=207</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ BC = 9\text{ cm}.\ \text{Find } AB.$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 134.0 183.2" width="134.0" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="22.0,22.0 112.0,142.0 22.0,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="34.8,142.0 34.8,129.2 22.0,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="67.0" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">9 cm</text><text x="82.4" y="70.5" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><path d="M 22.0 38.0 A 16.0 16.0 0 0 0 31.6 34.8" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="31.5" y="50.5" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">60°</text><circle cx="22.0" cy="142.0" r="3" fill="#1f2937"/><text x="12.0" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="112.0" cy="142.0" r="3" fill="#1f2937"/><text x="120.0" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="22.0" cy="22.0" r="3" fill="#1f2937"/><text x="12.0" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div><div class='math'><div class='lab'>Answer</div>$$\frac{9}{\sin 60^\circ}$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>right_triangle_trig</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>find_missing_sides_of_triangles</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈16 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ BC = 7\text{ cm}.\ \text{Find } AC.$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.2 183.2" width="98.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="41.2,22.0 76.2,142.0 41.2,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="54.0,142.0 54.0,129.2 41.2,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="58.7" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">7 cm</text><text x="22.0" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><path d="M 41.2 38.0 A 16.0 16.0 0 0 0 45.7 37.4" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="45.4" y="51.7" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">60°</text><circle cx="41.2" cy="142.0" r="3" fill="#1f2937"/><text x="31.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="76.2" cy="142.0" r="3" fill="#1f2937"/><text x="84.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="41.2" cy="22.0" r="3" fill="#1f2937"/><text x="31.2" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div><div class='math'><div class='lab'>Answer</div>$$\frac{7}{\tan 60^\circ}$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>right_triangle_trig</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>find_missing_sides_of_triangles</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈16 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ AC = 24\text{ cm}.\ \text{Find } BC.$$</div><div class='fig'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.2 183.2" width="98.2" height="183.2" role="img" aria-label="Geometry diagram"><polygon points="41.2,22.0 76.2,142.0 41.2,142.0" fill="none" stroke="#1f2937" stroke-width="1.75"/><polyline points="54.0,142.0 54.0,129.2 41.2,129.2" fill="none" stroke="#1f2937" stroke-width="1.75"/><text x="22.0" y="82.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">24 cm</text><text x="58.7" y="161.2" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">?</text><path d="M 41.2 38.0 A 16.0 16.0 0 0 0 45.7 37.4" fill="none" stroke="#2563eb" stroke-width="1.75"/><text x="45.4" y="51.7" class="diagram-label" fill="#2563eb" font-size="12" text-anchor="middle" dominant-baseline="middle">60°</text><circle cx="41.2" cy="142.0" r="3" fill="#1f2937"/><text x="31.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">C</text><circle cx="76.2" cy="142.0" r="3" fill="#1f2937"/><text x="84.2" y="150.8" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">B</text><circle cx="41.2" cy="22.0" r="3" fill="#1f2937"/><text x="31.2" y="12.0" class="diagram-label" fill="#374151" font-size="13" text-anchor="middle" dominant-baseline="middle">A</text></svg></div><div class='math'><div class='lab'>Answer</div>$$24\tan 60^\circ$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>diagram_kind</span><span class='v'>right_triangle_trig</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>true</span></div></div><p class='meta'>type: <code>find_missing_sides_of_triangles</code></p></article>
+</body></html>

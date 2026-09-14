@@ -1,0 +1,2941 @@
+{
+  "section": {
+    "slug": "factor_gcf",
+    "title": "FactorGcf \u2014 monomial GCF only",
+    "pattern": "FactorGcf",
+    "engine": "poly_skeleton",
+    "type_id": "polynomial_factoring_common_factor",
+    "aliases": [
+      "g6_factor_gcf",
+      "factor_gcf"
+    ],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313,
+      419
+    ],
+    "blurb": "D=0 is $6x+9 \\to 3(2x+3)$. At D\u22658 the GCF includes $x$ (old $4x(2x-3)$), not the same $3x+6$ at every D. Opt out with <code>use_factor_poly=True</code>."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Factor: } 3x + 6",
+      "answer_latex": "3\\left(x + 2\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          1
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "factor_gcf": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 1,
+        "upgrades": [
+          "gcf"
+        ],
+        "effective_d": 0.0,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 1,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 1,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf"
+          ],
+          "effective_d": 0.0,
+          "d_spend": 0.0
+        },
+        "effort_features": {
+          "answer_len": 19,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 1,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "min_degree": 1,
+          "max_degree": 2,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Factor: } 2 + 2x",
+      "answer_latex": "2\\left(x + 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          1
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "factor_gcf": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 1,
+        "upgrades": [
+          "gcf"
+        ],
+        "effective_d": 0.0,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 1,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 1,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf"
+          ],
+          "effective_d": 0.0,
+          "d_spend": 0.0
+        },
+        "effort_features": {
+          "answer_len": 19,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 1,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "min_degree": 1,
+          "max_degree": 2,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Factor: } 3 + 3x",
+      "answer_latex": "3\\left(x + 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          1
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "factor_gcf": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 1,
+        "upgrades": [
+          "gcf"
+        ],
+        "effective_d": 0.0,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 1,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 1,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf"
+          ],
+          "effective_d": 0.0,
+          "d_spend": 0.0
+        },
+        "effort_features": {
+          "answer_len": 19,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 1,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "min_degree": 1,
+          "max_degree": 2,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=419",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 419,
+      "prompt_latex": "\\text{Factor: } 2 + 2x",
+      "answer_latex": "2\\left(x + 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          1
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "factor_gcf": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 1,
+        "upgrades": [
+          "gcf"
+        ],
+        "effective_d": 0.0,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 1,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 1,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf"
+          ],
+          "effective_d": 0.0,
+          "d_spend": 0.0
+        },
+        "effort_features": {
+          "answer_len": 19,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 1,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -5,
+          "coef_max": 5,
+          "min_degree": 1,
+          "max_degree": 2,
+          "leading_coefficient_one": true,
+          "monic_only": true,
+          "difficulty": 0.0,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Factor: } -10x + 5x^{2}",
+      "answer_latex": "5x\\left(x - 2\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          6.707659629012013
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "factor_gcf": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.637163 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 6.707659629012013,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 6.707659629012013,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 20,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -8,
+          "coef_max": 8,
+          "min_degree": 2,
+          "max_degree": 2,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Factor: } 6x^{2} - 4x",
+      "answer_latex": "2x\\left(3x - 2\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          7.358564884961176
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "factor_gcf": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.44792848098459526,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.447928 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 7.358564884961176,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 7.358564884961176,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -8,
+          "coef_max": 8,
+          "min_degree": 2,
+          "max_degree": 2,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Factor: } -15x + 10x^{2}",
+      "answer_latex": "5x\\left(2x - 3\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.7842096401242094
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.702,
+          "variable": 2.514,
+          "factor_gcf": 2.784
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 2.51367228303639,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 2.51367228303639,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=2.51367 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 2.7842096401242094,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 2.7842096401242094,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -8,
+          "coef_max": 8,
+          "min_degree": 2,
+          "max_degree": 2,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=419",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 419,
+      "prompt_latex": "\\text{Factor: } 2x + 4x^{2}",
+      "answer_latex": "2x\\left(2x + 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.9004559164686448
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.782,
+          "variable": 6.318,
+          "factor_gcf": 0.9
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 6.317607242845544,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 6.317607242845544,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=6.31761 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 0.9004559164686448,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 0.9004559164686448,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -8,
+          "coef_max": 8,
+          "min_degree": 2,
+          "max_degree": 2,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 8.0,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Factor: } -18x + 9x^{2}",
+      "answer_latex": "9x\\left(x - 2\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          13.415319258024025
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "factor_gcf": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.27433 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 13.415319258024025,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 13.415319258024025,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 20,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Factor: } 4x^{2} - 2x",
+      "answer_latex": "2x\\left(2x - 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          14.717129769922352
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "factor_gcf": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.8958569619691905,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.895857 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 14.717129769922352,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 14.717129769922352,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Factor: } -8x + 16x^{2}",
+      "answer_latex": "8x\\left(2x - 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          5.568419280248419
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.404,
+          "variable": 5.027,
+          "factor_gcf": 5.568
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 5.02734456607278,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 5.02734456607278,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=5.02734 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 5.568419280248419,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 5.568419280248419,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=419",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 419,
+      "prompt_latex": "\\text{Factor: } 3x + 6x^{2}",
+      "answer_latex": "3x\\left(2x + 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          1.8009118329372895
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.564,
+          "variable": 12.635,
+          "factor_gcf": 1.801
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 12.635214485691089,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 12.635214485691089,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=12.6352 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 1.8009118329372895,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 1.8009118329372895,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 16.0,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Factor: } -18x + 9x^{2}",
+      "answer_latex": "9x\\left(x - 2\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          18.446063979783034
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 1.802,
+          "variable": 1.752,
+          "factor_gcf": 18.446
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.7521969627363239,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.7521969627363239,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.7522 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 18.446063979783034,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 18.446063979783034,
+          "d_spend": 22.0
+        },
+        "effort_features": {
+          "answer_len": 20,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Factor: } 4x^{2} - 2x",
+      "answer_latex": "2x\\left(2x - 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          20.236053433643235
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 0.532,
+          "variable": 1.232,
+          "factor_gcf": 20.236
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.231803322707637,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.231803322707637,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.2318 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 20.236053433643235,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 20.236053433643235,
+          "d_spend": 22.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Factor: } -8x + 16x^{2}",
+      "answer_latex": "8x\\left(2x - 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          7.6565765103415755
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 7.431,
+          "variable": 6.913,
+          "factor_gcf": 7.657
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 6.912598778350072,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 6.912598778350072,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=6.9126 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 7.6565765103415755,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 7.6565765103415755,
+          "d_spend": 22.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=419",
+      "type_id": "polynomial_factoring_common_factor",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 419,
+      "prompt_latex": "\\text{Factor: } 3x + 6x^{2}",
+      "answer_latex": "3x\\left(2x + 1\\right)",
+      "skeleton_pattern": "FactorGcf",
+      "form_id": "gcf_monomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorGcf"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.476253770288773
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "form_id",
+          "gcf_monomial"
+        ],
+        [
+          "openstax_form",
+          "gcf_monomial"
+        ],
+        [
+          "task",
+          "factor"
+        ],
+        [
+          "method",
+          "gcf"
+        ],
+        [
+          "degree",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 2.15,
+          "variable": 17.373,
+          "factor_gcf": 2.476
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 17.373419917825245,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 17.373419917825245,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=17.3734 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "gcf",
+        "degree": 2,
+        "upgrades": [
+          "gcf",
+          "signed_terms",
+          "variable_gcf"
+        ],
+        "effective_d": 2.476253770288773,
+        "skeleton_pattern": "FactorGcf",
+        "skeleton_source": "factor_gcf",
+        "task": "factor",
+        "form_id": "gcf_monomial",
+        "openstax_form": "gcf_monomial",
+        "openstax_case": "\u00a77.1 Example 7.1\u20137.3 \u2014 find / factor GCF",
+        "strategy": "factor_gcf",
+        "catalog_id": "algebra1_factoring",
+        "construction": "forward_form_catalog",
+        "shape_id": "gcf_monomial",
+        "family": "gcf",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:gcf",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 0,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "method": "gcf",
+          "upgrades": [
+            "gcf",
+            "signed_terms",
+            "variable_gcf"
+          ],
+          "effective_d": 2.476253770288773,
+          "d_spend": 22.0
+        },
+        "effort_features": {
+          "answer_len": 21,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "gcf",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 3,
+          "leading_coefficient_one": false,
+          "monic_only": false,
+          "difficulty": 22.0,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Factor completely.}"
+      }
+    }
+  ],
+  "failures": []
+}

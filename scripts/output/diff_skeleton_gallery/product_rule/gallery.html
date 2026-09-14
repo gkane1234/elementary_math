@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Product rule — Diff skeleton</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.1rem; margin-top: 1.4rem; border-bottom: 1px solid #d8d2c4;
+  padding-bottom: 0.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 52rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.35rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.band { background: #e8efe6; padding: 0.05rem 0.35rem; border-radius: 3px;
+  font-size: 0.75rem; }
+.band.low { background: #e8efe6; }
+.band.mid { background: #e6ebe8; }
+.band.high { background: #dde8f0; }
+.band.elite { background: #e8dde8; }
+.meta { font-size: 0.78rem; color: #555; margin: 0.3rem 0; }
+.debug { margin-top: 0.55rem; font-size: 0.72rem; background: #f3efe7;
+  border: 1px solid #e0d8cc; padding: 0.55rem 0.65rem; }
+.debug h3 { margin: 0 0 0.35rem; font-size: 0.78rem; font-weight: 600;
+  color: #444; letter-spacing: 0.02em; text-transform: uppercase; }
+.debug dl { display: grid; grid-template-columns: 11rem 1fr; gap: 0.15rem 0.6rem;
+  margin: 0; }
+.debug dt { color: #666; font-family: ui-monospace, Consolas, monospace; }
+.debug dd { margin: 0; font-family: ui-monospace, Consolas, monospace;
+  word-break: break-word; }
+.debug .section { margin-top: 0.45rem; padding-top: 0.35rem;
+  border-top: 1px dashed #d8d2c4; }
+.debug .section:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.raw { font-size: 0.72rem; white-space: pre-wrap; background: #f0ebe3; padding: 0.45rem; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.err { color: #a20; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; border: 0; padding: 0; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.7; }
+.katex .katex-mathml {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  padding: 0 !important; border: 0 !important;
+  height: 1px !important; width: 1px !important;
+  overflow: hidden !important; white-space: nowrap !important;
+}
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head>
+<body>
+
+<p class="nav"><a href="../index.html">← all topics</a>
+  <a href="../DIFFICULTY_SCALE.md">difficulty scale</a></p>
+<h1>Product rule</h1>
+<p class="sub"><code>derivative_product_rule</code> · live <code>sample_from_form</code>
+ · 13/13 ok · C ladder 2, 8, 14, 20
+ · each card shows richness knobs + honest cost/spend</p>
+<div class='notes-block'><h1>Notes — <code>calc_diff_product_rule</code> (<code>Product Rule</code>)</h1>
+<ul>
+<li><strong>Course:</strong> Calculus</li>
+<li><strong>Category:</strong> Calculus — Differentiation</li>
+<li><strong>Generator:</strong> <code>derivative_product_rule</code></li>
+<li><strong>Suggested family:</strong> other (calc limits / Diff)</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Differentiate a product \(uv\) with the product rule. Mid/high D may compose <strong>a factor</strong> (product+chain) when <code>allow_chain</code> is on; specials (<code>allow_trig</code> / <code>allow_exp</code> / <code>allow_log</code>) use the same function pool as the chain-rule leaf.</li>
+<li><strong>D=0:</strong> Simple product of two easy factors — old easy \((ax+b)(cx+d)\) / monomials. No required composition; not \(f(g(h(x)))\).</li>
+<li><strong>Mid D (≈8):</strong> Denser poly×linear <strong>or</strong> one composed factor \(\mathrm{poly}\times(ax+b)^n\). With specials on: \(\sin x\cdot e^{g(x)}\).</li>
+<li><strong>High D (≈16–22):</strong> OpenStax two-chain product \((ax+b)^n(cx+d)^m\) (Example 3.54) rotates in; one-chain poly\(\times(u)^n\) still allowed. Nest stays 1 on a factor — chain leaf keeps \(f(g(h(x)))\).</li>
+<li><strong>Must not:</strong> Pure chain without a product; quotient leaf shapes; log-diff \(x^x\) / \((\sin x)^x\); 3-deep nest on this leaf.</li>
+</ul>
+<h2>What old / live path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live old path: <code>question_engine.generators.calculus._derivative_product_rule</code> (shadowed by <code>calculus_derivative_rules</code>; no <code>use_sample_*</code> opt-out). Seeded <code>random.seed</code> then called the old builder. Band map: D≤4 easy, D≤11 medium, else hard.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td><code>$\frac{d}{dx}\left[\left(2x + 4\right)\left(3x + 3\right)\right]$</code></td><td><code>$12x + 18$</code></td><td>easy: two linears</td></tr><tr><td>0</td><td>207</td><td><code>$\frac{d}{dx}\left[\left(2x - 2\right)\left(x + 1\right)\right]$</code></td><td><code>$4x$</code></td><td>easy: two linears</td></tr><tr><td>8</td><td>101</td><td><code>$\frac{d}{dx}\left[\left(3x^{2} - x + 4\right)\left(3x + 3\right)\right]$</code></td><td><code>$27x^{2} + 12x + 9$</code></td><td>medium: quadratic × linear</td></tr><tr><td>16</td><td>101</td><td><code>$\frac{d}{dx}\left[x^{4}\left(2x + 4\right)\right]$</code></td><td><code>$10x^{4} + 16x^{3}$</code></td><td>hard: monomial × linear — <strong>no chain</strong></td></tr><tr><td>22</td><td>101</td><td><code>$\frac{d}{dx}\left[x^{4}\left(2x + 4\right)\right]$</code></td><td><code>$10x^{4} + 16x^{3}$</code></td><td>hard: same family as D=16</td></tr></tbody></table>
+<p>Opt-out flag used: _none — call shadowed <code>calculus._derivative_product_rule</code> directly_</p>
+<p><strong>Pre-fix live skeleton</strong> (seed 101) already had opportunistic one-chain at high D via <code>product_two_poly</code> hole fill: D=0 <code>$x(2x)$</code>; D=8 poly×linear; D=16/22 <code>(-2(\mathrm{poly})^3)(\mathrm{poly})</code>. Missing dedicated OpenStax two-chain \((ax+b)^n(cx+d)^m\) and \(\sin x\cdot e^{g}\).</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<p>Paraphrase stems; copy shapes, not wording.</p>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Calculus Volume 1 §3.3 Differentiation Rules</td><td>https://openstax.org/books/calculus-volume-1/pages/3-3-differentiation-rules</td><td>product of two polys / binomials — \( (x^2+2)(3x^3-5x) \), \( 2x^5(4x^2+x) \)</td></tr><tr><td>OpenStax Calculus Volume 1 §3.6 The Chain Rule — Example 3.54</td><td>https://openstax.org/books/calculus-volume-1/pages/3-6-the-chain-rule</td><td><strong>product of two chains:</strong> \( (2x+1)^5(3x-2)^7 \). Checkpoint 3.37 is a <strong>quotient</strong> \( x/(2x+3)^3 \) — not this leaf.</td></tr><tr><td>OpenStax Calculus Volume 1 §3.9 Exp / log derivatives</td><td>https://openstax.org/books/calculus-volume-1/pages/3-9-derivatives-of-exponential-and-logarithmic-functions</td><td>product+chain with one composed exp: \( x e^{2x} \), \( 4x e^{(x^2-1)} \); \(\sin x\cdot e^{g(x)}\)</td></tr></tbody></table>
+<p>Local mining: <code>scripts/output/example_mining/calculus-volume-1/stage1/3-3-differentiation-rules.md</code>, <code>3-6-the-chain-rule.md</code>. Challenging-integrals bank (<code>challenging_indefinite_integrals_bc.tex</code>) is mostly one composed piece times its derivative (u-sub) — product of two composed factors is rare there; do not copy integral shapes onto this leaf.</p>
+<p>Catalog forms on this leaf: <code>product_two_poly</code> (D=0 core), <code>product_one_chain</code>, <code>product_chain_powers</code> (Example 3.54), <code>product_poly_trig</code> / <code>product_poly_exp</code> (specials opt-in), <code>product_trig_exp_chain</code> (<code>allow_trig</code>+<code>allow_exp</code>). Not on <code>derivative_chain_rule</code> / <code>derivative_logarithmic</code>.</p>
+<h2>Variety notes</h2>
+<p>Old hard is monomial×linear only. OpenStax §3.6/§3.9 frames win for product+chain at mid/high D; D=0 algebra still matches old easy. Specials stay checkbox opt-in (same pool as chain-rule when on).</p>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Status:</strong> shipped — Diff <code>expr_skeleton</code> + catalog product+chain forms. Remaining <code>LIMITATIONS</code>: OpenStax Example 3.54 is a <strong>product of two chains</strong>; we also emit <strong>one-chain</strong> poly\(\times(u)^n\) (milder, and what old high-D skeleton already did). Product of two unlike special compositions (\(\sin(g)\cdot e^{h}\) with both inners composed) is not a default form — rare in the integrals bank and not the §3.54 item. No <code>sec</code>/<code>csc</code> factors. Log-diff variable-exponent work stays on the log-diff leaf.</li>
+<li><strong>Generator:</strong> <code>derivative_product_rule</code></li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<p><strong>Reuse:</strong> <code>expr_skeleton</code> <code>Diff(Prod(F,G))</code> (independent inners) + <code>derivatives.json</code> product forms. New form_ids stay on the product leaf; chain leaf remains \(f(g(h(x)))\). No padded <code>difficulty_costs</code>.</p>
+<ul>
+<li><strong>Shipped:</strong> <code>product_one_chain</code>, <code>product_chain_powers</code>, <code>product_trig_exp_chain</code>; D=0 still <code>product_two_poly</code>.</li>
+</ul>
+<p>Coverage: Diff algebraic families also cataloged in <code>scripts/output/diff_skeleton_gallery/</code> (power, product, quotient, chain, trig, invtrig, ln/exp, general, higher_order).</p></div>
+
+
+<article class="card">
+  <header><span class="n">#1</span> <code>product_two_poly</code>
+    <span class="pat">Diff(Prod(F,G)) fn×fn</span>
+    <span class="band low">C=2.0 · low</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(-3x^{2}\right)\left(2x\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$2x^{1}\left(-3\right)\left(2\right)x - 6x^{2}$$</div>
+  <p class="meta">diff_prod_fg; C=2; band=low; inner=affine; nest=0; deg=2; independent inners; chain=no/allow=True/req=False · methods: power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_two_poly</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) fn×fn</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2049</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>2</dd><dt>band</dt><dd>low</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>false</dd><dt>prefer_poly_u</dt><dd>false</dd><dt>power_min / power_max</dt><dd>2 / 2</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>3</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>affine</dd><dt>inner_latex</dt><dd>-3x^{2}</dd><dt>inner_degree</dt><dd>2</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>1</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>affine</dd><dt>u_g_kind</dt><dd>affine</dd><dt>u_f_latex</dt><dd>-3x^{2}</dd><dt>u_g_latex</dt><dd>2x</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(-3x^{2}\right)\left(2x\right)\right]</pre>
+    <p>answer: <code>2x^{1}\left(-3\right)\left(2\right)x - 6x^{2}</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#2</span> <code>product_two_poly</code>
+    <span class="pat">Diff(Prod(F,G)) fn×fn</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(-5x^{2} - 2x - 4\right)\left(3x - 4\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\left(2x^{1}\left(-5\right) - 2\right)\left(3x - 4\right) + 3\left(-5x^{2} - 2x - 4\right)$$</div>
+  <p class="meta">diff_prod_fg; C=8; band=mid; inner=poly; nest=0; deg=2; independent inners; chain=no/allow=True/req=False · methods: power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_two_poly</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) fn×fn</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2056</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 3</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>-5x^{2} - 2x - 4</dd><dt>inner_degree</dt><dd>2</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>3</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>poly</dd><dt>u_g_kind</dt><dd>affine</dd><dt>u_f_latex</dt><dd>-5x^{2} - 2x - 4</dd><dt>u_g_latex</dt><dd>3x - 4</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(-5x^{2} - 2x - 4\right)\left(3x - 4\right)\right]</pre>
+    <p>answer: <code>\left(2x^{1}\left(-5\right) - 2\right)\left(3x - 4\right) + 3\left(-5x^{2} - 2x - 4\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#3</span> <code>product_two_poly</code>
+    <span class="pat">Diff(Prod(F,G)) fn×fn</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(2x^{3} + 5\right)\left(3x^{3} + 4x^{2} - 2x + 4\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$3x^{2}\left(2\right)\left(3x^{3} + 4x^{2} - 2x + 4\right) + \left(3x^{2}\left(3\right) + 2x^{1}\left(4\right) - 2\right)\left(2x^{3} + 5\right)$$</div>
+  <p class="meta">diff_prod_fg; C=14; band=high; inner=poly; nest=0; deg=3; independent inners; chain=no/allow=True/req=False · methods: power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_two_poly</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) fn×fn</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2063</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 5</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>2x^{3} + 5</dd><dt>inner_degree</dt><dd>3</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>4</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>poly</dd><dt>u_g_kind</dt><dd>poly</dd><dt>u_f_latex</dt><dd>2x^{3} + 5</dd><dt>u_g_latex</dt><dd>3x^{3} + 4x^{2} - 2x + 4</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(2x^{3} + 5\right)\left(3x^{3} + 4x^{2} - 2x + 4\right)\right]</pre>
+    <p>answer: <code>3x^{2}\left(2\right)\left(3x^{3} + 4x^{2} - 2x + 4\right) + \left(3x^{2}\left(3\right) + 2x^{1}\left(4\right) - 2\right)\left(2x^{3} + 5\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#4</span> <code>product_two_poly</code>
+    <span class="pat">Diff(Prod(F,G)) fn×fn</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(-8x^{2} + 7x - 8\right)\left(6\left(-x^{2} + 2x - 9\right)^{5}\right)\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\left(2x^{1}\left(-8\right) + 7\right)\left(6\right)\left(-x^{2} + 2x - 9\right)^{5} + 5\left(-x^{2} + 2x - 9\right)^{4}\left(2x^{1}\left(-1\right) + 2\right)\left(6\right)\left(-8x^{2} + 7x - 8\right)$$</div>
+  <p class="meta">diff_prod_fg; C=20; band=elite; inner=poly; nest=1; deg=5; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_two_poly</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) fn×fn</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2070</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>4 / 7</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>-8x^{2} + 7x - 8</dd><dt>inner_degree</dt><dd>2</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>5</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>3</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>poly</dd><dt>u_g_kind</dt><dd>nested_pow</dd><dt>u_f_latex</dt><dd>-8x^{2} + 7x - 8</dd><dt>u_g_latex</dt><dd>6\left(-x^{2} + 2x - 9\right)^{5}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(-8x^{2} + 7x - 8\right)\left(6\left(-x^{2} + 2x - 9\right)^{5}\right)\right]</pre>
+    <p>answer: <code>\left(2x^{1}\left(-8\right) + 7\right)\left(6\right)\left(-x^{2} + 2x - 9\right)^{5} + 5\left(-x^{2} + 2x - 9\right)^{4}\left(2x^{1}\left(-1\right) + 2\right)\left(6\right)\left(-8x^{2} + 7x - 8\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#5</span> <code>product_one_chain</code>
+    <span class="pat">Diff(Prod(F,G)) poly×(u)^n</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(3x^{3} + 5x^{2} + 4x - 1\right)\left(2x - 3\right)^{3}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\left(3x^{2}\left(3\right) + 2x^{1}\left(5\right) + 4\right)\left(2x - 3\right)^{3} + 3\left(2x - 3\right)^{2}\left(2\right)\left(3x^{3} + 5x^{2} + 4x - 1\right)$$</div>
+  <p class="meta">diff_prod_fg; C=8; band=mid; inner=poly; nest=1; deg=3; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_one_chain</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) poly×(u)^n</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2156</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 3</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>3x^{3} + 5x^{2} + 4x - 1</dd><dt>inner_degree</dt><dd>3</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>4</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>poly</dd><dt>u_g_kind</dt><dd>nested_pow</dd><dt>u_f_latex</dt><dd>3x^{3} + 5x^{2} + 4x - 1</dd><dt>u_g_latex</dt><dd>\left(2x - 3\right)^{3}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(3x^{3} + 5x^{2} + 4x - 1\right)\left(2x - 3\right)^{3}\right]</pre>
+    <p>answer: <code>\left(3x^{2}\left(3\right) + 2x^{1}\left(5\right) + 4\right)\left(2x - 3\right)^{3} + 3\left(2x - 3\right)^{2}\left(2\right)\left(3x^{3} + 5x^{2} + 4x - 1\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#6</span> <code>product_one_chain</code>
+    <span class="pat">Diff(Prod(F,G)) poly×(u)^n</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(-5x^{2} + 6x - 4\right)\left(-2x + 3\right)^{3}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\left(2x^{1}\left(-5\right) + 6\right)\left(-2x + 3\right)^{3} + 3\left(-2x + 3\right)^{2}\left(-2\right)\left(-5x^{2} + 6x - 4\right)$$</div>
+  <p class="meta">diff_prod_fg; C=14; band=high; inner=poly; nest=1; deg=3; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_one_chain</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) poly×(u)^n</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2163</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 5</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>-5x^{2} + 6x - 4</dd><dt>inner_degree</dt><dd>2</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>3</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>poly</dd><dt>u_g_kind</dt><dd>nested_pow</dd><dt>u_f_latex</dt><dd>-5x^{2} + 6x - 4</dd><dt>u_g_latex</dt><dd>\left(-2x + 3\right)^{3}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(-5x^{2} + 6x - 4\right)\left(-2x + 3\right)^{3}\right]</pre>
+    <p>answer: <code>\left(2x^{1}\left(-5\right) + 6\right)\left(-2x + 3\right)^{3} + 3\left(-2x + 3\right)^{2}\left(-2\right)\left(-5x^{2} + 6x - 4\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#7</span> <code>product_one_chain</code>
+    <span class="pat">Diff(Prod(F,G)) poly×(u)^n</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(8x^{2} + 6\right)\left(3x - 1\right)^{6}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$2x^{1}\left(8\right)\left(3x - 1\right)^{6} + 6\left(3x - 1\right)^{5}\left(3\right)\left(8x^{2} + 6\right)$$</div>
+  <p class="meta">diff_prod_fg; C=20; band=elite; inner=poly; nest=1; deg=6; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_one_chain</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) poly×(u)^n</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2170</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>4 / 7</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>8x^{2} + 6</dd><dt>inner_degree</dt><dd>2</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>6</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>poly</dd><dt>u_g_kind</dt><dd>nested_pow</dd><dt>u_f_latex</dt><dd>8x^{2} + 6</dd><dt>u_g_latex</dt><dd>\left(3x - 1\right)^{6}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(8x^{2} + 6\right)\left(3x - 1\right)^{6}\right]</pre>
+    <p>answer: <code>2x^{1}\left(8\right)\left(3x - 1\right)^{6} + 6\left(3x - 1\right)^{5}\left(3\right)\left(8x^{2} + 6\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#8</span> <code>product_chain_powers</code>
+    <span class="pat">Diff(Prod(F,G)) (u)^n(v)^m</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(-2x - 1\right)^{3}\left(2x - 4\right)^{3}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$3\left(-2x - 1\right)^{2}\left(-2\right)\left(2x - 4\right)^{3} + 3\left(2x - 4\right)^{2}\left(2\right)\left(-2x - 1\right)^{3}$$</div>
+  <p class="meta">diff_prod_fg; C=8; band=mid; inner=nested_pow; nest=1; deg=3; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_chain_powers</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) (u)^n(v)^m</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2256</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 3</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_pow</dd><dt>inner_latex</dt><dd>\left(-2x - 1\right)^{3}</dd><dt>inner_degree</dt><dd>3</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>nested_pow</dd><dt>u_g_kind</dt><dd>nested_pow</dd><dt>u_f_latex</dt><dd>\left(-2x - 1\right)^{3}</dd><dt>u_g_latex</dt><dd>\left(2x - 4\right)^{3}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(-2x - 1\right)^{3}\left(2x - 4\right)^{3}\right]</pre>
+    <p>answer: <code>3\left(-2x - 1\right)^{2}\left(-2\right)\left(2x - 4\right)^{3} + 3\left(2x - 4\right)^{2}\left(2\right)\left(-2x - 1\right)^{3}</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#9</span> <code>product_chain_powers</code>
+    <span class="pat">Diff(Prod(F,G)) (u)^n(v)^m</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(4x - 2\right)^{3}\left(2x - 1\right)^{5}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$3\left(4x - 2\right)^{2}\left(4\right)\left(2x - 1\right)^{5} + 5\left(2x - 1\right)^{4}\left(2\right)\left(4x - 2\right)^{3}$$</div>
+  <p class="meta">diff_prod_fg; C=14; band=high; inner=nested_pow; nest=1; deg=5; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_chain_powers</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) (u)^n(v)^m</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2263</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 5</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_pow</dd><dt>inner_latex</dt><dd>\left(4x - 2\right)^{3}</dd><dt>inner_degree</dt><dd>3</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>5</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>nested_pow</dd><dt>u_g_kind</dt><dd>nested_pow</dd><dt>u_f_latex</dt><dd>\left(4x - 2\right)^{3}</dd><dt>u_g_latex</dt><dd>\left(2x - 1\right)^{5}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(4x - 2\right)^{3}\left(2x - 1\right)^{5}\right]</pre>
+    <p>answer: <code>3\left(4x - 2\right)^{2}\left(4\right)\left(2x - 1\right)^{5} + 5\left(2x - 1\right)^{4}\left(2\right)\left(4x - 2\right)^{3}</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#10</span> <code>product_chain_powers</code>
+    <span class="pat">Diff(Prod(F,G)) (u)^n(v)^m</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\left(3x - 3\right)^{4}\left(2x - 3\right)^{7}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$4\left(3x - 3\right)^{3}\left(3\right)\left(2x - 3\right)^{7} + 7\left(2x - 3\right)^{6}\left(2\right)\left(3x - 3\right)^{4}$$</div>
+  <p class="meta">diff_prod_fg; C=20; band=elite; inner=nested_pow; nest=1; deg=7; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_chain_powers</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) (u)^n(v)^m</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>2270</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:false,&quot;allow_exp&quot;:false,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>4 / 7</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_pow</dd><dt>inner_latex</dt><dd>\left(3x - 3\right)^{4}</dd><dt>inner_degree</dt><dd>4</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>7</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>nested_pow</dd><dt>u_g_kind</dt><dd>nested_pow</dd><dt>u_f_latex</dt><dd>\left(3x - 3\right)^{4}</dd><dt>u_g_latex</dt><dd>\left(2x - 3\right)^{7}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\left(3x - 3\right)^{4}\left(2x - 3\right)^{7}\right]</pre>
+    <p>answer: <code>4\left(3x - 3\right)^{3}\left(3\right)\left(2x - 3\right)^{7} + 7\left(2x - 3\right)^{6}\left(2\right)\left(3x - 3\right)^{4}</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#11</span> <code>product_trig_exp_chain</code>
+    <span class="pat">Diff(Prod(F,G)) trig×e^{g}</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\cos(-2x)e^{4x + 2}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$-\sin(-2x)\left(-2\right)e^{4x + 2} + e^{4x + 2}\left(4\right)\cos(-2x)$$</div>
+  <p class="meta">diff_prod_fg; C=8; band=mid; inner=nested_apply; nest=1; deg=1; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, exp, trig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_trig_exp_chain</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) trig×e^{g}</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>9000</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:true,&quot;allow_exp&quot;:true,&quot;allow_log&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 3</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[sin, cos]</dd><dt>atom_fn_candidates_g</dt><dd>[exp]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\cos(-2x)</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>1</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>nested_apply</dd><dt>u_g_kind</dt><dd>nested_apply</dd><dt>u_f_latex</dt><dd>\cos(-2x)</dd><dt>u_g_latex</dt><dd>e^{4x + 2}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\cos(-2x)e^{4x + 2}\right]</pre>
+    <p>answer: <code>-\sin(-2x)\left(-2\right)e^{4x + 2} + e^{4x + 2}\left(4\right)\cos(-2x)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#12</span> <code>product_trig_exp_chain</code>
+    <span class="pat">Diff(Prod(F,G)) trig×e^{g}</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\sin(x)e^{3x + 2}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\cos(x)e^{3x + 2} + e^{3x + 2}\left(3\right)\sin(x)$$</div>
+  <p class="meta">diff_prod_fg; C=14; band=high; inner=nested_apply; nest=1; deg=1; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, exp, trig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_trig_exp_chain</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) trig×e^{g}</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>9011</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:true,&quot;allow_exp&quot;:true,&quot;allow_log&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 5</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[sin, cos]</dd><dt>atom_fn_candidates_g</dt><dd>[exp]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\sin(x)</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>1</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>nested_apply</dd><dt>u_g_kind</dt><dd>nested_apply</dd><dt>u_f_latex</dt><dd>\sin(x)</dd><dt>u_g_latex</dt><dd>e^{3x + 2}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\sin(x)e^{3x + 2}\right]</pre>
+    <p>answer: <code>\cos(x)e^{3x + 2} + e^{3x + 2}\left(3\right)\sin(x)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#13</span> <code>product_trig_exp_chain</code>
+    <span class="pat">Diff(Prod(F,G)) trig×e^{g}</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[\sin(x)e^{-3x^{3} - 5x^{2} - 10x - 9}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$\cos(x)e^{-3x^{3} - 5x^{2} - 10x - 9} + e^{-3x^{3} - 5x^{2} - 10x - 9}\left(3x^{2}\left(-3\right) + 2x^{1}\left(-5\right) - 10\right)\sin(x)$$</div>
+  <p class="meta">diff_prod_fg; C=20; band=elite; inner=nested_apply; nest=1; deg=3; independent inners; chain=used/allow=True/req=False · methods: chain, power, product · classes: algebraic, exp, roots, trig</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>product_trig_exp_chain</dd><dt>skeleton_pattern</dt><dd>Diff(Prod(F,G)) trig×e^{g}</dd><dt>skeleton_kind</dt><dd>diff_prod_fg</dd><dt>productions</dt><dd>[Prod, F, G]</dd><dt>shared_inner</dt><dd>false</dd><dt>rng_seed</dt><dd>9022</dd><dt>allow_chain</dt><dd>true</dd><dt>chain_used</dt><dd>true</dd><dt>allows</dt><dd>{&quot;allow_trig&quot;:true,&quot;allow_exp&quot;:true,&quot;allow_log&quot;:true,&quot;allow_chain&quot;:true}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>1</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>4 / 7</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[sin, cos]</dd><dt>atom_fn_candidates_g</dt><dd>[exp]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>nested_apply</dd><dt>inner_latex</dt><dd>\sin(x)</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>1</dd><dt>chain_depth</dt><dd>1</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>2</dd><dt>n_terms</dt><dd>4</dd><dt>n_factors</dt><dd>2</dd><dt>shared_vs_independent</dt><dd>independent</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>C densifies holes only; pattern kind is form-locked</dd><dt>u_f_kind</dt><dd>nested_apply</dd><dt>u_g_kind</dt><dd>nested_apply</dd><dt>u_f_latex</dt><dd>\sin(x)</dd><dt>u_g_latex</dt><dd>e^{-3x^{3} - 5x^{2} - 10x - 9}</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[\sin(x)e^{-3x^{3} - 5x^{2} - 10x - 9}\right]</pre>
+    <p>answer: <code>\cos(x)e^{-3x^{3} - 5x^{2} - 10x - 9} + e^{-3x^{3} - 5x^{2} - 10x - 9}\left(3x^{2}\left(-3\right) + 2x^{1}\left(-5\right) - 10\right)\sin(x)</code></p>
+  </details>
+</article>
+</body></html>

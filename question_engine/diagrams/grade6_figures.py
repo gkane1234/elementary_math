@@ -332,6 +332,39 @@ def grid_polygon_svg(points: list[tuple[int, int]], *, shaded: bool = False) -> 
     )
 
 
+def shaded_composite_svg(
+    outer: list[tuple[int, int]],
+    inner: list[tuple[int, int]],
+) -> str:
+    """Grid figure: shaded outer polygon with an inner cutout (even-odd fill)."""
+    scale, ox, oy = 28, 55, 175
+    lines = "".join(
+        f'<line x1="{ox + i * scale}" y1="35" x2="{ox + i * scale}" y2="{oy}" stroke="#d1d5db"/>'
+        for i in range(9)
+    ) + "".join(
+        f'<line x1="{ox}" y1="{oy - i * scale}" x2="{ox + 8 * scale}" y2="{oy - i * scale}" stroke="#d1d5db"/>'
+        for i in range(6)
+    )
+
+    def _d(points: list[tuple[int, int]]) -> str:
+        if not points:
+            return ""
+        cmds = [f"M {ox + points[0][0] * scale} {oy - points[0][1] * scale}"]
+        for x, y in points[1:]:
+            cmds.append(f"L {ox + x * scale} {oy - y * scale}")
+        cmds.append("Z")
+        return " ".join(cmds)
+
+    path = f"{_d(outer)} {_d(inner)}"
+    inner_pts = " ".join(f"{ox + x * scale},{oy - y * scale}" for x, y in inner)
+    return _svg(
+        f'{lines}<line x1="{ox}" y1="{oy}" x2="{ox + 8 * scale}" y2="{oy}" stroke="#374151"/>'
+        f'<line x1="{ox}" y1="{oy}" x2="{ox}" y2="35" stroke="#374151"/>'
+        f'<path d="{path}" fill="#93c5fd" fill-rule="evenodd" stroke="#1e3a8a" stroke-width="2"/>'
+        f'<polygon points="{inner_pts}" fill="#fff" fill-opacity="0.95" stroke="#1e3a8a" stroke-width="1.5"/>'
+    )
+
+
 def _coordinate_plane_viewport(
     *point_sets: list[tuple[int, int]],
     pad_cells: int = 1,
@@ -467,6 +500,70 @@ def coordinate_transform_svg(
             labs=image_labels,
             lab_color="#166534",
         )
+    return _svg(f"{grid}{axes}{ticks}{body}", width=int(width), height=int(height))
+
+
+def coordinate_points_svg(
+    points: list[tuple[int, int]],
+    *,
+    labels: list[str] | None = None,
+    blank: bool = False,
+    segment: bool = False,
+) -> str:
+    """Labeled points on a coordinate plane (plot / identify / axis distance)."""
+    x_min, x_max, y_min, y_max = _coordinate_plane_viewport(points)
+    scale = 26
+    pad = 36
+    width = pad * 2 + (x_max - x_min) * scale
+    height = pad * 2 + (y_max - y_min) * scale
+
+    def px(x: int | float) -> float:
+        return pad + (float(x) - x_min) * scale
+
+    def py(y: int | float) -> float:
+        return pad + (y_max - float(y)) * scale
+
+    grid = "".join(
+        f'<line x1="{px(x)}" y1="{py(y_max)}" x2="{px(x)}" y2="{py(y_min)}" stroke="#e5e7eb"/>'
+        for x in range(x_min, x_max + 1)
+    ) + "".join(
+        f'<line x1="{px(x_min)}" y1="{py(y)}" x2="{px(x_max)}" y2="{py(y)}" stroke="#e5e7eb"/>'
+        for y in range(y_min, y_max + 1)
+    )
+    axes = (
+        f'<line x1="{px(x_min)}" y1="{py(0)}" x2="{px(x_max)}" y2="{py(0)}" stroke="#374151" stroke-width="1.5"/>'
+        f'<line x1="{px(0)}" y1="{py(y_min)}" x2="{px(0)}" y2="{py(y_max)}" stroke="#374151" stroke-width="1.5"/>'
+    )
+    ticks = "".join(
+        f'<text x="{px(x)}" y="{py(0) + 14}" text-anchor="middle" font-size="11" fill="#4b5563">'
+        f"{x}</text>"
+        for x in range(x_min, x_max + 1)
+        if x != 0
+    ) + "".join(
+        f'<text x="{px(0) - 10}" y="{py(y) + 4}" text-anchor="end" font-size="11" fill="#4b5563">'
+        f"{y}</text>"
+        for y in range(y_min, y_max + 1)
+        if y != 0
+    )
+    if blank:
+        return _svg(f"{grid}{axes}{ticks}", width=int(width), height=int(height))
+
+    body = ""
+    if segment and len(points) >= 2:
+        x1, y1 = points[0]
+        x2, y2 = points[1]
+        body += (
+            f'<line x1="{px(x1)}" y1="{py(y1)}" x2="{px(x2)}" y2="{py(y2)}" '
+            f'stroke="#2563eb" stroke-width="2"/>'
+        )
+    for i, (x, y) in enumerate(points):
+        lab = labels[i] if labels and i < len(labels) else ""
+        body += f'<circle cx="{px(x)}" cy="{py(y)}" r="4" fill="#1e3a8a"/>'
+        if lab:
+            body += (
+                f'<text x="{px(x) + 7}" y="{py(y) - 7}" font-size="13" fill="#1e3a8a">'
+                f"{escape(lab)}</text>"
+            )
     return _svg(f"{grid}{axes}{ticks}{body}", width=int(width), height=int(height))
 
 

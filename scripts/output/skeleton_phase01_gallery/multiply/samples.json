@@ -1,0 +1,1296 @@
+{
+  "section": {
+    "slug": "multiply",
+    "title": "FactorProduct \u2014 multiply polynomials",
+    "pattern": "FactorProduct",
+    "engine": "poly_skeleton",
+    "type_id": "polynomial_multiply",
+    "aliases": [
+      "a2_polynomial_functions_multiplying",
+      "pa_polynomials_multiplying"
+    ],
+    "task": "multiply",
+    "blurb": "FOIL / distribute; factors shown, product expanded."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=101",
+      "type_id": "polynomial_multiply",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Multiply: } x^{2}\\left(x + 3\\right)",
+      "answer_latex": "x^{3} + 3x^{2}",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "mono_times_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "mono_times_poly"
+        ],
+        [
+          "openstax_form",
+          "mono_times_poly"
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "task",
+          "multiply"
+        ],
+        [
+          "factor_kind",
+          "mono_poly"
+        ],
+        [
+          "factor_bias",
+          "monic_bias"
+        ],
+        [
+          "method",
+          "distribute"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.164,
+          "variable": 0.159,
+          "factor_poly": 1.677
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.15929063297602944,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.15929063297602944,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.159291 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "distribute",
+        "degree": 3,
+        "upgrades": [
+          "distribute",
+          "degree:3",
+          "kind:mono_poly",
+          "task:multiply",
+          "d:2.0"
+        ],
+        "effective_d": 2.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "multiply",
+        "dens_style": "factored",
+        "factor_kind": "mono_poly",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 3,
+        "factor_bias": "monic_bias",
+        "form_id": "mono_times_poly",
+        "openstax_form": "mono_times_poly",
+        "openstax_case": "\u00a76.3",
+        "strategy": "distribute",
+        "catalog_id": "algebra1_polynomials",
+        "construction": "forward_form_catalog",
+        "shape_id": "mono_times_poly",
+        "family": "distribute",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:distribute",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "distribute",
+          "upgrades": [
+            "distribute",
+            "degree:3",
+            "kind:mono_poly",
+            "task:multiply",
+            "d:2.0"
+          ],
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 14,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "allow_monomial_binomial": true,
+          "allow_binomial_binomial": true,
+          "allow_trinomial": false,
+          "leading_coefficient_one": true,
+          "max_factor_terms": 2,
+          "coef_min": -5,
+          "coef_max": 5,
+          "min_degree": 1,
+          "max_degree": 2,
+          "integer_coefficients_only": true,
+          "difficulty": 2.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Multiply.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22482 \u00b7 seed=207",
+      "type_id": "polynomial_multiply",
+      "difficulty": 2.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Multiply: } 4x^{2}\\left(x - 4\\right)",
+      "answer_latex": "4x^{3} - 16x^{2}",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "mono_times_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          2.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "mono_times_poly"
+        ],
+        [
+          "openstax_form",
+          "mono_times_poly"
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "task",
+          "multiply"
+        ],
+        [
+          "factor_kind",
+          "mono_poly"
+        ],
+        [
+          "factor_bias",
+          "monic_bias"
+        ],
+        [
+          "method",
+          "distribute"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 2.0,
+        "spend": {
+          "numbers": 0.048,
+          "variable": 0.112,
+          "factor_poly": 1.84
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.11198212024614881,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.11198212024614881,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.111982 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "distribute",
+        "degree": 3,
+        "upgrades": [
+          "distribute",
+          "degree:3",
+          "kind:mono_poly",
+          "task:multiply",
+          "d:2.0"
+        ],
+        "effective_d": 2.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "multiply",
+        "dens_style": "factored",
+        "factor_kind": "mono_poly",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 3,
+        "factor_bias": "monic_bias",
+        "form_id": "mono_times_poly",
+        "openstax_form": "mono_times_poly",
+        "openstax_case": "\u00a76.3",
+        "strategy": "distribute",
+        "catalog_id": "algebra1_polynomials",
+        "construction": "forward_form_catalog",
+        "shape_id": "mono_times_poly",
+        "family": "distribute",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:distribute",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "distribute",
+          "upgrades": [
+            "distribute",
+            "degree:3",
+            "kind:mono_poly",
+            "task:multiply",
+            "d:2.0"
+          ],
+          "effective_d": 2.0,
+          "d_spend": 2.0
+        },
+        "effort_features": {
+          "answer_len": 16,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "allow_monomial_binomial": true,
+          "allow_binomial_binomial": true,
+          "allow_trinomial": false,
+          "leading_coefficient_one": true,
+          "max_factor_terms": 2,
+          "coef_min": -5,
+          "coef_max": 5,
+          "min_degree": 1,
+          "max_degree": 2,
+          "integer_coefficients_only": true,
+          "difficulty": 2.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Multiply.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "polynomial_multiply",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Multiply: } 5x^{2}\\left(x - 3\\right)",
+      "answer_latex": "5x^{3} - 15x^{2}",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "mono_times_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "mono_times_poly"
+        ],
+        [
+          "openstax_form",
+          "mono_times_poly"
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "task",
+          "multiply"
+        ],
+        [
+          "factor_kind",
+          "mono_poly"
+        ],
+        [
+          "factor_bias",
+          "monic_bias"
+        ],
+        [
+          "method",
+          "distribute"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "factor_poly": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.637163 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "distribute",
+        "degree": 3,
+        "upgrades": [
+          "distribute",
+          "degree:3",
+          "kind:mono_poly",
+          "task:multiply",
+          "d:8.0"
+        ],
+        "effective_d": 8.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "multiply",
+        "dens_style": "factored",
+        "factor_kind": "mono_poly",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 3,
+        "factor_bias": "monic_bias",
+        "form_id": "mono_times_poly",
+        "openstax_form": "mono_times_poly",
+        "openstax_case": "\u00a76.3",
+        "strategy": "distribute",
+        "catalog_id": "algebra1_polynomials",
+        "construction": "forward_form_catalog",
+        "shape_id": "mono_times_poly",
+        "family": "distribute",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:distribute",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "distribute",
+          "upgrades": [
+            "distribute",
+            "degree:3",
+            "kind:mono_poly",
+            "task:multiply",
+            "d:8.0"
+          ],
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 16,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "allow_monomial_binomial": true,
+          "allow_binomial_binomial": true,
+          "allow_trinomial": true,
+          "leading_coefficient_one": false,
+          "max_factor_terms": 3,
+          "coef_min": -9,
+          "coef_max": 9,
+          "min_degree": 1,
+          "max_degree": 3,
+          "integer_coefficients_only": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Multiply.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "polynomial_multiply",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Multiply: } 4x^{2}\\left(x - 1\\right)",
+      "answer_latex": "4x^{3} - 4x^{2}",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "mono_times_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "mono_times_poly"
+        ],
+        [
+          "openstax_form",
+          "mono_times_poly"
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "task",
+          "multiply"
+        ],
+        [
+          "factor_kind",
+          "mono_poly"
+        ],
+        [
+          "factor_bias",
+          "monic_bias"
+        ],
+        [
+          "method",
+          "distribute"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "factor_poly": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.44792848098459526,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.447928 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "distribute",
+        "degree": 3,
+        "upgrades": [
+          "distribute",
+          "degree:3",
+          "kind:mono_poly",
+          "task:multiply",
+          "d:8.0"
+        ],
+        "effective_d": 8.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "multiply",
+        "dens_style": "factored",
+        "factor_kind": "mono_poly",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 3,
+        "factor_bias": "monic_bias",
+        "form_id": "mono_times_poly",
+        "openstax_form": "mono_times_poly",
+        "openstax_case": "\u00a76.3",
+        "strategy": "distribute",
+        "catalog_id": "algebra1_polynomials",
+        "construction": "forward_form_catalog",
+        "shape_id": "mono_times_poly",
+        "family": "distribute",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:distribute",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "distribute",
+          "upgrades": [
+            "distribute",
+            "degree:3",
+            "kind:mono_poly",
+            "task:multiply",
+            "d:8.0"
+          ],
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 15,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "allow_monomial_binomial": true,
+          "allow_binomial_binomial": true,
+          "allow_trinomial": true,
+          "leading_coefficient_one": false,
+          "max_factor_terms": 3,
+          "coef_min": -9,
+          "coef_max": 9,
+          "min_degree": 1,
+          "max_degree": 3,
+          "integer_coefficients_only": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Multiply.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "polynomial_multiply",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Multiply: } 5x^{2}\\left(x - 4\\right)",
+      "answer_latex": "5x^{3} - 20x^{2}",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "binomial_times_binomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "binomial_times_binomial"
+        ],
+        [
+          "openstax_form",
+          "binomial_times_binomial"
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "task",
+          "multiply"
+        ],
+        [
+          "factor_kind",
+          "mono_poly"
+        ],
+        [
+          "factor_bias",
+          "nonmonic"
+        ],
+        [
+          "method",
+          "distribute"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "factor_poly": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.27433 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 5,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "distribute",
+        "degree": 3,
+        "upgrades": [
+          "distribute",
+          "degree:3",
+          "kind:mono_poly",
+          "task:multiply",
+          "d:16.0"
+        ],
+        "effective_d": 16.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "multiply",
+        "dens_style": "factored",
+        "factor_kind": "mono_poly",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 3,
+        "factor_bias": "nonmonic",
+        "form_id": "binomial_times_binomial",
+        "openstax_form": "binomial_times_binomial",
+        "openstax_case": "\u00a76.3",
+        "strategy": "foil",
+        "catalog_id": "algebra1_polynomials",
+        "construction": "forward_form_catalog",
+        "shape_id": "binomial_times_binomial",
+        "family": "distribute",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:distribute",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "distribute",
+          "upgrades": [
+            "distribute",
+            "degree:3",
+            "kind:mono_poly",
+            "task:multiply",
+            "d:16.0"
+          ],
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 16,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "allow_monomial_binomial": true,
+          "allow_binomial_binomial": true,
+          "allow_trinomial": true,
+          "leading_coefficient_one": false,
+          "max_factor_terms": 5,
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 5,
+          "integer_coefficients_only": true,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Multiply.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "polynomial_multiply",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Multiply: } 5x^{2}\\left(3x + 8\\right)",
+      "answer_latex": "15x^{3} + 40x^{2}",
+      "skeleton_pattern": "FactorProduct",
+      "form_id": "binomial_times_binomial",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "FactorProduct"
+        ],
+        [
+          "primitive_engine",
+          "poly_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "binomial_times_binomial"
+        ],
+        [
+          "openstax_form",
+          "binomial_times_binomial"
+        ],
+        [
+          "dens_style",
+          "factored"
+        ],
+        [
+          "task",
+          "multiply"
+        ],
+        [
+          "factor_kind",
+          "mono_poly"
+        ],
+        [
+          "factor_bias",
+          "nonmonic"
+        ],
+        [
+          "method",
+          "distribute"
+        ],
+        [
+          "n_factors",
+          2
+        ],
+        [
+          "degree",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "factor_poly": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.8958569619691905,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.895857 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 5,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "poly_skeleton",
+        "method": "distribute",
+        "degree": 3,
+        "upgrades": [
+          "distribute",
+          "degree:3",
+          "kind:mono_poly",
+          "task:multiply",
+          "d:16.0"
+        ],
+        "effective_d": 16.0,
+        "skeleton_pattern": "FactorProduct",
+        "skeleton_source": "poly_skeleton",
+        "task": "multiply",
+        "dens_style": "factored",
+        "factor_kind": "mono_poly",
+        "n_factors": 2,
+        "outer_gcf": "1",
+        "max_product_degree": 3,
+        "factor_bias": "nonmonic",
+        "form_id": "binomial_times_binomial",
+        "openstax_form": "binomial_times_binomial",
+        "openstax_case": "\u00a76.3",
+        "strategy": "foil",
+        "catalog_id": "algebra1_polynomials",
+        "construction": "forward_form_catalog",
+        "shape_id": "binomial_times_binomial",
+        "family": "distribute",
+        "generator": "poly_skeleton",
+        "structure_id": "poly_skeleton:distribute",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "spec_snapshot": {
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "generator": "poly_skeleton",
+          "course_tag": "a1",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 0,
+          "n_factors": 2,
+          "nest_depth": 0,
+          "method": "distribute",
+          "upgrades": [
+            "distribute",
+            "degree:3",
+            "kind:mono_poly",
+            "task:multiply",
+            "d:16.0"
+          ],
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 17,
+          "nest_depth": 0,
+          "n_terms": 0,
+          "n_factors": 2,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_poly_skeleton",
+          "family": "distribute",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "a1",
+        "generation_settings": {
+          "allow_monomial_binomial": true,
+          "allow_binomial_binomial": true,
+          "allow_trinomial": true,
+          "leading_coefficient_one": false,
+          "max_factor_terms": 5,
+          "coef_min": -12,
+          "coef_max": 12,
+          "min_degree": 2,
+          "max_degree": 5,
+          "integer_coefficients_only": true,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Multiply.}"
+      }
+    }
+  ],
+  "failures": []
+}

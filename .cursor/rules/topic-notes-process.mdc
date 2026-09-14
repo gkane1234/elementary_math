@@ -1,0 +1,21 @@
+---
+description: Five-step topic process — old path, notes.md, OpenStax, skeleton/engine, gallery with notes and red UNCLEAR/LIMITATIONS header
+globs: question_engine/**/*.py,scripts/output/**/gen_examples.py,scripts/output/skeleton_phase01_gallery/notes/**
+alwaysApply: true
+---
+
+# Topic notes → engine (5 steps)
+
+When wiring or changing a question leaf, do not jump to a new generator. Follow this order:
+
+1. **Old path** — live-generate D=0, 8, 16, 22 with the opt-out flag. Copy algebra shapes; do not invent. See `benchmark-old-path.mdc`.
+2. **notes.md** — copy `scripts/output/skeleton_phase01_gallery/notes/_TEMPLATE.md` to `notes/<slug>.md` or `notes/<type_id>.md` (or `<slug>/NOTES.md`). Fill “should look like”, **real** old-path LaTeX, and a required **Limitations** section.
+3. **OpenStax** — cite chapter/section + URL. For WP **stories**, OpenStax frames win over a barren Mad-Lib; algebra shapes still follow old path. See `word-problem-frames.mdc`. If old is a dump stub or one vehicle, leave `UNCLEAR` and/or `LOW_VARIETY` in the notes.
+4. **Skeleton/engine** — **proposal first** (reuse an existing core if it can match honestly; else leave the leaf). Then implement. No fake difficulty metrics.
+5. **Gallery** — regenerate the section (`gen_examples.py`). Section pages include notes at the top and a **red header** if notes contain `UNCLEAR`, `LOW_VARIETY`, `LIMITATIONS`, or `NOT_IMPLEMENTED`. Types not yet in `SECTIONS` still get a stub page via `--type-id <id>` or `--ensure-stubs`. See `regenerate-galleries.mdc` and `gallery-html-katex.mdc`.
+
+### Limitations (required in every notes file)
+
+Document gaps honestly: variety, difficulty scaling, OpenStax coverage, diagram missing, wrong skill, deferred engine, etc. Leave the word-boundary tokens `LIMITATIONS` and/or `NOT_IMPLEMENTED` in the file when those still apply so the gallery shows the red header. Gallery stubs keep notes + limitations even when live generate returns 0 samples.
+
+Index of G6/PA leaves: `scripts/output/skeleton_phase01_gallery/notes/G6_PA_INDEX.md`.

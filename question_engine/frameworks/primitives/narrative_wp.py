@@ -521,6 +521,9 @@ class _AgeSpec:
     upgrades: tuple[str, ...]
     shape_id: str
     n_constraints: int
+    frame_id: str
+    older_label: str | None = None
+    younger_label: str | None = None
 
 
 def sample_age_wp(ctx: PrimitiveContext) -> WordProblemItem:
@@ -579,6 +582,7 @@ def _build_age_spec(ctx: PrimitiveContext, ids: set[str]) -> _AgeSpec:
             upgrades=tuple(sorted(ids)),
             shape_id="age:three",
             n_constraints=3,
+            frame_id="age_three",
         )
 
     names = tuple(rng.sample(list(_NAMES), 2))
@@ -609,6 +613,26 @@ def _build_age_spec(ctx: PrimitiveContext, ids: set[str]) -> _AgeSpec:
         shape = shape + "+ask_older"
 
     n_con = 2 + (1 if shift is not None else 0)
+    older_label = younger_label = None
+    frame_id = {
+        "times": "age_times",
+        "future": "age_future",
+        "past": "age_past",
+        "sum_diff": "age_sum_older",
+    }.get(shape.split("+")[0], f"age_{shape.split('+')[0]}")
+    if (
+        "three_people" not in ids
+        and shape.split("+")[0] in {"sum_diff", "times", "future", "past"}
+        and rng.random() < 0.32
+    ):
+        older_label, younger_label = rng.choice(
+            (
+                ("the father", "his son"),
+                ("the mother", "her daughter"),
+                ("the uncle", "his nephew"),
+            )
+        )
+        frame_id = f"{frame_id}_parent"
     return _AgeSpec(
         names=names,
         ages=ages,
@@ -620,6 +644,9 @@ def _build_age_spec(ctx: PrimitiveContext, ids: set[str]) -> _AgeSpec:
         upgrades=tuple(sorted(ids)),
         shape_id=f"age:{shape}",
         n_constraints=n_con,
+        frame_id=frame_id,
+        older_label=older_label,
+        younger_label=younger_label,
     )
 
 
@@ -637,6 +664,8 @@ def _render_age(spec: _AgeSpec) -> WordProblemItem:
         answer = str(b)
     else:
         older_n, younger_n = spec.names
+        if spec.older_label and spec.younger_label:
+            older_n, younger_n = spec.older_label, spec.younger_label
         older_a, younger_a = spec.ages
         if spec.times is not None:
             if spec.times == 2:
@@ -668,6 +697,8 @@ def _render_age(spec: _AgeSpec) -> WordProblemItem:
             )
 
         ask_name = spec.names[spec.ask_idx]
+        if spec.older_label and spec.younger_label:
+            ask_name = spec.older_label if spec.ask_idx == 0 else spec.younger_label
         clauses.append(f"How old is {ask_name}?")
         answer = str(spec.ages[spec.ask_idx])
 
@@ -683,7 +714,7 @@ def _render_age(spec: _AgeSpec) -> WordProblemItem:
         effective_d=float(4 + 3 * max(0, spec.n_constraints - 2) + len(spec.upgrades)),
         shape_id=spec.shape_id,
         n_constraints=spec.n_constraints,
-        frame="",
+        frame=spec.frame_id,
     )
 
 
@@ -801,12 +832,18 @@ def sample_consecutive_wp(
         effective_d=eff,
         shape_id=shape,
         n_constraints=n_con,
-        frame="",
+        frame=f"consec_{parity}_{goal}",
     )
 
 
 def narrative_item_metadata(item: WordProblemItem, ctx: PrimitiveContext) -> dict[str, Any]:
     """Standard metadata for galleries / ML (shape_id, spend, upgrades, …)."""
+    pattern = {
+        "coin": "CoinWP",
+        "age": "AgeWP",
+        "consecutive": "ConsecutiveWP",
+    }.get(item.kind, "NarrativeWP")
+    frame_id = item.frame or item.shape_id
     return {
         **ctx.metadata(),
         "shape_id": item.shape_id,
@@ -814,6 +851,8 @@ def narrative_item_metadata(item: WordProblemItem, ctx: PrimitiveContext) -> dic
         "shape": item.shape_id,
         "n_constraints": item.n_constraints,
         "frame": item.frame,
+        "frame_id": frame_id,
+        "skeleton_pattern": pattern,
         "upgrades": list(item.upgrades),
         "wp_kind": item.kind,
         "primitive_engine": "narrative_wp",

@@ -1,0 +1,2461 @@
+{
+  "section": {
+    "slug": "u_sub_preset_trig_chain",
+    "title": "u-sub preset \u2014 trig_chain",
+    "pattern": "",
+    "engine": "integrals",
+    "type_id": "calc_indef_int_power_rule_with_substitution",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Forced <code>trig_chain</code> (sin/cos/sec\u00b2 of u). OpenStax Vol 1 \u00a75.7.",
+    "extra_settings": {
+      "u_sub_form_preset": "trig_chain",
+      "u_sub_construction": "catalog"
+    }
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\int 2\\cos(2x + 2)\\,dx",
+      "answer_latex": "\\sin(2x + 2)+C",
+      "skeleton_pattern": "",
+      "form_id": "trig_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "trig_of_linear"
+        ],
+        [
+          "openstax_form",
+          "trig_of_linear"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "trig_of_linear",
+        "structure_id": "integral_substitution:trig_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "trig_of_linear",
+          "form_id": "trig_of_linear",
+          "catalog_id": "u_substitution",
+          "strategy": "trig_of_u"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 14,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "trig_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "trig_of_linear",
+        "openstax_form": "trig_of_linear",
+        "form_id": "trig_of_linear",
+        "openstax_case": "\u00a75.5 trig of linear inner",
+        "strategy": "trig_of_u",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "power_max": 3,
+          "term_count": 1,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\int 2\\sec^{2}(2x + 2)\\,dx",
+      "answer_latex": "\\tan(2x + 2)+C",
+      "skeleton_pattern": "",
+      "form_id": "sec2_of_u",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "sec2_of_u"
+        ],
+        [
+          "openstax_form",
+          "sec2_of_u"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "sec2_of_u",
+        "structure_id": "integral_substitution:sec2_of_u",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "sec2_of_u",
+          "form_id": "sec2_of_u",
+          "catalog_id": "u_substitution",
+          "strategy": "sec2_chain"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 14,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "sec2_of_u",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "sec2_of_u",
+        "openstax_form": "sec2_of_u",
+        "form_id": "sec2_of_u",
+        "openstax_case": "\u00a75.5 sec\u00b2 chain",
+        "strategy": "sec2_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "power_max": 3,
+          "term_count": 1,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int 2\\sec^{2}(2x + 2)\\,dx",
+      "answer_latex": "\\tan(2x + 2)+C",
+      "skeleton_pattern": "",
+      "form_id": "sec2_of_u",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "sec2_of_u"
+        ],
+        [
+          "openstax_form",
+          "sec2_of_u"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "sec2_of_u",
+        "structure_id": "integral_substitution:sec2_of_u",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "sec2_of_u",
+          "form_id": "sec2_of_u",
+          "catalog_id": "u_substitution",
+          "strategy": "sec2_chain"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 14,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "sec2_of_u",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "sec2_of_u",
+        "openstax_form": "sec2_of_u",
+        "form_id": "sec2_of_u",
+        "openstax_case": "\u00a75.5 sec\u00b2 chain",
+        "strategy": "sec2_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "power_max": 3,
+          "term_count": 1,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{\\sin(x)}{\\cos^{3}(x)}\\,dx",
+      "answer_latex": "\\frac{1}{2}\\sec^{2}(x)+C",
+      "skeleton_pattern": "",
+      "form_id": "du_over_u_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "du_over_u_trig"
+        ],
+        [
+          "openstax_form",
+          "du_over_u_trig"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "du_over_u_trig",
+        "structure_id": "integral_substitution:du_over_u_trig",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "du_over_u_trig",
+          "form_id": "du_over_u_trig",
+          "catalog_id": "u_substitution",
+          "strategy": "trig_power_u_sub"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 24,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "du_over_u_trig",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "du_over_u_trig",
+        "openstax_form": "du_over_u_trig",
+        "form_id": "du_over_u_trig",
+        "openstax_case": "Example 5.32 / Checkpoint 5.27 \u2014 trig substitution warmup",
+        "strategy": "trig_power_u_sub",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "power_max": 4,
+          "term_count": 1,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int \\tan(x)\\,dx",
+      "answer_latex": "-\\ln|\\cos(x)|+C",
+      "skeleton_pattern": "",
+      "form_id": "composite_ln_of_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "composite_ln_of_trig"
+        ],
+        [
+          "openstax_form",
+          "composite_ln_of_trig"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "composite_ln_of_trig",
+        "structure_id": "integral_substitution:composite_ln_of_trig",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "composite_ln_of_trig",
+          "form_id": "composite_ln_of_trig",
+          "catalog_id": "u_substitution",
+          "strategy": "du_over_u_trig_basic"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 15,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "composite_ln_of_trig",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "composite_ln_of_trig",
+        "openstax_form": "composite_ln_of_trig",
+        "form_id": "composite_ln_of_trig",
+        "openstax_case": "Related \u00a73.2 / \u00a75.5 rewrite-then-u (\u222b cot = ln|sin|, \u222b tan = \u2212ln|cos|)",
+        "strategy": "du_over_u_trig_basic",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "power_max": 4,
+          "term_count": 1,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\int \\cot(x)\\,dx",
+      "answer_latex": "\\ln|\\sin(x)|+C",
+      "skeleton_pattern": "",
+      "form_id": "composite_ln_of_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "composite_ln_of_trig"
+        ],
+        [
+          "openstax_form",
+          "composite_ln_of_trig"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "composite_ln_of_trig",
+        "structure_id": "integral_substitution:composite_ln_of_trig",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "composite_ln_of_trig",
+          "form_id": "composite_ln_of_trig",
+          "catalog_id": "u_substitution",
+          "strategy": "du_over_u_trig_basic"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 14,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "composite_ln_of_trig",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "composite_ln_of_trig",
+        "openstax_form": "composite_ln_of_trig",
+        "form_id": "composite_ln_of_trig",
+        "openstax_case": "Related \u00a73.2 / \u00a75.5 rewrite-then-u (\u222b cot = ln|sin|, \u222b tan = \u2212ln|cos|)",
+        "strategy": "du_over_u_trig_basic",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "power_max": 4,
+          "term_count": 1,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{\\sin(x)}{\\cos^{3}(x)}\\,dx",
+      "answer_latex": "\\frac{1}{2}\\sec^{2}(x)+C",
+      "skeleton_pattern": "",
+      "form_id": "du_over_u_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "du_over_u_trig"
+        ],
+        [
+          "openstax_form",
+          "du_over_u_trig"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "du_over_u_trig",
+        "structure_id": "integral_substitution:du_over_u_trig",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "du_over_u_trig",
+          "form_id": "du_over_u_trig",
+          "catalog_id": "u_substitution",
+          "strategy": "trig_power_u_sub"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 24,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "du_over_u_trig",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 4.5,
+        "wrappers_applied": [],
+        "core_form_id": "du_over_u_trig",
+        "openstax_form": "du_over_u_trig",
+        "form_id": "du_over_u_trig",
+        "openstax_case": "Example 5.32 / Checkpoint 5.27 \u2014 trig substitution warmup",
+        "strategy": "trig_power_u_sub",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{\\sin(x)}{\\left(1+\\cos(x)\\right)^{4}}\\,dx",
+      "answer_latex": "\\frac{1}{3\\left(1+\\cos(x)\\right)^{3}}+C",
+      "skeleton_pattern": "",
+      "form_id": "trig_over_linear_trig_power",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "trig_over_linear_trig_power"
+        ],
+        [
+          "openstax_form",
+          "trig_over_linear_trig_power"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "trig_over_linear_trig_power",
+        "structure_id": "integral_substitution:trig_over_linear_trig_power",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "trig_over_linear_trig_power",
+          "form_id": "trig_over_linear_trig_power",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_a_plus_trig"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 39,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "trig_over_linear_trig_power",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 4.5,
+        "wrappers_applied": [],
+        "core_form_id": "trig_over_linear_trig_power",
+        "openstax_form": "trig_over_linear_trig_power",
+        "form_id": "trig_over_linear_trig_power",
+        "openstax_case": "\u00a75.5 trig-linear inner (bank sin/(2+cos)\u2074 etc.)",
+        "strategy": "u_equals_a_plus_trig",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{\\sec^{2}(x)}{\\left(1+\\tan(x)\\right)^{2}}\\,dx",
+      "answer_latex": "-\\frac{1}{\\left(1+\\tan(x)\\right)}+C",
+      "skeleton_pattern": "",
+      "form_id": "trig_over_linear_trig_power",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "trig_over_linear_trig_power"
+        ],
+        [
+          "openstax_form",
+          "trig_over_linear_trig_power"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "trig_over_linear_trig_power",
+        "structure_id": "integral_substitution:trig_over_linear_trig_power",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "trig_over_linear_trig_power",
+          "form_id": "trig_over_linear_trig_power",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_a_plus_trig"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 35,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "trig_over_linear_trig_power",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 4.5,
+        "wrappers_applied": [],
+        "core_form_id": "trig_over_linear_trig_power",
+        "openstax_form": "trig_over_linear_trig_power",
+        "form_id": "trig_over_linear_trig_power",
+        "openstax_case": "\u00a75.5 trig-linear inner (bank sin/(2+cos)\u2074 etc.)",
+        "strategy": "u_equals_a_plus_trig",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{\\cos(x)}{\\sin^{2}(x)}\\,dx",
+      "answer_latex": "-\\frac{1}{\\sin(x)}+C",
+      "skeleton_pattern": "",
+      "form_id": "du_over_u_trig",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "du_over_u_trig"
+        ],
+        [
+          "openstax_form",
+          "du_over_u_trig"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "du_over_u_trig",
+        "structure_id": "integral_substitution:du_over_u_trig",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "du_over_u_trig",
+          "form_id": "du_over_u_trig",
+          "catalog_id": "u_substitution",
+          "strategy": "trig_power_u_sub"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 20,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "du_over_u_trig",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 10.5,
+        "wrappers_applied": [],
+        "core_form_id": "du_over_u_trig",
+        "openstax_form": "du_over_u_trig",
+        "form_id": "du_over_u_trig",
+        "openstax_case": "Example 5.32 / Checkpoint 5.27 \u2014 trig substitution warmup",
+        "strategy": "trig_power_u_sub",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{\\sin(x)}{\\left(3+\\cos(x)\\right)^{2}}\\,dx",
+      "answer_latex": "\\frac{1}{\\left(3+\\cos(x)\\right)}+C",
+      "skeleton_pattern": "",
+      "form_id": "trig_over_linear_trig_power",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "trig_over_linear_trig_power"
+        ],
+        [
+          "openstax_form",
+          "trig_over_linear_trig_power"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "trig_over_linear_trig_power",
+        "structure_id": "integral_substitution:trig_over_linear_trig_power",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "trig_over_linear_trig_power",
+          "form_id": "trig_over_linear_trig_power",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_a_plus_trig"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 34,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "trig_over_linear_trig_power",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 10.5,
+        "wrappers_applied": [],
+        "core_form_id": "trig_over_linear_trig_power",
+        "openstax_form": "trig_over_linear_trig_power",
+        "form_id": "trig_over_linear_trig_power",
+        "openstax_case": "\u00a75.5 trig-linear inner (bank sin/(2+cos)\u2074 etc.)",
+        "strategy": "u_equals_a_plus_trig",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{\\sec^{2}(x)}{\\left(1+\\tan(x)\\right)^{2}}\\,dx",
+      "answer_latex": "-\\frac{1}{\\left(1+\\tan(x)\\right)}+C",
+      "skeleton_pattern": "",
+      "form_id": "trig_over_linear_trig_power",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "trig_over_linear_trig_power"
+        ],
+        [
+          "openstax_form",
+          "trig_over_linear_trig_power"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "trig_over_linear_trig_power",
+        "structure_id": "integral_substitution:trig_over_linear_trig_power",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "trig_over_linear_trig_power",
+          "form_id": "trig_over_linear_trig_power",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_a_plus_trig"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 35,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "trig_over_linear_trig_power",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 10.5,
+        "wrappers_applied": [],
+        "core_form_id": "trig_over_linear_trig_power",
+        "openstax_form": "trig_over_linear_trig_power",
+        "form_id": "trig_over_linear_trig_power",
+        "openstax_case": "\u00a75.5 trig-linear inner (bank sin/(2+cos)\u2074 etc.)",
+        "strategy": "u_equals_a_plus_trig",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "trig_chain",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "trig_chain",
+          "u_sub_construction": "catalog",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    }
+  ],
+  "failures": []
+}

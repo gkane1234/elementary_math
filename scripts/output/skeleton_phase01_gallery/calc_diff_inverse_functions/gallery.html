@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Diff — Inverse functions (OpenStax §3.7 catalog) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Diff — Inverse functions (OpenStax §3.7 catalog)</h1>
+<p class="sub"><code>calc_diff_inverse_functions</code> · live <code>_generate_for_type</code>
+ · pattern <strong>Diff(inverse_functions</strong>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">IFT $(f^{-1})'(f(a))=1/f'(a)$. D=0 $x^n$; mid table/linear; high $\sin x$ / $\ln$ / $x^3+x$ (not leftover $e^x$). OpenStax Calc Vol.1 §3.7.</p>
+
+<div class='notes-alert'>LIMITATIONS — see Limitations in notes below.</div><div class='notes-block'><h1>Notes — <code>calc_diff_inverse_functions</code></h1>
+<ul>
+<li><strong>Course:</strong> Calculus</li>
+<li><strong>Category:</strong> Calculus — Differentiation</li>
+<li><strong>Generator:</strong> <code>derivative_inverse_functions</code></li>
+<li><strong>Suggested family:</strong> other (calc limits / Diff)</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Inverse Function Theorem \((f^{-1})&#x27;(f(a))=1/f&#x27;(a)\) (not the \(\arcsin\) formula leaf).</li>
+<li><strong>D=0:</strong> Power \(x^n\) only (old easy).</li>
+<li><strong>Mid D (≈8):</strong> Table values and linear \(mx+c\). Not leftover \(x^n\).</li>
+<li><strong>High D (≈16–22):</strong> \(\ln x\), \(x^3+x\), \(\sin x\) (OpenStax §3.7 exercise 267). \(e^x\) locked out at D=22 (<code>d_max=18</code>).</li>
+<li><strong>Must not:</strong> Bare \(\frac{d}{dx}\arcsin\) (that is <code>calc_diff_inverse_trigonometric</code>); invented cube-root IFT prompt.</li>
+</ul>
+<h2>What old / live path actually produced (real latex, D=0/8/16/22)</h2>
+<p><strong>Old (pre-catalog routing):</strong> D=0 power only; D=8 linear / table / power leftovers; D=16/22 mixed power leftovers with \(e^x\), \(\ln\), \(x^3+x\). Two-seed notes looked \(e^x\)-stuck; 36-seed sample was mixed but \(x^n\) leftovers still ~1/3 of high D.</p>
+<p><strong>Live now</strong> (<code>_generate_for_type</code>):</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td><code>$f(x)=x^{2};\quad f&#x27;(3)=6.\quad\text{Find }(f^{-1})&#x27;(9).$</code></td><td><code>$\frac{1}{6}$</code></td><td>form=<code>invfn_power</code></td></tr><tr><td>0</td><td>207</td><td><code>$f(x)=x^{4};\quad f&#x27;(3)=108.\quad\text{Find }(f^{-1})&#x27;(81).$</code></td><td><code>$\frac{1}{108}$</code></td><td>form=<code>invfn_power</code></td></tr><tr><td>8</td><td>101</td><td><code>$f(x)=3x + 1.\quad\text{Find }(f^{-1})&#x27;(x).$</code></td><td><code>$\frac{1}{3}$</code></td><td>form=<code>invfn_linear</code></td></tr><tr><td>8</td><td>1</td><td><code>$f(1)=4,\ f&#x27;(1)=-5.\quad\text{Find }(f^{-1})&#x27;(4).$</code></td><td><code>$-\frac{1}{5}$</code></td><td>form=<code>invfn_table</code></td></tr><tr><td>16</td><td>0</td><td><code>$f(x)=\sin(x);\quad f(0)=0,\ f&#x27;(0)=1.\quad\text{Find }(f^{-1})&#x27;(0).$</code></td><td><code>$1$</code></td><td>form=<code>invfn_trig</code></td></tr><tr><td>16</td><td>1</td><td><code>$f(x)=e^{x};\quad f(0)=1,\ f&#x27;(0)=1.\quad\text{Find }(f^{-1})&#x27;(1).$</code></td><td><code>$1$</code></td><td>form=<code>invfn_exp</code> (still at D=16)</td></tr><tr><td>16</td><td>3</td><td><code>$f(x)=\ln(x);\quad f(e)=1,\ f&#x27;(e)=\frac{1}{e}.\quad\text{Find }(f^{-1})&#x27;(1).$</code></td><td><code>$e$</code></td><td>form=<code>invfn_ln</code></td></tr><tr><td>22</td><td>0</td><td><code>$f(x)=\sin(x);\quad f(0)=0,\ f&#x27;(0)=1.\quad\text{Find }(f^{-1})&#x27;(0).$</code></td><td><code>$1$</code></td><td>form=<code>invfn_trig</code></td></tr><tr><td>22</td><td>1</td><td><code>$f(x)=\ln(x);\quad f(e)=1,\ f&#x27;(e)=\frac{1}{e}.\quad\text{Find }(f^{-1})&#x27;(1).$</code></td><td><code>$e$</code></td><td>form=<code>invfn_ln</code></td></tr><tr><td>22</td><td>101</td><td><code>$f(x)=x^{3}+x;\quad f&#x27;(1)=4.\quad\text{Find }(f^{-1})&#x27;(2).$</code></td><td><code>$\frac{1}{4}$</code></td><td>form=<code>invfn_cubic</code></td></tr></tbody></table>
+<p>Opt-out flag used: _none — structured catalog on the existing IFT Mad-Lib builders_</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Calculus Volume 1 §3.7 Derivatives of Inverse Functions</td><td>https://openstax.org/books/calculus-volume-1/pages/3-7-derivatives-of-inverse-functions</td><td>IFT on \(x^n\); linear \(6x-1\); cubic \(x^3+2x+3\); exercise 267 \(f(x)=\sin x\) at \(x=0\)</td></tr></tbody></table>
+<p>Local HTML / mining: <code>scripts/output/example_mining/calculus-volume-1/stage1/3-7-derivatives-of-inverse-functions.md</code></p>
+<p>Catalog forms: <code>invfn_power</code>, <code>invfn_table</code>, <code>invfn_linear</code>, <code>invfn_exp</code>, <code>invfn_ln</code>, <code>invfn_cubic</code>, <code>invfn_trig</code>.</p>
+<h2>Variety notes</h2>
+<p>D=0 stays one easy frame (power). Mid D table + linear. High D rotates OpenStax IFT shapes including \(\sin x\); \(e^x\) is mid-high only (<code>d_max=18</code>). Formula \(\frac{d}{dx}\sin^{-1}\) stays on the inverse-trig leaf. Cube-root Example 3.61 is <strong>not</strong> a new core this pass.</p>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Status:</strong> shipped — catalog-routed IFT families. Remaining <code>LIMITATIONS</code>: closed numeric IFT template (scaffolded \(f(a)\) and \(f&#x27;(a)\)); not a general inverse AST; Example 3.61 cube-root and mixed \(\tan x+3x^2\) not invented.</li>
+<li><strong>Generator:</strong> <code>derivative_inverse_functions</code></li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<p><strong>Reuse:</strong> existing IFT Mad-Lib builders + <code>derivatives.json</code> form_ids with <code>d_min</code>/<code>d_max</code>. <code>invfn_trig</code> is the same template with \(f(x)=\sin x\) (OpenStax 267), not a new sampler.</p>
+<ul>
+<li><strong>Shipped this pass:</strong> catalog routing; D=0 power-only; high D cannot emit <code>invfn_power</code> or leftover <code>invfn_exp</code>.</li>
+</ul></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>Diff(inverse_functions:invfn_power)</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>invfn_power</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{2};\quad f'(3)=6.\quad\text{Find }(f^{-1})'(9).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{6}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_power)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_power</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_power</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>Diff(inverse_functions:invfn_power)</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>invfn_power</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{4};\quad f'(3)=108.\quad\text{Find }(f^{-1})'(81).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{108}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_power)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_power</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_power</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>Diff(inverse_functions:invfn_power)</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>invfn_power</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{4};\quad f'(2)=32.\quad\text{Find }(f^{-1})'(16).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{32}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_power)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_power</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_power</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>Diff(inverse_functions:invfn_linear)</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>invfn_linear</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=3x + 1.\quad\text{Find }(f^{-1})'(x).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_linear)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_linear</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_linear</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>Diff(inverse_functions:invfn_linear)</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>invfn_linear</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=3x + 2.\quad\text{Find }(f^{-1})'(x).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_linear)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_linear</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_linear</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>Diff(inverse_functions:invfn_linear)</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>invfn_linear</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=5x.\quad\text{Find }(f^{-1})'(x).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{5}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_linear)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_linear</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_linear</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>Diff(inverse_functions:invfn_cubic)</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>invfn_cubic</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{3}+x;\quad f'(1)=4.\quad\text{Find }(f^{-1})'(2).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{4}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_cubic)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>Diff(inverse_functions:invfn_cubic)</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>invfn_cubic</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{3}+x;\quad f'(1)=4.\quad\text{Find }(f^{-1})'(2).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{4}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_cubic)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>Diff(inverse_functions:invfn_cubic)</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>invfn_cubic</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{3}+x;\quad f'(2)=13.\quad\text{Find }(f^{-1})'(10).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{13}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_cubic)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'>Diff(inverse_functions:invfn_cubic)</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span><span class='tag fid'>invfn_cubic</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{3}+x;\quad f'(1)=4.\quad\text{Find }(f^{-1})'(2).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{4}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_cubic)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'>Diff(inverse_functions:invfn_cubic)</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span><span class='tag fid'>invfn_cubic</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{3}+x;\quad f'(1)=4.\quad\text{Find }(f^{-1})'(2).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{4}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_cubic)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'>Diff(inverse_functions:invfn_cubic)</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span><span class='tag fid'>invfn_cubic</span></header><div class='math'><div class='lab'>Prompt</div>$$f(x)=x^{3}+x;\quad f'(2)=13.\quad\text{Find }(f^{-1})'(10).$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{13}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(inverse_functions:invfn_cubic)</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>invfn_cubic</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_inverse_functions</code></p></article>
+</body></html>

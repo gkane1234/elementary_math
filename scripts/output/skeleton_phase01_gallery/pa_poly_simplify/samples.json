@@ -1,0 +1,2465 @@
+{
+  "section": {
+    "slug": "pa_poly_simplify",
+    "title": "PolySimplify \u2014 combine like terms (degree \u2265 2)",
+    "pattern": "PolySimplify",
+    "engine": "construct_poly",
+    "type_id": "pa_polynomials_simplifying",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "D=0 a few $x^2$ likes. OpenStax PA \u00a710.1."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "2 + 3x - x^{2}",
+      "answer_latex": "-x^{2} + 3x + 2",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "expand_simplify": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 0.0,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 2,
+        "n_hot_terms": 1,
+        "n_terms": 3,
+        "single_hot": true,
+        "inflators": [
+          "seed"
+        ],
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 2,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {},
+          "compose_budget": 0,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 2,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed"
+          ],
+          "d_spend": 0.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "effort_features": {
+          "answer_len": 15,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_coefficients_only": true,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "1 - 2x - 3x^{2}",
+      "answer_latex": "-3x^{2} - 2x + 1",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "expand_simplify": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 0.0,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-2",
+            "d": 0.0,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 2,
+        "n_hot_terms": 1,
+        "n_terms": 3,
+        "single_hot": true,
+        "inflators": [
+          "seed"
+        ],
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 2,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {},
+          "compose_budget": 0,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 2,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed"
+          ],
+          "d_spend": 0.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "effort_features": {
+          "answer_len": 16,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_coefficients_only": true,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "3 + 3x + 2x^{2}",
+      "answer_latex": "2x^{2} + 3x + 3",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "expand_simplify": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 2,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 2,
+        "n_hot_terms": 1,
+        "n_terms": 3,
+        "single_hot": true,
+        "inflators": [
+          "seed"
+        ],
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 2,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {},
+          "compose_budget": 0,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 2,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 2,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed"
+          ],
+          "d_spend": 0.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 2,
+        "effort_features": {
+          "answer_len": 15,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 2,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 2,
+          "min_degree": 1,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_coefficients_only": true,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "-4x^{3} + 3x^{3} + 2 + 3x",
+      "answer_latex": "-x^{3} + 3x + 2",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "expand_simplify": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.637163 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 0.6551778390838696,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.6551778390838696,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.655178 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.6551778390838696,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.6551778390838696,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.655178 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.6551778390838696,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.6551778390838696,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.655178 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.6551778390838696,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.6551778390838696,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.655178 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 3,
+        "n_hot_terms": 1,
+        "n_terms": 3,
+        "single_hot": true,
+        "inflators": [
+          "seed",
+          "compose:d0:distribute"
+        ],
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 3,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {
+            "0": 1
+          },
+          "compose_budget": 1,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 3,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed",
+            "compose:d0:distribute"
+          ],
+          "d_spend": 8.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "effort_features": {
+          "answer_len": 15,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -10,
+          "coef_max": 10,
+          "integer_coefficients_only": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "2 - 1 - 2x - 3x^{3}",
+      "answer_latex": "-3x^{3} - 2x + 1",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "expand_simplify": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.44792848098459526,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.447928 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 0.19350663405422858,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.19350663405422858,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.193507 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.19350663405422858,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.19350663405422858,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.193507 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-2",
+            "d": 0.19350663405422858,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.19350663405422858,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.193507 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 3,
+        "n_hot_terms": 1,
+        "n_terms": 3,
+        "single_hot": true,
+        "inflators": [
+          "seed",
+          "compose:d0:numeric_split"
+        ],
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 3,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {
+            "0": 1
+          },
+          "compose_budget": 1,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 3,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed",
+            "compose:d0:numeric_split"
+          ],
+          "d_spend": 8.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "effort_features": {
+          "answer_len": 16,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -10,
+          "coef_max": 10,
+          "integer_coefficients_only": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "x + 2 - 2\\left(-2x^{3}\\right)",
+      "answer_latex": "4x^{3} + x + 2",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.702,
+          "variable": 2.514,
+          "expand_simplify": 2.784
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 2.51367228303639,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 2.51367228303639,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=2.51367 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 2.702118076839401,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.702118076839401,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.70212 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 2.702118076839401,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.702118076839401,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.70212 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 2.702118076839401,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.702118076839401,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.70212 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 2.702118076839401,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.702118076839401,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.70212 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 3,
+        "n_hot_terms": 1,
+        "n_terms": 3,
+        "single_hot": true,
+        "inflators": [
+          "seed",
+          "compose:d0:distribute"
+        ],
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 3,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {
+            "0": 1
+          },
+          "compose_budget": 1,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 3,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 3,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed",
+            "compose:d0:distribute"
+          ],
+          "d_spend": 8.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 3,
+        "effort_features": {
+          "answer_len": 14,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 3,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 3,
+          "min_degree": 1,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -10,
+          "coef_max": 10,
+          "integer_coefficients_only": true,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "-x^{4} - 3x + 4x^{4}",
+      "answer_latex": "3x^{4} - 3x",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "expand_simplify": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.27433 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 1.3103556781677392,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 1.3103556781677392,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.31036 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 1.3103556781677392,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 1.3103556781677392,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.31036 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 1.3103556781677392,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 1.3103556781677392,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.31036 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 1.3103556781677392,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 1.3103556781677392,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.31036 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 5,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 4,
+        "n_hot_terms": 1,
+        "n_terms": 2,
+        "single_hot": true,
+        "inflators": [
+          "seed",
+          "compose:d0:distribute",
+          "compose:d0:distribute"
+        ],
+        "constructive": {
+          "effective_d": 16.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 4,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {
+            "0": 2
+          },
+          "compose_budget": 2,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 5,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 2,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed",
+            "compose:d0:distribute",
+            "compose:d0:distribute"
+          ],
+          "d_spend": 16.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "effort_features": {
+          "answer_len": 11,
+          "nest_depth": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -15,
+          "coef_max": 15,
+          "integer_coefficients_only": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "-5x^{4} + 3x^{4} - x^{4} + 1 - 2x",
+      "answer_latex": "-3x^{4} - 2x + 1",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "expand_simplify": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.8958569619691905,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.895857 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 0.38701326810845715,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.38701326810845715,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.387013 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.38701326810845715,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.38701326810845715,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.387013 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-2",
+            "d": 0.38701326810845715,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.38701326810845715,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.387013 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.38701326810845715,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.38701326810845715,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.387013 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.38701326810845715,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.38701326810845715,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.387013 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 5,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 4,
+        "n_hot_terms": 1,
+        "n_terms": 3,
+        "single_hot": true,
+        "inflators": [
+          "seed",
+          "compose:d0:distribute",
+          "compose:d0:distribute"
+        ],
+        "constructive": {
+          "effective_d": 16.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 4,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {
+            "0": 2
+          },
+          "compose_budget": 2,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 5,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed",
+            "compose:d0:distribute",
+            "compose:d0:distribute"
+          ],
+          "d_spend": 16.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "effort_features": {
+          "answer_len": 16,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -15,
+          "coef_max": 15,
+          "integer_coefficients_only": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "pa_polynomials_simplifying",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "7x^{4} + 4x + 5\\left(x - 1\\right) - 8x + 8",
+      "answer_latex": "7x^{4} + x + 3",
+      "skeleton_pattern": "PolySimplify",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "PolySimplify"
+        ],
+        [
+          "primitive_engine",
+          "construct_poly"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.404,
+          "variable": 5.027,
+          "expand_simplify": 5.568
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 5.02734456607278,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 5.02734456607278,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=5.02734 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "7",
+            "d": 5.404236153678802,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 5.404236153678802,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.40424 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 5.404236153678802,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 5.404236153678802,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.40424 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 5.404236153678802,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 5.404236153678802,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.40424 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 5.404236153678802,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 5.404236153678802,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.40424 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "5",
+            "d": 5.404236153678802,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 5.404236153678802,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.40424 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 5,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "construct_poly",
+        "skeleton_pattern": "PolySimplify",
+        "poly_degree": 4,
+        "n_hot_terms": 1,
+        "n_terms": 3,
+        "single_hot": true,
+        "inflators": [
+          "seed",
+          "compose:d0:distribute",
+          "compose:d0:distribute"
+        ],
+        "constructive": {
+          "effective_d": 16.0,
+          "constructive": true,
+          "compose": true,
+          "var": "x",
+          "poly_degree": 4,
+          "n_hot_terms": 1,
+          "single_hot": true,
+          "recurse_depth": 0,
+          "compose_depth_counts": {
+            "0": 2
+          },
+          "compose_budget": 2,
+          "cancel_clutter": [],
+          "scope": {
+            "max_degree": 5,
+            "allow_cancel_clutter": false,
+            "prefer_distributive_factorization": false,
+            "prefer_single_hot": true,
+            "max_terms": 3,
+            "exact_terms": null,
+            "min_degree": 2
+          }
+        },
+        "target_constraints": {
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true
+        },
+        "spec_snapshot": {
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "generator": "construct_poly",
+          "course_tag": "pa",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "algebraic"
+          ],
+          "degree_max": 4,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "exact_terms": null,
+          "prefer_single_hot": true,
+          "inflators": [
+            "seed",
+            "compose:d0:distribute",
+            "compose:d0:distribute"
+          ],
+          "d_spend": 16.0
+        },
+        "generator": "construct_poly",
+        "family": "construct_poly",
+        "structure_id": "construct_poly:construct_poly",
+        "shape_id": "construct_poly",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "algebraic"
+        ],
+        "nest_depth": 0,
+        "degree_max": 4,
+        "effort_features": {
+          "answer_len": 14,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 4,
+          "methods": [
+            "algebraic"
+          ],
+          "pack": "structured_construct_poly",
+          "family": "construct_poly",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pa",
+        "generation_settings": {
+          "max_degree": 5,
+          "min_degree": 2,
+          "max_terms": 3,
+          "prefer_single_hot": true,
+          "coef_min": -15,
+          "coef_max": 15,
+          "integer_coefficients_only": false,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Simplify.}"
+      }
+    }
+  ],
+  "failures": []
+}

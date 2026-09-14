@@ -231,10 +231,98 @@ def _choose_builder(settings: dict):
     return _build_easy
 
 
+def _use_complex_frac_cancel_skeleton(settings: dict) -> bool:
+    """ComplexFracCancel is the live default for complex fractions.
+
+    Opt out (legacy tiered Mad-Libs):
+    - ``use_hand_complex_frac=True`` / ``use_constructive_rational=True``
+    - ``use_complex_frac_cancel_skeleton=False``
+    - ``skeleton_pattern`` in {hand, constructive, constructive_rational}
+    """
+    if bool(settings.get("use_hand_complex_frac")) or bool(
+        settings.get("use_constructive_rational")
+    ):
+        return False
+    pat = str(settings.get("skeleton_pattern", "")).strip()
+    if pat in {"hand", "constructive", "Constructive", "constructive_rational"}:
+        return False
+    if "use_complex_frac_cancel_skeleton" in settings:
+        return bool(settings.get("use_complex_frac_cancel_skeleton"))
+    if pat in {"ComplexFracCancel", "complex_frac_cancel"}:
+        return True
+    return True
+
+
 def generate_complex_fractions(topic: str, settings: dict) -> list:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+
+    if _use_complex_frac_cancel_skeleton(settings):
+        from question_engine.frameworks.primitives import (
+            PRIM_NUMBERS,
+            PRIM_VARIABLE,
+            build_context,
+        )
+        from question_engine.frameworks.primitives.expression_policy import (
+            POLYNOMIAL_POLICY_DEFAULT,
+        )
+        from question_engine.frameworks.primitives.rational_skeleton import (
+            sample_complex_frac_cancel,
+        )
+
+        last: dict = {"meta": {}}
+
+        def build_skel() -> tuple[str, str, str | None]:
+            local = dict(settings)
+            local["_leaf_id"] = str(topic or "complex_fractions")
+            form_meta: dict = {}
+            if str(topic or "").startswith("a2_"):
+                from question_engine.frameworks.difficulty_budget import settings_difficulty
+                from question_engine.frameworks.primitives.openstax_a2 import select_a2_form
+
+                d = float(settings_difficulty(local))
+                _form, form_meta = select_a2_form(
+                    "algebra2_rationals",
+                    d=d,
+                    rng=__import__("random").Random(local.get("seed")),
+                    leaf_id=str(topic or ""),
+                )
+            ctx = build_context(
+                local,
+                [PRIM_NUMBERS, PRIM_VARIABLE],
+                policy=POLYNOMIAL_POLICY_DEFAULT,
+                leaf_id=str(topic or "complex_fractions"),
+            )
+            result = sample_complex_frac_cancel(ctx)
+            last["meta"] = {
+                **ctx.metadata(),
+                "primitive_engine": "rational_skeleton",
+                **result.metadata,
+                **form_meta,
+            }
+            answer = result.answer_latex if include_answer_key else None
+            return result.prompt_latex, result.prompt_text, answer
+
+        def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+            return dict(last.get("meta") or {})
+
+        return make_questions(
+            topic,
+            count,
+            include_answer_key,
+            build_skel,
+            metadata_builder=metadata_builder,
+            settings=settings,
+        )
+
     builder = _choose_builder(settings)
+    # Nested form is the skill — stamp opt-out so shared display rules never flatten.
+    cf_meta = {
+        "display_intent": "complex_fraction_skill",
+        "display_normalize": True,
+        "display_preset": "none",
+        "primitive_engine": "hand_complex_fractions",
+    }
 
     def build() -> tuple[str, str, str | None]:
         for _ in range(60):
@@ -258,4 +346,11 @@ def generate_complex_fractions(topic: str, settings: dict) -> list:
         )
         return prompt, prompt, answer
 
-    return make_questions(topic, count, include_answer_key, build, settings=settings)
+    return make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata=cf_meta,
+        settings=settings,
+    )

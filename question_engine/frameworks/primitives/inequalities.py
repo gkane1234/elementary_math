@@ -1,5 +1,9 @@
 """One-step / two-step / multi-step linear inequalities — Layer 1 on numbers + variables.
 
+**Live leaf default** is the SolveInequality skeleton in ``equation_skeleton.py``
+(goal boundary + relation → reverse ops, flip on negative multiply/divide).
+Opt out with ``use_sample_linear_inequality=True``.
+
 Mirrors ``equations.py``. Multi-step composes expand/simplify expressions on
 each side (same as multi-step equations) and uses the unbounded op-growth
 formula::

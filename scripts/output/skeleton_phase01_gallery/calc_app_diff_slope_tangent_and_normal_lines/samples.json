@@ -1,0 +1,1291 @@
+{
+  "section": {
+    "slug": "calc_app_diff_slope_tangent_and_normal_lines",
+    "title": "App \u2014 tangent / normal lines",
+    "pattern": "",
+    "engine": "calc_apps",
+    "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Pilot <code>tangent_normal_line</code>. OpenStax Vol 1 \u00a73.1 / \u00a74.2."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\ln(2x)\\text{ at }x=1.",
+      "answer_latex": "y-\\ln(2)=1\\left(x-1\\right)",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,119.6 L 34.3,117.8 L 40.7,116.0 L 47.0,114.4 L 53.3,112.9 L 59.7,111.6 L 66.0,110.4 L 72.3,109.3 L 78.7,108.4 L 85.0,107.6 L 91.3,107.0 L 97.7,106.4 L 104.0,106.1 L 110.3,105.8 L 116.7,105.7 L 123.0,105.7 L 129.3,105.9 L 135.7,106.2 L 142.0,106.6 L 148.3,107.2 L 154.7,107.9 L 161.0,108.7 L 167.3,109.7 L 173.7,110.8 L 180.0,112.0 L 186.3,113.4 L 192.7,114.9 L 199.0,116.6 L 205.3,118.4 L 211.7,120.3 L 218.0,122.3 L 224.3,124.5 L 230.7,126.9 L 237.0,129.3 L 243.3,131.9 L 249.7,134.7 L 256.0,137.5 L 262.3,140.6 L 268.7,143.7 L 275.0,147.0 L 281.3,150.4 L 287.7,154.0 L 294.0,157.6 L 300.3,161.5 L 306.7,165.4 L 313.0,169.5 L 319.3,173.8 L 325.7,178.1 L 332.0,182.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"82.8\" y1=\"101.6\" x2=\"204.4\" y2=\"111.8\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"143.6\" cy=\"106.7\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"149.6\" y=\"100.7\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "ln",
+        "structure_id": "tangent_normal_line:ln",
+        "band": "easy",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 0.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "ln",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "log"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "ln",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 1
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "parabola",
+          "a": -0.159,
+          "b": -0.384,
+          "c": -0.074,
+          "touch_x": -0.719,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 4
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,119.6 L 34.3,117.8 L 40.7,116.0 L 47.0,114.4 L 53.3,112.9 L 59.7,111.6 L 66.0,110.4 L 72.3,109.3 L 78.7,108.4 L 85.0,107.6 L 91.3,107.0 L 97.7,106.4 L 104.0,106.1 L 110.3,105.8 L 116.7,105.7 L 123.0,105.7 L 129.3,105.9 L 135.7,106.2 L 142.0,106.6 L 148.3,107.2 L 154.7,107.9 L 161.0,108.7 L 167.3,109.7 L 173.7,110.8 L 180.0,112.0 L 186.3,113.4 L 192.7,114.9 L 199.0,116.6 L 205.3,118.4 L 211.7,120.3 L 218.0,122.3 L 224.3,124.5 L 230.7,126.9 L 237.0,129.3 L 243.3,131.9 L 249.7,134.7 L 256.0,137.5 L 262.3,140.6 L 268.7,143.7 L 275.0,147.0 L 281.3,150.4 L 287.7,154.0 L 294.0,157.6 L 300.3,161.5 L 306.7,165.4 L 313.0,169.5 L 319.3,173.8 L 325.7,178.1 L 332.0,182.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"82.8\" y1=\"101.6\" x2=\"204.4\" y2=\"111.8\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"143.6\" cy=\"106.7\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"149.6\" y=\"100.7\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\ln(2x)\\text{ at }x=1.",
+      "answer_latex": "y-\\ln(2)=1\\left(x-1\\right)",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"99.2\" y1=\"93.5\" x2=\"220.8\" y2=\"112.9\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"160.0\" cy=\"103.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"166.0\" y=\"97.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "ln",
+        "structure_id": "tangent_normal_line:ln",
+        "band": "easy",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 0.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "ln",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "log"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "ln",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 1
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.328,
+          "b": -0.037,
+          "c": 0.184,
+          "touch_x": -0.394,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 3
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"99.2\" y1=\"93.5\" x2=\"220.8\" y2=\"112.9\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"160.0\" cy=\"103.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"166.0\" y=\"97.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\ln(2x)\\text{ at }x=1.",
+      "answer_latex": "y-\\ln(2)=1\\left(x-1\\right)",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,57.8 L 34.3,62.6 L 40.7,67.2 L 47.0,71.6 L 53.3,75.8 L 59.7,79.8 L 66.0,83.5 L 72.3,87.1 L 78.7,90.4 L 85.0,93.6 L 91.3,96.5 L 97.7,99.2 L 104.0,101.8 L 110.3,104.1 L 116.7,106.2 L 123.0,108.1 L 129.3,109.8 L 135.7,111.3 L 142.0,112.6 L 148.3,113.7 L 154.7,114.5 L 161.0,115.2 L 167.3,115.7 L 173.7,115.9 L 180.0,116.0 L 186.3,115.8 L 192.7,115.4 L 199.0,114.9 L 205.3,114.1 L 211.7,113.1 L 218.0,111.9 L 224.3,110.5 L 230.7,108.9 L 237.0,107.1 L 243.3,105.0 L 249.7,102.8 L 256.0,100.4 L 262.3,97.7 L 268.7,94.9 L 275.0,91.8 L 281.3,88.6 L 287.7,85.1 L 294.0,81.4 L 300.3,77.5 L 306.7,73.5 L 313.0,69.2 L 319.3,64.7 L 325.7,59.9 L 332.0,55.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"95.7\" y1=\"107.9\" x2=\"217.3\" y2=\"121.6\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"156.5\" cy=\"114.8\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"162.5\" y=\"108.8\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "ln",
+        "structure_id": "tangent_normal_line:ln",
+        "band": "easy",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 0.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "ln",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "log"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "ln",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 1
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.242,
+          "b": 0.017,
+          "c": -0.218,
+          "touch_x": -0.464,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 4
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,57.8 L 34.3,62.6 L 40.7,67.2 L 47.0,71.6 L 53.3,75.8 L 59.7,79.8 L 66.0,83.5 L 72.3,87.1 L 78.7,90.4 L 85.0,93.6 L 91.3,96.5 L 97.7,99.2 L 104.0,101.8 L 110.3,104.1 L 116.7,106.2 L 123.0,108.1 L 129.3,109.8 L 135.7,111.3 L 142.0,112.6 L 148.3,113.7 L 154.7,114.5 L 161.0,115.2 L 167.3,115.7 L 173.7,115.9 L 180.0,116.0 L 186.3,115.8 L 192.7,115.4 L 199.0,114.9 L 205.3,114.1 L 211.7,113.1 L 218.0,111.9 L 224.3,110.5 L 230.7,108.9 L 237.0,107.1 L 243.3,105.0 L 249.7,102.8 L 256.0,100.4 L 262.3,97.7 L 268.7,94.9 L 275.0,91.8 L 281.3,88.6 L 287.7,85.1 L 294.0,81.4 L 300.3,77.5 L 306.7,73.5 L 313.0,69.2 L 319.3,64.7 L 325.7,59.9 L 332.0,55.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"95.7\" y1=\"107.9\" x2=\"217.3\" y2=\"121.6\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"156.5\" cy=\"114.8\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"162.5\" y=\"108.8\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\sin(x)\\text{ at }x=0.",
+      "answer_latex": "y-0=1\\left(x-0\\right)",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,115.5 L 32.8,115.6 L 37.5,115.7 L 42.2,115.7 L 47.0,115.7 L 51.8,115.7 L 56.5,115.7 L 61.2,115.7 L 66.0,115.6 L 70.8,115.5 L 75.5,115.4 L 80.2,115.3 L 85.0,115.2 L 89.8,115.0 L 94.5,114.8 L 99.2,114.7 L 104.0,114.4 L 108.8,114.2 L 113.5,114.0 L 118.2,113.7 L 123.0,113.5 L 127.8,113.2 L 132.5,112.9 L 137.2,112.6 L 142.0,112.3 L 146.8,111.9 L 151.5,111.6 L 156.2,111.3 L 161.0,110.9 L 165.8,110.6 L 170.5,110.3 L 175.2,109.9 L 180.0,109.6 L 184.8,109.2 L 189.5,108.9 L 194.2,108.6 L 199.0,108.2 L 203.8,107.9 L 208.5,107.6 L 213.2,107.3 L 218.0,107.0 L 222.8,106.7 L 227.5,106.4 L 232.2,106.2 L 237.0,105.9 L 241.8,105.7 L 246.5,105.5 L 251.2,105.3 L 256.0,105.1 L 260.8,104.9 L 265.5,104.8 L 270.2,104.6 L 275.0,104.5 L 279.8,104.4 L 284.5,104.4 L 289.2,104.3 L 294.0,104.3 L 298.8,104.3 L 303.5,104.3 L 308.2,104.3 L 313.0,104.4 L 317.8,104.4 L 322.5,104.5 L 327.2,104.6 L 332.0,104.8\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"121.7\" y1=\"113.7\" x2=\"194.6\" y2=\"108.6\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"158.1\" cy=\"111.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"164.1\" y=\"105.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "trig",
+        "structure_id": "tangent_normal_line:trig",
+        "band": "medium",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 8.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "trig",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "trig"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "trig",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 1
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "standard",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "sine",
+          "a": -0.159,
+          "b": -0.384,
+          "c": -0.074,
+          "touch_x": -0.719,
+          "window": [
+            -5,
+            5
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,115.5 L 32.8,115.6 L 37.5,115.7 L 42.2,115.7 L 47.0,115.7 L 51.8,115.7 L 56.5,115.7 L 61.2,115.7 L 66.0,115.6 L 70.8,115.5 L 75.5,115.4 L 80.2,115.3 L 85.0,115.2 L 89.8,115.0 L 94.5,114.8 L 99.2,114.7 L 104.0,114.4 L 108.8,114.2 L 113.5,114.0 L 118.2,113.7 L 123.0,113.5 L 127.8,113.2 L 132.5,112.9 L 137.2,112.6 L 142.0,112.3 L 146.8,111.9 L 151.5,111.6 L 156.2,111.3 L 161.0,110.9 L 165.8,110.6 L 170.5,110.3 L 175.2,109.9 L 180.0,109.6 L 184.8,109.2 L 189.5,108.9 L 194.2,108.6 L 199.0,108.2 L 203.8,107.9 L 208.5,107.6 L 213.2,107.3 L 218.0,107.0 L 222.8,106.7 L 227.5,106.4 L 232.2,106.2 L 237.0,105.9 L 241.8,105.7 L 246.5,105.5 L 251.2,105.3 L 256.0,105.1 L 260.8,104.9 L 265.5,104.8 L 270.2,104.6 L 275.0,104.5 L 279.8,104.4 L 284.5,104.4 L 289.2,104.3 L 294.0,104.3 L 298.8,104.3 L 303.5,104.3 L 308.2,104.3 L 313.0,104.4 L 317.8,104.4 L 322.5,104.5 L 327.2,104.6 L 332.0,104.8\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"121.7\" y1=\"113.7\" x2=\"194.6\" y2=\"108.6\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"158.1\" cy=\"111.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"164.1\" y=\"105.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\sin(x)\\text{ at }x=0.",
+      "answer_latex": "y-0=1\\left(x-0\\right)",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,104.3 L 32.8,104.3 L 37.5,104.4 L 42.2,104.5 L 47.0,104.5 L 51.8,104.6 L 56.5,104.7 L 61.2,104.7 L 66.0,104.8 L 70.8,104.9 L 75.5,104.9 L 80.2,105.0 L 85.0,105.1 L 89.8,105.1 L 94.5,105.2 L 99.2,105.3 L 104.0,105.3 L 108.8,105.4 L 113.5,105.5 L 118.2,105.5 L 123.0,105.6 L 127.8,105.7 L 132.5,105.7 L 137.2,105.8 L 142.0,105.9 L 146.8,105.9 L 151.5,106.0 L 156.2,106.1 L 161.0,106.1 L 165.8,106.2 L 170.5,106.3 L 175.2,106.3 L 180.0,106.4 L 184.8,106.5 L 189.5,106.5 L 194.2,106.6 L 199.0,106.7 L 203.8,106.7 L 208.5,106.8 L 213.2,106.9 L 218.0,106.9 L 222.8,107.0 L 227.5,107.1 L 232.2,107.1 L 237.0,107.2 L 241.8,107.3 L 246.5,107.3 L 251.2,107.4 L 256.0,107.5 L 260.8,107.5 L 265.5,107.6 L 270.2,107.7 L 275.0,107.7 L 279.8,107.8 L 284.5,107.9 L 289.2,107.9 L 294.0,108.0 L 298.8,108.1 L 303.5,108.2 L 308.2,108.2 L 313.0,108.3 L 317.8,108.4 L 322.5,108.4 L 327.2,108.5 L 332.0,108.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"99.2\" y1=\"105.3\" x2=\"220.8\" y2=\"107.0\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"160.0\" cy=\"106.1\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"166.0\" y=\"100.1\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "trig",
+        "structure_id": "tangent_normal_line:trig",
+        "band": "medium",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 8.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "trig",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "trig"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "trig",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 1
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "standard",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "sine",
+          "a": 0.328,
+          "b": -0.037,
+          "c": 0.184,
+          "touch_x": -0.394,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 4
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,104.3 L 32.8,104.3 L 37.5,104.4 L 42.2,104.5 L 47.0,104.5 L 51.8,104.6 L 56.5,104.7 L 61.2,104.7 L 66.0,104.8 L 70.8,104.9 L 75.5,104.9 L 80.2,105.0 L 85.0,105.1 L 89.8,105.1 L 94.5,105.2 L 99.2,105.3 L 104.0,105.3 L 108.8,105.4 L 113.5,105.5 L 118.2,105.5 L 123.0,105.6 L 127.8,105.7 L 132.5,105.7 L 137.2,105.8 L 142.0,105.9 L 146.8,105.9 L 151.5,106.0 L 156.2,106.1 L 161.0,106.1 L 165.8,106.2 L 170.5,106.3 L 175.2,106.3 L 180.0,106.4 L 184.8,106.5 L 189.5,106.5 L 194.2,106.6 L 199.0,106.7 L 203.8,106.7 L 208.5,106.8 L 213.2,106.9 L 218.0,106.9 L 222.8,107.0 L 227.5,107.1 L 232.2,107.1 L 237.0,107.2 L 241.8,107.3 L 246.5,107.3 L 251.2,107.4 L 256.0,107.5 L 260.8,107.5 L 265.5,107.6 L 270.2,107.7 L 275.0,107.7 L 279.8,107.8 L 284.5,107.9 L 289.2,107.9 L 294.0,108.0 L 298.8,108.1 L 303.5,108.2 L 308.2,108.2 L 313.0,108.3 L 317.8,108.4 L 322.5,108.4 L 327.2,108.5 L 332.0,108.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"99.2\" y1=\"105.3\" x2=\"220.8\" y2=\"107.0\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"160.0\" cy=\"106.1\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"166.0\" y=\"100.1\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\sin(x)\\text{ at }x=0.",
+      "answer_latex": "y-0=1\\left(x-0\\right)",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,112.6 L 32.8,112.6 L 37.5,112.6 L 42.2,112.5 L 47.0,112.5 L 51.8,112.5 L 56.5,112.5 L 61.2,112.4 L 66.0,112.4 L 70.8,112.4 L 75.5,112.4 L 80.2,112.4 L 85.0,112.3 L 89.8,112.3 L 94.5,112.3 L 99.2,112.3 L 104.0,112.2 L 108.8,112.2 L 113.5,112.2 L 118.2,112.2 L 123.0,112.2 L 127.8,112.1 L 132.5,112.1 L 137.2,112.1 L 142.0,112.1 L 146.8,112.0 L 151.5,112.0 L 156.2,112.0 L 161.0,112.0 L 165.8,112.0 L 170.5,111.9 L 175.2,111.9 L 180.0,111.9 L 184.8,111.9 L 189.5,111.8 L 194.2,111.8 L 199.0,111.8 L 203.8,111.8 L 208.5,111.8 L 213.2,111.7 L 218.0,111.7 L 222.8,111.7 L 227.5,111.7 L 232.2,111.6 L 237.0,111.6 L 241.8,111.6 L 246.5,111.6 L 251.2,111.5 L 256.0,111.5 L 260.8,111.5 L 265.5,111.5 L 270.2,111.5 L 275.0,111.4 L 279.8,111.4 L 284.5,111.4 L 289.2,111.4 L 294.0,111.3 L 298.8,111.3 L 303.5,111.3 L 308.2,111.3 L 313.0,111.2 L 317.8,111.2 L 322.5,111.2 L 327.2,111.2 L 332.0,111.2\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"129.4\" y1=\"112.1\" x2=\"202.4\" y2=\"111.8\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"165.9\" cy=\"112.0\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"171.9\" y=\"106.0\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "trig",
+        "structure_id": "tangent_normal_line:trig",
+        "band": "medium",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 8.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "trig",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "trig"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "trig",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 1
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "standard",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "sine",
+          "a": 0.242,
+          "b": 0.017,
+          "c": -0.218,
+          "touch_x": -0.464,
+          "window": [
+            -5,
+            5
+          ],
+          "riemann_n": 3
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,112.6 L 32.8,112.6 L 37.5,112.6 L 42.2,112.5 L 47.0,112.5 L 51.8,112.5 L 56.5,112.5 L 61.2,112.4 L 66.0,112.4 L 70.8,112.4 L 75.5,112.4 L 80.2,112.4 L 85.0,112.3 L 89.8,112.3 L 94.5,112.3 L 99.2,112.3 L 104.0,112.2 L 108.8,112.2 L 113.5,112.2 L 118.2,112.2 L 123.0,112.2 L 127.8,112.1 L 132.5,112.1 L 137.2,112.1 L 142.0,112.1 L 146.8,112.0 L 151.5,112.0 L 156.2,112.0 L 161.0,112.0 L 165.8,112.0 L 170.5,111.9 L 175.2,111.9 L 180.0,111.9 L 184.8,111.9 L 189.5,111.8 L 194.2,111.8 L 199.0,111.8 L 203.8,111.8 L 208.5,111.8 L 213.2,111.7 L 218.0,111.7 L 222.8,111.7 L 227.5,111.7 L 232.2,111.6 L 237.0,111.6 L 241.8,111.6 L 246.5,111.6 L 251.2,111.5 L 256.0,111.5 L 260.8,111.5 L 265.5,111.5 L 270.2,111.5 L 275.0,111.4 L 279.8,111.4 L 284.5,111.4 L 289.2,111.4 L 294.0,111.3 L 298.8,111.3 L 303.5,111.3 L 308.2,111.3 L 313.0,111.2 L 317.8,111.2 L 322.5,111.2 L 327.2,111.2 L 332.0,111.2\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"129.4\" y1=\"112.1\" x2=\"202.4\" y2=\"111.8\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"165.9\" cy=\"112.0\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"171.9\" y=\"106.0\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\sin(x^{2})\\text{ at }x=0.",
+      "answer_latex": "y=0",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,115.5 L 32.8,115.6 L 37.5,115.7 L 42.2,115.7 L 47.0,115.7 L 51.8,115.7 L 56.5,115.7 L 61.2,115.7 L 66.0,115.6 L 70.8,115.5 L 75.5,115.4 L 80.2,115.3 L 85.0,115.2 L 89.8,115.0 L 94.5,114.8 L 99.2,114.7 L 104.0,114.4 L 108.8,114.2 L 113.5,114.0 L 118.2,113.7 L 123.0,113.5 L 127.8,113.2 L 132.5,112.9 L 137.2,112.6 L 142.0,112.3 L 146.8,111.9 L 151.5,111.6 L 156.2,111.3 L 161.0,110.9 L 165.8,110.6 L 170.5,110.3 L 175.2,109.9 L 180.0,109.6 L 184.8,109.2 L 189.5,108.9 L 194.2,108.6 L 199.0,108.2 L 203.8,107.9 L 208.5,107.6 L 213.2,107.3 L 218.0,107.0 L 222.8,106.7 L 227.5,106.4 L 232.2,106.2 L 237.0,105.9 L 241.8,105.7 L 246.5,105.5 L 251.2,105.3 L 256.0,105.1 L 260.8,104.9 L 265.5,104.8 L 270.2,104.6 L 275.0,104.5 L 279.8,104.4 L 284.5,104.4 L 289.2,104.3 L 294.0,104.3 L 298.8,104.3 L 303.5,104.3 L 308.2,104.3 L 313.0,104.4 L 317.8,104.4 L 322.5,104.5 L 327.2,104.6 L 332.0,104.8\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"121.7\" y1=\"113.7\" x2=\"194.6\" y2=\"108.6\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"158.1\" cy=\"111.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"164.1\" y=\"105.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "trig_chain",
+        "structure_id": "tangent_normal_line:trig_chain",
+        "band": "hard",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_nested",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 16.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "trig_chain",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "trig_chain",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 0
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "sine",
+          "a": -0.159,
+          "b": -0.384,
+          "c": -0.074,
+          "touch_x": -0.719,
+          "window": [
+            -5,
+            5
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,115.5 L 32.8,115.6 L 37.5,115.7 L 42.2,115.7 L 47.0,115.7 L 51.8,115.7 L 56.5,115.7 L 61.2,115.7 L 66.0,115.6 L 70.8,115.5 L 75.5,115.4 L 80.2,115.3 L 85.0,115.2 L 89.8,115.0 L 94.5,114.8 L 99.2,114.7 L 104.0,114.4 L 108.8,114.2 L 113.5,114.0 L 118.2,113.7 L 123.0,113.5 L 127.8,113.2 L 132.5,112.9 L 137.2,112.6 L 142.0,112.3 L 146.8,111.9 L 151.5,111.6 L 156.2,111.3 L 161.0,110.9 L 165.8,110.6 L 170.5,110.3 L 175.2,109.9 L 180.0,109.6 L 184.8,109.2 L 189.5,108.9 L 194.2,108.6 L 199.0,108.2 L 203.8,107.9 L 208.5,107.6 L 213.2,107.3 L 218.0,107.0 L 222.8,106.7 L 227.5,106.4 L 232.2,106.2 L 237.0,105.9 L 241.8,105.7 L 246.5,105.5 L 251.2,105.3 L 256.0,105.1 L 260.8,104.9 L 265.5,104.8 L 270.2,104.6 L 275.0,104.5 L 279.8,104.4 L 284.5,104.4 L 289.2,104.3 L 294.0,104.3 L 298.8,104.3 L 303.5,104.3 L 308.2,104.3 L 313.0,104.4 L 317.8,104.4 L 322.5,104.5 L 327.2,104.6 L 332.0,104.8\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"121.7\" y1=\"113.7\" x2=\"194.6\" y2=\"108.6\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"158.1\" cy=\"111.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"164.1\" y=\"105.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\frac{x+3}{x+2}\\text{ at }x=0.",
+      "answer_latex": "y-\\frac{3}{2}=-\\frac{1}{4}\\left(x-0\\right)",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"99.2\" y1=\"93.5\" x2=\"220.8\" y2=\"112.9\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"160.0\" cy=\"103.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"166.0\" y=\"97.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "rational_linear",
+        "structure_id": "tangent_normal_line:rational_linear",
+        "band": "hard",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_nested",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 16.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "rational_linear",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "rational_linear",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 0
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.328,
+          "b": -0.037,
+          "c": 0.184,
+          "touch_x": -0.394,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 4
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"99.2\" y1=\"93.5\" x2=\"220.8\" y2=\"112.9\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"160.0\" cy=\"103.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"166.0\" y=\"97.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\sin(x^{2})\\text{ at }x=0.",
+      "answer_latex": "y=0",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,112.6 L 32.8,112.6 L 37.5,112.6 L 42.2,112.5 L 47.0,112.5 L 51.8,112.5 L 56.5,112.5 L 61.2,112.4 L 66.0,112.4 L 70.8,112.4 L 75.5,112.4 L 80.2,112.4 L 85.0,112.3 L 89.8,112.3 L 94.5,112.3 L 99.2,112.3 L 104.0,112.2 L 108.8,112.2 L 113.5,112.2 L 118.2,112.2 L 123.0,112.2 L 127.8,112.1 L 132.5,112.1 L 137.2,112.1 L 142.0,112.1 L 146.8,112.0 L 151.5,112.0 L 156.2,112.0 L 161.0,112.0 L 165.8,112.0 L 170.5,111.9 L 175.2,111.9 L 180.0,111.9 L 184.8,111.9 L 189.5,111.8 L 194.2,111.8 L 199.0,111.8 L 203.8,111.8 L 208.5,111.8 L 213.2,111.7 L 218.0,111.7 L 222.8,111.7 L 227.5,111.7 L 232.2,111.6 L 237.0,111.6 L 241.8,111.6 L 246.5,111.6 L 251.2,111.5 L 256.0,111.5 L 260.8,111.5 L 265.5,111.5 L 270.2,111.5 L 275.0,111.4 L 279.8,111.4 L 284.5,111.4 L 289.2,111.4 L 294.0,111.3 L 298.8,111.3 L 303.5,111.3 L 308.2,111.3 L 313.0,111.2 L 317.8,111.2 L 322.5,111.2 L 327.2,111.2 L 332.0,111.2\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"129.4\" y1=\"112.1\" x2=\"202.4\" y2=\"111.8\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"165.9\" cy=\"112.0\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"171.9\" y=\"106.0\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "trig_chain",
+        "structure_id": "tangent_normal_line:trig_chain",
+        "band": "hard",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_nested",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 16.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "trig_chain",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "normal"
+        },
+        "effort_features": {
+          "family": "trig_chain",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 0
+        },
+        "variant": "normal",
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "sine",
+          "a": 0.242,
+          "b": 0.017,
+          "c": -0.218,
+          "touch_x": -0.464,
+          "window": [
+            -5,
+            5
+          ],
+          "riemann_n": 3
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,112.6 L 32.8,112.6 L 37.5,112.6 L 42.2,112.5 L 47.0,112.5 L 51.8,112.5 L 56.5,112.5 L 61.2,112.4 L 66.0,112.4 L 70.8,112.4 L 75.5,112.4 L 80.2,112.4 L 85.0,112.3 L 89.8,112.3 L 94.5,112.3 L 99.2,112.3 L 104.0,112.2 L 108.8,112.2 L 113.5,112.2 L 118.2,112.2 L 123.0,112.2 L 127.8,112.1 L 132.5,112.1 L 137.2,112.1 L 142.0,112.1 L 146.8,112.0 L 151.5,112.0 L 156.2,112.0 L 161.0,112.0 L 165.8,112.0 L 170.5,111.9 L 175.2,111.9 L 180.0,111.9 L 184.8,111.9 L 189.5,111.8 L 194.2,111.8 L 199.0,111.8 L 203.8,111.8 L 208.5,111.8 L 213.2,111.7 L 218.0,111.7 L 222.8,111.7 L 227.5,111.7 L 232.2,111.6 L 237.0,111.6 L 241.8,111.6 L 246.5,111.6 L 251.2,111.5 L 256.0,111.5 L 260.8,111.5 L 265.5,111.5 L 270.2,111.5 L 275.0,111.4 L 279.8,111.4 L 284.5,111.4 L 289.2,111.4 L 294.0,111.3 L 298.8,111.3 L 303.5,111.3 L 308.2,111.3 L 313.0,111.2 L 317.8,111.2 L 322.5,111.2 L 327.2,111.2 L 332.0,111.2\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"129.4\" y1=\"112.1\" x2=\"202.4\" y2=\"111.8\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"165.9\" cy=\"112.0\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"171.9\" y=\"106.0\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\sin(x^{2})\\text{ at }x=0.",
+      "answer_latex": "y=0",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,115.5 L 32.8,115.6 L 37.5,115.7 L 42.2,115.7 L 47.0,115.7 L 51.8,115.7 L 56.5,115.7 L 61.2,115.7 L 66.0,115.6 L 70.8,115.5 L 75.5,115.4 L 80.2,115.3 L 85.0,115.2 L 89.8,115.0 L 94.5,114.8 L 99.2,114.7 L 104.0,114.4 L 108.8,114.2 L 113.5,114.0 L 118.2,113.7 L 123.0,113.5 L 127.8,113.2 L 132.5,112.9 L 137.2,112.6 L 142.0,112.3 L 146.8,111.9 L 151.5,111.6 L 156.2,111.3 L 161.0,110.9 L 165.8,110.6 L 170.5,110.3 L 175.2,109.9 L 180.0,109.6 L 184.8,109.2 L 189.5,108.9 L 194.2,108.6 L 199.0,108.2 L 203.8,107.9 L 208.5,107.6 L 213.2,107.3 L 218.0,107.0 L 222.8,106.7 L 227.5,106.4 L 232.2,106.2 L 237.0,105.9 L 241.8,105.7 L 246.5,105.5 L 251.2,105.3 L 256.0,105.1 L 260.8,104.9 L 265.5,104.8 L 270.2,104.6 L 275.0,104.5 L 279.8,104.4 L 284.5,104.4 L 289.2,104.3 L 294.0,104.3 L 298.8,104.3 L 303.5,104.3 L 308.2,104.3 L 313.0,104.4 L 317.8,104.4 L 322.5,104.5 L 327.2,104.6 L 332.0,104.8\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"121.7\" y1=\"113.7\" x2=\"194.6\" y2=\"108.6\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"158.1\" cy=\"111.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"164.1\" y=\"105.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "trig_chain",
+        "structure_id": "tangent_normal_line:trig_chain",
+        "band": "hard",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_nested",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 22.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "trig_chain",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "trig_chain",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 0
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "sine",
+          "a": -0.159,
+          "b": -0.384,
+          "c": -0.074,
+          "touch_x": -0.719,
+          "window": [
+            -5,
+            5
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,115.5 L 32.8,115.6 L 37.5,115.7 L 42.2,115.7 L 47.0,115.7 L 51.8,115.7 L 56.5,115.7 L 61.2,115.7 L 66.0,115.6 L 70.8,115.5 L 75.5,115.4 L 80.2,115.3 L 85.0,115.2 L 89.8,115.0 L 94.5,114.8 L 99.2,114.7 L 104.0,114.4 L 108.8,114.2 L 113.5,114.0 L 118.2,113.7 L 123.0,113.5 L 127.8,113.2 L 132.5,112.9 L 137.2,112.6 L 142.0,112.3 L 146.8,111.9 L 151.5,111.6 L 156.2,111.3 L 161.0,110.9 L 165.8,110.6 L 170.5,110.3 L 175.2,109.9 L 180.0,109.6 L 184.8,109.2 L 189.5,108.9 L 194.2,108.6 L 199.0,108.2 L 203.8,107.9 L 208.5,107.6 L 213.2,107.3 L 218.0,107.0 L 222.8,106.7 L 227.5,106.4 L 232.2,106.2 L 237.0,105.9 L 241.8,105.7 L 246.5,105.5 L 251.2,105.3 L 256.0,105.1 L 260.8,104.9 L 265.5,104.8 L 270.2,104.6 L 275.0,104.5 L 279.8,104.4 L 284.5,104.4 L 289.2,104.3 L 294.0,104.3 L 298.8,104.3 L 303.5,104.3 L 308.2,104.3 L 313.0,104.4 L 317.8,104.4 L 322.5,104.5 L 327.2,104.6 L 332.0,104.8\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"121.7\" y1=\"113.7\" x2=\"194.6\" y2=\"108.6\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"158.1\" cy=\"111.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"164.1\" y=\"105.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\frac{x+3}{x+2}\\text{ at }x=0.",
+      "answer_latex": "y-\\frac{3}{2}=-\\frac{1}{4}\\left(x-0\\right)",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"99.2\" y1=\"93.5\" x2=\"220.8\" y2=\"112.9\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"160.0\" cy=\"103.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"166.0\" y=\"97.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "rational_linear",
+        "structure_id": "tangent_normal_line:rational_linear",
+        "band": "hard",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_nested",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 22.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "rational_linear",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "tangent"
+        },
+        "effort_features": {
+          "family": "rational_linear",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 0
+        },
+        "variant": "tangent",
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.328,
+          "b": -0.037,
+          "c": 0.184,
+          "touch_x": -0.394,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 4
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"99.2\" y1=\"93.5\" x2=\"220.8\" y2=\"112.9\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"160.0\" cy=\"103.2\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"166.0\" y=\"97.2\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_app_diff_slope_tangent_and_normal_lines",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the tangent line to }y=\\sin(x^{2})\\text{ at }x=0.",
+      "answer_latex": "y=0",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,112.6 L 32.8,112.6 L 37.5,112.6 L 42.2,112.5 L 47.0,112.5 L 51.8,112.5 L 56.5,112.5 L 61.2,112.4 L 66.0,112.4 L 70.8,112.4 L 75.5,112.4 L 80.2,112.4 L 85.0,112.3 L 89.8,112.3 L 94.5,112.3 L 99.2,112.3 L 104.0,112.2 L 108.8,112.2 L 113.5,112.2 L 118.2,112.2 L 123.0,112.2 L 127.8,112.1 L 132.5,112.1 L 137.2,112.1 L 142.0,112.1 L 146.8,112.0 L 151.5,112.0 L 156.2,112.0 L 161.0,112.0 L 165.8,112.0 L 170.5,111.9 L 175.2,111.9 L 180.0,111.9 L 184.8,111.9 L 189.5,111.8 L 194.2,111.8 L 199.0,111.8 L 203.8,111.8 L 208.5,111.8 L 213.2,111.7 L 218.0,111.7 L 222.8,111.7 L 227.5,111.7 L 232.2,111.6 L 237.0,111.6 L 241.8,111.6 L 246.5,111.6 L 251.2,111.5 L 256.0,111.5 L 260.8,111.5 L 265.5,111.5 L 270.2,111.5 L 275.0,111.4 L 279.8,111.4 L 284.5,111.4 L 289.2,111.4 L 294.0,111.3 L 298.8,111.3 L 303.5,111.3 L 308.2,111.3 L 313.0,111.2 L 317.8,111.2 L 322.5,111.2 L 327.2,111.2 L 332.0,111.2\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"129.4\" y1=\"112.1\" x2=\"202.4\" y2=\"111.8\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"165.9\" cy=\"112.0\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"171.9\" y=\"106.0\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "family": "trig_chain",
+        "structure_id": "tangent_normal_line:trig_chain",
+        "band": "hard",
+        "upgrades_applied": [
+          "allow_trig",
+          "allow_exp",
+          "allow_ln",
+          "allow_nested",
+          "allow_roots",
+          "allow_invtrig"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "differential"
+        ],
+        "effective_d": 22.0,
+        "spec_snapshot": {
+          "pack": "structured_tangent_normal_line",
+          "family": "trig_chain",
+          "generator": "tangent_normal_line",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "differential"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_roots": true,
+          "variant": "normal"
+        },
+        "effort_features": {
+          "family": "trig_chain",
+          "pack": "structured_tangent_normal_line",
+          "n_terms": 1,
+          "methods": [
+            "differential"
+          ],
+          "n_fn_nodes": 0
+        },
+        "variant": "normal",
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "point",
+            "label_point",
+            "tangent"
+          ],
+          "curve_kind": "sine",
+          "a": 0.242,
+          "b": 0.017,
+          "c": -0.218,
+          "touch_x": -0.464,
+          "window": [
+            -5,
+            5
+          ],
+          "riemann_n": 3
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,112.6 L 32.8,112.6 L 37.5,112.6 L 42.2,112.5 L 47.0,112.5 L 51.8,112.5 L 56.5,112.5 L 61.2,112.4 L 66.0,112.4 L 70.8,112.4 L 75.5,112.4 L 80.2,112.4 L 85.0,112.3 L 89.8,112.3 L 94.5,112.3 L 99.2,112.3 L 104.0,112.2 L 108.8,112.2 L 113.5,112.2 L 118.2,112.2 L 123.0,112.2 L 127.8,112.1 L 132.5,112.1 L 137.2,112.1 L 142.0,112.1 L 146.8,112.0 L 151.5,112.0 L 156.2,112.0 L 161.0,112.0 L 165.8,112.0 L 170.5,111.9 L 175.2,111.9 L 180.0,111.9 L 184.8,111.9 L 189.5,111.8 L 194.2,111.8 L 199.0,111.8 L 203.8,111.8 L 208.5,111.8 L 213.2,111.7 L 218.0,111.7 L 222.8,111.7 L 227.5,111.7 L 232.2,111.6 L 237.0,111.6 L 241.8,111.6 L 246.5,111.6 L 251.2,111.5 L 256.0,111.5 L 260.8,111.5 L 265.5,111.5 L 270.2,111.5 L 275.0,111.4 L 279.8,111.4 L 284.5,111.4 L 289.2,111.4 L 294.0,111.3 L 298.8,111.3 L 303.5,111.3 L 308.2,111.3 L 313.0,111.2 L 317.8,111.2 L 322.5,111.2 L 327.2,111.2 L 332.0,111.2\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"129.4\" y1=\"112.1\" x2=\"202.4\" y2=\"111.8\" stroke=\"#dc2626\" stroke-width=\"1.8\"/><circle cx=\"165.9\" cy=\"112.0\" r=\"3.5\" fill=\"#0f172a\"/><text x=\"171.9\" y=\"106.0\" font-size=\"11\" fill=\"#0f172a\">P</text></svg>",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the slope, tangent line, or normal line.}"
+      }
+    }
+  ],
+  "failures": []
+}

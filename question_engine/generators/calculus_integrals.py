@@ -22,12 +22,14 @@ def _framework_generator(generator_key: str):
             "integral_log_exp": "log/exp integral",
             "integral_inverse_trig": "inverse trig integral",
             "integral_substitution": "substitution integral",
+            "integral_definite_substitution": "definite substitution integral",
             "integral_trig_substitution": "trig substitution integral",
             "integral_log_exp_substitution": "log/exp substitution integral",
             "integral_invtrig_substitution": "invtrig substitution integral",
             "integration_by_parts": "integration by parts",
             "integral_partial_fractions": "partial fractions integral",
             "integral_multi_trick": "multi-trick integral",
+            "integral_general": "general integral",
             "first_fundamental_theorem": "first fundamental theorem",
             "second_fundamental_theorem": "second fundamental theorem",
         }.get(generator_key, "integral")
@@ -61,6 +63,9 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "integral_log_exp": _framework_generator("integral_log_exp"),
     "integral_inverse_trig": _framework_generator("integral_inverse_trig"),
     "integral_substitution": _framework_generator("integral_substitution"),
+    "integral_definite_substitution": _framework_generator(
+        "integral_definite_substitution"
+    ),
     "integral_trig_substitution": _framework_generator("integral_trig_substitution"),
     "integral_log_exp_substitution": _framework_generator(
         "integral_log_exp_substitution"
@@ -71,6 +76,7 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "integration_by_parts": _framework_generator("integration_by_parts"),
     "integral_partial_fractions": _framework_generator("integral_partial_fractions"),
     "integral_multi_trick": _framework_generator("integral_multi_trick"),
+    "integral_general": _framework_generator("integral_general"),
     "first_fundamental_theorem": _framework_generator("first_fundamental_theorem"),
     "second_fundamental_theorem": _framework_generator("second_fundamental_theorem"),
 }

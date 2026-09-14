@@ -23,6 +23,7 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass, field, replace
 from fractions import Fraction
+from math import factorial
 from typing import Any, Callable, Literal, Sequence
 
 from question_engine.frameworks.difficulty_budget import (
@@ -162,7 +163,7 @@ _TOPIC_DEFAULTS: dict[str, dict[str, bool]] = {
         "definite": False,
     },
     "integral_log_exp_substitution": {
-        "allow_trig": False,
+        "allow_trig": True,
         "allow_exp": True,
         "allow_log": True,
         "allow_invtrig": False,
@@ -192,8 +193,8 @@ _TOPIC_DEFAULTS: dict[str, dict[str, bool]] = {
     "integration_by_parts": {
         "allow_trig": True,
         "allow_exp": True,
-        "allow_log": False,
-        "allow_invtrig": False,
+        "allow_log": True,
+        "allow_invtrig": True,
         "allow_substitution": False,
         "allow_parts": True,
         "allow_pfd": False,
@@ -232,6 +233,25 @@ _TOPIC_DEFAULTS: dict[str, dict[str, bool]] = {
         "include_plus_c": True,
         "definite": False,
     },
+    # Mixed technique leaf: checkboxes default ON (like derivative_general).
+    "integral_general": {
+        "allow_trig": True,
+        "allow_exp": True,
+        "allow_log": True,
+        "allow_invtrig": True,
+        "allow_substitution": True,
+        "allow_parts": True,
+        "allow_pfd": True,
+        "allow_trig_sub": True,
+        "allow_ftc": False,
+        "require_substitution": False,
+        "require_parts": False,
+        "require_pfd": False,
+        "require_trig": False,
+        "require_trig_sub": False,
+        "include_plus_c": True,
+        "definite": False,
+    },
     "first_fundamental_theorem": {
         "allow_trig": False,
         "allow_exp": False,
@@ -258,6 +278,21 @@ _TOPIC_DEFAULTS: dict[str, dict[str, bool]] = {
         "include_plus_c": False,
         "definite": True,
     },
+    # Definite u-sub with changed limits (OpenStax Vol 1 §5.5).
+    "integral_definite_substitution": {
+        "allow_trig": False,
+        "allow_exp": False,
+        "allow_log": False,
+        "allow_invtrig": False,
+        "allow_substitution": True,
+        "allow_parts": False,
+        "allow_pfd": False,
+        "allow_trig_sub": False,
+        "allow_ftc": False,
+        "require_substitution": True,
+        "include_plus_c": False,
+        "definite": True,
+    },
 }
 
 _TYPE_ID_TO_GENERATOR: dict[str, str] = {
@@ -272,9 +307,10 @@ _TYPE_ID_TO_GENERATOR: dict[str, str] = {
     "calc_indef_int_integration_by_parts": "integration_by_parts",
     "calc_indef_int_partial_fractions": "integral_partial_fractions",
     "calc_indef_int_multi_trick": "integral_multi_trick",
+    "calc_indef_int_general": "integral_general",
     "calc_def_int_first_fundamental_theorem_of_calculus": "first_fundamental_theorem",
     "calc_def_int_second_fundamental_theorem_of_calculus": "second_fundamental_theorem",
-    "calc_def_int_substitution_with_change_of_variables": "integral_substitution",
+    "calc_def_int_substitution_with_change_of_variables": "integral_definite_substitution",
     "pc_indefinite_integrals": "integral_power_rule",
 }
 
@@ -318,6 +354,13 @@ class IntegralSpec:
     pack: str = "integral_power"
     # Construction mode hints
     construction: str = "forward"  # forward | derivative_backed | pipeline
+    # Named OpenStax u-sub family (settings ``u_sub_form_preset``).
+    u_sub_form_preset: str = "auto"
+    # auto | catalog | reverse_chain
+    u_sub_construction: str = "auto"
+    # Named IBP / PFD families (settings ``parts_form_preset`` / ``pfd_form_preset``).
+    parts_form_preset: str = "auto"
+    pfd_form_preset: str = "auto"
 
     def snapshot(self) -> dict[str, Any]:
         return {
@@ -350,6 +393,10 @@ class IntegralSpec:
             "max_pipeline_len": self.max_pipeline_len,
             "d_spend": self.d_spend,
             "construction": self.construction,
+            "u_sub_form_preset": self.u_sub_form_preset,
+            "u_sub_construction": self.u_sub_construction,
+            "parts_form_preset": self.parts_form_preset,
+            "pfd_form_preset": self.pfd_form_preset,
         }
 
 
@@ -501,6 +548,85 @@ def _plus_c(body: str, *, include: bool) -> str:
     if body.endswith("+C") or body.endswith("+ C"):
         return body
     return f"{body}+C"
+
+
+def _neg_power_antideriv(
+    inner: str,
+    n: int,
+    du_scale: int,
+    *,
+    include: bool,
+    num_coef: int = 1,
+) -> str:
+    """Antiderivative of ``num_coef`` · u^{-n} · (du / du_scale) for integer n≥2.
+
+    ∫ num u^{-n} du/k = −num / (k (n−1) u^{n−1}). ``du_scale`` is k (may be negative).
+    """
+    k = int(du_scale)
+    num = int(num_coef)
+    if n < 2 or k == 0:
+        raise ValueError((n, k, num))
+    coef = Fraction(-num, k * (n - 1))
+    wrap = rf"\left({inner}\right)"
+    power = n - 1
+    den_inner = wrap if power == 1 else rf"{wrap}^{{{power}}}"
+    sign = "-" if coef < 0 else ""
+    abs_c = abs(coef)
+    if abs_c == 1:
+        body = rf"{sign}\frac{{1}}{{{den_inner}}}"
+    elif abs_c.denominator == 1:
+        body = rf"{sign}\frac{{{abs_c.numerator}}}{{{den_inner}}}"
+    elif abs_c.numerator == 1:
+        body = rf"{sign}\frac{{1}}{{{abs_c.denominator}{den_inner}}}"
+    else:
+        body = rf"{sign}\frac{{{abs_c.numerator}}}{{{abs_c.denominator}{den_inner}}}"
+    return _plus_c(body, include=include)
+
+
+def _spec_allow_map(spec: IntegralSpec) -> dict[str, bool]:
+    """Checkbox dict for ``filter_forms_by_allows``."""
+    return {
+        "allow_trig": spec.allow_trig,
+        "allow_exp": spec.allow_exp,
+        "allow_log": spec.allow_log,
+        "allow_invtrig": spec.allow_invtrig,
+        "allow_substitution": spec.allow_substitution,
+        "allow_parts": spec.allow_parts,
+        "allow_pfd": spec.allow_pfd,
+        "allow_trig_sub": spec.allow_trig_sub,
+        "allow_ftc": spec.allow_ftc,
+        "require_substitution": spec.require_substitution,
+        "require_parts": spec.require_parts,
+        "require_pfd": spec.require_pfd,
+        "require_trig": spec.require_trig,
+        "require_trig_sub": spec.require_trig_sub,
+    }
+
+
+def _gated_form_pool(
+    catalog: dict[str, Any],
+    spec: IntegralSpec,
+    *,
+    extra_ids: set[str] | None = None,
+) -> list[dict[str, Any]]:
+    """Implemented catalog forms that pass teacher allow_* / tricks gates."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        filter_forms_by_allows,
+        implemented_forms,
+    )
+
+    pool = implemented_forms(catalog)
+    if extra_ids:
+        subset = [f for f in pool if str(f.get("form_id")) in extra_ids]
+        if subset:
+            pool = subset
+    return filter_forms_by_allows(
+        pool,
+        _spec_allow_map(spec),
+        conceptual_d=float(spec.d_spend),
+        soft_c_schedule=False,
+        fallback_on_empty=False,
+    )
 
 
 def _coef(rng: random.Random, hi: int, *, exclude_zero: bool = True) -> int:
@@ -678,6 +804,9 @@ def plan_trick_pipeline(
             stages=(TrickStage(trick=t, input_kind="1", transform=_default_transform(t)),)
         )
 
+    if spec.pack == "integral_general":
+        return _plan_general_pipeline(spec, purchased=purchased, rng=rng)
+
     # Single-trick from pack / allowed
     primary = _primary_trick_for_pack(spec.pack, spec)
     return TrickPipeline(
@@ -686,6 +815,50 @@ def plan_trick_pipeline(
                 trick=primary,
                 input_kind="1",
                 transform=_default_transform(primary),
+            ),
+        )
+    )
+
+
+def _plan_general_pipeline(
+    spec: IntegralSpec,
+    *,
+    purchased: set[str],
+    rng: random.Random,
+) -> TrickPipeline:
+    """D-gated mix of allowed techniques for ``integral_general``.
+
+    D=0 stays table/power. Bank-hard families (parts/PFD/trig-sub) unlock mid/high D.
+    Toggles drop the corresponding technique entirely.
+    """
+    d = float(spec.d_spend)
+    weighted: list[tuple[str, float]] = [("power", 3.2 if d < 6 else 0.7)]
+    if spec.allow_trig:
+        weighted.append(("trig", 1.3 if d >= 2 else 0.35))
+    if spec.allow_exp or spec.allow_log:
+        weighted.append(("ln_exp", 1.1 if d >= 2 else 0.3))
+    if spec.allow_invtrig and d >= 6:
+        weighted.append(("invtrig", 1.0))
+    if spec.allow_substitution and d >= 4:
+        weighted.append(("u_sub", 1.6 if d >= 8 else 0.85))
+    if spec.allow_parts and d >= 8:
+        weighted.append(("parts", 1.3 if d >= 12 else 0.55))
+    if spec.allow_pfd and d >= 8:
+        weighted.append(("pfd", 1.3 if d >= 12 else 0.55))
+    if spec.allow_trig_sub and d >= 10:
+        weighted.append(("trig_sub", 1.0))
+    if "use_parts" in purchased and spec.allow_parts:
+        weighted = [(t, w * (1.8 if t == "parts" else 1.0)) for t, w in weighted]
+    if "use_pfd" in purchased and spec.allow_pfd:
+        weighted = [(t, w * (1.8 if t == "pfd" else 1.0)) for t, w in weighted]
+    tricks, weights = zip(*weighted)
+    chosen = rng.choices(list(tricks), weights=list(weights), k=1)[0]
+    return TrickPipeline(
+        stages=(
+            TrickStage(
+                trick=chosen,
+                input_kind="1",
+                transform=_default_transform(chosen),
             ),
         )
     )
@@ -712,12 +885,14 @@ def _primary_trick_for_pack(pack: str, spec: IntegralSpec) -> str:
         "integral_ln_exp": "ln_exp",
         "integral_invtrig": "invtrig",
         "integral_u_sub": "u_sub",
+        "integral_u_sub_definite": "u_sub",
         "integral_trig_sub": "trig_sub",
         "integral_log_exp_sub": "u_sub",
         "integral_invtrig_sub": "u_sub",
         "integral_parts": "parts",
         "integral_pfd": "pfd",
         "integral_multi_trick": "u_sub",
+        "integral_general": "power",
         "integral_ftc1": "ftc",
         "integral_ftc2": "ftc",
     }
@@ -773,6 +948,10 @@ def build_integral_spec(
         tricks = {"u_sub"}
         pack = "integral_u_sub"
         construction = "derivative_backed"
+    elif key == "integral_definite_substitution":
+        tricks = {"u_sub"}
+        pack = "integral_u_sub_definite"
+        construction = "forward"
     elif key == "integral_trig_substitution":
         tricks = {"trig_sub"}
         pack = "integral_trig_sub"
@@ -799,6 +978,10 @@ def build_integral_spec(
         pack = "integral_multi_trick"
         construction = "pipeline"
         max_pipe = 2
+    elif key == "integral_general":
+        tricks = {"power"}
+        pack = "integral_general"
+        construction = "forward"
     elif key == "first_fundamental_theorem":
         tricks = {"ftc", "power"}
         pack = "integral_ftc1"
@@ -877,6 +1060,10 @@ def build_integral_spec(
         d_spend=d,
         pack=pack,
         construction=construction,
+        u_sub_form_preset=str(settings.get("u_sub_form_preset") or "auto").strip().lower(),
+        u_sub_construction=str(settings.get("u_sub_construction") or "auto").strip().lower(),
+        parts_form_preset=str(settings.get("parts_form_preset") or "auto").strip().lower(),
+        pfd_form_preset=str(settings.get("pfd_form_preset") or "auto").strip().lower(),
     )
 
 
@@ -968,7 +1155,8 @@ def _sample_power(
 
     var = spec.variable
     catalog = load_form_catalog("basic_power_integrals")
-    form = select_form_id(implemented_forms(catalog), d=float(spec.d_spend), rng=rng)
+    pool = _gated_form_pool(catalog, spec) or implemented_forms(catalog)
+    form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
     form_id = str(form["form_id"])
     include = spec.include_plus_c
     meta_base = catalog_form_meta(form, catalog)
@@ -1054,7 +1242,13 @@ def _sample_trig(
 
     var = spec.variable
     catalog = load_form_catalog("trig_integrals")
-    form = select_form_id(implemented_forms(catalog), d=float(spec.d_spend), rng=rng)
+    pool = _gated_form_pool(catalog, spec)
+    if not pool:
+        if spec.allow_trig:
+            pool = implemented_forms(catalog)
+        else:
+            return _sample_power(rng, spec)
+    form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
     form_id = str(form["form_id"])
     tricks = [str(t) for t in (form.get("tricks") or ["trig"])]
     k = rng.randint(1, max(1, min(6, spec.coef_abs_max)))
@@ -1334,6 +1528,41 @@ def _sample_trig(
             include=include,
         )
 
+    elif form_id == "sin_cos_both_odd":
+        # ∫ sin³ cos³ = ∫ sin³ (1−sin²) cos → u=sin: u³ − u⁵
+        prompt = rf"\int \sin^{{3}}({var})\cos^{{3}}({var})\,d{var}"
+        answer = _plus_c(
+            rf"\frac{{1}}{{4}}\sin^{{4}}({var})-\frac{{1}}{{6}}\sin^{{6}}({var})",
+            include=include,
+        )
+
+    elif form_id == "csc_j_cot":
+        j = rng.choice([2, 3, 4])
+        prompt = rf"\int {_trig_pow('csc', j, var)}\cot({var})\,d{var}"
+        answer = _plus_c(
+            rf"-\frac{{1}}{{{j}}}{_trig_pow('csc', j, var)}",
+            include=include,
+        )
+
+    elif form_id == "sin_over_one_plus_cos2":
+        if rng.random() < 0.5:
+            prompt = rf"\int \frac{{\sin({var})}}{{1+\cos^{{2}}({var})}}\,d{var}"
+            answer = _plus_c(rf"-\arctan(\cos({var}))", include=include)
+        else:
+            prompt = rf"\int \frac{{\cos({var})}}{{1+\sin^{{2}}({var})}}\,d{var}"
+            answer = _plus_c(rf"\arctan(\sin({var}))", include=include)
+
+    elif form_id == "one_over_one_plus_cos":
+        prompt = rf"\int \frac{{1}}{{1+\cos({var})}}\,d{var}"
+        answer = _plus_c(rf"\tan\left(\frac{{{var}}}{{2}}\right)", include=include)
+
+    elif form_id == "one_over_one_plus_sin":
+        prompt = rf"\int \frac{{1}}{{1+\sin({var})}}\,d{var}"
+        answer = _plus_c(
+            rf"\tan({var})-\sec({var})",
+            include=include,
+        )
+
     else:
         # Should not reach for implemented catalog; fall back to basic sin
         form_id = "basic_sin_kx"
@@ -1421,7 +1650,8 @@ def _sample_invtrig(
 
     var = spec.variable
     catalog = load_form_catalog("invtrig_integrals")
-    form = select_form_id(implemented_forms(catalog), d=float(spec.d_spend), rng=rng)
+    pool = _gated_form_pool(catalog, spec) or implemented_forms(catalog)
+    form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
     form_id = str(form["form_id"])
     include = spec.include_plus_c
     meta = {
@@ -1476,10 +1706,170 @@ def _sample_invtrig(
     return prompt, answer, meta
 
 
+# Calc BC drill bank §2 (not OpenStax). Mid/high D; D=0 auto stays one-step LIATE.
+PARTS_FORM_PRESETS: dict[str, frozenset[str] | None] = {
+    "auto": None,
+    "bc_bank": frozenset(
+        {
+            "poly2_exp",
+            "poly3_exp",
+            "poly2_sin",
+            "poly2_cos",
+            "poly3_sin",
+            "poly3_cos",
+            "poly2_ln",
+            "ln_power_2",
+            "ln_power_3",
+            "cyclic_exp_sin",
+            "cyclic_exp_cos",
+            "arctan_alone",
+            "poly1_arctan",
+            "poly1_arcsin",
+            "arcsin_alone",
+            "power_frac_ln",
+            "ln_quad",
+        }
+    ),
+}
+PARTS_FORM_PRESET_OPTIONS: tuple[str, ...] = tuple(PARTS_FORM_PRESETS.keys())
+
+# Calc BC drill bank §4 families the existing PFD core can emit.
+PFD_FORM_PRESETS: dict[str, frozenset[str] | None] = {
+    "auto": None,
+    "bc_bank": frozenset(
+        {
+            "distinct_linear_2",
+            "distinct_linear_3",
+            "irreducible_quad_arctan",
+            "irreducible_quad_ln",
+            "mixed_linear_quad",
+            "repeated_linear_square",
+        }
+    ),
+}
+PFD_FORM_PRESET_OPTIONS: tuple[str, ...] = tuple(PFD_FORM_PRESETS.keys())
+
+
+def resolve_parts_form_preset(name: str | None) -> frozenset[str] | None:
+    key = str(name or "auto").strip().lower()
+    if key not in PARTS_FORM_PRESETS:
+        return None
+    return PARTS_FORM_PRESETS[key]
+
+
+def resolve_pfd_form_preset(name: str | None) -> frozenset[str] | None:
+    key = str(name or "auto").strip().lower()
+    if key not in PFD_FORM_PRESETS:
+        return None
+    return PFD_FORM_PRESETS[key]
+
+
+def _parts_kx(k: int, var: str) -> str:
+    return var if k == 1 else f"{k}{var}"
+
+
+def _parts_exp_kx(k: int, var: str) -> str:
+    return rf"e^{{{_parts_kx(k, var)}}}"
+
+
+def _parts_trig(fn: str, k: int, var: str) -> str:
+    arg = _parts_kx(k, var)
+    if fn == "sin":
+        return rf"\sin({arg})"
+    if fn == "cos":
+        return rf"\cos({arg})"
+    return rf"\tan({arg})"
+
+
+def _parts_chain_k(rng: random.Random, spec: IntegralSpec, *, floor_d: float = 8.0) -> int:
+    """Scale inner frequency/base: D=0 stays k=1 (old easy); mid+ D uses k≥2."""
+    if float(spec.d_spend) < floor_d:
+        return 1
+    hi = max(2, min(4, int(spec.coef_abs_max)))
+    return rng.randint(2, hi)
+
+
+def _parts_allows_ok(form: dict[str, Any], spec: IntegralSpec) -> bool:
+    flags = {
+        "allow_trig": spec.allow_trig,
+        "allow_exp": spec.allow_exp,
+        "allow_log": spec.allow_log,
+        "allow_invtrig": spec.allow_invtrig,
+    }
+    for key in form.get("requires_allows") or []:
+        if not flags.get(str(key), True):
+            return False
+    return True
+
+
+def _parts_coef_term(coef: int, tex: str) -> str:
+    if coef == 1:
+        return tex
+    if coef == -1:
+        return rf"-{tex}"
+    return rf"{coef}{tex}"
+
+
+def _parts_poly_desc(coeffs: Sequence[int], var: str) -> str:
+    """Highest-degree-first integer polynomial, no wrapping parens."""
+    n = len(list(coeffs)) - 1
+    pieces: list[str] = []
+    for i, c in enumerate(coeffs):
+        if c == 0:
+            continue
+        power = n - i
+        mag = abs(int(c))
+        if power == 0:
+            body = str(mag)
+        elif power == 1:
+            body = var if mag == 1 else f"{mag}{var}"
+        else:
+            body = rf"{var}^{{{power}}}" if mag == 1 else rf"{mag}{var}^{{{power}}}"
+        if not pieces:
+            pieces.append(f"-{body}" if c < 0 else body)
+        else:
+            pieces.append(f"-{body}" if c < 0 else f"+{body}")
+    return "".join(pieces) or "0"
+
+
+def _ibp_poly_exp(n: int, k: int, var: str, include: bool) -> tuple[str, str]:
+    """∫ x^n e^{kx} dx via tabular parts (n≥1)."""
+    exp = _parts_exp_kx(k, var)
+    xn = var if n == 1 else rf"{var}^{{{n}}}"
+    prompt = rf"\int {xn}{exp}\,d{var}"
+    coeffs = [
+        ((-1) ** j) * (factorial(n) // factorial(n - j)) * (k ** (n - j))
+        for j in range(n + 1)
+    ]
+    poly = _parts_poly_desc(coeffs, var)
+    den = k ** (n + 1)
+    if den == 1:
+        answer = _plus_c(rf"e^{{{var}}}({poly})", include=include)
+    else:
+        answer = _plus_c(
+            rf"{frac_latex(Fraction(1, den))}{exp}({poly})",
+            include=include,
+        )
+    return prompt, answer
+
+
+def _parts_ln_scale(rng: random.Random, spec: IntegralSpec, var: str) -> tuple[int, str]:
+    a = 1
+    if float(spec.d_spend) >= 8:
+        a = rng.randint(2, max(2, min(4, spec.coef_abs_max)))
+    arg = var if a == 1 else f"{a}{var}"
+    return a, arg
+
+
 def _sample_parts(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
-    """LIATE forms driven by ``integration_by_parts`` catalog."""
+    """LIATE forms driven by ``integration_by_parts`` catalog.
+
+    D=0 rotates one-step OpenStax shapes with k=1 (∫ ln x, ∫ x e^x, ∫ x sin x,
+    ∫ x cos x). Mid D scales the inner (e^{kx}, sin(kx), ln(ax)). High D
+    unlocks tabular (x^n n≤3), (ln)^n, cyclic e^{ax}sin/cos, and invtrig.
+    """
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
         catalog_form_meta,
         implemented_forms,
@@ -1489,7 +1879,27 @@ def _sample_parts(
 
     var = spec.variable
     catalog = load_form_catalog("integration_by_parts")
-    form = select_form_id(implemented_forms(catalog), d=float(spec.d_spend), rng=rng)
+    preset_ids = resolve_parts_form_preset(spec.parts_form_preset)
+    pool = _gated_form_pool(
+        catalog, spec, extra_ids=set(preset_ids) if preset_ids else None
+    )
+    if not pool and preset_ids:
+        pool = _gated_form_pool(catalog, spec)
+    if not pool:
+        # Dedicated parts leaf with every class off: keep ln_alone only if log is on.
+        pool = [
+            f
+            for f in implemented_forms(catalog)
+            if str(f.get("form_id")) == "ln_alone" and spec.allow_log
+        ]
+    if not pool:
+        return _sample_power(rng, spec)
+    # Repeated parts (tabular / cyclic) when the D budget bought parts_twice.
+    if spec.parts_depth >= 2:
+        rich = [f for f in pool if float(f.get("d_min") or 0) >= 10]
+        if rich:
+            pool = rich
+    form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
     form_id = str(form["form_id"])
     include = spec.include_plus_c
     meta = {
@@ -1498,62 +1908,301 @@ def _sample_parts(
         "n_terms": 1,
         "nest": spec.parts_depth,
     }
+    k = _parts_chain_k(rng, spec)
 
     if form_id == "ln_alone":
-        prompt = rf"\int \ln({var})\,d{var}"
-        answer = _plus_c(rf"{var}\ln({var})-{var}", include=include)
+        a, b = 1, 0
+        if float(spec.d_spend) >= 8:
+            a = rng.randint(1, max(1, min(4, spec.coef_abs_max)))
+            b = rng.randint(0, max(0, min(3, spec.coef_abs_max))) if spec.d_spend >= 12 else 0
+            if a == 1 and b == 0:
+                a = 2
+        arg = var if (a == 1 and b == 0) else format_linear_latex(a, b, variable=var)
+        prompt = rf"\int \ln({arg})\,d{var}"
+        if a == 1 and b == 0:
+            answer = _plus_c(rf"{var}\ln({var})-{var}", include=include)
+        elif b == 0:
+            answer = _plus_c(rf"{var}\ln({arg})-{var}", include=include)
+        else:
+            body = rf"{frac_latex(Fraction(1, a))}\left({arg}\right)\ln({arg})-{var}"
+            answer = _plus_c(body, include=include)
         classes = ["log"]
     elif form_id == "poly1_ln":
-        prompt = rf"\int {var}\ln({var})\,d{var}"
+        a = 1 if float(spec.d_spend) < 8 else rng.randint(2, max(2, min(4, spec.coef_abs_max)))
+        arg = var if a == 1 else f"{a}{var}"
+        prompt = rf"\int {var}\ln({arg})\,d{var}"
+        if a == 1:
+            answer = _plus_c(
+                rf"\frac{{1}}{{2}}{var}^{{2}}\ln({var})-\frac{{1}}{{4}}{var}^{{2}}",
+                include=include,
+            )
+        else:
+            answer = _plus_c(
+                rf"\frac{{1}}{{2}}{var}^{{2}}\ln({arg})-\frac{{1}}{{4}}{var}^{{2}}",
+                include=include,
+            )
+        classes = ["log"]
+    elif form_id == "poly1_exp":
+        prompt, answer = _ibp_poly_exp(1, k, var, include)
+        classes = ["exp"]
+    elif form_id == "poly1_sin":
+        s = _parts_trig("sin", k, var)
+        c = _parts_trig("cos", k, var)
+        prompt = rf"\int {var}{s}\,d{var}"
+        if k == 1:
+            answer = _plus_c(rf"-{var}\cos({var})+\sin({var})", include=include)
+        else:
+            answer = _plus_c(
+                rf"-{frac_latex(Fraction(1, k))}{var}{c}+{frac_latex(Fraction(1, k * k))}{s}",
+                include=include,
+            )
+        classes = ["trig"]
+    elif form_id == "poly1_cos":
+        s = _parts_trig("sin", k, var)
+        c = _parts_trig("cos", k, var)
+        prompt = rf"\int {var}{c}\,d{var}"
+        if k == 1:
+            answer = _plus_c(rf"{var}\sin({var})+\cos({var})", include=include)
+        else:
+            answer = _plus_c(
+                rf"{frac_latex(Fraction(1, k))}{var}{s}+{frac_latex(Fraction(1, k * k))}{c}",
+                include=include,
+            )
+        classes = ["trig"]
+    elif form_id == "poly2_exp":
+        prompt, answer = _ibp_poly_exp(2, k, var, include)
+        classes = ["exp"]
+    elif form_id == "poly3_exp":
+        prompt, answer = _ibp_poly_exp(3, k, var, include)
+        classes = ["exp"]
+    elif form_id == "poly2_sin":
+        s = _parts_trig("sin", k, var)
+        c = _parts_trig("cos", k, var)
+        prompt = rf"\int {var}^{{2}}{s}\,d{var}"
+        if k == 1:
+            answer = _plus_c(
+                rf"-{var}^{{2}}\cos({var})+2{var}\sin({var})+2\cos({var})",
+                include=include,
+            )
+        else:
+            # (−k² x² cos + 2k x sin + 2 cos) / k³
+            num = rf"-{k * k}{var}^{{2}}{c}+{2 * k}{var}{s}+2{c}"
+            answer = _plus_c(
+                rf"{frac_latex(Fraction(1, k ** 3))}({num})",
+                include=include,
+            )
+        classes = ["trig"]
+    elif form_id == "poly2_cos":
+        s = _parts_trig("sin", k, var)
+        c = _parts_trig("cos", k, var)
+        prompt = rf"\int {var}^{{2}}{c}\,d{var}"
+        if k == 1:
+            answer = _plus_c(
+                rf"{var}^{{2}}\sin({var})+2{var}\cos({var})-2\sin({var})",
+                include=include,
+            )
+        else:
+            # (k² x² sin + 2k x cos − 2 sin) / k³
+            num = rf"{k * k}{var}^{{2}}{s}+{2 * k}{var}{c}-2{s}"
+            answer = _plus_c(
+                rf"{frac_latex(Fraction(1, k ** 3))}({num})",
+                include=include,
+            )
+        classes = ["trig"]
+    elif form_id == "poly3_sin":
+        s = _parts_trig("sin", k, var)
+        c = _parts_trig("cos", k, var)
+        prompt = rf"\int {var}^{{3}}{s}\,d{var}"
+        if k == 1:
+            answer = _plus_c(
+                rf"-{var}^{{3}}\cos({var})+3{var}^{{2}}\sin({var})"
+                rf"+6{var}\cos({var})-6\sin({var})",
+                include=include,
+            )
+        else:
+            # (−k³ x³ cos + 3k² x² sin + 6k x cos − 6 sin) / k⁴
+            num = (
+                rf"-{k ** 3}{var}^{{3}}{c}+{3 * k * k}{var}^{{2}}{s}"
+                rf"+{6 * k}{var}{c}-6{s}"
+            )
+            answer = _plus_c(
+                rf"{frac_latex(Fraction(1, k ** 4))}({num})",
+                include=include,
+            )
+        classes = ["trig"]
+    elif form_id == "poly3_cos":
+        s = _parts_trig("sin", k, var)
+        c = _parts_trig("cos", k, var)
+        prompt = rf"\int {var}^{{3}}{c}\,d{var}"
+        if k == 1:
+            answer = _plus_c(
+                rf"{var}^{{3}}\sin({var})+3{var}^{{2}}\cos({var})"
+                rf"-6{var}\sin({var})-6\cos({var})",
+                include=include,
+            )
+        else:
+            # (k³ x³ sin + 3k² x² cos − 6k x sin − 6 cos) / k⁴
+            num = (
+                rf"{k ** 3}{var}^{{3}}{s}+{3 * k * k}{var}^{{2}}{c}"
+                rf"-{6 * k}{var}{s}-6{c}"
+            )
+            answer = _plus_c(
+                rf"{frac_latex(Fraction(1, k ** 4))}({num})",
+                include=include,
+            )
+        classes = ["trig"]
+    elif form_id == "poly2_ln":
+        _a, arg = _parts_ln_scale(rng, spec, var)
+        prompt = rf"\int {var}^{{2}}\ln({arg})\,d{var}"
         answer = _plus_c(
-            rf"\frac{{1}}{{2}}{var}^{{2}}\ln({var})-\frac{{1}}{{4}}{var}^{{2}}",
+            rf"\frac{{1}}{{3}}{var}^{{3}}\ln({arg})-\frac{{1}}{{9}}{var}^{{3}}",
             include=include,
         )
         classes = ["log"]
-    elif form_id == "poly1_exp":
-        prompt = rf"\int {var}e^{{{var}}}\,d{var}"
-        answer = _plus_c(rf"e^{{{var}}}({var}-1)", include=include)
-        classes = ["exp"]
-    elif form_id == "poly1_sin":
-        prompt = rf"\int {var}\sin({var})\,d{var}"
-        answer = _plus_c(rf"-{var}\cos({var})+\sin({var})", include=include)
-        classes = ["trig"]
-    elif form_id == "poly1_cos":
-        prompt = rf"\int {var}\cos({var})\,d{var}"
-        answer = _plus_c(rf"{var}\sin({var})+\cos({var})", include=include)
-        classes = ["trig"]
-    elif form_id == "poly2_exp":
-        prompt = rf"\int {var}^{{2}}e^{{{var}}}\,d{var}"
-        answer = _plus_c(rf"e^{{{var}}}({var}^{{2}}-2{var}+2)", include=include)
-        classes = ["exp"]
-    elif form_id == "poly2_sin":
-        prompt = rf"\int {var}^{{2}}\sin({var})\,d{var}"
+    elif form_id == "ln_power_2":
+        _a, arg = _parts_ln_scale(rng, spec, var)
+        prompt = rf"\int (\ln({arg}))^{{2}}\,d{var}"
         answer = _plus_c(
-            rf"-{var}^{{2}}\cos({var})+2{var}\sin({var})+2\cos({var})",
+            rf"{var}(\ln({arg}))^{{2}}-2{var}\ln({arg})+2{var}",
             include=include,
         )
-        classes = ["trig"]
+        classes = ["log"]
+    elif form_id == "ln_power_3":
+        _a, arg = _parts_ln_scale(rng, spec, var)
+        prompt = rf"\int (\ln({arg}))^{{3}}\,d{var}"
+        answer = _plus_c(
+            rf"{var}(\ln({arg}))^{{3}}-3{var}(\ln({arg}))^{{2}}"
+            rf"+6{var}\ln({arg})-6{var}",
+            include=include,
+        )
+        classes = ["log"]
+    elif form_id == "power_frac_ln":
+        _a, arg = _parts_ln_scale(rng, spec, var)
+        if rng.random() < 0.5:
+            prompt = rf"\int \sqrt{{{var}}}\ln({arg})\,d{var}"
+            answer = _plus_c(
+                rf"\frac{{2}}{{3}}{var}^{{3/2}}\ln({arg})-\frac{{4}}{{9}}{var}^{{3/2}}",
+                include=include,
+            )
+        else:
+            prompt = rf"\int {var}^{{3/2}}\ln({arg})\,d{var}"
+            answer = _plus_c(
+                rf"\frac{{2}}{{5}}{var}^{{5/2}}\ln({arg})-\frac{{4}}{{25}}{var}^{{5/2}}",
+                include=include,
+            )
+        classes = ["log"]
     elif form_id == "cyclic_exp_sin":
-        prompt = rf"\int e^{{{var}}}\sin({var})\,d{var}"
-        answer = _plus_c(
-            rf"\frac{{1}}{{2}}e^{{{var}}}(\sin({var})-\cos({var}))",
-            include=include,
-        )
+        a = b = 1
+        if float(spec.d_spend) >= 16:
+            a = rng.randint(1, 3)
+            b = rng.randint(1, 3)
+            if a == 1 and b == 1:
+                a = 2
+        exp = _parts_exp_kx(a, var)
+        s = _parts_trig("sin", b, var)
+        c = _parts_trig("cos", b, var)
+        prompt = rf"\int {exp}{s}\,d{var}"
+        if a == 1 and b == 1:
+            answer = _plus_c(
+                rf"\frac{{1}}{{2}}e^{{{var}}}(\sin({var})-\cos({var}))",
+                include=include,
+            )
+        else:
+            num = rf"{_parts_coef_term(a, s)}-{_parts_coef_term(b, c)}"
+            den = a * a + b * b
+            answer = _plus_c(rf"\frac{{{exp}({num})}}{{{den}}}", include=include)
         classes = ["exp", "trig"]
     elif form_id == "cyclic_exp_cos":
-        prompt = rf"\int e^{{{var}}}\cos({var})\,d{var}"
-        answer = _plus_c(
-            rf"\frac{{1}}{{2}}e^{{{var}}}(\sin({var})+\cos({var}))",
-            include=include,
-        )
+        a = b = 1
+        if float(spec.d_spend) >= 16:
+            a = rng.randint(1, 3)
+            b = rng.randint(1, 3)
+            if a == 1 and b == 1:
+                a = 2
+        exp = _parts_exp_kx(a, var)
+        s = _parts_trig("sin", b, var)
+        c = _parts_trig("cos", b, var)
+        prompt = rf"\int {exp}{c}\,d{var}"
+        if a == 1 and b == 1:
+            answer = _plus_c(
+                rf"\frac{{1}}{{2}}e^{{{var}}}(\sin({var})+\cos({var}))",
+                include=include,
+            )
+        else:
+            # (a cos(bx) + b sin(bx))
+            num = rf"{_parts_coef_term(a, c)}+{_parts_coef_term(b, s)}"
+            den = a * a + b * b
+            answer = _plus_c(rf"\frac{{{exp}({num})}}{{{den}}}", include=include)
         classes = ["exp", "trig"]
     elif form_id == "arctan_alone":
-        prompt = rf"\int \arctan({var})\,d{var}"
+        a = 1 if float(spec.d_spend) < 18 else rng.randint(2, 3)
+        arg = var if a == 1 else f"{a}{var}"
+        prompt = rf"\int \arctan({arg})\,d{var}"
+        if a == 1:
+            answer = _plus_c(
+                rf"{var}\arctan({var})-\frac{{1}}{{2}}\ln(1+{var}^{{2}})",
+                include=include,
+            )
+        else:
+            # ∫ arctan(ax) = x arctan(ax) − (1/(2a)) ln(1+a²x²)
+            answer = _plus_c(
+                rf"{var}\arctan({arg})-{frac_latex(Fraction(1, 2 * a))}\ln(1+{a * a}{var}^{{2}})",
+                include=include,
+            )
+        classes = ["invtrig"]
+    elif form_id == "poly1_arctan":
+        a = 1 if float(spec.d_spend) < 18 else rng.randint(2, 3)
+        arg = var if a == 1 else f"{a}{var}"
+        prompt = rf"\int {var}\arctan({arg})\,d{var}"
+        # (x²/2) arctan(ax) − x/(2a) + arctan(ax)/(2a²)
         answer = _plus_c(
-            rf"{var}\arctan({var})-\frac{{1}}{{2}}\ln(1+{var}^{{2}})",
+            rf"\frac{{1}}{{2}}{var}^{{2}}\arctan({arg})"
+            rf"-{frac_latex(Fraction(1, 2 * a))}{var}"
+            rf"+{frac_latex(Fraction(1, 2 * a * a))}\arctan({arg})",
             include=include,
         )
         classes = ["invtrig"]
+    elif form_id == "arcsin_alone":
+        a = 1 if float(spec.d_spend) < 18 else rng.randint(2, 3)
+        arg = var if a == 1 else f"{a}{var}"
+        prompt = rf"\int \arcsin({arg})\,d{var}"
+        if a == 1:
+            answer = _plus_c(
+                rf"{var}\arcsin({var})+\sqrt{{1-{var}^{{2}}}}",
+                include=include,
+            )
+        else:
+            answer = _plus_c(
+                rf"{var}\arcsin({arg})+{frac_latex(Fraction(1, a))}"
+                rf"\sqrt{{1-{a * a}{var}^{{2}}}}",
+                include=include,
+            )
+        classes = ["invtrig"]
+    elif form_id == "poly1_arcsin":
+        prompt = rf"\int {var}\arcsin({var})\,d{var}"
+        answer = _plus_c(
+            rf"\frac{{1}}{{2}}{var}^{{2}}\arcsin({var})"
+            rf"+\frac{{1}}{{4}}{var}\sqrt{{1-{var}^{{2}}}}"
+            rf"-\frac{{1}}{{4}}\arcsin({var})",
+            include=include,
+        )
+        classes = ["invtrig"]
+    elif form_id == "ln_quad":
+        a = 1 if float(spec.d_spend) < 18 else rng.randint(2, 3)
+        inner = rf"{var}^{{2}}+1" if a == 1 else rf"{var}^{{2}}+{a * a}"
+        prompt = rf"\int \ln({inner})\,d{var}"
+        atan_arg = var if a == 1 else rf"\frac{{{var}}}{{{a}}}"
+        atan_coef = 2 * a
+        atan_tex = (
+            rf"2\arctan({atan_arg})"
+            if atan_coef == 2
+            else rf"{atan_coef}\arctan({atan_arg})"
+        )
+        answer = _plus_c(
+            rf"{var}\ln({inner})-2{var}+{atan_tex}",
+            include=include,
+        )
+        classes = ["log", "invtrig"]
     else:
         prompt = rf"\int {var}e^{{{var}}}\,d{var}"
         answer = _plus_c(rf"e^{{{var}}}({var}-1)", include=include)
@@ -1562,37 +2211,53 @@ def _sample_parts(
         meta["openstax_form"] = "poly1_exp"
         meta["family"] = "poly1_exp"
     meta["function_classes"] = classes
-    meta["tricks_required"] = ["parts"]
+    meta["tricks_required"] = [str(t) for t in (form.get("tricks") or ["parts"])]
+    meta["parts_k"] = k
+    meta["parts_form_preset"] = spec.parts_form_preset
     return prompt, answer, meta
 
 
 def _sample_ftc(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
+    """FTC evaluation ∫_a^b f (OpenStax Part 2 / first_fundamental_theorem leaf)."""
     var = spec.variable
     a = 0
-    b = rng.randint(2, max(2, min(5, spec.bound_abs_max)))
-    family = rng.choice(["linear", "quad", "sqrt", "sin"])
+    b_hi = max(2, min(8, spec.bound_abs_max))
+    b = rng.randint(2, b_hi)
+    d = float(spec.d_spend)
+    # D=0: linear / simple quad only (old easy). Numeric hardness then unlocks.
+    pool = ["linear", "quad"]
+    if d >= 8:
+        pool.append("quad_const")
+    if d >= 12:
+        pool.extend(["sqrt", "sin"])
+    family = rng.choice(pool)
     if family == "linear":
         prompt = rf"\int_{{{a}}}^{{{b}}} {var}\,d{var}"
         answer = frac_latex(Fraction(b * b, 2))
         classes = ["algebraic"]
     elif family == "quad":
-        k = rng.randint(1, max(1, min(4, spec.coef_abs_max)))
+        k = rng.randint(1, max(1, min(6, spec.coef_abs_max)))
         f = format_monomial_latex(k, variable=var, degree=2) or f"{k}{var}^{{2}}"
         prompt = rf"\int_{{{a}}}^{{{b}}} {f}\,d{var}"
         answer = frac_latex(Fraction(k * b**3, 3))
         classes = ["algebraic"]
+    elif family == "quad_const":
+        p = rng.randint(1, max(1, min(4, spec.coef_abs_max)))
+        q = _coef(rng, max(2, min(4, spec.coef_abs_max)))
+        f = format_polynomial_latex([p, 0, q], variable=var)
+        prompt = rf"\int_{{{a}}}^{{{b}}} \left({f}\right)\,d{var}"
+        answer = frac_latex(Fraction(p * b**3, 3) + q * b)
+        classes = ["algebraic"]
     elif family == "sqrt":
         # ∫_0^b √x dx = (2/3) b^{3/2}; keep b a perfect square for clean key
-        b = rng.choice([1, 4, 9])
+        b = rng.choice([1, 4, 9] if d < 18 else [1, 4, 9, 16])
         prompt = rf"\int_{{{a}}}^{{{b}}} \sqrt{{{var}}}\,d{var}"
-        # (2/3) b^{3/2} = (2/3) (√b)^3 = (2/3) b √b
         root = int(b**0.5)
         answer = frac_latex(Fraction(2 * b * root, 3))
         classes = ["algebraic"]
     else:
-        # ∫_0^{π/2} or simple ∫_0^π/2 cos — use numeric π/2 carefully
         prompt = rf"\int_{{0}}^{{\pi/2}} \sin({var})\,d{var}"
         answer = "1"
         classes = ["trig"]
@@ -1600,8 +2265,50 @@ def _sample_ftc(
     return prompt, answer, {
         "function_classes": classes,
         "family": family,
+        "form_id": family,
         "n_terms": 1,
         "definite": True,
+    }
+
+
+def _sample_ftc2(
+    rng: random.Random, spec: IntegralSpec
+) -> tuple[str, str, dict[str, Any]]:
+    """FTC Part 1: d/dx ∫_a^{g(x)} f(t) dt (second_fundamental_theorem leaf).
+
+    Restores the skill from the pre-override calculus.py builder; D unlocks
+    chain-rule upper limits honestly (g(x)=kx).
+    """
+    var = spec.variable
+    a = rng.randint(0, 3)
+    d = float(spec.d_spend)
+    pool = ["poly"]
+    if d >= 8:
+        pool.append("trig")
+    if d >= 14:
+        pool.append("chain")
+    family = rng.choice(pool)
+    if family == "poly":
+        prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{var}}} t^{{2}}\,dt"
+        answer = rf"{var}^{{2}}"
+        classes = ["algebraic"]
+    elif family == "trig":
+        prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{var}}} \sin(t)\,dt"
+        answer = rf"\sin({var})"
+        classes = ["trig"]
+    else:
+        k = rng.randint(2, max(2, min(5, spec.coef_abs_max)))
+        prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{k}{var}}} e^{{t}}\,dt"
+        answer = rf"{k}e^{{{k}{var}}}"
+        classes = ["exp"]
+        family = "chain"
+    return prompt, answer, {
+        "function_classes": classes,
+        "family": family,
+        "form_id": f"ftc2_{family}",
+        "n_terms": 1,
+        "definite": True,
+        "construction": "ftc_variable_upper",
     }
 
 
@@ -1656,9 +2363,15 @@ def _sample_trig_sub(
         "pow_m3_2_a2_plus",
         "pow_m3_2_a2_minus",
     }
-    pool = implemented_forms(catalog)
-    if b_shift != 0:
-        pool = [f for f in pool if str(f.get("form_id")) in wrap_ok] or pool
+    extra = wrap_ok if b_shift != 0 else None
+    pool = _gated_form_pool(catalog, spec, extra_ids=extra)
+    if not pool:
+        pool = _gated_form_pool(catalog, spec)
+    if not pool:
+        if spec.allow_trig_sub:
+            pool = implemented_forms(catalog)
+        else:
+            return _sample_power(rng, spec)
     form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
     family = str(form["form_id"])
     catalog_meta = catalog_form_meta(form, catalog)
@@ -1806,10 +2519,69 @@ def _sample_trig_sub(
 # ---------------------------------------------------------------------------
 
 
+def _sample_definite_u_sub(
+    rng: random.Random, spec: IntegralSpec
+) -> tuple[str, str, dict[str, Any]]:
+    """Definite u-sub with changed limits (OpenStax Vol 1 §5.5).
+
+    D=0: ∫_a^b c(cx+d)^n with linear u (numeric hardness first).
+    Higher D: quadratic inner / 1/u forms.
+    """
+    var = spec.variable
+    d = float(spec.d_spend)
+    pool = ["power_linear"]
+    if d >= 8:
+        pool.append("quad_power")
+    if d >= 12:
+        pool.append("du_over_u")
+    family = rng.choice(pool)
+
+    if family == "power_linear":
+        # u = px + q; ∫_lo^hi p (px+q)^n dx = 1/(n+1) [(p·hi+q)^{n+1} - (p·lo+q)^{n+1}]
+        p = rng.randint(2, max(2, min(4, spec.coef_abs_max)))
+        q = rng.randint(0, max(0, min(3, spec.coef_abs_max)))
+        n = rng.randint(2, 3 if d < 10 else 5)
+        lo = 0
+        hi = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
+        u_lo = p * lo + q
+        u_hi = p * hi + q
+        inner = format_linear_latex(p, q, variable=var)
+        prompt = rf"\int_{{{lo}}}^{{{hi}}} {p}\left({inner}\right)^{{{n}}}\,d{var}"
+        # F = 1/(n+1) u^{n+1}
+        ans = Fraction(u_hi ** (n + 1) - u_lo ** (n + 1), n + 1)
+        answer = frac_latex(ans)
+        form_id = "definite_power_linear_du"
+    elif family == "quad_power":
+        # ∫_0^a 2x (x²+1)^n dx, u=x²+1 → [1/(n+1) u^{n+1}]_1^{a²+1}
+        a = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
+        n = rng.randint(2, 2 if d < 14 else 3)
+        prompt = rf"\int_{{0}}^{{{a}}} 2{var}\left({var}^{{2}}+1\right)^{{{n}}}\,d{var}"
+        u_hi = a * a + 1
+        ans = Fraction(u_hi ** (n + 1) - 1, n + 1)
+        answer = frac_latex(ans)
+        form_id = "definite_power_quad_x_du"
+    else:
+        # ∫_0^a 2x/(x²+1) dx = ln(a²+1)
+        a = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
+        prompt = rf"\int_{{0}}^{{{a}}} \frac{{2{var}}}{{{var}^{{2}}+1}}\,d{var}"
+        answer = rf"\ln({a * a + 1})"
+        form_id = "definite_du_over_u"
+
+    return prompt, answer, {
+        "function_classes": ["algebraic"],
+        "family": form_id,
+        "form_id": form_id,
+        "n_terms": 1,
+        "definite": True,
+        "tricks_required": ["u_sub"],
+        "construction": "definite_change_of_variables",
+    }
+
+
 def _sample_u_sub_derivative_backed(
     rng: random.Random, spec: IntegralSpec, *, flavor: str = "power"
 ) -> tuple[str, str, dict[str, Any]]:
-    """Catalog-driven u-sub; falls back to shared sampler for unmatched forms."""
+    """Catalog-driven u-sub; optional reverse-chain via Diff expr_skeleton."""
     from question_engine.frameworks.primitives import u_substitution as usub
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
         catalog_form_meta,
@@ -1817,26 +2589,83 @@ def _sample_u_sub_derivative_backed(
         load_form_catalog,
         select_form_id,
     )
+    from question_engine.frameworks.primitives.skeleton_difficulty import (
+        SkeletonDifficultyBands,
+    )
 
     var = spec.variable
     include = spec.include_plus_c
+    bands = SkeletonDifficultyBands.from_d(float(spec.d_spend))
+    preset_forms = usub.resolve_u_sub_form_preset(spec.u_sub_form_preset)
+    construction = str(spec.u_sub_construction or "auto")
+    use_reverse = False
+    if construction == "reverse_chain":
+        use_reverse = True
+    elif construction != "catalog" and preset_forms is None and bands.format_tier >= 1:
+        p_rev = (0.0, 0.4, 0.65, 0.8, 0.9)[min(4, bands.format_tier)]
+        use_reverse = rng.random() < p_rev
+    if use_reverse:
+        try:
+            sample = usub.sample_reverse_chain_integral(
+                d=float(spec.d_spend),
+                flavor=flavor,
+                variable=var,
+                include_plus_c=include,
+                allow_trig=spec.allow_trig,
+                allow_exp=spec.allow_exp,
+                allow_log=spec.allow_log,
+                allow_invtrig=spec.allow_invtrig,
+                rng=rng,
+            )
+            meta = dict(sample.metadata)
+            meta["n_terms"] = 1
+            meta["u_sub_form_preset"] = spec.u_sub_form_preset
+            return sample.prompt_latex, sample.answer_latex, meta
+        except (KeyError, ValueError, TypeError):
+            use_reverse = False
+
     catalog = load_form_catalog("u_substitution")
     # Flavor packs bias which forms are eligible
     flavor_allow = {
         "power": {
             "power_linear_du",
             "power_quad_x_du",
+            "power_cubic_x2_du",
             "root_quad_x_du",
             "du_over_u_linear",
             "alteration_linear_over_root",
+            "power_quad_neg",
+            "power_cubic_neg",
+            "root_quad_minus",
+            "power_quad_m3_2",
+            "du_over_u_quadratic",
+            "sin_of_sqrt",
+            "power_hex_neg",
+            "root_of_x4",
         },
         "ln_exp": {
             "exp_of_trig",
             "exp_of_poly",
+            "exp_of_cubic",
+            "exp_of_quartic",
+            "exp_root_chain",
+            "exp_power_of_exp",
             "du_over_u_linear",
             "ln_squared_chain",
             "nested_trig_exp",
             "du_over_u_trig",
+            "ln_power_over_x",
+            "power_of_one_plus_ln",
+            "exp_over_power_of_exp",
+            "exp_e2x_over_power",
+            "ln_ln_nested",
+            "ln_over_x_sqrt",
+            "arctan_of_ln",
+            "du_over_ln_of_poly",
+            "cos_of_ln_over_x",
+            "exp_of_sqrt",
+            "root_ln_of_linear",
+            "ln_sq_over_root_ln_cube",
         },
         "trig": {
             "du_over_u_trig",
@@ -1844,36 +2673,73 @@ def _sample_u_sub_derivative_backed(
             "sec2_of_u",
             "exp_of_trig",
             "nested_trig_exp",
+            "composite_ln_of_trig",
+            "trig_over_linear_trig_power",
+            "sin_of_sqrt",
         },
-        "invtrig": {"arctan_of_linear", "du_over_u_linear", "power_linear_du"},
+        "invtrig": {
+            "arctan_of_linear",
+            "du_over_u_linear",
+            "power_linear_du",
+            "arctan_of_ln",
+        },
     }
-    allow = flavor_allow.get(flavor) or None
-    pool = implemented_forms(catalog)
-    if allow:
-        filtered = [f for f in pool if str(f.get("form_id")) in allow]
-        if filtered:
-            pool = filtered
+    allow = set(flavor_allow.get(flavor) or ())
+    if preset_forms is not None:
+        allow = (allow & set(preset_forms)) or set(preset_forms)
+    pool = _gated_form_pool(catalog, spec, extra_ids=allow or None)
+    if not pool and preset_forms is not None:
+        # Forced named preset on a host whose allow_* would empty the
+        # intersection (trig_chain showcase on the algebraic power leaf).
+        pool = [
+            f
+            for f in implemented_forms(catalog)
+            if str(f.get("form_id")) in allow
+        ]
+    if not pool:
+        pool = _gated_form_pool(catalog, spec)
+    if not pool:
+        pool = _gated_form_pool(catalog, spec, extra_ids={"power_linear_du"})
+    if not pool:
+        pool = implemented_forms(catalog)[:1]
     form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
     form_id = str(form["form_id"])
+    form_tricks = [str(t) for t in (form.get("tricks") or ["u_sub"])]
     meta = {
         **catalog_form_meta(form, catalog),
         "n_terms": 1,
-        "tricks_required": ["u_sub"],
+        "tricks_required": form_tricks,
         "family": form_id,
     }
 
-    a = rng.randint(2, max(2, min(4, spec.coef_abs_max)))
-    b = _coef(rng, max(2, spec.coef_abs_max), exclude_zero=False)
-    n = rng.randint(2, max(2, min(5, spec.degree_max)))
-    c = rng.randint(1, max(1, spec.coef_abs_max))
+    nt = bands.numeric_tier
+    a_hi = (2, 3, 4, 6, 8)[nt]
+    n_hi = (2, 3, 4, 5, 6)[nt]
+    a = rng.randint(2, max(2, min(a_hi, spec.coef_abs_max)))
+    b_hi = (2, 3, 5, 8, 12)[nt]
+    b = _coef(rng, max(2, min(b_hi, spec.coef_abs_max)), exclude_zero=False)
+    n = rng.randint(2, max(2, min(n_hi, spec.degree_max)))
+    c = rng.randint(1, max(1, min((3, 4, 6, 9, 12)[nt], spec.coef_abs_max)))
+    meta["u_sub_form_preset"] = spec.u_sub_form_preset
+    meta["numeric_tier"] = nt
+    meta["format_tier"] = bands.format_tier
 
     if form_id == "power_linear_du":
         inner = format_linear_latex(a, b, variable=var)
-        prompt = rf"\int {a}\left({inner}\right)^{{{n}}}\,d{var}"
-        answer = _plus_c(
-            rf"\frac{{1}}{{{n + 1}}}\left({inner}\right)^{{{n + 1}}}",
-            include=include,
-        )
+        hide = bands.format_tier >= 2
+        if hide:
+            prompt = rf"\int \left({inner}\right)^{{{n}}}\,d{var}"
+            answer = _plus_c(
+                rf"\frac{{1}}{{{a * (n + 1)}}}\left({inner}\right)^{{{n + 1}}}",
+                include=include,
+            )
+            meta["omit_du_constant"] = True
+        else:
+            prompt = rf"\int {a}\left({inner}\right)^{{{n}}}\,d{var}"
+            answer = _plus_c(
+                rf"\frac{{1}}{{{n + 1}}}\left({inner}\right)^{{{n + 1}}}",
+                include=include,
+            )
         meta["function_classes"] = ["algebraic"]
         return prompt, answer, meta
     if form_id == "power_quad_x_du":
@@ -1882,6 +2748,28 @@ def _sample_u_sub_derivative_backed(
             rf"\frac{{1}}{{{n + 1}}}\left({var}^{{2}}+{c}\right)^{{{n + 1}}}",
             include=include,
         )
+        meta["function_classes"] = ["algebraic"]
+        return prompt, answer, meta
+    if form_id == "power_cubic_x2_du":
+        # Checkpoint 5.25: ∫ 3x² (x³-3)² dx; 5.26 omits the 3.
+        shift = c if rng.random() < 0.5 else -c
+        inner = (
+            rf"{var}^{{3}}+{shift}" if shift > 0 else rf"{var}^{{3}}-{abs(shift)}"
+        )
+        hide = bands.format_tier >= 2
+        if hide:
+            prompt = rf"\int {var}^{{2}}\left({inner}\right)^{{{n}}}\,d{var}"
+            answer = _plus_c(
+                rf"\frac{{1}}{{{3 * (n + 1)}}}\left({inner}\right)^{{{n + 1}}}",
+                include=include,
+            )
+            meta["omit_du_constant"] = True
+        else:
+            prompt = rf"\int 3{var}^{{2}}\left({inner}\right)^{{{n}}}\,d{var}"
+            answer = _plus_c(
+                rf"\frac{{1}}{{{n + 1}}}\left({inner}\right)^{{{n + 1}}}",
+                include=include,
+            )
         meta["function_classes"] = ["algebraic"]
         return prompt, answer, meta
     if form_id == "root_quad_x_du":
@@ -1936,6 +2824,87 @@ def _sample_u_sub_derivative_backed(
         answer = _plus_c(rf"e^{{{inner}}}", include=include)
         meta["function_classes"] = ["exp"]
         return prompt, answer, meta
+    if form_id == "exp_of_cubic":
+        # Example 5.39: ∫ 3x² e^{2x³}; Checkpoint 5.31: x² e^{-2x³} (omit 3).
+        a_exp = rng.choice([-2, -1, 1, 2]) if nt >= 1 else rng.choice([1, 2])
+        if a_exp == 1:
+            inner = rf"{var}^{{3}}"
+        elif a_exp == -1:
+            inner = rf"-{var}^{{3}}"
+        else:
+            inner = rf"{a_exp}{var}^{{3}}"
+        hide = bands.format_tier >= 2
+        if hide:
+            prompt = rf"\int {var}^{{2}}e^{{{inner}}}\,d{var}"
+            scale = 3 * a_exp
+        else:
+            prompt = rf"\int 3{var}^{{2}}e^{{{inner}}}\,d{var}"
+            scale = a_exp
+            meta["omit_du_constant"] = False
+        if hide:
+            meta["omit_du_constant"] = True
+        if scale == 1:
+            body = rf"e^{{{inner}}}"
+        elif scale == -1:
+            body = rf"-e^{{{inner}}}"
+        else:
+            body = rf"{frac_latex(Fraction(1, scale))}e^{{{inner}}}"
+        answer = _plus_c(body, include=include)
+        meta["function_classes"] = ["exp", "algebraic"]
+        return prompt, answer, meta
+    if form_id == "exp_of_quartic":
+        # Checkpoint 5.33: ∫ 2x³ e^{x⁴} dx (u=x⁴, du=4x³ dx).
+        a_exp = rng.choice([-2, -1, 1, 2]) if nt >= 1 else rng.choice([1, 2])
+        if a_exp == 1:
+            inner = rf"{var}^{{4}}"
+        elif a_exp == -1:
+            inner = rf"-{var}^{{4}}"
+        else:
+            inner = rf"{a_exp}{var}^{{4}}"
+        hide = bands.format_tier >= 2
+        if hide:
+            prompt = rf"\int {var}^{{3}}e^{{{inner}}}\,d{var}"
+            scale = 4 * a_exp
+            meta["omit_du_constant"] = True
+        else:
+            prompt = rf"\int 2{var}^{{3}}e^{{{inner}}}\,d{var}"
+            scale = 2 * a_exp
+            meta["omit_du_constant"] = False
+        if scale == 1:
+            body = rf"e^{{{inner}}}"
+        elif scale == -1:
+            body = rf"-e^{{{inner}}}"
+        else:
+            body = rf"{frac_latex(Fraction(1, scale))}e^{{{inner}}}"
+        answer = _plus_c(body, include=include)
+        meta["function_classes"] = ["exp", "algebraic"]
+        return prompt, answer, meta
+    if form_id == "exp_root_chain":
+        # Example 5.38: ∫ e^x √(1+e^x) dx
+        c0 = rng.choice([1, 2, 3])
+        prompt = rf"\int e^{{{var}}}\sqrt{{{c0}+e^{{{var}}}}}\,d{var}"
+        answer = _plus_c(
+            rf"\frac{{2}}{{3}}\left({c0}+e^{{{var}}}\right)^{{\frac{{3}}{{2}}}}",
+            include=include,
+        )
+        meta["function_classes"] = ["exp", "algebraic"]
+        return prompt, answer, meta
+    if form_id == "exp_power_of_exp":
+        # Checkpoint 5.32: ∫ e^x (3e^x-2)² dx
+        aa = rng.randint(2, max(2, a_hi))
+        bb = rng.randint(1, max(1, min(4, spec.coef_abs_max)))
+        inner = (
+            rf"{aa}e^{{{var}}}+{bb}"
+            if rng.random() < 0.5
+            else rf"{aa}e^{{{var}}}-{bb}"
+        )
+        prompt = rf"\int e^{{{var}}}\left({inner}\right)^{{{n}}}\,d{var}"
+        answer = _plus_c(
+            rf"\frac{{1}}{{{aa * (n + 1)}}}\left({inner}\right)^{{{n + 1}}}",
+            include=include,
+        )
+        meta["function_classes"] = ["exp", "algebraic"]
+        return prompt, answer, meta
     if form_id == "trig_of_linear":
         inner = format_linear_latex(a, b, variable=var)
         if rng.random() < 0.5:
@@ -1978,6 +2947,252 @@ def _sample_u_sub_derivative_backed(
         prompt = rf"\int {a}\sec^{{2}}({inner})\,d{var}"
         answer = _plus_c(rf"\tan({inner})", include=include)
         meta["function_classes"] = ["trig"]
+        return prompt, answer, meta
+    if form_id == "composite_ln_of_trig":
+        # ∫ cot = ln|sin|; ∫ tan = −ln|cos| (rewrite then du/u).
+        if rng.random() < 0.5:
+            prompt = rf"\int \cot({var})\,d{var}"
+            answer = _plus_c(rf"\ln|\sin({var})|", include=include)
+        else:
+            prompt = rf"\int \tan({var})\,d{var}"
+            answer = _plus_c(rf"-\ln|\cos({var})|", include=include)
+        meta["function_classes"] = ["trig", "log"]
+        return prompt, answer, meta
+
+    # BC bank §1 families (closed reverse-chain / du-over-u). D-gated in catalog.
+    n_neg = rng.choice([2, 3, 4] if nt >= 2 else [2, 3])
+    if form_id == "power_quad_neg":
+        # Bank ∫ x/(x²+1)⁴ is one draw of ∫ a x / (b x² + c)^n.
+        bq = 1 if nt < 2 else rng.choice([1, 1, 2])
+        aq = 1 if (nt < 2 or rng.random() < 0.55) else rng.randint(2, min(3, a_hi))
+        inner = rf"{var}^{{2}}+{c}" if bq == 1 else rf"{bq}{var}^{{2}}+{c}"
+        num = var if aq == 1 else rf"{aq}{var}"
+        prompt = rf"\int \frac{{{num}}}{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+        answer = _neg_power_antideriv(
+            inner, n_neg, 2 * bq, include=include, num_coef=aq
+        )
+        meta["function_classes"] = ["algebraic"]
+        meta["omit_du_constant"] = True
+        return prompt, answer, meta
+    if form_id == "power_cubic_neg":
+        shift = c if rng.random() < 0.5 else -c
+        bq = 1 if nt < 2 else rng.choice([1, 1, 2])
+        inner = (
+            rf"{var}^{{3}}+{shift}"
+            if bq == 1 and shift > 0
+            else (
+                rf"{var}^{{3}}-{abs(shift)}"
+                if bq == 1
+                else (
+                    rf"{bq}{var}^{{3}}+{shift}"
+                    if shift > 0
+                    else rf"{bq}{var}^{{3}}-{abs(shift)}"
+                )
+            )
+        )
+        hide = bands.format_tier >= 2
+        if hide:
+            prompt = rf"\int \frac{{{var}^{{2}}}}{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+            answer = _neg_power_antideriv(
+                inner, n_neg, 3 * bq, include=include, num_coef=1
+            )
+            meta["omit_du_constant"] = True
+        else:
+            num = rf"3{var}^{{2}}" if bq == 1 else rf"{3 * bq}{var}^{{2}}"
+            prompt = rf"\int \frac{{{num}}}{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+            answer = _neg_power_antideriv(
+                inner, n_neg, 3 * bq, include=include, num_coef=3 * bq
+            )
+        meta["function_classes"] = ["algebraic"]
+        return prompt, answer, meta
+    if form_id == "root_quad_minus":
+        cc = rng.choice([4, 9, 16] if nt >= 1 else [4, 9])
+        prompt = rf"\int \frac{{{var}}}{{\sqrt{{{cc}-{var}^{{2}}}}}}\,d{var}"
+        answer = _plus_c(rf"-\sqrt{{{cc}-{var}^{{2}}}}", include=include)
+        meta["function_classes"] = ["algebraic"]
+        meta["omit_du_constant"] = True
+        return prompt, answer, meta
+    if form_id == "power_quad_m3_2":
+        inner = rf"1+{var}^{{2}}" if rng.random() < 0.5 else rf"{var}^{{2}}+{c}"
+        prompt = (
+            rf"\int \frac{{{var}}}{{\left({inner}\right)\sqrt{{{inner}}}}}\,d{var}"
+        )
+        answer = _plus_c(rf"-\frac{{1}}{{\sqrt{{{inner}}}}}", include=include)
+        meta["function_classes"] = ["algebraic"]
+        meta["omit_du_constant"] = True
+        return prompt, answer, meta
+    if form_id == "ln_power_over_x":
+        pn = rng.choice([2, 3] if nt < 3 else [2, 3, 4])
+        prompt = rf"\int \frac{{\left(\ln {var}\right)^{{{pn}}}}}{{{var}}}\,d{var}"
+        answer = _plus_c(
+            rf"\frac{{1}}{{{pn + 1}}}\left(\ln {var}\right)^{{{pn + 1}}}",
+            include=include,
+        )
+        meta["function_classes"] = ["log"]
+        return prompt, answer, meta
+    if form_id == "power_of_one_plus_ln":
+        aa = rng.choice([1, 2])
+        inner = rf"{aa}+\ln {var}" if aa != 1 else rf"1+\ln {var}"
+        prompt = rf"\int \frac{{1}}{{{var}\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+        answer = _neg_power_antideriv(inner, n_neg, 1, include=include)
+        meta["function_classes"] = ["log"]
+        return prompt, answer, meta
+    if form_id == "exp_over_power_of_exp":
+        aa = rng.choice([1, 2, 3])
+        inner = rf"{aa}+e^{{{var}}}" if aa != 1 else rf"1+e^{{{var}}}"
+        prompt = rf"\int \frac{{e^{{{var}}}}}{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+        answer = _neg_power_antideriv(inner, n_neg, 1, include=include)
+        meta["function_classes"] = ["exp"]
+        return prompt, answer, meta
+    if form_id == "exp_e2x_over_power":
+        # u=a+e^x, e^{2x} dx = (u-a) du; n=3 bank item.
+        aa = rng.choice([1, 2])
+        inner = rf"{aa}+e^{{{var}}}" if aa != 1 else rf"1+e^{{{var}}}"
+        prompt = rf"\int \frac{{e^{{2{var}}}}}{{\left({inner}\right)^{{3}}}}\,d{var}"
+        # ∫ (u-a)/u^3 du = −1/u + a/(2 u^2)
+        if aa == 1:
+            body = rf"-\frac{{1}}{{{inner}}}+\frac{{1}}{{2\left({inner}\right)^{{2}}}}"
+        else:
+            body = (
+                rf"-\frac{{1}}{{{inner}}}"
+                rf"+\frac{{{aa}}}{{2\left({inner}\right)^{{2}}}}"
+            )
+        answer = _plus_c(body, include=include)
+        meta["function_classes"] = ["exp"]
+        return prompt, answer, meta
+    if form_id == "trig_over_linear_trig_power":
+        aa = rng.choice([1, 2, 3])
+        kind = rng.choice(["sin_cos", "cos_sin", "sec2_tan", "sectan_sec"])
+        if kind == "sin_cos":
+            inner = rf"{aa}+\cos({var})"
+            prompt = rf"\int \frac{{\sin({var})}}{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+            answer = _neg_power_antideriv(inner, n_neg, -1, include=include)
+        elif kind == "cos_sin":
+            inner = rf"{aa}+\sin({var})"
+            prompt = rf"\int \frac{{\cos({var})}}{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+            answer = _neg_power_antideriv(inner, n_neg, 1, include=include)
+        elif kind == "sec2_tan":
+            inner = rf"{aa}+\tan({var})"
+            prompt = rf"\int \frac{{\sec^{{2}}({var})}}{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+            answer = _neg_power_antideriv(inner, n_neg, 1, include=include)
+        else:
+            inner = rf"{aa}+\sec({var})"
+            prompt = (
+                rf"\int \frac{{\sec({var})\tan({var})}}"
+                rf"{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+            )
+            answer = _neg_power_antideriv(inner, n_neg, 1, include=include)
+        meta["function_classes"] = ["trig"]
+        return prompt, answer, meta
+    if form_id == "ln_ln_nested":
+        prompt = (
+            rf"\int \frac{{1}}{{{var}\ln {var}\left(\ln(\ln {var})\right)^{{2}}}}"
+            rf"\,d{var}"
+        )
+        answer = _neg_power_antideriv(rf"\ln(\ln {var})", 2, 1, include=include)
+        meta["function_classes"] = ["log"]
+        return prompt, answer, meta
+    if form_id == "ln_over_x_sqrt":
+        prompt = rf"\int \frac{{1}}{{{var}\sqrt{{\ln {var}}}}}\,d{var}"
+        answer = _plus_c(rf"2\sqrt{{\ln {var}}}", include=include)
+        meta["function_classes"] = ["log"]
+        return prompt, answer, meta
+    if form_id == "arctan_of_ln":
+        prompt = rf"\int \frac{{1}}{{{var}\left(1+(\ln {var})^{{2}}\right)}}\,d{var}"
+        answer = _plus_c(rf"\arctan(\ln {var})", include=include)
+        meta["function_classes"] = ["log", "invtrig"]
+        return prompt, answer, meta
+    if form_id == "du_over_u_quadratic":
+        bb = rng.choice([1, 2])
+        cc = rng.randint(2, max(2, min(9, spec.coef_abs_max)))
+        lin = rf"{var}" if bb == 1 else rf"{bb}{var}"
+        inner = rf"{var}^{{2}}+{lin}+{cc}"
+        num = rf"2{var}+{bb}"
+        prompt = rf"\int \frac{{{num}}}{{{inner}}}\,d{var}"
+        answer = _plus_c(rf"\ln|{inner}|", include=include)
+        meta["function_classes"] = ["log", "algebraic"]
+        return prompt, answer, meta
+    if form_id == "du_over_ln_of_poly":
+        shift = c if rng.random() < 0.5 else -c
+        poly = (
+            rf"{var}^{{3}}+{shift}" if shift > 0 else rf"{var}^{{3}}-{abs(shift)}"
+        )
+        prompt = (
+            rf"\int \frac{{{var}^{{2}}}}{{\left({poly}\right)\ln\left({poly}\right)}}"
+            rf"\,d{var}"
+        )
+        answer = _plus_c(
+            rf"\frac{{1}}{{3}}\ln\left|\ln\left({poly}\right)\right|",
+            include=include,
+        )
+        meta["function_classes"] = ["log"]
+        meta["omit_du_constant"] = True
+        return prompt, answer, meta
+    if form_id == "cos_of_ln_over_x":
+        if rng.random() < 0.5:
+            prompt = rf"\int \frac{{\cos(\ln {var})}}{{{var}}}\,d{var}"
+            answer = _plus_c(rf"\sin(\ln {var})", include=include)
+        else:
+            prompt = rf"\int \frac{{\sin(\ln {var})}}{{{var}}}\,d{var}"
+            answer = _plus_c(rf"-\cos(\ln {var})", include=include)
+        meta["function_classes"] = ["log", "trig"]
+        return prompt, answer, meta
+    if form_id == "sin_of_sqrt":
+        prompt = rf"\int \frac{{\sin(\sqrt{{{var}}})}}{{\sqrt{{{var}}}}}\,d{var}"
+        answer = _plus_c(rf"-2\cos(\sqrt{{{var}}})", include=include)
+        meta["function_classes"] = ["trig", "algebraic"]
+        meta["omit_du_constant"] = True
+        return prompt, answer, meta
+    if form_id == "exp_of_sqrt":
+        prompt = rf"\int \frac{{e^{{\sqrt{{{var}}}}}}}{{\sqrt{{{var}}}}}\,d{var}"
+        answer = _plus_c(rf"2e^{{\sqrt{{{var}}}}}", include=include)
+        meta["function_classes"] = ["exp", "algebraic"]
+        meta["omit_du_constant"] = True
+        return prompt, answer, meta
+    if form_id == "root_ln_of_linear":
+        aa = rng.choice([1, 2])
+        lin = rf"{var}+{aa}"
+        prompt = rf"\int \frac{{1}}{{\left({lin}\right)\sqrt{{\ln({lin})}}}}\,d{var}"
+        answer = _plus_c(rf"2\sqrt{{\ln({lin})}}", include=include)
+        meta["function_classes"] = ["log"]
+        return prompt, answer, meta
+    if form_id == "ln_sq_over_root_ln_cube":
+        prompt = (
+            rf"\int \frac{{\left(\ln {var}\right)^{{2}}}}"
+            rf"{{{var}\sqrt{{1+\left(\ln {var}\right)^{{3}}}}}}\,d{var}"
+        )
+        answer = _plus_c(
+            rf"\frac{{2}}{{3}}\sqrt{{1+\left(\ln {var}\right)^{{3}}}}",
+            include=include,
+        )
+        meta["function_classes"] = ["log"]
+        return prompt, answer, meta
+    if form_id == "power_hex_neg":
+        bq = 1 if nt < 2 else rng.choice([1, 1, 2])
+        inner = rf"{var}^{{6}}+{c}" if bq == 1 else rf"{bq}{var}^{{6}}+{c}"
+        prompt = rf"\int \frac{{{var}^{{5}}}}{{\left({inner}\right)^{{{n_neg}}}}}\,d{var}"
+        answer = _neg_power_antideriv(inner, n_neg, 6 * bq, include=include)
+        meta["function_classes"] = ["algebraic"]
+        meta["omit_du_constant"] = True
+        return prompt, answer, meta
+    if form_id == "root_of_x4":
+        bq = 1 if nt < 2 else rng.choice([1, 1, 2])
+        inner = (
+            rf"1+{var}^{{4}}"
+            if bq == 1 and rng.random() < 0.5
+            else (rf"{var}^{{4}}+{c}" if bq == 1 else rf"{bq}{var}^{{4}}+{c}")
+        )
+        prompt = rf"\int \frac{{{var}^{{3}}}}{{\sqrt{{{inner}}}}}\,d{var}"
+        # ∫ x³ / √(b x⁴ + c) = (1/(2b)) * 2 √u = √u / b
+        if bq == 1:
+            answer = _plus_c(rf"\frac{{1}}{{2}}\sqrt{{{inner}}}", include=include)
+        else:
+            answer = _plus_c(
+                rf"{frac_latex(Fraction(1, 2 * bq))}\sqrt{{{inner}}}",
+                include=include,
+            )
+        meta["function_classes"] = ["algebraic"]
+        meta["omit_du_constant"] = True
         return prompt, answer, meta
 
     # Fallback: shared sampler
@@ -2150,6 +3365,15 @@ def _sample_pfd_integral(
         for f in implemented_forms(catalog)
         if not str(f.get("form_id", "")).startswith("u_sub_then_pfd")
     ]
+    preset_ids = resolve_pfd_form_preset(spec.pfd_form_preset)
+    if preset_ids:
+        subset = [f for f in pool if str(f.get("form_id")) in preset_ids]
+        if subset:
+            pool = subset
+    pool = _gated_form_pool(
+        {"forms": pool, "catalog_id": catalog.get("catalog_id")},
+        spec,
+    ) or pool
     form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
     form_id = str(form["form_id"])
     ctx = _pfd_ctx(rng, spec)
@@ -2161,6 +3385,7 @@ def _sample_pfd_integral(
         "construction": "partial_fractions.combine_pf_to_rational",
         "pfd_source": "partial_fractions.combine_pf_to_rational",
         "tricks_required": ["pfd"],
+        "pfd_form_preset": spec.pfd_form_preset,
     }
 
     if form_id == "repeated_linear_square":
@@ -2526,17 +3751,31 @@ def _run_pipeline(
     primary = tricks[0] if tricks else "power"
     if primary == "u_sub":
         flavor = "power"
-        if "ln_exp" in spec.tricks_allowed or spec.pack.endswith("log_exp_sub"):
-            flavor = "ln_exp"
-        if "invtrig" in spec.tricks_allowed or spec.pack.endswith("invtrig_sub"):
-            flavor = "invtrig"
-        if spec.pack == "integral_log_exp_sub":
-            flavor = "ln_exp"
-        if spec.pack == "integral_invtrig_sub":
-            flavor = "invtrig"
+        if spec.pack == "integral_general":
+            flavs = ["power"]
+            if spec.allow_trig:
+                flavs.append("trig")
+            if spec.allow_exp or spec.allow_log:
+                flavs.append("ln_exp")
+            if spec.allow_invtrig:
+                flavs.append("invtrig")
+            flavor = rng.choice(flavs)
+        else:
+            if "ln_exp" in spec.tricks_allowed or spec.pack.endswith("log_exp_sub"):
+                flavor = "ln_exp"
+            if "invtrig" in spec.tricks_allowed or spec.pack.endswith("invtrig_sub"):
+                flavor = "invtrig"
+            if spec.pack == "integral_log_exp_sub":
+                flavor = "ln_exp"
+            if spec.pack == "integral_invtrig_sub":
+                flavor = "invtrig"
         # Never treat trig-sub leaf as plain algebraic u-sub
         if spec.pack == "integral_trig_sub" or spec.require_trig_sub:
             return _sample_trig_sub(rng, spec, with_u_wrap=False)
+        if spec.pack == "integral_u_sub_definite" or (
+            spec.definite and spec.pack == "integral_u_sub"
+        ):
+            return _sample_definite_u_sub(rng, spec)
         return _sample_u_sub_derivative_backed(rng, spec, flavor=flavor)
     if primary == "pfd":
         return _sample_pfd_integral(rng, spec)
@@ -2549,6 +3788,8 @@ def _run_pipeline(
     if primary == "parts":
         return _sample_parts(rng, spec)
     if primary == "ftc":
+        if spec.pack == "integral_ftc2":
+            return _sample_ftc2(rng, spec)
         return _sample_ftc(rng, spec)
     if primary == "trig_sub":
         return _sample_trig_sub(rng, spec, with_u_wrap=False)
@@ -2586,7 +3827,7 @@ def sample_integral_expression(
         "definite_bounds": allows.get("allow_ftc") or allows.get("definite"),
     }
     allowed_ids = {uid for uid, ok in id_gate.items() if ok}
-    purchased_list, _, _ = select_upgrades(
+    purchased_list, remaining_budget, _skipped = select_upgrades(
         upgrades, d, allowed_ids=allowed_ids, rng=rng
     )
     purchased = {f.id for f in purchased_list}
@@ -2598,6 +3839,15 @@ def sample_integral_expression(
         purchased.add("use_pfd")
     if allows.get("require_trig_sub"):
         purchased.add("use_trig_sub")
+
+    difficulty_costs = [
+        {"source": "spec", "feature": f.id, "cost": float(f.cost)}
+        for f in purchased_list
+    ]
+    difficulty_cost_total = float(sum(f.cost for f in purchased_list))
+    difficulty_shortfall = (
+        float(remaining_budget) if remaining_budget > 1e-9 else 0.0
+    )
 
     spec = build_integral_spec(
         settings, generator_key=key, allows=allows, purchased=purchased, d=d
@@ -2677,6 +3927,14 @@ def sample_integral_expression(
         "pipeline": pipeline.as_dict(),
         "shape_id": extra.get("family") or technique,
         "construction": extra.get("construction") or spec.construction,
+        "difficulty_costs": difficulty_costs,
+        "difficulty_cost_total": difficulty_cost_total,
+        "difficulty_shortfall": difficulty_shortfall,
+        "wrappers_applied": [],
+        "core_form_id": extra.get("form_id")
+        or extra.get("openstax_form")
+        or extra.get("family")
+        or technique,
     }
     for k in (
         "pfd_roots",
@@ -2699,6 +3957,12 @@ def sample_integral_expression(
         "strategy",
         "catalog_id",
         "family",
+        "u_sub_form_preset",
+        "parts_form_preset",
+        "pfd_form_preset",
+        "omit_du_constant",
+        "numeric_tier",
+        "format_tier",
     ):
         if k in extra and extra[k] is not None:
             meta[k] = extra[k]
@@ -2710,6 +3974,12 @@ def sample_integral_expression(
         meta["openstax_form"] = fid
         meta["shape_id"] = fid
         meta["family"] = fid
+        snap["form_id"] = fid
+        snap["family"] = fid
+        if extra.get("catalog_id"):
+            snap["catalog_id"] = extra["catalog_id"]
+        if extra.get("strategy"):
+            snap["strategy"] = extra["strategy"]
 
     return IntegralSample(
         prompt_latex=prompt,
@@ -2738,12 +4008,14 @@ def sample_integral_problem(
         "integral_log_exp": "log/exp integral",
         "integral_inverse_trig": "inverse trig integral",
         "integral_substitution": "substitution integral",
+        "integral_definite_substitution": "definite substitution integral",
         "integral_trig_substitution": "trig substitution integral",
         "integral_log_exp_substitution": "log/exp substitution integral",
         "integral_invtrig_substitution": "invtrig substitution integral",
         "integration_by_parts": "integration by parts",
         "integral_partial_fractions": "partial fractions integral",
         "integral_multi_trick": "multi-trick integral",
+        "integral_general": "general integral",
         "first_fundamental_theorem": "first fundamental theorem",
         "second_fundamental_theorem": "second fundamental theorem",
     }.get(key or "", "integral")

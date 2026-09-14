@@ -1,0 +1,3662 @@
+{
+  "section": {
+    "slug": "pc_partial_fraction_decomposition",
+    "title": "PC \u2014 Partial fraction decomposition",
+    "pattern": "",
+    "engine": "partial_fraction_decomposition",
+    "type_id": "pc_partial_fraction_decomposition",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Live <code>partial_fraction_decomposition</code> engine (reuse, no rewrite-skeleton). D=0 simple per <code>notes/pc_partial_fraction_decomposition.md</code>. OpenStax PC cite in notes."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Decompose } \\frac{x + 5}{x^{2} + x - 2}",
+      "answer_latex": "\\frac{-1}{x + 2}+\\frac{2}{x - 1}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "-2",
+            "d": 0.0,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 0.0,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 2,
+        "pfd_term_count": 2,
+        "pfd_coef_abs_max": 3,
+        "pfd_root_abs_max": 3,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "-1",
+                "root": "-2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "2",
+                "root": "1",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_2",
+        "openstax_form": "nonrepeated_linear_2",
+        "openstax_case": "\u00a79.4 Example 1 \u2014 nonrepeated linear factors",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_2",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 2,
+          "pfd_coef_abs_max": 3,
+          "pfd_root_abs_max": 3,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 0.0,
+          "d_spend": 0.0
+        },
+        "effort_features": {
+          "answer_len": 32,
+          "nest_depth": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Decompose } \\frac{3x + 7}{x^{2} + 4x + 3}",
+      "answer_latex": "\\frac{2}{x + 1}+\\frac{1}{x + 3}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 0.0,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 0.0,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 2,
+        "pfd_term_count": 2,
+        "pfd_coef_abs_max": 3,
+        "pfd_root_abs_max": 3,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "2",
+                "root": "-1",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "1",
+                "root": "-3",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_2",
+        "openstax_form": "nonrepeated_linear_2",
+        "openstax_case": "\u00a79.4 Example 1 \u2014 nonrepeated linear factors",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_2",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 2,
+          "pfd_coef_abs_max": 3,
+          "pfd_root_abs_max": 3,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 0.0,
+          "d_spend": 0.0
+        },
+        "effort_features": {
+          "answer_len": 31,
+          "nest_depth": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Decompose } \\frac{3x - 7}{x^{2} - 5x + 6}",
+      "answer_latex": "\\frac{1}{x - 2}+\\frac{2}{x - 3}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 2,
+        "pfd_term_count": 2,
+        "pfd_coef_abs_max": 3,
+        "pfd_root_abs_max": 3,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 0.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "1",
+                "root": "2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "2",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_2",
+        "openstax_form": "nonrepeated_linear_2",
+        "openstax_case": "\u00a79.4 Example 1 \u2014 nonrepeated linear factors",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_2",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 2,
+          "pfd_coef_abs_max": 3,
+          "pfd_root_abs_max": 3,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 0.0,
+          "d_spend": 0.0
+        },
+        "effort_features": {
+          "answer_len": 31,
+          "nest_depth": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Decompose } \\frac{6x^{2} - 3x - 75}{3\\left(x + 2\\right)\\left(x - 1\\right)\\left(x - 3\\right)}",
+      "answer_latex": "\\frac{-1}{x + 2}+\\frac{4}{x - 1}+\\frac{-1}{x - 3}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.816,
+          "variable": 5.184
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "-2",
+            "d": 2.815603748905756,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 2.815603748905756,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.8156 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 2.815603748905756,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 2.815603748905756,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.8156 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 2.815603748905756,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.815603748905756,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.8156 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 2.815603748905756,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.815603748905756,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.8156 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 2.815603748905756,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.815603748905756,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.8156 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 2.815603748905756,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.815603748905756,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.8156 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 2.815603748905756,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 2.815603748905756,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.8156 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 5.1843962510942445,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 5.1843962510942445,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=5.1844 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 3,
+        "pfd_term_count": 3,
+        "pfd_coef_abs_max": 5,
+        "pfd_root_abs_max": 5,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 3,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "-1",
+                "root": "-2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "4",
+                "root": "1",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "-1",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_3",
+        "openstax_form": "nonrepeated_linear_3",
+        "openstax_case": "\u00a79.4 nonrepeated linear (3 factors)",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_3",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 3,
+          "pfd_coef_abs_max": 5,
+          "pfd_root_abs_max": 5,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 49,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Decompose } \\frac{6x + 32}{x^{2} + 9x + 14}",
+      "answer_latex": "\\frac{4}{x + 2}+\\frac{2}{x + 7}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 4.362,
+          "variable": 3.638
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "-2",
+            "d": 4.361953365174827,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 4.361953365174827,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=4.36195 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 4.361953365174827,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 4.361953365174827,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=4.36195 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-7",
+            "d": 4.361953365174827,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 4.361953365174827,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=4.36195 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 4.361953365174827,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 4.361953365174827,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=4.36195 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 3.638046634825173,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 3.638046634825173,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=3.63805 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 2,
+        "pfd_term_count": 2,
+        "pfd_coef_abs_max": 5,
+        "pfd_root_abs_max": 5,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "4",
+                "root": "-2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "2",
+                "root": "-7",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_2",
+        "openstax_form": "nonrepeated_linear_2",
+        "openstax_case": "\u00a79.4 Example 1 \u2014 nonrepeated linear factors",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_2",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 2,
+          "pfd_coef_abs_max": 5,
+          "pfd_root_abs_max": 5,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 31,
+          "nest_depth": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Decompose } \\frac{6x - 14}{2x^{2} - 10x + 12}",
+      "answer_latex": "\\frac{1}{x - 2}+\\frac{2}{x - 3}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_2"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.833,
+          "variable": 7.167
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.833190493594712,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.833190493594712,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.83319 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.833190493594712,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.833190493594712,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.83319 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.833190493594712,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.833190493594712,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.83319 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.833190493594712,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.833190493594712,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.83319 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 7.166809506405288,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 7.166809506405288,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=7.16681 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 2,
+        "pfd_term_count": 2,
+        "pfd_coef_abs_max": 5,
+        "pfd_root_abs_max": 5,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 8.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "1",
+                "root": "2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "2",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_2",
+        "openstax_form": "nonrepeated_linear_2",
+        "openstax_case": "\u00a79.4 Example 1 \u2014 nonrepeated linear factors",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_2",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 2,
+          "pfd_coef_abs_max": 5,
+          "pfd_root_abs_max": 5,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 8.0,
+          "d_spend": 8.0
+        },
+        "effort_features": {
+          "answer_len": 31,
+          "nest_depth": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Decompose } \\frac{3x^{2} + 24x + 96}{3x^{3} + 6x^{2} + 48x + 96}",
+      "answer_latex": "\\frac{1}{x + 2}+\\frac{8}{x^{2} + 16}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_irreducible_quadratic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "nonrepeated_irreducible_quadratic"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_irreducible_quadratic"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.631,
+          "variable": 10.369
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "-2",
+            "d": 5.631207497811512,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 5.631207497811512,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.63121 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 5.631207497811512,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 5.631207497811512,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.63121 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "8",
+            "d": 5.631207497811512,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 5.631207497811512,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.63121 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 10.368792502188489,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 10.368792502188489,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=10.3688 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 2,
+        "pfd_term_count": 2,
+        "pfd_coef_abs_max": 6,
+        "pfd_root_abs_max": 6,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": true,
+        "constructive": {
+          "effective_d": 16.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": true,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "1",
+                "root": "-2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "8",
+                "root": "0",
+                "multiplicity": 1,
+                "kind": "quadratic",
+                "lin_coef": "0",
+                "quad_a2": "16"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": true
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_irreducible_quadratic",
+        "openstax_form": "nonrepeated_irreducible_quadratic",
+        "openstax_case": "\u00a79.4 Example 3 \u2014 nonrepeated irreducible quadratic",
+        "strategy": "pfd_irreducible_quad",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_irreducible_quadratic",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 2,
+          "pfd_coef_abs_max": 6,
+          "pfd_root_abs_max": 6,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": true,
+          "level": "L4",
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 36,
+          "nest_depth": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Decompose } \\frac{14x^{2} + 55x - 400}{\\left(x\\right)\\left(x + 10\\right)\\left(x - 5\\right)}",
+      "answer_latex": "\\frac{8}{x}+\\frac{3}{x + 10}+\\frac{3}{x - 5}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 8.724,
+          "variable": 7.276
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "0",
+            "d": 8.723906730349654,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 8.723906730349654,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=8.72391 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "8",
+            "d": 8.723906730349654,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 8.723906730349654,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=8.72391 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-10",
+            "d": 8.723906730349654,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 8.723906730349654,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=8.72391 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 8.723906730349654,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 8.723906730349654,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=8.72391 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "5",
+            "d": 8.723906730349654,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 8.723906730349654,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=8.72391 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 8.723906730349654,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 8.723906730349654,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=8.72391 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 7.276093269650346,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 7.276093269650346,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=7.27609 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 3,
+        "pfd_term_count": 3,
+        "pfd_coef_abs_max": 6,
+        "pfd_root_abs_max": 6,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 16.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 3,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "8",
+                "root": "0",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "3",
+                "root": "-10",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "3",
+                "root": "5",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_3",
+        "openstax_form": "nonrepeated_linear_3",
+        "openstax_case": "\u00a79.4 nonrepeated linear (3 factors)",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_3",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 3,
+          "pfd_coef_abs_max": 6,
+          "pfd_root_abs_max": 6,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 44,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Decompose } \\frac{7x^{2} - 7x - 22}{\\left(x - 2\\right)\\left(x - 3\\right)\\left(x + 2\\right)}",
+      "answer_latex": "\\frac{2}{x - 2}+\\frac{4}{x - 3}+\\frac{1}{x + 2}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.666,
+          "variable": 14.334
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 1.666380987189424,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 1.666380987189424,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.66638 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 1.666380987189424,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 1.666380987189424,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.66638 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 1.666380987189424,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 1.666380987189424,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.66638 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 1.666380987189424,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 1.666380987189424,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.66638 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-2",
+            "d": 1.666380987189424,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 1.666380987189424,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.66638 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 1.666380987189424,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 1.666380987189424,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.66638 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 14.333619012810576,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 14.333619012810576,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=14.3336 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 3,
+        "pfd_term_count": 3,
+        "pfd_coef_abs_max": 6,
+        "pfd_root_abs_max": 6,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 16.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 3,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "2",
+                "root": "2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "4",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "1",
+                "root": "-2",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_3",
+        "openstax_form": "nonrepeated_linear_3",
+        "openstax_case": "\u00a79.4 nonrepeated linear (3 factors)",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_3",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 3,
+          "pfd_coef_abs_max": 6,
+          "pfd_root_abs_max": 6,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 16.0,
+          "d_spend": 16.0
+        },
+        "effort_features": {
+          "answer_len": 47,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Decompose } \\frac{-3x^{2} + 24x + 48}{3x^{3} + 12x^{2} + 48x + 192}",
+      "answer_latex": "\\frac{-1}{x + 4}+\\frac{8}{x^{2} + 16}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_irreducible_quadratic",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "nonrepeated_irreducible_quadratic"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_irreducible_quadratic"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 7.743,
+          "variable": 14.257
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "-4",
+            "d": 7.742910309490829,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 7.742910309490829,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=7.74291 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 7.742910309490829,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 7.742910309490829,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=7.74291 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "8",
+            "d": 7.742910309490829,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 7.742910309490829,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=7.74291 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 14.257089690509172,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 14.257089690509172,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=14.2571 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 2,
+        "pfd_term_count": 2,
+        "pfd_coef_abs_max": 8,
+        "pfd_root_abs_max": 7,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": true,
+        "constructive": {
+          "effective_d": 22.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 2,
+          "has_quadratic": true,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "-1",
+                "root": "-4",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "8",
+                "root": "0",
+                "multiplicity": 1,
+                "kind": "quadratic",
+                "lin_coef": "0",
+                "quad_a2": "16"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": true
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_irreducible_quadratic",
+        "openstax_form": "nonrepeated_irreducible_quadratic",
+        "openstax_case": "\u00a79.4 Example 3 \u2014 nonrepeated irreducible quadratic",
+        "strategy": "pfd_irreducible_quad",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_irreducible_quadratic",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 2,
+          "pfd_coef_abs_max": 8,
+          "pfd_root_abs_max": 7,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": true,
+          "level": "L4",
+          "effective_d": 22.0,
+          "d_spend": 22.0
+        },
+        "effort_features": {
+          "answer_len": 37,
+          "nest_depth": 0,
+          "n_terms": 2,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Decompose } \\frac{10x^{2} + 42x - 604}{\\left(x + 3\\right)\\left(x + 13\\right)\\left(x - 5\\right)}",
+      "answer_latex": "\\frac{8}{x + 3}+\\frac{3}{x + 13}+\\frac{-1}{x - 5}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 11.995,
+          "variable": 10.005
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 11.995371754230774,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 11.995371754230774,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=11.9954 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "8",
+            "d": 11.995371754230774,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 11.995371754230774,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=11.9954 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-13",
+            "d": 11.995371754230774,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 11.995371754230774,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=11.9954 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 11.995371754230774,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 11.995371754230774,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=11.9954 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "5",
+            "d": 11.995371754230774,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 11.995371754230774,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=11.9954 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 11.995371754230774,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 11.995371754230774,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=11.9954 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 10.004628245769226,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 10.004628245769226,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=10.0046 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 3,
+        "pfd_term_count": 3,
+        "pfd_coef_abs_max": 8,
+        "pfd_root_abs_max": 7,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 22.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 3,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "8",
+                "root": "-3",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "3",
+                "root": "-13",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "-1",
+                "root": "5",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_3",
+        "openstax_form": "nonrepeated_linear_3",
+        "openstax_case": "\u00a79.4 nonrepeated linear (3 factors)",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_3",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 3,
+          "pfd_coef_abs_max": 8,
+          "pfd_root_abs_max": 7,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 22.0,
+          "d_spend": 22.0
+        },
+        "effort_features": {
+          "answer_len": 49,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "pc_partial_fraction_decomposition",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Decompose } \\frac{7x^{2} - x - 36}{\\left(x - 2\\right)\\left(x - 3\\right)\\left(x + 3\\right)}",
+      "answer_latex": "\\frac{2}{x - 2}+\\frac{4}{x - 3}+\\frac{1}{x + 3}",
+      "skeleton_pattern": "",
+      "form_id": "nonrepeated_linear_3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "primitive_engine",
+          "constructive_pfd"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "openstax_form",
+          "nonrepeated_linear_3"
+        ],
+        [
+          "mode",
+          "pfd"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 22.0,
+        "spend": {
+          "numbers": 2.291,
+          "variable": 19.709
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 2.291273857385458,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.291273857385458,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.29127 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 2.291273857385458,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.291273857385458,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.29127 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 2.291273857385458,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.291273857385458,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.29127 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 2.291273857385458,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.291273857385458,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.29127 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 2.291273857385458,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 2.291273857385458,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.29127 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 2.291273857385458,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.291273857385458,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.29127 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          },
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 19.70872614261454,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 19.70872614261454,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=19.7087 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "polynomial",
+          "max_degree": 3,
+          "max_variables": 2,
+          "allow_var_var_product": true,
+          "allow_abs": false,
+          "allow_higher_powers": true
+        },
+        "primitive_engine": "constructive_pfd",
+        "level": "L4",
+        "mode": "pfd",
+        "n_terms": 3,
+        "pfd_term_count": 3,
+        "pfd_coef_abs_max": 8,
+        "pfd_root_abs_max": 7,
+        "allow_repeated_factors": false,
+        "allow_quadratic_irreducible": false,
+        "constructive": {
+          "effective_d": 22.0,
+          "constructive": true,
+          "mode": "pfd",
+          "n_terms": 3,
+          "has_quadratic": false,
+          "pf_target": {
+            "kind": "partial_fractions",
+            "terms": [
+              {
+                "A": "2",
+                "root": "2",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "4",
+                "root": "3",
+                "multiplicity": 1,
+                "kind": "linear"
+              },
+              {
+                "A": "1",
+                "root": "-3",
+                "multiplicity": 1,
+                "kind": "linear"
+              }
+            ],
+            "level": "L4",
+            "has_quadratic": false
+          },
+          "recurse_hits": 0
+        },
+        "form_id": "nonrepeated_linear_3",
+        "openstax_form": "nonrepeated_linear_3",
+        "openstax_case": "\u00a79.4 nonrepeated linear (3 factors)",
+        "strategy": "pfd_distinct_linear",
+        "catalog_id": "precalculus_partial_fractions",
+        "construction": "forward_form_catalog",
+        "shape_id": "nonrepeated_linear_3",
+        "family": "pfd",
+        "generator": "partial_fraction_decomposition",
+        "structure_id": "partial_fraction_decomposition:pfd",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "partial_fractions",
+          "combine"
+        ],
+        "nest_depth": 0,
+        "spec_snapshot": {
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "generator": "partial_fraction_decomposition",
+          "course_tag": "pc",
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "partial_fractions",
+            "combine"
+          ],
+          "degree_max": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "nest_depth": 0,
+          "pfd_term_count": 3,
+          "pfd_coef_abs_max": 8,
+          "pfd_root_abs_max": 7,
+          "allow_repeated_factors": false,
+          "allow_quadratic_irreducible": false,
+          "level": "L4",
+          "effective_d": 22.0,
+          "d_spend": 22.0
+        },
+        "effort_features": {
+          "answer_len": 47,
+          "nest_depth": 0,
+          "n_terms": 3,
+          "n_factors": 0,
+          "degree_max": 0,
+          "methods": [
+            "partial_fractions",
+            "combine"
+          ],
+          "pack": "structured_pfd",
+          "family": "pfd",
+          "cancel_factor_count": 0
+        },
+        "course_tag": "pc",
+        "generation_settings": {
+          "integers_only": true,
+          "only_x": true,
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true
+        },
+        "instruction_latex": "\\text{Decompose.}"
+      }
+    }
+  ],
+  "failures": []
+}

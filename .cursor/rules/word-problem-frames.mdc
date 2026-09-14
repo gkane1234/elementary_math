@@ -1,0 +1,15 @@
+---
+description: Word problems use multiple OpenStax-derived story frames on existing math cores — not equation dumps or a single old Mad-Lib
+alwaysApply: true
+---
+
+# Word-problem story frames
+
+WP = an **existing math core** (SolveLinear / SolveInequality / proportion, etc.) plus **several OpenStax-derived typed frames**. Do not generate algebra and slap a sentence on it.
+
+- **Gold for story variety:** OpenStax IA/EA application sections (number, money, tickets, compare, budget, rate/d=rt, geometry, scale). Rotate distinct frames at the same D. D=0 stays simple (one easy frame, not a dump).
+- **Not gold:** the live dump stub (“the equation is $x+1=3$”) or a single vehicle Mad-Lib. Rate WPs use several OpenStax d=rt frames (bike / drive / walk / bus / train, …) — not bike-only because old code was. Flag `UNCLEAR` / `LOW_VARIETY` in `notes/<slug>.md` when that is what old path produced (`topic-notes-process.mdc`).
+- **Do not** dump mixture / systems / work onto one-step leaves. Those stay on their own kinds.
+- **Emulate old path** still applies to **algebra shapes** (term counts, `a=1` vs `a≠1`, parens). For WP **stories**, OpenStax frames win over a barren old Mad-Lib. See `benchmark-old-path.mdc`.
+
+Frames live in `question_engine/frameworks/primitives/wp_packaging.py` (`FRAMES`).

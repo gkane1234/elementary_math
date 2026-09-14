@@ -95,10 +95,10 @@ _TOPIC_DEFAULTS: dict[str, dict[str, bool]] = {
         "allow_implicit": False,
     },
     "derivative_product_rule": {
-        # Soft-unlock: D gates when specials appear; low D stays algebraic-heavy.
-        "allow_trig": True,
-        "allow_exp": True,
-        "allow_log": True,
+        # Specials OFF by default — checkbox / allow_* opt-in (D does not soft-unlock).
+        "allow_trig": False,
+        "allow_exp": False,
+        "allow_log": False,
         "allow_hyperbolic": False,
         "allow_roots": False,
         "allow_invtrig": False,
@@ -122,7 +122,7 @@ _TOPIC_DEFAULTS: dict[str, dict[str, bool]] = {
         "require_quotient": True,
     },
     "derivative_chain_rule": {
-        # Soft-unlock: D gates when specials appear; low D stays algebraic-heavy.
+        # OpenStax §3.6 compositions: specials ON; D-unlocks keep D=0 algebraic.
         "allow_trig": True,
         "allow_exp": True,
         "allow_log": True,
@@ -238,6 +238,7 @@ _TYPE_ID_TO_GENERATOR: dict[str, str] = {
     "calc_diff_inverse_trigonometric": "derivative_inverse_trig",
     "calc_diff_implicit": "derivative_implicit",
     "calc_diff_logarithmic": "derivative_logarithmic",
+    "calc_diff_inverse_functions": "derivative_inverse_functions",
     "calc_diff_higher_order_derivatives": "derivative_higher_order",
     "calc_diff_general": "derivative_general",
 }
@@ -563,9 +564,14 @@ def derivative_rule_structure(
 
     spans = structure_knobs_from_d(d)
     # D-gated unlocks within allowed classes (settings hard-gate)
+    key = generator_key or resolve_generator_key(topic)
     unlocked_trig = allow.allow_trig and d >= fget("derivatives", "unlock_trig_d", 6.0)
     unlocked_exp = allow.allow_exp and d >= fget("derivatives", "unlock_exp_d", 7.0)
-    unlocked_log = allow.allow_log and d >= fget("derivatives", "unlock_log_d", 12.0)
+    log_unlock = float(fget("derivatives", "unlock_log_d", 12.0))
+    if key == "derivative_chain_rule":
+        # §3.9 ln(g) is a mid-D chain shape on this leaf (old hard was trig-only).
+        log_unlock = min(log_unlock, 8.0)
+    unlocked_log = allow.allow_log and d >= log_unlock
     unlocked_roots = allow.allow_roots and d >= fget("derivatives", "unlock_roots_d", 4.0)
     unlocked_invtrig = allow.allow_invtrig and d >= fget(
         "derivatives", "unlock_invtrig_d", 10.0
@@ -671,8 +677,8 @@ def _derivative_order_for_sample(
 ) -> int:
     """Gate 2nd/3rd derivatives by D; prefer simpler inners upstream via packs.
 
-    Mid–high D specialty/general packs raise order=2 rate; packs tighten
-    factor/nest/power budgets so expanded answers stay within length gates.
+    First-derivative topic leaves stay order=1 at every D — higher-order
+    work belongs on ``derivative_higher_order`` (OpenStax §3.2 / §3.3).
     """
     if key == "derivative_higher_order":
         # Dedicated leaf always differentiates ≥2 times via Spec packs.
@@ -681,24 +687,23 @@ def _derivative_order_for_sample(
         if d < 20.0:
             return 3 if rng.random() < 0.25 else 2
         return 3 if rng.random() < 0.45 else 2
-    if key in {"derivative_product_rule", "derivative_quotient_rule"}:
-        # Product/quotient leaves already stress method; keep first-order
-        return 1
-    if d < 12.0 and "higher_order" not in purchased_ids:
-        return 1
-    # Probability grows with D; specialty/general get a bump
-    specialty = key in {
+    # Power / product / quotient / chain / trig / ln·exp / invtrig / general
+    # teach first derivatives; do not bleed d²/dx² at high D.
+    if key in {
+        "derivative_power_rule",
+        "derivative_product_rule",
+        "derivative_quotient_rule",
+        "derivative_chain_rule",
         "derivative_trigonometric",
         "derivative_ln_exp",
         "derivative_inverse_trig",
         "derivative_general",
-    }
-    if specialty:
-        p2 = 0.2 if d < 16 else (0.32 if d < 20 else (0.42 if d < 25 else 0.5))
-        p3 = 0.0 if d < 22 else (0.06 if d < 28 else 0.12)
-    else:
-        p2 = 0.14 if d < 18 else (0.24 if d < 22 else 0.34)
-        p3 = 0.0 if d < 22 else (0.08 if d < 30 else 0.15)
+    }:
+        return 1
+    if d < 12.0 and "higher_order" not in purchased_ids:
+        return 1
+    p2 = 0.14 if d < 18 else (0.24 if d < 22 else 0.34)
+    p3 = 0.0 if d < 22 else (0.08 if d < 30 else 0.15)
     if "higher_order" in purchased_ids:
         p2 = max(p2, 0.4)
         if d >= 20:
@@ -1030,6 +1035,32 @@ def _available_classes(
     return classes
 
 
+def _allows_for_catalog_and_skeleton(
+    allow: DerivativeAllowConfig,
+    structure: dict[str, Any],
+    *,
+    force_chain: bool = False,
+) -> dict[str, bool]:
+    """Checkbox ∧ D-unlock for function classes; method flags stay resolved."""
+    return {
+        "allow_trig": bool(allow.allow_trig) and bool(structure.get("allow_trig")),
+        "allow_exp": bool(allow.allow_exp) and bool(structure.get("allow_exp")),
+        "allow_log": bool(allow.allow_log) and bool(structure.get("allow_log")),
+        "allow_hyperbolic": bool(allow.allow_hyperbolic)
+        and bool(structure.get("allow_hyperbolic")),
+        "allow_roots": bool(allow.allow_roots)
+        and bool(structure.get("allow_roots")),
+        "allow_invtrig": bool(allow.allow_invtrig)
+        and bool(structure.get("allow_invtrig")),
+        "allow_chain": bool(allow.allow_chain) or bool(force_chain),
+        "require_chain": bool(allow.require_chain) or bool(force_chain),
+        "allow_product": bool(allow.allow_product),
+        "allow_quotient": bool(allow.allow_quotient),
+        "require_product": bool(allow.require_product),
+        "require_quotient": bool(allow.require_quotient),
+    }
+
+
 def _sample_via_spec(
     rng: random.Random,
     *,
@@ -1065,14 +1096,11 @@ def _sample_via_spec(
 
         if has_form_pattern(catalog_fid):
             try:
-                _skel_allows = {
-                    "allow_trig": bool(allow.allow_trig) or "trig" in classes,
-                    "allow_exp": bool(allow.allow_exp) or "exp" in classes,
-                    "allow_log": bool(allow.allow_log) or "log" in classes,
-                    "allow_roots": bool(structure.get("allow_roots"))
-                    or "roots" in classes,
-                    "allow_invtrig": bool(allow.allow_invtrig) or "invtrig" in classes,
-                }
+                _skel_allows = _allows_for_catalog_and_skeleton(
+                    allow, structure, force_chain=bool(force_chain)
+                )
+                if "roots" in classes:
+                    _skel_allows["allow_roots"] = True
                 expr_ast, _d_ast, body, deriv, inv = sample_from_form(
                     catalog_fid,
                     conceptual_d=float(d),
@@ -1384,6 +1412,7 @@ def sample_derivative_expression(
     # OpenStax form catalog — textbook case label + structure hints
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
         catalog_form_meta,
+        filter_forms_by_allows,
         forms_for_leaf,
         load_form_catalog,
         select_form_id,
@@ -1391,6 +1420,10 @@ def sample_derivative_expression(
 
     deriv_catalog = load_form_catalog("derivatives")
     deriv_forms = forms_for_leaf(deriv_catalog, key or "")
+    allow_gate = _allows_for_catalog_and_skeleton(allow, structure)
+    deriv_forms = filter_forms_by_allows(
+        deriv_forms, allow_gate, conceptual_d=float(d)
+    )
     catalog_form = (
         select_form_id(deriv_forms, d=d, rng=rng) if deriv_forms else None
     )
@@ -1424,9 +1457,12 @@ def sample_derivative_expression(
         "trig_product_chain",
         "invtrig_chained",
         "ln_exp_product",
+        "product_one_chain",
+        "product_chain_powers",
+        "product_trig_exp_chain",
     }:
         purchased_ids.add("use_chain")
-    if catalog_fid == "chain_nested":
+    if catalog_fid == "chain_nested" or catalog_fid == "chain_nested_power":
         purchased_ids.add("use_chain")
         purchased_ids.add("chain_depth_2")
     if catalog_fid == "power_root":
@@ -1442,7 +1478,7 @@ def sample_derivative_expression(
             classes.append("log")
     if key == "derivative_inverse_trig" and allow.allow_invtrig and "invtrig" not in classes:
         classes.append("invtrig")
-    if key == "derivative_general":
+    if key in {"derivative_general", "derivative_chain_rule"}:
         # Soft-on defaults: ensure allowed classes appear once D unlocks them
         for cls, flag in (
             ("trig", allow.allow_trig and structure.get("allow_trig")),
@@ -1539,14 +1575,11 @@ def sample_derivative_expression(
 
         if catalog_fid and has_form_pattern(catalog_fid):
             try:
-                _skel_allows = {
-                    "allow_trig": bool(allow.allow_trig) or "trig" in classes,
-                    "allow_exp": bool(allow.allow_exp) or "exp" in classes,
-                    "allow_log": bool(allow.allow_log) or "log" in classes,
-                    "allow_roots": bool(structure.get("allow_roots"))
-                    or "roots" in classes,
-                    "allow_invtrig": bool(allow.allow_invtrig) or "invtrig" in classes,
-                }
+                _skel_allows = _allows_for_catalog_and_skeleton(
+                    allow, structure, force_chain=bool(force_chain)
+                )
+                if "roots" in classes:
+                    _skel_allows["allow_roots"] = True
                 expr_ast, _d_ast, body_q, deriv_q, inv_q = sample_from_form(
                     catalog_fid,
                     conceptual_d=float(d),
@@ -1755,6 +1788,9 @@ def sample_derivative_expression(
         "variable": var,
         "derivative_order": order,
         "d_spend": d,
+        "function_classes": list(classes_sorted),
+        "methods_used": list(methods_sorted),
+        "chain_depth": int(expr.chain_depth),
     }
     if catalog_form:
         meta.update(catalog_form_meta(catalog_form, deriv_catalog))
@@ -1780,6 +1816,16 @@ def sample_derivative_expression(
             "skeleton_kind",
             "productions",
             "shared_inner",
+            "conceptual_difficulty",
+            "cost_spend",
+            "richness_band",
+            "richness_knobs",
+            "inner_kind",
+            "inner_latex",
+            "compose_layers",
+            "chosen_outer",
+            "atom_fn_candidates",
+            "atom_fn_candidates_g",
             "undressed_body_latex",
             "wrappers_applied",
             "spec_answer_preserved",
@@ -1789,6 +1835,23 @@ def sample_derivative_expression(
         ):
             if field_name in inventory:
                 meta[field_name] = inventory[field_name]
+        if "conceptual_difficulty" not in meta:
+            meta["conceptual_difficulty"] = float(d)
+    # Live Diff path always stamps skeleton_pattern for gallery / ML join.
+    if not meta.get("skeleton_pattern"):
+        if inventory.get("skeleton_source") == "expr_skeleton" or catalog_fid:
+            from question_engine.frameworks.primitives.expr_skeleton import (
+                pattern_for_form,
+            )
+
+            pat = pattern_for_form(catalog_fid) if catalog_fid else None
+            meta["skeleton_pattern"] = (
+                pat.label() if pat is not None else f"Diff({key or 'expr'})"
+            )
+            meta.setdefault("skeleton_source", "expr_skeleton")
+        else:
+            meta["skeleton_pattern"] = f"Diff({key or 'spec'})"
+            meta.setdefault("skeleton_source", "expression_spec")
     return DerivativeSample(
         prompt_latex=prompt,
         answer_latex=expr.deriv_latex,

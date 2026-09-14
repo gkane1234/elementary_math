@@ -1,0 +1,2457 @@
+{
+  "section": {
+    "slug": "calc_indef_int_power_rule_with_substitution",
+    "title": "Integral \u2014 u-sub (power)",
+    "pattern": "",
+    "engine": "integrals",
+    "type_id": "calc_indef_int_power_rule_with_substitution",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Derivative-backed linear/quad u-sub. OpenStax Vol 1 \u00a75.5."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\int 2\\left(2x + 2\\right)^{2}\\,dx",
+      "answer_latex": "\\frac{1}{3}\\left(2x + 2\\right)^{3}+C",
+      "skeleton_pattern": "",
+      "form_id": "power_linear_du",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "power_linear_du"
+        ],
+        [
+          "openstax_form",
+          "power_linear_du"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_linear_du",
+        "structure_id": "integral_substitution:power_linear_du",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "power_linear",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "power_linear_du",
+          "form_id": "power_linear_du",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 36,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "power_linear_du",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "power_linear_du",
+        "openstax_form": "power_linear_du",
+        "form_id": "power_linear_du",
+        "openstax_case": "Example 5.30 \u2014 \u222b 6x(3x\u00b2+4)^4 (related power-of-poly)",
+        "strategy": "u_equals_linear",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "power_linear",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "power_linear",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "power_max": 3,
+          "term_count": 1,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\int 2\\left(2x + 2\\right)^{2}\\,dx",
+      "answer_latex": "\\frac{1}{3}\\left(2x + 2\\right)^{3}+C",
+      "skeleton_pattern": "",
+      "form_id": "power_linear_du",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "power_linear_du"
+        ],
+        [
+          "openstax_form",
+          "power_linear_du"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_linear_du",
+        "structure_id": "integral_substitution:power_linear_du",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "power_linear",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "power_linear_du",
+          "form_id": "power_linear_du",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 36,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "power_linear_du",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "power_linear_du",
+        "openstax_form": "power_linear_du",
+        "form_id": "power_linear_du",
+        "openstax_case": "Example 5.30 \u2014 \u222b 6x(3x\u00b2+4)^4 (related power-of-poly)",
+        "strategy": "u_equals_linear",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "power_linear",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "power_linear",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "power_max": 3,
+          "term_count": 1,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int 2\\left(2x + 2\\right)^{2}\\,dx",
+      "answer_latex": "\\frac{1}{3}\\left(2x + 2\\right)^{3}+C",
+      "skeleton_pattern": "",
+      "form_id": "power_linear_du",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "power_linear_du"
+        ],
+        [
+          "openstax_form",
+          "power_linear_du"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_linear_du",
+        "structure_id": "integral_substitution:power_linear_du",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "power_linear",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "power_linear_du",
+          "form_id": "power_linear_du",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 36,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "power_linear_du",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "power_linear_du",
+        "openstax_form": "power_linear_du",
+        "form_id": "power_linear_du",
+        "openstax_case": "Example 5.30 \u2014 \u222b 6x(3x\u00b2+4)^4 (related power-of-poly)",
+        "strategy": "u_equals_linear",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "power_linear",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 0.0,
+          "u_sub_form_preset": "power_linear",
+          "u_sub_construction": "catalog",
+          "coef_min": -4,
+          "coef_max": 4,
+          "power_max": 3,
+          "term_count": 1,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\int 2x\\left(x^{2}+5\\right)^{2}\\,dx",
+      "answer_latex": "\\frac{1}{3}\\left(x^{2}+5\\right)^{3}+C",
+      "skeleton_pattern": "",
+      "form_id": "power_quad_x_du",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "power_quad_x_du"
+        ],
+        [
+          "openstax_form",
+          "power_quad_x_du"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_quad_x_du",
+        "structure_id": "integral_substitution:power_quad_x_du",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "power_quadratic",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "power_quad_x_du",
+          "form_id": "power_quad_x_du",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_quad"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 37,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "power_quad_x_du",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "power_quad_x_du",
+        "openstax_form": "power_quad_x_du",
+        "form_id": "power_quad_x_du",
+        "openstax_case": "Checkpoint 5.25 / Example 5.31 \u2014 quadratic inner",
+        "strategy": "u_equals_quad",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "power_quadratic",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "power_quadratic",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "power_max": 4,
+          "term_count": 1,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int x\\sqrt{x^{2}+1}\\,dx",
+      "answer_latex": "\\frac{1}{3}\\left(x^{2}+1\\right)^{\\frac{3}{2}}+C",
+      "skeleton_pattern": "",
+      "form_id": "root_quad_x_du",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "root_quad_x_du"
+        ],
+        [
+          "openstax_form",
+          "root_quad_x_du"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "root_quad_x_du",
+        "structure_id": "integral_substitution:root_quad_x_du",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "power_quadratic",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "root_quad_x_du",
+          "form_id": "root_quad_x_du",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_quad_root"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 47,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "root_quad_x_du",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "root_quad_x_du",
+        "openstax_form": "root_quad_x_du",
+        "form_id": "root_quad_x_du",
+        "openstax_case": "Example 5.31 \u2014 \u222b z\u221a(z\u00b2\u22125) dz",
+        "strategy": "u_equals_quad_root",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "power_quadratic",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "power_quadratic",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "power_max": 4,
+          "term_count": 1,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\int x\\sqrt{x^{2}+6}\\,dx",
+      "answer_latex": "\\frac{1}{3}\\left(x^{2}+6\\right)^{\\frac{3}{2}}+C",
+      "skeleton_pattern": "",
+      "form_id": "root_quad_x_du",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "root_quad_x_du"
+        ],
+        [
+          "openstax_form",
+          "root_quad_x_du"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "root_quad_x_du",
+        "structure_id": "integral_substitution:root_quad_x_du",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "power_quadratic",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "root_quad_x_du",
+          "form_id": "root_quad_x_du",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_quad_root"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 47,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "root_quad_x_du",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "root_quad_x_du",
+        "openstax_form": "root_quad_x_du",
+        "form_id": "root_quad_x_du",
+        "openstax_case": "Example 5.31 \u2014 \u222b z\u221a(z\u00b2\u22125) dz",
+        "strategy": "u_equals_quad_root",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "power_quadratic",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "difficulty": 8.0,
+          "u_sub_form_preset": "power_quadratic",
+          "u_sub_construction": "catalog",
+          "coef_min": -6,
+          "coef_max": 6,
+          "power_max": 4,
+          "term_count": 1,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int x^{2}\\left(x^{3}+9\\right)^{2}\\,dx",
+      "answer_latex": "\\frac{1}{9}\\left(x^{3}+9\\right)^{3}+C",
+      "skeleton_pattern": "",
+      "form_id": "power_cubic_x2_du",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "power_cubic_x2_du"
+        ],
+        [
+          "openstax_form",
+          "power_cubic_x2_du"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_cubic_x2_du",
+        "structure_id": "integral_substitution:power_cubic_x2_du",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "power_cubic_x2_du",
+          "form_id": "power_cubic_x2_du",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_cubic"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 37,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "power_cubic_x2_du",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 4.5,
+        "wrappers_applied": [],
+        "core_form_id": "power_cubic_x2_du",
+        "openstax_form": "power_cubic_x2_du",
+        "form_id": "power_cubic_x2_du",
+        "openstax_case": "Checkpoint 5.25 / 5.26 \u2014 \u222b 3x\u00b2(x\u00b3-3)\u00b2 and \u222b x\u00b2(x\u00b3+5)\u2079",
+        "strategy": "u_equals_cubic",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "challenging",
+        "omit_du_constant": true,
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{x}{\\sqrt{x-1}}\\,dx",
+      "answer_latex": "\\frac{2}{3}\\left(x-1\\right)^{\\frac{3}{2}}+2\\sqrt{x-1}+C",
+      "skeleton_pattern": "",
+      "form_id": "alteration_linear_over_root",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "alteration_linear_over_root"
+        ],
+        [
+          "openstax_form",
+          "alteration_linear_over_root"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "alteration_linear_over_root",
+        "structure_id": "integral_substitution:alteration_linear_over_root",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "alteration_linear_over_root",
+          "form_id": "alteration_linear_over_root",
+          "catalog_id": "u_substitution",
+          "strategy": "alteration"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 55,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "alteration_linear_over_root",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 4.5,
+        "wrappers_applied": [],
+        "core_form_id": "alteration_linear_over_root",
+        "openstax_form": "alteration_linear_over_root",
+        "form_id": "alteration_linear_over_root",
+        "openstax_case": "Example 5.33 \u2014 \u222b x/\u221a(x\u22121) dx",
+        "strategy": "alteration",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "challenging",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{x}{\\sqrt{x-1}}\\,dx",
+      "answer_latex": "\\frac{2}{3}\\left(x-1\\right)^{\\frac{3}{2}}+2\\sqrt{x-1}+C",
+      "skeleton_pattern": "",
+      "form_id": "alteration_linear_over_root",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "alteration_linear_over_root"
+        ],
+        [
+          "openstax_form",
+          "alteration_linear_over_root"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "alteration_linear_over_root",
+        "structure_id": "integral_substitution:alteration_linear_over_root",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "alteration_linear_over_root",
+          "form_id": "alteration_linear_over_root",
+          "catalog_id": "u_substitution",
+          "strategy": "alteration"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 55,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "alteration_linear_over_root",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 4.5,
+        "wrappers_applied": [],
+        "core_form_id": "alteration_linear_over_root",
+        "openstax_form": "alteration_linear_over_root",
+        "form_id": "alteration_linear_over_root",
+        "openstax_case": "Example 5.33 \u2014 \u222b x/\u221a(x\u22121) dx",
+        "strategy": "alteration",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "challenging",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "difficulty": 16.0,
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int x^{2}\\left(x^{3}-1\\right)^{4}\\,dx",
+      "answer_latex": "\\frac{1}{15}\\left(x^{3}-1\\right)^{5}+C",
+      "skeleton_pattern": "",
+      "form_id": "power_cubic_x2_du",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "power_cubic_x2_du"
+        ],
+        [
+          "openstax_form",
+          "power_cubic_x2_du"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "power_cubic_x2_du",
+        "structure_id": "integral_substitution:power_cubic_x2_du",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "power_cubic_x2_du",
+          "form_id": "power_cubic_x2_du",
+          "catalog_id": "u_substitution",
+          "strategy": "u_equals_cubic"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 38,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "power_cubic_x2_du",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 10.5,
+        "wrappers_applied": [],
+        "core_form_id": "power_cubic_x2_du",
+        "openstax_form": "power_cubic_x2_du",
+        "form_id": "power_cubic_x2_du",
+        "openstax_case": "Checkpoint 5.25 / 5.26 \u2014 \u222b 3x\u00b2(x\u00b3-3)\u00b2 and \u222b x\u00b2(x\u00b3+5)\u2079",
+        "strategy": "u_equals_cubic",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "challenging",
+        "omit_du_constant": true,
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{x}{\\sqrt{x-1}}\\,dx",
+      "answer_latex": "\\frac{2}{3}\\left(x-1\\right)^{\\frac{3}{2}}+2\\sqrt{x-1}+C",
+      "skeleton_pattern": "",
+      "form_id": "alteration_linear_over_root",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "alteration_linear_over_root"
+        ],
+        [
+          "openstax_form",
+          "alteration_linear_over_root"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "alteration_linear_over_root",
+        "structure_id": "integral_substitution:alteration_linear_over_root",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "alteration_linear_over_root",
+          "form_id": "alteration_linear_over_root",
+          "catalog_id": "u_substitution",
+          "strategy": "alteration"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 55,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "alteration_linear_over_root",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 10.5,
+        "wrappers_applied": [],
+        "core_form_id": "alteration_linear_over_root",
+        "openstax_form": "alteration_linear_over_root",
+        "form_id": "alteration_linear_over_root",
+        "openstax_case": "Example 5.33 \u2014 \u222b x/\u221a(x\u22121) dx",
+        "strategy": "alteration",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "challenging",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_power_rule_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{x}{\\sqrt{x-1}}\\,dx",
+      "answer_latex": "\\frac{2}{3}\\left(x-1\\right)^{\\frac{3}{2}}+2\\sqrt{x-1}+C",
+      "skeleton_pattern": "",
+      "form_id": "alteration_linear_over_root",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "alteration_linear_over_root"
+        ],
+        [
+          "openstax_form",
+          "alteration_linear_over_root"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "alteration_linear_over_root",
+        "structure_id": "integral_substitution:alteration_linear_over_root",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_u_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 6,
+          "term_count_max": 1,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "alteration_linear_over_root",
+          "form_id": "alteration_linear_over_root",
+          "catalog_id": "u_substitution",
+          "strategy": "alteration"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 55,
+          "nest_depth": 0,
+          "pack": "integral_u_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "alteration_linear_over_root",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 10.5,
+        "wrappers_applied": [],
+        "core_form_id": "alteration_linear_over_root",
+        "openstax_form": "alteration_linear_over_root",
+        "form_id": "alteration_linear_over_root",
+        "openstax_case": "Example 5.33 \u2014 \u222b x/\u221a(x\u22121) dx",
+        "strategy": "alteration",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "challenging",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "difficulty": 22.0,
+          "u_sub_form_preset": "challenging",
+          "u_sub_construction": "auto",
+          "coef_min": -10,
+          "coef_max": 10,
+          "power_max": 6,
+          "term_count": 1,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    }
+  ],
+  "failures": []
+}

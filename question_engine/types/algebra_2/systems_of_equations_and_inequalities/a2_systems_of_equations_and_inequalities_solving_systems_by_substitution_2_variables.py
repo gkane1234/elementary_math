@@ -1,10 +1,3 @@
-"""A2 systems substitution — framework-backed with systems settings profile."""
+"""A2 systems substitution — primitive LinearSystem via GENERATORS['systems_substitution']."""
 
-from question_engine.frameworks.linear import SystemsSubstitutionFramework
-from question_engine.types._linear_type import register_linear_type
-
-register_linear_type(
-    "a2_systems_of_equations_and_inequalities_solving_systems_by_substitution_2_variables",
-    SystemsSubstitutionFramework(),
-    profile="systems",
-)
+# Catalog + primitive_linear / primitive_a2; do not re-bind SystemsSubstitutionFramework.

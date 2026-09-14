@@ -1,0 +1,1003 @@
+{
+  "section": {
+    "slug": "pa_area",
+    "title": "Geometry \u2014 area / quads / circles / solids",
+    "pattern": "GeoMeasure",
+    "engine": "geometry_reuse",
+    "type_id": "pa_area_of_triangles_and_quadrilaterals",
+    "aliases": [
+      "pa_circles",
+      "pa_classifying_volume_and_surface_area"
+    ],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "D=0 rectangle or right triangle. Circles $C=2\\pi r$. OpenStax PA \u00a79.4\u20139.6."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the area of the parallelogram.}",
+      "answer_latex": "24\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 219.2 143.2\" width=\"219.2\" height=\"143.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,102.0 142.0,102.0 178.0,22.0 58.0,22.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"82.0\" y=\"121.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"197.2\" y=\"62.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><circle cx=\"22.0\" cy=\"102.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.6\" y=\"107.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"142.0\" cy=\"102.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.3\" y=\"110.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"178.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"189.4\" y=\"16.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"58.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"48.7\" y=\"13.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "parallelogram"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "parallelogram",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "dimensions": {
+            "base": 6.0,
+            "height": 4.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "parallelogram",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0,
+              "y": 0,
+              "label": "A"
+            },
+            "B": {
+              "x": 3.0,
+              "y": 0,
+              "label": "B"
+            },
+            "C": {
+              "x": 3.9,
+              "y": 2.0,
+              "label": "C"
+            },
+            "D": {
+              "x": 0.8999999999999999,
+              "y": 2.0,
+              "label": "D"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.285,-0.146) {A};\n  \\coordinate (B) at (3.000,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (3.232,-0.221) {B};\n  \\coordinate (C) at (3.900,2.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (4.185,2.146) {C};\n  \\coordinate (D) at (0.900,2.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (0.668,2.221) {D};\n  \\fill[fill=#dbeafe, fill opacity=0.25] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\node at (1.500,-0.480) {6 cm};\n  \\node at (4.380,1.000) {4 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 219.2 143.2\" width=\"219.2\" height=\"143.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,102.0 142.0,102.0 178.0,22.0 58.0,22.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"82.0\" y=\"121.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"197.2\" y=\"62.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><circle cx=\"22.0\" cy=\"102.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.6\" y=\"107.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"142.0\" cy=\"102.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.3\" y=\"110.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"178.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"189.4\" y=\"16.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"58.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"48.7\" y=\"13.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+        "figure_family": "parallelogram",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "skew_ratio": 0.3,
+          "orientation_deg": 0.0
+        },
+        "difficulty": 0.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the area of the parallelogram.}",
+      "answer_latex": "48\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 180.2 183.2\" width=\"180.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,142.0 112.0,142.0 139.0,22.0 49.0,22.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"67.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"158.2\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"13.1\" y=\"151.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"112.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"117.9\" y=\"153.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"139.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"147.9\" y=\"12.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"49.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"43.1\" y=\"10.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "parallelogram"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "parallelogram",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "dimensions": {
+            "base": 6.0,
+            "height": 8.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "parallelogram",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0,
+              "y": 0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.25,
+              "y": 0,
+              "label": "B"
+            },
+            "C": {
+              "x": 2.925,
+              "y": 3.0,
+              "label": "C"
+            },
+            "D": {
+              "x": 0.6749999999999999,
+              "y": 3.0,
+              "label": "D"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.223,-0.229) {A};\n  \\coordinate (B) at (2.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.399,-0.283) {B};\n  \\coordinate (C) at (2.925,3.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (3.148,3.229) {C};\n  \\coordinate (D) at (0.675,3.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (0.526,3.283) {D};\n  \\fill[fill=#dbeafe, fill opacity=0.25] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\node at (1.125,-0.480) {6 cm};\n  \\node at (3.405,1.500) {8 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 180.2 183.2\" width=\"180.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,142.0 112.0,142.0 139.0,22.0 49.0,22.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"67.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"158.2\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"13.1\" y=\"151.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"112.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"117.9\" y=\"153.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"139.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"147.9\" y=\"12.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"49.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"43.1\" y=\"10.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+        "figure_family": "parallelogram",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "skew_ratio": 0.3,
+          "orientation_deg": 0.0
+        },
+        "difficulty": 0.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the area of the parallelogram.}",
+      "answer_latex": "40\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160.7 183.2\" width=\"160.7\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,142.0 97.0,142.0 119.5,22.0 44.5,22.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"59.5\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"138.7\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"13.9\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"97.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"102.1\" y=\"153.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"119.5\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"127.6\" y=\"12.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"44.5\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"39.4\" y=\"10.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "parallelogram"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "parallelogram",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "dimensions": {
+            "base": 5.0,
+            "height": 8.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "parallelogram",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0,
+              "y": 0,
+              "label": "A"
+            },
+            "B": {
+              "x": 1.875,
+              "y": 0,
+              "label": "B"
+            },
+            "C": {
+              "x": 2.4375,
+              "y": 3.0,
+              "label": "C"
+            },
+            "D": {
+              "x": 0.5625,
+              "y": 3.0,
+              "label": "D"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.202,-0.248) {A};\n  \\coordinate (B) at (1.875,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.003,-0.293) {B};\n  \\coordinate (C) at (2.438,3.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (2.639,3.248) {C};\n  \\coordinate (D) at (0.562,3.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (0.434,3.293) {D};\n  \\fill[fill=#dbeafe, fill opacity=0.25] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\node at (0.938,-0.480) {5 cm};\n  \\node at (2.917,1.500) {8 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160.7 183.2\" width=\"160.7\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,142.0 97.0,142.0 119.5,22.0 44.5,22.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"59.5\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"138.7\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"13.9\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"97.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"102.1\" y=\"153.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"119.5\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"127.6\" y=\"12.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"44.5\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"39.4\" y=\"10.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+        "figure_family": "parallelogram",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "skew_ratio": 0.3,
+          "orientation_deg": 0.0
+        },
+        "difficulty": 0.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the area of the square.}",
+      "answer_latex": "144\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 183.2 183.2\" width=\"183.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,142.0 142.0,142.0 142.0,22.0 22.0,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"82.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"161.2\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.9\" y=\"151.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"142.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.1\" y=\"151.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"142.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.1\" y=\"12.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.9\" y=\"12.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "square"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "square",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "dimensions": {
+            "side": 12.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "square",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0,
+              "y": 0,
+              "label": "A"
+            },
+            "B": {
+              "x": 3.0,
+              "y": 0,
+              "label": "B"
+            },
+            "C": {
+              "x": 3.0,
+              "y": 3.0,
+              "label": "C"
+            },
+            "D": {
+              "x": 0,
+              "y": 3.0,
+              "label": "D"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.226,-0.226) {A};\n  \\coordinate (B) at (3.000,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (3.226,-0.226) {B};\n  \\coordinate (C) at (3.000,3.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (3.226,3.226) {C};\n  \\coordinate (D) at (0.000,3.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (-0.226,3.226) {D};\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\node at (1.500,-0.480) {12 cm};\n  \\node at (3.480,1.500) {12 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 183.2 183.2\" width=\"183.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,142.0 142.0,142.0 142.0,22.0 22.0,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"82.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"161.2\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.9\" y=\"151.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"142.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.1\" y=\"151.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"142.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.1\" y=\"12.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.9\" y=\"12.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+        "difficulty": 8.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the area of the kite.}",
+      "answer_latex": "12\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 183.2 143.2\" width=\"183.2\" height=\"143.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"82.0,22.0 142.0,62.0 82.0,102.0 22.0,62.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"104.0\" y=\"121.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"161.2\" y=\"84.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><circle cx=\"82.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"82.0\" y=\"9.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"142.0\" cy=\"62.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"154.8\" y=\"62.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"82.0\" cy=\"102.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"82.0\" y=\"114.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"62.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"9.2\" y=\"62.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "kite"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "kite",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "dimensions": {
+            "d1": 6.0,
+            "d2": 4.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "kite",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0,
+              "y": 1.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 1.5,
+              "y": 0,
+              "label": "B"
+            },
+            "C": {
+              "x": 0,
+              "y": -1.0,
+              "label": "C"
+            },
+            "D": {
+              "x": -1.5,
+              "y": 0,
+              "label": "D"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,1.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (0.000,1.320) {A};\n  \\coordinate (B) at (1.500,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.820,0.000) {B};\n  \\coordinate (C) at (0.000,-1.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (0.000,-1.320) {C};\n  \\coordinate (D) at (-1.500,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (-1.820,0.000) {D};\n  \\fill[fill=#dbeafe, fill opacity=0.25] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\node at (0.550,-1.480) {6 cm};\n  \\node at (1.980,-0.550) {4 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 183.2 143.2\" width=\"183.2\" height=\"143.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"82.0,22.0 142.0,62.0 82.0,102.0 22.0,62.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"104.0\" y=\"121.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"161.2\" y=\"84.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><circle cx=\"82.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"82.0\" y=\"9.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"142.0\" cy=\"62.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"154.8\" y=\"62.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"82.0\" cy=\"102.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"82.0\" y=\"114.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"62.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"9.2\" y=\"62.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+        "difficulty": 8.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the area of the triangle.}",
+      "answer_latex": "55\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160.4 191.2\" width=\"160.4\" height=\"191.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,150.0 138.4,150.0 96.1,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><line x1=\"96.1\" y1=\"22.0\" x2=\"96.1\" y2=\"150.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" stroke-dasharray=\"6 4\" fill=\"none\"/><polyline points=\"96.1,137.2 108.9,137.2 108.9,150.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"80.2\" y=\"169.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">10 cm</text><text x=\"104.6\" y=\"68.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">11 cm</text><circle cx=\"22.0\" cy=\"150.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.4\" y=\"157.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"138.4\" cy=\"150.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"148.3\" y=\"158.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"96.1\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"97.6\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "triangle_area"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "base": 10.0,
+            "height": 11.0,
+            "layout": "interior"
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "triangle_area",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "segments": [
+            [
+              "C",
+              "_H"
+            ]
+          ],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.9090909090909096,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.8513731955929698,
+              "y": 3.2000000000000006,
+              "label": "C"
+            },
+            "_H": {
+              "x": 1.8513731955929698,
+              "y": 0.0,
+              "label": null
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.266,-0.179) {A};\n  \\coordinate (B) at (2.909,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (3.158,-0.201) {B};\n  \\coordinate (C) at (1.851,3.200);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.891,3.518) {C};\n  \\coordinate (_H) at (1.851,0.000);\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[dashed] (C) -- (_H);\n  \\draw[thick] (1.851,0.320) -- (2.171,0.320) -- (2.171,0.000);\n  \\node at (1.455,-0.480) {10 cm};\n  \\node at (2.065,2.030) {11 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160.4 191.2\" width=\"160.4\" height=\"191.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,150.0 138.4,150.0 96.1,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><line x1=\"96.1\" y1=\"22.0\" x2=\"96.1\" y2=\"150.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" stroke-dasharray=\"6 4\" fill=\"none\"/><polyline points=\"96.1,137.2 108.9,137.2 108.9,150.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"80.2\" y=\"169.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">10 cm</text><text x=\"104.6\" y=\"68.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">11 cm</text><circle cx=\"22.0\" cy=\"150.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.4\" y=\"157.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"138.4\" cy=\"150.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"148.3\" y=\"158.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"96.1\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"97.6\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+        "figure_family": "triangle_area",
+        "figure_complexity": "standard",
+        "figure_params": {
+          "layout": "interior",
+          "orientation_deg": 120.0,
+          "reflect": false,
+          "foot_fraction": 0.6364095359850832
+        },
+        "difficulty": 8.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find the area of the square.}",
+      "answer_latex": "256\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 183.2 183.2\" width=\"183.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,142.0 142.0,142.0 142.0,22.0 22.0,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"82.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">16 cm</text><text x=\"161.2\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">16 cm</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.9\" y=\"151.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"142.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.1\" y=\"151.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"142.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.1\" y=\"12.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.9\" y=\"12.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "square"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "square",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "dimensions": {
+            "side": 16.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "square",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0,
+              "y": 0,
+              "label": "A"
+            },
+            "B": {
+              "x": 3.0,
+              "y": 0,
+              "label": "B"
+            },
+            "C": {
+              "x": 3.0,
+              "y": 3.0,
+              "label": "C"
+            },
+            "D": {
+              "x": 0,
+              "y": 3.0,
+              "label": "D"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.226,-0.226) {A};\n  \\coordinate (B) at (3.000,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (3.226,-0.226) {B};\n  \\coordinate (C) at (3.000,3.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (3.226,3.226) {C};\n  \\coordinate (D) at (0.000,3.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (-0.226,3.226) {D};\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\node at (1.500,-0.480) {16 cm};\n  \\node at (3.480,1.500) {16 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 183.2 183.2\" width=\"183.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,142.0 142.0,142.0 142.0,22.0 22.0,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"82.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">16 cm</text><text x=\"161.2\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">16 cm</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.9\" y=\"151.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"142.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.1\" y=\"151.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"142.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.1\" y=\"12.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.9\" y=\"12.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+        "difficulty": 16.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the area of the kite.}",
+      "answer_latex": "52.5\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 119.2 183.2\" width=\"119.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"50.0,22.0 78.0,82.0 50.0,142.0 22.0,82.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"72.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"97.2\" y=\"104.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><circle cx=\"50.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"50.0\" y=\"9.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"78.0\" cy=\"82.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"90.8\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"50.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"50.0\" y=\"154.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"82.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"9.2\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "kite"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "kite",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "dimensions": {
+            "d1": 7.0,
+            "d2": 15.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "kite",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0,
+              "y": 1.5,
+              "label": "A"
+            },
+            "B": {
+              "x": 0.7000000000000001,
+              "y": 0,
+              "label": "B"
+            },
+            "C": {
+              "x": 0,
+              "y": -1.5,
+              "label": "C"
+            },
+            "D": {
+              "x": -0.7000000000000001,
+              "y": 0,
+              "label": "D"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,1.500);\n  \\fill (A) circle (1.2pt);\n  \\node at (0.000,1.820) {A};\n  \\coordinate (B) at (0.700,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.020,0.000) {B};\n  \\coordinate (C) at (0.000,-1.500);\n  \\fill (C) circle (1.2pt);\n  \\node at (0.000,-1.820) {C};\n  \\coordinate (D) at (-0.700,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (-1.020,0.000) {D};\n  \\fill[fill=#dbeafe, fill opacity=0.25] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\node at (0.550,-1.980) {7 cm};\n  \\node at (1.180,-0.550) {15 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 119.2 183.2\" width=\"119.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"50.0,22.0 78.0,82.0 50.0,142.0 22.0,82.0\" fill=\"#dbeafe\" fill-opacity=\"0.25\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"72.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"97.2\" y=\"104.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><circle cx=\"50.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"50.0\" y=\"9.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"78.0\" cy=\"82.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"90.8\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"50.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"50.0\" y=\"154.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"82.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"9.2\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text></svg>",
+        "difficulty": 16.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "pa_area_of_triangles_and_quadrilaterals",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the area of the triangle.}",
+      "answer_latex": "180\\text{ cm}^2",
+      "skeleton_pattern": "GeoMeasure",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 159.2 191.2\" width=\"159.2\" height=\"191.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,150.0 137.2,150.0 103.2,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><line x1=\"103.2\" y1=\"22.0\" x2=\"103.2\" y2=\"150.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" stroke-dasharray=\"6 4\" fill=\"none\"/><polyline points=\"103.2,137.2 116.0,137.2 116.0,150.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"79.6\" y=\"169.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">18 cm</text><text x=\"114.6\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">20 cm</text><circle cx=\"22.0\" cy=\"150.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"157.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"137.2\" cy=\"150.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"146.9\" y=\"158.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"103.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"105.5\" y=\"9.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "GeoMeasure"
+        ],
+        [
+          "primitive_engine",
+          "geometry_reuse"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "triangle_area"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "base": 18.0,
+            "height": 20.0,
+            "layout": "interior"
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "triangle_area",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "segments": [
+            [
+              "C",
+              "_H"
+            ]
+          ],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.88,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 2.0295470351164395,
+              "y": 3.2,
+              "label": "C"
+            },
+            "_H": {
+              "x": 2.0295470351164395,
+              "y": 0.0,
+              "label": null
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.268,-0.175) {A};\n  \\coordinate (B) at (2.880,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (3.123,-0.208) {B};\n  \\coordinate (C) at (2.030,3.200);\n  \\fill (C) circle (1.2pt);\n  \\node at (2.088,3.515) {C};\n  \\coordinate (_H) at (2.030,0.000);\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[dashed] (C) -- (_H);\n  \\draw[thick] (2.030,0.320) -- (2.350,0.320) -- (2.350,0.000);\n  \\node at (1.440,-0.480) {18 cm};\n  \\node at (2.314,1.986) {20 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 159.2 191.2\" width=\"159.2\" height=\"191.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,150.0 137.2,150.0 103.2,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><line x1=\"103.2\" y1=\"22.0\" x2=\"103.2\" y2=\"150.0\" stroke=\"#1f2937\" stroke-width=\"1.75\" stroke-dasharray=\"6 4\" fill=\"none\"/><polyline points=\"103.2,137.2 116.0,137.2 116.0,150.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"79.6\" y=\"169.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">18 cm</text><text x=\"114.6\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">20 cm</text><circle cx=\"22.0\" cy=\"150.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"157.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"137.2\" cy=\"150.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"146.9\" y=\"158.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"103.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"105.5\" y=\"9.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text></svg>",
+        "figure_family": "triangle_area",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "layout": "interior",
+          "orientation_deg": 60.0,
+          "reflect": false,
+          "foot_fraction": 0.7047038316376526
+        },
+        "difficulty": 16.0,
+        "skeleton_pattern": "GeoMeasure",
+        "primitive_engine": "geometry_reuse",
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the area.}"
+      }
+    }
+  ],
+  "failures": []
+}

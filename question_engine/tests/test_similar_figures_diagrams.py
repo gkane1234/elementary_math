@@ -8,7 +8,6 @@ from question_engine.diagrams import similar_figures_pair_figure
 from question_engine.frameworks.geometry import SimilarTrianglesFramework
 from question_engine.frameworks.geometry_extended import RemainingGeometryFramework
 from question_engine.frameworks.word_problem import SimilarFiguresWordFramework
-from question_engine.generators.word_problems import GENERATORS as WP
 
 
 def test_similar_figures_pair_emits_svg():
@@ -27,8 +26,10 @@ def test_similar_figures_pair_emits_svg():
 
 
 def test_wp_similar_figures_default_has_diagram():
+    from question_engine.generators import GENERATORS as GEN
+
     random.seed(11)
-    gen = WP["wp_similar_figures"]
+    gen = GEN["wp_similar_figures"]
     with_diagram = 0
     for _ in range(12):
         q = gen("pa_similar_figures", {"count": 1, "prompt_style": "diagram"})[0]
@@ -39,8 +40,10 @@ def test_wp_similar_figures_default_has_diagram():
 
 
 def test_wp_similar_figures_description_only_skips_diagram():
+    from question_engine.generators import GENERATORS as GEN
+
     random.seed(12)
-    gen = WP["wp_similar_figures"]
+    gen = GEN["wp_similar_figures"]
     for _ in range(8):
         q = gen(
             "pa_similar_figures",

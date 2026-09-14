@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>PolySimplify — combine like terms (degree ≥ 2) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>PolySimplify — combine like terms (degree ≥ 2)</h1>
+<p class="sub"><code>pa_polynomials_simplifying</code> · live <code>_generate_for_type</code>
+ · pattern <strong>PolySimplify</strong>
+ · 9/9 ok · D ladder 0, 8, 16
+ · seeds 101, 207, 313</p>
+<p class="sub">D=0 a few $x^2$ likes. OpenStax PA §10.1.</p>
+
+<div class='notes-block'><h1><code>pa_polynomials_simplifying</code> — Simplifying</h1>
+<ul>
+<li><strong>Course:</strong> Prealgebra (PA catalog)</li>
+<li><strong>Category:</strong> Pre-Algebra — Beginning Polynomials</li>
+<li><strong>Generator:</strong> <code>simplify_polynomials</code></li>
+<li><strong>Already on skeleton?</strong> yes</li>
+<li><strong>Old-path extra settings: <code>{&quot;use_sample_expand_simplify&quot;: true}</code>.</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Combine like terms in a polynomial (degree may be 2+). D=0: 3x²+5x² or a few linear+const terms. High D: more terms / subtraction of a grouped polynomial.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>2 + 3x - x^{2}</code> - answer: <code>-x^{2} + 3x + 2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>1 - 2x - 3x^{2}</code> - answer: <code>-3x^{2} - 2x + 1</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>-4x^{3} + 3x^{3} + 2 + 3x</code> - answer: <code>-x^{3} + 3x + 2</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>2 - 1 - 2x - 3x^{3}</code> - answer: <code>-3x^{3} - 2x + 1</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>-x^{4} - 3x + 4x^{4}</code> - answer: <code>3x^{4} - 3x</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>-5x^{4} + 3x^{4} - x^{4} + 1 - 2x</code> - answer: <code>-3x^{4} - 2x + 1</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>-x^{4} - 3x + 4x^{4}</code> - answer: <code>3x^{4} - 3x</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>-5x^{4} + 3x^{4} - x^{4} + 1 - 2x</code> - answer: <code>-3x^{4} - 2x + 1</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Prealgebra 2e — 10.1 Add and Subtract Polynomials</h3>
+<ul>
+<li>https://openstax.org/books/prealgebra-2e/pages/10-1-add-and-subtract-polynomials</li>
+<li>Shape: Simplify by combining like terms before add/sub of two polynomials.</li>
+</ul>
+<h3>Elementary Algebra 2e — 6.1 Add and Subtract Polynomials</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/6-1-add-and-subtract-polynomials</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 6.1: Determine whether each polynomial is a monomial, binomial, trinomial, or other polynomial. ⓐ $4 y^{2} - 8 y - 6$ ⓑ $−5 a^{4} b^{2}$ ⓒ $2 x^{5} - 5 x^{3} - 9 x^{2} + 3 x + 4$ ⓓ $13 - 5 m^{3}$ ⓔ $q$ - Example 6.2: Find the degree of the following polynomials. ⓐ $10 y$ ⓑ $4 x^{3} - 7 x + 5$ ⓒ $−15$ ⓓ $−8 b^{2} + 9 b - 2$ ⓔ $8 x y^{2} + 2 y$ - Example 6.3: Add: $25 y^{2} + 15 y^{2}$ . - Example 6.4: Subtract: $16 p - (−7 p)$ .</p>
+<h2>Variety notes</h2>
+<p>Old path shapes at D=0 vs D=22 are recorded above. Flag if a WP dump stub or a single Mad-Lib.</p>
+<h2>Limitations</h2>
+<ul>
+<li>Old path can dump a bare equation / identity instead of the named skill.</li>
+<li>Story variety thin (one Mad-Lib / single vehicle) vs OpenStax frames.</li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse AffineInflate expand/simplify if old path is linear; else poly_skeleton / construct_poly. Check live samples before choosing.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>PolySimplify</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$2 + 3x - x^{2}$$</div><div class='math'><div class='lab'>Answer</div>$$-x^{2} + 3x + 2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>PolySimplify</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$1 - 2x - 3x^{2}$$</div><div class='math'><div class='lab'>Answer</div>$$-3x^{2} - 2x + 1$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>PolySimplify</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$3 + 3x + 2x^{2}$$</div><div class='math'><div class='lab'>Answer</div>$$2x^{2} + 3x + 3$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>PolySimplify</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$-4x^{3} + 3x^{3} + 2 + 3x$$</div><div class='math'><div class='lab'>Answer</div>$$-x^{3} + 3x + 2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>PolySimplify</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$2 - 1 - 2x - 3x^{3}$$</div><div class='math'><div class='lab'>Answer</div>$$-3x^{3} - 2x + 1$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>PolySimplify</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$x + 2 - 2\left(-2x^{3}\right)$$</div><div class='math'><div class='lab'>Answer</div>$$4x^{3} + x + 2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>PolySimplify</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$-x^{4} - 3x + 4x^{4}$$</div><div class='math'><div class='lab'>Answer</div>$$3x^{4} - 3x$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>PolySimplify</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$-5x^{4} + 3x^{4} - x^{4} + 1 - 2x$$</div><div class='math'><div class='lab'>Answer</div>$$-3x^{4} - 2x + 1$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>PolySimplify</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$7x^{4} + 4x + 5\left(x - 1\right) - 8x + 8$$</div><div class='math'><div class='lab'>Answer</div>$$7x^{4} + x + 3$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>PolySimplify</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>construct_poly</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_polynomials_simplifying</code></p></article>
+</body></html>

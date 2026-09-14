@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Integral — general (toggles) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Integral — general (toggles)</h1>
+<p class="sub"><code>calc_indef_int_general</code> · live <code>_generate_for_type</code>
+ · pattern <em>(none / stub)</em>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">Mixed techniques. Teacher <code>allow_*</code> checkboxes drop catalog forms whose <code>requires_allows</code> / <code>tricks</code> are off. D=0 stays power/table; bank-hard families unlock mid/high D.</p>
+
+<div class='notes-alert'>LIMITATIONS — see Limitations in notes below.</div><div class='notes-block'><h1>Notes — <code>calc_indef_int_general</code> (<code>calc_indef_int_general</code>)</h1>
+<p>Mixed-technique indefinite integral leaf, analogous to <code>calc_diff_general</code>. Teacher <code>allow_*</code> checkboxes drop catalog forms whose <code>requires_allows</code> / <code>tricks</code> are not all on. OpenStax table/power at low D; BC-bank families and parts/PFD/trig-sub unlock mid/high D.</p>
+<ul>
+<li><strong>Skill:</strong> choose and apply an allowed antiderivative technique</li>
+<li><strong>Generator:</strong> <code>integral_general</code></li>
+<li><strong>OpenStax:</strong> Calculus Volume 1 §4.10 / §5.5–5.7 and Volume 2 §3.1–3.4</li>
+<li><strong>Bank extra families:</strong> <code>scripts/output/example_mining/challenging_indefinite_integrals_bc.tex</code></li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>LIMITATIONS:</strong> D=0 still rotates easy table trig (<code>∫ sin(kx)</code>, <code>∫ sec tan</code>)</li>
+</ul>
+<p>when <code>allow_trig</code> is on (default). Seed 101 at mid/high D can stay on the power rewrite form; other seeds pick parts / PFD / trig-sub. Reverse-chain u-sub may appear when substitution is on. Deferred bank items (<code>x^4+1</code>, Weierstrass, <code>ln(cos x)</code>) are not invented.</p>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Live <code>sample_integral_expression</code> / <code>_generate_for_type</code> (seed=101/207/313):</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td>$\int \sqrt{x}\,dx$</td><td>$\frac{2}{3}x^{\frac{3}{2}}+C$</td><td>power / <code>sqrt_x</code></td></tr><tr><td>0</td><td>207</td><td>$\int \sec(x)\tan(x)\,dx$</td><td>$\sec(x)+C$</td><td>table trig</td></tr><tr><td>8</td><td>207</td><td>$\int x\cos(3x)\,dx$</td><td>$\frac{1}{3}x\sin(3x)+\frac{1}{9}\cos(3x)+C$</td><td>parts (unlocked ≥8)</td></tr><tr><td>16</td><td>207</td><td>$\int \frac{-4x + 4}{\left(x - 2\right)^{2}}\,dx$</td><td>$-4\ln\</td><td>x - 2\</td></tr><tr><td>16</td><td>313</td><td>$\int \frac{x^{2}}{\sqrt{4-x^{2}}}\,dx$</td><td>$-\frac{1}{2}x\sqrt{4-x^{2}}+2\arcsin\left(\frac{x}{2}\right)+C$</td><td>trig-sub</td></tr></tbody></table>
+<p>Opt-out flag used: none (this is a new mixed leaf; technique leaves still have old-path flags).</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy</th></tr></thead><tbody><tr><td>OpenStax Calculus Volume 1 §4.10</td><td>https://openstax.org/books/calculus-volume-1/pages/4-10-antiderivatives</td><td>D=0 power / table</td></tr><tr><td>OpenStax Calculus Volume 1 §5.5</td><td>https://openstax.org/books/calculus-volume-1/pages/5-5-substitution</td><td>u-sub families</td></tr><tr><td>OpenStax Calculus Volume 2 §3.1–3.4</td><td>https://openstax.org/books/calculus-volume-2/pages/3-1-integration-by-parts</td><td>parts / trig / PFD / trig-sub</td></tr></tbody></table>
+<h2>Variety notes</h2>
+<p>Toggles: <code>allow_parts</code> off → no <code>cyclic_exp_*</code> / tabular parts. <code>allow_pfd</code> off → no distinct-linear / mixed PFD. <code>allow_trig</code> off → no trig catalog or trig u-sub bank families (<code>trig_over_linear_trig_power</code>, <code>sin_of_sqrt</code>, …). Multi-trick forms need every listed skill.</p>
+<h2>Proposed engine</h2>
+<p>Reuse <code>integrals.py</code> catalogs + <code>filter_forms_by_allows</code>. No fake <code>difficulty_costs</code>.</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>sqrt_x</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \sqrt{x}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{2}{3}x^{\frac{3}{2}}+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>sqrt_x</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>sqrt_x</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>basic_sec_tan</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \sec(x)\tan(x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\sec(x)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>basic_sec_tan</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>basic_sec_tan</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'></span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>basic_sin_kx</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \sin(6x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$-\frac{1}{6}\cos(6x)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>basic_sin_kx</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>basic_sin_kx</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>rewrite_over_x</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \frac{x^{2}+1\sqrt[3]{x}}{x}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{2}x^{2}+3x^{\frac{1}{3}}+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rewrite_over_x</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rewrite_over_x</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>poly1_cos</span></header><div class='math'><div class='lab'>Prompt</div>$$\int x\cos(3x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{3}x\sin(3x)+\frac{1}{9}\cos(3x)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>poly1_cos</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'></span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>ln_alone</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \ln(3x)\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$x\ln(3x)-x+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>ln_alone</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>ln_alone</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>rewrite_over_x</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \frac{x^{2}+1\sqrt[3]{x}}{x}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{2}x^{2}+3x^{\frac{1}{3}}+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rewrite_over_x</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rewrite_over_x</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>repeated_linear_square</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \frac{-4x + 4}{\left(x - 2\right)^{2}}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$-4\ln|x - 2|+4\frac{1}{x - 2}+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>repeated_linear_square</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>repeated_linear_square</span></div><div class='kv'><span class='k'>construction</span><span class='v'>partial_fractions.combine_pf_to_rational</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>x2_over_sqrt_a2_minus_x2</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \frac{x^{2}}{\sqrt{4-x^{2}}}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$-\frac{1}{2}x\sqrt{4-x^{2}}+2\arcsin\left(\frac{x}{2}\right)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>x2_over_sqrt_a2_minus_x2</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>x2_over_sqrt_a2_minus_x2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span><span class='tag fid'>rewrite_over_x</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \frac{x^{2}+1\sqrt[3]{x}}{x}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{1}{2}x^{2}+3x^{\frac{1}{3}}+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>rewrite_over_x</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>rewrite_over_x</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span><span class='tag fid'>repeated_linear_square</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \frac{-4x + 4}{\left(x - 2\right)^{2}}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$-4\ln|x - 2|+4\frac{1}{x - 2}+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>repeated_linear_square</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>repeated_linear_square</span></div><div class='kv'><span class='k'>construction</span><span class='v'>partial_fractions.combine_pf_to_rational</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'></span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span><span class='tag fid'>x2_over_sqrt_a2_minus_x2</span></header><div class='math'><div class='lab'>Prompt</div>$$\int \frac{x^{2}}{\sqrt{4-x^{2}}}\,dx$$</div><div class='math'><div class='lab'>Answer</div>$$-\frac{1}{2}x\sqrt{4-x^{2}}+2\arcsin\left(\frac{x}{2}\right)+C$$</div><div class='debug'><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>x2_over_sqrt_a2_minus_x2</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>x2_over_sqrt_a2_minus_x2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_indef_int_general</code></p></article>
+</body></html>

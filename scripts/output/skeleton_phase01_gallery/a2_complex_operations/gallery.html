@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>ComplexOp — add / subtract / multiply — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>ComplexOp — add / subtract / multiply</h1>
+<p class="sub"><code>a2_complex_numbers_operations</code> · live <code>_generate_for_type</code>
+ · pattern <strong>ComplexOp</strong>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">D=0 small $a+bi$. FOIL multiply at high D. OpenStax CA §2.4.</p>
+
+<div class='notes-alert'>UNCLEAR — gold look not locked; see notes below.</div><div class='notes-block'><h1>Notes — <code>a2_complex_numbers_operations</code></h1>
+<ul>
+<li><strong>Course:</strong> Algebra 2 (A2 catalog)</li>
+<li><strong>Category:</strong> Algebra 2 — Complex Numbers</li>
+<li><strong>Generator:</strong> <code>complex_operations</code></li>
+<li><strong>Suggested family:</strong> <code>number</code></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Add/subtract or multiply small $a+bi$.</li>
+<li><strong>D=0:</strong> Add/subtract or multiply small $a+bi$.</li>
+<li><strong>High D (≈16–22):</strong> FOIL multiply; larger coeffs.</li>
+<li><strong>Must not:</strong> Graphing / polar on this leaf.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> with opt-out: <code>none (hand generator)</code>.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td>$\left(3 - i\right)\left(3 + 2i\right)$</td><td>$11 + 3i$</td><td></td></tr><tr><td>0</td><td>207</td><td>$\left(2 - 2i\right) - \left(-2 + i\right)$</td><td>$4 - 3i$</td><td></td></tr><tr><td>8</td><td>101</td><td>$\left(4\right)\left(3i\right)$</td><td>$12i$</td><td></td></tr><tr><td>8</td><td>207</td><td>$\left(-2 + 5i\right)\left(-3 - 5i\right)$</td><td>$31 - 5i$</td><td></td></tr><tr><td>16</td><td>101</td><td>$\left(4 + 3i\right)\left(2 - 2i\right)$</td><td>$14 - 2i$</td><td></td></tr><tr><td>16</td><td>207</td><td>$\left(-2 + i\right)\left(1 - 6i\right)$</td><td>$4 + 13i$</td><td></td></tr><tr><td>22</td><td>101</td><td>$\left(4 + 8i\right)\left(5 - 7i\right)$</td><td>$76 + 12i$</td><td></td></tr><tr><td>22</td><td>207</td><td>$\left(2 - 9i\right)\left(3 - 2i\right)$</td><td>$-12 - 31i$</td><td></td></tr></tbody></table>
+<p>Opt-out flag used: <code>none (hand generator)</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax College Algebra 2e §2.4</td><td>https://openstax.org/books/college-algebra-2e/pages/2-4-complex-numbers</td><td>Add, subtract, multiply complex numbers</td></tr><tr><td>OpenStax Intermediate Algebra 2e §8.8</td><td>https://openstax.org/books/intermediate-algebra-2e/pages/8-8-use-the-complex-number-system</td><td>IA complex intro</td></tr></tbody></table>
+<h2>Variety notes / UNCLEAR flag</h2>
+<p>Old path shapes recorded above; OpenStax frames win for WP stories.</p>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Variety:</strong> Add/sub/mul of $a+bi$ only — division / powers are other leaves (rationalize, abs).</li>
+<li><strong>Difficulty scaling:</strong> Real — FOIL multiply and larger coeffs at high D.</li>
+<li><strong>OpenStax:</strong> CA §2.4 / IA §8.8 cites match operations skill.</li>
+<li><strong>Shipped:</strong> Gallery <code>a2_complex_operations</code> — clear; graphing complex is a separate UNCLEAR leaf.</li>
+</ul>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<ul>
+<li><strong>Reuse:</strong> <code>complex_algebra</code> / <code>ComplexOp</code> (gallery wired).</li>
+<li><strong>New:</strong> not required for ±/× spine.</li>
+</ul></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>ComplexOp</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(3 + i\right)\left(3 + 2i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$7 + 9i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>ComplexOp</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(1 + 2i\right)\left(-2 + 2i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-6 - 2i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>ComplexOp</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(2 + 2i\right) - \left(-i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$2 + 3i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>ComplexOp</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(5 - 4i\right)\left(3\right)$$</div><div class='math'><div class='lab'>Answer</div>$$15 - 12i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>ComplexOp</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(-5 - 4i\right)\left(1 + 5i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$15 - 29i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>ComplexOp</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(5 - 2i\right)\left(2\right)$$</div><div class='math'><div class='lab'>Answer</div>$$10 - 4i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>ComplexOp</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(7 - 5i\right)\left(-7i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-35 - 49i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>ComplexOp</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(-7\right)\left(-1\right)$$</div><div class='math'><div class='lab'>Answer</div>$$7$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>ComplexOp</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(4 + 2i\right)\left(3i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-6 + 12i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'>ComplexOp</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(-5 + 4i\right)\left(-5 - 5i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$45 + 5i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'>ComplexOp</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(9 - 7i\right)\left(1 + 7i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$58 + 56i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'>ComplexOp</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\left(-7 + 7i\right)\left(-4 - i\right)$$</div><div class='math'><div class='lab'>Answer</div>$$35 - 21i$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>ComplexOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>complex_algebra</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_complex_numbers_operations</code></p></article>
+</body></html>

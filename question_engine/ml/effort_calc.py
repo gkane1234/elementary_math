@@ -1207,6 +1207,7 @@ PRECALC_CALC_SCORERS: dict[str, Any] = {
     "calc_indef_int_integration_by_parts": effort_ibp_sub_integral,
     "calc_indef_int_partial_fractions": effort_ibp_sub_integral,
     "calc_indef_int_multi_trick": effort_ibp_sub_integral,
+    "calc_indef_int_general": effort_ibp_sub_integral,
     "calc_def_int_area_under_a_curve_by_limit_of_sums": effort_definite_ftc,
     "calc_def_int_riemann_sum_tables": effort_definite_ftc,
     "calc_def_int_first_fundamental_theorem_of_calculus": effort_definite_ftc,

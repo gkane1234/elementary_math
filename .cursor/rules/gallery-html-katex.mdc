@@ -1,0 +1,79 @@
+---
+description: KaTeX setup for scripts/output HTML example galleries — paths, delimiters, escaping
+globs: scripts/output/**/*.html,scripts/output/**/gen_examples.py
+alwaysApply: false
+---
+
+# Gallery HTML + KaTeX
+
+Reference implementation: `scripts/output/addsub_cancel_gallery/gallery.html` (flat layout) and `scripts/output/diff_skeleton_gallery/gen_examples.py` (index + nested `<topic>/gallery.html`).
+
+Copy-paste snippets: `scripts/output/GALLERY_KATEX.md` (includes NOTES.md / red `UNCLEAR`·`LIMITATIONS` header for phase-01 section pages).
+
+## Asset paths (most common bug)
+
+KaTeX lives at `scripts/output/topic_fit/_assets/katex/` (vendored local copy — **not** a CDN).
+
+Relative path **from the HTML file** to that folder:
+
+| HTML location | `katex_rel` |
+|---|---|
+| `scripts/output/<gallery>/gallery.html` or `index.html` | `../topic_fit/_assets/katex` |
+| `scripts/output/<gallery>/<slug>/gallery.html` | `../../topic_fit/_assets/katex` |
+
+In `gen_examples.py`, define two constants when you have both index and per-type pages:
+
+```python
+KATEX = "../../topic_fit/_assets/katex"       # from <slug>/gallery.html
+KATEX_INDEX = "../topic_fit/_assets/katex"    # from index.html
+```
+
+**Wrong:** using `../topic_fit/...` on nested per-type pages — KaTeX 404s and raw `$$\frac{...}$$` shows.
+
+## Script order and auto-render
+
+Load in `<head>` in this order:
+
+1. `katex.min.css`
+2. `katex.min.js` (`defer`)
+3. `contrib/auto-render.min.js` (`defer`, `onload` calls `renderMathInElement`)
+
+```html
+<link rel="stylesheet" href="{katex_rel}/katex.min.css"/>
+<script defer src="{katex_rel}/katex.min.js"></script>
+<script defer src="{katex_rel}/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+```
+
+Optional (diff galleries): append `document.documentElement.setAttribute('data-math-ready','1')` inside `onload`.
+
+## Delimiter rules
+
+Engine `prompt_latex` / `answer_latex` are **bare TeX** (no delimiters), e.g. `\frac{3x+3}{x+1}`.
+
+In HTML, wrap display math with `$$…$$`:
+
+```python
+f"<div class='math'>$${row['prompt_latex']}$$</div>"
+```
+
+- **Display (prompt/answer cards):** `$$…$$` — matches `renderMathInElement` config above.
+- **Inline (prose, debug values):** `$…$` in static HTML strings.
+- **Do not** store `\(...\)` / `\[...\]` in engine output unless you also add those delimiters to `renderMathInElement`.
+
+## Python escaping
+
+- **HTML text nodes** (labels, errors, metadata): `html.escape(...)`.
+- **LaTeX in math divs:** insert raw — do **not** `escape()` TeX (breaks `\frac`, `\left`, etc.).
+- **f-strings:** backslashes in generated HTML are literal; engine strings already have `\frac` etc.
+- **JSON (`samples.json`):** standard `json.dumps` — `\` becomes `\\` in the file (correct).
+
+## Pre-done checklist
+
+Before declaring a gallery done:
+
+1. [ ] Regenerated via the gallery's `gen_examples.py` (live generation — never hand-write LaTeX).
+2. [ ] Opened **index** and at least one **nested** per-type page in a browser; math renders (not raw `$$`).
+3. [ ] View-source / devtools: KaTeX CSS+JS URLs resolve (no 404 on `katex.min.js`).
+4. [ ] `renderMathInElement` delimiters match how TeX is wrapped in HTML (`$$` for cards).
+5. [ ] Prompt/answer TeX is unescaped inside math divs; only plain text uses `escape()`.

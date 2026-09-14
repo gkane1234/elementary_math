@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Literal
 
 from question_engine.frameworks.primitives.equations import sample_linear_equation
@@ -23,6 +23,7 @@ WPKind = Literal[
     "proportion",
     "inequality",
     "systems",
+    "similar_figures",
 ]
 
 
@@ -38,12 +39,29 @@ class WordProblemItem:
     shape_id: str = ""
     n_constraints: int = 0
     frame: str = ""
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 _NAMES = ("Alex", "Jordan", "Sam", "Riley", "Casey", "Taylor")
 
 
 def sample_word_problem(ctx: PrimitiveContext, kind: WPKind) -> WordProblemItem:
+    if kind in {
+        "one_step",
+        "two_step",
+        "inequality",
+        "proportion",
+        "similar_figures",
+        "systems",
+    }:
+        from question_engine.frameworks.primitives.wp_packaging import (
+            sample_packaged_word_problem,
+            use_wp_packaging,
+        )
+
+        settings = dict(getattr(ctx, "settings", None) or {})
+        if use_wp_packaging(settings, kind):
+            return sample_packaged_word_problem(ctx, kind)
     if kind == "systems":
         return _wp_systems(ctx)
     if kind == "proportion":

@@ -1,0 +1,1900 @@
+{
+  "section": {
+    "slug": "calc_limits_at_jump_discontinuities_and_kinks",
+    "title": "LimitSpec \u2014 jump discontinuities (Calc \u00a72.4)",
+    "pattern": "",
+    "engine": "limit_jump",
+    "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Piecewise const \u2192 linear \u2192 poly sides; optional one-sided lim. Structural <code>jump_side_*</code> upgrades (no whole-prompt scale)."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\lim_{x \\to 5} f(x)\\text{ where }f(x)=\\begin{cases}3&x<5\\\\-3&x\\ge 5\\end{cases}",
+      "answer_latex": "\\text{DNE}",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "piecewise_jump"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "two_sided_compare",
+        "methods_used": [
+          "two_sided_compare"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": false,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 1,
+          "coef_abs_max": 6,
+          "degree_max": 2,
+          "term_count_max": 3,
+          "d_spend": 0.0,
+          "form": "piecewise_jump",
+          "technique": "two_sided_compare"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "two_sided_compare",
+          "degree_max": 1,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 10,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "two_sided_compare"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump",
+        "openstax_form": "piecewise_jump",
+        "core_form_id": "piecewise_jump",
+        "catalog_id": "limits",
+        "wrappers_applied": [],
+        "openstax_case": "\u00a72.4 / jump (constant pieces)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 5,
+        "approach_mode": "two_sided",
+        "left_value": 3,
+        "right_value": -3,
+        "left_kind": "const",
+        "right_kind": "const",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump",
+            "cost": 0.0
+          }
+        ],
+        "difficulty_cost_total": 0.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 2,
+          "allow_infinity": false,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\lim_{x \\to 4} f(x)\\text{ where }f(x)=\\begin{cases}2&x<4\\\\4&x\\ge 4\\end{cases}",
+      "answer_latex": "\\text{DNE}",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "piecewise_jump"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "two_sided_compare",
+        "methods_used": [
+          "two_sided_compare"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": false,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 1,
+          "coef_abs_max": 6,
+          "degree_max": 2,
+          "term_count_max": 3,
+          "d_spend": 0.0,
+          "form": "piecewise_jump",
+          "technique": "two_sided_compare"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "two_sided_compare",
+          "degree_max": 1,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 10,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "two_sided_compare"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump",
+        "openstax_form": "piecewise_jump",
+        "core_form_id": "piecewise_jump",
+        "catalog_id": "limits",
+        "wrappers_applied": [],
+        "openstax_case": "\u00a72.4 / jump (constant pieces)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 4,
+        "approach_mode": "two_sided",
+        "left_value": 2,
+        "right_value": 4,
+        "left_kind": "const",
+        "right_kind": "const",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump",
+            "cost": 0.0
+          }
+        ],
+        "difficulty_cost_total": 0.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 2,
+          "allow_infinity": false,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\lim_{x \\to 0} f(x)\\text{ where }f(x)=\\begin{cases}3&x<0\\\\-4&x\\ge 0\\end{cases}",
+      "answer_latex": "\\text{DNE}",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "piecewise_jump"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "two_sided_compare",
+        "methods_used": [
+          "two_sided_compare"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": false,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 1,
+          "coef_abs_max": 6,
+          "degree_max": 2,
+          "term_count_max": 3,
+          "d_spend": 0.0,
+          "form": "piecewise_jump",
+          "technique": "two_sided_compare"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "two_sided_compare",
+          "degree_max": 1,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 10,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "two_sided_compare"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump",
+        "openstax_form": "piecewise_jump",
+        "core_form_id": "piecewise_jump",
+        "catalog_id": "limits",
+        "wrappers_applied": [],
+        "openstax_case": "\u00a72.4 / jump (constant pieces)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 0,
+        "approach_mode": "two_sided",
+        "left_value": 3,
+        "right_value": -4,
+        "left_kind": "const",
+        "right_kind": "const",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump",
+            "cost": 0.0
+          }
+        ],
+        "difficulty_cost_total": 0.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 2,
+          "allow_infinity": false,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\lim_{x \\to 5} f(x)\\text{ where }f(x)=\\begin{cases}3x - 3&x<5\\\\2&x\\ge 5\\end{cases}",
+      "answer_latex": "\\text{DNE}",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "piecewise_jump_linear"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_linear"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_linear",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "two_sided_compare",
+        "methods_used": [
+          "two_sided_compare"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "piecewise"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": false,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 1,
+          "coef_abs_max": 6,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "d_spend": 8.0,
+          "form": "piecewise_jump",
+          "technique": "two_sided_compare"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "two_sided_compare",
+          "degree_max": 1,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 10,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "two_sided_compare"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_linear",
+        "openstax_form": "piecewise_jump_linear",
+        "core_form_id": "piecewise_jump_linear",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_linear"
+        ],
+        "openstax_case": "\u00a72.4 piecewise linear jump",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 5,
+        "approach_mode": "two_sided",
+        "left_value": 12,
+        "right_value": 2,
+        "left_kind": "linear",
+        "right_kind": "const",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_linear",
+            "cost": 6.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_linear",
+            "cost": 2.0
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 3,
+          "allow_infinity": false,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\lim_{x \\to 4^{+}} f(x)\\text{ where }f(x)=\\begin{cases}2x + 4&x<4\\\\4x + 3&x\\ge 4\\end{cases}",
+      "answer_latex": "19",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "piecewise_jump_linear"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_linear"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_linear",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "one_sided",
+        "methods_used": [
+          "one_sided"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "piecewise"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": false,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 1,
+          "coef_abs_max": 6,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "d_spend": 8.0,
+          "form": "piecewise_jump",
+          "technique": "one_sided"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "one_sided",
+          "degree_max": 1,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 2,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "one_sided"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_linear",
+        "openstax_form": "piecewise_jump_linear",
+        "core_form_id": "piecewise_jump_linear",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_linear",
+          "jump_side_linear"
+        ],
+        "openstax_case": "\u00a72.4 piecewise linear jump",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 4,
+        "approach_mode": "right",
+        "left_value": 12,
+        "right_value": 19,
+        "left_kind": "linear",
+        "right_kind": "linear",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_linear",
+            "cost": 6.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_linear",
+            "cost": 2.0
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 3,
+          "allow_infinity": false,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\lim_{x \\to 0^{+}} f(x)\\text{ where }f(x)=\\begin{cases}3&x<0\\\\-4x + 4&x\\ge 0\\end{cases}",
+      "answer_latex": "4",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "piecewise_jump_linear"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_linear"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_linear",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "one_sided",
+        "methods_used": [
+          "one_sided"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "piecewise"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": false,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 1,
+          "coef_abs_max": 6,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "d_spend": 8.0,
+          "form": "piecewise_jump",
+          "technique": "one_sided"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "one_sided",
+          "degree_max": 1,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 1,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "one_sided"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_linear",
+        "openstax_form": "piecewise_jump_linear",
+        "core_form_id": "piecewise_jump_linear",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_linear"
+        ],
+        "openstax_case": "\u00a72.4 piecewise linear jump",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 0,
+        "approach_mode": "right",
+        "left_value": 3,
+        "right_value": 4,
+        "left_kind": "const",
+        "right_kind": "linear",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_linear",
+            "cost": 6.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_linear",
+            "cost": 2.0
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 3,
+          "allow_infinity": false,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\lim_{x \\to 5^{+}} f(x)\\text{ where }f(x)=\\begin{cases}2x^{2} + x + 6&x<5\\\\-4&x\\ge 5\\end{cases}",
+      "answer_latex": "-4",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "piecewise_jump_poly"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_poly"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_poly",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "one_sided",
+        "methods_used": [
+          "one_sided"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "one_sided",
+          "piecewise",
+          "rational_body"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": true,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 2,
+          "coef_abs_max": 7,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "d_spend": 16.0,
+          "form": "piecewise_jump",
+          "technique": "one_sided"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "one_sided",
+          "degree_max": 2,
+          "coef_abs_max": 7,
+          "n_terms": 2,
+          "answer_len": 2,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "one_sided"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_poly",
+        "openstax_form": "piecewise_jump_poly",
+        "core_form_id": "piecewise_jump_poly",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_quad"
+        ],
+        "openstax_case": "\u00a72.4 Ex. 2.27 (\u2212x\u00b2+4)/(4x\u22128)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 5,
+        "approach_mode": "right",
+        "left_value": 61,
+        "right_value": -4,
+        "left_kind": "quad",
+        "right_kind": "const",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_poly",
+            "cost": 10.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_quad",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 13.0,
+        "difficulty_shortfall": 3.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 4,
+          "allow_infinity": true,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\lim_{x \\to 4^{+}} f(x)\\text{ where }f(x)=\\begin{cases}-x^{2} + x + 3&x<4\\\\3x + 2&x\\ge 4\\end{cases}",
+      "answer_latex": "14",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "piecewise_jump_poly"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_poly"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_poly",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "one_sided",
+        "methods_used": [
+          "one_sided"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "one_sided",
+          "piecewise",
+          "rational_body"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": true,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 2,
+          "coef_abs_max": 7,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "d_spend": 16.0,
+          "form": "piecewise_jump",
+          "technique": "one_sided"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "one_sided",
+          "degree_max": 2,
+          "coef_abs_max": 7,
+          "n_terms": 2,
+          "answer_len": 2,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "one_sided"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_poly",
+        "openstax_form": "piecewise_jump_poly",
+        "core_form_id": "piecewise_jump_poly",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_quad",
+          "jump_side_linear"
+        ],
+        "openstax_case": "\u00a72.4 Ex. 2.27 (\u2212x\u00b2+4)/(4x\u22128)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 4,
+        "approach_mode": "right",
+        "left_value": -9,
+        "right_value": 14,
+        "left_kind": "quad",
+        "right_kind": "linear",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_poly",
+            "cost": 10.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_quad",
+            "cost": 3.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_linear",
+            "cost": 2.0
+          }
+        ],
+        "difficulty_cost_total": 15.0,
+        "difficulty_shortfall": 1.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 4,
+          "allow_infinity": true,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\lim_{x \\to 0^{+}} f(x)\\text{ where }f(x)=\\begin{cases}2x - 5&x<0\\\\3x - 1&x\\ge 0\\end{cases}",
+      "answer_latex": "-1",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "piecewise_jump_poly"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_poly"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_poly",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "one_sided",
+        "methods_used": [
+          "one_sided"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "one_sided",
+          "piecewise",
+          "rational_body"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": true,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 2,
+          "coef_abs_max": 7,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "d_spend": 16.0,
+          "form": "piecewise_jump",
+          "technique": "one_sided"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "one_sided",
+          "degree_max": 1,
+          "coef_abs_max": 7,
+          "n_terms": 2,
+          "answer_len": 2,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "one_sided"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_poly",
+        "openstax_form": "piecewise_jump_poly",
+        "core_form_id": "piecewise_jump_poly",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_linear",
+          "jump_side_linear"
+        ],
+        "openstax_case": "\u00a72.4 Ex. 2.27 (\u2212x\u00b2+4)/(4x\u22128)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 0,
+        "approach_mode": "right",
+        "left_value": -5,
+        "right_value": -1,
+        "left_kind": "linear",
+        "right_kind": "linear",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_poly",
+            "cost": 10.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_linear",
+            "cost": 2.0
+          }
+        ],
+        "difficulty_cost_total": 12.0,
+        "difficulty_shortfall": 4.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 4,
+          "allow_infinity": true,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\lim_{x \\to 5^{+}} f(x)\\text{ where }f(x)=\\begin{cases}2x^{2} - x + 3&x<5\\\\6&x\\ge 5\\end{cases}",
+      "answer_latex": "6",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "piecewise_jump_poly"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_poly"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_poly",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "one_sided",
+        "methods_used": [
+          "one_sided"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "one_sided",
+          "piecewise",
+          "rational_body"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": true,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 3,
+          "coef_abs_max": 8,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "d_spend": 22.0,
+          "form": "piecewise_jump",
+          "technique": "one_sided"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "one_sided",
+          "degree_max": 2,
+          "coef_abs_max": 8,
+          "n_terms": 2,
+          "answer_len": 1,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "one_sided"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_poly",
+        "openstax_form": "piecewise_jump_poly",
+        "core_form_id": "piecewise_jump_poly",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_quad"
+        ],
+        "openstax_case": "\u00a72.4 Ex. 2.27 (\u2212x\u00b2+4)/(4x\u22128)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 5,
+        "approach_mode": "right",
+        "left_value": 48,
+        "right_value": 6,
+        "left_kind": "quad",
+        "right_kind": "const",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_poly",
+            "cost": 10.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_quad",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 13.0,
+        "difficulty_shortfall": 9.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 4,
+          "allow_infinity": true,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\lim_{x \\to 4^{+}} f(x)\\text{ where }f(x)=\\begin{cases}-x^{2} + 4x - 1&x<4\\\\-3x - 8&x\\ge 4\\end{cases}",
+      "answer_latex": "-20",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "piecewise_jump_poly"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_poly"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_poly",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "one_sided",
+        "methods_used": [
+          "one_sided"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "one_sided",
+          "piecewise",
+          "rational_body"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": true,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 3,
+          "coef_abs_max": 8,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "d_spend": 22.0,
+          "form": "piecewise_jump",
+          "technique": "one_sided"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "one_sided",
+          "degree_max": 2,
+          "coef_abs_max": 8,
+          "n_terms": 2,
+          "answer_len": 3,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "one_sided"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_poly",
+        "openstax_form": "piecewise_jump_poly",
+        "core_form_id": "piecewise_jump_poly",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_quad",
+          "jump_side_linear"
+        ],
+        "openstax_case": "\u00a72.4 Ex. 2.27 (\u2212x\u00b2+4)/(4x\u22128)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 4,
+        "approach_mode": "right",
+        "left_value": -1,
+        "right_value": -20,
+        "left_kind": "quad",
+        "right_kind": "linear",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_poly",
+            "cost": 10.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_quad",
+            "cost": 3.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_linear",
+            "cost": 2.0
+          }
+        ],
+        "difficulty_cost_total": 15.0,
+        "difficulty_shortfall": 7.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 4,
+          "allow_infinity": true,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_limits_at_jump_discontinuities_and_kinks",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\lim_{x \\to 0^{+}} f(x)\\text{ where }f(x)=\\begin{cases}-3x + 5&x<0\\\\7x - 8&x\\ge 0\\end{cases}",
+      "answer_latex": "-8",
+      "skeleton_pattern": "",
+      "form_id": "piecewise_jump_poly",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "piecewise_jump_poly"
+        ],
+        [
+          "openstax_form",
+          "piecewise_jump_poly"
+        ],
+        [
+          "form",
+          "piecewise_jump"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "piecewise_jump_poly",
+        "structure_id": "limit_jump:piecewise_jump",
+        "form": "piecewise_jump",
+        "technique": "one_sided",
+        "methods_used": [
+          "one_sided"
+        ],
+        "function_classes": [
+          "algebraic",
+          "piecewise"
+        ],
+        "upgrades": [
+          "higher_degree",
+          "one_sided",
+          "piecewise",
+          "rational_body"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "limit_jump",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "limit_jump",
+          "variable": "x",
+          "approach_mode": "finite",
+          "approach_abs_max": 5,
+          "forms": [
+            "piecewise_jump"
+          ],
+          "allow_rational": true,
+          "allow_removable": false,
+          "allow_rationalize": false,
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_roots": false,
+          "allow_invtrig": false,
+          "allow_piecewise": true,
+          "allow_essential": false,
+          "allow_indet": false,
+          "allow_one_sided": true,
+          "apply_lhopital": false,
+          "require_removable": false,
+          "require_indet": false,
+          "max_lhopital_steps": 3,
+          "coef_abs_max": 8,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "d_spend": 22.0,
+          "form": "piecewise_jump",
+          "technique": "one_sided"
+        },
+        "effort_features": {
+          "form": "piecewise_jump",
+          "technique": "one_sided",
+          "degree_max": 1,
+          "coef_abs_max": 8,
+          "n_terms": 2,
+          "answer_len": 2,
+          "lhopital_steps": 0,
+          "nest_depth": 0,
+          "pack": "limit_jump",
+          "methods": [
+            "one_sided"
+          ]
+        },
+        "shape_id": "piecewise_jump",
+        "form_id": "piecewise_jump_poly",
+        "openstax_form": "piecewise_jump_poly",
+        "core_form_id": "piecewise_jump_poly",
+        "catalog_id": "limits",
+        "wrappers_applied": [
+          "jump_side_linear",
+          "jump_side_linear"
+        ],
+        "openstax_case": "\u00a72.4 Ex. 2.27 (\u2212x\u00b2+4)/(4x\u22128)",
+        "strategy": "one_sided",
+        "construction": "forward_form_catalog",
+        "approach_value": 0,
+        "approach_mode": "right",
+        "left_value": 5,
+        "right_value": -8,
+        "left_kind": "linear",
+        "right_kind": "linear",
+        "n_pieces": 2,
+        "difficulty_costs": [
+          {
+            "source": "form",
+            "feature": "piecewise_jump_poly",
+            "cost": 10.0
+          },
+          {
+            "source": "dress",
+            "feature": "jump_side_linear",
+            "cost": 2.0
+          }
+        ],
+        "difficulty_cost_total": 12.0,
+        "difficulty_shortfall": 10.0,
+        "generation_settings": {
+          "allow_piecewise": true,
+          "allow_one_sided": true,
+          "power_min": 1,
+          "power_max": 4,
+          "allow_infinity": true,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>FactorProduct — special products — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>FactorProduct — special products</h1>
+<p class="sub"><code>polynomial_factoring_special_cases</code> · live <code>_generate_for_type</code>
+ · pattern <strong>FactorProduct</strong>
+ · 6/6 ok · D ladder 2, 8, 16
+ · seeds 101, 207</p>
+<p class="sub">Difference of squares, perfect-square trinomial, etc.</p>
+<p class='sub'>Also wired: <code>a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions</code></p>
+<div class='notes-alert'>UNCLEAR — gold look not locked; see notes below.</div><div class='notes-block'><h1>Notes — <code>factor_special</code> (<code>polynomial_factoring_special_cases</code>)</h1>
+<p>Also covers: <code>polynomial_factoring_special_cases</code></p>
+<p>Flags:</p>
+<ul>
+<li>_(none)_</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Factor difference of squares or a perfect-square trinomial.</li>
+<li><strong>D=0:</strong> $x^2-c^2$ or $x^2\pm 2bx+b^2$ (a=1).</li>
+<li><strong>High D (≈16–22):</strong> $a^2x^2-c^2$ / non-monic perfect squares. Cubes are A2, not this A1 leaf.</li>
+<li><strong>Must not:</strong> Generic $x^2+bx+c$ that is not a special product; grouping four-terms.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> with <code>use_factor_poly=True</code>.</p>
+<ul>
+<li><strong>D=0 seed=101:</strong> $x^{2} - 16$ → $\left(x + 4\right)\left(x - 4\right)$ — form_id=difference_of_squares</li>
+<li><strong>D=0 seed=207:</strong> $x^{2} - 1$ → $\left(x + 1\right)\left(x - 1\right)$ — form_id=difference_of_squares</li>
+<li><strong>D=8 seed=101:</strong> $x^{2} - 49$ → $\left(x + 7\right)\left(x - 7\right)$ — form_id=difference_of_squares</li>
+<li><strong>D=8 seed=207:</strong> $x^{2} - 9$ → $\left(x + 3\right)\left(x - 3\right)$ — form_id=difference_of_squares</li>
+<li><strong>D=16 seed=101:</strong> $-3x^{2} + 4x^{2} - 49$ → $\left(x + 7\right)\left(x - 7\right)$ — form_id=difference_of_squares</li>
+<li><strong>D=16 seed=207:</strong> $-x^{2} - 11 + 2\left(x^{2} + 1\right)$ → $\left(x + 3\right)\left(x - 3\right)$ — form_id=difference_of_squares</li>
+<li><strong>D=22 seed=101:</strong> $3 - 54 + 2 + x^{2}$ → $\left(x + 7\right)\left(x - 7\right)$ — form_id=difference_of_squares</li>
+<li><strong>D=22 seed=207:</strong> $x^{2} - 11 + 2x^{2} - 2\left(x^{2} - 1\right)$ → $\left(x + 3\right)\left(x - 3\right)$ — form_id=difference_of_squares</li>
+</ul>
+<p>Opt-out flag used: <code>use_factor_poly=True</code></p>
+<h2>Current default (same D/seeds)</h2>
+<ul>
+<li><strong>D=0 seed=101:</strong> $x^{2} - 16$ → $\left(x + 4\right)\left(x - 4\right)$ — form_id=difference_of_squares, pattern=FactorProduct</li>
+<li><strong>D=0 seed=207:</strong> $x^{2} - 9$ → $\left(x + 3\right)\left(x - 3\right)$ — form_id=difference_of_squares, pattern=FactorProduct</li>
+<li><strong>D=8 seed=101:</strong> $x^{2} - 1$ → $\left(x - 1\right)\left(x + 1\right)$ — form_id=difference_of_squares, pattern=FactorProduct</li>
+<li><strong>D=8 seed=207:</strong> $x^{2} - 81$ → $\left(x - 9\right)\left(x + 9\right)$ — form_id=difference_of_squares, pattern=FactorProduct</li>
+<li><strong>D=16 seed=101:</strong> $x^{2} - 1$ → $\left(x - 1\right)\left(x + 1\right)$ — form_id=difference_of_squares, pattern=FactorProduct</li>
+<li><strong>D=16 seed=207:</strong> $x^{2} - 121$ → $\left(x - 11\right)\left(x + 11\right)$ — form_id=difference_of_squares, pattern=FactorProduct</li>
+<li><strong>D=22 seed=101:</strong> $x^{2} + 6 - 7$ → $\left(x - 1\right)\left(x + 1\right)$ — form_id=difference_of_squares, pattern=FactorProduct</li>
+<li><strong>D=22 seed=207:</strong> $3x^{2} - 2x^{2} - 121$ → $\left(x - 11\right)\left(x + 11\right)$ — form_id=difference_of_squares, pattern=FactorProduct</li>
+</ul>
+<h2>OpenStax examples + chapter/section cites</h2>
+<p>Paraphrase stems; cite book + chapter/section + URL. Do not dump copyrighted problem text wholesale.</p>
+<p>| Cite | URL | What to copy (shape / frame, not wording) | |------|-----|-------------------------------------------| | OpenStax Elementary Algebra 2e §7.4 | https://openstax.org/books/elementary-algebra-2e/pages/7-4-factor-special-products | Difference of squares; perfect-square trinomials. |</p>
+<p>Local HTML (if mined): <code>textbooks/openstax/html/elementary-algebra-2e/</code> or <code>intermediate-algebra-2e/</code>.</p>
+<h2>Variety notes / UNCLEAR flag</h2>
+<p>Not a WP. Algebra shapes follow the old path; default is the live skeleton. Flag UNCLEAR only if old path is a dump stub or the skill is wrong.</p>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<ul>
+<li><strong>Reuse:</strong> FactorProduct special factor / poly_skeleton (already wired). Opt-out: <code>use_factor_poly</code>.</li>
+<li><strong>New:</strong> not this pass (already on skeleton).</li>
+<li><strong>Not this pass:</strong> do not re-implement generators.</li>
+</ul>
+<p>Suggested family from <code>A1_INDEX.md</code>: <code>other</code></p>
+<p>_Catalog:_ Algebra 1 — Polynomials — Special cases. Generator <code>polynomial_factoring_special_cases</code>.</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈2 · seed=101</strong> <span class='pat'>FactorProduct</span> <span class='tag band low'>D≈2.0</span><span class='tag'>seed=101</span><span class='tag fid'>difference_of_squares</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - 16$$</div><div class='math'><div class='lab'>Answer</div>$$\left(x + 4\right)\left(x - 4\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>FactorProduct</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>2</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>expanded</span></div><div class='kv'><span class='k'>task</span><span class='v'>factor</span></div><div class='kv'><span class='k'>factor_kind</span><span class='v'>diff_squares</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>monic_bias+expanded</span></div><div class='kv'><span class='k'>method</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>2</span></div><div class='kv'><span class='k'>degree</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_factoring_special_cases</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈2 · seed=207</strong> <span class='pat'>FactorProduct</span> <span class='tag band low'>D≈2.0</span><span class='tag'>seed=207</span><span class='tag fid'>difference_of_squares</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - 9$$</div><div class='math'><div class='lab'>Answer</div>$$\left(x + 3\right)\left(x - 3\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>FactorProduct</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>2</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>expanded</span></div><div class='kv'><span class='k'>task</span><span class='v'>factor</span></div><div class='kv'><span class='k'>factor_kind</span><span class='v'>diff_squares</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>monic_bias+expanded</span></div><div class='kv'><span class='k'>method</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>2</span></div><div class='kv'><span class='k'>degree</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_factoring_special_cases</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈8 · seed=101</strong> <span class='pat'>FactorProduct</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>difference_of_squares</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - 1$$</div><div class='math'><div class='lab'>Answer</div>$$\left(x - 1\right)\left(x + 1\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>FactorProduct</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>expanded</span></div><div class='kv'><span class='k'>task</span><span class='v'>factor</span></div><div class='kv'><span class='k'>factor_kind</span><span class='v'>diff_squares</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>monic_bias+expanded</span></div><div class='kv'><span class='k'>method</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>2</span></div><div class='kv'><span class='k'>degree</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_factoring_special_cases</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=207</strong> <span class='pat'>FactorProduct</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>difference_of_squares</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - 81$$</div><div class='math'><div class='lab'>Answer</div>$$\left(x - 9\right)\left(x + 9\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>FactorProduct</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>expanded</span></div><div class='kv'><span class='k'>task</span><span class='v'>factor</span></div><div class='kv'><span class='k'>factor_kind</span><span class='v'>diff_squares</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>monic_bias+expanded</span></div><div class='kv'><span class='k'>method</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>2</span></div><div class='kv'><span class='k'>degree</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_factoring_special_cases</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈16 · seed=101</strong> <span class='pat'>FactorProduct</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>difference_of_squares</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - 1$$</div><div class='math'><div class='lab'>Answer</div>$$\left(x - 1\right)\left(x + 1\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>FactorProduct</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>expanded</span></div><div class='kv'><span class='k'>task</span><span class='v'>factor</span></div><div class='kv'><span class='k'>factor_kind</span><span class='v'>diff_squares</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>nonmonic+expanded</span></div><div class='kv'><span class='k'>method</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>2</span></div><div class='kv'><span class='k'>degree</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_factoring_special_cases</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈16 · seed=207</strong> <span class='pat'>FactorProduct</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>difference_of_squares</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - 121$$</div><div class='math'><div class='lab'>Answer</div>$$\left(x - 11\right)\left(x + 11\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>FactorProduct</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>poly_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>dens_style</span><span class='v'>expanded</span></div><div class='kv'><span class='k'>task</span><span class='v'>factor</span></div><div class='kv'><span class='k'>factor_kind</span><span class='v'>diff_squares</span></div><div class='kv'><span class='k'>factor_bias</span><span class='v'>nonmonic+expanded</span></div><div class='kv'><span class='k'>method</span><span class='v'>difference_of_squares</span></div><div class='kv'><span class='k'>n_factors</span><span class='v'>2</span></div><div class='kv'><span class='k'>degree</span><span class='v'>2</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>polynomial_factoring_special_cases</code></p></article>
+</body></html>

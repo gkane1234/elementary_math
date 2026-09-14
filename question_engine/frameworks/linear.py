@@ -453,6 +453,14 @@ class WritingLinearEquationsFramework(QuestionFramework):
         answer: str | None,
     ) -> dict[str, Any]:
         meta = question_metadata(linear_form=self._last_target_form)
+        topic = str(settings.get("_topic_id") or "")
+        if topic.startswith("a2_") and "writing_linear" in topic:
+            meta = {
+                **meta,
+                "skeleton_pattern": "WriteLinear",
+                "primitive_engine": "writing_linear_forms",
+                "ask_mode": self._last_ask_mode or "to_slope_intercept",
+            }
         if self._last_plane_spec is None:
             return meta
         from .graphing import coordinate_plane_metadata

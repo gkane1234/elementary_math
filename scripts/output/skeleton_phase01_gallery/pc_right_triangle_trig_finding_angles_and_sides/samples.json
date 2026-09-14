@@ -1,0 +1,1129 @@
+{
+  "section": {
+    "slug": "pc_right_triangle_trig_finding_angles_and_sides",
+    "title": "PC \u2014 Right triangle trig, finding angles and sides",
+    "pattern": "",
+    "engine": "geo_right_triangle_trig",
+    "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Live <code>geo_right_triangle_trig</code> engine (reuse, no rewrite-skeleton). D=0 simple per <code>notes/pc_right_triangle_trig_finding_angles_and_sides.md</code>. OpenStax PC cite in notes."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 45^\\circ,\\ BC = 5\\text{ cm}.\\ \\text{Find } AC.",
+      "answer_latex": "\\frac{5}{\\tan 45^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 113.2 183.2\" width=\"113.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 91.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"66.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 47.4 36.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"47.1\" y=\"51.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"91.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"99.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 5.0,
+            "leg_b": 12.0,
+            "hypotenuse": 13.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "45\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 1.25,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (1.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.450,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (0.625,-0.480) {5 cm};\n  \\node at (-0.480,1.500) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:292.62:0.400);\n  \\node at (0.147,2.265) {45\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 113.2 183.2\" width=\"113.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 91.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"66.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 47.4 36.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"47.1\" y=\"51.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"91.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"99.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 0.0,
+        "generation_settings": {
+          "side_min": 3,
+          "side_max": 12,
+          "angle_min": 20,
+          "angle_max": 120,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 30^\\circ,\\ AC = 12\\text{ cm}.\\ \\text{Find } BC.",
+      "answer_latex": "12\\tan 30^\\circ",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 113.2 183.2\" width=\"113.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 91.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"66.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 47.4 36.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"47.1\" y=\"51.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">30\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"91.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"99.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 5.0,
+            "leg_b": 12.0,
+            "hypotenuse": 13.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "30\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 1.25,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (1.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.450,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (-0.480,1.500) {12 cm};\n  \\node at (0.625,-0.480) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:292.62:0.400);\n  \\node at (0.147,2.265) {30\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 113.2 183.2\" width=\"113.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 91.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"66.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 47.4 36.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"47.1\" y=\"51.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">30\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"91.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"99.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 0.0,
+        "generation_settings": {
+          "side_min": 3,
+          "side_max": 12,
+          "angle_min": 20,
+          "angle_max": 120,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 45^\\circ,\\ BC = 5\\text{ cm}.\\ \\text{Find } AC.",
+      "answer_latex": "\\frac{5}{\\tan 45^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 113.2 183.2\" width=\"113.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 91.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"66.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 47.4 36.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"47.1\" y=\"51.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"91.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"99.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 5.0,
+            "leg_b": 12.0,
+            "hypotenuse": 13.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "45\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 1.25,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (1.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.450,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (0.625,-0.480) {5 cm};\n  \\node at (-0.480,1.500) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:292.62:0.400);\n  \\node at (0.147,2.265) {45\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 113.2 183.2\" width=\"113.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 91.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"66.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 47.4 36.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"47.1\" y=\"51.4\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"91.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"99.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 0.0,
+        "generation_settings": {
+          "side_min": 3,
+          "side_max": 12,
+          "angle_min": 20,
+          "angle_max": 120,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{In right } \\triangle ABC \\text{ with right angle at } C,\\ \\text{find } \\tan A.",
+      "answer_latex": "\\frac{9}{12}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 153.2 183.2\" width=\"153.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 131.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"86.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">9 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"101.6\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 50.8 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"50.7\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">\u03b8</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"131.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"139.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 9.0,
+            "leg_b": 12.0,
+            "hypotenuse": 15.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "\u03b8"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 2.25,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (2.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.450,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (1.125,-0.480) {9 cm};\n  \\node at (-0.480,1.500) {12 cm};\n  \\node at (1.509,1.788) {15 cm};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:306.87:0.400);\n  \\node at (0.237,2.288) {\u03b8};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 153.2 183.2\" width=\"153.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 131.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"86.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">9 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"101.6\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 50.8 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"50.7\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">\u03b8</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"131.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"139.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 8.0,
+        "generation_settings": {
+          "side_min": 3,
+          "side_max": 20,
+          "angle_min": 10,
+          "angle_max": 170,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 60^\\circ,\\ BC = 9\\text{ cm}.\\ \\text{Find } AB.",
+      "answer_latex": "\\frac{9}{\\sin 60^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 134.0 183.2\" width=\"134.0\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,22.0 112.0,142.0 22.0,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"34.8,142.0 34.8,129.2 22.0,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"67.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">9 cm</text><text x=\"82.4\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 22.0 38.0 A 16.0 16.0 0 0 0 31.6 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"31.5\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">60\u00b0</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"112.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"120.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 9.0,
+            "leg_b": 12.0,
+            "hypotenuse": 15.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "60\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 2.25,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (2.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.450,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (1.125,-0.480) {9 cm};\n  \\node at (1.509,1.788) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:306.87:0.400);\n  \\node at (0.237,2.288) {60\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 134.0 183.2\" width=\"134.0\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,22.0 112.0,142.0 22.0,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"34.8,142.0 34.8,129.2 22.0,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"67.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">9 cm</text><text x=\"82.4\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 22.0 38.0 A 16.0 16.0 0 0 0 31.6 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"31.5\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">60\u00b0</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"112.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"120.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 8.0,
+        "generation_settings": {
+          "side_min": 3,
+          "side_max": 20,
+          "angle_min": 10,
+          "angle_max": 170,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{In right } \\triangle ABC \\text{ with right angle at } C,\\ \\text{find } \\tan A.",
+      "answer_latex": "\\frac{9}{12}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 153.2 183.2\" width=\"153.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 131.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"86.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">9 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"101.6\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 50.8 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"50.7\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">\u03b8</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"131.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"139.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 9.0,
+            "leg_b": 12.0,
+            "hypotenuse": 15.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "\u03b8"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 2.25,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (2.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.450,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (1.125,-0.480) {9 cm};\n  \\node at (-0.480,1.500) {12 cm};\n  \\node at (1.509,1.788) {15 cm};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:306.87:0.400);\n  \\node at (0.237,2.288) {\u03b8};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 153.2 183.2\" width=\"153.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 131.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"86.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">9 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"101.6\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 50.8 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"50.7\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">\u03b8</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"131.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"139.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 8.0,
+        "generation_settings": {
+          "side_min": 3,
+          "side_max": 20,
+          "angle_min": 10,
+          "angle_max": 170,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 45^\\circ,\\ BC = 7\\text{ cm}.\\ \\text{Find } AC.",
+      "answer_latex": "\\frac{7}{\\tan 45^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 98.2 183.2\" width=\"98.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 76.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"58.7\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 45.7 37.4\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"45.4\" y=\"51.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"76.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"84.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 7.0,
+            "leg_b": 24.0,
+            "hypotenuse": 25.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "45\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 0.875,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (0.875,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.075,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (0.438,-0.480) {7 cm};\n  \\node at (-0.480,1.500) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:286.26:0.400);\n  \\node at (0.106,2.258) {45\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 98.2 183.2\" width=\"98.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 76.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"58.7\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 45.7 37.4\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"45.4\" y=\"51.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"76.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"84.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 16.0,
+        "generation_settings": {
+          "side_min": 5,
+          "side_max": 40,
+          "angle_min": 5,
+          "angle_max": 175,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 60^\\circ,\\ BC = 15\\text{ cm}.\\ \\text{Find } AB.",
+      "answer_latex": "\\frac{15}{\\sin 60^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 134.0 183.2\" width=\"134.0\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,22.0 112.0,142.0 22.0,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"34.8,142.0 34.8,129.2 22.0,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"67.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><text x=\"82.4\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 22.0 38.0 A 16.0 16.0 0 0 0 31.6 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"31.5\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">60\u00b0</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"112.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"120.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 15.0,
+            "leg_b": 20.0,
+            "hypotenuse": 25.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "60\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 2.25,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (2.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.450,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (1.125,-0.480) {15 cm};\n  \\node at (1.509,1.788) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:306.87:0.400);\n  \\node at (0.237,2.288) {60\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 134.0 183.2\" width=\"134.0\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,22.0 112.0,142.0 22.0,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"34.8,142.0 34.8,129.2 22.0,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"67.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><text x=\"82.4\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 22.0 38.0 A 16.0 16.0 0 0 0 31.6 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"31.5\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">60\u00b0</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"112.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"120.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 16.0,
+        "generation_settings": {
+          "side_min": 5,
+          "side_max": 40,
+          "angle_min": 5,
+          "angle_max": 175,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 45^\\circ,\\ BC = 8\\text{ cm}.\\ \\text{Find } AC.",
+      "answer_latex": "\\frac{8}{\\tan 45^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 127.2 183.2\" width=\"127.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 105.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"73.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 48.7 36.1\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"48.5\" y=\"51.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"105.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"113.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 8.0,
+            "leg_b": 15.0,
+            "hypotenuse": 17.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "45\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 1.6,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (1.600,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.800,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (0.800,-0.480) {8 cm};\n  \\node at (-0.480,1.500) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:298.07:0.400);\n  \\node at (0.182,2.272) {45\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 127.2 183.2\" width=\"127.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 105.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"73.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 48.7 36.1\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"48.5\" y=\"51.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"105.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"113.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 16.0,
+        "generation_settings": {
+          "side_min": 5,
+          "side_max": 40,
+          "angle_min": 5,
+          "angle_max": 175,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 45^\\circ,\\ BC = 7\\text{ cm}.\\ \\text{Find } AC.",
+      "answer_latex": "\\frac{7}{\\tan 45^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 98.2 183.2\" width=\"98.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 76.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"58.7\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 45.7 37.4\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"45.4\" y=\"51.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"76.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"84.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 7.0,
+            "leg_b": 24.0,
+            "hypotenuse": 25.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "45\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 0.875,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (0.875,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.075,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (0.438,-0.480) {7 cm};\n  \\node at (-0.480,1.500) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:286.26:0.400);\n  \\node at (0.106,2.258) {45\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 98.2 183.2\" width=\"98.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 76.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"58.7\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 45.7 37.4\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"45.4\" y=\"51.7\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"76.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"84.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 22.0,
+        "generation_settings": {
+          "side_min": 5,
+          "side_max": 40,
+          "angle_min": 5,
+          "angle_max": 175,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 60^\\circ,\\ BC = 15\\text{ cm}.\\ \\text{Find } AB.",
+      "answer_latex": "\\frac{15}{\\sin 60^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 134.0 183.2\" width=\"134.0\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,22.0 112.0,142.0 22.0,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"34.8,142.0 34.8,129.2 22.0,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"67.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><text x=\"82.4\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 22.0 38.0 A 16.0 16.0 0 0 0 31.6 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"31.5\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">60\u00b0</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"112.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"120.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 15.0,
+            "leg_b": 20.0,
+            "hypotenuse": 25.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "60\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 2.25,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (2.250,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.450,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (1.125,-0.480) {15 cm};\n  \\node at (1.509,1.788) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:306.87:0.400);\n  \\node at (0.237,2.288) {60\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 134.0 183.2\" width=\"134.0\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,22.0 112.0,142.0 22.0,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"34.8,142.0 34.8,129.2 22.0,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"67.0\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">15 cm</text><text x=\"82.4\" y=\"70.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 22.0 38.0 A 16.0 16.0 0 0 0 31.6 34.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"31.5\" y=\"50.5\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">60\u00b0</text><circle cx=\"22.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"112.0\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"120.0\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"22.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"12.0\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 22.0,
+        "generation_settings": {
+          "side_min": 5,
+          "side_max": 40,
+          "angle_min": 5,
+          "angle_max": 175,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "pc_right_triangle_trig_finding_angles_and_sides",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{In right } \\triangle ABC,\\ m\\angle A = 45^\\circ,\\ BC = 8\\text{ cm}.\\ \\text{Find } AC.",
+      "answer_latex": "\\frac{8}{\\tan 45^\\circ}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 127.2 183.2\" width=\"127.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 105.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"73.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 48.7 36.1\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"48.5\" y=\"51.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"105.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"113.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "diagram_kind",
+          "right_triangle_trig"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_spec": {
+          "figure_type": "triangle",
+          "labels": [
+            "A",
+            "B",
+            "C"
+          ],
+          "dimensions": {
+            "leg_a": 8.0,
+            "leg_b": 15.0,
+            "hypotenuse": 17.0
+          },
+          "unit": "cm"
+        },
+        "diagram_spec": {
+          "kind": "right_triangle_trig",
+          "labels": [
+            "C",
+            "B",
+            "A"
+          ],
+          "segments": [],
+          "angles": [
+            "45\u00b0"
+          ],
+          "points": {
+            "C": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "C"
+            },
+            "B": {
+              "x": 1.6,
+              "y": 0.0,
+              "label": "B"
+            },
+            "A": {
+              "x": 0.0,
+              "y": 3.0,
+              "label": "A"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (C) at (0.000,0.000);\n  \\fill (C) circle (1.2pt);\n  \\node at (-0.250,-0.220) {C};\n  \\coordinate (B) at (1.600,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (1.800,-0.220) {B};\n  \\coordinate (A) at (0.000,3.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.250,3.250) {A};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (0.320,0.000) -- (0.320,0.320) -- (0.000,0.320);\n  \\node at (0.800,-0.480) {8 cm};\n  \\node at (-0.480,1.500) {?};\n  \\draw[#2563eb] (A) ++(270.00:0.400) arc (270.00:298.07:0.400);\n  \\node at (0.182,2.272) {45\u00b0};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 127.2 183.2\" width=\"127.2\" height=\"183.2\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,22.0 105.2,142.0 41.2,142.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polyline points=\"54.0,142.0 54.0,129.2 41.2,129.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"73.2\" y=\"161.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><text x=\"22.0\" y=\"82.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><path d=\"M 41.2 38.0 A 16.0 16.0 0 0 0 48.7 36.1\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"1.75\"/><text x=\"48.5\" y=\"51.1\" class=\"diagram-label\" fill=\"#2563eb\" font-size=\"12\" text-anchor=\"middle\" dominant-baseline=\"middle\">45\u00b0</text><circle cx=\"41.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"105.2\" cy=\"142.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"113.2\" y=\"150.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"41.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"31.2\" y=\"12.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text></svg>",
+        "difficulty": 22.0,
+        "generation_settings": {
+          "side_min": 5,
+          "side_max": 40,
+          "angle_min": 5,
+          "angle_max": 175,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    }
+  ],
+  "failures": []
+}

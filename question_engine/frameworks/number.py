@@ -750,6 +750,17 @@ def _format_decimal(value: Decimal, *, places: int = 2) -> str:
     return text
 
 
+def _decimal_to_unreduced_frac_latex(value: Decimal, places: int) -> str:
+    """Place-value fraction (tenths/hundredths), not reduced — the named method."""
+    if places <= 0:
+        n = int(value)
+        return str(n) if n >= 0 else f"({n})"
+    scale = 10 ** int(places)
+    n = int((value * Decimal(scale)).quantize(Decimal(1), rounding=ROUND_HALF_UP))
+    sign = "-" if n < 0 else ""
+    return f"{sign}\\frac{{{abs(n)}}}{{{scale}}}"
+
+
 def _random_decimal(
     *,
     places: int = 1,
@@ -769,12 +780,27 @@ def _random_decimal(
 class NumberFramework(QuestionFramework):
     """Shared batch generation for numeric expression types."""
 
+    skeleton_pattern: str = "NumberCore"
+
+    def build_metadata(self, settings: dict) -> dict[str, Any]:
+        return {
+            "skeleton_pattern": getattr(self, "skeleton_pattern", "NumberCore"),
+            "primitive_engine": "number",
+        }
+
 
 class RationalFramework(NumberFramework):
     """Adding/subtracting/multiplying/dividing rational numbers."""
 
     def __init__(self, operation: str = "+"):
         self.operation = operation
+        self.skeleton_pattern = {
+            "+": "FractionAdd",
+            "-": "FractionSub",
+            "+-": "FractionAddSub",
+            "*": "FractionMul",
+            "/": "FractionDiv",
+        }.get(operation, "FractionOp")
 
     def _random_fraction(self, params: NumberParams) -> Fraction:
         return random_fraction(
@@ -1020,6 +1046,7 @@ class PercentFramework(NumberFramework):
 
     def __init__(self, *, percent_change: bool = False):
         self.percent_change = percent_change
+        self.skeleton_pattern = "PercentChange" if percent_change else "PercentOf"
         self._diagram_ctx: dict[str, object] | None = None
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
@@ -1238,6 +1265,8 @@ class FindingPercentsEquivalentFractionsFramework(NumberFramework):
     cheap; awkward factors (e.g. ×4 from 25, reduce-then-scale from 12/16) cost more.
     """
 
+    skeleton_pattern = "FindingPercent"
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
 
@@ -1324,6 +1353,7 @@ class RatioFramework(NumberFramework):
 
     def __init__(self, *, equivalent: bool = False):
         self.equivalent = equivalent
+        self.skeleton_pattern = "EquivalentRatio" if equivalent else "Ratio"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         if self.equivalent:
@@ -1382,6 +1412,8 @@ class RatioFramework(NumberFramework):
 
 class PartPartWholeRatioFramework(NumberFramework):
     """Part–part and part–whole ratio prompts (not a simplify-ratio stand-in)."""
+
+    skeleton_pattern = "PartPartWhole"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -1566,7 +1598,10 @@ class ComparingRatiosFramework(NumberFramework):
     Continuous difficulty ramps two axes:
       1. Closeness — relative unit-rate gap shrinks with D (harder judgment)
       2. Simplification — inflate-k gains meaningful (non-10ⁿ) cancel steps
+
     """
+
+    skeleton_pattern = "CompareRatios"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -1717,6 +1752,8 @@ class ComparingRatiosFramework(NumberFramework):
 
 class UnitRateFramework(NumberFramework):
     """Unit rates and equivalent rates (factors-first under continuous D)."""
+
+    skeleton_pattern = "UnitRate"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -1935,6 +1972,8 @@ def _sample_comparing_rate_amounts(
 
 class ComparingRatesFramework(NumberFramework):
     """Compare two rates (unit price / speed) with double-number-line stimuli."""
+
+    skeleton_pattern = "CompareRates"
 
     def __init__(self) -> None:
         self._metadata: dict[str, object] = {}
@@ -2283,6 +2322,8 @@ def _sample_convert_amount(from_step: int, d: float, *, allow_partial: bool) -> 
 class ConvertingUnitsFramework(NumberFramework):
     """Unit conversion word problems with a given equivalence + DNL stimulus."""
 
+    skeleton_pattern = "ConvertUnits"
+
     def __init__(self) -> None:
         self._metadata: dict[str, object] = {}
 
@@ -2434,6 +2475,15 @@ class DecimalArithmeticFramework(NumberFramework):
         self.operation = operation
         self.via_equivalent_fractions = via_equivalent_fractions
         self._diagram_ctx: dict[str, object] | None = None
+        if via_equivalent_fractions:
+            self.skeleton_pattern = "DecimalMulFrac"
+        else:
+            self.skeleton_pattern = {
+                "+": "DecimalAdd",
+                "-": "DecimalSub",
+                "*": "DecimalMul",
+                "/": "DecimalDiv",
+            }.get(operation, "DecimalOp")
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -2569,6 +2619,13 @@ class DecimalArithmeticFramework(NumberFramework):
         latex_op = "+" if self.operation == "+" else "-"
         a_s = _format_decimal(a, places=a_places)
         b_s = _format_decimal(b, places=b_places)
+        # Keep addition as addition: format_binop_expression would turn
+        # ``10.5 + (-9.5)`` into ``10.5 - 9.5`` (looks like the subtraction leaf).
+        if self.operation == "+":
+            if a < 0:
+                a_s = f"({a_s})"
+            if b < 0:
+                b_s = f"({b_s})"
         prompt_latex = format_binop_expression(a_s, latex_op, b_s)
         prompt_text = format_binop_expression(a_s, self.operation, b_s)
         self._diagram_ctx = {
@@ -2603,8 +2660,17 @@ class DecimalArithmeticFramework(NumberFramework):
         answer_places = a_places + b_places
         a_s = _format_decimal(a, places=a_places)
         b_s = _format_decimal(b, places=b_places)
-        prompt_latex = format_binop_expression(a_s, "\\cdot", b_s)
-        prompt_text = format_binop_expression(a_s, "*", b_s)
+        via_frac = self.via_equivalent_fractions or bool(
+            settings.get("decimal_multiply_via_fractions", False)
+        )
+        if via_frac:
+            a_frac = _decimal_to_unreduced_frac_latex(a, a_places)
+            b_frac = _decimal_to_unreduced_frac_latex(b, b_places)
+            prompt_latex = f"{a_s} \\cdot {b_s} = {a_frac} \\cdot {b_frac}"
+            prompt_text = f"{a_s} * {b_s} = {a_frac} * {b_frac}"
+        else:
+            prompt_latex = format_binop_expression(a_s, "\\cdot", b_s)
+            prompt_text = format_binop_expression(a_s, "*", b_s)
         self._diagram_ctx = {
             "kind": "mul",
             "a": a_s,
@@ -2879,6 +2945,8 @@ def _needs_decimal_borrow(a: Decimal, b: Decimal, *, places: int) -> bool:
 class WholeDivideToDecimalFramework(NumberFramework):
     """Whole ÷ whole with a terminating non-integer decimal quotient."""
 
+    skeleton_pattern = "WholeToDecimal"
+
     _DIVISORS_BY_PLACES: dict[int, tuple[int, ...]] = {
         1: (2, 4, 5, 10),
         2: (4, 5, 8, 10, 16, 20, 25, 40, 50),
@@ -3078,6 +3146,8 @@ class WholeByDecimalDivideFramework(NumberFramework):
     - High D: more places, larger magnitudes, signed dividends/divisors
     """
 
+    skeleton_pattern = "WholeByDecimal"
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         cfg = _whole_by_decimal_ladder(settings)
         quot_max = max(4, int(cfg["quot_max"]))
@@ -3194,6 +3264,7 @@ class IdentifyPropertyFramework(NumberFramework):
 
     instruction_latex = r"\text{Identify the property.}"
     instruction_text = "Identify the property."
+    skeleton_pattern = "IdentifyProperty"
 
     def __init__(self) -> None:
         self._last_distractors: list[str] = []
@@ -3212,17 +3283,42 @@ class IdentifyPropertyFramework(NumberFramework):
         return prompt_latex, prompt_text, answer
 
     def _build_example(self, settings: dict) -> tuple[str, str, str]:
-        tier = _difficulty_band(settings)
-        if tier == "easy":
-            pool = [
-                "commutative property of addition",
-                "commutative property of multiplication",
-                "identity property of addition",
-                "identity property of multiplication",
-                "zero property of multiplication",
-            ]
+        has_cont = "difficulty" in settings and settings["difficulty"] is not None
+        if has_cont:
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            d = max(0.0, settings_difficulty(settings, default=0.0))
+            if d < 5.0:
+                pool = [
+                    "commutative property of addition",
+                    "commutative property of multiplication",
+                    "identity property of addition",
+                    "identity property of multiplication",
+                ]
+            elif d < 12.0:
+                pool = [
+                    "commutative property of addition",
+                    "commutative property of multiplication",
+                    "identity property of addition",
+                    "identity property of multiplication",
+                    "zero property of multiplication",
+                    "associative property of addition",
+                    "associative property of multiplication",
+                ]
+            else:
+                pool = list(_PROPERTY_LABELS)
         else:
-            pool = list(_PROPERTY_LABELS)
+            tier = _difficulty_band(settings)
+            if tier == "easy":
+                pool = [
+                    "commutative property of addition",
+                    "commutative property of multiplication",
+                    "identity property of addition",
+                    "identity property of multiplication",
+                    "zero property of multiplication",
+                ]
+            else:
+                pool = list(_PROPERTY_LABELS)
 
         name = random.choice(pool)
         a = _property_int(settings)
@@ -4278,6 +4374,8 @@ class MixedNumberArithmeticFramework(NumberFramework):
 class LongDivisionWithRemaindersFramework(NumberFramework):
     """Whole-number long division with a nonzero remainder."""
 
+    skeleton_pattern = "LongDivision"
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
 
@@ -4343,6 +4441,8 @@ class DecimalDivideByDecimalFramework(NumberFramework):
     - Mid: hundredths, mixed places, still terminating
     - High: multi-place both sides, non-place-value divisors (0.16, 0.125, …)
     """
+
+    skeleton_pattern = "DecimalDivByDec"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -4541,6 +4641,11 @@ class FractionDivideWordFramework(NumberFramework):
 
     def __init__(self, *, mode: str = "groups"):
         self.mode = mode
+        self.skeleton_pattern = {
+            "groups": "FractionGroups",
+            "each": "FractionEach",
+            "whole": "FractionOfWhole",
+        }.get(mode, "FractionWord")
 
     def _format_value(self, value: Fraction, params: NumberParams) -> str:
         show_mixed = params.allow_mixed and abs(value.numerator) > value.denominator
@@ -4656,15 +4761,28 @@ class FractionDivideWordFramework(NumberFramework):
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         params = number_params_from_settings(settings)
         if self.mode == "whole":
-            dividend = self._sample_operand(
-                str(settings.get("dividend_form", "fraction")), params
-            )
-            portion = Fraction(1, 2)
+            # "What fraction of B is A?" — not multiply-by-1/2 of X.
+            from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+            has_cont = "difficulty" in settings and settings["difficulty"] is not None
+            d = max(0.0, settings_difficulty(settings, default=0.0)) if has_cont else 0.0
+            if d < 5.0:
+                whole_n = random.randint(2, 8)
+                part_n = random.randint(1, whole_n - 1)
+                part, whole = Fraction(part_n), Fraction(whole_n)
+            elif d < 12.0:
+                whole_n = random.randint(6, 16)
+                part_n = random.randint(1, whole_n - 1)
+                part, whole = Fraction(part_n), Fraction(whole_n)
+            else:
+                whole_n = random.randint(8, max(12, 18 + int(d / 4)))
+                part_n = random.randint(1, whole_n - 1)
+                part, whole = Fraction(part_n), Fraction(whole_n)
             prompt = (
-                f"\\text{{What fraction of a whole is }} {self._format_value(portion, params)} "
-                f"\\text{{ of }} {self._format_value(dividend, params)}\\text{{?}}"
+                f"\\text{{What fraction of }} {self._format_value(whole, params)} "
+                f"\\text{{ is }} {self._format_value(part, params)}\\text{{?}}"
             )
-            return prompt, "fraction of a whole", self._format_value(portion * dividend, params)
+            return prompt, "what fraction of a whole", self._format_value(part / whole, params)
 
         dividend, divisor = self._pair_for_tier(settings, params)
         answer = dividend / divisor
@@ -4999,6 +5117,7 @@ class GcfLcmFramework(NumberFramework):
 
     def __init__(self, *, mode: str = "gcf"):
         self.mode = mode
+        self.skeleton_pattern = "GCF" if mode == "gcf" else "LCM"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         lo, hi = _factor_bounds(settings)
@@ -5052,6 +5171,8 @@ class GcfLcmFramework(NumberFramework):
 
 class GcfLcmWordFramework(NumberFramework):
     """GCF/LCM word problems (effort-targeted when continuous difficulty is set)."""
+
+    skeleton_pattern = "GcfLcmWord"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -5116,6 +5237,8 @@ class PrimeFactorizationFramework(NumberFramework):
     Continuous difficulty targets Ω(n) and small-prime factor trees — not
     large semiprimes (2×67) that inflate magnitude without extra cancel work.
     """
+
+    skeleton_pattern = "PrimeFactor"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         has_cont = "difficulty" in settings and settings["difficulty"] is not None
@@ -5637,6 +5760,11 @@ class AbsoluteValueFramework(NumberFramework):
 
     def __init__(self, *, mode: str = "evaluate"):
         self.mode = mode
+        self.skeleton_pattern = {
+            "evaluate": "AbsoluteValue",
+            "compare": "CompareAbs",
+            "order": "OrderAbs",
+        }.get(mode, "AbsoluteValue")
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -5719,6 +5847,8 @@ class AbsoluteValueFramework(NumberFramework):
 class OppositeFramework(NumberFramework):
     """Find the opposite of an integer."""
 
+    skeleton_pattern = "Opposite"
+
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         lo, hi = _int_bounds(settings, lo_default=-20, hi_default=20)
         n = random.randint(lo, hi)
@@ -5744,6 +5874,7 @@ class CompareOrderFramework(NumberFramework):
 
     def __init__(self, *, mode: str = "compare"):
         self.mode = mode
+        self.skeleton_pattern = "CompareNumbers" if mode == "compare" else "OrderNumbers"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -5807,6 +5938,7 @@ class FractionDecimalConvertFramework(NumberFramework):
     def __init__(self, *, to_decimal: bool | None = None, include_percent: bool = False):
         self.to_decimal = to_decimal
         self.include_percent = include_percent
+        self.skeleton_pattern = "RelatePercent" if include_percent else "FracDecimal"
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
         include_pct = self.include_percent or bool(
@@ -6943,6 +7075,8 @@ def _intro_percent_ladder(settings: dict) -> dict[str, Any]:
 
 class IntroductionToPercentsFramework(NumberFramework):
     """Shade a blank figure to represent a given percent (visual percent meaning)."""
+
+    skeleton_pattern = "IntroPercent"
 
     def __init__(self) -> None:
         self._metadata: dict[str, object] = {}

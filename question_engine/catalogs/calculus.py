@@ -234,42 +234,49 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Applications of Differentiation",
         "calc_app_diff_intervals_of_concavity",
         "Intervals of concavity",
+        generator="intervals_concavity",
         instruction_text="Find intervals of concavity.",
     ),
     _calc(
         "Applications of Differentiation",
         "calc_app_diff_relative_extrema",
         "Relative extrema",
+        generator="relative_extrema",
         instruction_text="Find the relative extrema.",
     ),
     _calc(
         "Applications of Differentiation",
         "calc_app_diff_absolute_extrema",
         "Absolute extrema",
+        generator="absolute_extrema",
         instruction_text="Find the absolute extrema.",
     ),
     _calc(
         "Applications of Differentiation",
         "calc_app_diff_optimization",
         "Optimization",
+        generator="optimization_applied",
         instruction_text="Solve the optimization problem.",
     ),
     _calc(
         "Applications of Differentiation",
         "calc_app_diff_curve_sketching",
         "Curve sketching",
+        generator="curve_sketching",
         instruction_text="Sketch the curve.",
     ),
     _calc(
         "Applications of Differentiation",
         "calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime",
         "Graphical comparison of f, f', and f''",
+        generator="graphical_f_fp",
         instruction_text="Compare the graphs.",
     ),
     _calc(
         "Applications of Differentiation",
         "calc_app_diff_motion_along_a_line",
         "Motion along a line",
+        generator="motion_along_a_line",
         instruction_text="Solve the motion problem.",
     ),
     _calc(
@@ -296,6 +303,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Applications of Differentiation",
         "calc_app_diff_newtons_method",
         "Newton's Method",
+        generator="newtons_method",
         instruction_text="Use Newton's Method.",
     ),
     _calc(
@@ -389,6 +397,13 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         generator="integral_multi_trick",
         instruction_text="Integrate.",
     ),
+    _calc(
+        "Indefinite Integration",
+        "calc_indef_int_general",
+        "General integrals",
+        generator="integral_general",
+        instruction_text="Integrate.",
+    ),
     # Definite Integration
     _calc(
         "Definite Integration",
@@ -422,7 +437,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Definite Integration",
         "calc_def_int_substitution_with_change_of_variables",
         "Substitution with change of variables",
-        generator="integral_substitution",
+        generator="integral_definite_substitution",
         instruction_text="Evaluate.",
     ),
     _calc(
@@ -478,6 +493,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Applications of Integration",
         "calc_app_int_motion_along_a_line_revisited",
         "Motion along a line revisited",
+        generator="motion_along_a_line_integral",
         instruction_text="Solve the motion problem.",
     ),
     # Differential Equations
@@ -492,6 +508,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differential Equations",
         "calc_diff_eq_introduction",
         "Introduction",
+        generator="de_introduction",
         instruction_text="Identify or solve the differential equation.",
     ),
     _calc(
@@ -505,7 +522,7 @@ CATALOG: tuple[TypeCatalogEntry, ...] = (
         "Differential Equations",
         "calc_diff_eq_exponential_growth_and_decay",
         "Exponential growth and decay",
-        generator="exponential_growth_decay",
-        instruction_text="Solve the problem.",
+        generator="calc_continuous_growth_decay",
+        instruction_text="Solve the continuous growth/decay problem.",
     ),
 )

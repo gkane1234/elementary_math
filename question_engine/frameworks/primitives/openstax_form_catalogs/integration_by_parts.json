@@ -21,154 +21,582 @@
   },
   "taxonomy_notes": [
     "LIATE families: poly×ln, poly×exp, poly×trig, tabular/repeated parts, cyclic e^x sin/cos.",
-    "Sampler selects form_id by D-weighted weights among implemented entries."
+    "Sampler selects form_id by D-weighted weights among implemented entries.",
+    "Calc BC drill bank §2 lookalikes (not frozen bank LaTeX): named preset parts_form_preset=bc_bank.",
+    "Deferred: ∫ x e^{ax} sin/cos(bx) (no tabular construction here); x arccos; x² ln(x²+a²)."
   ],
   "forms": [
     {
       "form_id": "ln_alone",
-      "description": "∫ ln x dx — u=ln, dv=dx",
+      "description": "∫ ln(ax+b) dx — u=ln, dv=dx; D=0 is ∫ ln x",
       "strategy": "parts_ln",
-      "constraints": { "u": "ln", "dv": "1" },
+      "constraints": {
+        "u": "ln",
+        "dv": "1"
+      },
       "d_min": 0,
+      "d_max": 8,
       "d_weight": 1.5,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_log"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 classic ∫ ln x"
     },
     {
       "form_id": "poly1_ln",
-      "description": "∫ x ln x dx",
+      "description": "∫ x ln(ax) dx",
       "strategy": "parts_poly_ln",
-      "constraints": { "u": "ln", "dv": "x" },
+      "constraints": {
+        "u": "ln",
+        "dv": "x"
+      },
       "d_min": 4,
+      "d_max": 14,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_log"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 poly × ln"
     },
     {
       "form_id": "poly1_exp",
-      "description": "∫ x e^x dx",
+      "description": "∫ x e^{kx} dx — D=0 is k=1",
       "strategy": "parts_poly_exp",
-      "constraints": { "u": "x", "dv": "e^x" },
-      "d_min": 2,
+      "constraints": {
+        "u": "x",
+        "dv": "e^{kx}"
+      },
+      "d_min": 0,
+      "d_max": 12,
       "d_weight": 2.2,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_exp"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 poly × exp"
     },
     {
       "form_id": "poly1_sin",
-      "description": "∫ x sin x dx",
+      "description": "∫ x sin(kx) dx — D=0 is k=1",
       "strategy": "parts_poly_trig",
-      "constraints": { "u": "x", "dv": "sin" },
-      "d_min": 2,
+      "constraints": {
+        "u": "x",
+        "dv": "sin"
+      },
+      "d_min": 0,
+      "d_max": 12,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_trig"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 poly × sin"
     },
     {
       "form_id": "poly1_cos",
-      "description": "∫ x cos x dx",
+      "description": "∫ x cos(kx) dx — D=0 is k=1",
       "strategy": "parts_poly_trig",
-      "constraints": { "u": "x", "dv": "cos" },
-      "d_min": 2,
+      "constraints": {
+        "u": "x",
+        "dv": "cos"
+      },
+      "d_min": 0,
+      "d_max": 12,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_trig"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 poly × cos"
     },
     {
       "form_id": "poly2_exp",
-      "description": "∫ x² e^x dx — tabular / repeated parts",
+      "description": "∫ x² e^{kx} dx — tabular / repeated parts",
       "strategy": "tabular_parts",
-      "constraints": { "u": "x^2", "dv": "e^x", "parts_depth": 2 },
+      "constraints": {
+        "u": "x^2",
+        "dv": "e^{kx}",
+        "parts_depth": 2
+      },
       "d_min": 10,
-      "d_weight": 2.0,
+      "d_weight": 2.2,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_exp"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 repeated / tabular"
     },
     {
       "form_id": "poly2_sin",
-      "description": "∫ x² sin x dx — repeated parts",
+      "description": "∫ x² sin(kx) dx — repeated parts",
       "strategy": "tabular_parts",
-      "constraints": { "u": "x^2", "dv": "sin", "parts_depth": 2 },
-      "d_min": 14,
-      "d_weight": 1.8,
+      "constraints": {
+        "u": "x^2",
+        "dv": "sin",
+        "parts_depth": 2
+      },
+      "d_min": 12,
+      "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_trig"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 repeated poly×trig"
     },
     {
-      "form_id": "cyclic_exp_sin",
-      "description": "∫ e^x sin x dx — cyclic parts",
-      "strategy": "cyclic_parts",
-      "constraints": { "kind": "e^x_sin" },
+      "form_id": "poly2_cos",
+      "description": "∫ x² cos(kx) dx — repeated parts (lookalike of bank x² cos(3x))",
+      "strategy": "tabular_parts",
+      "constraints": {
+        "u": "x^2",
+        "dv": "cos",
+        "parts_depth": 2
+      },
       "d_min": 12,
       "d_weight": 2.0,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_trig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 repeated poly×cos / BC bank §2"
+    },
+    {
+      "form_id": "poly3_exp",
+      "description": "∫ x³ e^{kx} dx — tabular n=3 lookalike of bank x³ e^{2x}",
+      "strategy": "tabular_parts",
+      "constraints": {
+        "u": "x^3",
+        "dv": "e^{kx}",
+        "parts_depth": 3
+      },
+      "d_min": 14,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_exp"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 tabular / BC bank §2"
+    },
+    {
+      "form_id": "poly3_sin",
+      "description": "∫ x³ sin(kx) dx — tabular n=3",
+      "strategy": "tabular_parts",
+      "constraints": {
+        "u": "x^3",
+        "dv": "sin",
+        "parts_depth": 3
+      },
+      "d_min": 16,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_trig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 tabular poly×sin / BC bank §2"
+    },
+    {
+      "form_id": "poly3_cos",
+      "description": "∫ x³ cos(kx) dx — tabular n=3 lookalike of bank x³ cos x",
+      "strategy": "tabular_parts",
+      "constraints": {
+        "u": "x^3",
+        "dv": "cos",
+        "parts_depth": 3
+      },
+      "d_min": 16,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_trig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 tabular poly×cos / BC bank §2"
+    },
+    {
+      "form_id": "poly2_ln",
+      "description": "∫ x² ln(ax) dx — one parts step, lookalike of bank x² ln x",
+      "strategy": "parts_poly_ln",
+      "constraints": {
+        "u": "ln",
+        "dv": "x^2"
+      },
+      "d_min": 10,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_log"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 poly × ln / BC bank §2"
+    },
+    {
+      "form_id": "ln_power_2",
+      "description": "∫ (ln(ax))² dx — parts twice",
+      "strategy": "parts_ln_power",
+      "constraints": {
+        "u": "(ln)^2",
+        "dv": "1",
+        "ln_power": 2
+      },
+      "d_min": 12,
+      "d_weight": 1.8,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_log"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 (ln x)^n / BC bank §2"
+    },
+    {
+      "form_id": "ln_power_3",
+      "description": "∫ (ln(ax))³ dx — parts three times",
+      "strategy": "parts_ln_power",
+      "constraints": {
+        "u": "(ln)^3",
+        "dv": "1",
+        "ln_power": 3
+      },
+      "d_min": 16,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_log"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 (ln x)^n / BC bank §2"
+    },
+    {
+      "form_id": "poly1_arctan",
+      "description": "∫ x arctan(ax) dx — closed lookalike of bank x arctan x",
+      "strategy": "parts_poly_invtrig",
+      "constraints": {
+        "u": "arctan",
+        "dv": "x"
+      },
+      "d_min": 16,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts",
+        "invtrig"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_invtrig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 poly × arctan / BC bank §2"
+    },
+    {
+      "form_id": "arcsin_alone",
+      "description": "∫ arcsin(ax) dx — parts with invtrig (lookalike of arctan_alone)",
+      "strategy": "parts_invtrig",
+      "constraints": {
+        "u": "arcsin",
+        "dv": "1"
+      },
+      "d_min": 14,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts",
+        "invtrig"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_invtrig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 invtrig × 1 / BC bank §2"
+    },
+    {
+      "form_id": "power_frac_ln",
+      "description": "∫ x^{n} ln(ax) dx for n=1/2 or 3/2 — lookalike of bank √x ln x",
+      "strategy": "parts_power_ln",
+      "constraints": {
+        "u": "ln",
+        "dv": "x^{p/2}"
+      },
+      "d_min": 12,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_log"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.1 x^n ln x / BC bank §2"
+    },
+    {
+      "form_id": "ln_quad",
+      "description": "∫ ln(x²+a²) dx — parts then arctan",
+      "strategy": "parts_ln_quad",
+      "constraints": {
+        "u": "ln(x^2+a^2)",
+        "dv": "1"
+      },
+      "d_min": 14,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts",
+        "invtrig"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_log",
+        "allow_invtrig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "BC bank §2 ln(x²+1)"
+    },
+    {
+      "form_id": "cyclic_exp_sin",
+      "description": "∫ e^{ax} sin(bx) dx — cyclic parts",
+      "strategy": "cyclic_parts",
+      "constraints": {
+        "kind": "e^x_sin"
+      },
+      "d_min": 12,
+      "d_weight": 2.0,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_exp",
+        "allow_trig"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 cyclic e^x sin x"
     },
     {
       "form_id": "cyclic_exp_cos",
-      "description": "∫ e^x cos x dx — cyclic parts",
+      "description": "∫ e^{ax} cos(bx) dx — cyclic parts",
       "strategy": "cyclic_parts",
-      "constraints": { "kind": "e^x_cos" },
+      "constraints": {
+        "kind": "e^x_cos"
+      },
       "d_min": 12,
       "d_weight": 1.8,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_exp",
+        "allow_trig"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 cyclic e^x cos x"
     },
     {
       "form_id": "arctan_alone",
-      "description": "∫ arctan x dx — parts with invtrig",
+      "description": "∫ arctan(ax) dx — parts with invtrig",
       "strategy": "parts_invtrig",
-      "constraints": { "u": "arctan", "dv": "1" },
+      "constraints": {
+        "u": "arctan",
+        "dv": "1"
+      },
       "d_min": 14,
-      "d_weight": 1.2,
+      "d_weight": 1.4,
       "generation_status": "implemented",
-      "tricks": ["parts"],
+      "tricks": [
+        "parts",
+        "invtrig"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_invtrig"
+      ],
       "example_item_ids": [],
       "openstax_case": "§3.1 invtrig × 1"
     },
     {
       "form_id": "poly1_arcsin",
-      "description": "∫ x arcsin x dx",
+      "description": "∫ x arcsin x dx — closed (a=1)",
       "strategy": "parts_poly_invtrig",
-      "constraints": { "u": "arcsin", "dv": "x" },
+      "constraints": {
+        "u": "arcsin",
+        "dv": "x"
+      },
       "d_min": 16,
-      "d_weight": 1.0,
-      "generation_status": "stub",
-      "tricks": ["parts"],
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "tricks": [
+        "parts",
+        "invtrig"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_invtrig"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§3.1 poly × arcsin",
-      "gap_reason": "Antiderivative messier; defer until answer-key template ready"
+      "openstax_case": "§3.1 poly × arcsin / BC bank §2"
     },
     {
       "form_id": "sec3_via_parts",
       "description": "∫ sec³ x via parts (shared with trig integrals)",
       "strategy": "parts_sec3",
-      "constraints": { "kind": "sec3" },
+      "constraints": {
+        "kind": "sec3"
+      },
       "d_min": 16,
       "d_weight": 0.8,
       "generation_status": "deferred",
-      "tricks": ["parts", "trig"],
+      "tricks": [
+        "parts",
+        "trig"
+      ],
       "example_item_ids": [],
       "openstax_case": "Generated under trig_integrals.sec3_reduction",
-      "gap_reason": "Owned by trig_integrals catalog to avoid double-routing"
+      "gap_reason": "Owned by trig_integrals catalog to avoid double-routing",
+      "requires_allows": [
+        "allow_parts",
+        "allow_trig"
+      ]
+    },
+    {
+      "form_id": "poly_exp_trig",
+      "description": "∫ x e^{ax} sin(bx) dx (and cos)",
+      "strategy": "parts_then_cyclic",
+      "constraints": {
+        "kind": "x_exp_sin"
+      },
+      "d_min": 18,
+      "d_weight": 0.6,
+      "generation_status": "deferred",
+      "tricks": [
+        "parts"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_exp",
+        "allow_trig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "BC bank §2 x e^x sin/cos",
+      "gap_reason": "No tabular/cyclic construction with an honest closed answer-key template yet"
+    },
+    {
+      "form_id": "poly1_arccos",
+      "description": "∫ x arccos x dx",
+      "strategy": "parts_poly_invtrig",
+      "constraints": {
+        "u": "arccos",
+        "dv": "x"
+      },
+      "d_min": 16,
+      "d_weight": 0.6,
+      "generation_status": "deferred",
+      "tricks": [
+        "parts",
+        "invtrig"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_invtrig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "BC bank §2 x arccos",
+      "gap_reason": "Same shape as poly1_arcsin (arccos = π/2 − arcsin); skip duplicate until a distinct template is needed"
+    },
+    {
+      "form_id": "poly2_ln_quad",
+      "description": "∫ x² ln(x²+a²) dx",
+      "strategy": "parts_poly_ln_quad",
+      "constraints": {
+        "u": "ln(x^2+a^2)",
+        "dv": "x^2"
+      },
+      "d_min": 18,
+      "d_weight": 0.5,
+      "generation_status": "deferred",
+      "tricks": [
+        "parts",
+        "invtrig"
+      ],
+      "requires_allows": [
+        "allow_parts",
+        "allow_log",
+        "allow_invtrig"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "BC bank §2 x² ln(x²+1)",
+      "gap_reason": "Antiderivative needs reduction of ∫ x²/(x²+a²) plus arctan; no template yet"
     }
   ]
 }

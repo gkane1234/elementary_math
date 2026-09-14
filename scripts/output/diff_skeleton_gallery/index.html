@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Diff skeleton galleries — by topic</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.1rem; margin-top: 1.4rem; border-bottom: 1px solid #d8d2c4;
+  padding-bottom: 0.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 52rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.35rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.band { background: #e8efe6; padding: 0.05rem 0.35rem; border-radius: 3px;
+  font-size: 0.75rem; }
+.band.low { background: #e8efe6; }
+.band.mid { background: #e6ebe8; }
+.band.high { background: #dde8f0; }
+.band.elite { background: #e8dde8; }
+.meta { font-size: 0.78rem; color: #555; margin: 0.3rem 0; }
+.debug { margin-top: 0.55rem; font-size: 0.72rem; background: #f3efe7;
+  border: 1px solid #e0d8cc; padding: 0.55rem 0.65rem; }
+.debug h3 { margin: 0 0 0.35rem; font-size: 0.78rem; font-weight: 600;
+  color: #444; letter-spacing: 0.02em; text-transform: uppercase; }
+.debug dl { display: grid; grid-template-columns: 11rem 1fr; gap: 0.15rem 0.6rem;
+  margin: 0; }
+.debug dt { color: #666; font-family: ui-monospace, Consolas, monospace; }
+.debug dd { margin: 0; font-family: ui-monospace, Consolas, monospace;
+  word-break: break-word; }
+.debug .section { margin-top: 0.45rem; padding-top: 0.35rem;
+  border-top: 1px dashed #d8d2c4; }
+.debug .section:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.raw { font-size: 0.72rem; white-space: pre-wrap; background: #f0ebe3; padding: 0.45rem; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.err { color: #a20; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; border: 0; padding: 0; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.7; }
+.katex .katex-mathml {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  padding: 0 !important; border: 0 !important;
+  height: 1px !important; width: 1px !important;
+  overflow: hidden !important; white-space: nowrap !important;
+}
+</style>
+<link rel="stylesheet" href="../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head>
+<body>
+
+<h1>Diff skeleton galleries by topic</h1>
+<p class="sub">OpenStax form → pattern → hole-fill · conceptual C ladder per form ·
+  KaTeX · debug knobs + cost/spend on every card ·
+  see <a href="DIFFICULTY_SCALE.md">DIFFICULTY_SCALE.md</a></p>
+<ul class="topics">
+<li><a href="power_rule/gallery.html"><strong>Power rule</strong></a> · <code>derivative_power_rule</code> · 13/13 ok · forms: power_poly, power_root, power_negative, chain_nested_power</li><li><a href="product_rule/gallery.html"><strong>Product rule</strong></a> · <code>derivative_product_rule</code> · 13/13 ok · forms: product_two_poly, product_one_chain, product_chain_powers</li><li><a href="quotient_rule/gallery.html"><strong>Quotient rule</strong></a> · <code>derivative_quotient_rule</code> · 4/4 ok · forms: quotient_poly</li><li><a href="chain_rule/gallery.html"><strong>Chain rule</strong></a> · <code>derivative_chain_rule</code> · 19/19 ok · forms: chain_power_linear, chain_trig_poly, chain_exp_poly, chain_ln_poly, chain_power_trig, chain_nested</li><li><a href="trigonometric/gallery.html"><strong>Trigonometric</strong></a> · <code>derivative_trigonometric</code> · 13/13 ok · forms: chain_trig_poly, chain_power_trig, trig_basic, trig_product_chain</li><li><a href="ln_exp/gallery.html"><strong>Exp / ln</strong></a> · <code>derivative_ln_exp</code> · 23/23 ok · forms: quotient_exp_poly, quotient_log_poly, chain_exp_poly, chain_ln_poly, ln_basic, exp_basic, ln_exp_product</li><li><a href="inverse_trig/gallery.html"><strong>Inverse trig</strong></a> · <code>derivative_inverse_trig</code> · 11/11 ok · forms: invtrig_arcsin, invtrig_arctan, invtrig_chained</li><li><a href="higher_order/gallery.html"><strong>Higher order</strong></a> · <code>derivative_higher_order</code> · 10/10 ok · forms: power_poly, higher_order_2, higher_order_3</li><li><a href="general/gallery.html"><strong>General / mixed</strong></a> · <code>derivative_general</code> · 79/79 ok · forms: power_poly, product_two_poly, product_poly_trig, product_poly_exp, product_one_chain, product_chain_powers, product_trig_exp_chain, quotient_poly, quotient_trig_poly, quotient_exp_poly, quotient_log_poly, quotient_mixed_special, chain_power_linear, chain_trig_poly, chain_exp_poly, chain_ln_poly, chain_power_trig, chain_nested, chain_nested_power, trig_basic, trig_product_chain, ln_basic, exp_basic, general_mixed</li>
+</ul>
+<p><a href="gallery.html">Mixed overview (spot-check)</a></p>
+</body></html>

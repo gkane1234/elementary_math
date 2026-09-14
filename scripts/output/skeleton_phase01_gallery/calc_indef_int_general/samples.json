@@ -1,0 +1,2569 @@
+{
+  "section": {
+    "slug": "calc_indef_int_general",
+    "title": "Integral \u2014 general (toggles)",
+    "pattern": "",
+    "engine": "integrals",
+    "type_id": "calc_indef_int_general",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Mixed techniques. Teacher <code>allow_*</code> checkboxes drop catalog forms whose <code>requires_allows</code> / <code>tricks</code> are off. D=0 stays power/table; bank-hard families unlock mid/high D."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\int \\sqrt{x}\\,dx",
+      "answer_latex": "\\frac{2}{3}x^{\\frac{3}{2}}+C",
+      "skeleton_pattern": "",
+      "form_id": "sqrt_x",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "sqrt_x"
+        ],
+        [
+          "openstax_form",
+          "sqrt_x"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "sqrt_x",
+        "structure_id": "integral_general:sqrt_x",
+        "technique": "power",
+        "tricks_required": [
+          "power"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "power"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "power",
+                "input_kind": "1",
+                "transform": "sample_power_poly",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "power"
+            ],
+            "length": 1
+          },
+          "technique": "power",
+          "family": "sqrt_x",
+          "form_id": "sqrt_x",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "power_rule_root"
+        },
+        "effort_features": {
+          "technique": "power",
+          "tricks_required": [
+            "power"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 28,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "power"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "power",
+              "input_kind": "1",
+              "transform": "sample_power_poly",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "power"
+          ],
+          "length": 1
+        },
+        "shape_id": "sqrt_x",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "sqrt_x",
+        "openstax_form": "sqrt_x",
+        "form_id": "sqrt_x",
+        "openstax_case": "\u00a74.10 / \u00a75.4 roots",
+        "strategy": "power_rule_root",
+        "catalog_id": "basic_power_integrals",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\int \\sec(x)\\tan(x)\\,dx",
+      "answer_latex": "\\sec(x)+C",
+      "skeleton_pattern": "",
+      "form_id": "basic_sec_tan",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "basic_sec_tan"
+        ],
+        [
+          "openstax_form",
+          "basic_sec_tan"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "basic_sec_tan",
+        "structure_id": "integral_general:basic_sec_tan",
+        "technique": "trig",
+        "tricks_required": [
+          "trig"
+        ],
+        "methods_used": [
+          "trig"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "trig"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "trig",
+                "input_kind": "1",
+                "transform": "sample_trig_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "trig"
+            ],
+            "length": 1
+          },
+          "technique": "trig",
+          "family": "basic_sec_tan",
+          "form_id": "basic_sec_tan",
+          "catalog_id": "trig_integrals",
+          "strategy": "basic_antiderivative"
+        },
+        "effort_features": {
+          "technique": "trig",
+          "tricks_required": [
+            "trig"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 9,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "trig"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "trig",
+              "input_kind": "1",
+              "transform": "sample_trig_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "trig"
+          ],
+          "length": 1
+        },
+        "shape_id": "basic_sec_tan",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "basic_sec_tan",
+        "openstax_form": "basic_sec_tan",
+        "form_id": "basic_sec_tan",
+        "openstax_case": "\u00a73.2 exercise 87",
+        "strategy": "basic_antiderivative",
+        "catalog_id": "trig_integrals",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int \\sin(6x)\\,dx",
+      "answer_latex": "-\\frac{1}{6}\\cos(6x)+C",
+      "skeleton_pattern": "",
+      "form_id": "basic_sin_kx",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "basic_sin_kx"
+        ],
+        [
+          "openstax_form",
+          "basic_sin_kx"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "basic_sin_kx",
+        "structure_id": "integral_general:basic_sin_kx",
+        "technique": "trig",
+        "tricks_required": [
+          "trig"
+        ],
+        "methods_used": [
+          "trig"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "trig"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "trig",
+                "input_kind": "1",
+                "transform": "sample_trig_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "trig"
+            ],
+            "length": 1
+          },
+          "technique": "trig",
+          "family": "basic_sin_kx",
+          "form_id": "basic_sin_kx",
+          "catalog_id": "trig_integrals",
+          "strategy": "basic_antiderivative"
+        },
+        "effort_features": {
+          "technique": "trig",
+          "tricks_required": [
+            "trig"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 22,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "trig"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "trig",
+              "input_kind": "1",
+              "transform": "sample_trig_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "trig"
+          ],
+          "length": 1
+        },
+        "shape_id": "basic_sin_kx",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "basic_sin_kx",
+        "openstax_form": "basic_sin_kx",
+        "form_id": "basic_sin_kx",
+        "openstax_case": "basic table / Vol.1 antiderivatives",
+        "strategy": "basic_antiderivative",
+        "catalog_id": "trig_integrals",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{x^{2}+1\\sqrt[3]{x}}{x}\\,dx",
+      "answer_latex": "\\frac{1}{2}x^{2}+3x^{\\frac{1}{3}}+C",
+      "skeleton_pattern": "",
+      "form_id": "rewrite_over_x",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "rewrite_over_x"
+        ],
+        [
+          "openstax_form",
+          "rewrite_over_x"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "rewrite_over_x",
+        "structure_id": "integral_general:rewrite_over_x",
+        "technique": "power",
+        "tricks_required": [
+          "power"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_trig"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "power"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "power",
+                "input_kind": "1",
+                "transform": "sample_power_poly",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "power"
+            ],
+            "length": 1
+          },
+          "technique": "power",
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
+        },
+        "effort_features": {
+          "technique": "power",
+          "tricks_required": [
+            "power"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 2,
+          "answer_len": 35,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "power"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "power",
+              "input_kind": "1",
+              "transform": "sample_power_poly",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "power"
+          ],
+          "length": 1
+        },
+        "shape_id": "rewrite_over_x",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "rewrite_over_x",
+        "openstax_form": "rewrite_over_x",
+        "form_id": "rewrite_over_x",
+        "openstax_case": "\u00a74.10 rewrite",
+        "strategy": "rewrite_split",
+        "catalog_id": "basic_power_integrals",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int x\\cos(3x)\\,dx",
+      "answer_latex": "\\frac{1}{3}x\\sin(3x)+\\frac{1}{9}\\cos(3x)+C",
+      "skeleton_pattern": "",
+      "form_id": "poly1_cos",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "poly1_cos"
+        ],
+        [
+          "openstax_form",
+          "poly1_cos"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "poly1_cos",
+        "structure_id": "integral_general:poly1_cos",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_trig"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "poly1_cos",
+          "form_id": "poly1_cos",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_poly_trig"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 42,
+          "nest_depth": 1,
+          "pack": "integral_general",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "poly1_cos",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "poly1_cos",
+        "openstax_form": "poly1_cos",
+        "form_id": "poly1_cos",
+        "openstax_case": "\u00a73.1 poly \u00d7 cos",
+        "strategy": "parts_poly_trig",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\int \\ln(3x)\\,dx",
+      "answer_latex": "x\\ln(3x)-x+C",
+      "skeleton_pattern": "",
+      "form_id": "ln_alone",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "ln_alone"
+        ],
+        [
+          "openstax_form",
+          "ln_alone"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln_alone",
+        "structure_id": "integral_general:ln_alone",
+        "technique": "parts",
+        "tricks_required": [
+          "parts"
+        ],
+        "methods_used": [
+          "parts"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_trig"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "parts",
+                "input_kind": "1",
+                "transform": "sample_parts_liate",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "parts"
+            ],
+            "length": 1
+          },
+          "technique": "parts",
+          "family": "ln_alone",
+          "form_id": "ln_alone",
+          "catalog_id": "integration_by_parts",
+          "strategy": "parts_ln"
+        },
+        "effort_features": {
+          "technique": "parts",
+          "tricks_required": [
+            "parts"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 12,
+          "nest_depth": 1,
+          "pack": "integral_general",
+          "methods": [
+            "parts"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "parts",
+              "input_kind": "1",
+              "transform": "sample_parts_liate",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "parts"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln_alone",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "ln_alone",
+        "openstax_form": "ln_alone",
+        "form_id": "ln_alone",
+        "openstax_case": "\u00a73.1 classic \u222b ln x",
+        "strategy": "parts_ln",
+        "catalog_id": "integration_by_parts",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{x^{2}+1\\sqrt[3]{x}}{x}\\,dx",
+      "answer_latex": "\\frac{1}{2}x^{2}+3x^{\\frac{1}{3}}+C",
+      "skeleton_pattern": "",
+      "form_id": "rewrite_over_x",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "rewrite_over_x"
+        ],
+        [
+          "openstax_form",
+          "rewrite_over_x"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "rewrite_over_x",
+        "structure_id": "integral_general:rewrite_over_x",
+        "technique": "power",
+        "tricks_required": [
+          "power"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_trig"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "power"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "power",
+                "input_kind": "1",
+                "transform": "sample_power_poly",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "power"
+            ],
+            "length": 1
+          },
+          "technique": "power",
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
+        },
+        "effort_features": {
+          "technique": "power",
+          "tricks_required": [
+            "power"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 2,
+          "answer_len": 35,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "power"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "power",
+              "input_kind": "1",
+              "transform": "sample_power_poly",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "power"
+          ],
+          "length": 1
+        },
+        "shape_id": "rewrite_over_x",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
+        "wrappers_applied": [],
+        "core_form_id": "rewrite_over_x",
+        "openstax_form": "rewrite_over_x",
+        "form_id": "rewrite_over_x",
+        "openstax_case": "\u00a74.10 rewrite",
+        "strategy": "rewrite_split",
+        "catalog_id": "basic_power_integrals",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{-4x + 4}{\\left(x - 2\\right)^{2}}\\,dx",
+      "answer_latex": "-4\\ln|x - 2|+4\\frac{1}{x - 2}+C",
+      "skeleton_pattern": "",
+      "form_id": "repeated_linear_square",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "repeated_linear_square"
+        ],
+        [
+          "openstax_form",
+          "repeated_linear_square"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "repeated_linear_square",
+        "structure_id": "integral_general:repeated_linear_square",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_trig"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "repeated_linear_square",
+          "form_id": "repeated_linear_square",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_repeated"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 2,
+          "answer_len": 31,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "repeated_linear_square",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
+        "wrappers_applied": [],
+        "core_form_id": "repeated_linear_square",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "openstax_form": "repeated_linear_square",
+        "form_id": "repeated_linear_square",
+        "openstax_case": "\u00a73.4 repeated linear",
+        "strategy": "pfd_repeated",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{x^{2}}{\\sqrt{4-x^{2}}}\\,dx",
+      "answer_latex": "-\\frac{1}{2}x\\sqrt{4-x^{2}}+2\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "skeleton_pattern": "",
+      "form_id": "x2_over_sqrt_a2_minus_x2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "x2_over_sqrt_a2_minus_x2"
+        ],
+        [
+          "openstax_form",
+          "x2_over_sqrt_a2_minus_x2"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "x2_over_sqrt_a2_minus_x2",
+        "structure_id": "integral_general:x2_over_sqrt_a2_minus_x2",
+        "technique": "trig_sub",
+        "tricks_required": [
+          "trig_sub"
+        ],
+        "methods_used": [
+          "trig_sub"
+        ],
+        "function_classes": [
+          "trig",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_trig"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "trig_sub",
+                "input_kind": "1",
+                "transform": "sample_trig_sub_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "trig_sub"
+            ],
+            "length": 1
+          },
+          "technique": "trig_sub",
+          "family": "x2_over_sqrt_a2_minus_x2",
+          "form_id": "x2_over_sqrt_a2_minus_x2",
+          "catalog_id": "trig_substitution",
+          "strategy": "sin_sub"
+        },
+        "effort_features": {
+          "technique": "trig_sub",
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 1,
+          "answer_len": 62,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "trig_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "trig_sub",
+              "input_kind": "1",
+              "transform": "sample_trig_sub_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "x2_over_sqrt_a2_minus_x2",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
+        "wrappers_applied": [],
+        "core_form_id": "x2_over_sqrt_a2_minus_x2",
+        "trig_sub_kind": "sin",
+        "trig_sub_exponent": "1/2",
+        "openstax_form": "x2_over_sqrt_a2_minus_x2",
+        "form_id": "x2_over_sqrt_a2_minus_x2",
+        "openstax_case": "Checkpoint 3.14 related",
+        "strategy": "sin_sub",
+        "catalog_id": "trig_substitution",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{x^{2}+1\\sqrt[3]{x}}{x}\\,dx",
+      "answer_latex": "\\frac{1}{2}x^{2}+3x^{\\frac{1}{3}}+C",
+      "skeleton_pattern": "",
+      "form_id": "rewrite_over_x",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "rewrite_over_x"
+        ],
+        [
+          "openstax_form",
+          "rewrite_over_x"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "rewrite_over_x",
+        "structure_id": "integral_general:rewrite_over_x",
+        "technique": "power",
+        "tricks_required": [
+          "power"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "function_classes": [
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "power"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "power",
+                "input_kind": "1",
+                "transform": "sample_power_poly",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "power"
+            ],
+            "length": 1
+          },
+          "technique": "power",
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
+        },
+        "effort_features": {
+          "technique": "power",
+          "tricks_required": [
+            "power"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 2,
+          "answer_len": 35,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "power"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "power",
+              "input_kind": "1",
+              "transform": "sample_power_poly",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "power"
+          ],
+          "length": 1
+        },
+        "shape_id": "rewrite_over_x",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_parts",
+            "cost": 4.0
+          }
+        ],
+        "difficulty_cost_total": 21.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "rewrite_over_x",
+        "openstax_form": "rewrite_over_x",
+        "form_id": "rewrite_over_x",
+        "openstax_case": "\u00a74.10 rewrite",
+        "strategy": "rewrite_split",
+        "catalog_id": "basic_power_integrals",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{-4x + 4}{\\left(x - 2\\right)^{2}}\\,dx",
+      "answer_latex": "-4\\ln|x - 2|+4\\frac{1}{x - 2}+C",
+      "skeleton_pattern": "",
+      "form_id": "repeated_linear_square",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "repeated_linear_square"
+        ],
+        [
+          "openstax_form",
+          "repeated_linear_square"
+        ],
+        [
+          "construction",
+          "partial_fractions.combine_pf_to_rational"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "repeated_linear_square",
+        "structure_id": "integral_general:repeated_linear_square",
+        "technique": "pfd",
+        "tricks_required": [
+          "pfd"
+        ],
+        "methods_used": [
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "partial_fractions.combine_pf_to_rational",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "pfd",
+                "input_kind": "1",
+                "transform": "seed_pfd_forward",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "pfd"
+            ],
+            "length": 1
+          },
+          "technique": "pfd",
+          "family": "repeated_linear_square",
+          "form_id": "repeated_linear_square",
+          "catalog_id": "partial_fractions",
+          "strategy": "pfd_repeated"
+        },
+        "effort_features": {
+          "technique": "pfd",
+          "tricks_required": [
+            "pfd"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 2,
+          "answer_len": 31,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "pfd",
+              "input_kind": "1",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "pfd"
+          ],
+          "length": 1
+        },
+        "shape_id": "repeated_linear_square",
+        "construction": "partial_fractions.combine_pf_to_rational",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_parts",
+            "cost": 4.0
+          }
+        ],
+        "difficulty_cost_total": 21.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "repeated_linear_square",
+        "has_quadratic": false,
+        "pfd_source": "partial_fractions.combine_pf_to_rational",
+        "openstax_form": "repeated_linear_square",
+        "form_id": "repeated_linear_square",
+        "openstax_case": "\u00a73.4 repeated linear",
+        "strategy": "pfd_repeated",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_general",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{x^{2}}{\\sqrt{4-x^{2}}}\\,dx",
+      "answer_latex": "-\\frac{1}{2}x\\sqrt{4-x^{2}}+2\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "skeleton_pattern": "",
+      "form_id": "x2_over_sqrt_a2_minus_x2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "x2_over_sqrt_a2_minus_x2"
+        ],
+        [
+          "openstax_form",
+          "x2_over_sqrt_a2_minus_x2"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "x2_over_sqrt_a2_minus_x2",
+        "structure_id": "integral_general:x2_over_sqrt_a2_minus_x2",
+        "technique": "trig_sub",
+        "tricks_required": [
+          "trig_sub"
+        ],
+        "methods_used": [
+          "trig_sub"
+        ],
+        "function_classes": [
+          "trig",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log",
+          "use_invtrig",
+          "use_parts",
+          "use_trig",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_general",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_general",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "ln_exp",
+            "parts",
+            "pfd",
+            "power",
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "trig_sub",
+                "input_kind": "1",
+                "transform": "sample_trig_sub_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "trig_sub"
+            ],
+            "length": 1
+          },
+          "technique": "trig_sub",
+          "family": "x2_over_sqrt_a2_minus_x2",
+          "form_id": "x2_over_sqrt_a2_minus_x2",
+          "catalog_id": "trig_substitution",
+          "strategy": "sin_sub"
+        },
+        "effort_features": {
+          "technique": "trig_sub",
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 1,
+          "answer_len": 62,
+          "nest_depth": 0,
+          "pack": "integral_general",
+          "methods": [
+            "trig_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "trig_sub",
+              "input_kind": "1",
+              "transform": "sample_trig_sub_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "x2_over_sqrt_a2_minus_x2",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_parts",
+            "cost": 4.0
+          }
+        ],
+        "difficulty_cost_total": 21.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "x2_over_sqrt_a2_minus_x2",
+        "trig_sub_kind": "sin",
+        "trig_sub_exponent": "1/2",
+        "openstax_form": "x2_over_sqrt_a2_minus_x2",
+        "form_id": "x2_over_sqrt_a2_minus_x2",
+        "openstax_case": "Checkpoint 3.14 related",
+        "strategy": "sin_sub",
+        "catalog_id": "trig_substitution",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": true,
+          "allow_pfd": true,
+          "allow_trig_sub": true,
+          "include_plus_c": true,
+          "max_pipeline_len": 1,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    }
+  ],
+  "failures": []
+}

@@ -90,6 +90,11 @@ LEAF_TO_PRIMITIVE: dict[str, str] = {
     # Layer 1 algebra family
     "g6_evaluating_algebraic_expressions": PRIM_EVALUATE,
     "evaluate_algebraic_expressions": PRIM_EVALUATE,
+    "g6_solutions_to_equations": PRIM_EQUATIONS,
+    "check_equation_solution": PRIM_EQUATIONS,
+    "g6_constant_rate_equations": PRIM_EQUATIONS,
+    "g6_equations_for_other_relationships": PRIM_EQUATIONS,
+    "write_one_step_equation": PRIM_EQUATIONS,
     "g6_combining_like_terms": PRIM_LIKE_TERMS,
     "combining_like_terms": PRIM_LIKE_TERMS,
     # Expand then simplify (distributive + combine)
@@ -169,6 +174,8 @@ LEAF_TO_PRIMITIVE: dict[str, str] = {
     "systems_substitution": PRIM_EQUATIONS,
     "systems_graphing": PRIM_EQUATIONS,
     "graph_system": PRIM_EQUATIONS,
+    "pa_systems_substitution": PRIM_EQUATIONS,
+    "pa_graphing_systems_of_equations": PRIM_EQUATIONS,
     "graphing_systems_of_inequalities": PRIM_INEQUALITIES,
     "graph_system_inequalities": PRIM_INEQUALITIES,
     # Word problems
@@ -182,6 +189,8 @@ LEAF_TO_PRIMITIVE: dict[str, str] = {
     "wp_one_step_equation": PRIM_EQUATIONS,
     "wp_two_step_equation": PRIM_EQUATIONS,
     "wp_systems": PRIM_EQUATIONS,
+    "systems_word_problems": PRIM_EQUATIONS,
+    "pa_systems_word_problems": PRIM_EQUATIONS,
     "wp_proportion": PRIM_EQUATIONS,
     "wp_inequality": PRIM_INEQUALITIES,
 }

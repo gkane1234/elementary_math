@@ -29,6 +29,18 @@ from question_engine.frameworks.primitives.partial_fractions import (
 )
 from question_engine.frameworks.primitives.rational_cancel import resolve_rational_cancel_count
 from question_engine.generators.utils import make_questions
+from question_engine.generators.rational_multiply_divide import (
+    generate_rational_expression_multiply_divide,
+)
+from question_engine.generators.complex_fractions import generate_complex_fractions
+
+
+def rational_expression_multiply_divide(topic: str, settings: dict) -> list[Question]:
+    return generate_rational_expression_multiply_divide(topic, settings)
+
+
+def complex_fractions(topic: str, settings: dict) -> list[Question]:
+    return generate_complex_fractions(topic, settings)
 
 
 def _course_tag_for(topic: str) -> str:
@@ -193,8 +205,53 @@ def _rational_ctx(settings: dict, *, leaf_id: str = ""):
     )
 
 
+def _use_add_sub_cancel_skeleton(settings: dict) -> bool:
+    """AddSubCancel is the live default for ± rationals.
+
+    Opt out (legacy constructive / OpenStax form path):
+    - ``use_constructive_rational=True``
+    - ``use_add_sub_cancel_skeleton=False``
+    - ``skeleton_pattern`` in {constructive, constructive_rational}
+    """
+    if bool(settings.get("use_constructive_rational")):
+        return False
+    pat = str(settings.get("skeleton_pattern", "")).strip()
+    if pat in {"constructive", "Constructive", "constructive_rational"}:
+        return False
+    if "use_add_sub_cancel_skeleton" in settings:
+        return bool(settings.get("use_add_sub_cancel_skeleton"))
+    if pat in {"AddSubCancel", "add_sub_cancel"}:
+        return True
+    return True
+
+
+def _use_simplify_cancel_skeleton(settings: dict) -> bool:
+    """SimplifyCancel is the live default for single-fraction simplify.
+
+    Opt out:
+    - ``use_constructive_rational=True``
+    - ``use_simplify_cancel_skeleton=False``
+    - ``skeleton_pattern`` in {constructive, constructive_rational}
+    """
+    if bool(settings.get("use_constructive_rational")):
+        return False
+    pat = str(settings.get("skeleton_pattern", "")).strip()
+    if pat in {"constructive", "Constructive", "constructive_rational"}:
+        return False
+    if "use_simplify_cancel_skeleton" in settings:
+        return bool(settings.get("use_simplify_cancel_skeleton"))
+    if pat in {"SimplifyCancel", "simplify_cancel"}:
+        return True
+    return True
+
+
 def rational_add_subtract(topic: str, settings: dict) -> list[Question]:
-    """L3: add/subtract rational expressions (constructive combine + cancel)."""
+    """L3: add/subtract rational expressions via AddSubCancel skeleton.
+
+    Default: goal→inflate→PFD+2D-kernel (``rational_skeleton``).
+    Legacy constructive / A2 form-catalog path: set
+    ``use_constructive_rational=True`` (or ``use_add_sub_cancel_skeleton=False``).
+    """
     from question_engine.frameworks.primitives.rational_cancel import (
         apply_continuous_rational_structure,
     )
@@ -203,8 +260,35 @@ def rational_add_subtract(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
+    use_skeleton = _use_add_sub_cancel_skeleton(settings)
 
     def build() -> tuple[str, str, str | None]:
+        if use_skeleton:
+            from question_engine.frameworks.primitives.rational_skeleton import (
+                sample_add_sub_cancel,
+            )
+
+            ctx = _rational_ctx(settings, leaf_id=str(topic or ""))
+            result = sample_add_sub_cancel(ctx)
+            last["meta"] = {
+                **ctx.metadata(),
+                "primitive_engine": "rational_skeleton",
+                "level": "L3",
+                "mode": "add_subtract_rationals",
+                "cancel_factor_count": result.cancel_count,
+                "n_terms": len(result.terms),
+                "term_count": len(result.terms),
+                "excluded_values": result.metadata.get("excluded_values") or [],
+                "constructive": result.debug_dict(),
+                **result.metadata,
+            }
+            answer = result.answer_latex if include_answer_key else None
+            return (
+                rf"\text{{Combine and simplify: }} {result.prompt_latex}",
+                f"Combine and simplify: {result.prompt_text}",
+                answer,
+            )
+
         form, form_meta = _maybe_a2_rational_form(topic, settings)
         ctx = _rational_ctx(settings, leaf_id=str(topic or ""))
         constraints = (form or {}).get("constraints") or {}
@@ -265,10 +349,11 @@ def rational_add_subtract(topic: str, settings: dict) -> list[Question]:
 
 
 def rational_simplify(topic: str, settings: dict) -> list[Question]:
-    """L2: simplify a rational with planned cancellation.
+    """L2: simplify a rational with planned cancellation via SimplifyCancel.
 
-    A1 leaves select ``form_id`` from ``algebra1_rationals``; A2 uses
-    ``algebra2_rationals`` via ``_maybe_a2_rational_form``.
+    Default: goal→inflate→single fraction (``rational_skeleton``).
+    Legacy constructive / form-catalog path: set
+    ``use_constructive_rational=True`` (or ``use_simplify_cancel_skeleton=False``).
     """
     from question_engine.frameworks.primitives.rational_cancel import (
         apply_continuous_rational_structure,
@@ -279,8 +364,44 @@ def rational_simplify(topic: str, settings: dict) -> list[Question]:
     include_answer_key = bool(settings.get("include_answer_key", False))
     last: dict[str, Any] = {"meta": {}}
     tid = str(topic or "rational_simplification")
+    use_skeleton = _use_simplify_cancel_skeleton(settings)
 
     def build() -> tuple[str, str, str | None]:
+        if use_skeleton:
+            from question_engine.frameworks.primitives.rational_skeleton import (
+                sample_simplify_cancel,
+            )
+
+            ctx = _rational_ctx(settings, leaf_id=tid)
+            result = sample_simplify_cancel(ctx)
+            form_meta = {
+                "form_id": "simplify_cancel",
+                "openstax_form": "simplify_cancel",
+                "shape_id": "simplify_cancel",
+                "catalog_id": (
+                    "algebra2_rationals" if tid.startswith("a2_") else "algebra1_rationals"
+                ),
+                "construction": "forward_form_catalog",
+            }
+            last["meta"] = {
+                **ctx.metadata(),
+                "primitive_engine": "rational_skeleton",
+                "level": "L2",
+                "mode": "simplify_rational",
+                "cancel_factor_count": result.cancel_count,
+                "n_terms": 1,
+                "excluded_values": result.metadata.get("excluded_values") or [],
+                "constructive": result.debug_dict(),
+                **result.metadata,
+                **form_meta,
+            }
+            answer = result.answer_latex if include_answer_key else None
+            return (
+                rf"\text{{Simplify: }} {result.prompt_latex}",
+                f"Simplify: {result.prompt_text}",
+                answer,
+            )
+
         form, form_meta = _maybe_a2_rational_form(topic, settings)
         ctx = _rational_ctx(settings, leaf_id=tid)
         if not form_meta and not tid.startswith("a2_"):
@@ -423,6 +544,54 @@ def partial_fraction_decomposition(topic: str, settings: dict) -> list[Question]
             methods_used=["partial_fractions", "combine"],
         ),
         settings=settings,
+        )
+
+
+def _use_eq_cancel_skeleton(settings: dict) -> bool:
+    from question_engine.frameworks.primitives.rational_skeleton import use_eq_cancel_skeleton
+
+    return use_eq_cancel_skeleton(settings)
+
+
+def rational_equations(topic: str, settings: dict) -> list[Question]:
+    """EqCancel: clear dens + extraneous. D=0 is a proportion."""
+    if not _use_eq_cancel_skeleton(settings):
+        from question_engine.generators.rational_equations import (
+            generate_rational_equations,
+        )
+
+        return generate_rational_equations(topic, settings)
+
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+    last: dict[str, Any] = {"meta": {}}
+
+    def build() -> tuple[str, str, str | None]:
+        from question_engine.frameworks.primitives.rational_skeleton import (
+            sample_eq_cancel,
+        )
+
+        ctx = _rational_ctx(settings, leaf_id=str(topic or ""))
+        result = sample_eq_cancel(ctx)
+        last["meta"] = {
+            **ctx.metadata(),
+            "primitive_engine": "rational_skeleton",
+            **result.metadata,
+            "upgrades": list(result.upgrades),
+        }
+        answer = result.answer_latex if include_answer_key else None
+        return (
+            rf"\text{{Solve: }} {result.prompt_latex}",
+            f"Solve: {result.prompt_text}",
+            answer,
+        )
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict[str, Any]:
+        return dict(last.get("meta") or {})
+
+    return make_questions(
+        topic, count, include_answer_key, build,
+        metadata_builder=metadata_builder, settings=settings,
     )
 
 
@@ -435,4 +604,10 @@ GENERATORS = {
     "rational_expressions_simplifying": rational_simplify,
     "partial_fraction_decomposition": partial_fraction_decomposition,
     "pc_partial_fraction_decomposition": partial_fraction_decomposition,
+    "rational_equations": rational_equations,
+    "rational_expressions_equations": rational_equations,
+    "a2_rational_expressions_equations": rational_equations,
+    "a2_rational_expressions_multiplying_and_dividing": rational_expression_multiply_divide,
+    "a2_rational_expressions_complex_fractions": complex_fractions,
+    "pc_rational_equations": rational_equations,
 }

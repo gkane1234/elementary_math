@@ -1,0 +1,444 @@
+{
+  "section": {
+    "slug": "g6_drawing_histograms",
+    "title": "Draw histograms (UNCLEAR stub)",
+    "pattern": "",
+    "engine": "stats (untouched)",
+    "type_id": "g6_drawing_histograms",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207
+    ],
+    "blurb": "UNCLEAR gold. Red-header live samples."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "g6_drawing_histograms",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Create a histogram for the data set } \\{3,\\ 4,\\ 1,\\ 6,\\ 5,\\ 2\\}. \\text{Use the blank axis provided.}",
+      "answer_latex": "\\text{(see figure)}",
+      "skeleton_pattern": "NumberCore",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"142.0\" x2=\"36\" y2=\"142.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"145.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"120.0\" x2=\"36\" y2=\"120.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"123.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"98.0\" x2=\"36\" y2=\"98.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"101.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"76.0\" x2=\"36\" y2=\"76.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"79.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"54.0\" x2=\"36\" y2=\"54.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"57.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "NumberCore"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "NumberCore",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"142.0\" x2=\"36\" y2=\"142.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"145.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"120.0\" x2=\"36\" y2=\"120.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"123.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"98.0\" x2=\"36\" y2=\"98.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"101.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"76.0\" x2=\"36\" y2=\"76.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"79.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"54.0\" x2=\"36\" y2=\"54.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"57.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"120.0\" x2=\"36\" y2=\"120.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"123.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"76.0\" x2=\"36\" y2=\"76.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"79.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><rect x=\"38.0\" y=\"120.0\" width=\"73.0\" height=\"44.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><rect x=\"115.0\" y=\"76.0\" width=\"73.0\" height=\"88.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><rect x=\"192.0\" y=\"32.0\" width=\"73.0\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><rect x=\"269.0\" y=\"120.0\" width=\"73.0\" height=\"44.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text></svg>",
+        "difficulty": 0.0,
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Create a histogram for the data.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "g6_drawing_histograms",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Create a histogram for the data set } \\{2,\\ 1,\\ 6,\\ 3,\\ 2,\\ 6\\}. \\text{Use the blank axis provided.}",
+      "answer_latex": "\\text{(see figure)}",
+      "skeleton_pattern": "NumberCore",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"142.0\" x2=\"36\" y2=\"142.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"145.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"120.0\" x2=\"36\" y2=\"120.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"123.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"98.0\" x2=\"36\" y2=\"98.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"101.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"76.0\" x2=\"36\" y2=\"76.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"79.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"54.0\" x2=\"36\" y2=\"54.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"57.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "NumberCore"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "NumberCore",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"142.0\" x2=\"36\" y2=\"142.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"145.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"120.0\" x2=\"36\" y2=\"120.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"123.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"98.0\" x2=\"36\" y2=\"98.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"101.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"76.0\" x2=\"36\" y2=\"76.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"79.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"54.0\" x2=\"36\" y2=\"54.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"57.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"120.0\" x2=\"36\" y2=\"120.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"123.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"76.0\" x2=\"36\" y2=\"76.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"79.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><rect x=\"38.0\" y=\"120.0\" width=\"73.0\" height=\"44.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><rect x=\"115.0\" y=\"32.0\" width=\"73.0\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><rect x=\"192.0\" y=\"76.0\" width=\"73.0\" height=\"88.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><rect x=\"269.0\" y=\"76.0\" width=\"73.0\" height=\"88.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text></svg>",
+        "difficulty": 0.0,
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Create a histogram for the data.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "g6_drawing_histograms",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Create a histogram for the data set } \\{8,\\ 1,\\ 9,\\ 4,\\ 10,\\ 4,\\ 5,\\ 8\\}. \\text{Use the blank axis provided.}",
+      "answer_latex": "\\text{(see figure)}",
+      "skeleton_pattern": "NumberCore",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"147.5\" x2=\"36\" y2=\"147.5\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"150.5\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"131.0\" x2=\"36\" y2=\"131.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"134.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"114.5\" x2=\"36\" y2=\"114.5\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"117.5\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"98.0\" x2=\"36\" y2=\"98.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"101.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"81.5\" x2=\"36\" y2=\"81.5\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"84.5\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"65.0\" x2=\"36\" y2=\"65.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"68.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><line x1=\"32\" y1=\"48.5\" x2=\"36\" y2=\"48.5\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"51.5\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">7</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">8</text><text x=\"61.7\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><text x=\"113.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><text x=\"164.3\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><text x=\"215.7\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text><text x=\"267.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">8-10</text><text x=\"318.3\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">10-12</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "NumberCore"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "NumberCore",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"147.5\" x2=\"36\" y2=\"147.5\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"150.5\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"131.0\" x2=\"36\" y2=\"131.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"134.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"114.5\" x2=\"36\" y2=\"114.5\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"117.5\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"98.0\" x2=\"36\" y2=\"98.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"101.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"81.5\" x2=\"36\" y2=\"81.5\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"84.5\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"65.0\" x2=\"36\" y2=\"65.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"68.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><line x1=\"32\" y1=\"48.5\" x2=\"36\" y2=\"48.5\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"51.5\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">7</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">8</text><text x=\"61.7\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><text x=\"113.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><text x=\"164.3\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><text x=\"215.7\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text><text x=\"267.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">8-10</text><text x=\"318.3\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">10-12</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"131.0\" x2=\"36\" y2=\"131.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"134.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"98.0\" x2=\"36\" y2=\"98.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"101.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"65.0\" x2=\"36\" y2=\"65.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"68.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><rect x=\"38.0\" y=\"131.0\" width=\"47.3\" height=\"33.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"61.7\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-2</text><text x=\"113.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2-4</text><rect x=\"140.7\" y=\"65.0\" width=\"47.3\" height=\"99.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"164.3\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-6</text><text x=\"215.7\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-8</text><rect x=\"243.3\" y=\"32.0\" width=\"47.3\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"267.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">8-10</text><rect x=\"294.7\" y=\"131.0\" width=\"47.3\" height=\"33.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"318.3\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">10-12</text></svg>",
+        "difficulty": 8.0,
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Create a histogram for the data.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "g6_drawing_histograms",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Create a histogram for the data set } \\{1,\\ 6,\\ 3,\\ 8,\\ 2,\\ 1,\\ 6\\}. \\text{Use the blank axis provided.}",
+      "answer_latex": "\\text{(see figure)}",
+      "skeleton_pattern": "NumberCore",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"145.1\" x2=\"36\" y2=\"145.1\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"148.1\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"126.3\" x2=\"36\" y2=\"126.3\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"129.3\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"107.4\" x2=\"36\" y2=\"107.4\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"110.4\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"88.6\" x2=\"36\" y2=\"88.6\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"91.6\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"69.7\" x2=\"36\" y2=\"69.7\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"72.7\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"50.9\" x2=\"36\" y2=\"50.9\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"53.9\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">7</text><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-3</text><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3-6</text><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-9</text><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">9-12</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "NumberCore"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "NumberCore",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"145.1\" x2=\"36\" y2=\"145.1\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"148.1\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"126.3\" x2=\"36\" y2=\"126.3\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"129.3\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"107.4\" x2=\"36\" y2=\"107.4\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"110.4\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"88.6\" x2=\"36\" y2=\"88.6\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"91.6\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"69.7\" x2=\"36\" y2=\"69.7\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"72.7\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"50.9\" x2=\"36\" y2=\"50.9\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"53.9\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">7</text><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-3</text><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3-6</text><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-9</text><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">9-12</text></svg>",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"120.0\" x2=\"36\" y2=\"120.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"123.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"76.0\" x2=\"36\" y2=\"76.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"79.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><rect x=\"38.0\" y=\"32.0\" width=\"73.0\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-3</text><rect x=\"115.0\" y=\"120.0\" width=\"73.0\" height=\"44.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3-6</text><rect x=\"192.0\" y=\"32.0\" width=\"73.0\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6-9</text><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">9-12</text></svg>",
+        "difficulty": 8.0,
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Create a histogram for the data.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "g6_drawing_histograms",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Create a histogram for the data set } \\{11,\\ 18,\\ 10,\\ 12,\\ 18,\\ 4,\\ 11,\\ 10,\\ 9,\\ 4,\\ 18\\}. \\text{Draw and label your own axis.}",
+      "answer_latex": "\\text{(see figure)}",
+      "skeleton_pattern": "NumberCore",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "NumberCore"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "NumberCore",
+        "primitive_engine": "number",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"137.6\" x2=\"36\" y2=\"137.6\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"140.6\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"111.2\" x2=\"36\" y2=\"111.2\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"114.2\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"84.8\" x2=\"36\" y2=\"84.8\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"87.8\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"58.4\" x2=\"36\" y2=\"58.4\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"61.4\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><rect x=\"38.0\" y=\"111.2\" width=\"57.6\" height=\"52.8\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"66.8\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-8</text><rect x=\"99.6\" y=\"32.0\" width=\"57.6\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"128.4\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">8-12</text><rect x=\"161.2\" y=\"137.6\" width=\"57.6\" height=\"26.4\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"190.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">12-16</text><rect x=\"222.8\" y=\"84.8\" width=\"57.6\" height=\"79.2\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"251.6\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">16-20</text><text x=\"313.2\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">20-24</text></svg>",
+        "difficulty": 16.0,
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Create a histogram for the data.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "g6_drawing_histograms",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Create a histogram for the data set } \\{12,\\ 5,\\ 5,\\ 2,\\ 12,\\ 18,\\ 6,\\ 17,\\ 17,\\ 6,\\ 5,\\ 2\\}. \\text{Draw and label your own axis.}",
+      "answer_latex": "\\text{(see figure)}",
+      "skeleton_pattern": "NumberCore",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "NumberCore"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "NumberCore",
+        "primitive_engine": "number",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"137.6\" x2=\"36\" y2=\"137.6\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"140.6\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"111.2\" x2=\"36\" y2=\"111.2\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"114.2\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"84.8\" x2=\"36\" y2=\"84.8\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"87.8\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"58.4\" x2=\"36\" y2=\"58.4\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"61.4\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><rect x=\"38.0\" y=\"111.2\" width=\"47.3\" height=\"52.8\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"61.7\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-4</text><rect x=\"89.3\" y=\"32.0\" width=\"47.3\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"113.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-8</text><text x=\"164.3\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">8-12</text><rect x=\"192.0\" y=\"111.2\" width=\"47.3\" height=\"52.8\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"215.7\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">12-16</text><rect x=\"243.3\" y=\"84.8\" width=\"47.3\" height=\"79.2\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"267.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">16-20</text><text x=\"318.3\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">20-24</text></svg>",
+        "difficulty": 16.0,
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Create a histogram for the data.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "g6_drawing_histograms",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Create a histogram for the data set } \\{10,\\ 15,\\ 18,\\ 7,\\ 12,\\ 10,\\ 8,\\ 7,\\ 18,\\ 19,\\ 15,\\ 10,\\ 18,\\ 15,\\ 10\\}. \\text{Draw and label your own axis.}",
+      "answer_latex": "\\text{(see figure)}",
+      "skeleton_pattern": "NumberCore",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "NumberCore"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "NumberCore",
+        "primitive_engine": "number",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"145.1\" x2=\"36\" y2=\"145.1\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"148.1\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"126.3\" x2=\"36\" y2=\"126.3\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"129.3\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"107.4\" x2=\"36\" y2=\"107.4\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"110.4\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"88.6\" x2=\"36\" y2=\"88.6\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"91.6\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><line x1=\"32\" y1=\"69.7\" x2=\"36\" y2=\"69.7\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"72.7\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5</text><line x1=\"32\" y1=\"50.9\" x2=\"36\" y2=\"50.9\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"53.9\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">6</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">7</text><rect x=\"38.0\" y=\"107.4\" width=\"73.0\" height=\"56.6\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"74.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">5-10</text><rect x=\"115.0\" y=\"69.7\" width=\"73.0\" height=\"94.3\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"151.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">10-15</text><rect x=\"192.0\" y=\"32.0\" width=\"73.0\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"228.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">15-20</text><text x=\"305.5\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">20-25</text></svg>",
+        "difficulty": 22.0,
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Create a histogram for the data.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "g6_drawing_histograms",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Create a histogram for the data set } \\{3,\\ 2,\\ 11,\\ 16,\\ 5,\\ 12,\\ 12,\\ 5,\\ 23,\\ 3,\\ 2\\}. \\text{Draw and label your own axis.}",
+      "answer_latex": "\\text{(see figure)}",
+      "skeleton_pattern": "NumberCore",
+      "form_id": null,
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "NumberCore"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "NumberCore",
+        "primitive_engine": "number",
+        "answer_diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"200\" viewBox=\"0 0 360 200\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"180\" y=\"18\" text-anchor=\"middle\" font-size=\"13\" fill=\"#374151\" font-family=\"system-ui,sans-serif\">Histogram</text><line x1=\"36\" y1=\"164\" x2=\"344\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"36\" y1=\"28\" x2=\"36\" y2=\"164\" stroke=\"#1f2937\" stroke-width=\"1.5\"/><line x1=\"32\" y1=\"164.0\" x2=\"36\" y2=\"164.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"167.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0</text><line x1=\"32\" y1=\"131.0\" x2=\"36\" y2=\"131.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"134.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">1</text><line x1=\"32\" y1=\"98.0\" x2=\"36\" y2=\"98.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"101.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">2</text><line x1=\"32\" y1=\"65.0\" x2=\"36\" y2=\"65.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"68.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">3</text><line x1=\"32\" y1=\"32.0\" x2=\"36\" y2=\"32.0\" stroke=\"#1f2937\" stroke-width=\"1\"/><text x=\"28\" y=\"35.0\" text-anchor=\"end\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4</text><rect x=\"38.0\" y=\"32.0\" width=\"40.0\" height=\"132.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"58.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">0-4</text><rect x=\"82.0\" y=\"98.0\" width=\"40.0\" height=\"66.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"102.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">4-8</text><rect x=\"126.0\" y=\"131.0\" width=\"40.0\" height=\"33.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"146.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">8-12</text><rect x=\"170.0\" y=\"98.0\" width=\"40.0\" height=\"66.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"190.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">12-16</text><rect x=\"214.0\" y=\"131.0\" width=\"40.0\" height=\"33.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"234.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">16-20</text><rect x=\"258.0\" y=\"131.0\" width=\"40.0\" height=\"33.0\" fill=\"#93c5fd\" stroke=\"#2563eb\" stroke-width=\"1\"/><text x=\"278.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">20-24</text><text x=\"322.0\" y=\"178\" text-anchor=\"middle\" font-size=\"9\" fill=\"#4b5563\" font-family=\"system-ui,sans-serif\">24-28</text></svg>",
+        "difficulty": 22.0,
+        "generation_settings": {
+          "min_terms": 3,
+          "max_terms": 6,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Create a histogram for the data.}"
+      }
+    }
+  ],
+  "failures": []
+}

@@ -112,6 +112,81 @@ def test_wired_factoring_leaves_emit_form_ids():
         assert len(seen) >= min_distinct, (tid, seen)
 
 
+def test_linear_equation_leaves_emit_form_ids():
+    cat = load_form_catalog("algebra1_linear_equations")
+    implemented = {str(f["form_id"]) for f in implemented_forms(cat)}
+    one = {str(f["form_id"]) for f in forms_for_leaf(cat, "one_step_equations")}
+    two = {str(f["form_id"]) for f in forms_for_leaf(cat, "two_step_equations")}
+    multi = {str(f["form_id"]) for f in forms_for_leaf(cat, "multi_step_equations")}
+    assert one <= {"one_step_add_sub", "one_step_mul_div"}
+    assert "two_step" in two
+    assert "vars_both_sides" in multi
+    assert "multi_step_distribute" in multi
+
+    for tid, allowed in (
+        ("one_step_equations", one),
+        ("two_step_equations", two),
+        ("multi_step_equations", multi),
+    ):
+        seen: set[str] = set()
+        for d, seed in ((0.0, 3), (8.0, 11), (16.0, 21)):
+            qs = _generate_for_type(
+                tid,
+                {
+                    "difficulty": d,
+                    "count": 1,
+                    "seed": seed,
+                    "include_answer_key": True,
+                    "integers_only": True,
+                    "only_x": True,
+                },
+            )
+            assert qs, (tid, d, seed)
+            meta = qs[0].metadata or {}
+            assert meta.get("skeleton_pattern") == "SolveLinear"
+            fid = _meta_form_id(qs[0])
+            assert fid in implemented, (tid, d, seed, fid)
+            assert fid in allowed or fid in implemented
+            seen.add(fid)
+        assert seen, tid
+
+
+def test_linear_inequality_and_literal_leaves_emit_form_ids():
+    cat = load_form_catalog("algebra1_linear_equations")
+    one_i = {str(f["form_id"]) for f in forms_for_leaf(cat, "one_step_inequalities")}
+    two_i = {str(f["form_id"]) for f in forms_for_leaf(cat, "two_step_inequalities")}
+    multi_i = {str(f["form_id"]) for f in forms_for_leaf(cat, "multi_step_inequalities")}
+    lit = {str(f["form_id"]) for f in forms_for_leaf(cat, "literal_equations")}
+    assert one_i <= {"one_step_ineq_add_sub", "one_step_ineq_mul_div"}
+    assert "two_step_ineq" in two_i
+    assert "vars_both_sides_ineq" in multi_i
+    assert "multi_step_ineq_distribute" in multi_i
+    assert lit == {"literal_equation"}
+
+    for tid, allowed, pat in (
+        ("one_step_inequalities", one_i, "SolveInequality"),
+        ("two_step_inequalities", two_i, "SolveInequality"),
+        ("multi_step_inequalities", multi_i, "SolveInequality"),
+        ("literal_equations", lit, "SolveLiteral"),
+    ):
+        qs = _generate_for_type(
+            tid,
+            {
+                "difficulty": 0.0,
+                "count": 1,
+                "seed": 5,
+                "include_answer_key": True,
+                "integers_only": True,
+                "only_x": True,
+            },
+        )
+        assert qs, tid
+        meta = qs[0].metadata or {}
+        assert meta.get("skeleton_pattern") == pat
+        fid = _meta_form_id(qs[0])
+        assert fid in allowed, (tid, fid, allowed)
+
+
 def test_rational_simplification_stamps_simplify_cancel():
     for seed in range(20, 35):
         qs = _generate_for_type(

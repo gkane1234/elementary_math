@@ -1,0 +1,3281 @@
+{
+  "section": {
+    "slug": "similar_figures_wp",
+    "title": "SimilarFigures \u2014 scale-factor story + diagram",
+    "pattern": "SimilarFigures",
+    "engine": "wp_packaging",
+    "type_id": "pa_similar_figures",
+    "aliases": [
+      "pa_similar_figures_word_problems"
+    ],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313,
+      419,
+      523,
+      631
+    ],
+    "blurb": "EA \u00a78.7 similar triangles at D=0 (scale 2, missing side). Quadrilaterals and larger scale at higher D. Opt out with <code>use_legacy_similar_figures=True</code>."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "pa_similar_figures",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle DEF.\\ \\text{The figures are similar. Corresponding sides BC and EF measure 2 cm and 4 cm. If AB is 3 cm, find DE.}",
+      "answer_latex": "6\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "DE",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "D": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "D"
+            },
+            "E": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (D) at (3.750,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (3.457,-0.130) {D};\n  \\coordinate (E) at (6.990,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (7.276,-0.143) {E};\n  \\coordinate (F) at (5.669,2.287);\n  \\fill (F) circle (1.2pt);\n  \\node at (5.711,2.605) {F};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (D) -- (E) -- (F) -- cycle;\n  \\node at (2.327,1.087) {2 cm};\n  \\node at (1.200,-0.480) {3 cm};\n  \\node at (6.745,1.384) {4 cm};\n  \\node at (5.370,-0.480) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{2}{4} = \\frac{3}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "pa_similar_figures",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle DEF.\\ \\text{The figures are similar. Corresponding sides AB and DE measure 3 cm and 6 cm. If AC is 4 cm, find DF.}",
+      "answer_latex": "8\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "DF",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "D": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "D"
+            },
+            "E": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (D) at (3.750,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (3.457,-0.130) {D};\n  \\coordinate (E) at (6.990,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (7.276,-0.143) {E};\n  \\coordinate (F) at (5.669,2.287);\n  \\fill (F) circle (1.2pt);\n  \\node at (5.711,2.605) {F};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (D) -- (E) -- (F) -- cycle;\n  \\node at (1.200,-0.480) {3 cm};\n  \\node at (0.343,1.156) {4 cm};\n  \\node at (5.370,-0.480) {6 cm};\n  \\node at (4.342,1.452) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{3}{6} = \\frac{4}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "pa_similar_figures",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle XYZ.\\ \\text{The figures are similar. Corresponding sides BC and YZ measure 3 cm and 6 cm. If AC is 4 cm, find XZ.}",
+      "answer_latex": "8\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 135.5\" width=\"323.6\" height=\"135.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "XZ",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "X": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "X"
+            },
+            "Y": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "Y"
+            },
+            "Z": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "Z"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (X) at (3.750,0.000);\n  \\fill (X) circle (1.2pt);\n  \\node at (3.457,-0.130) {X};\n  \\coordinate (Y) at (6.990,0.000);\n  \\fill (Y) circle (1.2pt);\n  \\node at (7.276,-0.143) {Y};\n  \\coordinate (Z) at (5.669,2.287);\n  \\fill (Z) circle (1.2pt);\n  \\node at (5.711,2.605) {Z};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (X) -- (Y) -- (Z) -- cycle;\n  \\node at (2.327,1.087) {3 cm};\n  \\node at (0.343,1.156) {4 cm};\n  \\node at (6.745,1.384) {6 cm};\n  \\node at (4.342,1.452) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 135.5\" width=\"323.6\" height=\"135.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{3}{6} = \\frac{4}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=419",
+      "type_id": "pa_similar_figures",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 419,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle XYZ.\\ \\text{The figures are similar. Corresponding sides BC and YZ measure 2 cm and 4 cm. If AB is 3 cm, find XY.}",
+      "answer_latex": "6\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "XY",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "X": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "X"
+            },
+            "Y": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "Y"
+            },
+            "Z": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "Z"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (X) at (3.750,0.000);\n  \\fill (X) circle (1.2pt);\n  \\node at (3.457,-0.130) {X};\n  \\coordinate (Y) at (6.990,0.000);\n  \\fill (Y) circle (1.2pt);\n  \\node at (7.276,-0.143) {Y};\n  \\coordinate (Z) at (5.669,2.287);\n  \\fill (Z) circle (1.2pt);\n  \\node at (5.711,2.605) {Z};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (X) -- (Y) -- (Z) -- cycle;\n  \\node at (2.327,1.087) {2 cm};\n  \\node at (1.200,-0.480) {3 cm};\n  \\node at (6.745,1.384) {4 cm};\n  \\node at (5.370,-0.480) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{2}{4} = \\frac{3}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=523",
+      "type_id": "pa_similar_figures",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 523,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle XYZ.\\ \\text{The figures are similar. Corresponding sides AC and XZ measure 4 cm and 8 cm. If BC is 2 cm, find YZ.}",
+      "answer_latex": "4\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 135.5\" width=\"323.6\" height=\"135.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "YZ",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "X": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "X"
+            },
+            "Y": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "Y"
+            },
+            "Z": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "Z"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (X) at (3.750,0.000);\n  \\fill (X) circle (1.2pt);\n  \\node at (3.457,-0.130) {X};\n  \\coordinate (Y) at (6.990,0.000);\n  \\fill (Y) circle (1.2pt);\n  \\node at (7.276,-0.143) {Y};\n  \\coordinate (Z) at (5.669,2.287);\n  \\fill (Z) circle (1.2pt);\n  \\node at (5.711,2.605) {Z};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (X) -- (Y) -- (Z) -- cycle;\n  \\node at (0.343,1.156) {4 cm};\n  \\node at (2.327,1.087) {2 cm};\n  \\node at (4.342,1.452) {8 cm};\n  \\node at (6.745,1.384) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 135.5\" width=\"323.6\" height=\"135.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{4}{8} = \\frac{2}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=631",
+      "type_id": "pa_similar_figures",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 631,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle DEF.\\ \\text{The figures are similar. Corresponding sides AB and DE measure 4 cm and 8 cm. If BC is 5 cm, find EF.}",
+      "answer_latex": "10\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          631
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "equations": 0.0
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "EF",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "D": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "D"
+            },
+            "E": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (D) at (3.750,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (3.457,-0.130) {D};\n  \\coordinate (E) at (6.990,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (7.276,-0.143) {E};\n  \\coordinate (F) at (5.669,2.287);\n  \\fill (F) circle (1.2pt);\n  \\node at (5.711,2.605) {F};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (D) -- (E) -- (F) -- cycle;\n  \\node at (1.200,-0.480) {4 cm};\n  \\node at (2.327,1.087) {5 cm};\n  \\node at (5.370,-0.480) {8 cm};\n  \\node at (6.745,1.384) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">8 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{4}{8} = \\frac{5}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 0.0,
+          "min_terms": 2,
+          "max_terms": 3,
+          "seed": 631,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "pa_similar_figures",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle DEF.\\ \\text{The figures are similar. Corresponding sides BC and EF measure 6 cm and 18 cm. If AB is 3 cm, find DE.}",
+      "answer_latex": "9\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 357.2 178.4\" width=\"357.2\" height=\"178.4\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,137.2 118.0,137.2 78.9,69.4\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,137.2 335.2,137.2 268.7,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"93.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"70.0\" y=\"156.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"318.6\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">18 cm</text><text x=\"253.6\" y=\"156.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"137.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"142.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"137.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"143.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"69.4\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"56.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"137.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"142.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"335.2\" cy=\"137.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"346.6\" y=\"143.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"268.7\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"270.3\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "equations": 6.708
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 3,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "DE",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "D": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "D"
+            },
+            "E": {
+              "x": 7.83,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 6.166976763044355,
+              "y": 2.880440740574834,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (D) at (3.750,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (3.457,-0.130) {D};\n  \\coordinate (E) at (7.830,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (8.116,-0.143) {E};\n  \\coordinate (F) at (6.167,2.880);\n  \\fill (F) circle (1.2pt);\n  \\node at (6.209,3.198) {F};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (D) -- (E) -- (F) -- cycle;\n  \\node at (2.327,1.087) {6 cm};\n  \\node at (1.200,-0.480) {3 cm};\n  \\node at (7.414,1.680) {18 cm};\n  \\node at (5.790,-0.480) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 357.2 178.4\" width=\"357.2\" height=\"178.4\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,137.2 118.0,137.2 78.9,69.4\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,137.2 335.2,137.2 268.7,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"93.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"70.0\" y=\"156.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"318.6\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">18 cm</text><text x=\"253.6\" y=\"156.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"137.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"142.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"137.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"143.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"69.4\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"56.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"137.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"142.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"335.2\" cy=\"137.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"346.6\" y=\"143.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"268.7\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"270.3\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{6}{18} = \\frac{3}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "pa_similar_figures",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle XYZ.\\ \\text{The figures are similar. Corresponding sides AB and XY measure 3 cm and 12 cm. If AC is 7 cm, find XZ.}",
+      "answer_latex": "28\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390.8 202.1\" width=\"390.8\" height=\"202.1\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,160.9 118.0,160.9 78.9,93.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,160.9 368.8,160.9 288.6,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"70.0\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"35.7\" y=\"114.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"270.4\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"215.6\" y=\"79.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"93.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"80.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"368.8\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"380.2\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"288.6\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"290.2\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "equations": 7.359
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 4,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "XZ",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "X": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "X"
+            },
+            "Y": {
+              "x": 8.669999999999998,
+              "y": 0.0,
+              "label": "Y"
+            },
+            "Z": {
+              "x": 6.664589626024075,
+              "y": 3.473472657752005,
+              "label": "Z"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (X) at (3.750,0.000);\n  \\fill (X) circle (1.2pt);\n  \\node at (3.457,-0.130) {X};\n  \\coordinate (Y) at (8.670,0.000);\n  \\fill (Y) circle (1.2pt);\n  \\node at (8.956,-0.143) {Y};\n  \\coordinate (Z) at (6.665,3.473);\n  \\fill (Z) circle (1.2pt);\n  \\node at (6.706,3.791) {Z};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (X) -- (Y) -- (Z) -- cycle;\n  \\node at (1.200,-0.480) {3 cm};\n  \\node at (0.343,1.156) {7 cm};\n  \\node at (6.210,-0.480) {12 cm};\n  \\node at (4.840,2.045) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390.8 202.1\" width=\"390.8\" height=\"202.1\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,160.9 118.0,160.9 78.9,93.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,160.9 368.8,160.9 288.6,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"70.0\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"35.7\" y=\"114.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"270.4\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"215.6\" y=\"79.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"93.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"80.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"368.8\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"380.2\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"288.6\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"290.2\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{3}{12} = \\frac{7}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "pa_similar_figures",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle XYZ.\\ \\text{The figures are similar. Corresponding sides BC and YZ measure 4 cm and 16 cm. If AC is 2 cm, find XZ.}",
+      "answer_latex": "8\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390.8 182.9\" width=\"390.8\" height=\"182.9\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,160.9 118.0,160.9 78.9,93.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,160.9 368.8,160.9 288.6,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"117.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"35.7\" y=\"114.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"345.3\" y=\"81.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">16 cm</text><text x=\"215.6\" y=\"79.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"93.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"80.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"368.8\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"380.2\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"288.6\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"290.2\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.702,
+          "variable": 2.514,
+          "equations": 2.784
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 4,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "XZ",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "X": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "X"
+            },
+            "Y": {
+              "x": 8.669999999999998,
+              "y": 0.0,
+              "label": "Y"
+            },
+            "Z": {
+              "x": 6.664589626024075,
+              "y": 3.473472657752005,
+              "label": "Z"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (X) at (3.750,0.000);\n  \\fill (X) circle (1.2pt);\n  \\node at (3.457,-0.130) {X};\n  \\coordinate (Y) at (8.670,0.000);\n  \\fill (Y) circle (1.2pt);\n  \\node at (8.956,-0.143) {Y};\n  \\coordinate (Z) at (6.665,3.473);\n  \\fill (Z) circle (1.2pt);\n  \\node at (6.706,3.791) {Z};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (X) -- (Y) -- (Z) -- cycle;\n  \\node at (2.327,1.087) {4 cm};\n  \\node at (0.343,1.156) {2 cm};\n  \\node at (8.083,1.977) {16 cm};\n  \\node at (4.840,2.045) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390.8 182.9\" width=\"390.8\" height=\"182.9\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,160.9 118.0,160.9 78.9,93.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,160.9 368.8,160.9 288.6,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"117.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"35.7\" y=\"114.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"345.3\" y=\"81.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">16 cm</text><text x=\"215.6\" y=\"79.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"93.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"80.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"368.8\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"380.2\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"288.6\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"290.2\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{4}{16} = \\frac{2}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=419",
+      "type_id": "pa_similar_figures",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 419,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle XYZ.\\ \\text{The figures are similar. Corresponding sides BC and YZ measure 6 cm and 12 cm. If AB is 3 cm, find XY.}",
+      "answer_latex": "6\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.782,
+          "variable": 6.318,
+          "equations": 0.9
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "XY",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "X": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "X"
+            },
+            "Y": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "Y"
+            },
+            "Z": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "Z"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (X) at (3.750,0.000);\n  \\fill (X) circle (1.2pt);\n  \\node at (3.457,-0.130) {X};\n  \\coordinate (Y) at (6.990,0.000);\n  \\fill (Y) circle (1.2pt);\n  \\node at (7.276,-0.143) {Y};\n  \\coordinate (Z) at (5.669,2.287);\n  \\fill (Z) circle (1.2pt);\n  \\node at (5.711,2.605) {Z};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (X) -- (Y) -- (Z) -- cycle;\n  \\node at (2.327,1.087) {6 cm};\n  \\node at (1.200,-0.480) {3 cm};\n  \\node at (6.745,1.384) {12 cm};\n  \\node at (5.370,-0.480) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 154.7\" width=\"323.6\" height=\"154.7\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"70.0\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"236.8\" y=\"132.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{6}{12} = \\frac{3}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=523",
+      "type_id": "pa_similar_figures",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 523,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle DEF.\\ \\text{The figures are similar. Corresponding sides BC and EF measure 5 cm and 10 cm. If AC is 7 cm, find DF.}",
+      "answer_latex": "14\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 135.5\" width=\"323.6\" height=\"135.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">10 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.539,
+          "variable": 1.954,
+          "equations": 3.507
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "DF",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "D": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "D"
+            },
+            "E": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (D) at (3.750,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (3.457,-0.130) {D};\n  \\coordinate (E) at (6.990,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (7.276,-0.143) {E};\n  \\coordinate (F) at (5.669,2.287);\n  \\fill (F) circle (1.2pt);\n  \\node at (5.711,2.605) {F};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (D) -- (E) -- (F) -- cycle;\n  \\node at (2.327,1.087) {5 cm};\n  \\node at (0.343,1.156) {7 cm};\n  \\node at (6.745,1.384) {10 cm};\n  \\node at (4.342,1.452) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 135.5\" width=\"323.6\" height=\"135.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">10 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{5}{10} = \\frac{7}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=631",
+      "type_id": "pa_similar_figures",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 631,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle DEF.\\ \\text{The figures are similar. Corresponding sides BC and EF measure 3 cm and 12 cm. If AB is 4 cm, find DE.}",
+      "answer_latex": "16\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390.8 202.1\" width=\"390.8\" height=\"202.1\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,160.9 118.0,160.9 78.9,93.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,160.9 368.8,160.9 288.6,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"117.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"70.0\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"345.3\" y=\"81.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"270.4\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"93.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"80.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"368.8\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"380.2\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"288.6\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"290.2\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          631
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.97,
+          "variable": 3.004,
+          "equations": 4.026
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 4,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "DE",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "D": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "D"
+            },
+            "E": {
+              "x": 8.669999999999998,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 6.664589626024075,
+              "y": 3.473472657752005,
+              "label": "F"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (D) at (3.750,0.000);\n  \\fill (D) circle (1.2pt);\n  \\node at (3.457,-0.130) {D};\n  \\coordinate (E) at (8.670,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (8.956,-0.143) {E};\n  \\coordinate (F) at (6.665,3.473);\n  \\fill (F) circle (1.2pt);\n  \\node at (6.706,3.791) {F};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (D) -- (E) -- (F) -- cycle;\n  \\node at (2.327,1.087) {3 cm};\n  \\node at (1.200,-0.480) {4 cm};\n  \\node at (8.083,1.977) {12 cm};\n  \\node at (6.210,-0.480) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390.8 202.1\" width=\"390.8\" height=\"202.1\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,160.9 118.0,160.9 78.9,93.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,160.9 368.8,160.9 288.6,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"117.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"70.0\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"345.3\" y=\"81.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"270.4\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"93.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"80.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"368.8\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"380.2\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"288.6\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"290.2\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{3}{12} = \\frac{4}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 8.0,
+          "min_terms": 2,
+          "max_terms": 4,
+          "seed": 631,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "pa_similar_figures",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "ABCD \\sim EFGH.\\ \\text{The figures are similar. Corresponding sides AB and EF measure 4 cm and 12 cm. If AD is 5 cm, find EH.}",
+      "answer_latex": "15\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 383.2 173.9\" width=\"383.2\" height=\"173.9\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,132.7 141.2,132.7 141.2,66.0 41.2,66.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"195.2,132.7 361.2,132.7 361.2,22.0 195.2,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"91.2\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"22.0\" y=\"99.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"278.2\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"176.0\" y=\"77.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"41.2\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"30.5\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"141.2\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.9\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"141.2\" cy=\"66.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.9\" y=\"58.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"41.2\" cy=\"66.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"30.5\" y=\"58.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"195.2\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"184.5\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"361.2\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"371.9\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><circle cx=\"361.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"371.9\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><circle cx=\"195.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"184.5\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "frame_id",
+          "similar_quad"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "equations": 13.415
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_quad",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 3,
+        "shape": "rectangle",
+        "ask": "missing_side",
+        "missing_side": "EH",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.5,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 2.5,
+              "y": 1.6666666666666667,
+              "label": "C"
+            },
+            "D": {
+              "x": 0.0,
+              "y": 1.6666666666666667,
+              "label": "D"
+            },
+            "E": {
+              "x": 3.85,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 8.0,
+              "y": 0.0,
+              "label": "F"
+            },
+            "G": {
+              "x": 8.0,
+              "y": 2.766666666666667,
+              "label": "G"
+            },
+            "H": {
+              "x": 3.85,
+              "y": 2.766666666666667,
+              "label": "H"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.266,-0.178) {A};\n  \\coordinate (B) at (2.500,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.766,-0.178) {B};\n  \\coordinate (C) at (2.500,1.667);\n  \\fill (C) circle (1.2pt);\n  \\node at (2.766,1.844) {C};\n  \\coordinate (D) at (0.000,1.667);\n  \\fill (D) circle (1.2pt);\n  \\node at (-0.266,1.844) {D};\n  \\coordinate (E) at (3.850,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (3.584,-0.178) {E};\n  \\coordinate (F) at (8.000,0.000);\n  \\fill (F) circle (1.2pt);\n  \\node at (8.266,-0.178) {F};\n  \\coordinate (G) at (8.000,2.767);\n  \\fill (G) circle (1.2pt);\n  \\node at (8.266,2.944) {G};\n  \\coordinate (H) at (3.850,2.767);\n  \\fill (H) circle (1.2pt);\n  \\node at (3.584,2.944) {H};\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (E) -- (F) -- (G) -- (H) -- cycle;\n  \\node at (1.250,-0.480) {4 cm};\n  \\node at (-0.480,0.833) {5 cm};\n  \\node at (5.925,-0.480) {12 cm};\n  \\node at (3.370,1.383) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 383.2 173.9\" width=\"383.2\" height=\"173.9\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,132.7 141.2,132.7 141.2,66.0 41.2,66.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"195.2,132.7 361.2,132.7 361.2,22.0 195.2,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"91.2\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"22.0\" y=\"99.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"278.2\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"176.0\" y=\"77.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"41.2\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"30.5\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"141.2\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.9\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"141.2\" cy=\"66.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.9\" y=\"58.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"41.2\" cy=\"66.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"30.5\" y=\"58.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"195.2\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"184.5\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"361.2\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"371.9\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><circle cx=\"361.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"371.9\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><circle cx=\"195.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"184.5\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{4}{12} = \\frac{5}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "pa_similar_figures",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "ABCD \\sim EFGH.\\ \\text{The figures are similar. Corresponding sides AB and EF measure 2 cm and 10 cm. If BC is 3 cm, find FG.}",
+      "answer_latex": "15\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 405.2 188.5\" width=\"405.2\" height=\"188.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,147.3 122.0,147.3 122.0,80.7 22.0,80.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"176.0,147.3 364.0,147.3 364.0,22.0 176.0,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"72.0\" y=\"166.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"141.2\" y=\"114.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"270.0\" y=\"166.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">10 cm</text><text x=\"383.2\" y=\"84.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"147.3\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"154.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"122.0\" cy=\"147.3\" r=\"3\" fill=\"#1f2937\"/><text x=\"132.7\" y=\"154.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"122.0\" cy=\"80.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"132.7\" y=\"73.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"80.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"73.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"176.0\" cy=\"147.3\" r=\"3\" fill=\"#1f2937\"/><text x=\"165.3\" y=\"154.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"364.0\" cy=\"147.3\" r=\"3\" fill=\"#1f2937\"/><text x=\"374.7\" y=\"154.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><circle cx=\"364.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"374.7\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><circle cx=\"176.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"165.3\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "frame_id",
+          "similar_quad"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "equations": 14.717
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_quad",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 5,
+        "shape": "rectangle",
+        "ask": "missing_side",
+        "missing_side": "FG",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.5,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 2.5,
+              "y": 1.6666666666666667,
+              "label": "C"
+            },
+            "D": {
+              "x": 0.0,
+              "y": 1.6666666666666667,
+              "label": "D"
+            },
+            "E": {
+              "x": 3.85,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 8.55,
+              "y": 0.0,
+              "label": "F"
+            },
+            "G": {
+              "x": 8.55,
+              "y": 3.1333333333333337,
+              "label": "G"
+            },
+            "H": {
+              "x": 3.85,
+              "y": 3.1333333333333337,
+              "label": "H"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.266,-0.178) {A};\n  \\coordinate (B) at (2.500,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.766,-0.178) {B};\n  \\coordinate (C) at (2.500,1.667);\n  \\fill (C) circle (1.2pt);\n  \\node at (2.766,1.844) {C};\n  \\coordinate (D) at (0.000,1.667);\n  \\fill (D) circle (1.2pt);\n  \\node at (-0.266,1.844) {D};\n  \\coordinate (E) at (3.850,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (3.584,-0.178) {E};\n  \\coordinate (F) at (8.550,0.000);\n  \\fill (F) circle (1.2pt);\n  \\node at (8.816,-0.178) {F};\n  \\coordinate (G) at (8.550,3.133);\n  \\fill (G) circle (1.2pt);\n  \\node at (8.816,3.311) {G};\n  \\coordinate (H) at (3.850,3.133);\n  \\fill (H) circle (1.2pt);\n  \\node at (3.584,3.311) {H};\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (E) -- (F) -- (G) -- (H) -- cycle;\n  \\node at (1.250,-0.480) {2 cm};\n  \\node at (2.980,0.833) {3 cm};\n  \\node at (6.200,-0.480) {10 cm};\n  \\node at (9.030,1.567) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 405.2 188.5\" width=\"405.2\" height=\"188.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,147.3 122.0,147.3 122.0,80.7 22.0,80.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"176.0,147.3 364.0,147.3 364.0,22.0 176.0,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"72.0\" y=\"166.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"141.2\" y=\"114.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"270.0\" y=\"166.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">10 cm</text><text x=\"383.2\" y=\"84.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"147.3\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"154.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"122.0\" cy=\"147.3\" r=\"3\" fill=\"#1f2937\"/><text x=\"132.7\" y=\"154.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"122.0\" cy=\"80.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"132.7\" y=\"73.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"80.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"73.6\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"176.0\" cy=\"147.3\" r=\"3\" fill=\"#1f2937\"/><text x=\"165.3\" y=\"154.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"364.0\" cy=\"147.3\" r=\"3\" fill=\"#1f2937\"/><text x=\"374.7\" y=\"154.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><circle cx=\"364.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"374.7\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><circle cx=\"176.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"165.3\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{2}{10} = \\frac{3}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "pa_similar_figures",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "ABCD \\sim EFGH.\\ \\text{The figures are similar. Corresponding sides AD and EH measure 3 cm and 6 cm. If BC is 5 cm, find FG.}",
+      "answer_latex": "10\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 383.2 141.8\" width=\"383.2\" height=\"141.8\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,119.8 141.2,119.8 141.2,53.2 41.2,53.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"195.2,119.8 341.9,119.8 341.9,22.0 195.2,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"22.0\" y=\"86.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"160.4\" y=\"86.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"176.0\" y=\"70.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"361.2\" y=\"70.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"41.2\" cy=\"119.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"30.5\" y=\"126.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"141.2\" cy=\"119.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.9\" y=\"126.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"141.2\" cy=\"53.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.9\" y=\"46.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"41.2\" cy=\"53.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"30.5\" y=\"46.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"195.2\" cy=\"119.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"184.5\" y=\"126.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"341.9\" cy=\"119.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"352.6\" y=\"126.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><circle cx=\"341.9\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"352.6\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><circle cx=\"195.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"184.5\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "frame_id",
+          "similar_quad"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.404,
+          "variable": 5.027,
+          "equations": 5.568
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_quad",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "rectangle",
+        "ask": "missing_side",
+        "missing_side": "FG",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.5,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 2.5,
+              "y": 1.6666666666666667,
+              "label": "C"
+            },
+            "D": {
+              "x": 0.0,
+              "y": 1.6666666666666667,
+              "label": "D"
+            },
+            "E": {
+              "x": 3.85,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 7.518750000000001,
+              "y": 0.0,
+              "label": "F"
+            },
+            "G": {
+              "x": 7.518750000000001,
+              "y": 2.4458333333333333,
+              "label": "G"
+            },
+            "H": {
+              "x": 3.85,
+              "y": 2.4458333333333333,
+              "label": "H"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.266,-0.178) {A};\n  \\coordinate (B) at (2.500,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.766,-0.178) {B};\n  \\coordinate (C) at (2.500,1.667);\n  \\fill (C) circle (1.2pt);\n  \\node at (2.766,1.844) {C};\n  \\coordinate (D) at (0.000,1.667);\n  \\fill (D) circle (1.2pt);\n  \\node at (-0.266,1.844) {D};\n  \\coordinate (E) at (3.850,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (3.584,-0.178) {E};\n  \\coordinate (F) at (7.519,0.000);\n  \\fill (F) circle (1.2pt);\n  \\node at (7.785,-0.178) {F};\n  \\coordinate (G) at (7.519,2.446);\n  \\fill (G) circle (1.2pt);\n  \\node at (7.785,2.623) {G};\n  \\coordinate (H) at (3.850,2.446);\n  \\fill (H) circle (1.2pt);\n  \\node at (3.584,2.623) {H};\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (E) -- (F) -- (G) -- (H) -- cycle;\n  \\node at (-0.480,0.833) {3 cm};\n  \\node at (2.980,0.833) {5 cm};\n  \\node at (3.370,1.223) {6 cm};\n  \\node at (7.999,1.223) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 383.2 141.8\" width=\"383.2\" height=\"141.8\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"41.2,119.8 141.2,119.8 141.2,53.2 41.2,53.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"195.2,119.8 341.9,119.8 341.9,22.0 195.2,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"22.0\" y=\"86.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"160.4\" y=\"86.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"176.0\" y=\"70.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><text x=\"361.2\" y=\"70.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"41.2\" cy=\"119.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"30.5\" y=\"126.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"141.2\" cy=\"119.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.9\" y=\"126.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"141.2\" cy=\"53.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"151.9\" y=\"46.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"41.2\" cy=\"53.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"30.5\" y=\"46.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"195.2\" cy=\"119.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"184.5\" y=\"126.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"341.9\" cy=\"119.8\" r=\"3\" fill=\"#1f2937\"/><text x=\"352.6\" y=\"126.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><circle cx=\"341.9\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"352.6\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><circle cx=\"195.2\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"184.5\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{3}{6} = \\frac{5}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=419",
+      "type_id": "pa_similar_figures",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 419,
+      "prompt_latex": "ABCD \\sim EFGH.\\ \\text{The figures are similar. Corresponding sides AB and EF measure 2 cm and 6 cm. Find the scale factor from the smaller to the larger.}",
+      "answer_latex": "3",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 364.0 173.9\" width=\"364.0\" height=\"173.9\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,132.7 122.0,132.7 122.0,66.0 22.0,66.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"176.0,132.7 342.0,132.7 342.0,22.0 176.0,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"72.0\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"259.0\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><circle cx=\"22.0\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"122.0\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"132.7\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"122.0\" cy=\"66.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"132.7\" y=\"58.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"66.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"58.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"176.0\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"165.3\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"342.0\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"352.7\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><circle cx=\"342.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"352.7\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><circle cx=\"176.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"165.3\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          419
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "frame_id",
+          "similar_quad"
+        ],
+        [
+          "ask",
+          "scale_factor"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.564,
+          "variable": 12.635,
+          "equations": 1.801
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_quad",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 3,
+        "shape": "rectangle",
+        "ask": "scale_factor",
+        "missing_side": "",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.5,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 2.5,
+              "y": 1.6666666666666667,
+              "label": "C"
+            },
+            "D": {
+              "x": 0.0,
+              "y": 1.6666666666666667,
+              "label": "D"
+            },
+            "E": {
+              "x": 3.85,
+              "y": 0.0,
+              "label": "E"
+            },
+            "F": {
+              "x": 8.0,
+              "y": 0.0,
+              "label": "F"
+            },
+            "G": {
+              "x": 8.0,
+              "y": 2.766666666666667,
+              "label": "G"
+            },
+            "H": {
+              "x": 3.85,
+              "y": 2.766666666666667,
+              "label": "H"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.266,-0.178) {A};\n  \\coordinate (B) at (2.500,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.766,-0.178) {B};\n  \\coordinate (C) at (2.500,1.667);\n  \\fill (C) circle (1.2pt);\n  \\node at (2.766,1.844) {C};\n  \\coordinate (D) at (0.000,1.667);\n  \\fill (D) circle (1.2pt);\n  \\node at (-0.266,1.844) {D};\n  \\coordinate (E) at (3.850,0.000);\n  \\fill (E) circle (1.2pt);\n  \\node at (3.584,-0.178) {E};\n  \\coordinate (F) at (8.000,0.000);\n  \\fill (F) circle (1.2pt);\n  \\node at (8.266,-0.178) {F};\n  \\coordinate (G) at (8.000,2.767);\n  \\fill (G) circle (1.2pt);\n  \\node at (8.266,2.944) {G};\n  \\coordinate (H) at (3.850,2.767);\n  \\fill (H) circle (1.2pt);\n  \\node at (3.584,2.944) {H};\n  \\draw[thick] (A) -- (B) -- (C) -- (D) -- cycle;\n  \\draw[thick] (E) -- (F) -- (G) -- (H) -- cycle;\n  \\node at (1.250,-0.480) {2 cm};\n  \\node at (5.925,-0.480) {6 cm};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 364.0 173.9\" width=\"364.0\" height=\"173.9\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,132.7 122.0,132.7 122.0,66.0 22.0,66.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"176.0,132.7 342.0,132.7 342.0,22.0 176.0,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"72.0\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">2 cm</text><text x=\"259.0\" y=\"151.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">6 cm</text><circle cx=\"22.0\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"122.0\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"132.7\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"122.0\" cy=\"66.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"132.7\" y=\"58.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"22.0\" cy=\"66.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"11.3\" y=\"58.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">D</text><circle cx=\"176.0\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"165.3\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">E</text><circle cx=\"342.0\" cy=\"132.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"352.7\" y=\"139.8\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">F</text><circle cx=\"342.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"352.7\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">G</text><circle cx=\"176.0\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"165.3\" y=\"14.9\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">H</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{6}{2} = 3",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 419,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=523",
+      "type_id": "pa_similar_figures",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 523,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle XYZ.\\ \\text{The figures are similar. Corresponding sides BC and YZ measure 5 cm and 10 cm. If AC is 7 cm, find XZ.}",
+      "answer_latex": "14\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 135.5\" width=\"323.6\" height=\"135.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">10 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          523
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.078,
+          "variable": 3.909,
+          "equations": 7.014
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 2,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "XZ",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "X": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "X"
+            },
+            "Y": {
+              "x": 6.99,
+              "y": 0.0,
+              "label": "Y"
+            },
+            "Z": {
+              "x": 5.669363900064635,
+              "y": 2.2874088233976626,
+              "label": "Z"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (X) at (3.750,0.000);\n  \\fill (X) circle (1.2pt);\n  \\node at (3.457,-0.130) {X};\n  \\coordinate (Y) at (6.990,0.000);\n  \\fill (Y) circle (1.2pt);\n  \\node at (7.276,-0.143) {Y};\n  \\coordinate (Z) at (5.669,2.287);\n  \\fill (Z) circle (1.2pt);\n  \\node at (5.711,2.605) {Z};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (X) -- (Y) -- (Z) -- cycle;\n  \\node at (2.327,1.087) {5 cm};\n  \\node at (0.343,1.156) {7 cm};\n  \\node at (6.745,1.384) {10 cm};\n  \\node at (4.342,1.452) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 323.6 135.5\" width=\"323.6\" height=\"135.5\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,113.5 118.0,113.5 78.9,45.7\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,113.5 301.6,113.5 248.8,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"115.1\" y=\"70.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">5 cm</text><text x=\"35.7\" y=\"67.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">7 cm</text><text x=\"291.8\" y=\"58.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">10 cm</text><text x=\"195.7\" y=\"55.4\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"45.7\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"33.0\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"118.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"301.6\" cy=\"113.5\" r=\"3\" fill=\"#1f2937\"/><text x=\"313.0\" y=\"119.2\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"248.8\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"250.4\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{5}{10} = \\frac{7}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 523,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=631",
+      "type_id": "pa_similar_figures",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 631,
+      "prompt_latex": "\\triangle ABC \\sim \\triangle XYZ.\\ \\text{The figures are similar. Corresponding sides AB and XY measure 3 cm and 12 cm. If AC is 4 cm, find XZ.}",
+      "answer_latex": "16\\text{ cm}",
+      "skeleton_pattern": "SimilarFigures",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390.8 202.1\" width=\"390.8\" height=\"202.1\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,160.9 118.0,160.9 78.9,93.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,160.9 368.8,160.9 288.6,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"70.0\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"35.7\" y=\"114.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"270.4\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"215.6\" y=\"79.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"93.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"80.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"368.8\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"380.2\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"288.6\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"290.2\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "SimilarFigures"
+        ],
+        [
+          "primitive_engine",
+          "wp_packaging"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          631
+        ],
+        [
+          "n_ops",
+          1
+        ],
+        [
+          "species",
+          "proportion"
+        ],
+        [
+          "transforms",
+          [
+            "cross_multiply",
+            "scale_factor"
+          ]
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "frame_id",
+          "similar_triangles"
+        ],
+        [
+          "ask",
+          "missing_side"
+        ],
+        [
+          "wp_kind",
+          "similar_figures"
+        ],
+        [
+          "construction",
+          "wp_packaging"
+        ],
+        [
+          "diagram_kind",
+          "similar_figures"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.939,
+          "variable": 6.008,
+          "equations": 8.052
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SimilarFigures",
+        "species": "proportion",
+        "frame_id": "similar_triangles",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "transforms": [
+          "cross_multiply",
+          "scale_factor"
+        ],
+        "n_ops": 1,
+        "construction": "wp_packaging",
+        "scale_factor": 4,
+        "shape": "triangle",
+        "ask": "missing_side",
+        "missing_side": "XZ",
+        "diagram_spec": {
+          "kind": "similar_figures",
+          "labels": [
+            "A",
+            "B",
+            "C",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "segments": [],
+          "angles": [],
+          "points": {
+            "A": {
+              "x": 0.0,
+              "y": 0.0,
+              "label": "A"
+            },
+            "B": {
+              "x": 2.4,
+              "y": 0.0,
+              "label": "B"
+            },
+            "C": {
+              "x": 1.4217510370849145,
+              "y": 1.6943769062204903,
+              "label": "C"
+            },
+            "X": {
+              "x": 3.75,
+              "y": 0.0,
+              "label": "X"
+            },
+            "Y": {
+              "x": 8.669999999999998,
+              "y": 0.0,
+              "label": "Y"
+            },
+            "Z": {
+              "x": 6.664589626024075,
+              "y": 3.473472657752005,
+              "label": "Z"
+            }
+          }
+        },
+        "diagram_latex": "\\begin{tikzpicture}[scale=1, every node/.style={font=\\small}]\n  \\coordinate (A) at (0.000,0.000);\n  \\fill (A) circle (1.2pt);\n  \\node at (-0.293,-0.130) {A};\n  \\coordinate (B) at (2.400,0.000);\n  \\fill (B) circle (1.2pt);\n  \\node at (2.686,-0.143) {B};\n  \\coordinate (C) at (1.422,1.694);\n  \\fill (C) circle (1.2pt);\n  \\node at (1.463,2.012) {C};\n  \\coordinate (X) at (3.750,0.000);\n  \\fill (X) circle (1.2pt);\n  \\node at (3.457,-0.130) {X};\n  \\coordinate (Y) at (8.670,0.000);\n  \\fill (Y) circle (1.2pt);\n  \\node at (8.956,-0.143) {Y};\n  \\coordinate (Z) at (6.665,3.473);\n  \\fill (Z) circle (1.2pt);\n  \\node at (6.706,3.791) {Z};\n  \\draw[thick] (A) -- (B) -- (C) -- cycle;\n  \\draw[thick] (X) -- (Y) -- (Z) -- cycle;\n  \\node at (1.200,-0.480) {3 cm};\n  \\node at (0.343,1.156) {4 cm};\n  \\node at (6.210,-0.480) {12 cm};\n  \\node at (4.840,2.045) {?};\n\\end{tikzpicture}",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 390.8 202.1\" width=\"390.8\" height=\"202.1\" role=\"img\" aria-label=\"Geometry diagram\"><polygon points=\"22.0,160.9 118.0,160.9 78.9,93.2\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><polygon points=\"172.0,160.9 368.8,160.9 288.6,22.0\" fill=\"none\" stroke=\"#1f2937\" stroke-width=\"1.75\"/><text x=\"70.0\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">3 cm</text><text x=\"35.7\" y=\"114.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">4 cm</text><text x=\"270.4\" y=\"180.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">12 cm</text><text x=\"215.6\" y=\"79.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" paint-order=\"stroke fill\">?</text><circle cx=\"22.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"10.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">A</text><circle cx=\"118.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"129.4\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">B</text><circle cx=\"78.9\" cy=\"93.2\" r=\"3\" fill=\"#1f2937\"/><text x=\"80.5\" y=\"80.5\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">C</text><circle cx=\"172.0\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"160.3\" y=\"166.1\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">X</text><circle cx=\"368.8\" cy=\"160.9\" r=\"3\" fill=\"#1f2937\"/><text x=\"380.2\" y=\"166.7\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Y</text><circle cx=\"288.6\" cy=\"22.0\" r=\"3\" fill=\"#1f2937\"/><text x=\"290.2\" y=\"9.3\" class=\"diagram-label\" fill=\"#374151\" font-size=\"13\" text-anchor=\"middle\" dominant-baseline=\"middle\">Z</text></svg>",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "similar_figures",
+        "equation_latex": "\\frac{3}{12} = \\frac{4}{x}",
+        "upgrades": [
+          "similar_figures"
+        ],
+        "generation_settings": {
+          "prompt_style": "diagram",
+          "include_figure": true,
+          "difficulty": 16.0,
+          "min_terms": 3,
+          "max_terms": 6,
+          "seed": 631,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the missing measure.}"
+      }
+    }
+  ],
+  "failures": []
+}

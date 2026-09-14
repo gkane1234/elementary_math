@@ -22,6 +22,8 @@ python scripts/mine_openstax_section.py --book elementary-algebra-2e --chapter 2
 
 Inspect: `scripts/output/example_mining/calculus-volume-1/stage1/`, `scripts/output/example_mining/prealgebra-2e/stage1/`, `scripts/output/example_mining/elementary-algebra-2e/stage1/`
 
+User Calc BC indefinite-integral drill bank (extra form families, not OpenStax): `challenging_indefinite_integrals_bc.tex` + mapping `challenging_indefinite_integrals_bc.md`.
+
 ## Cross-section progression graph
 
 Two views in each output file:

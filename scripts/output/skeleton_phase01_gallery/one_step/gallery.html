@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>SolveLinear — one-step equations — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>SolveLinear — one-step equations</h1>
+<p class="sub"><code>one_step_equations</code> · live <code>_generate_for_type</code>
+ · pattern <strong>SolveLinear</strong>
+ · 9/9 ok · D ladder 0, 8, 16
+ · seeds 101, 207, 313</p>
+<p class="sub">Goal-first reverse op (add/sub or mul/div). Opt out with <code>use_sample_linear_equation=True</code>.</p>
+
+<div class='notes-block'><h1>Notes — <code>one_step</code> (<code>one_step_equations</code>)</h1>
+<p>Also covers: <code>one_step_equations</code></p>
+<p>Flags:</p>
+<ul>
+<li>_(none)_</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Solve a one-step linear equation (add/sub or mul/div).</li>
+<li><strong>D=0:</strong> $x\pm a=b$ or $ax=b$ with small positive integers; no fractions.</li>
+<li><strong>High D (≈16–22):</strong> Larger |coeffs|; negatives; later $x/a=b$ fractions (numeric first).</li>
+<li><strong>Must not:</strong> Two-step $ax\pm b=c$, distribute, or a story dump.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> with <code>use_sample_linear_equation=True</code>.</p>
+<ul>
+<li><strong>D=0 seed=101:</strong> $x + 2 = 2$ → $x = 0$ — steps=one</li>
+<li><strong>D=0 seed=207:</strong> $x - 1 = -4$ → $x = -3$ — steps=one</li>
+<li><strong>D=8 seed=101:</strong> $x + 2 = 8$ → $x = 6$ — steps=one</li>
+<li><strong>D=8 seed=207:</strong> $2x = -18$ → $x = -9$ — steps=one</li>
+<li><strong>D=16 seed=101:</strong> $x + 4 = 19$ → $x = 15$ — steps=one</li>
+<li><strong>D=16 seed=207:</strong> $2x = -28$ → $x = -14$ — steps=one</li>
+<li><strong>D=22 seed=101:</strong> $x + 4 = 14$ → $x = 10$ — steps=one</li>
+<li><strong>D=22 seed=207:</strong> $2x = -40$ → $x = -20$ — steps=one</li>
+</ul>
+<h2>Current default (same D/seeds)</h2>
+<ul>
+<li><strong>D=0 seed=101:</strong> $x - 4 = 2$ → $x = 6$ — form_id=one_step_add_sub, steps=one</li>
+<li><strong>D=0 seed=207:</strong> $2x = 6$ → $x = 3$ — form_id=one_step_mul_div, steps=one</li>
+<li><strong>D=8 seed=101:</strong> $-2x = -24$ → $x = 12$ — form_id=one_step_mul_div, steps=one</li>
+<li><strong>D=8 seed=207:</strong> $x - 11 = -17$ → $x = -6$ — form_id=one_step_add_sub, steps=one</li>
+<li><strong>D=16 seed=101:</strong> $\frac{x}{-3} = \frac{7}{3}$ → $x = -7$ — form_id=one_step_mul_div, steps=one</li>
+<li><strong>D=16 seed=207:</strong> $x - 3 = -14$ → $x = -11$ — form_id=one_step_add_sub, steps=one</li>
+<li><strong>D=22 seed=101:</strong> $-9x = -207$ → $x = 23$ — form_id=one_step_mul_div, steps=one</li>
+<li><strong>D=22 seed=207:</strong> $x - 5 = -16$ → $x = -11$ — form_id=one_step_add_sub, steps=one</li>
+</ul>
+<h2>OpenStax examples + chapter/section cites</h2>
+<ul>
+<li><strong>OpenStax Elementary Algebra 2e §2.1</strong> — $x+a=b$ / $x-a=b$ (addition/subtraction property) — https://openstax.org/books/elementary-algebra-2e/pages/2-1-solve-equations-using-the-subtraction-and-addition-properties-of-equality</li>
+<li><strong>OpenStax Elementary Algebra 2e §2.2</strong> — $ax=b$ or $x/a=b$ — https://openstax.org/books/elementary-algebra-2e/pages/2-2-solve-equations-using-the-division-and-multiplication-properties-of-equality</li>
+<li><strong>OpenStax Prealgebra 2e §3.5 / §4.7 / §5.4</strong> — Integer / fraction / decimal coefficients on the same one-step skill — https://openstax.org/books/prealgebra-2e/pages/3-5-solve-equations-using-integers-the-division-property-of-equality</li>
+</ul>
+<p>Local mining: <code>scripts/output/example_mining/</code> (EA 2e Ch. 2 / 6 / 7 / 8.7; PA 2e Ch. 3–6).</p>
+<h2>Variety notes</h2>
+<p>Not a WP. Old and default stay one-step. Default D=0 avoids negatives (old D=0 seed 207 is $x-1=-4$). Default D=16 can show $x/a=b$ fractions.</p>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<ul>
+<li><strong>Reuse:</strong> SolveLinear / equation_skeleton (already wired). Opt-out: <code>use_sample_linear_equation</code>.</li>
+<li><strong>New:</strong> not this pass (already on skeleton).</li>
+<li><strong>Not this pass:</strong> do not re-implement generators.</li>
+</ul>
+<p>Suggested family from <code>G6_PA_INDEX.md</code>: <code>solve</code></p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>SolveLinear</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>one_step_add_sub</span></header><div class='math'><div class='lab'>Prompt</div>$$x - 4 = 2$$</div><div class='math'><div class='lab'>Answer</div>$$x = 6$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;sub&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>SolveLinear</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>one_step_mul_div</span></header><div class='math'><div class='lab'>Prompt</div>$$2x = 6$$</div><div class='math'><div class='lab'>Answer</div>$$x = 3$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_mul_div</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_mul_div</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;mul&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>SolveLinear</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>one_step_mul_div</span></header><div class='math'><div class='lab'>Prompt</div>$$3x = 12$$</div><div class='math'><div class='lab'>Answer</div>$$x = 4$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_mul_div</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_mul_div</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;mul&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>SolveLinear</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>one_step_mul_div</span></header><div class='math'><div class='lab'>Prompt</div>$$-2x = -24$$</div><div class='math'><div class='lab'>Answer</div>$$x = 12$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_mul_div</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_mul_div</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;mul&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>SolveLinear</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>one_step_add_sub</span></header><div class='math'><div class='lab'>Prompt</div>$$x - 11 = -17$$</div><div class='math'><div class='lab'>Answer</div>$$x = -6$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;sub&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>SolveLinear</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>one_step_add_sub</span></header><div class='math'><div class='lab'>Prompt</div>$$x - 8 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 8$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;sub&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>0</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>SolveLinear</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>one_step_mul_div</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{x}{-3} = \frac{7}{3}$$</div><div class='math'><div class='lab'>Answer</div>$$x = -7$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_mul_div</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_mul_div</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;div&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>SolveLinear</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>one_step_add_sub</span></header><div class='math'><div class='lab'>Prompt</div>$$x - 3 = -14$$</div><div class='math'><div class='lab'>Answer</div>$$x = -11$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;sub&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>SolveLinear</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>one_step_add_sub</span></header><div class='math'><div class='lab'>Prompt</div>$$x - 12 = 4$$</div><div class='math'><div class='lab'>Answer</div>$$x = 16$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>SolveLinear</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>equation_skeleton</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>one_step_add_sub</span></div><div class='kv'><span class='k'>steps</span><span class='v'>one</span></div><div class='kv'><span class='k'>n_ops</span><span class='v'>1</span></div><div class='kv'><span class='k'>species</span><span class='v'>one</span></div><div class='kv'><span class='k'>transforms</span><span class='v'>[&quot;sub&quot;]</span></div><div class='kv'><span class='k'>numeric_tier</span><span class='v'>3</span></div><div class='kv'><span class='k'>format_tier</span><span class='v'>2</span></div><div class='kv'><span class='k'>flipped</span><span class='v'>false</span></div><div class='kv'><span class='k'>relation</span><span class='v'>=</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>one_step_equations</code></p></article>
+</body></html>

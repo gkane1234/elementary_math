@@ -35,7 +35,7 @@ def test_generators_are_narrative_frameworks_not_equation_stubs():
     text3 = qs3[0].prompt_text
     assert "rates combine to" not in text3
     assert "Find x" not in text3 and "Find y" not in text3
-    assert "finish" in text3 or "pipe" in text3 or "tank" in text3 or "alone" in text3
+    assert "finish" in text3 or "pipe" in text3 or "tank" in text3 or "alone" in text3 or "mow" in text3 or "paint" in text3 or "print" in text3 or "clean" in text3
 
     age = GENERATORS["wp_age"]("age_word_problems", {"count": 1, "difficulty": 6, "include_answer_key": True})
     assert "Ages of" not in age[0].prompt_text and "satisfy" not in age[0].prompt_text
@@ -194,10 +194,10 @@ def test_drt_catchup_find_slow_speed():
                 "allow_time_min": False,
             }
         )
-        if "slow" not in text.lower() or "unknown speed" not in text:
+        if "unknown speed" not in text:
             continue
         m = re.search(
-            r"(\d+) hr later a faster \w+ leaves the same station at "
+            r"(\d+) hr later a (?:faster )?\w+ leaves the same .+? at "
             r"(\d+) (?:mi/hr|km/hr) and catches up after (\d+) hr",
             text,
         )

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Word problem — work (together / pipes / starts later) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Word problem — work (together / pipes / starts later)</h1>
+<p class="sub"><code>work_word_problems</code> · live <code>_generate_for_type</code>
+ · pattern <strong>WorkWP</strong>
+ · 16/16 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313, 419</p>
+<p class="sub">OpenStax EA §8.8 jobs and printing presses. D=0 two people, integer hours. High D starts-later or fill-and-drain pipes.</p>
+
+<div class='notes-block'><h1><code>work_word_problems</code> — Work word problems</h1>
+<ul>
+<li><strong>Course:</strong> Algebra 1 (A1 catalog)</li>
+<li><strong>Category:</strong> Algebra 1 — Equations</li>
+<li><strong>Generator:</strong> <code>wp_work</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Together / one-rate / pipes. D=0: two people finish a job in integer hours. High D: starts-later or three workers. Story first; not a dumped $1/a+1/b=1/t$.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Owen can finish a job in 6 hr. Working with Wade, they finish in 4 hr. How many hr would it take Wade working alone?}</code> - answer: <code>12 hr</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Aisha can finish a job in 12 hr and Maya can finish the same job in 6 hr. Working together, how many hr will it take them to finish the job?}</code> - answer: <code>4 hr</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Owen and Wade can finish a job in 3 and 10 hr. With Gwen helping, the three finish in 2 hr. How many hr would Gwen need alone?}</code> - answer: <code>15 hr</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Aisha, Maya, and Yves can finish a job in 3, 10, and 15 hr respectively. Working together, how many hr will it take them?}</code> - answer: <code>2 hr</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Pipe A fills a tank in 3 hr, pipe B fills it in 6 hr, and a drain empties it in 6 hr. With all three open, how many hr to fill the tank?}</code> - answer: <code>3 hr</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Aisha can finish a job in 10 hr and Maya in 5 hr. Aisha works alone for 4 hr, then Maya joins. How many hr from the start until the job is done?}</code> - answer: <code>6 hr</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Pipe A fills a tank in 3 hr, pipe B fills it in 6 hr, and a drain empties it in 6 hr. With all three open, how many hr to fill the tank?}</code> - answer: <code>3 hr</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Aisha can finish a job in 10 hr and Maya in 5 hr. Aisha works alone for 4 hr, then Maya joins. How many hr from the start until the job is done?}</code> - answer: <code>6 hr</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Elementary Algebra 2e — 8.8 Solve Uniform Motion and Work Applications</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/8-8-solve-uniform-motion-and-work-applications</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 8.81: An airplane can fly 200 miles into a 30 mph headwind in the same amount of time it takes to fly 300 miles with a 30 mph tailwind. What is the speed of the airplane? - Example 8.82: Jazmine trained for 3 hours on Saturday. She ran 8 miles and then biked 24 miles. Her biking speed is 4 mph faster than her running speed. What is her running speed? - Example 8.83: Hamilton rode his bike downhill 12 miles on the river trail from his house to the ocean and then rode uphill to return home. His uphill speed was 8 miles per hour slower than his downhill speed. It took him 2 hours longer to get home than it took him to get to the ocean. Find … - Example 8.84: The weekly gossip magazine has a big story about the Princess’ baby and the editor wants the magazine to be printed as soon as possible. She has asked the printer to run an extra printing press to get the printing done more quickly. Press #1 takes 6 hours to do the job and Pre…</p>
+<h2>Variety notes</h2>
+<p>Old path shapes at D=0 vs D=22 are recorded above. Flag if a WP dump stub or a single Mad-Lib.</p>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse WorkProblemFramework. Optional later wrap in wp_packaging frames. Leave on dedicated work core — do not dump onto one-step SolveLinear.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>WorkWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Press #1 takes 4 hr to print an issue. Working with Press #2, they finish in 3 hr. How many hr would Press #2 need working alone?}$$</div><div class='math'><div class='lab'>Answer</div>$$12 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_press_find_one</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>WorkWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Aisha can clean a pool in 12 hr and Maya can finish the same pool in 6 hr. Working together, how many hr will it take them to finish cleaning?}$$</div><div class='math'><div class='lab'>Answer</div>$$4 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_pool_together</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>WorkWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Parker can mow a lawn in 3 hr. Working with Gabriel, they finish in 2 hr. How many hr would it take Gabriel working alone?}$$</div><div class='math'><div class='lab'>Answer</div>$$6 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_lawn_find_one</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈0 · seed=419</strong> <span class='pat'>WorkWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jade can finish a job in 3 hr and Ximena can finish the same job in 6 hr. Working together, how many hr will it take them to finish the job?}$$</div><div class='math'><div class='lab'>Answer</div>$$2 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_job_together</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=101</strong> <span class='pat'>WorkWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Owen and Wade can mow a lawn in 3 and 10 hr. With Gwen helping, the three finish in 2 hr. How many hr would Gwen need alone?}$$</div><div class='math'><div class='lab'>Answer</div>$$15 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_lawn_find_one_time</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=207</strong> <span class='pat'>WorkWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Aisha, Maya, and Yves can finish a job in 3, 10, and 15 hr respectively. Working together, how many hr will it take them to finish the job?}$$</div><div class='math'><div class='lab'>Answer</div>$$2 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_job_three</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈8 · seed=313</strong> <span class='pat'>WorkWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Parker and Gabriel can finish a job in 4 and 6 hr. With Ben helping, the three finish in 2 hr. How many hr would Ben need alone?}$$</div><div class='math'><div class='lab'>Answer</div>$$12 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_job_find_one_time</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈8 · seed=419</strong> <span class='pat'>WorkWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jade, Ximena, and Chris can finish a job in 3, 10, and 15 hr respectively. Working together, how many hr will it take them to finish the job?}$$</div><div class='math'><div class='lab'>Answer</div>$$2 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_job_three</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=101</strong> <span class='pat'>WorkWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Pipe A fills a tank in 3 hr, pipe B fills it in 6 hr, and a drain empties it in 6 hr. With all three open, how many hr to fill the tank?}$$</div><div class='math'><div class='lab'>Answer</div>$$3 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_pipes</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈16 · seed=207</strong> <span class='pat'>WorkWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Aisha can finish a job in 10 hr and Maya can finish the same job in 5 hr. Aisha works alone for 4 hr, then Maya joins. How many hr from the start until the job is done?}$$</div><div class='math'><div class='lab'>Answer</div>$$6 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_job_starts_later</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈16 · seed=313</strong> <span class='pat'>WorkWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Pipe A fills a tank in 3 hr, pipe B fills it in 6 hr, and a drain empties it in 6 hr. With all three open, how many hr to fill the tank?}$$</div><div class='math'><div class='lab'>Answer</div>$$3 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_pipes</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈16 · seed=419</strong> <span class='pat'>WorkWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jade can finish a job in 6 hr and Ximena can finish the same job in 3 hr. Jade works alone for 3 hr, then Ximena joins. How many hr from the start until the job is done?}$$</div><div class='math'><div class='lab'>Answer</div>$$4 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_job_starts_later</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#13</span> <strong>D≈22 · seed=101</strong> <span class='pat'>WorkWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Pipe A fills a tank in 3 hr, pipe B fills it in 6 hr, and a drain empties it in 6 hr. With all three open, how many hr to fill the tank?}$$</div><div class='math'><div class='lab'>Answer</div>$$3 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_pipes</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#14</span> <strong>D≈22 · seed=207</strong> <span class='pat'>WorkWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Aisha can finish a job in 10 hr and Maya can finish the same job in 5 hr. Aisha works alone for 4 hr, then Maya joins. How many hr from the start until the job is done?}$$</div><div class='math'><div class='lab'>Answer</div>$$6 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_job_starts_later</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#15</span> <strong>D≈22 · seed=313</strong> <span class='pat'>WorkWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Pipe A fills a tank in 3 hr, pipe B fills it in 6 hr, and a drain empties it in 6 hr. With all three open, how many hr to fill the tank?}$$</div><div class='math'><div class='lab'>Answer</div>$$3 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_pipes</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#16</span> <strong>D≈22 · seed=419</strong> <span class='pat'>WorkWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jade can finish a job in 6 hr and Ximena can finish the same job in 3 hr. Jade works alone for 3 hr, then Ximena joins. How many hr from the start until the job is done?}$$</div><div class='math'><div class='lab'>Answer</div>$$4 hr$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>WorkWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_work</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>work_job_starts_later</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>work_word_problems</code></p></article>
+</body></html>

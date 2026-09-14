@@ -155,22 +155,96 @@
       "constraints": { "kind": "gcf" },
       "d_min": 0,
       "d_weight": 1.5,
-      "generation_status": "stub",
-      "leaves": [],
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_factoring_all_techniques"],
       "example_item_ids": [],
-      "openstax_case": "§6.1 Factor the GCF from a polynomial — A2 leaf unwired (A1 has dedicated type)"
+      "openstax_case": "§6.1 Factor the GCF from a polynomial"
+    },
+    {
+      "form_id": "trinomial_x2_bx_c",
+      "description": "Factor monic trinomial x²+bx+c",
+      "strategy": "trial_factors",
+      "constraints": { "kind": "trinomial", "leading": "monic", "degree": 2 },
+      "d_min": 0,
+      "d_weight": 1.6,
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_quadratic_functions_and_inequalities_factoring_quadratic_expressions",
+        "a2_polynomial_functions_factoring_all_techniques"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§6.2 Factor trinomials x²+bx+c"
     },
     {
       "form_id": "trinomial_a_gt_1",
       "description": "Factor ax²+bx+c with a≠1 (trial/ac)",
       "strategy": "ac_method",
-      "constraints": { "a_gt_1": true },
+      "constraints": { "a_gt_1": true, "kind": "trinomial", "leading": "nonmonic", "degree": 2 },
       "d_min": 6,
       "d_weight": 1.8,
-      "generation_status": "stub",
-      "leaves": [],
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_quadratic_functions_and_inequalities_factoring_quadratic_expressions",
+        "a2_polynomial_functions_factoring_all_techniques"
+      ],
       "example_item_ids": [],
-      "openstax_case": "§6.2 Factor trinomials a≠1 — catalog form pending dedicated leaf wiring"
+      "openstax_case": "§6.2 Factor trinomials a≠1"
+    },
+    {
+      "form_id": "difference_of_squares",
+      "description": "Factor a²−b²",
+      "strategy": "difference_of_squares",
+      "constraints": { "kind": "binomial", "pattern": "diff_squares" },
+      "d_min": 0,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions",
+        "a2_polynomial_functions_factoring_all_techniques",
+        "a2_polynomial_functions_conjugate_roots_and_factoring"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§6.3 Factor special products — difference of squares"
+    },
+    {
+      "form_id": "perfect_square_trinomial",
+      "description": "Factor a²±2ab+b²",
+      "strategy": "perfect_square",
+      "constraints": { "kind": "trinomial", "pattern": "perfect_square" },
+      "d_min": 2,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "leaves": [
+        "a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions",
+        "a2_polynomial_functions_factoring_all_techniques",
+        "a2_polynomial_functions_conjugate_roots_and_factoring"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§6.3 Factor special products — perfect square"
+    },
+    {
+      "form_id": "gcf_then_pattern",
+      "description": "GCF first, then residual trinomial/special",
+      "strategy": "gcf_then_pattern",
+      "constraints": { "kind": "multi_step", "require_gcf": true },
+      "d_min": 10,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_factoring_all_techniques"],
+      "example_item_ids": [],
+      "openstax_case": "§6.5 General strategy — GCF then pattern"
+    },
+    {
+      "form_id": "quadratic_form",
+      "description": "Factor quadratic form (ax²+b)(cx²+d)",
+      "strategy": "quadratic_form",
+      "constraints": { "kind": "quadratic_form" },
+      "d_min": 4,
+      "d_weight": 1.4,
+      "generation_status": "implemented",
+      "leaves": ["a2_polynomial_functions_factoring_quadratic_form"],
+      "example_item_ids": [],
+      "openstax_case": "§6.2 / §6.3 quadratic form substitution"
     }
   ]
 }

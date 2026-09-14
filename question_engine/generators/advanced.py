@@ -4,10 +4,17 @@ from __future__ import annotations
 
 import math
 import random
+from fractions import Fraction
 from typing import Callable
 
 from ..core.models import Question
-from .utils import _make_questions, format_monomial_latex, format_polynomial_latex, random_int_range
+from .utils import (
+    _make_questions,
+    format_monomial_latex,
+    format_polynomial_latex,
+    frac_latex,
+    random_int_range,
+)
 
 
 def _law_of_sines(topic: str, settings: dict) -> list[Question]:
@@ -396,7 +403,14 @@ def _writing_numeric_expressions(topic: str, settings: dict) -> list[Question]:
         answer = expr if include_answer_key else None
         return prompt, "writing numeric expression", answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata={"skeleton_pattern": "WriteNumeric", "primitive_engine": "number"},
+        settings=local,
+    )
 
 
 def _decimal_divide(topic: str, settings: dict) -> list[Question]:
@@ -531,53 +545,45 @@ def _limit_removable(topic: str, settings: dict) -> list[Question]:
 
 
 def _related_rates_simple(topic: str, settings: dict) -> list[Question]:
-    """Simple related rates: expanding circle / sphere / cone."""
+    """Related rates via OpenStax §4.1 frames (circle / balloon / ladder / …)."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.frameworks.primitives.related_rates_frames import (
+        sample_related_rates_frame,
+    )
     from question_engine.settings.params import calc_application_structure_from_continuous
 
     structure = calc_application_structure_from_continuous(settings)
 
     def build() -> tuple[str, str, str | None]:
         if structure is None:
-            r = random.randint(2, 10)
-            drdt = random.randint(1, 5)
-            prompt = (
-                f"\\text{{The radius of a circle increases at }} {drdt}\\text{{ cm/s. "
-                f"How fast is the area increasing when }} r = {r}\\text{{ cm?}}"
-            )
-            answer = f"{2 * r * drdt}\\pi" if include_answer_key else None
-            return prompt, "related rates circle", answer
-
-        r = random.randint(2, max(3, int(structure["radius_max"])))
-        drdt = random.randint(1, max(1, int(structure["rate_max"])))
-        shape = random.choice(list(structure["related_shapes"]))
-        if shape == "sphere":
-            # dV/dt = 4 π r^2 dr/dt
-            prompt = (
-                f"\\text{{The radius of a sphere increases at }} {drdt}\\text{{ cm/s. "
-                f"How fast is the volume increasing when }} r = {r}\\text{{ cm?}}"
-            )
-            answer = f"{4 * r * r * drdt}\\pi"
-            label = "related rates sphere"
-        elif shape == "cone":
-            # Fixed height = 3r style: V = (1/3)π r^2 h with h=3r → V=π r^3
-            # dV/dt = 3 π r^2 dr/dt
-            prompt = (
-                f"\\text{{A cone keeps }} h=3r\\text{{ while the radius increases at }} "
-                f"{drdt}\\text{{ cm/s. How fast is the volume increasing when }} "
-                f"r = {r}\\text{{ cm?}}"
-            )
-            answer = f"{3 * r * r * drdt}\\pi"
-            label = "related rates cone"
+            frames: tuple[str, ...] = ("expanding_circle",)
+            r_max, rate_max = 10, 5
         else:
-            prompt = (
-                f"\\text{{The radius of a circle increases at }} {drdt}\\text{{ cm/s. "
-                f"How fast is the area increasing when }} r = {r}\\text{{ cm?}}"
+            raw = structure.get("related_frames") or structure.get("related_shapes") or (
+                "expanding_circle",
             )
-            answer = f"{2 * r * drdt}\\pi"
-            label = "related rates circle"
-        return prompt, label, answer if include_answer_key else None
+            legacy = {
+                "circle": "expanding_circle",
+                "sphere": "expanding_sphere",
+                "cone": "cone_similar",
+            }
+            frames = tuple(legacy.get(str(f), str(f)) for f in raw)
+            r_max = max(3, int(structure["radius_max"]))
+            rate_max = max(1, int(structure["rate_max"]))
+        item = sample_related_rates_frame(
+            random,
+            frames=frames,
+            r_max=r_max,
+            rate_max=rate_max,
+        )
+        build._last_meta = {  # type: ignore[attr-defined]
+            "frame_id": item.frame_id,
+            "related_rates_frame": item.frame_id,
+            **item.metadata,
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
     def _sketch_meta(prompt_latex: str, prompt_text: str, answer: str | None) -> dict:
         from question_engine.diagrams.figure_families import sample_figure_from_settings
@@ -588,7 +594,9 @@ def _related_rates_simple(topic: str, settings: dict) -> list[Question]:
             features=["curve", "related_rates_circle", "related_rates_ladder"],
             curve_kind="parabola",
         )
-        return sample.to_metadata_extras()
+        extras = sample.to_metadata_extras()
+        extras.update(getattr(build, "_last_meta", {}) or {})
+        return extras
 
     return _make_questions(
         topic,
@@ -655,18 +663,64 @@ def _lhopitals_rule(topic: str, settings: dict) -> list[Question]:
 
 
 def _area_between_curves(topic: str, settings: dict) -> list[Question]:
+    """Area between curves — OpenStax Calc Vol 1 §6.1 shapes (∫(top−bottom))."""
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
+    from question_engine.settings.params import calc_application_structure_from_continuous
+
+    structure = calc_application_structure_from_continuous(settings)
+    x = str(settings.get("variable", "x"))
+    d = float(settings.get("difficulty", 8.0) or 8.0)
+    if structure is not None:
+        band = str(structure.get("band") or "easy")
+        bound_max = max(2, int(structure.get("bound_max", 4)))
+    else:
+        band = "easy" if d < 8 else ("medium" if d < 16 else "hard")
+        bound_max = 4 if d < 8 else (5 if d < 16 else 6)
 
     def build() -> tuple[str, str, str | None]:
-        a = random.randint(1, 4)
-        # area between y=a and y=0 from 0 to 1 is a
-        prompt = (
-            f"\\text{{Find the area between }} y = {a} \\text{{ and }} y = 0 "
-            f"\\text{{ from }} x = 0 \\text{{ to }} x = 1."
-        )
-        answer = str(a) if include_answer_key else None
-        return prompt, "area between curves", answer
+        b = random.randint(2, bound_max)
+        if band == "easy":
+            # y=x above y=0 on [0,b]
+            prompt = (
+                rf"\text{{Find the area between }}y={x}\text{{ and }}y=0"
+                rf"\text{{ from }}{x}=0\text{{ to }}{x}={b}."
+            )
+            answer = frac_latex(Fraction(b * b, 2))
+        elif band == "medium":
+            if random.choice([True, False]):
+                # y=x^2 above y=0
+                prompt = (
+                    rf"\text{{Find the area between }}y={x}^{{2}}\text{{ and }}y=0"
+                    rf"\text{{ from }}{x}=0\text{{ to }}{x}={b}."
+                )
+                answer = frac_latex(Fraction(b**3, 3))
+            else:
+                # horizontal line above y=x on [0,k] where they meet at x=k
+                k = random.randint(2, max(2, min(5, bound_max)))
+                prompt = (
+                    rf"\text{{Find the area of the region bounded by }}"
+                    rf"y={k},\ y={x},\text{{ and }}{x}=0."
+                )
+                # ∫_0^k (k-x) dx = k^2/2
+                answer = frac_latex(Fraction(k * k, 2))
+        else:
+            # classic: y=x and y=x^2 on [0,1] (or scale)
+            if random.choice([True, False]):
+                prompt = (
+                    rf"\text{{Find the area of the region bounded by }}"
+                    rf"y={x}\text{{ and }}y={x}^{{2}}."
+                )
+                answer = frac_latex(Fraction(1, 6))
+            else:
+                k = random.randint(2, 4)
+                # y=k-x and y=0 from 0 to k
+                prompt = (
+                    rf"\text{{Find the area between }}y={k}-{x}\text{{ and }}y=0"
+                    rf"\text{{ from }}{x}=0\text{{ to }}{x}={k}."
+                )
+                answer = frac_latex(Fraction(k * k, 2))
+        return prompt, "area between curves", answer if include_answer_key else None
 
     return _make_questions(topic, count, include_answer_key, build)
 

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Number — integer add / subtract — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Number — integer add / subtract</h1>
+<p class="sub"><code>pa_integers_adding_and_subtracting</code> · live <code>_generate_for_type</code>
+ · pattern <strong>NumberOp</strong>
+ · 9/9 ok · D ladder 0, 8, 16
+ · seeds 101, 207, 313</p>
+<p class="sub">D=0 two small integers. OpenStax PA §3.2–3.4.</p>
+<p class='sub'>Also wired: <code>pa_integers_multiplying</code>, <code>pa_integers_dividing</code></p>
+<div class='notes-block'><h1><code>pa_integers_adding_and_subtracting</code> — Adding and subtracting</h1>
+<ul>
+<li><strong>Course:</strong> Prealgebra (PA catalog)</li>
+<li><strong>Category:</strong> Pre-Algebra — Integers, Decimals, and Fractions</li>
+<li><strong>Generator:</strong> <code>pa_integers_adding_and_subtracting</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>D=0: two small same-sign addends (5+3 or −2+(−4)). High D: unlike signs, subtract as add-opposite, 3+ addends, parentheses, evaluate a variable expression.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>3 + 6</code> - answer: <code>9</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>-3 - 8</code> - answer: <code>-11</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>29 + 5</code> - answer: <code>34</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>-20 - 37</code> - answer: <code>-57</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>39 - 8</code> - answer: <code>31</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>90 - 59</code> - answer: <code>31</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>117 + 24</code> - answer: <code>141</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>-78 - 147</code> - answer: <code>-225</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Prealgebra 2e — 3.2 Add Integers</h3>
+<ul>
+<li>https://openstax.org/books/prealgebra-2e/pages/3-2-add-integers</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 3.14: Model: $5 + 3 .$ - Example 3.15: Model: $−5 + (−3) .$ - Example 3.16: Model: $−5 + 3 .$ - Example 3.17: Model: $5 + (−3) .$</p>
+<h3>Prealgebra 2e — 3.3 Subtract Integers</h3>
+<ul>
+<li>https://openstax.org/books/prealgebra-2e/pages/3-3-subtract-integers</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 3.30: Model: $5 - 3 .$ - Example 3.31: Model: $−5 - (−3) .$ - Example 3.32: Model: $−5 - 3 .$ - Example 3.33: Model: $5 - (−3) .$</p>
+<h2>Variety notes</h2>
+<p>Old path shapes at D=0 vs D=22 are recorded above. Flag if a WP dump stub or a single Mad-Lib.</p>
+<h2>Limitations</h2>
+<ul>
+<li>Old path can dump a bare equation / identity instead of the named skill.</li>
+<li>Story variety thin (one Mad-Lib / single vehicle) vs OpenStax frames.</li>
+</ul>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse integer-ops number engine (pa_integers_adding_and_subtracting). Do not fold into affine.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>NumberOp</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$3 + 6$$</div><div class='math'><div class='lab'>Answer</div>$$9$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>NumberOp</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$-3 - 8$$</div><div class='math'><div class='lab'>Answer</div>$$-11$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>NumberOp</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$5 + 7$$</div><div class='math'><div class='lab'>Answer</div>$$12$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>NumberOp</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$29 + 5$$</div><div class='math'><div class='lab'>Answer</div>$$34$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>NumberOp</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$-20 - 37$$</div><div class='math'><div class='lab'>Answer</div>$$-57$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>NumberOp</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$14 + 21$$</div><div class='math'><div class='lab'>Answer</div>$$35$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>NumberOp</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$39 - 8$$</div><div class='math'><div class='lab'>Answer</div>$$31$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>NumberOp</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$90 - 59$$</div><div class='math'><div class='lab'>Answer</div>$$31$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>NumberOp</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$71 + 10$$</div><div class='math'><div class='lab'>Answer</div>$$81$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>NumberOp</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>number</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>pa_integers_adding_and_subtracting</code></p></article>
+</body></html>

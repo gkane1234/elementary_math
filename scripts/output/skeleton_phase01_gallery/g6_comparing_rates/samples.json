@@ -1,0 +1,865 @@
+{
+  "section": {
+    "slug": "g6_comparing_rates",
+    "title": "Number \u2014 comparing rates",
+    "pattern": "CompareRates",
+    "engine": "number",
+    "type_id": "g6_comparing_rates",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Unit price / speed compare. Double number lines in metadata (existing helper)."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Ethan's car went 2 miles in 1 minutes. Stefan's car went 4 miles in 6 minutes. Whose car went slower?}",
+      "answer_latex": "\\text{Stefan}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"43.0\" x2=\"160.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"160.0\" y1=\"91.0\" x2=\"160.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"160.0\" y1=\"57.0\" x2=\"160.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"43.0\" x2=\"340.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"340.0\" y1=\"91.0\" x2=\"340.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"340.0\" y1=\"57.0\" x2=\"340.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">8</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Stefan</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"43.0\" x2=\"160.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"160.0\" y1=\"91.0\" x2=\"160.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"160.0\" y1=\"57.0\" x2=\"160.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"43.0\" x2=\"340.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"340.0\" y1=\"91.0\" x2=\"340.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"340.0\" y1=\"57.0\" x2=\"340.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">8</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Stefan</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "speed",
+        "rate_a": {
+          "name": "Ethan",
+          "top": 2,
+          "bottom": 1
+        },
+        "rate_b": {
+          "name": "Stefan",
+          "top": 4,
+          "bottom": 6
+        },
+        "difficulty": 0.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 6,
+          "unit_rate_multiplier_min": 1,
+          "unit_rate_multiplier_max": 4,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Maya paid \\$2 for 1 pound of apples. Priya paid \\$4 for 6 pounds of apples. Who paid the higher unit price?}",
+      "answer_latex": "\\text{Maya}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Maya</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"43.0\" x2=\"160.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"160.0\" y1=\"91.0\" x2=\"160.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"160.0\" y1=\"57.0\" x2=\"160.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"43.0\" x2=\"340.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"340.0\" y1=\"91.0\" x2=\"340.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"340.0\" y1=\"57.0\" x2=\"340.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">8</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Priya</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Maya</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"43.0\" x2=\"160.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"160.0\" y1=\"91.0\" x2=\"160.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"160.0\" y1=\"57.0\" x2=\"160.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"43.0\" x2=\"340.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"340.0\" y1=\"91.0\" x2=\"340.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"340.0\" y1=\"57.0\" x2=\"340.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">8</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Priya</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "unit_price",
+        "rate_a": {
+          "name": "Maya",
+          "top": 2,
+          "bottom": 1
+        },
+        "rate_b": {
+          "name": "Priya",
+          "top": 4,
+          "bottom": 6
+        },
+        "difficulty": 0.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 6,
+          "unit_rate_multiplier_min": 1,
+          "unit_rate_multiplier_max": 4,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Ethan's car went 2 miles in 1 minutes. Mary's car went 3 miles in 4 minutes. Whose car went slower?}",
+      "answer_latex": "\\text{Mary}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"43.0\" x2=\"160.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"160.0\" y1=\"91.0\" x2=\"160.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"160.0\" y1=\"57.0\" x2=\"160.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"43.0\" x2=\"340.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"340.0\" y1=\"91.0\" x2=\"340.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"340.0\" y1=\"57.0\" x2=\"340.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">8</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Mary</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"43.0\" x2=\"160.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"160.0\" y1=\"91.0\" x2=\"160.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">1</text><line x1=\"160.0\" y1=\"57.0\" x2=\"160.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">2</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"43.0\" x2=\"340.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">6</text><line x1=\"340.0\" y1=\"91.0\" x2=\"340.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"340.0\" y1=\"57.0\" x2=\"340.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">8</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Mary</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">3</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">4</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "speed",
+        "rate_a": {
+          "name": "Ethan",
+          "top": 2,
+          "bottom": 1
+        },
+        "rate_b": {
+          "name": "Mary",
+          "top": 3,
+          "bottom": 4
+        },
+        "difficulty": 0.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 6,
+          "unit_rate_multiplier_min": 1,
+          "unit_rate_multiplier_max": 4,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Ethan's car went 8 miles in 12 minutes. Stefan's car went 18 miles in 24 minutes. Whose car went slower?}",
+      "answer_latex": "\\text{Ethan}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">8</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">12</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">16</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Stefan</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">8</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">12</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">16</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Stefan</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "speed",
+        "rate_a": {
+          "name": "Ethan",
+          "top": 8,
+          "bottom": 12
+        },
+        "rate_b": {
+          "name": "Stefan",
+          "top": 18,
+          "bottom": 24
+        },
+        "difficulty": 8.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 12,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 8,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Maya paid \\$18 for 30 pounds of apples. Priya paid \\$24 for 18 pounds of apples. Who paid the higher unit price?}",
+      "answer_latex": "\\text{Priya}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Maya</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"43.0\" x2=\"190.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"190.0\" y1=\"91.0\" x2=\"190.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"190.0\" y1=\"57.0\" x2=\"190.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"43.0\" x2=\"310.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"310.0\" y1=\"91.0\" x2=\"310.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"310.0\" y1=\"57.0\" x2=\"310.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">54</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Priya</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"142.0\" y1=\"168.0\" x2=\"142.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"142.0\" y1=\"216.0\" x2=\"142.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"142.0\" y1=\"182.0\" x2=\"142.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"214.0\" y1=\"168.0\" x2=\"214.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"214.0\" y1=\"216.0\" x2=\"214.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"214.0\" y1=\"182.0\" x2=\"214.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"286.0\" y1=\"168.0\" x2=\"286.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"286.0\" y1=\"216.0\" x2=\"286.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">54</text><line x1=\"286.0\" y1=\"182.0\" x2=\"286.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"358.0\" y1=\"168.0\" x2=\"358.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"358.0\" y1=\"216.0\" x2=\"358.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"358.0\" y1=\"182.0\" x2=\"358.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">120</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Maya</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"43.0\" x2=\"190.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"190.0\" y1=\"91.0\" x2=\"190.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"190.0\" y1=\"57.0\" x2=\"190.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"43.0\" x2=\"310.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"310.0\" y1=\"91.0\" x2=\"310.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"310.0\" y1=\"57.0\" x2=\"310.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">54</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Priya</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"142.0\" y1=\"168.0\" x2=\"142.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"142.0\" y1=\"216.0\" x2=\"142.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"142.0\" y1=\"182.0\" x2=\"142.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"214.0\" y1=\"168.0\" x2=\"214.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"214.0\" y1=\"216.0\" x2=\"214.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"214.0\" y1=\"182.0\" x2=\"214.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"286.0\" y1=\"168.0\" x2=\"286.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"286.0\" y1=\"216.0\" x2=\"286.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">54</text><line x1=\"286.0\" y1=\"182.0\" x2=\"286.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"358.0\" y1=\"168.0\" x2=\"358.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"358.0\" y1=\"216.0\" x2=\"358.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"358.0\" y1=\"182.0\" x2=\"358.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">120</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "unit_price",
+        "rate_a": {
+          "name": "Maya",
+          "top": 18,
+          "bottom": 30
+        },
+        "rate_b": {
+          "name": "Priya",
+          "top": 24,
+          "bottom": 18
+        },
+        "difficulty": 8.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 12,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 8,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Ethan's car went 12 miles in 18 minutes. Mary's car went 18 miles in 30 minutes. Whose car went slower?}",
+      "answer_latex": "\\text{Mary}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"142.0\" y1=\"43.0\" x2=\"142.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">12</text><line x1=\"142.0\" y1=\"91.0\" x2=\"142.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"142.0\" y1=\"57.0\" x2=\"142.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"214.0\" y1=\"43.0\" x2=\"214.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"214.0\" y1=\"91.0\" x2=\"214.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"214.0\" y1=\"57.0\" x2=\"214.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"286.0\" y1=\"43.0\" x2=\"286.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"286.0\" y1=\"91.0\" x2=\"286.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">54</text><line x1=\"286.0\" y1=\"57.0\" x2=\"286.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"358.0\" y1=\"43.0\" x2=\"358.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"358.0\" y1=\"91.0\" x2=\"358.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"358.0\" y1=\"57.0\" x2=\"358.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Mary</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"168.0\" x2=\"190.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"190.0\" y1=\"216.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"190.0\" y1=\"182.0\" x2=\"190.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"168.0\" x2=\"310.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"310.0\" y1=\"216.0\" x2=\"310.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"310.0\" y1=\"182.0\" x2=\"310.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">54</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"142.0\" y1=\"43.0\" x2=\"142.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">12</text><line x1=\"142.0\" y1=\"91.0\" x2=\"142.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"142.0\" y1=\"57.0\" x2=\"142.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"214.0\" y1=\"43.0\" x2=\"214.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"214.0\" y1=\"91.0\" x2=\"214.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"214.0\" y1=\"57.0\" x2=\"214.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"286.0\" y1=\"43.0\" x2=\"286.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"286.0\" y1=\"91.0\" x2=\"286.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">54</text><line x1=\"286.0\" y1=\"57.0\" x2=\"286.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"358.0\" y1=\"43.0\" x2=\"358.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"358.0\" y1=\"91.0\" x2=\"358.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"358.0\" y1=\"57.0\" x2=\"358.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Mary</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"168.0\" x2=\"190.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">18</text><line x1=\"190.0\" y1=\"216.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">30</text><line x1=\"190.0\" y1=\"182.0\" x2=\"190.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"168.0\" x2=\"310.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"310.0\" y1=\"216.0\" x2=\"310.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"310.0\" y1=\"182.0\" x2=\"310.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">54</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">90</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "speed",
+        "rate_a": {
+          "name": "Ethan",
+          "top": 12,
+          "bottom": 18
+        },
+        "rate_b": {
+          "name": "Mary",
+          "top": 18,
+          "bottom": 30
+        },
+        "difficulty": 8.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 12,
+          "unit_rate_multiplier_min": 2,
+          "unit_rate_multiplier_max": 8,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Ethan's car went 24 miles in 84 minutes. Stefan's car went 108 miles in 84 minutes. Whose car went slower?}",
+      "answer_latex": "\\text{Ethan}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">84</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Stefan</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">108</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">84</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">84</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Stefan</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">108</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">84</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "speed",
+        "rate_a": {
+          "name": "Ethan",
+          "top": 24,
+          "bottom": 84
+        },
+        "rate_b": {
+          "name": "Stefan",
+          "top": 108,
+          "bottom": 84
+        },
+        "difficulty": 16.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 20,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 12,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Maya paid \\$24 for 84 pounds of grapes. Priya paid \\$48 for 36 pounds of grapes. Who paid the higher unit price?}",
+      "answer_latex": "\\text{Priya}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Maya</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"43.0\" x2=\"190.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"190.0\" y1=\"91.0\" x2=\"190.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">84</text><line x1=\"190.0\" y1=\"57.0\" x2=\"190.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"43.0\" x2=\"310.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"310.0\" y1=\"91.0\" x2=\"310.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">168</text><line x1=\"310.0\" y1=\"57.0\" x2=\"310.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">252</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Priya</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"168.0\" x2=\"121.4\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"121.4\" y1=\"216.0\" x2=\"121.4\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"121.4\" y1=\"182.0\" x2=\"121.4\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"168.0\" x2=\"172.9\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"172.9\" y1=\"216.0\" x2=\"172.9\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"172.9\" y1=\"182.0\" x2=\"172.9\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"168.0\" x2=\"224.3\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"224.3\" y1=\"216.0\" x2=\"224.3\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">108</text><line x1=\"224.3\" y1=\"182.0\" x2=\"224.3\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"168.0\" x2=\"275.7\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"275.7\" y1=\"216.0\" x2=\"275.7\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"275.7\" y1=\"182.0\" x2=\"275.7\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"168.0\" x2=\"327.1\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">240</text><line x1=\"327.1\" y1=\"216.0\" x2=\"327.1\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">180</text><line x1=\"327.1\" y1=\"182.0\" x2=\"327.1\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"168.0\" x2=\"378.6\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">288</text><line x1=\"378.6\" y1=\"216.0\" x2=\"378.6\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">216</text><line x1=\"378.6\" y1=\"182.0\" x2=\"378.6\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">336</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">252</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Maya</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"43.0\" x2=\"190.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">24</text><line x1=\"190.0\" y1=\"91.0\" x2=\"190.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">84</text><line x1=\"190.0\" y1=\"57.0\" x2=\"190.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"43.0\" x2=\"310.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"310.0\" y1=\"91.0\" x2=\"310.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">168</text><line x1=\"310.0\" y1=\"57.0\" x2=\"310.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">252</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Priya</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"168.0\" x2=\"121.4\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"121.4\" y1=\"216.0\" x2=\"121.4\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"121.4\" y1=\"182.0\" x2=\"121.4\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"168.0\" x2=\"172.9\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"172.9\" y1=\"216.0\" x2=\"172.9\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"172.9\" y1=\"182.0\" x2=\"172.9\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"168.0\" x2=\"224.3\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"224.3\" y1=\"216.0\" x2=\"224.3\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">108</text><line x1=\"224.3\" y1=\"182.0\" x2=\"224.3\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"168.0\" x2=\"275.7\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"275.7\" y1=\"216.0\" x2=\"275.7\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"275.7\" y1=\"182.0\" x2=\"275.7\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"168.0\" x2=\"327.1\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">240</text><line x1=\"327.1\" y1=\"216.0\" x2=\"327.1\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">180</text><line x1=\"327.1\" y1=\"182.0\" x2=\"327.1\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"168.0\" x2=\"378.6\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">288</text><line x1=\"378.6\" y1=\"216.0\" x2=\"378.6\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">216</text><line x1=\"378.6\" y1=\"182.0\" x2=\"378.6\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">336</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">252</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "unit_price",
+        "rate_a": {
+          "name": "Maya",
+          "top": 24,
+          "bottom": 84
+        },
+        "rate_b": {
+          "name": "Priya",
+          "top": 48,
+          "bottom": 36
+        },
+        "difficulty": 16.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 20,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 12,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Ethan's car went 60 miles in 72 minutes. Mary's car went 36 miles in 48 minutes. Whose car went slower?}",
+      "answer_latex": "\\text{Mary}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">120</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Mary</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"168.0\" x2=\"190.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"190.0\" y1=\"216.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"190.0\" y1=\"182.0\" x2=\"190.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"168.0\" x2=\"310.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"310.0\" y1=\"216.0\" x2=\"310.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"310.0\" y1=\"182.0\" x2=\"310.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">108</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">60</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">120</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Mary</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"168.0\" x2=\"190.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">36</text><line x1=\"190.0\" y1=\"216.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"190.0\" y1=\"182.0\" x2=\"190.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"168.0\" x2=\"310.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">72</text><line x1=\"310.0\" y1=\"216.0\" x2=\"310.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"310.0\" y1=\"182.0\" x2=\"310.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">108</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "speed",
+        "rate_a": {
+          "name": "Ethan",
+          "top": 60,
+          "bottom": 72
+        },
+        "rate_b": {
+          "name": "Mary",
+          "top": 36,
+          "bottom": 48
+        },
+        "difficulty": 16.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 20,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 12,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Ethan's car went 32 miles in 112 minutes. Stefan's car went 96 miles in 80 minutes. Whose car went slower?}",
+      "answer_latex": "\\text{Ethan}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"142.0\" y1=\"43.0\" x2=\"142.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"142.0\" y1=\"91.0\" x2=\"142.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">112</text><line x1=\"142.0\" y1=\"57.0\" x2=\"142.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"214.0\" y1=\"43.0\" x2=\"214.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"214.0\" y1=\"91.0\" x2=\"214.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">224</text><line x1=\"214.0\" y1=\"57.0\" x2=\"214.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"286.0\" y1=\"43.0\" x2=\"286.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"286.0\" y1=\"91.0\" x2=\"286.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">336</text><line x1=\"286.0\" y1=\"57.0\" x2=\"286.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"358.0\" y1=\"43.0\" x2=\"358.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"358.0\" y1=\"91.0\" x2=\"358.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">448</text><line x1=\"358.0\" y1=\"57.0\" x2=\"358.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">560</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Stefan</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"168.0\" x2=\"121.4\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"121.4\" y1=\"216.0\" x2=\"121.4\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">80</text><line x1=\"121.4\" y1=\"182.0\" x2=\"121.4\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"168.0\" x2=\"172.9\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"172.9\" y1=\"216.0\" x2=\"172.9\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"172.9\" y1=\"182.0\" x2=\"172.9\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"168.0\" x2=\"224.3\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">288</text><line x1=\"224.3\" y1=\"216.0\" x2=\"224.3\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">240</text><line x1=\"224.3\" y1=\"182.0\" x2=\"224.3\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"168.0\" x2=\"275.7\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">384</text><line x1=\"275.7\" y1=\"216.0\" x2=\"275.7\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">320</text><line x1=\"275.7\" y1=\"182.0\" x2=\"275.7\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"168.0\" x2=\"327.1\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">480</text><line x1=\"327.1\" y1=\"216.0\" x2=\"327.1\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">400</text><line x1=\"327.1\" y1=\"182.0\" x2=\"327.1\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"168.0\" x2=\"378.6\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">576</text><line x1=\"378.6\" y1=\"216.0\" x2=\"378.6\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">480</text><line x1=\"378.6\" y1=\"182.0\" x2=\"378.6\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">672</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">560</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"142.0\" y1=\"43.0\" x2=\"142.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"142.0\" y1=\"91.0\" x2=\"142.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"142.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">112</text><line x1=\"142.0\" y1=\"57.0\" x2=\"142.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"214.0\" y1=\"43.0\" x2=\"214.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"214.0\" y1=\"91.0\" x2=\"214.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"214.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">224</text><line x1=\"214.0\" y1=\"57.0\" x2=\"214.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"286.0\" y1=\"43.0\" x2=\"286.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"286.0\" y1=\"91.0\" x2=\"286.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"286.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">336</text><line x1=\"286.0\" y1=\"57.0\" x2=\"286.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"358.0\" y1=\"43.0\" x2=\"358.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"358.0\" y1=\"91.0\" x2=\"358.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"358.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">448</text><line x1=\"358.0\" y1=\"57.0\" x2=\"358.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">560</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Stefan</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"121.4\" y1=\"168.0\" x2=\"121.4\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"121.4\" y1=\"216.0\" x2=\"121.4\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"121.4\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">80</text><line x1=\"121.4\" y1=\"182.0\" x2=\"121.4\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"172.9\" y1=\"168.0\" x2=\"172.9\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"172.9\" y1=\"216.0\" x2=\"172.9\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"172.9\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">160</text><line x1=\"172.9\" y1=\"182.0\" x2=\"172.9\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"224.3\" y1=\"168.0\" x2=\"224.3\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">288</text><line x1=\"224.3\" y1=\"216.0\" x2=\"224.3\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"224.3\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">240</text><line x1=\"224.3\" y1=\"182.0\" x2=\"224.3\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"275.7\" y1=\"168.0\" x2=\"275.7\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">384</text><line x1=\"275.7\" y1=\"216.0\" x2=\"275.7\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"275.7\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">320</text><line x1=\"275.7\" y1=\"182.0\" x2=\"275.7\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"327.1\" y1=\"168.0\" x2=\"327.1\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">480</text><line x1=\"327.1\" y1=\"216.0\" x2=\"327.1\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"327.1\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">400</text><line x1=\"327.1\" y1=\"182.0\" x2=\"327.1\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"378.6\" y1=\"168.0\" x2=\"378.6\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">576</text><line x1=\"378.6\" y1=\"216.0\" x2=\"378.6\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"378.6\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">480</text><line x1=\"378.6\" y1=\"182.0\" x2=\"378.6\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">672</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">560</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "speed",
+        "rate_a": {
+          "name": "Ethan",
+          "top": 32,
+          "bottom": 112
+        },
+        "rate_b": {
+          "name": "Stefan",
+          "top": 96,
+          "bottom": 80
+        },
+        "difficulty": 22.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 20,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 12,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Maya paid \\$32 for 112 pounds of cheese. Priya paid \\$176 for 80 pounds of cheese. Who paid the higher unit price?}",
+      "answer_latex": "\\text{Priya}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Maya</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">112</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Priya</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">176</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">80</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Maya</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">112</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Priya</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">dollars</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">pounds</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">176</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">80</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "unit_price",
+        "rate_a": {
+          "name": "Maya",
+          "top": 32,
+          "bottom": 112
+        },
+        "rate_b": {
+          "name": "Priya",
+          "top": 176,
+          "bottom": 80
+        },
+        "difficulty": 22.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 20,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 12,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "g6_comparing_rates",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Ethan's car went 32 miles in 48 minutes. Mary's car went 112 miles in 64 minutes. Whose car went slower?}",
+      "answer_latex": "\\text{Ethan}",
+      "skeleton_pattern": "CompareRates",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"43.0\" x2=\"160.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"160.0\" y1=\"91.0\" x2=\"160.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"160.0\" y1=\"57.0\" x2=\"160.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"43.0\" x2=\"340.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"340.0\" y1=\"91.0\" x2=\"340.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"340.0\" y1=\"57.0\" x2=\"340.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Mary</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"168.0\" x2=\"190.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">112</text><line x1=\"190.0\" y1=\"216.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"190.0\" y1=\"182.0\" x2=\"190.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"168.0\" x2=\"310.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">224</text><line x1=\"310.0\" y1=\"216.0\" x2=\"310.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"310.0\" y1=\"182.0\" x2=\"310.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">336</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "CompareRates"
+        ],
+        [
+          "primitive_engine",
+          "number"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "stimulus_kind",
+          "double_number_line"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "skeleton_pattern": "CompareRates",
+        "primitive_engine": "number",
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"280\" viewBox=\"0 0 460 280\" role=\"img\"><rect width=\"100%\" height=\"100%\" fill=\"#fff\"/><text x=\"62.0\" y=\"28.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Ethan</text><text x=\"62.0\" y=\"55.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"103.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"50.0\" x2=\"430.0\" y2=\"50.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"98.0\" x2=\"430.0\" y2=\"98.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"43.0\" x2=\"70.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"91.0\" x2=\"70.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"57.0\" x2=\"70.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"160.0\" y1=\"43.0\" x2=\"160.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">32</text><line x1=\"160.0\" y1=\"91.0\" x2=\"160.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"160.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">48</text><line x1=\"160.0\" y1=\"57.0\" x2=\"160.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"250.0\" y1=\"43.0\" x2=\"250.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"250.0\" y1=\"91.0\" x2=\"250.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"250.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"250.0\" y1=\"57.0\" x2=\"250.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"340.0\" y1=\"43.0\" x2=\"340.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">96</text><line x1=\"340.0\" y1=\"91.0\" x2=\"340.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"340.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">144</text><line x1=\"340.0\" y1=\"57.0\" x2=\"340.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"43.0\" x2=\"430.0\" y2=\"57.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"38.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"430.0\" y1=\"91.0\" x2=\"430.0\" y2=\"105.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"118.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"430.0\" y1=\"57.0\" x2=\"430.0\" y2=\"91.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><text x=\"62.0\" y=\"153.0\" text-anchor=\"end\" font-size=\"14\" font-weight=\"600\" fill=\"#1e3a8a\">Mary</text><text x=\"62.0\" y=\"180.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">miles</text><text x=\"62.0\" y=\"228.0\" text-anchor=\"end\" font-size=\"12\" fill=\"#4b5563\">minutes</text><line x1=\"70.0\" y1=\"175.0\" x2=\"430.0\" y2=\"175.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"223.0\" x2=\"430.0\" y2=\"223.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><line x1=\"70.0\" y1=\"168.0\" x2=\"70.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"216.0\" x2=\"70.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"70.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">0</text><line x1=\"70.0\" y1=\"182.0\" x2=\"70.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"190.0\" y1=\"168.0\" x2=\"190.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">112</text><line x1=\"190.0\" y1=\"216.0\" x2=\"190.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"190.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">64</text><line x1=\"190.0\" y1=\"182.0\" x2=\"190.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"310.0\" y1=\"168.0\" x2=\"310.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">224</text><line x1=\"310.0\" y1=\"216.0\" x2=\"310.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"310.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">128</text><line x1=\"310.0\" y1=\"182.0\" x2=\"310.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/><line x1=\"430.0\" y1=\"168.0\" x2=\"430.0\" y2=\"182.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"163.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">336</text><line x1=\"430.0\" y1=\"216.0\" x2=\"430.0\" y2=\"230.0\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"430.0\" y=\"243.0\" text-anchor=\"middle\" font-size=\"13\" fill=\"#111827\">192</text><line x1=\"430.0\" y1=\"182.0\" x2=\"430.0\" y2=\"216.0\" stroke=\"#93c5fd\" stroke-width=\"1\" stroke-dasharray=\"3 3\"/></svg>",
+        "stimulus_kind": "double_number_line",
+        "compare_kind": "speed",
+        "rate_a": {
+          "name": "Ethan",
+          "top": 32,
+          "bottom": 48
+        },
+        "rate_b": {
+          "name": "Mary",
+          "top": 112,
+          "bottom": 64
+        },
+        "difficulty": 22.0,
+        "generation_settings": {
+          "unit_rate_min": 2,
+          "unit_rate_max": 20,
+          "unit_rate_multiplier_min": 3,
+          "unit_rate_multiplier_max": 12,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true
+        },
+        "instruction_latex": "\\text{Solve each problem. Two double number lines representing the two rates are provided.}"
+      }
+    }
+  ],
+  "failures": []
+}

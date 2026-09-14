@@ -233,7 +233,9 @@ def test_sequence_trig_proof_calc_app_knobs():
     a20 = calc_application_structure_from_continuous({"difficulty": 20})
     assert a0 is not None and a20 is not None
     assert a0["related_shapes"] == ("circle",)
+    assert a0["related_frames"] == ("expanding_circle",)
     assert "cone" in a20["related_shapes"]
+    assert "sliding_ladder" in a20["related_frames"]
     assert a0["radius_max"] < a20["radius_max"]
     assert a0["bound_max"] < a20["bound_max"]
 
@@ -424,20 +426,28 @@ def test_smoke_precalc_calc_structure():
 
 
 def test_smoke_calc_apps_structure_differs():
-    shapes20 = set()
-    for seed in range(16):
-        text = (
-            _gen("calc_app_diff_related_rates", 20, seed=seed, count=1)[0].prompt_latex
-            or ""
-        ).lower()
-        if "sphere" in text:
-            shapes20.add("sphere")
-        elif "cone" in text:
-            shapes20.add("cone")
+    frames20: set[str] = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_related_rates", 20, seed=seed, count=1)[0]
+        fid = (q.metadata or {}).get("frame_id") or (q.metadata or {}).get(
+            "related_rates_frame"
+        )
+        if fid:
+            frames20.add(str(fid))
         else:
-            shapes20.add("circle")
-    assert "circle" in shapes20
-    assert shapes20 & {"sphere", "cone"}
+            text = (q.prompt_latex or "").lower()
+            if "ladder" in text:
+                frames20.add("sliding_ladder")
+            elif "balloon" in text:
+                frames20.add("balloon_radius")
+            elif "sphere" in text:
+                frames20.add("expanding_sphere")
+            elif "cone" in text:
+                frames20.add("cone_similar")
+            else:
+                frames20.add("expanding_circle")
+    assert "expanding_circle" in frames20
+    assert frames20 - {"expanding_circle"}, frames20
 
     for seed in range(6):
         text0 = (
@@ -445,6 +455,8 @@ def test_smoke_calc_apps_structure_differs():
             or ""
         ).lower()
         assert "circle" in text0
+        assert "ladder" not in text0
+        assert "balloon" not in text0
         assert "sphere" not in text0 and "cone" not in text0
 
     washer20 = 0

@@ -1,0 +1,804 @@
+{
+  "topic": "derivative_higher_order",
+  "rows": [
+    {
+      "form_id": "power_poly",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 2.0,
+      "band": "low",
+      "prompt_latex": "\\frac{d}{dx}\\left[-3x^{2}\\right]",
+      "body_latex": "-3x^{2}",
+      "answer_latex": "2x^{1}\\left(-3\\right)",
+      "note": "diff_pow_h_n; C=2; band=low; inner=affine; nest=0; deg=2; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2011,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 2.0,
+        "band": "low",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": false,
+        "prefer_poly_u": false,
+        "power_min": 2,
+        "power_max": 2,
+        "poly_degree_min": 1,
+        "coef_abs_max": 3
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 2,
+        "n_applies": 0,
+        "n_terms": 1,
+        "n_factors": 0,
+        "inner_kind": "affine",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "affine",
+      "inner_latex": "3x",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "power_poly",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 8.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d}{dx}\\left[-2x^{2} - 4\\right]",
+      "body_latex": "-2x^{2} - 4",
+      "answer_latex": "2x^{1}\\left(-2\\right)",
+      "note": "diff_pow_h_n; C=8; band=mid; inner=poly; nest=0; deg=2; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2018,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 8.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 3,
+        "poly_degree_min": 2,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 2,
+        "n_applies": 0,
+        "n_terms": 2,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 2,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "2x^{2} + 4x - 1",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "power_poly",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d}{dx}\\left[-5x^{2} + 5x - 5\\right]",
+      "body_latex": "-5x^{2} + 5x - 5",
+      "answer_latex": "2x^{1}\\left(-5\\right) + 5",
+      "note": "diff_pow_h_n; C=14; band=high; inner=poly; nest=0; deg=2; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2025,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 3,
+        "power_max": 5,
+        "poly_degree_min": 2,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 2,
+        "n_applies": 0,
+        "n_terms": 3,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 4,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "8x^{4} - 8x^{3} + 5x^{2} - 6x + 4",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "power_poly",
+      "skeleton_pattern": "Diff(Pow(H,n))",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d}{dx}\\left[2x^{4} - 4x^{2} - 6x - 5\\right]",
+      "body_latex": "2x^{4} - 4x^{2} - 6x - 5",
+      "answer_latex": "4x^{3}\\left(2\\right) + 2x^{1}\\left(-4\\right) - 6",
+      "note": "diff_pow_h_n; C=20; band=elite; inner=poly; nest=0; deg=4; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2032,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 4,
+        "power_max": 7,
+        "poly_degree_min": 2,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 4,
+        "n_applies": 0,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 4,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "5x^{4} - 5x^{2} - 5x + 8",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "higher_order_2",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 8.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-5x^{2}\\right]",
+      "body_latex": "-5x^{2}",
+      "answer_latex": "x^{0}\\left(2\\right)\\left(-5\\right)",
+      "note": "diff_pow_h_n; C=8; band=mid; inner=poly; nest=0; deg=2; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2118,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 8.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 2,
+        "power_max": 3,
+        "poly_degree_min": 1,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 2,
+        "n_applies": 0,
+        "n_terms": 1,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "-3x^{3} - 5x^{2} + 4x + 2",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "higher_order_2",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[-7x^{2} + 3x + 7\\right]",
+      "body_latex": "-7x^{2} + 3x + 7",
+      "answer_latex": "x^{0}\\left(2\\right)\\left(-7\\right)",
+      "note": "diff_pow_h_n; C=14; band=high; inner=affine; nest=0; deg=2; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2125,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 2,
+        "power_max": 5,
+        "poly_degree_min": 1,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 2,
+        "n_applies": 0,
+        "n_terms": 3,
+        "n_factors": 0,
+        "inner_kind": "affine",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "affine",
+      "inner_latex": "8x - 1",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "higher_order_2",
+      "skeleton_pattern": "Diff(Pow(H,n)) order2",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d^{2}}{dx^{2}}\\left[10x^{2} - 9x\\right]",
+      "body_latex": "10x^{2} - 9x",
+      "answer_latex": "x^{0}\\left(2\\right)\\left(10\\right)",
+      "note": "diff_pow_h_n; C=20; band=elite; inner=poly; nest=0; deg=2; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2132,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 2,
+        "power_max": 7,
+        "poly_degree_min": 1,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 2,
+        "n_applies": 0,
+        "n_terms": 2,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 2,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "5x^{2} - 8x - 2",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "higher_order_3",
+      "skeleton_pattern": "Diff(Pow(H,n)) order3",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 10.0,
+      "band": "mid",
+      "prompt_latex": "\\frac{d^{3}}{dx^{3}}\\left[x^{4} - 5x^{3} - 5x^{2} - 2\\right]",
+      "body_latex": "x^{4} - 5x^{3} - 5x^{2} - 2",
+      "answer_latex": "2x^{1}\\left(3\\right)\\left(4\\right) + x^{0}\\left(2\\right)\\left(3\\right)\\left(-5\\right) + \\frac{02\\left(-5\\right)}{x}",
+      "note": "diff_pow_h_n; C=10; band=mid; inner=poly; nest=0; deg=4; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2218,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 10.0,
+        "band": "mid",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 2,
+        "power_max": 5,
+        "poly_degree_min": 1,
+        "coef_abs_max": 5
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 4,
+        "n_applies": 0,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "poly",
+        "inner_degree": 3,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "poly",
+      "inner_latex": "x^{3} - 3x + 3",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "higher_order_3",
+      "skeleton_pattern": "Diff(Pow(H,n)) order3",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 14.0,
+      "band": "high",
+      "prompt_latex": "\\frac{d^{3}}{dx^{3}}\\left[-8x^{3} + 3x^{2} + 5x - 8\\right]",
+      "body_latex": "-8x^{3} + 3x^{2} + 5x - 8",
+      "answer_latex": "x^{0}\\left(2\\right)\\left(3\\right)\\left(-8\\right) + \\frac{023}{x}",
+      "note": "diff_pow_h_n; C=14; band=high; inner=affine; nest=0; deg=3; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2225,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 14.0,
+        "band": "high",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 2,
+        "power_max": 5,
+        "poly_degree_min": 1,
+        "coef_abs_max": 8
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 3,
+        "n_applies": 0,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "affine",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "affine",
+      "inner_latex": "x + 4",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    },
+    {
+      "form_id": "higher_order_3",
+      "skeleton_pattern": "Diff(Pow(H,n)) order3",
+      "skeleton_kind": "diff_pow_h_n",
+      "conceptual_d": 20.0,
+      "band": "elite",
+      "prompt_latex": "\\frac{d^{3}}{dx^{3}}\\left[5x^{3} + 5x^{2} + 6x - 2\\right]",
+      "body_latex": "5x^{3} + 5x^{2} + 6x - 2",
+      "answer_latex": "x^{0}\\left(2\\right)\\left(3\\right)\\left(5\\right) + \\frac{025}{x}",
+      "note": "diff_pow_h_n; C=20; band=elite; inner=affine; nest=0; deg=3; shared u; chain=no/allow=False/req=False",
+      "methods": [
+        "power",
+        "sum"
+      ],
+      "classes": [
+        "algebraic",
+        "roots"
+      ],
+      "shared_inner": true,
+      "allows": {
+        "allow_chain": false
+      },
+      "chain_used": false,
+      "shared_u_ok": null,
+      "seed": 2232,
+      "productions": [
+        "Pow",
+        "H",
+        "n",
+        "u"
+      ],
+      "chosen_outer": null,
+      "richness_knobs": {
+        "conceptual_d": 20.0,
+        "band": "elite",
+        "nest_budget": 0,
+        "force_min_nest": 0,
+        "allow_form_min_nest": false,
+        "allow_affine_u": true,
+        "allow_poly_u": true,
+        "prefer_poly_u": true,
+        "power_min": 2,
+        "power_max": 7,
+        "poly_degree_min": 1,
+        "coef_abs_max": 10
+      },
+      "cost_spend": {
+        "nest_budget": 0,
+        "nest_budget_forced_min": 0,
+        "nest_left_at_sample": 0,
+        "nest_depth_expr": 0,
+        "chain_depth": 0,
+        "degree_max": 3,
+        "n_applies": 0,
+        "n_terms": 4,
+        "n_factors": 0,
+        "inner_kind": "affine",
+        "inner_degree": 1,
+        "atom_fn_candidates": [
+          "poly"
+        ],
+        "atom_fn_candidates_g": [
+          "poly"
+        ],
+        "shared_vs_independent": "shared_u",
+        "pattern_locks_top_structure": true,
+        "note": "power: nest capped \u2014 harden poly/|n|"
+      },
+      "atom_fn_candidates": [
+        "poly"
+      ],
+      "atom_fn_candidates_g": [
+        "poly"
+      ],
+      "inner_kind": "affine",
+      "inner_latex": "2x + 6",
+      "independent_inners": null,
+      "chain_depth": 0,
+      "ok": true
+    }
+  ],
+  "failures": []
+}

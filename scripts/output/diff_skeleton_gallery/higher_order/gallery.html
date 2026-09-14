@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Higher order — Diff skeleton</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.1rem; margin-top: 1.4rem; border-bottom: 1px solid #d8d2c4;
+  padding-bottom: 0.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 52rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.35rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.band { background: #e8efe6; padding: 0.05rem 0.35rem; border-radius: 3px;
+  font-size: 0.75rem; }
+.band.low { background: #e8efe6; }
+.band.mid { background: #e6ebe8; }
+.band.high { background: #dde8f0; }
+.band.elite { background: #e8dde8; }
+.meta { font-size: 0.78rem; color: #555; margin: 0.3rem 0; }
+.debug { margin-top: 0.55rem; font-size: 0.72rem; background: #f3efe7;
+  border: 1px solid #e0d8cc; padding: 0.55rem 0.65rem; }
+.debug h3 { margin: 0 0 0.35rem; font-size: 0.78rem; font-weight: 600;
+  color: #444; letter-spacing: 0.02em; text-transform: uppercase; }
+.debug dl { display: grid; grid-template-columns: 11rem 1fr; gap: 0.15rem 0.6rem;
+  margin: 0; }
+.debug dt { color: #666; font-family: ui-monospace, Consolas, monospace; }
+.debug dd { margin: 0; font-family: ui-monospace, Consolas, monospace;
+  word-break: break-word; }
+.debug .section { margin-top: 0.45rem; padding-top: 0.35rem;
+  border-top: 1px dashed #d8d2c4; }
+.debug .section:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.raw { font-size: 0.72rem; white-space: pre-wrap; background: #f0ebe3; padding: 0.45rem; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.err { color: #a20; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; border: 0; padding: 0; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.7; }
+.katex .katex-mathml {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  padding: 0 !important; border: 0 !important;
+  height: 1px !important; width: 1px !important;
+  overflow: hidden !important; white-space: nowrap !important;
+}
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});document.documentElement.setAttribute('data-math-ready','1');"></script>
+</head>
+<body>
+
+<p class="nav"><a href="../index.html">← all topics</a>
+  <a href="../DIFFICULTY_SCALE.md">difficulty scale</a></p>
+<h1>Higher order</h1>
+<p class="sub"><code>derivative_higher_order</code> · live <code>sample_from_form</code>
+ · 10/10 ok · C ladder 2, 8, 14, 20
+ · each card shows richness knobs + honest cost/spend</p>
+<div class='notes-block'><h1>Notes — <code>calc_diff_higher_order_derivatives</code> (<code>Higher order derivatives</code>)</h1>
+<ul>
+<li><strong>Course:</strong> Calculus</li>
+<li><strong>Category:</strong> Calculus — Differentiation</li>
+<li><strong>Generator:</strong> <code>derivative_higher_order</code></li>
+<li><strong>Suggested family:</strong> other (calc limits / Diff)</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Status:</strong> shipped — Diff expr_skeleton</li>
+<li><strong>Generator:</strong> <code>derivative_higher_order</code></li>
+<li><strong>Remaining limits:</strong> Live on Diff <code>expr_skeleton</code> + derivatives.json forms. Gaps: allow_* checkboxes gate class unlocks; some leaves still stamp soft patterns; OpenStax mixed-rule drill richer than general pack at mid-D.</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Compute second (or higher) derivatives of power/chain-style expressions.</li>
+<li><strong>D=0:</strong> d²/dx² of a simple monomial/power, e.g. x².</li>
+<li><strong>High D (≈16–22):</strong> d² of (poly)^n or richer inners; optional order 3 forms.</li>
+<li><strong>Must not:</strong> First-derivative-only prompts on this leaf; steal all high-D from other leaves via order=2.</li>
+</ul>
+<h2>What old / live path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> at default path (Diff leaves → <code>expr_skeleton</code> when form maps; limits → LimitSpec packs). No <code>use_sample_*</code> / Mad-Lib opt-out found for these generators.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td><code>$\frac{d^{2}}{dx^{2}}\left[x^{2}\right]$</code></td><td><code>$x^{0}\left(2\right)$</code></td><td>form=<code>power_poly</code>; skel=<code>Diff(Pow(H,n))</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>8</td><td>101</td><td><code>$\frac{d^{2}}{dx^{2}}\left[\left(2x - 3\right)^{3}\right]$</code></td><td><code>$2\left(2x - 3\right)^{1}\left(2\right)\left(3\right)\left(2\right)$</code></td><td>form=<code>higher_order_2</code>; skel=<code>Diff(Pow(H,n)) order2</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>16</td><td>101</td><td><code>$\frac{d^{2}}{dx^{2}}\left[\left(4x + 3\right)^{2}\right]$</code></td><td><code>$\left(4x + 3\right)^{0}\left(4\right)\left(2\right)\left(4\right)$</code></td><td>form=<code>higher_order_2</code>; skel=<code>Diff(Pow(H,n)) order2</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>22</td><td>101</td><td><code>$\frac{d^{2}}{dx^{2}}\left[\left(9x^{3} + 9x^{2} + 2x + 6\right)^{4}\right]$</code></td><td><code>$3\left(9x^{3} + 9x^{2} + 2x + 6\right)^{2}\left(3x^{2}\left(9\right) + 2x^{1}\left(9\right) + 2\right)\left(4\right)\left(3x^{2}\left(9\right) + 2x^{1}\left(9\right) + 2\right) + \left(2x^{1}\left(3\right)\left(9\right) + x^{0}\left(2\right)\left(9\right)\right)\left(4\right)\left(9x^{3} + 9x^{2} + 2x + 6\right)^{3}$</code></td><td>form=<code>higher_order_2</code>; skel=<code>Diff(Pow(H,n)) order2</code>; pack=<code>expr_skeleton</code></td></tr></tbody></table>
+<p>Opt-out flag used: _none — expr_skeleton default_</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Calculus Volume 1 §3.2 The Derivative as a Function</td><td>https://openstax.org/books/calculus-volume-1/pages/3-2-the-derivative-as-a-function</td><td>higher-order derivatives notation</td></tr><tr><td>OpenStax Calculus Volume 1 §3.3 Differentiation Rules</td><td>https://openstax.org/books/calculus-volume-1/pages/3-3-differentiation-rules</td><td>repeated differentiation of powers</td></tr></tbody></table>
+<p>Local HTML / mining: <code>diff_skeleton_gallery/higher_order/; forms higher_order_2 / higher_order_3</code></p>
+<h2>Variety notes / flags</h2>
+<p>Correctly order≥2 from D=0. Good power/chain ladder.</p>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<p><strong>Reuse:</strong> <code>expr_skeleton</code> with <code>derivative_order≥2</code> + <code>Diff(Pow(H,n))</code> order2 patterns. Gallery: <code>diff_skeleton_gallery/higher_order/</code>.</p>
+<ul>
+<li><strong>Not this pass:</strong> notes only — no generator changes.</li>
+</ul>
+<p>Coverage: Diff algebraic families also cataloged in <code>scripts/output/diff_skeleton_gallery/</code> (power, product, quotient, chain, trig, invtrig, ln/exp, general, higher_order).</p></div>
+
+
+<article class="card">
+  <header><span class="n">#1</span> <code>power_poly</code>
+    <span class="pat">Diff(Pow(H,n))</span>
+    <span class="band low">C=2.0 · low</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[-3x^{2}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$2x^{1}\left(-3\right)$$</div>
+  <p class="meta">diff_pow_h_n; C=2; band=low; inner=affine; nest=0; deg=2; shared u; chain=no/allow=False/req=False · methods: power · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>power_poly</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n))</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2011</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>2</dd><dt>band</dt><dd>low</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>false</dd><dt>prefer_poly_u</dt><dd>false</dd><dt>power_min / power_max</dt><dd>2 / 2</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>3</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>affine</dd><dt>inner_latex</dt><dd>3x</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>1</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[-3x^{2}\right]</pre>
+    <p>answer: <code>2x^{1}\left(-3\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#2</span> <code>power_poly</code>
+    <span class="pat">Diff(Pow(H,n))</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[-2x^{2} - 4\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$2x^{1}\left(-2\right)$$</div>
+  <p class="meta">diff_pow_h_n; C=8; band=mid; inner=poly; nest=0; deg=2; shared u; chain=no/allow=False/req=False · methods: power, sum · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>power_poly</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n))</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2018</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 3</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>2x^{2} + 4x - 1</dd><dt>inner_degree</dt><dd>2</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[-2x^{2} - 4\right]</pre>
+    <p>answer: <code>2x^{1}\left(-2\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#3</span> <code>power_poly</code>
+    <span class="pat">Diff(Pow(H,n))</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[-5x^{2} + 5x - 5\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$2x^{1}\left(-5\right) + 5$$</div>
+  <p class="meta">diff_pow_h_n; C=14; band=high; inner=poly; nest=0; deg=2; shared u; chain=no/allow=False/req=False · methods: power, sum · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>power_poly</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n))</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2025</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>3 / 5</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>8x^{4} - 8x^{3} + 5x^{2} - 6x + 4</dd><dt>inner_degree</dt><dd>4</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>3</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[-5x^{2} + 5x - 5\right]</pre>
+    <p>answer: <code>2x^{1}\left(-5\right) + 5</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#4</span> <code>power_poly</code>
+    <span class="pat">Diff(Pow(H,n))</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d}{dx}\left[2x^{4} - 4x^{2} - 6x - 5\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$4x^{3}\left(2\right) + 2x^{1}\left(-4\right) - 6$$</div>
+  <p class="meta">diff_pow_h_n; C=20; band=elite; inner=poly; nest=0; deg=4; shared u; chain=no/allow=False/req=False · methods: power, sum · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>power_poly</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n))</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2032</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>4 / 7</dd><dt>poly_degree_min</dt><dd>2</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>5x^{4} - 5x^{2} - 5x + 8</dd><dt>inner_degree</dt><dd>4</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>4</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>4</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d}{dx}\left[2x^{4} - 4x^{2} - 6x - 5\right]</pre>
+    <p>answer: <code>4x^{3}\left(2\right) + 2x^{1}\left(-4\right) - 6</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#5</span> <code>higher_order_2</code>
+    <span class="pat">Diff(Pow(H,n)) order2</span>
+    <span class="band mid">C=8.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d^{2}}{dx^{2}}\left[-5x^{2}\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$x^{0}\left(2\right)\left(-5\right)$$</div>
+  <p class="meta">diff_pow_h_n; C=8; band=mid; inner=poly; nest=0; deg=2; shared u; chain=no/allow=False/req=False · methods: power · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>higher_order_2</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n)) order2</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2118</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>8</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>2 / 3</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>-3x^{3} - 5x^{2} + 4x + 2</dd><dt>inner_degree</dt><dd>3</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>1</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d^{2}}{dx^{2}}\left[-5x^{2}\right]</pre>
+    <p>answer: <code>x^{0}\left(2\right)\left(-5\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#6</span> <code>higher_order_2</code>
+    <span class="pat">Diff(Pow(H,n)) order2</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d^{2}}{dx^{2}}\left[-7x^{2} + 3x + 7\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$x^{0}\left(2\right)\left(-7\right)$$</div>
+  <p class="meta">diff_pow_h_n; C=14; band=high; inner=affine; nest=0; deg=2; shared u; chain=no/allow=False/req=False · methods: power, sum · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>higher_order_2</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n)) order2</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2125</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>2 / 5</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>affine</dd><dt>inner_latex</dt><dd>8x - 1</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>3</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d^{2}}{dx^{2}}\left[-7x^{2} + 3x + 7\right]</pre>
+    <p>answer: <code>x^{0}\left(2\right)\left(-7\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#7</span> <code>higher_order_2</code>
+    <span class="pat">Diff(Pow(H,n)) order2</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d^{2}}{dx^{2}}\left[10x^{2} - 9x\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$x^{0}\left(2\right)\left(10\right)$$</div>
+  <p class="meta">diff_pow_h_n; C=20; band=elite; inner=poly; nest=0; deg=2; shared u; chain=no/allow=False/req=False · methods: power, sum · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>higher_order_2</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n)) order2</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2132</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>2 / 7</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>5x^{2} - 8x - 2</dd><dt>inner_degree</dt><dd>2</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>2</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>2</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d^{2}}{dx^{2}}\left[10x^{2} - 9x\right]</pre>
+    <p>answer: <code>x^{0}\left(2\right)\left(10\right)</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#8</span> <code>higher_order_3</code>
+    <span class="pat">Diff(Pow(H,n)) order3</span>
+    <span class="band mid">C=10.0 · mid</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d^{3}}{dx^{3}}\left[x^{4} - 5x^{3} - 5x^{2} - 2\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$2x^{1}\left(3\right)\left(4\right) + x^{0}\left(2\right)\left(3\right)\left(-5\right) + \frac{02\left(-5\right)}{x}$$</div>
+  <p class="meta">diff_pow_h_n; C=10; band=mid; inner=poly; nest=0; deg=4; shared u; chain=no/allow=False/req=False · methods: power, sum · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>higher_order_3</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n)) order3</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2218</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>10</dd><dt>band</dt><dd>mid</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>2 / 5</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>5</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>poly</dd><dt>inner_latex</dt><dd>x^{3} - 3x + 3</dd><dt>inner_degree</dt><dd>3</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>4</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>4</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d^{3}}{dx^{3}}\left[x^{4} - 5x^{3} - 5x^{2} - 2\right]</pre>
+    <p>answer: <code>2x^{1}\left(3\right)\left(4\right) + x^{0}\left(2\right)\left(3\right)\left(-5\right) + \frac{02\left(-5\right)}{x}</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#9</span> <code>higher_order_3</code>
+    <span class="pat">Diff(Pow(H,n)) order3</span>
+    <span class="band high">C=14.0 · high</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d^{3}}{dx^{3}}\left[-8x^{3} + 3x^{2} + 5x - 8\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$x^{0}\left(2\right)\left(3\right)\left(-8\right) + \frac{023}{x}$$</div>
+  <p class="meta">diff_pow_h_n; C=14; band=high; inner=affine; nest=0; deg=3; shared u; chain=no/allow=False/req=False · methods: power, sum · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>higher_order_3</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n)) order3</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2225</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>14</dd><dt>band</dt><dd>high</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>2 / 5</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>8</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>affine</dd><dt>inner_latex</dt><dd>x + 4</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>4</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d^{3}}{dx^{3}}\left[-8x^{3} + 3x^{2} + 5x - 8\right]</pre>
+    <p>answer: <code>x^{0}\left(2\right)\left(3\right)\left(-8\right) + \frac{023}{x}</code></p>
+  </details>
+</article>
+<article class="card">
+  <header><span class="n">#10</span> <code>higher_order_3</code>
+    <span class="pat">Diff(Pow(H,n)) order3</span>
+    <span class="band elite">C=20.0 · elite</span></header>
+  <div class="math"><div class="lab">Prompt</div>$$\frac{d^{3}}{dx^{3}}\left[5x^{3} + 5x^{2} + 6x - 2\right]$$</div>
+  <div class="math"><div class="lab">Answer</div>$$x^{0}\left(2\right)\left(3\right)\left(5\right) + \frac{025}{x}$$</div>
+  <p class="meta">diff_pow_h_n; C=20; band=elite; inner=affine; nest=0; deg=3; shared u; chain=no/allow=False/req=False · methods: power, sum · classes: algebraic, roots</p>
+  
+<div class="debug">
+  <h3>Generation debug</h3>
+  <div class="section"><dl><dt>form_id</dt><dd>higher_order_3</dd><dt>skeleton_pattern</dt><dd>Diff(Pow(H,n)) order3</dd><dt>skeleton_kind</dt><dd>diff_pow_h_n</dd><dt>productions</dt><dd>[Pow, H, n, u]</dd><dt>shared_inner</dt><dd>true</dd><dt>rng_seed</dt><dd>2232</dd><dt>allow_chain</dt><dd>false</dd><dt>chain_used</dt><dd>false</dd><dt>allows</dt><dd>{&quot;allow_chain&quot;:false}</dd></dl></div>
+  <div class="section"><h3>Richness knobs</h3><dl><dt>conceptual_d / C</dt><dd>20</dd><dt>band</dt><dd>elite</dd><dt>nest_budget</dt><dd>0</dd><dt>force_min_nest</dt><dd>0</dd><dt>allow_poly_u</dt><dd>true</dd><dt>prefer_poly_u</dt><dd>true</dd><dt>power_min / power_max</dt><dd>2 / 7</dd><dt>poly_degree_min</dt><dd>1</dd><dt>coef_abs_max</dt><dd>10</dd><dt>atom_fn_candidates</dt><dd>[poly]</dd><dt>atom_fn_candidates_g</dt><dd>[poly]</dd></dl></div>
+  <div class="section"><h3>Cost / spend (honest)</h3><dl><dt>inner_kind</dt><dd>affine</dd><dt>inner_latex</dt><dd>2x + 6</dd><dt>inner_degree</dt><dd>1</dd><dt>nest_depth_expr</dt><dd>0</dd><dt>chain_depth</dt><dd>0</dd><dt>degree_max</dt><dd>3</dd><dt>n_applies</dt><dd>0</dd><dt>n_terms</dt><dd>4</dd><dt>n_factors</dt><dd>0</dd><dt>shared_vs_independent</dt><dd>shared_u</dd><dt>pattern_locks_top_structure</dt><dd>true</dd><dt>note</dt><dd>power: nest capped — harden poly/|n|</dd></dl></div>
+</div>
+  <details><summary>raw latex / answer</summary>
+    <pre class="raw">\frac{d^{3}}{dx^{3}}\left[5x^{3} + 5x^{2} + 6x - 2\right]</pre>
+    <p>answer: <code>x^{0}\left(2\right)\left(3\right)\left(5\right) + \frac{025}{x}</code></p>
+  </details>
+</article>
+</body></html>

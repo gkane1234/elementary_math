@@ -1,0 +1,2498 @@
+{
+  "section": {
+    "slug": "u_sub_preset_arctan_chain",
+    "title": "u-sub preset \u2014 arctan_chain",
+    "pattern": "",
+    "engine": "integrals",
+    "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Forced <code>arctan_chain</code>. OpenStax Vol 1 \u00a75.7.",
+    "extra_settings": {
+      "u_sub_form_preset": "arctan_chain",
+      "u_sub_construction": "catalog"
+    }
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{2}{1+(2x + 2)^{2}}\\,dx",
+      "answer_latex": "\\arctan(2x + 2)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 4,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 0.0,
+          "coef_min": -4,
+          "coef_max": 4,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{2}{1+(2x + 2)^{2}}\\,dx",
+      "answer_latex": "\\arctan(2x + 2)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 4,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 0.0,
+          "coef_min": -4,
+          "coef_max": 4,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{2}{1+(2x + 2)^{2}}\\,dx",
+      "answer_latex": "\\arctan(2x + 2)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "use_u_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 4,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 0.0,
+          "coef_min": -4,
+          "coef_max": 4,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{3}{1+(3x + 4)^{2}}\\,dx",
+      "answer_latex": "\\arctan(3x + 4)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 8.0,
+          "coef_min": -6,
+          "coef_max": 6,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{4}{1+(4x + 3)^{2}}\\,dx",
+      "answer_latex": "\\arctan(4x + 3)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 8.0,
+          "coef_min": -6,
+          "coef_max": 6,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{2}{1+(2x + 4)^{2}}\\,dx",
+      "answer_latex": "\\arctan(2x + 4)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 8.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 8.0,
+          "coef_min": -6,
+          "coef_max": 6,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{4}{1+(4x - 2)^{2}}\\,dx",
+      "answer_latex": "\\arctan(4x - 2)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 15.0,
+        "difficulty_shortfall": 1.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 16.0,
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{6}{1+(6x + 8)^{2}}\\,dx",
+      "answer_latex": "\\arctan(6x + 8)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 15.0,
+        "difficulty_shortfall": 1.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 16.0,
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{2}{1+(2x - 3)^{2}}\\,dx",
+      "answer_latex": "\\arctan(2x - 3)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 15.0,
+        "difficulty_shortfall": 1.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 16.0,
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{8}{1+(8x + 8)^{2}}\\,dx",
+      "answer_latex": "\\arctan(8x + 8)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 15.0,
+        "difficulty_shortfall": 7.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 22.0,
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{8}{1+(8x + 6)^{2}}\\,dx",
+      "answer_latex": "\\arctan(8x + 6)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 15.0,
+        "difficulty_shortfall": 7.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 22.0,
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_inverse_trigonometric_with_substitution",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{2}{1+(2x + 8)^{2}}\\,dx",
+      "answer_latex": "\\arctan(2x + 8)+C",
+      "skeleton_pattern": "",
+      "form_id": "arctan_of_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "arctan_of_linear"
+        ],
+        [
+          "openstax_form",
+          "arctan_of_linear"
+        ],
+        [
+          "numeric_tier",
+          4
+        ],
+        [
+          "format_tier",
+          3
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "arctan_of_linear",
+        "structure_id": "integral_invtrig_substitution:arctan_of_linear",
+        "technique": "u_sub",
+        "tricks_required": [
+          "u_sub"
+        ],
+        "methods_used": [
+          "u_sub"
+        ],
+        "function_classes": [
+          "invtrig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "nested_u",
+          "use_invtrig",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_invtrig_substitution",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_invtrig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "invtrig",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 10,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "u_sub"
+            ],
+            "length": 1
+          },
+          "technique": "u_sub",
+          "family": "arctan_of_linear"
+        },
+        "effort_features": {
+          "technique": "u_sub",
+          "tricks_required": [
+            "u_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 10,
+          "n_terms": 1,
+          "answer_len": 17,
+          "nest_depth": 0,
+          "pack": "integral_invtrig_sub",
+          "methods": [
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "arctan_of_linear",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_invtrig",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "nested_u",
+            "cost": 3.5
+          }
+        ],
+        "difficulty_cost_total": 15.0,
+        "difficulty_shortfall": 7.0,
+        "wrappers_applied": [],
+        "core_form_id": "arctan_of_linear",
+        "openstax_form": "arctan_of_linear",
+        "form_id": "arctan_of_linear",
+        "openstax_case": "\u00a75.7 invtrig via substitution",
+        "strategy": "arctan_chain",
+        "catalog_id": "u_substitution",
+        "u_sub_form_preset": "arctan_chain",
+        "numeric_tier": 4,
+        "format_tier": 3,
+        "generation_settings": {
+          "allow_invtrig": true,
+          "allow_substitution": true,
+          "require_substitution": true,
+          "include_plus_c": true,
+          "u_sub_form_preset": "arctan_chain",
+          "u_sub_construction": "catalog",
+          "difficulty": 22.0,
+          "coef_min": -10,
+          "coef_max": 10,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    }
+  ],
+  "failures": []
+}

@@ -10,6 +10,17 @@ const SOFT_DIFFICULTY_SLIDER_MAX = 24;
 /** Shared enrichment groups rendered after question-specific settings. */
 const COMMON_GROUPS = new Set(["answer", "signs", "presentation"]);
 
+/**
+ * Function / method allow-lists for calc derivatives (and similar).
+ * Kept visible under continuous difficulty — not black-boxed with legacy knobs.
+ */
+const FUNCTION_METHOD_GROUPS = new Set([
+  "derivative_functions",
+  "derivative_methods",
+  "integral_functions",
+  "integral_techniques",
+]);
+
 /** Deeper MC controls — only shown when the MC toggle is checked. */
 const MC_DETAIL_KEYS = new Set(["multiple_choice_ratio"]);
 
@@ -50,6 +61,34 @@ const GENERATOR_PROMOTE_KEYS = new Set([
   "prefer_simple_factors",
   "inflation_chance",
   "max_inflation_degree",
+  // Derivative function / method allow-lists (hard gates; C schedules rarity).
+  "allow_trig",
+  "allow_exp",
+  "allow_log",
+  "allow_hyperbolic",
+  "allow_roots",
+  "allow_invtrig",
+  "allow_chain",
+  "allow_product",
+  "allow_quotient",
+  "allow_implicit",
+  "require_chain",
+  "require_product",
+  "require_quotient",
+  "require_implicit",
+  "allow_triple_product",
+  "u_sub_form_preset",
+  "u_sub_construction",
+  "parts_form_preset",
+  "pfd_form_preset",
+]);
+
+/** Groups always shown with continuous difficulty (checkbox allow kits). */
+const ALWAYS_VISIBLE_GROUPS = new Set([
+  "derivative_functions",
+  "derivative_methods",
+  "integral_functions",
+  "integral_techniques",
 ]);
 
 const CANCEL_FACTOR_COUNT_LABELS: Record<string, string> = {
@@ -440,7 +479,8 @@ function partitionFields(fields: SettingField[]) {
       field.key === "cancel_factor_count" ||
       // RRT sits under canceling factors for rational topics that expose cancel count.
       (field.key === "factor_rrt" && hasCancelFactorCount) ||
-      GENERATOR_PROMOTE_KEYS.has(field.key)
+      GENERATOR_PROMOTE_KEYS.has(field.key) ||
+      ALWAYS_VISIBLE_GROUPS.has(field.group ?? "")
     ) {
       difficulty.push(field);
       continue;

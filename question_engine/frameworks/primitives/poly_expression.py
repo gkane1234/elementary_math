@@ -284,11 +284,15 @@ def _sym_const_latex(sym: SymConst) -> str:
 
 
 def _juxtapose_coef_body(coef_s: str, body: str) -> str:
-    """Join a symbolic/fraction coef onto a power body without eating ``\\pi x``."""
+    """Join a symbolic/fraction coef onto a body without eating ``\\pi x``.
+
+    Sums / leading-minus bodies are parenthesized so ``5`` + ``5x^{2}+…`` does
+    not digit-glue into the false monomial ``55x^{2}+…``.
+    """
     if not coef_s:
         return body
-    if body.startswith("-"):
-        return rf"{coef_s}\cdot\left({body}\right)"
+    if body.startswith("-") or _latex_factor_needs_paren(body):
+        return rf"{coef_s}\left({body}\right)"
     # Bare control-word coefs (\pi) need a space before a letter
     if coef_s.startswith("\\") and not coef_s.endswith("}") and body[:1].isalpha():
         return f"{coef_s} {body}"
@@ -1451,6 +1455,20 @@ def _coeffs_to_ast(coeffs: Sequence[int], var: str) -> ExprAST:
 def _sample_linear(spec: ExpressionSpec, rng: random.Random) -> ExprAST:
     a, b = _linear_pair(rng, spec.coef_abs_max)
     return _coeffs_to_ast([a, b], spec.variable)
+
+
+def sample_linear_expr(spec: ExpressionSpec, rng: random.Random) -> ExprAST:
+    """Public Spec linear ``ax+b`` sampler (complexity_wrap / dress helpers)."""
+    return _sample_linear(spec, rng)
+
+
+def sample_scale_coef(spec: ExpressionSpec, rng: random.Random) -> int:
+    """Nonzero integer coef from Spec (optionally signed)."""
+    return _nz_coef(
+        rng,
+        max(1, int(spec.coef_abs_max)),
+        allow_neg=bool(spec.allow_negative_coefs),
+    )
 
 
 def _sample_quadratic_inner(spec: ExpressionSpec, rng: random.Random) -> ExprAST:
@@ -2622,6 +2640,57 @@ def _render_mul(
 ) -> str:
     if not factors:
         return "1"
+
+    # Quotient sugar: F · G^{-1} · … → \frac{F·…}{G·…}
+    nums: list[ExprAST] = []
+    dens: list[ExprAST] = []
+    for f in factors:
+        if (
+            isinstance(f, Pow)
+            and (
+                f.exp == -1
+                or (isinstance(f.exp, Fraction) and f.exp == Fraction(-1))
+            )
+        ):
+            dens.append(f.base)
+        else:
+            nums.append(f)
+    if dens:
+        if not nums:
+            den_s = (
+                _render(dens[0], style=style, parent="fn")
+                if len(dens) == 1
+                else _render_mul(tuple(dens), style=style, parent="fn")
+            )
+            return rf"\frac{{1}}{{{den_s}}}"
+        # Pull a leading -1 coef out as a sign on the fraction.
+        sign = ""
+        if (
+            len(nums) >= 1
+            and isinstance(nums[0], Const)
+            and nums[0].value == -1
+        ):
+            sign = "-"
+            nums = nums[1:]
+            if not nums:
+                den_s = (
+                    _render(dens[0], style=style, parent="fn")
+                    if len(dens) == 1
+                    else _render_mul(tuple(dens), style=style, parent="fn")
+                )
+                return rf"{sign}\frac{{1}}{{{den_s}}}"
+        num_s = (
+            _render(nums[0], style=style, parent=None)
+            if len(nums) == 1
+            else _render_mul(tuple(nums), style=style, parent="mul")
+        )
+        den_s = (
+            _render(dens[0], style=style, parent="fn")
+            if len(dens) == 1
+            else _render_mul(tuple(dens), style=style, parent="fn")
+        )
+        return rf"{sign}\frac{{{num_s}}}{{{den_s}}}"
+
     # coef * rest sugar (int / Fraction / SymConst leading coefficients)
     if len(factors) >= 2 and isinstance(factors[0], Const):
         # On monomials k·x^p, fold a run of rational Consts into one coefficient.
@@ -2666,21 +2735,39 @@ def _render_mul(
 
         coef_v = factors[0].value
         rest = factors[1:]
+        rest_ast = rest[0] if len(rest) == 1 else None
         rest_s = (
             _render_mul(rest, style=style, parent="mul")
             if len(rest) > 1
             else _render(rest[0], style=style, parent="mul")
         )
+        # Parenthesize sums (and similar) before coef juxtaposition. Without
+        # this, ``5·(5x^{2}+2x-4)`` digit-glues to the false ``55x^{2}+2x-4``.
+        rest_needs_paren = rest_s.startswith("-") or (
+            _factor_ast_needs_paren(rest_ast, rest_s)
+            if rest_ast is not None
+            else _latex_factor_needs_paren(rest_s)
+        )
         if isinstance(coef_v, int):
             coef = int(coef_v)
             if coef == -1:
+                if rest_needs_paren and not _already_wrapped_factor(rest_s):
+                    return rf"-\left({rest_s}\right)"
                 return f"-{rest_s}"
             if coef == 1:
                 return rest_s
-            if rest_s.startswith("-"):
-                return rf"{coef}\cdot\left({rest_s}\right)"
+            if rest_needs_paren:
+                if rest_s.startswith("-"):
+                    return rf"{coef}\cdot\left({rest_s}\right)"
+                return rf"{coef}\left({rest_s}\right)"
             return f"{coef}{rest_s}"
         if isinstance(coef_v, (Fraction, SymConst)):
+            if isinstance(coef_v, Fraction) and coef_v == -1:
+                if rest_needs_paren and not _already_wrapped_factor(rest_s):
+                    return rf"-\left({rest_s}\right)"
+                return f"-{rest_s}"
+            if isinstance(coef_v, Fraction) and coef_v == 1:
+                return rest_s
             coef_s = (
                 frac_latex(coef_v)
                 if isinstance(coef_v, Fraction)
@@ -2809,6 +2896,7 @@ def structure_inventory(expr: ExprAST) -> dict[str, Any]:
     has_sum = False
     has_power = False
     has_fn = False
+    has_quotient = False
 
     def is_coef_mul(e: Mul) -> bool:
         """True when Mul is only a numeric coefficient times one atom."""
@@ -2817,8 +2905,24 @@ def structure_inventory(expr: ExprAST) -> dict[str, Any]:
         a, b = e.factors
         return isinstance(a, Const) and not isinstance(b, Const)
 
+    def is_quot_mul(e: Mul) -> bool:
+        """F · G^{-1} (possibly with extra num factors) — quotient shape."""
+        dens = 0
+        nums = 0
+        for f in e.factors:
+            if isinstance(f, Pow) and (
+                f.exp == -1
+                or (isinstance(f.exp, Fraction) and f.exp == Fraction(-1))
+            ):
+                dens += 1
+            elif not (isinstance(f, Const)):
+                nums += 1
+            elif isinstance(f, Const):
+                nums += 1  # coef counts toward numerator side
+        return dens >= 1 and nums >= 1
+
     def walk(e: ExprAST) -> None:
-        nonlocal n_factors, n_terms, has_product, has_sum, has_power, has_fn
+        nonlocal n_factors, n_terms, has_product, has_sum, has_power, has_fn, has_quotient
         if isinstance(e, Const):
             return
         if isinstance(e, Var):
@@ -2841,6 +2945,18 @@ def structure_inventory(expr: ExprAST) -> dict[str, Any]:
                     walk(e.factors[1].base)
                 else:
                     walk(e.factors[1])
+                return
+            if is_quot_mul(e):
+                ops.append("/")
+                has_quotient = True
+                for f in e.factors:
+                    if isinstance(f, Pow) and (
+                        f.exp == -1
+                        or (isinstance(f.exp, Fraction) and f.exp == Fraction(-1))
+                    ):
+                        walk(f.base)
+                    else:
+                        walk(f)
                 return
             ops.append("*")
             has_product = True
@@ -2886,6 +3002,8 @@ def structure_inventory(expr: ExprAST) -> dict[str, Any]:
         shape_parts.append("fn:" + "+".join(sorted(set(fns)) or ["?"]))
     if has_fn_power:
         shape_parts.append("fn_power")
+    if has_quotient:
+        shape_parts.append("quotient")
     if has_product:
         shape_parts.append("product")
     if has_sum:
@@ -2905,6 +3023,7 @@ def structure_inventory(expr: ExprAST) -> dict[str, Any]:
         "n_terms": n_terms or (1 if not has_sum else n_terms),
         "n_factors": n_factors,
         "has_product": has_product,
+        "has_quotient": has_quotient,
         "has_sum": has_sum,
         "has_power": has_power,
         "has_fn": has_fn,
@@ -2986,6 +3105,8 @@ def methods_used_of(expr: ExprAST) -> frozenset[str]:
     inv = structure_inventory(expr)
     methods: set[str] = set()
     methods.add("power")
+    if inv.get("has_quotient"):
+        methods.add("quotient")
     if inv["has_product"]:
         methods.add("product")
 

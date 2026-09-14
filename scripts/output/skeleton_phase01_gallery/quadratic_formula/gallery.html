@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>QuadraticFormula — solve with the formula — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>QuadraticFormula — solve with the formula</h1>
+<p class="sub"><code>quadratic_formula</code> · live <code>_generate_for_type</code>
+ · pattern <strong>QuadraticFormula</strong>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">D=0 integer roots, $a=1$. High D radicals / fractions. OpenStax EA §10.3.</p>
+<p class='sub'>Also wired: <code>a2_quadratic_functions_and_inequalities_solving_equations_with_the_quadratic_formula</code></p>
+<div class='notes-block'><h1><code>quadratic_formula</code> — Solving equations with the Quadratic Formula</h1>
+<ul>
+<li><strong>Course:</strong> Algebra 1</li>
+<li><strong>Category:</strong> Algebra 1 — Quadratic Functions</li>
+<li><strong>Generator:</strong> <code>quadratic_formula</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Solve with the quadratic formula. D=0: integer roots, a=1. High D: simplify a radical / fractions.</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>x^{2} - x - 2 = 0</code> - answer: <code>x = 2, -1</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>x^{2} - 4x + 4 = 0</code> - answer: <code>x = 2</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>4x^{2} + 4x - 120 = 0</code> - answer: <code>x = 5, -6</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>4x^{2} - 72x + 324 = 0</code> - answer: <code>x = 9</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>3x^{2} + 12x = 0</code> - answer: <code>x = 0, -4</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>3x^{2} - 12x - 21 = 0</code> - answer: <code>x = 2 \pm \sqrt{11}</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>3x^{2} + 11x - 1 = 0</code> - answer: <code>x = \frac{-11 \pm \sqrt{133}}{6}</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>3x^{2} - 13x - 22 = 0</code> - answer: <code>x = \frac{13 \pm \sqrt{433}}{6}</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Elementary Algebra 2e — 10.3 Solve Quadratic Equations Using the Quadratic Formula</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/10-3-solve-quadratic-equations-using-the-quadratic-formula</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 10.28: How to Solve a Quadratic Equation Using the Quadratic Formula Solve $2 x^{2} + 9 x - 5 = 0$ by using the Quadratic Formula. - Example 10.29: Solve $x^{2} - 6 x + 5 = 0$ by using the Quadratic Formula. - Example 10.30: Solve $4 y^{2} - 5 y - 3 = 0$ by using the Quadratic Formula. - Example 10.31: Solve $2 x^{2} + 10 x + 11 = 0$ by using the Quadratic Formula.</p>
+<h2>Variety notes</h2>
+<p>Old path shapes at D=0 vs D=22 are recorded above. Flag if a WP dump stub or a single Mad-Lib.</p>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse quadratic_formula. New engine only if we later unify with FactorProduct goals — not this pass.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - x - 2 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 2, -1$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - 4x + 4 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 2$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$x^{2} - x - 2 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 2, -1$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$4x^{2} + 4x - 120 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 5, -6$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$4x^{2} - 72x + 324 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 9$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$4x^{2} - 8x - 252 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 9, -7$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$3x^{2} + 12x = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 0, -4$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$3x^{2} - 12x - 21 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = 2 \pm \sqrt{11}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$3x^{2} + 20x + 5 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{-10 \pm \sqrt{85}}{3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$3x^{2} + 11x - 1 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{-11 \pm \sqrt{133}}{6}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$3x^{2} - 13x - 22 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{13 \pm \sqrt{433}}{6}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'>QuadraticFormula</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$3x^{2} + 19x + 4 = 0$$</div><div class='math'><div class='lab'>Answer</div>$$x = \frac{-19 \pm \sqrt{313}}{6}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>QuadraticFormula</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>quadratic_formula</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>quadratic_formula</code></p></article>
+</body></html>

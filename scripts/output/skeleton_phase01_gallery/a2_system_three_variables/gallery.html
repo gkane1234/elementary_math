@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>LinearSystem3 — 3×3 elimination — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>LinearSystem3 — 3×3 elimination</h1>
+<p class="sub"><code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code> · live <code>_generate_for_type</code>
+ · pattern <strong>LinearSystem3</strong>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">D=0 integer 3×3 with unique solution. Larger coeffs at high D. OpenStax IA §4.4.</p>
+
+<div class='notes-alert'>UNCLEAR — gold look not locked; see notes below.</div><div class='notes-block'><h1>Notes — <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></h1>
+<ul>
+<li><strong>Course:</strong> Algebra 2 (A2 catalog)</li>
+<li><strong>Category:</strong> Algebra 2 — Systems of Equations and Inequalities</li>
+<li><strong>Generator:</strong> <code>system_three_variables</code></li>
+<li><strong>Suggested family:</strong> <code>systems</code></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> 3×3 integer system; unique solution.</li>
+<li><strong>D=0:</strong> 3×3 integer system; unique solution.</li>
+<li><strong>High D (≈16–22):</strong> Larger coeffs; elimination chain.</li>
+<li><strong>Must not:</strong> 2×2 only; matrices leaf.</li>
+</ul>
+<h2>What old path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> with opt-out: <code>none (hand generator)</code>.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td>$\text{Solve } \begin{cases} 2x - 2y - 3z=-8\\ -2x + 3y + 2z=8\\ -3x + 2y + 2z=5\end{cases}$</td><td>$(1, 2, 2)$</td><td></td></tr><tr><td>0</td><td>207</td><td>$\text{Solve } \begin{cases} 2x + 3y - 3z=7\\ 3x + 3y + 2z=-1\\ -3x + 2y - 3z=-2\end{cases}$</td><td>$(2, -1, -2)$</td><td></td></tr><tr><td>8</td><td>101</td><td>$\text{Solve } \begin{cases} -3x - 3y - 4z=15\\ -3x + 4y - 3z=15\\ -4x - 3y + 3z=20\end{cases}$</td><td>$(-5, 0, 0)$</td><td></td></tr><tr><td>8</td><td>207</td><td>$\text{Solve } \begin{cases} -2x + y + z=6\\ x - y - 2z=-8\\ x - 2y - z=-10\end{cases}$</td><td>$(0, 4, 2)$</td><td></td></tr><tr><td>16</td><td>101</td><td>$\text{Solve } \begin{cases} -5x - y - 6z=37\\ -x + 6y - 5z=35\\ -6x - 5y + z=4\end{cases}$</td><td>$(-3, 2, -4)$</td><td></td></tr><tr><td>16</td><td>207</td><td>$\text{Solve } \begin{cases} 5x - 5y - z=-16\\ -5x + y + 5z=-24\\ -x + 5y + 5z=8\end{cases}$</td><td>$(2, 6, -4)$</td><td></td></tr><tr><td>22</td><td>101</td><td>$\text{Solve } \begin{cases} 4x + y - 7z=35\\ x + 7y + 4z=33\\ -7x + 4y - z=32\end{cases}$</td><td>$(0, 7, -4)$</td><td></td></tr><tr><td>22</td><td>207</td><td>$\text{Solve } \begin{cases} 3x + 3y + 3z=36\\ 3x - 3y + 3z=0\\ 3x + 3y - 3z=18\end{cases}$</td><td>$(3, 6, 3)$</td><td></td></tr></tbody></table>
+<p>Opt-out flag used: <code>none (hand generator)</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Intermediate Algebra 2e §4.4</td><td>https://openstax.org/books/intermediate-algebra-2e/pages/4-4-solve-systems-of-equations-with-three-variables</td><td>Elimination on 3×3</td></tr><tr><td>OpenStax College Algebra 2e §11.1</td><td>https://openstax.org/books/college-algebra-2e/pages/11-1-systems-of-linear-equations-two-variables</td><td>CA extends to three variables</td></tr></tbody></table>
+<h2>Variety notes / UNCLEAR flag</h2>
+<p>Old path shapes recorded above; OpenStax frames win for WP stories.</p>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Variety:</strong> Unique integer solutions only in samples — OpenStax §4.4 also has no-solution / infinite; not yet in ladder.</li>
+<li><strong>Difficulty scaling:</strong> Real — coeffs grow D=0→22; elimination chain length is the hardness (honest).</li>
+<li><strong>OpenStax:</strong> IA §4.4 cite matches; CA §11.1 is two-var — keep IA as primary.</li>
+<li><strong>Shipped:</strong> Gallery <code>a2_system_three_variables</code> / <code>LinearSystem3</code> — clear enough; no graph deferral.</li>
+</ul>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<ul>
+<li><strong>Reuse:</strong> <code>LinearSystem3</code> / systems engine (gallery wired).</li>
+<li><strong>New:</strong> not required for unique-solution spine.</li>
+<li><strong>Optional later:</strong> special-case systems (0 / ∞ solutions) as format unlock.</li>
+</ul></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>LinearSystem3</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} -2x - y + 2z=13\\ -x - 2y - 2z=5\\ 2x - 2y + z=2\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(-3, -3, 2)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>LinearSystem3</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} 3x + 2y + 3z=-6\\ 2x - 3y + 3z=-3\\ 3x + 3y - 2z=-11\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(-3, 0, 1)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>LinearSystem3</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} -2x - y + 2z=3\\ -x - 2y - 2z=6\\ 2x - 2y + z=6\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(0, -3, 0)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>LinearSystem3</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} 2x - 4y + 4z=-12\\ -4x - 4y + 2z=-6\\ 4x + 2y + 4z=14\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(-2, 5, 3)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>LinearSystem3</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} -x + 3y - z=10\\ 3x + y - z=10\\ -x - y - 3z=12\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(1, 2, -5)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>LinearSystem3</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} -2x + 4y - 5z=-11\\ 4x + 5y - 2z=-27\\ -5x - 2y - 4z=10\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(-4, -1, 3)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>LinearSystem3</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} 2x + 6y - 6z=50\\ 6x + 6y + 2z=22\\ -6x + 2y - 6z=26\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(1, 4, -4)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>LinearSystem3</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} 2x - y - 6z=-25\\ -x + 6y + 2z=12\\ -6x + 2y + z=-28\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(6, 1, 6)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>LinearSystem3</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} -4x - 2y - 5z=34\\ -2x + 5y - 4z=26\\ -5x - 4y + 2z=-7\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(-1, 0, -6)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'>LinearSystem3</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} x - 3y - 5z=25\\ -3x + 5y + z=3\\ -5x + y + 3z=-41\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(5, 5, -7)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'>LinearSystem3</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} 7x + 3y - 2z=35\\ 3x + 2y + 7z=50\\ -2x + 7y - 3z=15\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(4, 5, 4)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'>LinearSystem3</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Solve } \begin{cases} -4x - 4y + 8z=24\\ -4x - 8y - 4z=16\\ 8x - 4y + 4z=-72\end{cases}$$</div><div class='math'><div class='lab'>Answer</div>$$(-8, 2, 0)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>LinearSystem3</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>systems</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables</code></p></article>
+</body></html>

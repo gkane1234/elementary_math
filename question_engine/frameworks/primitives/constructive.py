@@ -2117,16 +2117,33 @@ def _poly_div_linear(p: dict[int, Fraction], root: Fraction) -> dict[int, Fracti
 def _fraction_latex(
     num: dict[int, Fraction], den: dict[int, Fraction], var: SampledVariable
 ) -> tuple[str, str]:
+    """Render ``num/den`` with default rational display polish when applicable.
+
+    Constant nested ``(p/q)/poly`` absorbs into ``p/(q·poly)`` under the
+    default ``standard_rational`` preset. Does not distribute dens.
+    """
+    from question_engine.frameworks.primitives.rational_display import (
+        apply_leading_den_coef,
+        plan_fraction_display,
+    )
+
     # Normalize leading den > 0
     if den:
         lead = den[max(den)]
         if lead < 0:
             num = _poly_scale(num, Fraction(-1))
             den = _poly_scale(den, Fraction(-1))
-    nl, nt = _render_poly_dict(num, var)
-    dl, dt = _render_poly_dict(den, var)
-    if den == {0: Fraction(1)}:
+
+    den_present = bool(den) and den != {0: Fraction(1)}
+    # Dummy dens token only gates absorb (needs non-empty dens); body from den.
+    plan = plan_fraction_display(num, (True,) if den_present else ())
+    nl, nt = _render_poly_dict(plan.num, var)
+    if not den_present:
         return nl, nt
+    dl, dt = _render_poly_dict(den, var)
+    if plan.leading_den_coef != 1:
+        dl = apply_leading_den_coef(plan.leading_den_coef, dl, config=plan.config)
+        dt = f"{plan.leading_den_coef}*({dt})"
     return rf"\frac{{{nl}}}{{{dl}}}", f"({nt})/({dt})"
 
 

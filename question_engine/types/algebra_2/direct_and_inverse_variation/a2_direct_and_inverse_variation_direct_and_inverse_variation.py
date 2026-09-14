@@ -1,10 +1,3 @@
-"""A2 direct and inverse variation — framework-backed with variation settings profile."""
+"""A2 direct/inverse variation — VariationEq via primitive_a2 (OpenStax EA §8.9)."""
 
-from question_engine.frameworks.linear import DirectVariationFramework
-from question_engine.types._linear_type import register_linear_type
-
-register_linear_type(
-    "a2_direct_and_inverse_variation_direct_and_inverse_variation",
-    DirectVariationFramework(),
-    profile="variation",
-)
+# Catalog + primitive_a2; do not re-bind DirectVariationFramework.

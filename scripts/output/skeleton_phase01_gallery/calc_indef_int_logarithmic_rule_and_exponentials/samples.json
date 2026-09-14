@@ -1,0 +1,2173 @@
+{
+  "section": {
+    "slug": "calc_indef_int_logarithmic_rule_and_exponentials",
+    "title": "Integral \u2014 ln / exp",
+    "pattern": "",
+    "engine": "integrals",
+    "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "Forward ln/exp forms. OpenStax Vol 1 \u00a75.6 / Vol 2."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{3}{3x + 3}\\,dx",
+      "answer_latex": "\\ln|3x + 3|+C",
+      "skeleton_pattern": "",
+      "form_id": "ln_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "ln_linear"
+        ],
+        [
+          "openstax_form",
+          "ln_linear"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln_linear",
+        "structure_id": "integral_log_exp:ln_linear",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "ln_linear"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 13,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln_linear",
+        "construction": "forward",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "ln_linear",
+        "form_id": "ln_linear",
+        "openstax_form": "ln_linear",
+        "generation_settings": {
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\int 3^{x}\\,dx",
+      "answer_latex": "\\frac{3^{x}}{\\ln 3}+C",
+      "skeleton_pattern": "",
+      "form_id": "base_a",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "base_a"
+        ],
+        [
+          "openstax_form",
+          "base_a"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "base_a",
+        "structure_id": "integral_log_exp:base_a",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "exp"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "base_a"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 21,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "base_a",
+        "construction": "forward",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "base_a",
+        "form_id": "base_a",
+        "openstax_form": "base_a",
+        "generation_settings": {
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
+      "answer_latex": "\\ln|x|+C",
+      "skeleton_pattern": "",
+      "form_id": "ln",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "ln"
+        ],
+        [
+          "openstax_form",
+          "ln"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln",
+        "structure_id": "integral_log_exp:ln",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 3,
+          "term_count_max": 1,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "ln"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 3,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 8,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln",
+        "construction": "forward",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "ln",
+        "form_id": "ln",
+        "openstax_form": "ln",
+        "generation_settings": {
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{3}{3x + 3}\\,dx",
+      "answer_latex": "\\ln|3x + 3|+C",
+      "skeleton_pattern": "",
+      "form_id": "ln_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "ln_linear"
+        ],
+        [
+          "openstax_form",
+          "ln_linear"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln_linear",
+        "structure_id": "integral_log_exp:ln_linear",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "ln_linear"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 13,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln_linear",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "ln_linear",
+        "form_id": "ln_linear",
+        "openstax_form": "ln_linear",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int 3^{x}\\,dx",
+      "answer_latex": "\\frac{3^{x}}{\\ln 3}+C",
+      "skeleton_pattern": "",
+      "form_id": "base_a",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "base_a"
+        ],
+        [
+          "openstax_form",
+          "base_a"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "base_a",
+        "structure_id": "integral_log_exp:base_a",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "exp"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "base_a"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 21,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "base_a",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "base_a",
+        "form_id": "base_a",
+        "openstax_form": "base_a",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
+      "answer_latex": "\\ln|x|+C",
+      "skeleton_pattern": "",
+      "form_id": "ln",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "ln"
+        ],
+        [
+          "openstax_form",
+          "ln"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln",
+        "structure_id": "integral_log_exp:ln",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 2,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "ln"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 8,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "ln",
+        "form_id": "ln",
+        "openstax_form": "ln",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{3}{3x + 2}\\,dx",
+      "answer_latex": "\\ln|3x + 2|+C",
+      "skeleton_pattern": "",
+      "form_id": "ln_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "ln_linear"
+        ],
+        [
+          "openstax_form",
+          "ln_linear"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln_linear",
+        "structure_id": "integral_log_exp:ln_linear",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "ln_linear"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 1,
+          "answer_len": 13,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln_linear",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 8.5,
+        "wrappers_applied": [],
+        "core_form_id": "ln_linear",
+        "form_id": "ln_linear",
+        "openstax_form": "ln_linear",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int 3^{x}\\,dx",
+      "answer_latex": "\\frac{3^{x}}{\\ln 3}+C",
+      "skeleton_pattern": "",
+      "form_id": "base_a",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "base_a"
+        ],
+        [
+          "openstax_form",
+          "base_a"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "base_a",
+        "structure_id": "integral_log_exp:base_a",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "exp"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "base_a"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 1,
+          "answer_len": 21,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "base_a",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 8.5,
+        "wrappers_applied": [],
+        "core_form_id": "base_a",
+        "form_id": "base_a",
+        "openstax_form": "base_a",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
+      "answer_latex": "\\ln|x|+C",
+      "skeleton_pattern": "",
+      "form_id": "ln",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "ln"
+        ],
+        [
+          "openstax_form",
+          "ln"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln",
+        "structure_id": "integral_log_exp:ln",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "ln"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 1,
+          "answer_len": 8,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 8.5,
+        "wrappers_applied": [],
+        "core_form_id": "ln",
+        "form_id": "ln",
+        "openstax_form": "ln",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\int \\frac{3}{3x - 2}\\,dx",
+      "answer_latex": "\\ln|3x - 2|+C",
+      "skeleton_pattern": "",
+      "form_id": "ln_linear",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "ln_linear"
+        ],
+        [
+          "openstax_form",
+          "ln_linear"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln_linear",
+        "structure_id": "integral_log_exp:ln_linear",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "ln_linear"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 1,
+          "answer_len": 13,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln_linear",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 14.5,
+        "wrappers_applied": [],
+        "core_form_id": "ln_linear",
+        "form_id": "ln_linear",
+        "openstax_form": "ln_linear",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\int 3^{x}\\,dx",
+      "answer_latex": "\\frac{3^{x}}{\\ln 3}+C",
+      "skeleton_pattern": "",
+      "form_id": "base_a",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "base_a"
+        ],
+        [
+          "openstax_form",
+          "base_a"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "base_a",
+        "structure_id": "integral_log_exp:base_a",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "exp"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "base_a"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 1,
+          "answer_len": 21,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "base_a",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 14.5,
+        "wrappers_applied": [],
+        "core_form_id": "base_a",
+        "form_id": "base_a",
+        "openstax_form": "base_a",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_logarithmic_rule_and_exponentials",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
+      "answer_latex": "\\ln|x|+C",
+      "skeleton_pattern": "",
+      "form_id": "ln",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "ln"
+        ],
+        [
+          "openstax_form",
+          "ln"
+        ],
+        [
+          "construction",
+          "forward"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "ln",
+        "structure_id": "integral_log_exp:ln",
+        "technique": "ln_exp",
+        "tricks_required": [
+          "ln_exp"
+        ],
+        "methods_used": [
+          "ln_exp"
+        ],
+        "function_classes": [
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_exp_log"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_log_exp",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_ln_exp",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp"
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "allow_trig": false,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 22.0,
+          "construction": "forward",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "ln_exp",
+                "input_kind": "1",
+                "transform": "sample_ln_exp_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "ln_exp"
+            ],
+            "length": 1
+          },
+          "technique": "ln_exp",
+          "family": "ln"
+        },
+        "effort_features": {
+          "technique": "ln_exp",
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 1,
+          "answer_len": 8,
+          "nest_depth": 0,
+          "pack": "integral_ln_exp",
+          "methods": [
+            "ln_exp"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "ln_exp",
+              "input_kind": "1",
+              "transform": "sample_ln_exp_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "ln_exp"
+          ],
+          "length": 1
+        },
+        "shape_id": "ln",
+        "construction": "forward",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 14.5,
+        "wrappers_applied": [],
+        "core_form_id": "ln",
+        "form_id": "ln",
+        "openstax_form": "ln",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    }
+  ],
+  "failures": []
+}

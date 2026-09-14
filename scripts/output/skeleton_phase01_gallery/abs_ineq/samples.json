@@ -1,0 +1,2064 @@
+{
+  "section": {
+    "slug": "abs_ineq",
+    "title": "AbsInequality \u2014 compound + number line",
+    "pattern": "AbsInequality",
+    "engine": "equation_skeleton",
+    "type_id": "absolute_value_inequalities",
+    "aliases": [
+      "a2_equations_and_inequalities_absolute_value_inequalities"
+    ],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "blurb": "D=0 is $|x|<2$ or $|x+b|<k$ (a=1). D\u22658 is $|ax+b|\\ge k$ with $|a|\\ge 2$, matching old medium linear. Number line on the answer. Opt out with <code>use_sample_absolute_value_inequality=True</code>."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Solve: } \\left|x - 1\\right| < 1",
+      "answer_latex": "(0, 2)",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "1"
+        ],
+        [
+          "inner_b",
+          "-1"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "both"
+        ],
+        [
+          "nl_boundary",
+          0.0
+        ],
+        [
+          "nl_boundary_high",
+          2.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "chain",
+        "upgrades": [
+          "abs_ineq",
+          "chain",
+          "ft:0"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "<",
+        "k": "1",
+        "inner_a": "1",
+        "inner_b": "-1",
+        "lo": "0",
+        "hi": "2",
+        "lo_inclusive": false,
+        "hi_inclusive": false,
+        "number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 2.0,
+          "inclusive_high": false
+        },
+        "graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": true,
+          "allow_shifted": true,
+          "allow_linear": false,
+          "allow_abs_plus_constant": false,
+          "allow_abs_vs_linear": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": false,
+          "allow_gte": false,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Solve: } \\left|x - 2\\right| < 5",
+      "answer_latex": "(-3, 7)",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "1"
+        ],
+        [
+          "inner_b",
+          "-2"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "both"
+        ],
+        [
+          "nl_boundary",
+          -3.0
+        ],
+        [
+          "nl_boundary_high",
+          7.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "2",
+            "d": 0.0,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "chain",
+        "upgrades": [
+          "abs_ineq",
+          "chain",
+          "ft:0"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "<",
+        "k": "5",
+        "inner_a": "1",
+        "inner_b": "-2",
+        "lo": "-3",
+        "hi": "7",
+        "lo_inclusive": false,
+        "hi_inclusive": false,
+        "number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": -3.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 7.0,
+          "inclusive_high": false
+        },
+        "graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": true,
+          "allow_shifted": true,
+          "allow_linear": false,
+          "allow_abs_plus_constant": false,
+          "allow_abs_vs_linear": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": false,
+          "allow_gte": false,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\text{Solve: } \\left|x\\right| < 1",
+      "answer_latex": "(-1, 1)",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          0
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "1"
+        ],
+        [
+          "inner_b",
+          "0"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "both"
+        ],
+        [
+          "nl_boundary",
+          -1.0
+        ],
+        [
+          "nl_boundary_high",
+          1.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 0.0,
+        "spend": {
+          "numbers": 0.0,
+          "variable": 0.0,
+          "inequalities": 0.0
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.0,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.0,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "chain",
+        "upgrades": [
+          "abs_ineq",
+          "chain",
+          "ft:0"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "<",
+        "k": "1",
+        "inner_a": "1",
+        "inner_b": "0",
+        "lo": "-1",
+        "hi": "1",
+        "lo_inclusive": false,
+        "hi_inclusive": false,
+        "number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": -1.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 1.0,
+          "inclusive_high": false
+        },
+        "graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": true,
+          "allow_shifted": true,
+          "allow_linear": false,
+          "allow_abs_plus_constant": false,
+          "allow_abs_vs_linear": false,
+          "coef_min": -5,
+          "coef_max": 5,
+          "integer_only": true,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": false,
+          "allow_gte": false,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Solve: } \\left|-2x + 2\\right| < 8",
+      "answer_latex": "(-3, 5)",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "-2"
+        ],
+        [
+          "inner_b",
+          "2"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "both"
+        ],
+        [
+          "nl_boundary",
+          -3.0
+        ],
+        [
+          "nl_boundary_high",
+          5.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.655,
+          "variable": 0.637,
+          "inequalities": 6.708
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.6371625319041178,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.6371625319041178,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.637163 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-1",
+            "d": 0.6551778390838696,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.6551778390838696,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.655178 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "chain",
+        "upgrades": [
+          "abs_ineq",
+          "chain",
+          "ft:0"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "<",
+        "k": "8",
+        "inner_a": "-2",
+        "inner_b": "2",
+        "lo": "-3",
+        "hi": "5",
+        "lo_inclusive": false,
+        "hi_inclusive": false,
+        "number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": -3.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 5.0,
+          "inclusive_high": false
+        },
+        "graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": false,
+          "allow_shifted": false,
+          "allow_linear": true,
+          "allow_abs_plus_constant": false,
+          "allow_abs_vs_linear": false,
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": true,
+          "allow_gte": true,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Solve: } \\left|-3x + 6\\right| < 15",
+      "answer_latex": "(-3, 7)",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "-3"
+        ],
+        [
+          "inner_b",
+          "6"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "both"
+        ],
+        [
+          "nl_boundary",
+          -3.0
+        ],
+        [
+          "nl_boundary_high",
+          7.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 0.194,
+          "variable": 0.448,
+          "inequalities": 7.359
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.44792848098459526,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.44792848098459526,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.447928 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 0.19350663405422858,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.19350663405422858,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.193507 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "chain",
+        "upgrades": [
+          "abs_ineq",
+          "chain",
+          "ft:0"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "<",
+        "k": "15",
+        "inner_a": "-3",
+        "inner_b": "6",
+        "lo": "-3",
+        "hi": "7",
+        "lo_inclusive": false,
+        "hi_inclusive": false,
+        "number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": -3.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 7.0,
+          "inclusive_high": false
+        },
+        "graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": false,
+          "allow_shifted": false,
+          "allow_linear": true,
+          "allow_abs_plus_constant": false,
+          "allow_abs_vs_linear": false,
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": true,
+          "allow_gte": true,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Solve: } \\left|4x\\right| \\le 16",
+      "answer_latex": "[-4, 4]",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          2
+        ],
+        [
+          "format_tier",
+          0
+        ],
+        [
+          "inner_a",
+          "4"
+        ],
+        [
+          "inner_b",
+          "0"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "both"
+        ],
+        [
+          "nl_boundary",
+          -4.0
+        ],
+        [
+          "nl_boundary_high",
+          4.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 2.702,
+          "variable": 2.514,
+          "inequalities": 2.784
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 2.51367228303639,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 2.51367228303639,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=2.51367 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "4",
+            "d": 2.702118076839401,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 2.702118076839401,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=2.70212 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "chain",
+        "upgrades": [
+          "abs_ineq",
+          "chain",
+          "ft:0"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "\\le",
+        "k": "16",
+        "inner_a": "4",
+        "inner_b": "0",
+        "lo": "-4",
+        "hi": "4",
+        "lo_inclusive": true,
+        "hi_inclusive": true,
+        "number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": -4.0,
+          "direction": "both",
+          "inclusive": true,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 4.0,
+          "inclusive_high": true
+        },
+        "graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": false,
+          "allow_shifted": false,
+          "allow_linear": true,
+          "allow_abs_plus_constant": false,
+          "allow_abs_vs_linear": false,
+          "coef_min": -12,
+          "coef_max": 12,
+          "integer_only": true,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": true,
+          "allow_gte": true,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Solve: } \\left|3x - 3\\right| \\ge 9",
+      "answer_latex": "(-\\infty,-2] \\cup [4,\\infty)",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "inner_a",
+          "3"
+        ],
+        [
+          "inner_b",
+          "-3"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "outside"
+        ],
+        [
+          "nl_boundary",
+          -2.0
+        ],
+        [
+          "nl_boundary_high",
+          4.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 1.31,
+          "variable": 1.274,
+          "inequalities": 13.415
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.2743250638082355,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.2743250638082355,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.27433 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 1.3103556781677392,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 1.3103556781677392,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.31036 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "or",
+        "upgrades": [
+          "abs_ineq",
+          "or",
+          "ft:2"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "\\ge",
+        "k": "9",
+        "inner_a": "3",
+        "inner_b": "-3",
+        "lo": "-2",
+        "hi": "4",
+        "lo_inclusive": true,
+        "hi_inclusive": true,
+        "number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -12.0,
+          "max_value": 12.0,
+          "boundary": -2.0,
+          "direction": "outside",
+          "inclusive": true,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 4.0,
+          "inclusive_high": true
+        },
+        "graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": false,
+          "allow_shifted": false,
+          "allow_linear": true,
+          "allow_abs_plus_constant": true,
+          "allow_abs_vs_linear": true,
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": true,
+          "allow_gte": true,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\text{Solve: } \\left|-3x + 6\\right| < 27",
+      "answer_latex": "(-7, 11)",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "inner_a",
+          "-3"
+        ],
+        [
+          "inner_b",
+          "6"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "both"
+        ],
+        [
+          "nl_boundary",
+          -7.0
+        ],
+        [
+          "nl_boundary_high",
+          11.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 0.387,
+          "variable": 0.896,
+          "inequalities": 14.717
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.8958569619691905,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.8958569619691905,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.895857 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "-3",
+            "d": 0.38701326810845715,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.38701326810845715,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.387013 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "chain",
+        "upgrades": [
+          "abs_ineq",
+          "chain",
+          "ft:2"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "<",
+        "k": "27",
+        "inner_a": "-3",
+        "inner_b": "6",
+        "lo": "-7",
+        "hi": "11",
+        "lo_inclusive": false,
+        "hi_inclusive": false,
+        "number_line_spec": {
+          "min_value": -13.0,
+          "max_value": 13.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -13.0,
+          "max_value": 13.0,
+          "boundary": -7.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 11.0,
+          "inclusive_high": false
+        },
+        "graph_spec": {
+          "x_min": -13.0,
+          "x_max": 13.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -13.0,
+          "x_max": 13.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": false,
+          "allow_shifted": false,
+          "allow_linear": true,
+          "allow_abs_plus_constant": true,
+          "allow_abs_vs_linear": true,
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": true,
+          "allow_gte": true,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "absolute_value_inequalities",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Solve: } \\left|7x + 14\\right| \\le 91",
+      "answer_latex": "[-15, 11]",
+      "skeleton_pattern": "AbsInequality",
+      "form_id": "absolute_value_inequality",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "AbsInequality"
+        ],
+        [
+          "primitive_engine",
+          "equation_skeleton"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "absolute_value_inequality"
+        ],
+        [
+          "species",
+          "abs_ineq"
+        ],
+        [
+          "numeric_tier",
+          3
+        ],
+        [
+          "format_tier",
+          2
+        ],
+        [
+          "inner_a",
+          "7"
+        ],
+        [
+          "inner_b",
+          "14"
+        ],
+        [
+          "construction",
+          "abs_to_compound"
+        ],
+        [
+          "nl_blank_prompt",
+          true
+        ],
+        [
+          "nl_direction",
+          "both"
+        ],
+        [
+          "nl_boundary",
+          -15.0
+        ],
+        [
+          "nl_boundary_high",
+          11.0
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "difficulty": 16.0,
+        "spend": {
+          "numbers": 5.404,
+          "variable": 5.027,
+          "inequalities": 5.568
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 5.02734456607278,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 5.02734456607278,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": true,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=5.02734 eligible=['only_x'] constraints={'only_x': True, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "7",
+            "d": 5.404236153678802,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 5.404236153678802,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": true,
+                "allow_negatives": true,
+                "allow_fractions": false,
+                "allow_decimals": false,
+                "exclude_zero": false
+              },
+              "note": "auto from D=5.40424 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': True, 'allow_negatives': True, 'allow_fractions': False, 'allow_decimals': False, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 1,
+          "allow_var_var_product": false,
+          "allow_abs": true,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "compound_style": "chain",
+        "upgrades": [
+          "abs_ineq",
+          "chain",
+          "ft:2"
+        ],
+        "skeleton_pattern": "AbsInequality",
+        "species": "abs_ineq",
+        "numeric_tier": 3,
+        "format_tier": 2,
+        "construction": "abs_to_compound",
+        "form_id": "absolute_value_inequality",
+        "op": "\\le",
+        "k": "91",
+        "inner_a": "7",
+        "inner_b": "14",
+        "lo": "-15",
+        "hi": "11",
+        "lo_inclusive": true,
+        "hi_inclusive": true,
+        "number_line_spec": {
+          "min_value": -17.0,
+          "max_value": 17.0,
+          "boundary": 0.0,
+          "direction": "both",
+          "inclusive": false,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": true
+        },
+        "answer_number_line_spec": {
+          "min_value": -17.0,
+          "max_value": 17.0,
+          "boundary": -15.0,
+          "direction": "both",
+          "inclusive": true,
+          "tick_interval": 1.0,
+          "show_zero": true,
+          "blank": false,
+          "boundary_high": 11.0,
+          "inclusive_high": true
+        },
+        "graph_spec": {
+          "x_min": -17.0,
+          "x_max": 17.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "answer_graph_spec": {
+          "x_min": -17.0,
+          "x_max": 17.0,
+          "y_min": -1,
+          "y_max": 1,
+          "functions": [],
+          "points": [],
+          "show_grid": false,
+          "show_points": false
+        },
+        "graph_role": "blank",
+        "generation_settings": {
+          "include_graph_metadata": true,
+          "allow_simple": false,
+          "allow_shifted": false,
+          "allow_linear": true,
+          "allow_abs_plus_constant": true,
+          "allow_abs_vs_linear": true,
+          "coef_min": -20,
+          "coef_max": 20,
+          "integer_only": false,
+          "allow_lt": true,
+          "allow_gt": true,
+          "allow_lte": true,
+          "allow_gte": true,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Word problem — mixture (percent / cost / find amount) — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Word problem — mixture (percent / cost / find amount)</h1>
+<p class="sub"><code>mixture_word_problems</code> · live <code>_generate_for_type</code>
+ · pattern <strong>MixtureWP</strong>
+ · 16/16 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313, 419</p>
+<p class="sub">OpenStax EA §3.3 / IA §2.4. D=0 blend-percent with small ints. High D can ask for an unknown amount given a target mix. Coins/tickets stay on the coin leaf.</p>
+
+<div class='notes-block'><h1><code>mixture_word_problems</code> — Mixture word problems</h1>
+<ul>
+<li><strong>Course:</strong> Algebra 1 (A1 catalog)</li>
+<li><strong>Category:</strong> Algebra 1 — Equations</li>
+<li><strong>Generator:</strong> <code>wp_mixture</code></li>
+<li><strong>Already on skeleton?</strong> no</li>
+<li><strong>No skeleton opt-out (old path is the live default).</strong></li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<p>Story first: two concentrations / ticket prices / dry mix. D=0 one easy percent-mix or ticket frame with small ints. High D: find an amount given the blend percent. Never dump the equation. Not a systems leaf (EA 5.5).</p>
+<h2>What old path actually produced</h2>
+<p>Live <code>_generate_for_type</code> at D=0 / 8 / 16 / 22 (seeds 101 and 207).</p>
+<h3>D=0</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Quinn mixes 6 fl oz of a 75\% alcohol solution with 4 fl oz of a 10\% alcohol solution. What is the concentration of the new mixture?}</code> - answer: <code>49\%</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Finn mixes 2 cubic yards of soil that is 50\% sand with 3 cubic yards of soil that is 25\% sand. What percent of the mixture is sand?}</code> - answer: <code>35\%</code></p>
+<h3>D=8</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Lena mixes 6 fl oz of a 15\% alcohol solution with 4 fl oz of a 75\% alcohol solution. What is the concentration of the new mixture?}</code> - answer: <code>39\%</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Maya mixes 4 lb of nuts that are 60\% peanuts with 6 lb of nuts that are 25\% peanuts. What percent of the new mixture is peanuts?}</code> - answer: <code>39\%</code></p>
+<h3>D=16</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Quinn mixes 21 fl oz of a 35\% alcohol solution with 15 fl oz of a 10\% alcohol solution. What is the concentration of the new mixture?}</code> - answer: <code>24.6\%</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Wesley mixes 9 cubic yards of soil that is 50\% sand with 4 cubic yards of soil that is 25\% sand. What percent of the mixture is sand?}</code> - answer: <code>42.3\%</code></p>
+<h3>D=22</h3>
+<ul>
+<li>seed 101:</li>
+</ul>
+<p>- prompt: <code>\text{Quinn mixes 21 fl oz of a 35\% alcohol solution with 15 fl oz of a 10\% alcohol solution. What is the concentration of the new mixture?}</code> - answer: <code>24.6\%</code></p>
+<ul>
+<li>seed 207:</li>
+</ul>
+<p>- prompt: <code>\text{Wesley mixes 9 cubic yards of soil that is 50\% sand with 4 cubic yards of soil that is 25\% sand. What percent of the mixture is sand?}</code> - answer: <code>42.3\%</code></p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<h3>Elementary Algebra 2e — 3.3 Solve Mixture Applications</h3>
+<ul>
+<li>https://openstax.org/books/elementary-algebra-2e/pages/3-3-solve-mixture-applications</li>
+<li>Shape: Coins / tickets / percent solutions as one linear equation.</li>
+</ul>
+<h3>Intermediate Algebra 2e — 2.4 Solve Mixture and Uniform Motion Applications</h3>
+<ul>
+<li>https://openstax.org/books/intermediate-algebra-2e/pages/2-4-solve-mixture-and-uniform-motion-applications</li>
+<li>Mined examples:</li>
+</ul>
+<p>- Example 2.39: Jesse has $3.02 worth of pennies and nickels in his piggy bank. The number of nickels is three more than eight times the number of pennies. How many nickels and how many pennies does Jesse have? - Example 2.40: Danny paid $15.75 for stamps. The number of 49-cent stamps was five less than three times the number of 35-cent stamps. How many 49-cent stamps and how many 35-cent stamps did Danny buy? - Example 2.41: A whale-watching ship had 40 paying passengers on board. The total revenue collected from tickets was $1,196. Full-fare passengers paid $32 each and reduced-fare passengers paid $26 each. How many full-fare passengers and how many reduced-fare passengers were on the ship? - Example 2.42: Henning is mixing raisins and nuts to make 25 pounds of trail mix. Raisins cost $4.50 a pound and nuts cost $8 a pound. If Henning wants his cost for the trail mix to be $6.60 a pound, how many pounds of raisins and how many pounds of nuts should he use?</p>
+<h2>Variety notes</h2>
+<p>Stories are real (alcohol / soil / nuts) — not a dump. Ask-kind is only “what is the blend percent?”; OpenStax IA 2.4 / EA 3.3 also solve for an unknown amount given a target mix. Keep coins/tickets on the coin leaf; two-variable mix on systems WP (EA 5.5).</p>
+<h2>Proposed engine (reuse vs new)</h2>
+<p>Reuse MixtureProblemFramework + OpenStax story frames (wp_packaging style). Algebra stays one linear mix equation — not systems.</p>
+<p>_Proposal only. No engine implementation in this notes pass._</p></div>
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>MixtureWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Quinn mixes 6 fl oz of a 75\% alcohol solution with 4 fl oz of a 10\% alcohol solution. What is the concentration of the new mixture?}$$</div><div class='math'><div class='lab'>Answer</div>$$49\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_alcohol_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>MixtureWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Finn mixes 2 cubic yards of soil that is 50\% sand with 3 cubic yards of soil that is 25\% sand. What percent of the mixture is sand?}$$</div><div class='math'><div class='lab'>Answer</div>$$35\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_soil_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>MixtureWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Kai mixes 2 lb of nuts that are 25\% peanuts with 4 lb of nuts that are 10\% peanuts. What percent of the new mixture is peanuts?}$$</div><div class='math'><div class='lab'>Answer</div>$$15\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_nuts_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈0 · seed=419</strong> <span class='pat'>MixtureWP</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Kyle mixes 4 cubic yards of soil that is 60\% sand with 8 cubic yards of soil that is 30\% sand. What percent of the mixture is sand?}$$</div><div class='math'><div class='lab'>Answer</div>$$40\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_soil_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=101</strong> <span class='pat'>MixtureWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Lena mixes 6 fl oz of a 15\% alcohol solution with 4 fl oz of a 75\% alcohol solution. What is the concentration of the new mixture?}$$</div><div class='math'><div class='lab'>Answer</div>$$39\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_alcohol_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=207</strong> <span class='pat'>MixtureWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Parker mixes 3 fl oz of a 40\% alcohol solution with 12 fl oz of a 20\% alcohol solution. What is the concentration of the new mixture?}$$</div><div class='math'><div class='lab'>Answer</div>$$24\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_alcohol_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈8 · seed=313</strong> <span class='pat'>MixtureWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Julian mixes 6 cubic yards of soil that is 40\% sand with 12 cubic yards of soil that is 25\% sand. What percent of the mixture is sand?}$$</div><div class='math'><div class='lab'>Answer</div>$$30\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_soil_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈8 · seed=419</strong> <span class='pat'>MixtureWP</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jade mixes 3 fl oz of a 15\% alcohol solution with some 75\% alcohol solution. The new mixture is 55\% alcohol. How many fl oz of the 75\% solution did Jade add?}$$</div><div class='math'><div class='lab'>Answer</div>$$6$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_alcohol_find_amount</span></div><div class='kv'><span class='k'>ask</span><span class='v'>find_amount</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=101</strong> <span class='pat'>MixtureWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Quinn mixes 21 fl oz of a 35\% alcohol solution with 15 fl oz of a 10\% alcohol solution. What is the concentration of the new mixture?}$$</div><div class='math'><div class='lab'>Answer</div>$$24.6\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_alcohol_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈16 · seed=207</strong> <span class='pat'>MixtureWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Casey mixes 4 lb of nuts that are 15\% peanuts with 16 lb of nuts that are 70\% peanuts. What percent of the new mixture is peanuts?}$$</div><div class='math'><div class='lab'>Answer</div>$$59\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_nuts_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈16 · seed=313</strong> <span class='pat'>MixtureWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Ben mixes 17 cubic yards of soil that is 10\% sand with 20 cubic yards of soil that is 20\% sand. What percent of the mixture is sand?}$$</div><div class='math'><div class='lab'>Answer</div>$$15.4\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_soil_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈16 · seed=419</strong> <span class='pat'>MixtureWP</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jade mixes 8 fl oz of a 35\% alcohol solution with some 20\% alcohol solution. The new mixture is 30\% alcohol. How many fl oz of the 20\% solution did Jade add?}$$</div><div class='math'><div class='lab'>Answer</div>$$4$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_alcohol_find_amount</span></div><div class='kv'><span class='k'>ask</span><span class='v'>find_amount</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#13</span> <strong>D≈22 · seed=101</strong> <span class='pat'>MixtureWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Quinn mixes 21 fl oz of a 35\% alcohol solution with 15 fl oz of a 10\% alcohol solution. What is the concentration of the new mixture?}$$</div><div class='math'><div class='lab'>Answer</div>$$24.6\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_alcohol_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#14</span> <strong>D≈22 · seed=207</strong> <span class='pat'>MixtureWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Casey mixes 4 lb of nuts that are 15\% peanuts with 16 lb of nuts that are 70\% peanuts. What percent of the new mixture is peanuts?}$$</div><div class='math'><div class='lab'>Answer</div>$$59\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_nuts_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#15</span> <strong>D≈22 · seed=313</strong> <span class='pat'>MixtureWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Ben mixes 17 cubic yards of soil that is 10\% sand with 20 cubic yards of soil that is 20\% sand. What percent of the mixture is sand?}$$</div><div class='math'><div class='lab'>Answer</div>$$15.4\%$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_soil_blend</span></div><div class='kv'><span class='k'>ask</span><span class='v'>blend_percent</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+<article class='card'><header><span class='n'>#16</span> <strong>D≈22 · seed=419</strong> <span class='pat'>MixtureWP</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=419</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Jade mixes 8 fl oz of a 35\% alcohol solution with some 20\% alcohol solution. The new mixture is 30\% alcohol. How many fl oz of the 20\% solution did Jade add?}$$</div><div class='math'><div class='lab'>Answer</div>$$4$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>MixtureWP</span></div><div class='kv'><span class='k'>primitive_engine</span><span class='v'>wp_mixture</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>419</span></div><div class='kv'><span class='k'>frame_id</span><span class='v'>mix_alcohol_find_amount</span></div><div class='kv'><span class='k'>ask</span><span class='v'>find_amount</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>mixture_word_problems</code></p></article>
+</body></html>

@@ -341,6 +341,28 @@ def _build_three_operand_multiply(settings: dict) -> tuple[str, str]:
     return prompt, answer
 
 
+def _use_mul_div_cancel_skeleton(settings: dict) -> bool:
+    """MulDivCancel is the live default for ×÷ rationals.
+
+    Opt out (legacy hand factor pools):
+    - ``use_hand_muldiv=True`` / ``use_constructive_rational=True``
+    - ``use_mul_div_cancel_skeleton=False``
+    - ``skeleton_pattern`` in {hand, constructive, constructive_rational}
+    """
+    if bool(settings.get("use_hand_muldiv")) or bool(
+        settings.get("use_constructive_rational")
+    ):
+        return False
+    pat = str(settings.get("skeleton_pattern", "")).strip()
+    if pat in {"hand", "constructive", "Constructive", "constructive_rational"}:
+        return False
+    if "use_mul_div_cancel_skeleton" in settings:
+        return bool(settings.get("use_mul_div_cancel_skeleton"))
+    if pat in {"MulDivCancel", "mul_div_cancel"}:
+        return True
+    return True
+
+
 def build_rational_multiply_divide_prompt(settings: dict) -> tuple[str, str, str | None]:
     """Return (prompt_latex, kind, answer_latex|None)."""
     from question_engine.frameworks.primitives.rational_cancel import (
@@ -348,8 +370,47 @@ def build_rational_multiply_divide_prompt(settings: dict) -> tuple[str, str, str
         continuous_rational_term_count_max,
     )
 
+    caller_settings = settings
     settings = apply_continuous_rational_structure(settings)
     include_answer_key = bool(settings.get("include_answer_key", False))
+    operand_count = max(2, int(settings.get("operand_count", 2)))
+
+    # Skeleton lane handles 2-operand and 3+ multiply chains at high D.
+    if _use_mul_div_cancel_skeleton(settings):
+        from question_engine.frameworks.primitives import (
+            PRIM_NUMBERS,
+            PRIM_VARIABLE,
+            build_context,
+        )
+        from question_engine.frameworks.primitives.expression_policy import (
+            POLYNOMIAL_POLICY_DEFAULT,
+        )
+        from question_engine.frameworks.primitives.rational_skeleton import (
+            sample_mul_div_cancel,
+        )
+
+        ctx = build_context(
+            settings,
+            [PRIM_NUMBERS, PRIM_VARIABLE],
+            policy=POLYNOMIAL_POLICY_DEFAULT,
+            leaf_id=str(
+                settings.get("_leaf_id")
+                or settings.get("type_id")
+                or "rational_expression_multiply_divide"
+            ),
+        )
+        result = sample_mul_div_cancel(ctx)
+        meta = {
+            "primitive_engine": "rational_skeleton",
+            "mode": "rational multiply/divide",
+            **result.metadata,
+        }
+        # Stamp on caller-held dict (apply_continuous may return a copy).
+        caller_settings["_last_muldiv_meta"] = meta
+        settings["_last_muldiv_meta"] = meta
+        answer = result.answer_latex if include_answer_key else None
+        return result.prompt_latex, "rational multiply/divide", answer
+
     term_hi = continuous_rational_term_count_max(settings)
     if term_hi is not None:
         operand_count = max(2, int(settings.get("operand_count", 2)))
@@ -369,6 +430,12 @@ def build_rational_multiply_divide_prompt(settings: dict) -> tuple[str, str, str
     else:
         prompt, answer = _build_two_operand_problem(settings)
 
+    meta = {
+        "primitive_engine": "rational_expression_multiply_divide",
+        "mode": "rational multiply/divide",
+    }
+    caller_settings["_last_muldiv_meta"] = meta
+    settings["_last_muldiv_meta"] = meta
     return prompt, "rational multiply/divide", answer if include_answer_key else None
 
 
@@ -423,6 +490,7 @@ def generate_rational_expression_multiply_divide(
 
     def build() -> tuple[str, str, str | None]:
         local = dict(settings)
+        local["_leaf_id"] = str(topic or "")
         form_stamp: dict = {}
         if use_a2:
             from question_engine.frameworks.difficulty_budget import settings_difficulty
@@ -449,27 +517,36 @@ def generate_rational_expression_multiply_divide(
         if not include_answer_key:
             answer = None
         last["meta"] = {
-            "primitive_engine": "rational_expression_multiply_divide",
+            **(local.get("_last_muldiv_meta") or {}),
             "mode": kind,
             **form_stamp,
         }
+        if not last["meta"].get("primitive_engine"):
+            last["meta"]["primitive_engine"] = "rational_expression_multiply_divide"
+        # Nested division notation is the skill — keep display rules from flattening.
+        if "\\frac{\\frac" in prompt and "display_intent" not in last["meta"]:
+            last["meta"]["display_intent"] = "complex_fraction_skill"
+            last["meta"]["display_preset"] = "none"
         return prompt, kind, answer
 
     def metadata_builder(_p: str, _t: str, answer: str | None) -> dict:
-        return enrich_algebraic_meta(
-            last.get("meta"),
-            pack="structured_rational_muldiv",
-            generator="rational_expression_multiply_divide",
-            methods_used=["rational", "multiply_divide"],
-            answer=answer,
-            course_tag="a2" if use_a2 else "a1",
-        )
+        base = dict(last.get("meta") or {})
+        if use_a2:
+            return enrich_algebraic_meta(
+                base,
+                pack="structured_rational_muldiv",
+                generator="rational_expression_multiply_divide",
+                methods_used=["rational", "multiply_divide"],
+                answer=answer,
+                course_tag="a2",
+            )
+        return base
 
     return make_questions(
         topic,
         count,
         include_answer_key,
         build,
-        metadata_builder=metadata_builder if use_a2 else None,
+        metadata_builder=metadata_builder,
         settings=settings,
     )

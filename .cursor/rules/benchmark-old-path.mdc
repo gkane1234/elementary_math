@@ -1,0 +1,25 @@
+---
+description: Benchmark the old generator path before designing skeleton difficulty — emulate, don’t invent
+globs: question_engine/**/*.py,scripts/output/**/gen_examples.py
+alwaysApply: true
+---
+
+# Benchmark old path first
+
+When wiring or changing a question leaf’s **generation / difficulty**, copy the old problem shapes. Do not invent new ones.
+
+1. Find the old generator, opt-out flag, and `scripts/output/topic_fit/` gallery (if any).
+2. Live-generate the **old** path at D=0, 8, 16, 22 (`_generate_for_type` with the opt-out flag).
+3. Note real shapes (term counts, `a=1` vs `a≠1`, parens, graph vs solve, story vs dumped equation).
+4. Design difficulty only to reproduce those shapes on an **existing** skeleton core.
+5. D=0 must be as simple as old easy. Numeric hardness before format unlocks.
+6. If the old path is rich and a core cannot match it honestly, **leave the leaf** and document the skip.
+
+**Word-problem stories:** copy old **algebra shapes**; do **not** freeze story variety to a barren old Mad-Lib (e.g. bike-only rate). OpenStax-derived frames win for WP text — see `word-problem-frames.mdc`.
+
+After sampling old path, write `notes/<slug>.md` before designing the engine — see `topic-notes-process.mdc`.
+
+```python
+# Live old path (example)
+_generate_for_type(type_id, {**base, "use_sample_linear_equation": True, "difficulty": 0})
+```

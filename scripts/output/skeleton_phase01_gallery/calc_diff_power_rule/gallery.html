@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Diff — Power Rule — skeleton gallery</title>
+<style>
+body { font-family: Georgia, "Iowan Old Style", serif; margin: 1.25rem 1.75rem;
+  background: #f7f5f0; color: #1a1a1a; }
+h1 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+h2 { font-size: 1.05rem; margin-top: 1.25rem; }
+.sub { color: #555; font-size: 0.9rem; margin-bottom: 1rem; max-width: 52rem; }
+.nav a { margin-right: 0.85rem; }
+.card { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem; max-width: 54rem; }
+.card.fail { border-color: #c44; }
+.card.warn { border-color: #c80; }
+header { display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: baseline;
+  font-size: 0.88rem; margin-bottom: 0.45rem; }
+.n { color: #666; }
+.pat { color: #3a5a40; font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; }
+.tag { background: #efebe3; padding: 0.1rem 0.4rem; font-size: 0.78rem; }
+.tag.fid { background: #e6ebe8; }
+.tag.warn-tag { background: #f5e6d3; }
+.tag.band.low { background: #e8efe6; }
+.tag.band.mid { background: #dde8f0; }
+.tag.band.high { background: #e8dde8; }
+.math { margin: 0.4rem 0; }
+.lab { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; }
+.debug { margin-top: 0.55rem; padding-top: 0.45rem; border-top: 1px dashed #d8d2c4;
+  font-size: 0.82rem; }
+.kv { display: grid; grid-template-columns: 11rem 1fr; gap: 0.25rem 0.75rem; margin: 0.15rem 0; }
+.k { color: #666; }
+.v { word-break: break-word; font-family: ui-monospace, Consolas, monospace; font-size: 0.78rem; }
+.meta { font-size: 0.78rem; color: #555; margin-top: 0.35rem; }
+.fig { margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; border: 1px solid #eee; background: #fff; }
+code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; }
+ul.topics { line-height: 1.75; }
+.note { font-size: 0.88rem; color: #555; max-width: 52rem; margin-top: 1.25rem;
+  padding: 0.65rem 0.85rem; background: #f0ebe3; border: 1px solid #d8d2c4; }
+.notes-alert { background: #c62828; color: #fff; padding: 0.7rem 0.95rem;
+  font-weight: 700; margin: 0.85rem 0 1rem; max-width: 54rem; }
+.notes-block { background: #fff; border: 1px solid #d8d2c4; padding: 0.75rem 1rem;
+  margin-bottom: 1rem; max-width: 54rem; font-size: 0.92rem; }
+.notes-block h1 { font-size: 1.1rem; margin: 0 0 0.35rem; }
+.notes-block h2 { font-size: 1rem; margin: 0.85rem 0 0.35rem; }
+.notes-block h2:first-child { margin-top: 0; }
+.notes-block ul { margin: 0.35rem 0 0.5rem 1.2rem; }
+.notes-block p { margin: 0.35rem 0; }
+.notes-table { border-collapse: collapse; width: 100%; margin: 0.5rem 0 0.75rem;
+  font-size: 0.82rem; }
+.notes-table th, .notes-table td { border: 1px solid #d8d2c4; padding: 0.3rem 0.45rem;
+  text-align: left; vertical-align: top; }
+.notes-table th { background: #f3efe7; }
+.fig { max-width: 36rem; margin: 0.45rem 0; overflow-x: auto; }
+.fig svg { max-width: 100%; height: auto; }
+</style>
+<link rel="stylesheet" href="../../topic_fit/_assets/katex/katex.min.css"/>
+<script defer src="../../topic_fit/_assets/katex/katex.min.js"></script>
+<script defer src="../../topic_fit/_assets/katex/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+</head><body>
+<p class="nav"><a href="../index.html">← all types</a></p>
+<h1>Diff — Power Rule</h1>
+<p class="sub"><code>calc_diff_power_rule</code> · live <code>_generate_for_type</code>
+ · pattern <strong>Diff(Pow(H,n))</strong>
+ · 12/12 ok · D ladder 0, 8, 16, 22
+ · seeds 101, 207, 313</p>
+<p class="sub">First-derivative power / roots. OpenStax Calc Vol.1 §3.3. Higher order → <code>calc_diff_higher_order_derivatives</code>.</p>
+<p class='sub'>Also wired: <code>pc_power_rule_for_differentiation</code></p>
+<div class='notes-block'><h1>Notes — <code>calc_diff_power_rule</code> (<code>Power Rule</code>)</h1>
+<ul>
+<li><strong>Course:</strong> Calculus</li>
+<li><strong>Category:</strong> Calculus — Differentiation</li>
+<li><strong>Generator:</strong> <code>derivative_power_rule</code></li>
+<li><strong>Suggested family:</strong> other (calc limits / Diff)</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Status:</strong> shipped — Diff expr_skeleton</li>
+<li><strong>Generator:</strong> <code>derivative_power_rule</code></li>
+<li><strong>Remaining limits:</strong> Live on Diff <code>expr_skeleton</code> + derivatives.json forms. Gaps: allow_* checkboxes gate class unlocks; some leaves still stamp soft patterns; OpenStax mixed-rule drill richer than general pack at mid-D.</li>
+</ul>
+<h2>What the question should look like (D=0 vs high D)</h2>
+<ul>
+<li><strong>Skill:</strong> Differentiate polynomial / power / root expressions with the power rule (and sum).</li>
+<li><strong>D=0:</strong> Single monomial c x^n, e.g. d/dx(2x²).</li>
+<li><strong>High D (≈16–22):</strong> Fractional/negative powers, multi-term polys; stay first derivative on this leaf.</li>
+<li><strong>Must not:</strong> Product/quotient/trig as primary skill; second derivative belongs on higher-order leaf.</li>
+</ul>
+<h2>What old / live path actually produced (real latex, D=0/8/16/22)</h2>
+<p>Live <code>_generate_for_type</code> at default path (Diff leaves → <code>expr_skeleton</code> when form maps; limits → LimitSpec packs). No <code>use_sample_*</code> / Mad-Lib opt-out found for these generators.</p>
+<table class='notes-table'><thead><tr><th>D</th><th>seed</th><th>prompt_latex</th><th>answer_latex</th><th>shape notes</th></tr></thead><tbody><tr><td>0</td><td>101</td><td><code>$\text{Find }\frac{d}{dx}\left(2x^{2}\right)$</code></td><td><code>$2x^{1}\left(2\right)$</code></td><td>form=<code>power_poly</code>; skel=<code>Diff(Pow(H,n))</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>8</td><td>101</td><td><code>$\text{Find }\frac{d}{dx}\left(5x^{3} + 5x^{2} + x + 3\right)$</code></td><td><code>$3x^{2}\left(5\right) + 2x^{1}\left(5\right) + 1$</code></td><td>form=<code>power_root</code>; skel=<code>Diff(Pow(H,n)) roots</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>16</td><td>101</td><td><code>$\frac{d}{dx}\left[x^{\frac{5}{2}}\right]$</code></td><td><code>$\frac{5}{2}x^{\frac{3}{2}}$</code></td><td>form=<code>power_root</code>; skel=<code>Diff(Pow(H,n)) roots</code>; pack=<code>expr_skeleton</code></td></tr><tr><td>22</td><td>101</td><td><code>$\frac{d^{2}}{dx^{2}}\left[9x^{3} + 9x^{2} + 2x + 6\right]$</code></td><td><code>$2x^{1}\left(3\right)\left(9\right) + x^{0}\left(2\right)\left(9\right)$</code></td><td>form=<code>power_root</code>; skel=<code>Diff(Pow(H,n)) roots</code>; pack=<code>expr_skeleton</code></td></tr></tbody></table>
+<p>Opt-out flag used: _none — Diff/<code>expr_skeleton</code> is default when catalog form has FORM_PATTERNS entry_</p>
+<h2>OpenStax examples + chapter/section cites</h2>
+<table class='notes-table'><thead><tr><th>Cite</th><th>URL</th><th>What to copy (shape / frame, not wording)</th></tr></thead><tbody><tr><td>OpenStax Calculus Volume 1 §3.3 Differentiation Rules</td><td>https://openstax.org/books/calculus-volume-1/pages/3-3-differentiation-rules</td><td>power / sum / constant multiple</td></tr></tbody></table>
+<p>Local HTML / mining: <code>scripts/output/example_mining/calculus-volume-1/stage1/3-3-differentiation-rules.md; diff_skeleton_gallery/power_rule/</code></p>
+<h2>Variety notes / flags</h2>
+<p>Fixed — was: D=22 emitted d²/dx² of a poly while form_id stayed <code>power_root</code>. Gold: first-derivative power/roots only; higher order → <code>calc_diff_higher_order_derivatives</code>.</p>
+<h2>Proposed engine (reuse vs new) — proposal only</h2>
+<p><strong>Reuse:</strong> <code>expr_skeleton</code> Diff patterns <code>Diff(Pow(H,n))</code> / roots / neg via OpenStax forms <code>power_*</code>. Covered in <code>scripts/output/diff_skeleton_gallery/</code>. No separate opt-out flag — skeleton is default when form maps.</p>
+<ul>
+<li><strong>Shipped:</strong> first-deriv order lock + form/flesh gates; phase-01 gallery wired.</li>
+</ul>
+<p>Coverage: Diff algebraic families also cataloged in <code>scripts/output/diff_skeleton_gallery/</code> (power, product, quotient, chain, trig, invtrig, ln/exp, general, higher_order).</p></div>
+
+
+<article class='card'><header><span class='n'>#1</span> <strong>D≈0 · seed=101</strong> <span class='pat'>Diff(Pow(H,n))</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=101</span><span class='tag fid'>power_poly</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find }\frac{d}{dx}\left(2x^{2}\right)$$</div><div class='math'><div class='lab'>Answer</div>$$2x^{1}\left(2\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n))</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#2</span> <strong>D≈0 · seed=207</strong> <span class='pat'>Diff(Pow(H,n))</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=207</span><span class='tag fid'>power_poly</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{d}{dx}\left[2x^{2}\right]$$</div><div class='math'><div class='lab'>Answer</div>$$2x^{1}\left(2\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n))</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#3</span> <strong>D≈0 · seed=313</strong> <span class='pat'>Diff(Pow(H,n))</span> <span class='tag band low'>D≈0.0</span><span class='tag'>seed=313</span><span class='tag fid'>power_poly</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{d}{dx}\left[x^{2}\right]$$</div><div class='math'><div class='lab'>Answer</div>$$2x^{1}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n))</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>0</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#4</span> <strong>D≈8 · seed=101</strong> <span class='pat'>Diff(Pow(H,n)) roots</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=101</span><span class='tag fid'>power_root</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find }\frac{d}{dx}\left(x^{\frac{3}{2}}\right)$$</div><div class='math'><div class='lab'>Answer</div>$$\frac{3}{2}x^{\frac{1}{2}}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n)) roots</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_root</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_root</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#5</span> <strong>D≈8 · seed=207</strong> <span class='pat'>Diff(Pow(H,n)) neg</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=207</span><span class='tag fid'>power_negative</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find }\frac{d}{dx}\left(-3x^{-3}\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-3x^{-4}\left(-3\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n)) neg</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_negative</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_negative</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#6</span> <strong>D≈8 · seed=313</strong> <span class='pat'>Diff(Pow(H,n))</span> <span class='tag band mid'>D≈8.0</span><span class='tag'>seed=313</span><span class='tag fid'>power_poly</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find }\frac{d}{dx}\left(-3x^{3} + 4x + 1\right)$$</div><div class='math'><div class='lab'>Answer</div>$$3x^{2}\left(-3\right) + 4$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n))</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>8</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#7</span> <strong>D≈16 · seed=101</strong> <span class='pat'>Diff(Pow(H,n)) neg</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=101</span><span class='tag fid'>power_negative</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find }\frac{d}{dx}\left(x^{-3}\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-3x^{-4}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n)) neg</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_negative</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_negative</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#8</span> <strong>D≈16 · seed=207</strong> <span class='pat'>Diff(Pow(H,n)) nested</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=207</span><span class='tag fid'>chain_nested_power</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{d}{dx}\left[\left(-4\left(4x^{4} - 2x^{3} + 6x^{2} - 3\right)^{2}\right)^{3}\right]$$</div><div class='math'><div class='lab'>Answer</div>$$3\left(-4\left(4x^{4} - 2x^{3} + 6x^{2} - 3\right)^{2}\right)^{2}\left(2\right)\left(4x^{4} - 2x^{3} + 6x^{2} - 3\right)^{1}\left(4x^{3}\left(4\right) + 3x^{2}\left(-2\right) + 2x^{1}\left(6\right)\right)\left(-4\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n)) nested</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>chain_nested_power</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>chain_nested_power</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#9</span> <strong>D≈16 · seed=313</strong> <span class='pat'>Diff(Pow(H,n))</span> <span class='tag band high'>D≈16.0</span><span class='tag'>seed=313</span><span class='tag fid'>power_poly</span></header><div class='math'><div class='lab'>Prompt</div>$$\frac{d}{dx}\left[5x^{5}\right]$$</div><div class='math'><div class='lab'>Answer</div>$$5x^{4}\left(5\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n))</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>16</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#10</span> <strong>D≈22 · seed=101</strong> <span class='pat'>Diff(Pow(H,n)) neg</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=101</span><span class='tag fid'>power_negative</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find }\frac{d}{dx}\left(x^{-2}\right)$$</div><div class='math'><div class='lab'>Answer</div>$$-2x^{-3}$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n)) neg</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>101</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_negative</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_negative</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#11</span> <strong>D≈22 · seed=207</strong> <span class='pat'>Diff(Pow(H,n)) nested</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=207</span><span class='tag fid'>chain_nested_power</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find }\frac{d}{dx}\left(\left(-7\left(-2\left(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10\right)^{3}\right)^{3}\right)^{6}\right)$$</div><div class='math'><div class='lab'>Answer</div>$$6\left(-7\left(-2\left(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10\right)^{3}\right)^{3}\right)^{5}\left(3\right)\left(-2\left(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10\right)^{3}\right)^{2}\left(3\right)\left(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10\right)^{2}\left(4x^{3}\left(7\right) + 3x^{2}\left(2\right) + 2x^{1}\left(9\right) + 7\right)\left(-2\right)\left(-7\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n)) nested</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>207</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>chain_nested_power</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>chain_nested_power</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+<article class='card'><header><span class='n'>#12</span> <strong>D≈22 · seed=313</strong> <span class='pat'>Diff(Pow(H,n))</span> <span class='tag band high'>D≈22.0</span><span class='tag'>seed=313</span><span class='tag fid'>power_poly</span></header><div class='math'><div class='lab'>Prompt</div>$$\text{Find }\frac{d}{dx}\left(-6x^{7}\right)$$</div><div class='math'><div class='lab'>Answer</div>$$7x^{6}\left(-6\right)$$</div><div class='debug'><div class='kv'><span class='k'>skeleton_pattern</span><span class='v'>Diff(Pow(H,n))</span></div><div class='kv'><span class='k'>D / effective_d</span><span class='v'>22</span></div><div class='kv'><span class='k'>seed</span><span class='v'>313</span></div><div class='kv'><span class='k'>form_id</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>openstax_form</span><span class='v'>power_poly</span></div><div class='kv'><span class='k'>construction</span><span class='v'>forward_form_catalog</span></div><div class='kv'><span class='k'>has_diagram_svg</span><span class='v'>false</span></div></div><p class='meta'>type: <code>calc_diff_power_rule</code></p></article>
+</body></html>

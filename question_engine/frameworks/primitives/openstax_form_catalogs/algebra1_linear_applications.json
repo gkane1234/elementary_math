@@ -1,0 +1,378 @@
+{
+  "catalog_id": "algebra1_linear_applications",
+  "title": "OpenStax linear application / word-problem frames (story packaging)",
+  "version": 2,
+  "source": {
+    "primary": {
+      "book": "intermediate-algebra-2e",
+      "slug": "2-2-use-a-problem-solving-strategy",
+      "title": "2.2 Use a Problem Solving Strategy (number / money applications)",
+      "url": "https://openstax.org/books/intermediate-algebra-2e/pages/2-2-use-a-problem-solving-strategy"
+    },
+    "related": [
+      { "book": "elementary-algebra-2e", "slug": "2-6-solve-a-formula-for-a-specific-variable", "title": "2.6 Distance, Rate, and Time / formulas" },
+      { "book": "elementary-algebra-2e", "slug": "2-7-solve-linear-inequalities" },
+      { "book": "intermediate-algebra-2e", "slug": "2-5-solve-linear-inequalities" },
+      { "book": "elementary-algebra-2e", "slug": "8-7-solve-proportion-and-similar-figure-applications" }
+    ]
+  },
+  "taxonomy_notes": [
+    "Story frames, not algebraic equation forms. Each frame_id is a typed slot schema.",
+    "Packaging picks a frame first, then fills numbers so reverse algebra holds. Do not dump $3x+2=17$ into the prompt.",
+    "Mixture, work, and two-unknown ticket systems stay off these G6/PA one-/two-step leaves."
+  ],
+  "wired_type_ids": [
+    "g6_equations_word_problems",
+    "pa_equations_one_step_word_problems",
+    "pa_equations_two_step_word_problems",
+    "g6_inequalities_word_problems",
+    "pa_proportions_word_problems",
+    "g6_constant_rate_equations",
+    "g6_equations_for_other_relationships",
+    "pa_systems_word_problems",
+    "systems_word_problems"
+  ],
+  "forms": [
+    {
+      "form_id": "number_one_step",
+      "description": "A number plus 4 is 11. What is the number?",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "ops": ["add", "sub", "mul", "div"] },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 / EA §2.1–2.2 number WP",
+      "leaves": ["g6_equations_word_problems", "pa_equations_one_step_word_problems"]
+    },
+    {
+      "form_id": "money_spent",
+      "description": "Had some money, spent $a, has $b left. How much to start?",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "ops": ["sub"] },
+      "d_min": 0,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 money spent/left",
+      "leaves": ["g6_equations_word_problems", "pa_equations_one_step_word_problems"]
+    },
+    {
+      "form_id": "money_received",
+      "description": "Had some money, received $a, now has $b. Start amount?",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "ops": ["add"] },
+      "d_min": 0,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 money received",
+      "leaves": ["g6_equations_word_problems", "pa_equations_one_step_word_problems"]
+    },
+    {
+      "form_id": "money_shared",
+      "description": "Shared $T equally among n friends. How much each?",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "ops": ["mul"] },
+      "d_min": 0,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 equal shares",
+      "leaves": ["g6_equations_word_problems", "pa_equations_one_step_word_problems"]
+    },
+    {
+      "form_id": "money_donations",
+      "description": "n equal donations totaling $T. How much each?",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "ops": ["mul"] },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 unit amount",
+      "leaves": ["g6_equations_word_problems", "pa_equations_one_step_word_problems"]
+    },
+    {
+      "form_id": "count_tickets",
+      "description": "Items cost $p each. Spent $T. How many?",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "ops": ["mul"] },
+      "d_min": 0,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 / EA ticket unit price (one price; not two-price systems)",
+      "leaves": ["g6_equations_word_problems", "pa_equations_one_step_word_problems"]
+    },
+    {
+      "form_id": "count_groups",
+      "description": "Divided into n equal groups with k each. How many total?",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "ops": ["div"], "min_format_tier": 1 },
+      "d_min": 10,
+      "d_weight": 0.9,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.2 division property (groups)",
+      "leaves": ["g6_equations_word_problems", "pa_equations_one_step_word_problems"]
+    },
+    {
+      "form_id": "number_two_step",
+      "description": "The sum of seven times a number and eight is thirty-six",
+      "strategy": "two_step",
+      "constraints": { "species": "two" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 Example 2.15 number two-step",
+      "leaves": ["pa_equations_two_step_word_problems"]
+    },
+    {
+      "form_id": "money_two_step",
+      "description": "Unit price plus a fixed fee equals the total",
+      "strategy": "two_step",
+      "constraints": { "species": "two", "slot_kind": "money" },
+      "d_min": 0,
+      "d_weight": 1.2,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 money two-step (unit + fee)",
+      "leaves": ["pa_equations_two_step_word_problems"]
+    },
+    {
+      "form_id": "compare_twice",
+      "description": "Three more than twice the notebooks; bought seven items",
+      "strategy": "two_step",
+      "constraints": { "species": "two" },
+      "d_min": 0,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 Example 2.14 (notebooks / snowfall: k more than twice)",
+      "leaves": ["pa_equations_two_step_word_problems"]
+    },
+    {
+      "form_id": "earnings_two_step",
+      "description": "Together they earn T; one earns k less than twice the other",
+      "strategy": "two_step",
+      "constraints": { "species": "two" },
+      "d_min": 0,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.2 Example 2.19 earnings (scaled integers)",
+      "leaves": ["pa_equations_two_step_word_problems"]
+    },
+    {
+      "form_id": "ineq_score",
+      "description": "Wants a score at least / more than a threshold",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "kind": "inequality" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.7 translate to an inequality",
+      "leaves": ["g6_inequalities_word_problems"]
+    },
+    {
+      "form_id": "ineq_height",
+      "description": "A child's height must be at least n inches",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "kind": "inequality" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.7 #504 safety height",
+      "leaves": ["g6_inequalities_word_problems"]
+    },
+    {
+      "form_id": "ineq_checkout",
+      "description": "Express lane: number of items at most n",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "kind": "inequality" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.7 #507 express check-out",
+      "leaves": ["g6_inequalities_word_problems"]
+    },
+    {
+      "form_id": "ineq_points",
+      "description": "Already has points; needs at least a total",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "kind": "inequality", "ops": ["add"] },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.7 one-step add (points)",
+      "leaves": ["g6_inequalities_word_problems"]
+    },
+    {
+      "form_id": "ineq_lost",
+      "description": "Lost points; now has at least / more than n",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "kind": "inequality", "ops": ["sub"] },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.7 one-step sub (points)",
+      "leaves": ["g6_inequalities_word_problems"]
+    },
+    {
+      "form_id": "ineq_tickets",
+      "description": "Items at $p each; spend at most $T. How many?",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "kind": "inequality", "ops": ["mul"] },
+      "d_min": 0,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.5 tablets / juice packs (one-step mul)",
+      "leaves": ["g6_inequalities_word_problems"]
+    },
+    {
+      "form_id": "ineq_budget",
+      "description": "At most $c for ax + b (car rental, phone, tablets)",
+      "strategy": "two_step",
+      "constraints": { "species": "two", "kind": "inequality", "min_format_tier": 1 },
+      "d_min": 10,
+      "d_weight": 1.3,
+      "generation_status": "implemented",
+      "openstax_case": "IA §2.5 car rental / phone plan / tablets",
+      "leaves": ["g6_inequalities_word_problems"]
+    },
+    {
+      "form_id": "prop_recipe",
+      "description": "Recipe for n dozen uses c cups; scale to m dozen",
+      "strategy": "proportion",
+      "constraints": { "species": "proportion" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §8.7 #406 oatmeal cookie recipe",
+      "leaves": ["pa_proportions_word_problems"]
+    },
+    {
+      "form_id": "prop_unit_rate",
+      "description": "If n cost $a, how much for m at the same rate?",
+      "strategy": "proportion",
+      "constraints": { "species": "proportion" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §8.7 unit-rate cost",
+      "leaves": ["pa_proportions_word_problems"]
+    },
+    {
+      "form_id": "prop_calories",
+      "description": "An n-ounce drink has c calories; how many in m ounces?",
+      "strategy": "proportion",
+      "constraints": { "species": "proportion" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §8.7 calories / serving size",
+      "leaves": ["pa_proportions_word_problems"]
+    },
+    {
+      "form_id": "prop_dosage",
+      "description": "Prescribe p ml per w pounds; dose for a given weight",
+      "strategy": "proportion",
+      "constraints": { "species": "proportion" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §8.7 acetaminophen dosage",
+      "leaves": ["pa_proportions_word_problems"]
+    },
+    {
+      "form_id": "write_rate",
+      "description": "Write d=rt (or t=d/r, r=d/t) for bike/car/walk/bus/train",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "vehicles": ["bike", "car", "walk", "bus", "train"], "asks": ["distance", "time", "rate"] },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.6 Jamal bike / Lindsay drove / Trinh walked / Megan bus / Aisha train",
+      "leaves": ["g6_constant_rate_equations"]
+    },
+    {
+      "form_id": "write_cost",
+      "description": "Pencils/notebooks cost n cents each; write c = nq",
+      "strategy": "one_step",
+      "constraints": { "species": "one" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.6 cost formula applications",
+      "leaves": ["g6_equations_for_other_relationships"]
+    },
+    {
+      "form_id": "write_tickets",
+      "description": "Tickets cost $a each; write T = a·n",
+      "strategy": "one_step",
+      "constraints": { "species": "one" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.6 / ticket unit price",
+      "leaves": ["g6_equations_for_other_relationships"]
+    },
+    {
+      "form_id": "write_square",
+      "description": "Square side s; write P = 4s, then find P",
+      "strategy": "one_step",
+      "constraints": { "species": "one" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.6 perimeter formula",
+      "leaves": ["g6_equations_for_other_relationships"]
+    },
+    {
+      "form_id": "write_triangle",
+      "description": "Triangle perimeter; two sides given; write equation for the third",
+      "strategy": "one_step",
+      "constraints": { "species": "one", "ops": ["add"] },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §2.6 P=a+b+c / §8.7 Be Prepared triangular window",
+      "leaves": ["g6_equations_for_other_relationships"]
+    },
+    {
+      "form_id": "sys_number",
+      "description": "Sum of two numbers is S; one is k more than the other",
+      "strategy": "systems",
+      "constraints": { "species": "systems" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §5.4 number applications",
+      "leaves": ["pa_systems_word_problems", "systems_word_problems"]
+    },
+    {
+      "form_id": "sys_tickets",
+      "description": "Adult and child tickets; n sold for $T",
+      "strategy": "systems",
+      "constraints": { "species": "systems" },
+      "d_min": 0,
+      "d_weight": 1.0,
+      "generation_status": "implemented",
+      "openstax_case": "EA §5.4 money / tickets",
+      "leaves": ["pa_systems_word_problems", "systems_word_problems"]
+    },
+    {
+      "form_id": "sys_geometry",
+      "description": "Rectangle length k more than width; given perimeter",
+      "strategy": "systems",
+      "constraints": { "species": "systems", "min_format_tier": 1 },
+      "d_min": 8,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "openstax_case": "EA §5.4 geometry",
+      "leaves": ["pa_systems_word_problems", "systems_word_problems"]
+    },
+    {
+      "form_id": "sys_motion",
+      "description": "Opposite-direction cars; one k mph faster; distance after t hours",
+      "strategy": "systems",
+      "constraints": { "species": "systems", "min_format_tier": 1 },
+      "d_min": 8,
+      "d_weight": 1.1,
+      "generation_status": "implemented",
+      "openstax_case": "EA §5.4 uniform motion",
+      "leaves": ["pa_systems_word_problems", "systems_word_problems"]
+    }
+  ]
+}

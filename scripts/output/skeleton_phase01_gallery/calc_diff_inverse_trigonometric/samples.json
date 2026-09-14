@@ -1,0 +1,1993 @@
+{
+  "section": {
+    "slug": "calc_diff_inverse_trigonometric",
+    "title": "Diff \u2014 Inverse trigonometric",
+    "pattern": "Diff(Apply",
+    "engine": "expr_skeleton",
+    "type_id": "calc_diff_inverse_trigonometric",
+    "aliases": [],
+    "ladder_ds": [
+      0.0,
+      8.0,
+      16.0,
+      22.0
+    ],
+    "ladder_seeds": [
+      101,
+      207,
+      313
+    ],
+    "pattern_soft": true,
+    "blurb": "arcsin / arctan + chain. OpenStax Calc Vol.1 \u00a73.7."
+  },
+  "rows": [
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=101",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 101,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arctan\\left(3x + 3\\right)\\right)",
+      "answer_latex": "\\frac{1}{1+(3x + 3)^{2}}\\left(3\\right)",
+      "skeleton_pattern": "Diff(Apply(arctan,u))",
+      "form_id": "invtrig_arctan",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(arctan,u))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "invtrig_arctan"
+        ],
+        [
+          "openstax_form",
+          "invtrig_arctan"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_arctan",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 0.0,
+        "form_id": "invtrig_arctan",
+        "openstax_form": "invtrig_arctan",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_arctan",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(arctan,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "invtrig_arctan",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(arctan,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arctan",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 1,
+          "n_applies": 1,
+          "n_terms": 2,
+          "n_factors": 0,
+          "inner_kind": "affine",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "arctan"
+          ],
+          "atom_fn_candidates_g": [
+            "arctan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": false,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "affine",
+        "inner_latex": "3x + 3",
+        "atom_fn_candidates": [
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "arctan"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=207",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 207,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arctan(3x)\\right)",
+      "answer_latex": "\\frac{1}{1+(3x)^{2}}\\left(3\\right)",
+      "skeleton_pattern": "Diff(Apply(arctan,u))",
+      "form_id": "invtrig_arctan",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(arctan,u))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "invtrig_arctan"
+        ],
+        [
+          "openstax_form",
+          "invtrig_arctan"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_arctan",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 0.0,
+        "form_id": "invtrig_arctan",
+        "openstax_form": "invtrig_arctan",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_arctan",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(arctan,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "invtrig_arctan",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(arctan,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arctan",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 1,
+          "n_applies": 1,
+          "n_terms": 1,
+          "n_factors": 0,
+          "inner_kind": "affine",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "arctan"
+          ],
+          "atom_fn_candidates_g": [
+            "arctan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": false,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "affine",
+        "inner_latex": "3x",
+        "atom_fn_candidates": [
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "arctan"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\arcsin(x)\\right]",
+      "answer_latex": "\\frac{1}{\\sqrt{1-(x)^{2}}}",
+      "skeleton_pattern": "Diff(Apply(arcsin,u))",
+      "form_id": "invtrig_arcsin",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(arcsin,u))"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "invtrig_arcsin"
+        ],
+        [
+          "openstax_form",
+          "invtrig_arcsin"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_arcsin",
+        "structure_id": "derivative_inverse_trig:power",
+        "function_classes": [
+          "invtrig"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "chain_depth": 0,
+        "upgrades": [],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 0.0,
+        "form_id": "invtrig_arcsin",
+        "openstax_form": "invtrig_arcsin",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_arcsin",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(arcsin,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 3,
+          "degree_max": 4
+        },
+        "core_form_id": "invtrig_arcsin",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(arcsin,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arcsin",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 0.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 0,
+          "chain_depth": 0,
+          "degree_max": 1,
+          "n_applies": 1,
+          "n_terms": 1,
+          "n_factors": 0,
+          "inner_kind": "var",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "arcsin"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "low",
+        "richness_knobs": {
+          "conceptual_d": 0.0,
+          "band": "low",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": false,
+          "prefer_poly_u": false,
+          "power_min": 2,
+          "power_max": 2,
+          "poly_degree_min": 1,
+          "coef_abs_max": 3
+        },
+        "inner_kind": "var",
+        "inner_latex": "x",
+        "atom_fn_candidates": [
+          "arcsin"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arctan\\left(-x^{3} + 3x^{2} + 4\\right)\\right)",
+      "answer_latex": "\\frac{1}{1+(-x^{3} + 3x^{2} + 4)^{2}}\\left(3x^{2}\\left(-1\\right) + 2x^{1}\\left(3\\right)\\right)",
+      "skeleton_pattern": "Diff(Apply(arctan,u))",
+      "form_id": "invtrig_arctan",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(arctan,u))"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "invtrig_arctan"
+        ],
+        [
+          "openstax_form",
+          "invtrig_arctan"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_arctan",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "extra_term",
+          "fn_power",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 8.0,
+        "form_id": "invtrig_arctan",
+        "openstax_form": "invtrig_arctan",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_arctan",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(arctan,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "invtrig_arctan",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(arctan,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arctan",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 3,
+          "n_applies": 1,
+          "n_terms": 3,
+          "n_factors": 0,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "arctan"
+          ],
+          "atom_fn_candidates_g": [
+            "arctan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 3,
+          "poly_degree_min": 2,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "poly",
+        "inner_latex": "-x^{3} + 3x^{2} + 4",
+        "atom_fn_candidates": [
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "arctan"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\arctan\\left(-2x^{3} + 5x^{2} + 4x + 5\\right)\\right]",
+      "answer_latex": "\\frac{1}{1+(-2x^{3} + 5x^{2} + 4x + 5)^{2}}\\left(3x^{2}\\left(-2\\right) + 2x^{1}\\left(5\\right) + 4\\right)",
+      "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+      "form_id": "invtrig_chained",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(invtrig,u)) chain"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "invtrig_chained"
+        ],
+        [
+          "openstax_form",
+          "invtrig_chained"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_chained",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "extra_term",
+          "fn_power",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 8.0,
+        "form_id": "invtrig_chained",
+        "openstax_form": "invtrig_chained",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig_chain",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_chained",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "invtrig_chained",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arctan",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 3,
+          "n_applies": 1,
+          "n_terms": 4,
+          "n_factors": 0,
+          "inner_kind": "poly",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "arcsin",
+            "arctan"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin",
+            "arctan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 3,
+          "poly_degree_min": 2,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "poly",
+        "inner_latex": "-2x^{3} + 5x^{2} + 4x + 5",
+        "atom_fn_candidates": [
+          "arcsin",
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin",
+          "arctan"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\arcsin\\left(3x - 3\\right)\\right]",
+      "answer_latex": "\\frac{1}{\\sqrt{1-(3x - 3)^{2}}}\\left(3\\right)",
+      "skeleton_pattern": "Diff(Apply(arcsin,u))",
+      "form_id": "invtrig_arcsin",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(arcsin,u))"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "invtrig_arcsin"
+        ],
+        [
+          "openstax_form",
+          "invtrig_arcsin"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_arcsin",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 1,
+        "upgrades": [
+          "extra_term",
+          "fn_power",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 8.0,
+        "form_id": "invtrig_arcsin",
+        "openstax_form": "invtrig_arcsin",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_arcsin",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(arcsin,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "invtrig_arcsin",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(arcsin,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arcsin",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 8.0,
+        "cost_spend": {
+          "nest_budget": 0,
+          "nest_budget_forced_min": 0,
+          "nest_left_at_sample": 0,
+          "nest_depth_expr": 1,
+          "chain_depth": 1,
+          "degree_max": 1,
+          "n_applies": 1,
+          "n_terms": 2,
+          "n_factors": 0,
+          "inner_kind": "affine",
+          "inner_degree": 1,
+          "atom_fn_candidates": [
+            "arcsin"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "mid",
+        "richness_knobs": {
+          "conceptual_d": 8.0,
+          "band": "mid",
+          "nest_budget": 0,
+          "force_min_nest": 0,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 3,
+          "poly_degree_min": 2,
+          "coef_abs_max": 5
+        },
+        "inner_kind": "affine",
+        "inner_latex": "3x - 3",
+        "atom_fn_candidates": [
+          "arcsin"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arctan\\left(\\arctan\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)\\right)\\right)",
+      "answer_latex": "\\frac{1}{1+(\\arctan\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right))^{2}}\\frac{1}{1+(x^{4} + 7x^{3} + 2x^{2} + 3x - 5)^{2}}\\left(4x^{3} + 3x^{2}\\left(7\\right) + 2x^{1}\\left(2\\right) + 3\\right)",
+      "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+      "form_id": "invtrig_chained",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(invtrig,u)) chain"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "invtrig_chained"
+        ],
+        [
+          "openstax_form",
+          "invtrig_chained"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_chained",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 2,
+        "upgrades": [
+          "chain_depth_2",
+          "class_invtrig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 16.0,
+        "form_id": "invtrig_chained",
+        "openstax_form": "invtrig_chained",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig_chain",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_chained",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "invtrig_chained",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arctan",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 1,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 2,
+          "chain_depth": 2,
+          "degree_max": 4,
+          "n_applies": 2,
+          "n_terms": 5,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 4,
+          "atom_fn_candidates": [
+            "arcsin",
+            "arctan"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin",
+            "arctan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 1,
+          "force_min_nest": 1,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 5,
+          "poly_degree_min": 2,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\arctan\\left(x^{4} + 7x^{3} + 2x^{2} + 3x - 5\\right)",
+        "atom_fn_candidates": [
+          "arcsin",
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin",
+          "arctan"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=207",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\arctan\\left(\\arctan\\left(4x^{4} - 2x^{3} + 6x^{2} - 3\\right)\\right)\\right]",
+      "answer_latex": "\\frac{1}{1+(\\arctan\\left(4x^{4} - 2x^{3} + 6x^{2} - 3\\right))^{2}}\\frac{1}{1+(4x^{4} - 2x^{3} + 6x^{2} - 3)^{2}}\\left(4x^{3}\\left(4\\right) + 3x^{2}\\left(-2\\right) + 2x^{1}\\left(6\\right)\\right)",
+      "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+      "form_id": "invtrig_chained",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(invtrig,u)) chain"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "invtrig_chained"
+        ],
+        [
+          "openstax_form",
+          "invtrig_chained"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_chained",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 2,
+        "upgrades": [
+          "chain_depth_2",
+          "class_invtrig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 16.0,
+        "form_id": "invtrig_chained",
+        "openstax_form": "invtrig_chained",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig_chain",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_chained",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "invtrig_chained",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arctan",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 1,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 2,
+          "chain_depth": 2,
+          "degree_max": 4,
+          "n_applies": 2,
+          "n_terms": 4,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 4,
+          "atom_fn_candidates": [
+            "arcsin",
+            "arctan"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin",
+            "arctan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 1,
+          "force_min_nest": 1,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 5,
+          "poly_degree_min": 2,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\arctan\\left(4x^{4} - 2x^{3} + 6x^{2} - 3\\right)",
+        "atom_fn_candidates": [
+          "arcsin",
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin",
+          "arctan"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arcsin\\left(\\arcsin\\left(-5x^{3} - 2x - 2\\right)\\right)\\right)",
+      "answer_latex": "\\frac{1}{\\sqrt{1-(\\arcsin\\left(-5x^{3} - 2x - 2\\right))^{2}}}\\frac{1}{\\sqrt{1-(-5x^{3} - 2x - 2)^{2}}}\\left(3x^{2}\\left(-5\\right) - 2\\right)",
+      "skeleton_pattern": "Diff(Apply(arcsin,u))",
+      "form_id": "invtrig_arcsin",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(arcsin,u))"
+        ],
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "invtrig_arcsin"
+        ],
+        [
+          "openstax_form",
+          "invtrig_arcsin"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_arcsin",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 2,
+        "upgrades": [
+          "chain_depth_2",
+          "class_invtrig",
+          "extra_term",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 16.0,
+        "form_id": "invtrig_arcsin",
+        "openstax_form": "invtrig_arcsin",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_arcsin",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(arcsin,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 5,
+          "degree_max": 5
+        },
+        "core_form_id": "invtrig_arcsin",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(arcsin,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arcsin",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 16.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 1,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 2,
+          "chain_depth": 2,
+          "degree_max": 3,
+          "n_applies": 2,
+          "n_terms": 3,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "arcsin"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "high",
+        "richness_knobs": {
+          "conceptual_d": 16.0,
+          "band": "high",
+          "nest_budget": 1,
+          "force_min_nest": 1,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 3,
+          "power_max": 5,
+          "poly_degree_min": 2,
+          "coef_abs_max": 8
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\arcsin\\left(-5x^{3} - 2x - 2\\right)",
+        "atom_fn_candidates": [
+          "arcsin"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arctan\\left(\\arctan\\left(\\arcsin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\right)\\right)\\right)",
+      "answer_latex": "\\frac{1}{1+(\\arctan\\left(\\arcsin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\right))^{2}}\\frac{1}{1+(\\arcsin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right))^{2}}\\frac{1}{\\sqrt{1-(-2x^{4} + 5x^{3} - x^{2} + 9x)^{2}}}\\left(4x^{3}\\left(-2\\right) + 3x^{2}\\left(5\\right) + 2x^{1}\\left(-1\\right) + 9\\right)",
+      "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+      "form_id": "invtrig_chained",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(invtrig,u)) chain"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "invtrig_chained"
+        ],
+        [
+          "openstax_form",
+          "invtrig_chained"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_chained",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 3,
+        "upgrades": [
+          "chain_depth_2",
+          "class_invtrig",
+          "extra_term",
+          "fn_power",
+          "higher_order",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 22.0,
+        "form_id": "invtrig_chained",
+        "openstax_form": "invtrig_chained",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig_chain",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_chained",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "invtrig_chained",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arctan",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 2,
+          "nest_budget_forced_min": 2,
+          "nest_left_at_sample": 2,
+          "nest_depth_expr": 3,
+          "chain_depth": 3,
+          "degree_max": 4,
+          "n_applies": 3,
+          "n_terms": 4,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 4,
+          "atom_fn_candidates": [
+            "arcsin",
+            "arctan"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin",
+            "arctan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 2,
+          "force_min_nest": 2,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 4,
+          "power_max": 7,
+          "poly_degree_min": 2,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\arctan\\left(\\arcsin\\left(-2x^{4} + 5x^{3} - x^{2} + 9x\\right)\\right)",
+        "atom_fn_candidates": [
+          "arcsin",
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin",
+          "arctan"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=207",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 207,
+      "prompt_latex": "\\frac{d}{dx}\\left[\\arctan\\left(\\arcsin\\left(\\arctan\\left(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10\\right)\\right)\\right)\\right]",
+      "answer_latex": "\\frac{1}{1+(\\arcsin\\left(\\arctan\\left(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10\\right)\\right))^{2}}\\frac{1}{\\sqrt{1-(\\arctan\\left(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10\\right))^{2}}}\\frac{1}{1+(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10)^{2}}\\left(4x^{3}\\left(7\\right) + 3x^{2}\\left(2\\right) + 2x^{1}\\left(9\\right) + 7\\right)",
+      "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+      "form_id": "invtrig_chained",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(invtrig,u)) chain"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "invtrig_chained"
+        ],
+        [
+          "openstax_form",
+          "invtrig_chained"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_chained",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 3,
+        "upgrades": [
+          "chain_depth_2",
+          "class_invtrig",
+          "extra_term",
+          "fn_power",
+          "higher_order",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 22.0,
+        "form_id": "invtrig_chained",
+        "openstax_form": "invtrig_chained",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig_chain",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_chained",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "invtrig_chained",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(invtrig,u)) chain",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arctan",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 2,
+          "nest_budget_forced_min": 2,
+          "nest_left_at_sample": 2,
+          "nest_depth_expr": 3,
+          "chain_depth": 3,
+          "degree_max": 4,
+          "n_applies": 3,
+          "n_terms": 5,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 4,
+          "atom_fn_candidates": [
+            "arcsin",
+            "arctan"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin",
+            "arctan"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 2,
+          "force_min_nest": 2,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 4,
+          "power_max": 7,
+          "poly_degree_min": 2,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\arcsin\\left(\\arctan\\left(7x^{4} + 2x^{3} + 9x^{2} + 7x + 10\\right)\\right)",
+        "atom_fn_candidates": [
+          "arcsin",
+          "arctan"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin",
+          "arctan"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_diff_inverse_trigonometric",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\text{Find }\\frac{d}{dx}\\left(\\arcsin\\left(\\arcsin\\left(-7x^{3} - 4x - 4\\right)\\right)\\right)",
+      "answer_latex": "\\frac{1}{\\sqrt{1-(\\arcsin\\left(-7x^{3} - 4x - 4\\right))^{2}}}\\frac{1}{\\sqrt{1-(-7x^{3} - 4x - 4)^{2}}}\\left(3x^{2}\\left(-7\\right) - 4\\right)",
+      "skeleton_pattern": "Diff(Apply(arcsin,u))",
+      "form_id": "invtrig_arcsin",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(Apply(arcsin,u))"
+        ],
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "invtrig_arcsin"
+        ],
+        [
+          "openstax_form",
+          "invtrig_arcsin"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "invtrig_arcsin",
+        "structure_id": "derivative_inverse_trig:chain+power",
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "roots"
+        ],
+        "methods_used": [
+          "chain",
+          "power"
+        ],
+        "chain_depth": 2,
+        "upgrades": [
+          "chain_depth_2",
+          "class_invtrig",
+          "extra_term",
+          "fn_power",
+          "higher_order",
+          "higher_power",
+          "use_chain"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "derivative_inverse_trig",
+        "variable": "x",
+        "derivative_order": 1,
+        "d_spend": 22.0,
+        "form_id": "invtrig_arcsin",
+        "openstax_form": "invtrig_arcsin",
+        "openstax_case": "\u00a73.7",
+        "strategy": "invtrig",
+        "catalog_id": "derivatives",
+        "construction": "forward_form_catalog",
+        "shape_id": "invtrig_arcsin",
+        "spec_snapshot": {
+          "pack": "expr_skeleton",
+          "skeleton_pattern": "Diff(Apply(arcsin,u))",
+          "skeleton_kind": "diff_apply_fn_u",
+          "derivative_order": 1,
+          "variable": "x",
+          "coef_abs_max": 6,
+          "degree_max": 6
+        },
+        "core_form_id": "invtrig_arcsin",
+        "skeleton_source": "expr_skeleton",
+        "skeleton_pattern": "Diff(Apply(arcsin,u))",
+        "skeleton_kind": "diff_apply_fn_u",
+        "productions": [
+          "Apply",
+          "arcsin",
+          "u"
+        ],
+        "shared_inner": true,
+        "conceptual_difficulty": 22.0,
+        "cost_spend": {
+          "nest_budget": 1,
+          "nest_budget_forced_min": 1,
+          "nest_left_at_sample": 1,
+          "nest_depth_expr": 2,
+          "chain_depth": 2,
+          "degree_max": 3,
+          "n_applies": 2,
+          "n_terms": 3,
+          "n_factors": 0,
+          "inner_kind": "nested_apply",
+          "inner_degree": 3,
+          "atom_fn_candidates": [
+            "arcsin"
+          ],
+          "atom_fn_candidates_g": [
+            "arcsin"
+          ],
+          "shared_vs_independent": "shared_u",
+          "pattern_locks_top_structure": true,
+          "note": "C densifies holes only; pattern kind is form-locked"
+        },
+        "richness_band": "elite",
+        "richness_knobs": {
+          "conceptual_d": 22.0,
+          "band": "elite",
+          "nest_budget": 1,
+          "force_min_nest": 1,
+          "allow_form_min_nest": true,
+          "allow_affine_u": true,
+          "allow_poly_u": true,
+          "prefer_poly_u": true,
+          "power_min": 4,
+          "power_max": 7,
+          "poly_degree_min": 2,
+          "coef_abs_max": 10
+        },
+        "inner_kind": "nested_apply",
+        "inner_latex": "\\arcsin\\left(-7x^{3} - 4x - 4\\right)",
+        "atom_fn_candidates": [
+          "arcsin"
+        ],
+        "atom_fn_candidates_g": [
+          "arcsin"
+        ],
+        "generation_settings": {
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_hyperbolic": false,
+          "allow_roots": false,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": false,
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Differentiate.}"
+      }
+    }
+  ],
+  "failures": []
+}

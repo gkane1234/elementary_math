@@ -297,6 +297,68 @@ def test_mvt_quality_weights_tilt():
     assert tilted["mvt_k_x_cubed"] > baseline["mvt_k_x_cubed"]
 
 
+def test_rolles_d0_even_quad_high_d_cubic_lockout():
+    q0 = _gen("calc_app_diff_rolles_theorem", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "rolles_even_quad"
+    assert (q0.metadata or {}).get("generator") == "rolles_theorem"
+    assert (q0.answer_latex or "") == "0"
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "rolles_even_quad"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_rolles_theorem", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+    assert "rolles_even_quad" in mid
+    assert "rolles_two_roots" in mid
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_rolles_theorem", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "rolles_even_quad"
+        assert (q.answer_latex or "") != "0"
+        assert (q.metadata or {}).get("generator") == "rolles_theorem"
+    assert high <= {"rolles_two_roots", "rolles_cubic_odd"}
+    assert "rolles_cubic_odd" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_rolles_theorem", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "rolles_cubic_odd"
+        assert (q.answer_latex or "") != "0"
+        assert r"\sqrt" in (q.answer_latex or "")
+    assert expert == {"rolles_cubic_odd"}
+
+
+def test_rolles_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_rolles,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_rolles(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"rolles_even_quad": -2.5, "rolles_two_roots": 2.5})
+    assert tilted["rolles_two_roots"] > baseline["rolles_two_roots"]
+
+
 def test_newton_one_then_two_steps():
     q0 = _gen("calc_app_diff_newtons_method", 0, seed=101)[0]
     assert "Newton" in (q0.prompt_latex or "")
@@ -467,9 +529,70 @@ def test_de_intro_verify_exp_then_euler():
     assert "Cx" in (qh.prompt_latex or "") or "x^{" in (qh.prompt_latex or "")
 
 
-def test_curve_sketch_and_graphical_sign_of_fp():
+def test_curve_sketch_d0_parabola_high_d_shifted_lockout():
     qs = _gen("calc_app_diff_curve_sketching", 0, seed=101)[0]
+    assert (qs.metadata or {}).get("form_id") == "parabola_sketch"
+    assert (qs.metadata or {}).get("generator") == "curve_sketching"
     assert "vertex" in (qs.answer_latex or "")
+    snap = (qs.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "parabola_sketch"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_curve_sketching", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+    assert "parabola_sketch" in mid
+    assert "cubic_sketch_checklist" in mid
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_curve_sketching", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "parabola_sketch"
+        assert "inflection" in (q.answer_latex or "")
+        assert (q.metadata or {}).get("generator") == "curve_sketching"
+    assert high <= {"cubic_sketch_checklist", "cubic_shifted_sketch"}
+    assert "cubic_shifted_sketch" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_curve_sketching", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "cubic_shifted_sketch"
+        h = (q.metadata or {}).get("h")
+        assert h not in (0, None)
+        assert r"inflection at }x=0" not in (q.answer_latex or "")
+    assert expert == {"cubic_shifted_sketch"}
+
+
+def test_curve_sketch_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_curve_sketching,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_curve_sketching(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"parabola_sketch": -2.5, "cubic_sketch_checklist": 2.5})
+    assert tilted["cubic_sketch_checklist"] > baseline["cubic_sketch_checklist"]
+
+
+def test_graphical_sign_of_fp():
     qg = _gen("calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime", 0, seed=101)[0]
     assert "f'" in (qg.prompt_latex or "") or "f'(x)" in (qg.prompt_latex or "")
     assert r"\frac{d}{dx}" not in (qg.prompt_latex or "")

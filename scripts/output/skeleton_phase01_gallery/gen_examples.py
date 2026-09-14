@@ -2746,7 +2746,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_rolles_theorem",
         "App — Rolle's Theorem",
-        "Find c with f'(c)=0. OpenStax Vol 1 §4.4.",
+        "D=0 even-quad leftover (old easy, c=0); D≥8 two-root quadratics; "
+        "high D odd cubic (OpenStax Ex. 4.14) and locks out even-quad c=0. "
+        "OpenStax Vol 1 §4.4.",
     ),
 
     (
@@ -2899,7 +2901,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_curve_sketching",
         "App — curve sketching",
-        "Checklist (vertex or cubic extrema+inflection), not a drawn graph. OpenStax Vol 1 §4.5.",
+        "D=0 parabola leftover (old easy); D≥8 odd cubics inflecting at 0; "
+        "high D shifted cubics (same idea as Ex. 4.19) and locks out "
+        "inflection-at-0. Checklist, not a drawn graph. OpenStax Vol 1 §4.5.",
     ),
     (
         "calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime",

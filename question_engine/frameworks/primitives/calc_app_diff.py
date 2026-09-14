@@ -26,6 +26,7 @@ Kind = Literal[
     "optimization",
     "increase_decrease",
     "mean_value",
+    "rolles",
     "curve_sketching",
     "graphical_f_fp",
     "related_rates",
@@ -499,6 +500,129 @@ def sample_mean_value(rng: random.Random, settings: dict[str, Any]) -> AppDiffIt
     )
 
 
+ROLLES_GENERATOR = "rolles_theorem"
+
+_ROLLES_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("rolles_even_quad",),
+    "medium": ("rolles_even_quad", "rolles_two_roots"),
+    "hard": ("rolles_two_roots", "rolles_cubic_odd"),
+    "expert": ("rolles_cubic_odd",),
+}
+
+
+def rolles_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _ROLLES_BANDS["easy"]
+    if d < 16.0:
+        return _ROLLES_BANDS["medium"]
+    if d < 20.0:
+        return _ROLLES_BANDS["hard"]
+    return _ROLLES_BANDS["expert"]
+
+
+def _rolles_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [ROLLES_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_rolles_even_quad(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: f=x²−n² on [−n,n], c=0."""
+    n = rng.randint(2, 5)
+    body = _poly_body([1, 0, -n * n])
+    prompt = (
+        rf"\text{{Find }}c\text{{ guaranteed by Rolle's Theorem for }}"
+        rf"f(x)={body}\text{{ on }}[{-n},{n}]."
+    )
+    return AppDiffItem(
+        prompt, "0", "Rolle's Theorem", "rolles_even_quad",
+        {"n": n, "c": 0},
+    )
+
+
+def _sample_rolles_two_roots(rng: random.Random) -> AppDiffItem:
+    """Ex. 4.14 first: f=(x−a)(x−b) on [a,b], midpoint c≠0 (not even-quad)."""
+    a, b = -2, 0
+    for _ in range(24):
+        lo = rng.randint(-4, 1)
+        hi = lo + rng.randint(2, 5)
+        if lo + hi != 0:
+            a, b = lo, hi
+            break
+    mid = Fraction(a + b, 2)
+    body = _poly_body([1, -(a + b), a * b])
+    prompt = (
+        rf"\text{{Find }}c\text{{ guaranteed by Rolle's Theorem for }}"
+        rf"f(x)={body}\text{{ on }}[{a},{b}]."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(mid), "Rolle's Theorem", "rolles_two_roots",
+        {"a": a, "b": b, "c": str(mid)},
+    )
+
+
+def _sample_rolles_cubic_odd(rng: random.Random) -> AppDiffItem:
+    """Ex. 4.14 second: f=x³−n²x on [−n,n], c=±n/√3."""
+    n = rng.choice((2, 3, 4))
+    body = _poly_body([1, 0, -n * n, 0])
+    prompt = (
+        rf"\text{{Find all }}c\text{{ guaranteed by Rolle's Theorem for }}"
+        rf"f(x)={body}\text{{ on }}[{-n},{n}]."
+    )
+    answer = rf"c=\pm\frac{{{n}}}{{\sqrt{{3}}}}"
+    return AppDiffItem(
+        prompt, answer, "Rolle's Theorem", "rolles_cubic_odd",
+        {"n": n},
+    )
+
+
+_ROLLES_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "rolles_even_quad": _sample_rolles_even_quad,
+    "rolles_two_roots": _sample_rolles_two_roots,
+    "rolles_cubic_odd": _sample_rolles_cubic_odd,
+}
+
+
+def sample_rolles(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Find c with f'(c)=0 when f(a)=f(b). High D locks out even-quad c=0."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = rolles_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _rolles_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _ROLLES_BUILDERS:
+        fid = forms[0]
+    item = _ROLLES_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": ROLLES_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": ROLLES_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 def sample_newton(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     d = _d(settings)
     if d < 10.0:
@@ -659,19 +783,55 @@ def sample_optimization(rng: random.Random, settings: dict[str, Any]) -> AppDiff
     )
 
 
-def sample_curve_sketching(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    d = _d(settings)
+CURVE_SKETCH_GENERATOR = "curve_sketching"
+
+_SKETCH_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("parabola_sketch",),
+    "medium": ("parabola_sketch", "cubic_sketch_checklist"),
+    "hard": ("cubic_sketch_checklist", "cubic_shifted_sketch"),
+    "expert": ("cubic_shifted_sketch",),
+}
+
+
+def curve_sketch_forms_for_difficulty(d: float) -> tuple[str, ...]:
     if d < 8.0:
-        h = rng.randint(1, 4)
-        prompt = (
-            rf"\text{{For }}f(x)=(x-{h})^{{2}},\text{{ list the vertex "
-            rf"and concavity.}}"
-        )
-        answer = rf"\text{{vertex }}({h},0);\text{{ concave up}}"
-        return AppDiffItem(
-            prompt, answer, "curve sketch", "parabola_sketch",
-            {"h": h},
-        )
+        return _SKETCH_BANDS["easy"]
+    if d < 16.0:
+        return _SKETCH_BANDS["medium"]
+    if d < 20.0:
+        return _SKETCH_BANDS["hard"]
+    return _SKETCH_BANDS["expert"]
+
+
+def _sketch_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [CURVE_SKETCH_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_parabola_sketch(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: vertex + concavity of (x−h)²."""
+    h = rng.randint(1, 4)
+    prompt = (
+        rf"\text{{For }}f(x)=(x-{h})^{{2}},\text{{ list the vertex "
+        rf"and concavity.}}"
+    )
+    answer = rf"\text{{vertex }}({h},0);\text{{ concave up}}"
+    return AppDiffItem(
+        prompt, answer, "curve sketch", "parabola_sketch",
+        {"h": h},
+    )
+
+
+def _sample_cubic_sketch_checklist(rng: random.Random) -> AppDiffItem:
+    """Reuse ``_cubic_odd``: extrema at ±a, inflection at 0. Mid-D leftover."""
     a, c, body = _cubic_odd(rng)
     ymax, ymin = 2 * a**3 + c, -2 * a**3 + c
     prompt = (
@@ -685,7 +845,75 @@ def sample_curve_sketching(rng: random.Random, settings: dict[str, Any]) -> AppD
     )
     return AppDiffItem(
         prompt, answer, "curve sketch", "cubic_sketch_checklist",
-        {"a": a},
+        {"a": a, "c": c, "inflection": 0},
+    )
+
+
+def _sample_cubic_shifted_sketch(rng: random.Random) -> AppDiffItem:
+    """Translate ``_cubic_odd`` so the inflection is at h≠0 (same idea as Ex. 4.19)."""
+    a, k, _ = _cubic_odd(rng)
+    h = rng.choice((-3, -2, -1, 1, 2, 3, 4))
+    coeffs = [
+        1,
+        -3 * h,
+        3 * h * h - 3 * a * a,
+        -h**3 + 3 * a * a * h + k,
+    ]
+    body = _poly_body(coeffs)
+    xmax, xmin = h - a, h + a
+    ymax, ymin = 2 * a**3 + k, -2 * a**3 + k
+    prompt = (
+        rf"\text{{For }}f(x)={body},\text{{ list relative extrema and "
+        rf"the inflection point.}}"
+    )
+    answer = (
+        rf"\text{{rel max }}{ymax}\text{{ at }}x={xmax};"
+        rf"\text{{ rel min }}{ymin}\text{{ at }}x={xmin};"
+        rf"\text{{ inflection at }}x={h}"
+    )
+    return AppDiffItem(
+        prompt, answer, "curve sketch", "cubic_shifted_sketch",
+        {"a": a, "h": h, "k": k, "inflection": h},
+    )
+
+
+_SKETCH_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "parabola_sketch": _sample_parabola_sketch,
+    "cubic_sketch_checklist": _sample_cubic_sketch_checklist,
+    "cubic_shifted_sketch": _sample_cubic_shifted_sketch,
+}
+
+
+def sample_curve_sketching(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Checklist of vertex / extrema / inflection. High D locks out inflect-at-0."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = curve_sketch_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _sketch_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _SKETCH_BUILDERS:
+        fid = forms[0]
+    item = _SKETCH_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": CURVE_SKETCH_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": CURVE_SKETCH_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 
@@ -764,6 +992,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "absolute_extrema": sample_absolute_extrema,
     "concavity": sample_concavity,
     "mean_value": sample_mean_value,
+    "rolles": sample_rolles,
     "newtons_method": sample_newton,
     "motion": sample_motion,
     "motion_integral": sample_motion_integral,

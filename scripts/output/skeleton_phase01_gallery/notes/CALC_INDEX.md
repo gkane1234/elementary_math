@@ -243,7 +243,7 @@ skill pair with a Calculus leaf. See `PRECALC_INDEX.md`.
 | `calc_app_diff_relative_extrema` | `calculus_foundations` | — |
 | `calc_app_diff_absolute_extrema` | `calculus_foundations` | — |
 | `calc_app_diff_optimization` | `calculus_foundations` | — |
-| `calc_app_diff_curve_sketching` | `calculus_foundations` | — |
+| `calc_app_diff_curve_sketching` | `curve_sketching` | — |
 | `calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime` | `calculus_foundations` | — |
 | `calc_app_diff_motion_along_a_line` | `calculus_foundations` | — |
 | `calc_app_diff_related_rates` | `related_rates_simple` | — |

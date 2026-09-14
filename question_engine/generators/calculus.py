@@ -915,45 +915,10 @@ def _derivative_from_tables(topic: str, settings: dict) -> list[Question]:
 
 
 def _rolles_theorem(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _topic_structure(settings)
-    x = str(settings.get("variable", "x"))
+    """Delegate to calculus_app_diff (live form_id / generator stamps)."""
+    from question_engine.generators.calculus_app_diff import GENERATORS as APP
 
-    def build() -> tuple[str, str, str | None]:
-        family = _pick_family(
-            structure,
-            ["even_quad"],
-            medium=["two_roots"],
-            hard=["cubic_odd"],
-        )
-        if family == "even_quad":
-            n = random.randint(2, max(2, min(5, int(structure.get("n_max", 5)))))
-            prompt = (
-                rf"\text{{Find }}c\text{{ guaranteed by Rolle's Theorem for }}"
-                rf"f({x})={x}^{{2}}-{n * n}\text{{ on }}[-{n},{n}]."
-            )
-            answer = "0"
-        elif family == "two_roots":
-            a = random.randint(-4, 1)
-            b = a + random.randint(2, max(2, min(5, int(structure.get("interval_width_max", 5)))))
-            mid = Fraction(a + b, 2)
-            f = format_polynomial_latex([1, -(a + b), a * b], variable=x)
-            prompt = (
-                rf"\text{{Find }}c\text{{ guaranteed by Rolle's Theorem for }}"
-                rf"f({x})={f}\text{{ on }}[{a},{b}]."
-            )
-            answer = frac_latex(mid)
-        else:
-            n = random.choice([2, 3, 4])
-            prompt = (
-                rf"\text{{Find all }}c\text{{ guaranteed by Rolle's Theorem for }}"
-                rf"f({x})={x}^{{3}}-{n * n}{x}\text{{ on }}[-{n},{n}]."
-            )
-            answer = rf"c=\pm\frac{{{n}}}{{\sqrt{{3}}}}"
-        return prompt, "Rolle's Theorem", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
+    return APP["rolles_theorem"](topic, settings)
 
 
 def _mean_value_theorem(topic: str, settings: dict) -> list[Question]:

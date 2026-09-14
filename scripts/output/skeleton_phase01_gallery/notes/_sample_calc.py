@@ -217,6 +217,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Find intervals of concavity / inflection from f or f''.",
         "engine": "calc_app_diff `intervals_concavity` (odd-power ray / odd cubic / shifted cubic).",
     },
+    "calc_app_diff_rolles_theorem": {
+        "flag_why": "Shipped leftover lockout of even-quad c=0; LIMITATIONS no scaled Checkpoint 4.14.",
+        "skill": "Find c with f'(c)=0 when f(a)=f(b).",
+        "engine": "calc_app_diff `rolles_theorem` (even-quad / two-root / odd cubic).",
+    },
     "calc_app_diff_relative_extrema": {
         "force_flags": ["UNCLEAR"],
         "flag_why": "`calculus_foundations` stub — gold is critical points + relative max/min (OpenStax §4.3/4.5).",
@@ -236,10 +241,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "WP packaging over a max/min core + several OpenStax frames (box/fence/can/…).",
     },
     "calc_app_diff_curve_sketching": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "`calculus_foundations` stub — multi-step sketch checklist not locked.",
-        "skill": "Sketch using intercepts, extrema, concavity, asymptotes.",
-        "engine": "Leave leaf or new curve-sketching pack; graph UX outside algebraic cores.",
+        "flag_why": "Shipped leftover lockout + shifted inflections; LIMITATIONS no SVG / asymptotes.",
+        "skill": "List vertex / extrema / inflection for a sketch (no drawn graph).",
+        "engine": "calc_app_diff `curve_sketching` (parabola / odd cubic / shifted cubic).",
     },
     "calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime": {
         "force_flags": ["UNCLEAR"],

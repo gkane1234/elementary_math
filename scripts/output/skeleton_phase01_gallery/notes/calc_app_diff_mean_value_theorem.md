@@ -70,4 +70,4 @@ Not a WP. D=0 one easy quadratic. Same-D rotation at mid D: quad leftover vs \(k
 ## Proposed engine (reuse vs new)
 
 - **Reuse:** existing MVT closed forms (quad + \(kx^{3}\)) moved onto the calc_app_diff constructive core. Depth = real structure (lock out \(x^{2}\) leftovers; unlock \(\sqrt{x}\)) — not padded `difficulty_costs`.
-- **Not this pass:** Rolle's leftover lockout (same accumulate pattern on `rolles_theorem`); velocity story frames.
+- **Not this pass:** velocity story frames (Ex. 4.16).

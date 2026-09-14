@@ -2717,7 +2717,8 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_def_int_second_fundamental_theorem_of_calculus",
         "FTC — d/dx ∫_a^{g(x)}",
-        "Variable-upper derivative (OpenStax Part 1). Chain unlock at high D.",
+        "Leftover lockout: D=0 t^2; D=8 t^2 leftover + sin t; D=16 sin leftover + "
+        "chain g(x)=kx (no t^2); D=22 chain only. OpenStax Vol 1 §5.3 Part 1.",
     ),
     (
         "calc_def_int_substitution_with_change_of_variables",

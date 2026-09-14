@@ -214,15 +214,105 @@ def test_ftc2_is_derivative_of_integral():
     assert r"\frac{d}" in (q.prompt_latex or "")
     assert r"\int_" in (q.prompt_latex or "")
     assert q.answer_latex
-    # High D unlocks chain / trig families across seeds
-    forms = set()
+
+
+def test_ftc2_d0_poly_high_d_chain_lockout():
+    from question_engine.frameworks.primitives.integrals import (
+        ftc2_forms_for_difficulty,
+    )
+
+    assert ftc2_forms_for_difficulty(0) == ("ftc2_poly",)
+    med = ftc2_forms_for_difficulty(8)
+    assert med == ("ftc2_poly", "ftc2_trig")
+    hard = ftc2_forms_for_difficulty(16)
+    assert hard == ("ftc2_trig", "ftc2_chain")
+    assert "ftc2_poly" not in hard
+    assert ftc2_forms_for_difficulty(22) == ("ftc2_chain",)
+
+    q0 = _gen("calc_def_int_second_fundamental_theorem_of_calculus", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "ftc2_poly"
+    assert (q0.metadata or {}).get("generator") == "second_fundamental_theorem"
+    assert r"t^{2}" in (q0.prompt_latex or "")
+    assert r"\sin" not in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "ftc2_poly"
+    assert snap.get("generator") == "second_fundamental_theorem"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_def_int_second_fundamental_theorem_of_calculus", 8, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert (q.metadata or {}).get("generator") == "second_fundamental_theorem"
+        p = q.prompt_latex or ""
+        assert r"e^{" not in p
+    assert "ftc2_poly" in mid
+    assert "ftc2_trig" in mid
+    assert mid <= {"ftc2_poly", "ftc2_trig"}
+
+    high = set()
     for seed in range(30):
-        qq = _gen(
+        q = _gen(
             "calc_def_int_second_fundamental_theorem_of_calculus", 16, seed=seed
         )[0]
-        forms.add((qq.metadata or {}).get("form_id") or (qq.metadata or {}).get("family"))
-    assert "ftc2_poly" in forms
-    assert forms & {"ftc2_trig", "ftc2_chain"}
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "ftc2_poly"
+        p = q.prompt_latex or ""
+        assert r"t^{2}" not in p
+        assert (q.metadata or {}).get("generator") == "second_fundamental_theorem"
+    assert high <= {"ftc2_trig", "ftc2_chain"}
+    assert "ftc2_trig" in high
+    assert "ftc2_chain" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_def_int_second_fundamental_theorem_of_calculus", 22, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "ftc2_chain"
+        p = q.prompt_latex or ""
+        assert r"t^{2}" not in p
+        assert r"\sin" not in p
+        assert r"e^{" in p
+        assert (q.metadata or {}).get("generator") == "second_fundamental_theorem"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "ftc2_chain"
+        assert snap.get("generator") == "second_fundamental_theorem"
+    assert expert == {"ftc2_chain"}
+
+
+def test_ftc2_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.integrals import (
+        sample_integral_expression,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                sample = sample_integral_expression(
+                    {"difficulty": 8.0, "include_answer_key": True},
+                    generator_key="second_fundamental_theorem",
+                    rng=_random.Random(i),
+                )
+                c[sample.metadata.get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"ftc2_poly": -2.5, "ftc2_trig": 2.5})
+    assert tilted["ftc2_trig"] > baseline["ftc2_trig"]
 
 
 def test_definite_u_sub_has_limits_no_plus_c():

@@ -17,7 +17,7 @@
       207,
       313
     ],
-    "blurb": "Variable-upper derivative (OpenStax Part 1). Chain unlock at high D."
+    "blurb": "Leftover lockout: D=0 t^2; D=8 t^2 leftover + sin t; D=16 sin leftover + chain g(x)=kx (no t^2); D=22 chain only. OpenStax Vol 1 \u00a75.3 Part 1."
   },
   "rows": [
     {
@@ -28,7 +28,7 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\frac{d}{dx}\\int_{0}^{x} t^{2}\\,dt",
+      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
       "answer_latex": "x^{2}",
       "skeleton_pattern": "",
       "form_id": "ftc2_poly",
@@ -49,6 +49,12 @@
         [
           "openstax_form",
           "ftc2_poly"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -115,6 +121,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -130,7 +139,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_poly",
+          "form_id": "ftc2_poly",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -216,6 +227,12 @@
           "ftc2_poly"
         ],
         [
+          "tricks_required",
+          [
+            "ftc"
+          ]
+        ],
+        [
           "construction",
           "ftc_variable_upper"
         ],
@@ -280,6 +297,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -295,7 +315,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_poly",
+          "form_id": "ftc2_poly",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -358,7 +380,7 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
+      "prompt_latex": "\\frac{d}{dx}\\int_{0}^{x} t^{2}\\,dt",
       "answer_latex": "x^{2}",
       "skeleton_pattern": "",
       "form_id": "ftc2_poly",
@@ -379,6 +401,12 @@
         [
           "openstax_form",
           "ftc2_poly"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -445,6 +473,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -460,7 +491,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_poly",
+          "form_id": "ftc2_poly",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -523,7 +556,7 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\frac{d}{dx}\\int_{0}^{x} t^{2}\\,dt",
+      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
       "answer_latex": "x^{2}",
       "skeleton_pattern": "",
       "form_id": "ftc2_poly",
@@ -544,6 +577,12 @@
         [
           "openstax_form",
           "ftc2_poly"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -614,6 +653,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -629,7 +671,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_poly",
+          "form_id": "ftc2_poly",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -708,10 +752,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
-      "answer_latex": "x^{2}",
+      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} \\sin(t)\\,dt",
+      "answer_latex": "\\sin(x)",
       "skeleton_pattern": "",
-      "form_id": "ftc2_poly",
+      "form_id": "ftc2_trig",
       "diagram_svg": "",
       "debug": [
         [
@@ -724,11 +768,17 @@
         ],
         [
           "form_id",
-          "ftc2_poly"
+          "ftc2_trig"
         ],
         [
           "openstax_form",
-          "ftc2_poly"
+          "ftc2_trig"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -740,8 +790,8 @@
         ]
       ],
       "metadata": {
-        "family": "ftc2_poly",
-        "structure_id": "second_fundamental_theorem:ftc2_poly",
+        "family": "ftc2_trig",
+        "structure_id": "second_fundamental_theorem:ftc2_trig",
         "technique": "ftc",
         "tricks_required": [
           "ftc"
@@ -750,7 +800,7 @@
           "ftc"
         ],
         "function_classes": [
-          "algebraic"
+          "trig"
         ],
         "upgrades": [
           "extra_term",
@@ -799,6 +849,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -814,7 +867,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_trig",
+          "form_id": "ftc2_trig",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -825,7 +880,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 5,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ftc2",
           "methods": [
@@ -846,7 +901,7 @@
           ],
           "length": 1
         },
-        "shape_id": "ftc2_poly",
+        "shape_id": "ftc2_trig",
         "construction": "ftc_variable_upper",
         "difficulty_costs": [
           {
@@ -868,9 +923,9 @@
         "difficulty_cost_total": 8.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "ftc2_poly",
-        "form_id": "ftc2_poly",
-        "openstax_form": "ftc2_poly",
+        "core_form_id": "ftc2_trig",
+        "form_id": "ftc2_trig",
+        "openstax_form": "ftc2_trig",
         "generation_settings": {
           "term_count": 2,
           "power_max": 4,
@@ -893,10 +948,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
-      "answer_latex": "x^{2}",
+      "prompt_latex": "\\frac{d}{dx}\\int_{0}^{x} \\sin(t)\\,dt",
+      "answer_latex": "\\sin(x)",
       "skeleton_pattern": "",
-      "form_id": "ftc2_poly",
+      "form_id": "ftc2_trig",
       "diagram_svg": "",
       "debug": [
         [
@@ -909,11 +964,17 @@
         ],
         [
           "form_id",
-          "ftc2_poly"
+          "ftc2_trig"
         ],
         [
           "openstax_form",
-          "ftc2_poly"
+          "ftc2_trig"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -925,8 +986,8 @@
         ]
       ],
       "metadata": {
-        "family": "ftc2_poly",
-        "structure_id": "second_fundamental_theorem:ftc2_poly",
+        "family": "ftc2_trig",
+        "structure_id": "second_fundamental_theorem:ftc2_trig",
         "technique": "ftc",
         "tricks_required": [
           "ftc"
@@ -935,7 +996,7 @@
           "ftc"
         ],
         "function_classes": [
-          "algebraic"
+          "trig"
         ],
         "upgrades": [
           "extra_term",
@@ -984,6 +1045,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -999,7 +1063,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_trig",
+          "form_id": "ftc2_trig",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -1010,7 +1076,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 5,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ftc2",
           "methods": [
@@ -1031,7 +1097,7 @@
           ],
           "length": 1
         },
-        "shape_id": "ftc2_poly",
+        "shape_id": "ftc2_trig",
         "construction": "ftc_variable_upper",
         "difficulty_costs": [
           {
@@ -1053,9 +1119,9 @@
         "difficulty_cost_total": 8.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "ftc2_poly",
-        "form_id": "ftc2_poly",
-        "openstax_form": "ftc2_poly",
+        "core_form_id": "ftc2_trig",
+        "form_id": "ftc2_trig",
+        "openstax_form": "ftc2_trig",
         "generation_settings": {
           "term_count": 2,
           "power_max": 4,
@@ -1078,10 +1144,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\frac{d}{dx}\\int_{0}^{x} t^{2}\\,dt",
-      "answer_latex": "x^{2}",
+      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} \\sin(t)\\,dt",
+      "answer_latex": "\\sin(x)",
       "skeleton_pattern": "",
-      "form_id": "ftc2_poly",
+      "form_id": "ftc2_trig",
       "diagram_svg": "",
       "debug": [
         [
@@ -1094,11 +1160,17 @@
         ],
         [
           "form_id",
-          "ftc2_poly"
+          "ftc2_trig"
         ],
         [
           "openstax_form",
-          "ftc2_poly"
+          "ftc2_trig"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -1110,8 +1182,8 @@
         ]
       ],
       "metadata": {
-        "family": "ftc2_poly",
-        "structure_id": "second_fundamental_theorem:ftc2_poly",
+        "family": "ftc2_trig",
+        "structure_id": "second_fundamental_theorem:ftc2_trig",
         "technique": "ftc",
         "tricks_required": [
           "ftc"
@@ -1120,7 +1192,7 @@
           "ftc"
         ],
         "function_classes": [
-          "algebraic"
+          "trig"
         ],
         "upgrades": [
           "definite_bounds",
@@ -1171,6 +1243,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1186,7 +1261,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_trig",
+          "form_id": "ftc2_trig",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -1197,7 +1274,7 @@
           "degree_max": 6,
           "coef_abs_max": 7,
           "n_terms": 1,
-          "answer_len": 5,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ftc2",
           "methods": [
@@ -1218,7 +1295,7 @@
           ],
           "length": 1
         },
-        "shape_id": "ftc2_poly",
+        "shape_id": "ftc2_trig",
         "construction": "ftc_variable_upper",
         "difficulty_costs": [
           {
@@ -1250,9 +1327,9 @@
         "difficulty_cost_total": 13.5,
         "difficulty_shortfall": 2.5,
         "wrappers_applied": [],
-        "core_form_id": "ftc2_poly",
-        "form_id": "ftc2_poly",
-        "openstax_form": "ftc2_poly",
+        "core_form_id": "ftc2_trig",
+        "form_id": "ftc2_trig",
+        "openstax_form": "ftc2_trig",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1275,10 +1352,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
-      "answer_latex": "x^{2}",
+      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{2x} e^{t}\\,dt",
+      "answer_latex": "2e^{2x}",
       "skeleton_pattern": "",
-      "form_id": "ftc2_poly",
+      "form_id": "ftc2_chain",
       "diagram_svg": "",
       "debug": [
         [
@@ -1291,11 +1368,17 @@
         ],
         [
           "form_id",
-          "ftc2_poly"
+          "ftc2_chain"
         ],
         [
           "openstax_form",
-          "ftc2_poly"
+          "ftc2_chain"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -1307,8 +1390,8 @@
         ]
       ],
       "metadata": {
-        "family": "ftc2_poly",
-        "structure_id": "second_fundamental_theorem:ftc2_poly",
+        "family": "ftc2_chain",
+        "structure_id": "second_fundamental_theorem:ftc2_chain",
         "technique": "ftc",
         "tricks_required": [
           "ftc"
@@ -1317,7 +1400,7 @@
           "ftc"
         ],
         "function_classes": [
-          "algebraic"
+          "exp"
         ],
         "upgrades": [
           "definite_bounds",
@@ -1368,6 +1451,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1383,7 +1469,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_chain",
+          "form_id": "ftc2_chain",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -1394,7 +1482,7 @@
           "degree_max": 6,
           "coef_abs_max": 7,
           "n_terms": 1,
-          "answer_len": 5,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ftc2",
           "methods": [
@@ -1415,7 +1503,7 @@
           ],
           "length": 1
         },
-        "shape_id": "ftc2_poly",
+        "shape_id": "ftc2_chain",
         "construction": "ftc_variable_upper",
         "difficulty_costs": [
           {
@@ -1447,9 +1535,9 @@
         "difficulty_cost_total": 13.5,
         "difficulty_shortfall": 2.5,
         "wrappers_applied": [],
-        "core_form_id": "ftc2_poly",
-        "form_id": "ftc2_poly",
-        "openstax_form": "ftc2_poly",
+        "core_form_id": "ftc2_chain",
+        "form_id": "ftc2_chain",
+        "openstax_form": "ftc2_chain",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1472,10 +1560,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
-      "answer_latex": "x^{2}",
+      "prompt_latex": "\\frac{d}{dx}\\int_{0}^{4x} e^{t}\\,dt",
+      "answer_latex": "4e^{4x}",
       "skeleton_pattern": "",
-      "form_id": "ftc2_poly",
+      "form_id": "ftc2_chain",
       "diagram_svg": "",
       "debug": [
         [
@@ -1488,11 +1576,17 @@
         ],
         [
           "form_id",
-          "ftc2_poly"
+          "ftc2_chain"
         ],
         [
           "openstax_form",
-          "ftc2_poly"
+          "ftc2_chain"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -1504,8 +1598,8 @@
         ]
       ],
       "metadata": {
-        "family": "ftc2_poly",
-        "structure_id": "second_fundamental_theorem:ftc2_poly",
+        "family": "ftc2_chain",
+        "structure_id": "second_fundamental_theorem:ftc2_chain",
         "technique": "ftc",
         "tricks_required": [
           "ftc"
@@ -1514,7 +1608,7 @@
           "ftc"
         ],
         "function_classes": [
-          "algebraic"
+          "exp"
         ],
         "upgrades": [
           "definite_bounds",
@@ -1565,6 +1659,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1580,7 +1677,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_chain",
+          "form_id": "ftc2_chain",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -1591,7 +1690,7 @@
           "degree_max": 6,
           "coef_abs_max": 7,
           "n_terms": 1,
-          "answer_len": 5,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ftc2",
           "methods": [
@@ -1612,7 +1711,7 @@
           ],
           "length": 1
         },
-        "shape_id": "ftc2_poly",
+        "shape_id": "ftc2_chain",
         "construction": "ftc_variable_upper",
         "difficulty_costs": [
           {
@@ -1644,9 +1743,9 @@
         "difficulty_cost_total": 13.5,
         "difficulty_shortfall": 2.5,
         "wrappers_applied": [],
-        "core_form_id": "ftc2_poly",
-        "form_id": "ftc2_poly",
-        "openstax_form": "ftc2_poly",
+        "core_form_id": "ftc2_chain",
+        "form_id": "ftc2_chain",
+        "openstax_form": "ftc2_chain",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1669,10 +1768,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\frac{d}{dx}\\int_{0}^{x} t^{2}\\,dt",
-      "answer_latex": "x^{2}",
+      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{2x} e^{t}\\,dt",
+      "answer_latex": "2e^{2x}",
       "skeleton_pattern": "",
-      "form_id": "ftc2_poly",
+      "form_id": "ftc2_chain",
       "diagram_svg": "",
       "debug": [
         [
@@ -1685,11 +1784,17 @@
         ],
         [
           "form_id",
-          "ftc2_poly"
+          "ftc2_chain"
         ],
         [
           "openstax_form",
-          "ftc2_poly"
+          "ftc2_chain"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -1701,8 +1806,8 @@
         ]
       ],
       "metadata": {
-        "family": "ftc2_poly",
-        "structure_id": "second_fundamental_theorem:ftc2_poly",
+        "family": "ftc2_chain",
+        "structure_id": "second_fundamental_theorem:ftc2_chain",
         "technique": "ftc",
         "tricks_required": [
           "ftc"
@@ -1711,7 +1816,7 @@
           "ftc"
         ],
         "function_classes": [
-          "algebraic"
+          "exp"
         ],
         "upgrades": [
           "definite_bounds",
@@ -1762,6 +1867,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1777,7 +1885,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_chain",
+          "form_id": "ftc2_chain",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -1788,7 +1898,7 @@
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 1,
-          "answer_len": 5,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ftc2",
           "methods": [
@@ -1809,7 +1919,7 @@
           ],
           "length": 1
         },
-        "shape_id": "ftc2_poly",
+        "shape_id": "ftc2_chain",
         "construction": "ftc_variable_upper",
         "difficulty_costs": [
           {
@@ -1841,9 +1951,9 @@
         "difficulty_cost_total": 13.5,
         "difficulty_shortfall": 8.5,
         "wrappers_applied": [],
-        "core_form_id": "ftc2_poly",
-        "form_id": "ftc2_poly",
-        "openstax_form": "ftc2_poly",
+        "core_form_id": "ftc2_chain",
+        "form_id": "ftc2_chain",
+        "openstax_form": "ftc2_chain",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1866,10 +1976,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
-      "answer_latex": "x^{2}",
+      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{2x} e^{t}\\,dt",
+      "answer_latex": "2e^{2x}",
       "skeleton_pattern": "",
-      "form_id": "ftc2_poly",
+      "form_id": "ftc2_chain",
       "diagram_svg": "",
       "debug": [
         [
@@ -1882,11 +1992,17 @@
         ],
         [
           "form_id",
-          "ftc2_poly"
+          "ftc2_chain"
         ],
         [
           "openstax_form",
-          "ftc2_poly"
+          "ftc2_chain"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -1898,8 +2014,8 @@
         ]
       ],
       "metadata": {
-        "family": "ftc2_poly",
-        "structure_id": "second_fundamental_theorem:ftc2_poly",
+        "family": "ftc2_chain",
+        "structure_id": "second_fundamental_theorem:ftc2_chain",
         "technique": "ftc",
         "tricks_required": [
           "ftc"
@@ -1908,7 +2024,7 @@
           "ftc"
         ],
         "function_classes": [
-          "algebraic"
+          "exp"
         ],
         "upgrades": [
           "definite_bounds",
@@ -1959,6 +2075,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1974,7 +2093,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_chain",
+          "form_id": "ftc2_chain",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -1985,7 +2106,7 @@
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 1,
-          "answer_len": 5,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ftc2",
           "methods": [
@@ -2006,7 +2127,7 @@
           ],
           "length": 1
         },
-        "shape_id": "ftc2_poly",
+        "shape_id": "ftc2_chain",
         "construction": "ftc_variable_upper",
         "difficulty_costs": [
           {
@@ -2038,9 +2159,9 @@
         "difficulty_cost_total": 13.5,
         "difficulty_shortfall": 8.5,
         "wrappers_applied": [],
-        "core_form_id": "ftc2_poly",
-        "form_id": "ftc2_poly",
-        "openstax_form": "ftc2_poly",
+        "core_form_id": "ftc2_chain",
+        "form_id": "ftc2_chain",
+        "openstax_form": "ftc2_chain",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -2063,10 +2184,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\frac{d}{dx}\\int_{2}^{x} t^{2}\\,dt",
-      "answer_latex": "x^{2}",
+      "prompt_latex": "\\frac{d}{dx}\\int_{0}^{4x} e^{t}\\,dt",
+      "answer_latex": "4e^{4x}",
       "skeleton_pattern": "",
-      "form_id": "ftc2_poly",
+      "form_id": "ftc2_chain",
       "diagram_svg": "",
       "debug": [
         [
@@ -2079,11 +2200,17 @@
         ],
         [
           "form_id",
-          "ftc2_poly"
+          "ftc2_chain"
         ],
         [
           "openstax_form",
-          "ftc2_poly"
+          "ftc2_chain"
+        ],
+        [
+          "tricks_required",
+          [
+            "ftc"
+          ]
         ],
         [
           "construction",
@@ -2095,8 +2222,8 @@
         ]
       ],
       "metadata": {
-        "family": "ftc2_poly",
-        "structure_id": "second_fundamental_theorem:ftc2_poly",
+        "family": "ftc2_chain",
+        "structure_id": "second_fundamental_theorem:ftc2_chain",
         "technique": "ftc",
         "tricks_required": [
           "ftc"
@@ -2105,7 +2232,7 @@
           "ftc"
         ],
         "function_classes": [
-          "algebraic"
+          "exp"
         ],
         "upgrades": [
           "definite_bounds",
@@ -2156,6 +2283,9 @@
           "construction": "ftc_variable_upper",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2171,7 +2301,9 @@
             "length": 1
           },
           "technique": "ftc",
-          "family": "poly"
+          "family": "ftc2_chain",
+          "form_id": "ftc2_chain",
+          "generator": "second_fundamental_theorem"
         },
         "effort_features": {
           "technique": "ftc",
@@ -2182,7 +2314,7 @@
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 1,
-          "answer_len": 5,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ftc2",
           "methods": [
@@ -2203,7 +2335,7 @@
           ],
           "length": 1
         },
-        "shape_id": "ftc2_poly",
+        "shape_id": "ftc2_chain",
         "construction": "ftc_variable_upper",
         "difficulty_costs": [
           {
@@ -2235,9 +2367,9 @@
         "difficulty_cost_total": 13.5,
         "difficulty_shortfall": 8.5,
         "wrappers_applied": [],
-        "core_form_id": "ftc2_poly",
-        "form_id": "ftc2_poly",
-        "openstax_form": "ftc2_poly",
+        "core_form_id": "ftc2_chain",
+        "form_id": "ftc2_chain",
+        "openstax_form": "ftc2_chain",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,

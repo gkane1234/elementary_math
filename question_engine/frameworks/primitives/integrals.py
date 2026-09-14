@@ -2389,41 +2389,101 @@ def _sample_ftc(
     }
 
 
+FTC2_GENERATOR = "second_fundamental_theorem"
+
+_FTC2_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("ftc2_poly",),
+    "medium": ("ftc2_poly", "ftc2_trig"),
+    "hard": ("ftc2_trig", "ftc2_chain"),
+    "expert": ("ftc2_chain",),
+}
+
+
+def ftc2_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 d/dx ∫ t²; D=22 is chain g(x)=kx only."""
+    if d < 8.0:
+        return _FTC2_BANDS["easy"]
+    if d < 16.0:
+        return _FTC2_BANDS["medium"]
+    if d < 20.0:
+        return _FTC2_BANDS["hard"]
+    return _FTC2_BANDS["expert"]
+
+
+def _ftc2_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [FTC2_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_ftc2_poly(rng: random.Random, var: str) -> tuple[str, str, list[str]]:
+    """Old-path D=0 leftover: d/dx ∫_a^x t^2 dt → x^2."""
+    a = rng.randint(0, 3)
+    prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{var}}} t^{{2}}\,dt"
+    return prompt, rf"{var}^{{2}}", ["algebraic"]
+
+
+def _sample_ftc2_trig(rng: random.Random, var: str) -> tuple[str, str, list[str]]:
+    """Old mid unlock: d/dx ∫_a^x sin(t) dt → sin(x)."""
+    a = rng.randint(0, 3)
+    prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{var}}} \sin(t)\,dt"
+    return prompt, rf"\sin({var})", ["trig"]
+
+
+def _sample_ftc2_chain(
+    rng: random.Random, var: str, coef_hi: int
+) -> tuple[str, str, list[str]]:
+    """Old high unlock: d/dx ∫_a^{kx} e^t dt → k e^{kx}."""
+    a = rng.randint(0, 3)
+    k = rng.randint(2, max(2, min(5, coef_hi)))
+    prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{k}{var}}} e^{{t}}\,dt"
+    return prompt, rf"{k}e^{{{k}{var}}}", ["exp"]
+
+
 def _sample_ftc2(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
     """FTC Part 1: d/dx ∫_a^{g(x)} f(t) dt (second_fundamental_theorem leaf).
 
-    Restores the skill from the pre-override calculus.py builder; D unlocks
-    chain-rule upper limits honestly (g(x)=kx).
+    High D locks out D=0 t² leftover. Same three old builders.
     """
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
     var = spec.variable
-    a = rng.randint(0, 3)
     d = float(spec.d_spend)
-    pool = ["poly"]
-    if d >= 8:
-        pool.append("trig")
-    if d >= 14:
-        pool.append("chain")
-    family = rng.choice(pool)
-    if family == "poly":
-        prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{var}}} t^{{2}}\,dt"
-        answer = rf"{var}^{{2}}"
-        classes = ["algebraic"]
-    elif family == "trig":
-        prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{var}}} \sin(t)\,dt"
-        answer = rf"\sin({var})"
-        classes = ["trig"]
+    forms = ftc2_forms_for_difficulty(d)
+    form = select_form_id(_ftc2_form_rows(forms), d=d, rng=rng)
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "ftc2_poly" and fid in forms:
+        prompt, answer, classes = _sample_ftc2_poly(rng, var)
+    elif fid == "ftc2_trig" and fid in forms:
+        prompt, answer, classes = _sample_ftc2_trig(rng, var)
+    elif fid == "ftc2_chain" and fid in forms:
+        prompt, answer, classes = _sample_ftc2_chain(rng, var, spec.coef_abs_max)
     else:
-        k = rng.randint(2, max(2, min(5, spec.coef_abs_max)))
-        prompt = rf"\frac{{d}}{{d{var}}}\int_{{{a}}}^{{{k}{var}}} e^{{t}}\,dt"
-        answer = rf"{k}e^{{{k}{var}}}"
-        classes = ["exp"]
-        family = "chain"
+        fid = forms[0]
+        if fid == "ftc2_trig":
+            prompt, answer, classes = _sample_ftc2_trig(rng, var)
+        elif fid == "ftc2_chain":
+            prompt, answer, classes = _sample_ftc2_chain(
+                rng, var, spec.coef_abs_max
+            )
+        else:
+            prompt, answer, classes = _sample_ftc2_poly(rng, var)
     return prompt, answer, {
         "function_classes": classes,
-        "family": family,
-        "form_id": f"ftc2_{family}",
+        "family": fid,
+        "form_id": fid,
+        "generator": FTC2_GENERATOR,
         "n_terms": 1,
         "definite": True,
         "construction": "ftc_variable_upper",

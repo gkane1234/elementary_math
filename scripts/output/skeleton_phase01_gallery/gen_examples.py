@@ -2727,7 +2727,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_int_area_under_a_curve",
         "App — area under a curve",
-        "Constructive area wordings; D=0 linear. OpenStax Vol 1 §5.2 / §6.1.",
+        "Leftover lockout: D=0 y=x; D=8 x leftover + y=x^2; D=16 x^2 leftover + "
+        "k x^2 (no y=x); D=22 k x^2 only. FTC area on [0,b], no figures. "
+        "OpenStax Vol 1 §5.2 / §6.1.",
     ),
     (
         "calc_app_diff_related_rates",
@@ -3172,6 +3174,7 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)
         elif tid == "calc_app_int_area_under_a_curve":
             eng = "area_under_curve"
+            extra_seeds = (101, 207, 313, 0, 2, 5, 7)
         elif tid == "calc_app_int_area_between_curves":
             eng = "area_between_curves"
         elif "volume" in tid:

@@ -52,6 +52,8 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## Still thin / LIMITATIONS (not stubs)
 
+- Area under a curve: leftover lockout of \(y=x\) shipped; still three frozen monomials on \([0,b]\) (no \(\sin x\) / \(e^x\) / \(a\neq 0\)); sibling limit-of-sums still shares the FTC stem
+
 - Motion along a line (diff): leftover lockout + Ex. 3.36/3.35 cubics shipped; still no free-fall \(-16t^{2}\) / piecewise / trig / \(s(t)\) graph
 - Motion along a line revisited (integral): leftover lockout of \(v=2t\) shipped; still no \(\int|v|\) distance / Ex. 5.24 nonzero net / quadratic \(v(t)\)
 - Graphical comparison: no figure bank
@@ -81,6 +83,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_app_int_area_under_a_curve`:** Leftover lockout of D=0 \(y=x\). D=0 linear on \([0,b]\) (old easy); D=8 leftover linear + \(y=x^{2}\); D=16 \(x^{2}\) leftover + \(kx^{2}\) (no \(y=x\)); D=22 \(kx^{2}\) only. Stamps `form_id` + `generator=area_under_curve`; `select_form_id` / `live_quality_form_weights`. Shared generator also serves the limit-of-sums sibling (still FTC wording).
 - **`calc_app_diff_slope_tangent_and_normal_lines`:** Leftover lockout of D=0 poly/trig/exp/ln. D=0 easy mix (old easy, always tangent); D=8 leftover easy + \(1/x\) + radical (normals begin); D=16 reciprocal/radical leftover + cubic / nested (no poly/trig/exp/ln); D=22 cubic / \((x+p)/(x+q)\) / \(\sin(kx)\) only. Stamps `form_id` + `generator=tangent_normal_line`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_linear_approximations`:** Leftover lockout of D=0 \(x^{2}\) (formula + estimate). D=0 \(\sqrt{x}\) / \(x^{2}\) (old easy); D=8 leftover easy + estimate-\(x^{2}\) + \(1/x\) + \(e^{x}\); D=16 \(\sqrt{x}\) leftover + \(1/x\) + \(e^{x}\) (no \(x^{2}\)); D=22 \(1/x\) and \(e^{x}\) only. Stamps `form_id` + `generator=linear_approximation`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_differentials`:** Leftover lockout of D=0 log/power/trig/exp. D=0 easy mix (old easy); D=8 leftover easy + radical/reciprocal; D=16 radical/reciprocal leftover + nested (no log/power); D=22 nested only (product / quotient / \(e^{x^{2}}\) / eval \(dx\)). Stamps `form_id` + `generator=differentials`; `select_form_id` / `live_quality_form_weights`.

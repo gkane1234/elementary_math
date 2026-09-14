@@ -772,37 +772,45 @@ def _first_fundamental_theorem(topic: str, settings: dict) -> list[Question]:
 
 
 def _area_under_curve(topic: str, settings: dict) -> list[Question]:
+    """FTC area under y=f(x) on [0,b]; leftover lockout of y=x."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        AREA_UNDER_CURVE_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _topic_structure(settings)
-    x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        b = random.randint(2, max(2, min(6, int(structure.get("bound_max", 5)))))
-        family = _pick_family(
-            structure,
-            ["linear"],
-            medium=["quad"],
-            hard=["quad_coef"],
-        )
-        if family == "linear":
-            f = x
-            area = Fraction(b * b, 2)
-        elif family == "quad":
-            f = f"{x}^{{2}}"
-            area = Fraction(b**3, 3)
-        else:
-            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
-            f = format_monomial_latex(k, variable=x, degree=2) or f"{k}{x}^{{2}}"
-            area = Fraction(k * b**3, 3)
-        prompt = (
-            rf"\text{{Find the area under }}y={f}"
-            rf"\text{{ from }}{x}=0\text{{ to }}{x}={b}."
-        )
-        answer = frac_latex(area)
-        return prompt, "area under a curve", answer if include_answer_key else None
+        item = sample_app_diff("area_under_curve", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": AREA_UNDER_CURVE_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": AREA_UNDER_CURVE_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _derivative_inverse_trig(topic: str, settings: dict) -> list[Question]:

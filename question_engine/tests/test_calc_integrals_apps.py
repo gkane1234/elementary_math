@@ -153,6 +153,94 @@ def test_area_under_curve_d0_simple():
     assert q.answer_latex
 
 
+def test_area_under_curve_d0_linear_high_d_quad_coef_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        area_under_curve_forms_for_difficulty,
+    )
+
+    assert area_under_curve_forms_for_difficulty(0) == ("auc_linear",)
+    med = area_under_curve_forms_for_difficulty(8)
+    assert "auc_linear" in med and "auc_quad" in med
+    hard = area_under_curve_forms_for_difficulty(16)
+    assert "auc_linear" not in hard
+    assert hard == ("auc_quad", "auc_quad_coef")
+    assert area_under_curve_forms_for_difficulty(22) == ("auc_quad_coef",)
+
+    q0 = _gen("calc_app_int_area_under_a_curve", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "auc_linear"
+    assert (q0.metadata or {}).get("generator") == "area_under_curve"
+    assert r"y=x\text{ from }" in (q0.prompt_latex or "")
+    assert r"x^{2}" not in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "auc_linear"
+    assert snap.get("generator") == "area_under_curve"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_int_area_under_a_curve", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "area_under_curve"
+        assert r"y=2x^{2}" not in (q.prompt_latex or "")
+        assert r"y=3x^{2}" not in (q.prompt_latex or "")
+        assert r"y=4x^{2}" not in (q.prompt_latex or "")
+    assert "auc_linear" in mid
+    assert "auc_quad" in mid
+    assert mid <= {"auc_linear", "auc_quad"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_int_area_under_a_curve", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "auc_linear"
+        assert r"y=x\text{ from }" not in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "area_under_curve"
+    assert high <= {"auc_quad", "auc_quad_coef"}
+    assert "auc_quad_coef" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_int_area_under_a_curve", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "auc_quad_coef"
+        p = q.prompt_latex or ""
+        assert r"y=x\text{ from }" not in p
+        assert r"x^{2}" in p
+        assert (q.metadata or {}).get("generator") == "area_under_curve"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "auc_quad_coef"
+        assert snap.get("generator") == "area_under_curve"
+    assert expert == {"auc_quad_coef"}
+
+
+def test_area_under_curve_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_area_under_curve,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_area_under_curve(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"auc_linear": -2.5, "auc_quad": 2.5})
+    assert tilted["auc_quad"] > baseline["auc_quad"]
+
+
 def test_relative_extrema_d0_parabola_high_d_shifted_lockout():
     q0 = _gen("calc_app_diff_relative_extrema", 0, seed=101)[0]
     assert (q0.metadata or {}).get("form_id") == "parabola_vertex"

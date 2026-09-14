@@ -249,6 +249,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Match or compare graphs of f, f', and f''.",
         "engine": "Leave leaf until figure bank exists; not Diff skeleton.",
     },
+    "calc_app_int_area_under_a_curve": {
+        "flag_why": "Shipped leftover lockout of y=x; LIMITATIONS three frozen monomials on [0,b] / sibling limit-of-sums still shares FTC stem.",
+        "skill": "Find the area under y=f(x) from x=0 to x=b via the definite integral.",
+        "engine": "calc_app_diff `area_under_curve` (linear leftover / quad leftover / k x^2).",
+    },
     "calc_app_diff_slope_tangent_and_normal_lines": {
         "flag_why": "Shipped leftover lockout of D=0 poly/trig/exp/ln; LIMITATIONS no implicit/folium / x·5^x normals.",
         "skill": "Find the tangent (and sometimes normal) line to y=f(x) at x=a.",

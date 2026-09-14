@@ -14,6 +14,7 @@ from typing import Any, Callable, Literal
 
 from question_engine.generators.utils import (
     format_linear_latex,
+    format_monomial_latex,
     format_polynomial_latex,
     frac_latex,
 )
@@ -26,6 +27,7 @@ Kind = Literal[
     "newtons_method",
     "motion",
     "motion_integral",
+    "area_under_curve",
     "de_intro",
     "slope_field",
     "separable",
@@ -2129,6 +2131,138 @@ def sample_motion_integral(rng: random.Random, settings: dict[str, Any]) -> AppD
     )
 
 
+AREA_UNDER_CURVE_GENERATOR = "area_under_curve"
+
+_AUC_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("auc_linear",),
+    "medium": ("auc_linear", "auc_quad"),
+    "hard": ("auc_quad", "auc_quad_coef"),
+    "expert": ("auc_quad_coef",),
+}
+
+
+def area_under_curve_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _AUC_BANDS["easy"]
+    if d < 16.0:
+        return _AUC_BANDS["medium"]
+    if d < 20.0:
+        return _AUC_BANDS["hard"]
+    return _AUC_BANDS["expert"]
+
+
+def _auc_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [AREA_UNDER_CURVE_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _auc_limits(settings: dict[str, Any]) -> tuple[int, int]:
+    """Copy old `_area_under_curve` bound/k caps (min(6, bound_max), min(4, k_max))."""
+    from question_engine.settings.params import calc_topic_structure_from_continuous
+
+    structure = calc_topic_structure_from_continuous(settings)
+    if structure is None:
+        return 5, 4
+    b_hi = max(2, min(6, int(structure.get("bound_max", 5))))
+    k_hi = max(2, min(4, int(structure.get("k_max", 4))))
+    return b_hi, k_hi
+
+
+def _sample_auc_linear(rng: random.Random, b_hi: int) -> AppDiffItem:
+    """Old-path D=0: area under y=x from 0 to b (triangle)."""
+    b = rng.randint(2, max(2, b_hi))
+    prompt = (
+        rf"\text{{Find the area under }}y=x"
+        rf"\text{{ from }}x=0\text{{ to }}x={b}."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(b * b, 2)), "area under a curve", "auc_linear",
+        {"b": b},
+    )
+
+
+def _sample_auc_quad(rng: random.Random, b_hi: int) -> AppDiffItem:
+    """Old mid: area under y=x^2 from 0 to b."""
+    b = rng.randint(2, max(2, b_hi))
+    prompt = (
+        rf"\text{{Find the area under }}y=x^{{2}}"
+        rf"\text{{ from }}x=0\text{{ to }}x={b}."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(b**3, 3)), "area under a curve", "auc_quad",
+        {"b": b},
+    )
+
+
+def _sample_auc_quad_coef(rng: random.Random, b_hi: int, k_hi: int) -> AppDiffItem:
+    """Old exclusive D≥10: area under y=k x^2 from 0 to b."""
+    b = rng.randint(2, max(2, b_hi))
+    k = rng.randint(2, max(2, k_hi))
+    f = format_monomial_latex(k, variable="x", degree=2) or f"{k}x^{{2}}"
+    prompt = (
+        rf"\text{{Find the area under }}y={f}"
+        rf"\text{{ from }}x=0\text{{ to }}x={b}."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(k * b**3, 3)), "area under a curve",
+        "auc_quad_coef",
+        {"b": b, "k": k},
+    )
+
+
+def sample_area_under_curve(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """FTC area under y=f(x) on [0,b]. High D locks out y=x leftover."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = area_under_curve_forms_for_difficulty(d)
+    b_hi, k_hi = _auc_limits(settings)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _auc_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "auc_linear" and fid in forms:
+        item = _sample_auc_linear(rng, b_hi)
+    elif fid == "auc_quad" and fid in forms:
+        item = _sample_auc_quad(rng, b_hi)
+    elif fid == "auc_quad_coef" and fid in forms:
+        item = _sample_auc_quad_coef(rng, b_hi, k_hi)
+    else:
+        fid = forms[0]
+        if fid == "auc_quad":
+            item = _sample_auc_quad(rng, b_hi)
+        elif fid == "auc_quad_coef":
+            item = _sample_auc_quad_coef(rng, b_hi, k_hi)
+        else:
+            item = _sample_auc_linear(rng, b_hi)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": AREA_UNDER_CURVE_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": AREA_UNDER_CURVE_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 DE_INTRO_GENERATOR = "de_introduction"
 
 _DE_INTRO_BANDS: dict[str, tuple[str, ...]] = {
@@ -2857,6 +2991,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "newtons_method": sample_newton,
     "motion": sample_motion,
     "motion_integral": sample_motion_integral,
+    "area_under_curve": sample_area_under_curve,
     "de_intro": sample_de_intro,
     "slope_field": sample_slope_field,
     "separable": sample_separable_de,

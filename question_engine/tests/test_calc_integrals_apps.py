@@ -870,6 +870,75 @@ def test_indef_log_exp_d0_ln_exp_high_d_linear_base_a_lockout():
     assert expert == {"ln_linear", "base_a"}
 
 
+def test_indef_invtrig_sub_stamps_and_high_d_no_arctan_of_linear():
+    """EMH presets already lock catalog arctan_of_linear out of D≥16; stamps already live.
+
+    Further exclusive leftover bands on auto would not change live generate
+    (named arctan_chain catalog / reverse_chain). Skip — do not empty showcases.
+    """
+    q0 = _gen(
+        "calc_indef_int_inverse_trigonometric_with_substitution",
+        0,
+        seed=101,
+    )[0]
+    assert (q0.metadata or {}).get("form_id") == "arctan_of_linear"
+    assert (q0.metadata or {}).get("generator") == "integral_invtrig_substitution"
+    snap0 = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap0.get("form_id") == "arctan_of_linear"
+    assert snap0.get("generator") == "integral_invtrig_substitution"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+    assert r"1+(" in (q0.prompt_latex or "").replace(" ", "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_indef_int_inverse_trigonometric_with_substitution",
+            0,
+            seed=seed,
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "arctan_of_linear"
+        assert (q.metadata or {}).get("generator") == "integral_invtrig_substitution"
+        assert "+C" in (q.answer_latex or "")
+    assert easy == {"arctan_of_linear"}
+
+    mid = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_indef_int_inverse_trigonometric_with_substitution",
+            8,
+            seed=seed,
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert fid == "arctan_of_linear"
+        assert (q.metadata or {}).get("generator") == "integral_invtrig_substitution"
+    assert mid == {"arctan_of_linear"}
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen(
+                "calc_indef_int_inverse_trigonometric_with_substitution",
+                d,
+                seed=seed,
+            )[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid != "arctan_of_linear"
+            assert fid in {"invtrig_arctan", "invtrig_arcsin"}
+            assert (q.metadata or {}).get("generator") == (
+                "integral_invtrig_substitution"
+            )
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "integral_invtrig_substitution"
+            assert "+C" in (q.answer_latex or "")
+    assert high == {"invtrig_arctan", "invtrig_arcsin"}
+
+
 def test_indef_log_exp_sub_stamps_and_high_d_no_du_over_u_trig():
     """EMH presets already lock du_over_u_trig out of D≥16; stamps already live.
 

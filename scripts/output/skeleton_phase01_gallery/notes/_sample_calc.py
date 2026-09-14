@@ -351,6 +351,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Indefinite ln/exp antiderivative after u-sub +C.",
         "engine": "Reuse `integrals.py` `_sample_u_sub_derivative_backed` flavor ln_exp + u_substitution.json presets.",
     },
+    "calc_indef_int_inverse_trigonometric_with_substitution": {
+        "flag_why": "Skip further leftover lockout: EMH presets + stamps already; LIMITATIONS D=0 and D=8 frozen arctan_of_linear / D=16===D=22 reverse-chain.",
+        "skill": "Indefinite invtrig antiderivative after u-sub +C.",
+        "engine": "Reuse `integrals.py` `_sample_u_sub_derivative_backed` flavor invtrig + arctan_chain / reverse-chain.",
+    },
     "calc_indef_int_trigonometric_with_substitution": {
         "note": "Catalog name says trig substitution; generator is `integral_trig_substitution` (Calc 2 §3.3).",
         "skill": "Integrate using a trigonometric substitution.",

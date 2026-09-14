@@ -9,6 +9,7 @@ import pytest
 from question_engine.api.handler import _generate_for_type
 from question_engine.generators.calculus_derivative_rules import (
     GENERATORS,
+    average_rate_forms_for_difficulty,
     definition_of_derivative_forms_for_difficulty,
 )
 
@@ -135,6 +136,105 @@ def test_definition_of_derivative_d0_limit_high_d_hard_lockout() -> None:
         assert snap.get("generator") == "definition_of_derivative"
     assert expert <= _HARD
     assert expert & _HARD
+
+
+_ARC_TYPE = "calc_diff_average_rates_of_change"
+_ARC_EASY = {"quad"}
+_ARC_MEDIUM = {"cubic", "quad_const", "linear"}
+_ARC_HARD = {"poly", "shifted", "reciprocal"}
+
+
+def test_average_rate_d0_quad_high_d_hard_lockout() -> None:
+    assert average_rate_forms_for_difficulty(0) == ("quad",)
+    med = average_rate_forms_for_difficulty(8)
+    assert _ARC_EASY <= set(med) and _ARC_MEDIUM <= set(med)
+    assert med == ("quad", "cubic", "quad_const", "linear")
+    hard = average_rate_forms_for_difficulty(16)
+    assert hard == ("cubic", "quad_const", "linear", "poly", "shifted", "reciprocal")
+    assert "quad" not in hard
+    assert average_rate_forms_for_difficulty(22) == ("poly", "shifted", "reciprocal")
+
+    q0 = _gen_def(_ARC_TYPE, 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "quad"
+    assert (q0.metadata or {}).get("generator") == "average_rate_of_change"
+    p0 = q0.prompt_latex or ""
+    assert r"f(x)=x^{2}" in p0
+    assert r"x^{3}" not in p0
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "quad"
+    assert snap.get("generator") == "average_rate_of_change"
+
+    mid = set()
+    for seed in range(40):
+        q = _gen_def(_ARC_TYPE, 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert fid in _ARC_EASY | _ARC_MEDIUM
+        assert (q.metadata or {}).get("generator") == "average_rate_of_change"
+        p = q.prompt_latex or ""
+        assert r"\frac{1}{" not in p
+        assert r"^{-1}" not in p
+    assert mid & _ARC_EASY
+    assert mid & _ARC_MEDIUM
+    assert mid <= _ARC_EASY | _ARC_MEDIUM
+
+    high = set()
+    leftover_quad = r"f(x)=x^{2}\text{ on }"
+    for seed in range(40):
+        q = _gen_def(_ARC_TYPE, 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "quad"
+        p = q.prompt_latex or ""
+        assert leftover_quad not in p
+        assert (q.metadata or {}).get("generator") == "average_rate_of_change"
+    assert high <= _ARC_MEDIUM | _ARC_HARD
+    assert high & _ARC_HARD
+
+    expert = set()
+    for seed in range(30):
+        q = _gen_def(_ARC_TYPE, 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in _ARC_HARD
+        p = q.prompt_latex or ""
+        assert leftover_quad not in p
+        assert (q.metadata or {}).get("generator") == "average_rate_of_change"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") in _ARC_HARD
+        assert snap.get("generator") == "average_rate_of_change"
+    assert expert <= _ARC_HARD
+    assert expert & _ARC_HARD
+
+
+def test_average_rate_quality_weights_tilt() -> None:
+    from contextlib import nullcontext
+
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                q = GENERATORS["average_rate_of_change"](
+                    _ARC_TYPE,
+                    {
+                        "difficulty": 8.0,
+                        "seed": i,
+                        "count": 1,
+                        "include_answer_key": True,
+                        "live_quality_form_weights": weights,
+                    },
+                )[0]
+                c[(q.metadata or {}).get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"quad": -2.5, "linear": 2.5})
+    assert tilted["linear"] > baseline["linear"]
 
 
 def test_definition_of_derivative_quality_weights_tilt() -> None:

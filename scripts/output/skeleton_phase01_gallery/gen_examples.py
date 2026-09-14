@@ -2863,7 +2863,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_diff_average_rates_of_change",
         "Diff — average rate of change",
-        "Δf/Δx on [a,b]. OpenStax Vol 1 §3.4.",
+        "Leftover lockout: D=0 x^2; D=8 leftover quad + cubic/px^2+q/linear; "
+        "D=16 medium leftover + poly/x^3+x/1/x (no x^2 leftover); "
+        "D=22 poly / shifted / 1/x only. OpenStax Vol 1 §3.4.",
     ),
 
     (

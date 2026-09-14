@@ -300,6 +300,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Perform one or more Newton iterations.",
         "engine": "calc_app_diff `newtons_method` (one-quad leftover / one-cubic leftover / two cubic steps).",
     },
+    "calc_diff_average_rates_of_change": {
+        "flag_why": "Shipped leftover lockout of D=0 x^2; LIMITATIONS seven frozen old builders / no sqrt / trig / story s(t).",
+        "skill": "Compute (f(b)-f(a))/(b-a) on a closed interval.",
+        "engine": "calculus_derivative_rules `average_rate_of_change` (quad leftover / cubic+quad_const+linear leftover / poly+shifted+reciprocal).",
+    },
     "calc_app_diff_limits_in_form_of_definition_of_derivative": {
         "flag_why": "Shipped leftover lockout of D=0 x^2 x→a / h→0; LIMITATIONS eight frozen old builders / no general f.",
         "skill": "Recognize a difference quotient as f'(a) and evaluate it from the definition.",

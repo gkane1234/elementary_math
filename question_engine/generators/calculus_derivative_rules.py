@@ -797,12 +797,47 @@ def _derivative_implicit(topic: str, settings: dict) -> list[Question]:
 # ---------------------------------------------------------------------------
 
 
+AVERAGE_RATE_GENERATOR = "average_rate_of_change"
+
+_ARC_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("quad",),
+    "medium": ("quad", "cubic", "quad_const", "linear"),
+    "hard": ("cubic", "quad_const", "linear", "poly", "shifted", "reciprocal"),
+    "expert": ("poly", "shifted", "reciprocal"),
+}
+
+
+def average_rate_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of easy x² (old accumulate kept it at high D)."""
+    if d < 8.0:
+        return _ARC_BANDS["easy"]
+    if d < 16.0:
+        return _ARC_BANDS["medium"]
+    if d < 20.0:
+        return _ARC_BANDS["hard"]
+    return _ARC_BANDS["expert"]
+
+
+def _arc_form_rows(forms: tuple[str, ...]) -> list[dict]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [AVERAGE_RATE_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
 def _average_rate_of_change(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     structure = _rule_structure(settings)
     x = str(settings.get("variable", "x"))
     note, metadata_builder = _madlibs_meta("average_rate_of_change", structure)
+    numeric_d = _settings_numeric_d(settings)
 
     def build() -> tuple[str, str, str | None]:
         a0 = random.randint(0, 3)
@@ -811,17 +846,35 @@ def _average_rate_of_change(topic: str, settings: dict) -> list[Question]:
         if structure.get("unlock_medium"):
             width = random.randint(1, max(1, min(5, width_max)))
         b0 = a0 + width
-        extra = []
-        if structure.get("unlock_reciprocal"):
-            extra.append("reciprocal")
-        family = _pick_family(
-            structure,
-            ["quad"],
-            medium=["cubic", "quad_const", "linear"],
-            hard=["poly", "shifted"],
-            extra=extra if structure.get("unlock_hard") else None,
-        )
-        note(family)
+        if numeric_d is not None:
+            from question_engine.frameworks.primitives.openstax_form_catalogs import (
+                select_form_id,
+            )
+
+            forms = average_rate_forms_for_difficulty(numeric_d)
+            qw = settings.get("live_quality_form_weights")
+            quality_weights = qw if isinstance(qw, dict) else None
+            form = select_form_id(
+                _arc_form_rows(forms),
+                d=numeric_d,
+                rng=random,
+                quality_weights=quality_weights,
+            )
+            family = str(form.get("form_id") or forms[0])
+            if family not in forms:
+                family = forms[0]
+        else:
+            extra = []
+            if structure.get("unlock_reciprocal"):
+                extra.append("reciprocal")
+            family = _pick_family(
+                structure,
+                ["quad"],
+                medium=["cubic", "quad_const", "linear"],
+                hard=["poly", "shifted"],
+                extra=extra if structure.get("unlock_hard") else None,
+            )
+        note(family, form_id=family)
         a, b = a0, b0
         if family == "quad":
             f = f"{x}^{{2}}"

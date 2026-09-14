@@ -2795,13 +2795,16 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_def_int_area_under_a_curve_by_limit_of_sums",
         "Area by limit of sums",
-        "Reuse area_under_curve / limit-of-sums path. OpenStax Vol 1 §5.2.",
+        "SKIP: live is FTC area-under-curve (shared area_under_curve), not OpenStax "
+        "Ex. 5.7 lim∑. No existing definition core. Vol 1 §5.2.",
     ),
 
     (
         "calc_def_int_riemann_sum_tables",
         "Riemann sums from tables",
-        "Left/right/mid from value tables. OpenStax Vol 1 §5.1.",
+        "Leftover lockout: D=0 3-point left; D=8 leftover left3 + 4-point L/R; "
+        "D=16 4-point leftover + midpoint (no left3); D=22 midpoint only. "
+        "OpenStax Vol 1 §5.1.",
     ),
 
     (
@@ -3185,6 +3188,8 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             eng = "volumes"
         elif "riemann" in tid or tid == "calc_def_int_approximating_area_under_a_curve":
             eng = "riemann"
+            if tid == "calc_def_int_riemann_sum_tables":
+                extra_seeds = (101, 207, 313, 0, 1, 2, 7)
         elif tid.startswith("calc_diff_eq_"):
             eng = "diff_eq"
             if tid == "calc_diff_eq_separable":

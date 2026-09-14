@@ -30,6 +30,7 @@ Kind = Literal[
     "area_under_curve",
     "area_between_curves",
     "def_int_mean_value",
+    "riemann_sum_tables",
     "de_intro",
     "slope_field",
     "separable",
@@ -2392,6 +2393,133 @@ def sample_def_int_mean_value(rng: random.Random, settings: dict[str, Any]) -> A
     )
 
 
+RIEMANN_SUM_TABLES_GENERATOR = "riemann_sum_tables"
+
+_RST_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("rst_left3",),
+    "medium": ("rst_left3", "rst_left_right4"),
+    "hard": ("rst_left_right4", "rst_midpoint"),
+    "expert": ("rst_midpoint",),
+}
+
+
+def riemann_sum_tables_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _RST_BANDS["easy"]
+    if d < 16.0:
+        return _RST_BANDS["medium"]
+    if d < 20.0:
+        return _RST_BANDS["hard"]
+    return _RST_BANDS["expert"]
+
+
+def _rst_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [RIEMANN_SUM_TABLES_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_rst_left3(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: 3-point table, left Riemann on [0,2], Δx=1."""
+    xs = [0, 1, 2]
+    ys = [rng.randint(1, 5) for _ in xs]
+    table = ", ".join(rf"f({x})={y}" for x, y in zip(xs, ys))
+    prompt = (
+        rf"{table}.\quad\text{{Approximate }}\int_{{{xs[0]}}}^{{{xs[-1]}}} f(x)\,dx"
+        rf"\text{{ with a left Riemann sum.}}"
+    )
+    return AppDiffItem(
+        prompt, str(sum(ys[:-1])), "Riemann sum from table", "rst_left3",
+        {"xs": xs, "ys": ys, "kind": "left"},
+    )
+
+
+def _sample_rst_left_right4(rng: random.Random) -> AppDiffItem:
+    """Old mid: 4-point table, left or right Riemann on [0,3], Δx=1."""
+    xs = [0, 1, 2, 3]
+    ys = [rng.randint(1, 6) for _ in xs]
+    table = ", ".join(rf"f({x})={y}" for x, y in zip(xs, ys))
+    if rng.choice((True, False)):
+        total = sum(ys[:-1])
+        kind = "left"
+    else:
+        total = sum(ys[1:])
+        kind = "right"
+    prompt = (
+        rf"{table}.\quad\text{{Approximate }}\int_{{{xs[0]}}}^{{{xs[-1]}}} f(x)\,dx"
+        rf"\text{{ with a {kind} Riemann sum.}}"
+    )
+    return AppDiffItem(
+        prompt, str(total), "Riemann sum from table", "rst_left_right4",
+        {"xs": xs, "ys": ys, "kind": kind},
+    )
+
+
+def _sample_rst_midpoint(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D≥10: midpoint values on [0,4] with Δx=2."""
+    mid_vals = [rng.randint(1, 6), rng.randint(1, 6)]
+    prompt = (
+        rf"\text{{On }}[0,4]\text{{ with }}\Delta x=2,\text{{ the midpoint values are }}"
+        rf"f(1)={mid_vals[0]}\text{{ and }}f(3)={mid_vals[1]}."
+        rf"\quad\text{{Find the midpoint Riemann sum.}}"
+    )
+    return AppDiffItem(
+        prompt, str(sum(mid_vals) * 2), "Riemann sum from table", "rst_midpoint",
+        {"mid_vals": mid_vals},
+    )
+
+
+def sample_riemann_sum_tables(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Table Riemann sums. High D locks out 3-point left leftover."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = riemann_sum_tables_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _rst_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "rst_left3" and fid in forms:
+        item = _sample_rst_left3(rng)
+    elif fid == "rst_left_right4" and fid in forms:
+        item = _sample_rst_left_right4(rng)
+    elif fid == "rst_midpoint" and fid in forms:
+        item = _sample_rst_midpoint(rng)
+    else:
+        fid = forms[0]
+        if fid == "rst_left_right4":
+            item = _sample_rst_left_right4(rng)
+        elif fid == "rst_midpoint":
+            item = _sample_rst_midpoint(rng)
+        else:
+            item = _sample_rst_left3(rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": RIEMANN_SUM_TABLES_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": RIEMANN_SUM_TABLES_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 AREA_BETWEEN_CURVES_GENERATOR = "area_between_curves"
 
 _ABC_BANDS: dict[str, tuple[str, ...]] = {
@@ -3293,6 +3421,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "area_under_curve": sample_area_under_curve,
     "area_between_curves": sample_area_between_curves,
     "def_int_mean_value": sample_def_int_mean_value,
+    "riemann_sum_tables": sample_riemann_sum_tables,
     "de_intro": sample_de_intro,
     "slope_field": sample_slope_field,
     "separable": sample_separable_de,

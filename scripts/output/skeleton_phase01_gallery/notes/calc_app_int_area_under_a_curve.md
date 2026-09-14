@@ -69,7 +69,7 @@ Not a WP. D=0 one easy linear \(y=x\) (old). Same-D rotation at mid D: leftover 
 
 ## Limitations
 
-- **Status:** shipped — leftover lockout of \(y=x\). Remaining `LIMITATIONS`: three frozen nonnegative monomials on \([0,b]\) (no \(\sin x\) / \(e^x\) / \(\sqrt{x}\), no start at \(a\neq 0\)); no figure / shaded region; D=16 can still emit \(y=x^{2}\) leftover (intentional); sibling `calc_def_int_area_under_a_curve_by_limit_of_sums` still shares this FTC stem (not a limit-of-sums core).
+- **Status:** shipped — leftover lockout of \(y=x\). Remaining `LIMITATIONS`: three frozen nonnegative monomials on \([0,b]\) (no \(\sin x\) / \(e^x\) / \(\sqrt{x}\), no start at \(a\neq 0\)); no figure / shaded region; D=16 can still emit \(y=x^{2}\) leftover (intentional); sibling `calc_def_int_area_under_a_curve_by_limit_of_sums` skipped (same FTC stem; no \(\lim\sum\) core).
 - **Live pairwise:** each item stamps `form_id`, shared `generator=area_under_curve`, and `family`; copies `form_id` onto `spec_snapshot`. Form pick uses `select_form_id` so `live_quality_form_weights` can tilt.
 - **Generator:** `area_under_curve`
 

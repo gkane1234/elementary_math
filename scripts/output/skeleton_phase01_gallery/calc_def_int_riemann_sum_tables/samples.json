@@ -15,9 +15,13 @@
     "ladder_seeds": [
       101,
       207,
-      313
+      313,
+      0,
+      1,
+      2,
+      7
     ],
-    "blurb": "Left/right/mid from value tables. OpenStax Vol 1 \u00a75.1."
+    "blurb": "Leftover lockout: D=0 3-point left; D=8 leftover left3 + 4-point L/R; D=16 4-point leftover + midpoint (no left3); D=22 midpoint only. OpenStax Vol 1 \u00a75.1."
   },
   "rows": [
     {
@@ -28,10 +32,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "f(0)=2, f(1)=3, f(2)=2.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "5",
+      "prompt_latex": "f(0)=2, f(1)=5, f(2)=3.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "7",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_left3",
       "diagram_svg": "",
       "debug": [
         [
@@ -43,11 +47,34 @@
           101
         ],
         [
+          "form_id",
+          "rst_left3"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          2,
+          5,
+          3
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 1,
           "power_max": 3,
@@ -56,7 +83,8 @@
           "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -69,10 +97,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "f(0)=3, f(1)=4, f(2)=4.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "prompt_latex": "f(0)=5, f(1)=2, f(2)=2.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
       "answer_latex": "7",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_left3",
       "diagram_svg": "",
       "debug": [
         [
@@ -84,11 +112,34 @@
           207
         ],
         [
+          "form_id",
+          "rst_left3"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          5,
+          2,
+          2
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 1,
           "power_max": 3,
@@ -97,7 +148,8 @@
           "seed": 207,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -110,10 +162,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "f(0)=5, f(1)=1, f(2)=3.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "6",
+      "prompt_latex": "f(0)=4, f(1)=4, f(2)=1.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "8",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_left3",
       "diagram_svg": "",
       "debug": [
         [
@@ -125,11 +177,34 @@
           313
         ],
         [
+          "form_id",
+          "rst_left3"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          4,
+          4,
+          1
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 1,
           "power_max": 3,
@@ -138,7 +213,268 @@
           "seed": 313,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=0",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 0,
+      "prompt_latex": "f(0)=4, f(1)=1, f(2)=3.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "5",
+      "skeleton_pattern": "",
+      "form_id": "rst_left3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "rst_left3"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          4,
+          1,
+          3
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=1",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 1,
+      "prompt_latex": "f(0)=1, f(1)=3, f(2)=1.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "4",
+      "skeleton_pattern": "",
+      "form_id": "rst_left3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          1
+        ],
+        [
+          "form_id",
+          "rst_left3"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          1,
+          3,
+          1
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 1,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=2",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 2,
+      "prompt_latex": "f(0)=1, f(1)=1, f(2)=1.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "2",
+      "skeleton_pattern": "",
+      "form_id": "rst_left3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "rst_left3"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          1,
+          1,
+          1
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=7",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 7,
+      "prompt_latex": "f(0)=2, f(1)=4, f(2)=1.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "6",
+      "skeleton_pattern": "",
+      "form_id": "rst_left3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "rst_left3"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          2,
+          4,
+          1
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 1,
+          "power_max": 3,
+          "require_positive_power": true,
+          "difficulty": 0.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -151,10 +487,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "f(0)=2, f(1)=2, f(2)=5, f(3)=2.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "9",
+      "prompt_latex": "f(0)=2, f(1)=5, f(2)=3, f(3)=4.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "10",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_left_right4",
       "diagram_svg": "",
       "debug": [
         [
@@ -166,11 +502,36 @@
           101
         ],
         [
+          "form_id",
+          "rst_left_right4"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "xs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "ys": [
+          2,
+          5,
+          3,
+          4
+        ],
+        "kind": "left",
+        "form_id": "rst_left_right4",
+        "family": "rst_left_right4",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left_right4",
+          "family": "rst_left_right4",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 4,
@@ -179,7 +540,8 @@
           "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -192,10 +554,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "f(0)=6, f(1)=1, f(2)=3, f(3)=4.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "10",
+      "prompt_latex": "f(0)=6, f(1)=5, f(2)=2, f(3)=6.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "13",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_left_right4",
       "diagram_svg": "",
       "debug": [
         [
@@ -207,11 +569,36 @@
           207
         ],
         [
+          "form_id",
+          "rst_left_right4"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "xs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "ys": [
+          6,
+          5,
+          2,
+          6
+        ],
+        "kind": "left",
+        "form_id": "rst_left_right4",
+        "family": "rst_left_right4",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left_right4",
+          "family": "rst_left_right4",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 4,
@@ -220,7 +607,8 @@
           "seed": 207,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -233,10 +621,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "f(0)=3, f(1)=1, f(2)=5, f(3)=2.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a right Riemann sum.}",
-      "answer_latex": "8",
+      "prompt_latex": "f(0)=6, f(1)=4, f(2)=4, f(3)=1.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "14",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_left_right4",
       "diagram_svg": "",
       "debug": [
         [
@@ -248,11 +636,36 @@
           313
         ],
         [
+          "form_id",
+          "rst_left_right4"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "xs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "ys": [
+          6,
+          4,
+          4,
+          1
+        ],
+        "kind": "left",
+        "form_id": "rst_left_right4",
+        "family": "rst_left_right4",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left_right4",
+          "family": "rst_left_right4",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 4,
@@ -261,7 +674,272 @@
           "seed": 313,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=0",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 0,
+      "prompt_latex": "f(0)=4, f(1)=1, f(2)=3, f(3)=5.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a right Riemann sum.}",
+      "answer_latex": "9",
+      "skeleton_pattern": "",
+      "form_id": "rst_left_right4",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "rst_left_right4"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "ys": [
+          4,
+          1,
+          3,
+          5
+        ],
+        "kind": "right",
+        "form_id": "rst_left_right4",
+        "family": "rst_left_right4",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left_right4",
+          "family": "rst_left_right4",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=1",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 1,
+      "prompt_latex": "f(0)=1, f(1)=3, f(2)=1.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "4",
+      "skeleton_pattern": "",
+      "form_id": "rst_left3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          1
+        ],
+        [
+          "form_id",
+          "rst_left3"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          1,
+          3,
+          1
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 1,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=2",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 2,
+      "prompt_latex": "f(0)=1, f(1)=1, f(2)=1, f(3)=3.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "3",
+      "skeleton_pattern": "",
+      "form_id": "rst_left_right4",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "rst_left_right4"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "ys": [
+          1,
+          1,
+          1,
+          3
+        ],
+        "kind": "left",
+        "form_id": "rst_left_right4",
+        "family": "rst_left_right4",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left_right4",
+          "family": "rst_left_right4",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=7",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 7,
+      "prompt_latex": "f(0)=2, f(1)=4, f(2)=1.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "6",
+      "skeleton_pattern": "",
+      "form_id": "rst_left3",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "rst_left3"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2
+        ],
+        "ys": [
+          2,
+          4,
+          1
+        ],
+        "kind": "left",
+        "form_id": "rst_left3",
+        "family": "rst_left3",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left3",
+          "family": "rst_left3",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 4,
+          "require_positive_power": true,
+          "difficulty": 8.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -274,10 +952,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "f(0)=5, f(1)=1, f(2)=4.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "6",
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=2\\text{ and }f(3)=5.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "14",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_midpoint",
       "diagram_svg": "",
       "debug": [
         [
@@ -289,11 +967,27 @@
           101
         ],
         [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "mid_vals": [
+          2,
+          5
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -302,7 +996,8 @@
           "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -315,10 +1010,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=2\\text{ and }f(3)=2.\\quad\\text{Find the midpoint Riemann sum.}",
-      "answer_latex": "8",
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=6\\text{ and }f(3)=5.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "22",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_midpoint",
       "diagram_svg": "",
       "debug": [
         [
@@ -330,11 +1025,27 @@
           207
         ],
         [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "mid_vals": [
+          6,
+          5
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -343,7 +1054,8 @@
           "seed": 207,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -356,10 +1068,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "f(0)=4, f(1)=4, f(2)=6, f(3)=5.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "14",
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=6\\text{ and }f(3)=4.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "20",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_midpoint",
       "diagram_svg": "",
       "debug": [
         [
@@ -371,11 +1083,27 @@
           313
         ],
         [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "mid_vals": [
+          6,
+          4
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -384,7 +1112,258 @@
           "seed": 313,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=0",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=4\\text{ and }f(3)=1.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "10",
+      "skeleton_pattern": "",
+      "form_id": "rst_midpoint",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "mid_vals": [
+          4,
+          1
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=1",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 1,
+      "prompt_latex": "f(0)=1, f(1)=3, f(2)=1, f(3)=4.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a right Riemann sum.}",
+      "answer_latex": "8",
+      "skeleton_pattern": "",
+      "form_id": "rst_left_right4",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          1
+        ],
+        [
+          "form_id",
+          "rst_left_right4"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "ys": [
+          1,
+          3,
+          1,
+          4
+        ],
+        "kind": "right",
+        "form_id": "rst_left_right4",
+        "family": "rst_left_right4",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left_right4",
+          "family": "rst_left_right4",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 1,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=2",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=1\\text{ and }f(3)=1.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "4",
+      "skeleton_pattern": "",
+      "form_id": "rst_midpoint",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "mid_vals": [
+          1,
+          1
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=7",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "f(0)=2, f(1)=4, f(2)=6, f(3)=1.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
+      "answer_latex": "12",
+      "skeleton_pattern": "",
+      "form_id": "rst_left_right4",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "rst_left_right4"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "xs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "ys": [
+          2,
+          4,
+          6,
+          1
+        ],
+        "kind": "left",
+        "form_id": "rst_left_right4",
+        "family": "rst_left_right4",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_left_right4",
+          "family": "rst_left_right4",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -397,10 +1376,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "f(0)=1, f(1)=1, f(2)=2, f(3)=4.\\quad\\text{Approximate }\\int_{0}^{3} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "4",
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=2\\text{ and }f(3)=5.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "14",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_midpoint",
       "diagram_svg": "",
       "debug": [
         [
@@ -412,11 +1391,27 @@
           101
         ],
         [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "mid_vals": [
+          2,
+          5
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -425,7 +1420,8 @@
           "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -438,10 +1434,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "f(0)=5, f(1)=5, f(2)=5.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "10",
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=6\\text{ and }f(3)=5.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "22",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_midpoint",
       "diagram_svg": "",
       "debug": [
         [
@@ -453,11 +1449,27 @@
           207
         ],
         [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "mid_vals": [
+          6,
+          5
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -466,7 +1478,8 @@
           "seed": 207,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }
@@ -479,10 +1492,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "f(0)=2, f(1)=4, f(2)=5.\\quad\\text{Approximate }\\int_{0}^{2} f(x)\\,dx\\text{ with a left Riemann sum.}",
-      "answer_latex": "6",
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=6\\text{ and }f(3)=4.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "20",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "rst_midpoint",
       "diagram_svg": "",
       "debug": [
         [
@@ -494,11 +1507,27 @@
           313
         ],
         [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "mid_vals": [
+          6,
+          4
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -507,7 +1536,240 @@
           "seed": 313,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=0",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=4\\text{ and }f(3)=1.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "10",
+      "skeleton_pattern": "",
+      "form_id": "rst_midpoint",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "mid_vals": [
+          4,
+          1
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=1",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 1,
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=1\\text{ and }f(3)=3.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "8",
+      "skeleton_pattern": "",
+      "form_id": "rst_midpoint",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          1
+        ],
+        [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "mid_vals": [
+          1,
+          3
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 1,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=2",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=1\\text{ and }f(3)=1.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "4",
+      "skeleton_pattern": "",
+      "form_id": "rst_midpoint",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "mid_vals": [
+          1,
+          1
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Use the Riemann sum table.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=7",
+      "type_id": "calc_def_int_riemann_sum_tables",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{On }[0,4]\\text{ with }\\Delta x=2,\\text{ the midpoint values are }f(1)=2\\text{ and }f(3)=4.\\quad\\text{Find the midpoint Riemann sum.}",
+      "answer_latex": "12",
+      "skeleton_pattern": "",
+      "form_id": "rst_midpoint",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "rst_midpoint"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "mid_vals": [
+          2,
+          4
+        ],
+        "form_id": "rst_midpoint",
+        "family": "rst_midpoint",
+        "generator": "riemann_sum_tables",
+        "spec_snapshot": {
+          "form_id": "rst_midpoint",
+          "family": "rst_midpoint",
+          "generator": "riemann_sum_tables"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Use the Riemann sum table.}"
       }

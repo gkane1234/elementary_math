@@ -494,6 +494,97 @@ def test_def_int_mean_value_d0_linear_high_d_quad_coef_lockout():
     assert expert == {"dimvt_quad_coef"}
 
 
+def test_riemann_sum_tables_d0_left3_high_d_midpoint_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        riemann_sum_tables_forms_for_difficulty,
+    )
+
+    assert riemann_sum_tables_forms_for_difficulty(0) == ("rst_left3",)
+    med = riemann_sum_tables_forms_for_difficulty(8)
+    assert "rst_left3" in med and "rst_left_right4" in med
+    hard = riemann_sum_tables_forms_for_difficulty(16)
+    assert "rst_left3" not in hard
+    assert hard == ("rst_left_right4", "rst_midpoint")
+    assert riemann_sum_tables_forms_for_difficulty(22) == ("rst_midpoint",)
+
+    q0 = _gen("calc_def_int_riemann_sum_tables", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "rst_left3"
+    assert (q0.metadata or {}).get("generator") == "riemann_sum_tables"
+    p0 = q0.prompt_latex or ""
+    assert r"f(2)=" in p0
+    assert r"f(3)=" not in p0
+    assert "midpoint" not in p0.lower()
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "rst_left3"
+    assert snap.get("generator") == "riemann_sum_tables"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_def_int_riemann_sum_tables", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        p = q.prompt_latex or ""
+        assert (q.metadata or {}).get("generator") == "riemann_sum_tables"
+        assert "midpoint" not in p.lower()
+    assert "rst_left3" in mid
+    assert "rst_left_right4" in mid
+    assert mid <= {"rst_left3", "rst_left_right4"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_def_int_riemann_sum_tables", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        p = q.prompt_latex or ""
+        assert fid != "rst_left3"
+        assert not (r"f(2)=" in p and r"f(3)=" not in p and "midpoint" not in p.lower())
+        assert (q.metadata or {}).get("generator") == "riemann_sum_tables"
+    assert high <= {"rst_left_right4", "rst_midpoint"}
+    assert "rst_midpoint" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_def_int_riemann_sum_tables", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        p = q.prompt_latex or ""
+        assert fid == "rst_midpoint"
+        assert "midpoint" in p.lower()
+        assert r"f(3)=" in p
+        assert (q.metadata or {}).get("generator") == "riemann_sum_tables"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "rst_midpoint"
+        assert snap.get("generator") == "riemann_sum_tables"
+    assert expert == {"rst_midpoint"}
+
+
+def test_riemann_sum_tables_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_riemann_sum_tables,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_riemann_sum_tables(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"rst_left3": -2.5, "rst_left_right4": 2.5})
+    assert tilted["rst_left_right4"] > baseline["rst_left_right4"]
+
+
 def test_def_int_mean_value_quality_weights_tilt():
     from contextlib import nullcontext
     import random as _random

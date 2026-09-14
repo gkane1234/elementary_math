@@ -1158,53 +1158,49 @@ def _integration_by_parts(topic: str, settings: dict) -> list[Question]:
 
 
 def _riemann_sum_tables(topic: str, settings: dict) -> list[Question]:
-    """Left/right/midpoint Riemann sums from a short value table."""
+    """Left/right/midpoint Riemann sums from a short value table.
+
+    Leftover lockout of D=0 3-point left sums (``_pick_family`` used to keep
+    ``left3`` in the pool through expert).
+    """
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        RIEMANN_SUM_TABLES_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _topic_structure(settings)
 
     def build() -> tuple[str, str, str | None]:
-        family = _pick_family(
-            structure,
-            ["left3"],
-            medium=["left_right4"],
-            hard=["midpoint"] if structure.get("unlock_midpoint_table") else ["left_right4"],
-        )
-        if family == "left3":
-            xs = [0, 1, 2]
-            ys = [random.randint(1, 5) for _ in xs]
-            table = ", ".join(rf"f({x})={y}" for x, y in zip(xs, ys))
-            total = sum(ys[:-1])
-            prompt = (
-                rf"{table}.\quad\text{{Approximate }}\int_{{{xs[0]}}}^{{{xs[-1]}}} f(x)\,dx"
-                rf"\text{{ with a left Riemann sum.}}"
-            )
-        elif family == "left_right4":
-            xs = [0, 1, 2, 3]
-            ys = [random.randint(1, 6) for _ in xs]
-            table = ", ".join(rf"f({x})={y}" for x, y in zip(xs, ys))
-            if random.choice([True, False]):
-                total = sum(ys[:-1])
-                kind = "left"
-            else:
-                total = sum(ys[1:])
-                kind = "right"
-            prompt = (
-                rf"{table}.\quad\text{{Approximate }}\int_{{{xs[0]}}}^{{{xs[-1]}}} f(x)\,dx"
-                rf"\text{{ with a {kind} Riemann sum.}}"
-            )
-        else:
-            mid_vals = [random.randint(1, 6), random.randint(1, 6)]
-            prompt = (
-                rf"\text{{On }}[0,4]\text{{ with }}\Delta x=2,\text{{ the midpoint values are }}"
-                rf"f(1)={mid_vals[0]}\text{{ and }}f(3)={mid_vals[1]}."
-                rf"\quad\text{{Find the midpoint Riemann sum.}}"
-            )
-            total = sum(mid_vals) * 2
-        answer = str(total)
-        return prompt, "Riemann sum from table", answer if include_answer_key else None
+        item = sample_app_diff("riemann_sum_tables", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": RIEMANN_SUM_TABLES_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": RIEMANN_SUM_TABLES_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _second_fundamental_theorem(topic: str, settings: dict) -> list[Question]:

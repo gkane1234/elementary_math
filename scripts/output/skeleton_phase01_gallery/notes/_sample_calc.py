@@ -249,8 +249,19 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Match or compare graphs of f, f', and f''.",
         "engine": "Leave leaf until figure bank exists; not Diff skeleton.",
     },
+    "calc_def_int_riemann_sum_tables": {
+        "flag_why": "Shipped leftover lockout of 3-point left; LIMITATIONS three frozen old builders / no story tables.",
+        "skill": "Approximate a definite integral from tabulated values (left / right / midpoint).",
+        "engine": "calc_app_diff `riemann_sum_tables` (left3 leftover / 4-point leftover / midpoint).",
+    },
+    "calc_def_int_area_under_a_curve_by_limit_of_sums": {
+        "force_flags": ["UNCLEAR", "LIMITATIONS", "NOT_IMPLEMENTED"],
+        "flag_why": "Skip: live is FTC area-under-curve stem; no existing lim-sum core (finite Riemann / tables are other leaves).",
+        "skill": "Evaluate a definite integral from the definition (right-endpoint sum, n→∞).",
+        "engine": "Leave leaf; do not invent a lim∑ core; do not rewire onto riemann_approximate_area.",
+    },
     "calc_app_int_area_under_a_curve": {
-        "flag_why": "Shipped leftover lockout of y=x; LIMITATIONS three frozen monomials on [0,b] / sibling limit-of-sums still shares FTC stem.",
+        "flag_why": "Shipped leftover lockout of y=x; LIMITATIONS three frozen monomials on [0,b]. Limit-of-sums sibling skipped (still FTC stem).",
         "skill": "Find the area under y=f(x) from x=0 to x=b via the definite integral.",
         "engine": "calc_app_diff `area_under_curve` (linear leftover / quad leftover / k x^2).",
     },

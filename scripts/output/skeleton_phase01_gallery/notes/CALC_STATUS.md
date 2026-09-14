@@ -87,6 +87,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Concavity: leftover lockout + Ex. 4.19 shifted inflections shipped; still no quintic second-derivative test
 - MVT: leftover lockout + Ex. 4.15 \(\sqrt{x}\) shipped; still no velocity story / interior-only \(\sqrt{x}\)
 - Rolle's: leftover lockout shipped (high D no even-quad \(c=0\)); still no scaled Checkpoint 4.14 / hypothesis-verify stem
+- Power rule (indef): leftover lockout of `poly_sum` / \(\sqrt{x}\) shipped; still six frozen old builders (no Ex. 4.50 \(1/x\) / \(\cos x\) / \(e^{x}\); no Ex. 5.23 \(\sqrt{t}(1+t)\)); D=16 can still emit \(1/\sqrt{x}\) / \(x\sqrt{x}\) leftover
 - Challenging on the power host stays algebraic (cubic / root-quad / alteration); trig/exp challenging is on the ln/exp host
 - Reverse-chain: `x^{1}` elided here; unsimplified juxtaposition (`2x(-4)`) and high-D nested F∘g remain
 - Implicit: catalog families only (not a general \(F(x,y)\) AST)
@@ -97,6 +98,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_indef_int_power_rule`:** Leftover lockout of D=0 `poly_sum` / \(\sqrt{x}\). D=0 poly or \(\int\sqrt{x}\) (old easy); D=8 leftover easy + \(1/\sqrt{x}\) / \(x\sqrt{x}\) / \(k/x^n\) / rewrite; D=16 mid leftover + rewrite/neg-power (no `poly_sum` / \(\sqrt{x}\)); D=22 rewrite / neg-power only. Stamps `form_id` + `generator=integral_power_rule`; `select_form_id` / `live_quality_form_weights`. Shared generator also leftover-locks `pc_indefinite_integrals`. Did not invent Ex. 4.50 trig/exp / Ex. 5.23 \(\sqrt{t}(1+t)\) cores.
 - **`calc_def_int_substitution_with_change_of_variables`:** Leftover lockout of D=0 linear \(u\). D=0 \(\int_0^b p(px+q)^n\) (old easy); D=8 leftover linear + quad \(2x(x^{2}+1)^n\); D=16 quad leftover + \(du/u\) (no linear); D=22 \(du/u\) only. Stamps `form_id` + `generator=integral_definite_substitution`; `select_form_id` / `live_quality_form_weights`. Did not invent Ex. 5.31 trig / Ex. 5.32 exp / reverse-limit cores.
 - **`calc_diff_rules_using_tables`:** Leftover lockout of D=0 \((fg)'\). D=0 product from four tabulated values (old easy); D=8 leftover product + quotient; D=16 quotient leftover + compose (no product); D=22 compose only. Stamps `form_id` + `generator=derivative_from_tables`; `select_form_id` / `live_quality_form_weights`. Text tables only. Did not invent a figure-bank table / three-function core.
 - **`calc_diff_instantaneous_rates_of_change`:** Leftover lockout of D=0 \(x^{n}\). D=0 monomial \(x^{n}\) at a point (old easy); D=8 leftover power + \(px^{2}+q\) / \(\sqrt{x}\) / \(1/x\); D=16 medium leftover + cubic / trig / exp (no \(x^{n}\) leftover); D=22 cubic / trig / exp only. Stamps `form_id` + `generator=instantaneous_rate_of_change`; `select_form_id` / `live_quality_form_weights`. Shared generator also leftover-locks `pc_instantaneous_rates_of_change`. Did not invent free-fall / table / graph cores.

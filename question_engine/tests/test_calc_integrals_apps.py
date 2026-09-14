@@ -443,6 +443,107 @@ def test_indef_power_and_pfd_still_live():
     assert "+C" in (pf.answer_latex or "")
 
 
+def test_indef_power_d0_poly_sqrt_high_d_rewrite_lockout():
+    from question_engine.frameworks.primitives.integrals import (
+        power_forms_for_difficulty,
+    )
+
+    assert power_forms_for_difficulty(0) == ("poly_sum", "sqrt_x")
+    med = power_forms_for_difficulty(8)
+    assert "poly_sum" in med and "rewrite_over_x" in med
+    hard = power_forms_for_difficulty(16)
+    assert "poly_sum" not in hard and "sqrt_x" not in hard
+    assert hard == ("one_over_sqrt_x", "x_sqrt_x", "neg_power", "rewrite_over_x")
+    assert power_forms_for_difficulty(22) == ("neg_power", "rewrite_over_x")
+
+    q0 = _gen("calc_indef_int_power_rule", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") in {"poly_sum", "sqrt_x"}
+    assert (q0.metadata or {}).get("generator") == "integral_power_rule"
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") in {"poly_sum", "sqrt_x"}
+    assert snap.get("generator") == "integral_power_rule"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen("calc_indef_int_power_rule", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid in {"poly_sum", "sqrt_x"}
+        assert (q.metadata or {}).get("generator") == "integral_power_rule"
+    assert easy == {"poly_sum", "sqrt_x"}
+
+    mid = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_power_rule", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert (q.metadata or {}).get("generator") == "integral_power_rule"
+        assert "+C" in (q.answer_latex or "")
+    assert "poly_sum" in mid
+    assert mid & {"rewrite_over_x", "neg_power", "x_sqrt_x", "one_over_sqrt_x"}
+    assert mid <= {
+        "poly_sum",
+        "sqrt_x",
+        "one_over_sqrt_x",
+        "x_sqrt_x",
+        "neg_power",
+        "rewrite_over_x",
+    }
+
+    high = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_power_rule", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid not in {"poly_sum", "sqrt_x"}
+        assert (q.metadata or {}).get("generator") == "integral_power_rule"
+    assert high <= {"one_over_sqrt_x", "x_sqrt_x", "neg_power", "rewrite_over_x"}
+    assert "rewrite_over_x" in high
+
+    expert = set()
+    for seed in range(30):
+        q = _gen("calc_indef_int_power_rule", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in {"neg_power", "rewrite_over_x"}
+        assert (q.metadata or {}).get("generator") == "integral_power_rule"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") in {"neg_power", "rewrite_over_x"}
+        assert snap.get("generator") == "integral_power_rule"
+    assert expert == {"neg_power", "rewrite_over_x"}
+
+
+def test_indef_power_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.integrals import (
+        sample_integral_expression,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                sample = sample_integral_expression(
+                    {"difficulty": 8.0, "include_answer_key": True},
+                    generator_key="integral_power_rule",
+                    rng=_random.Random(i),
+                )
+                c[sample.metadata.get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"poly_sum": -2.5, "rewrite_over_x": 2.5})
+    assert tilted["rewrite_over_x"] > baseline["rewrite_over_x"]
+
+
 def test_area_under_curve_d0_simple():
     q = _gen("calc_app_int_area_under_a_curve", 0, seed=101)[0]
     assert "area under" in (q.prompt_latex or "").lower()

@@ -1145,10 +1145,41 @@ def _join_poly_int_terms(terms: list[tuple[Fraction | int, int | Fraction]], var
     return out
 
 
+POWER_GENERATOR = "integral_power_rule"
+
+_POWER_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("poly_sum", "sqrt_x"),
+    "medium": (
+        "poly_sum",
+        "sqrt_x",
+        "one_over_sqrt_x",
+        "x_sqrt_x",
+        "neg_power",
+        "rewrite_over_x",
+    ),
+    "hard": ("one_over_sqrt_x", "x_sqrt_x", "neg_power", "rewrite_over_x"),
+    "expert": ("neg_power", "rewrite_over_x"),
+}
+
+
+def power_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 poly_sum / √x; D=22 is rewrite / neg-power."""
+    if d < 8.0:
+        return _POWER_BANDS["easy"]
+    if d < 16.0:
+        return _POWER_BANDS["medium"]
+    if d < 20.0:
+        return _POWER_BANDS["hard"]
+    return _POWER_BANDS["expert"]
+
+
 def _sample_power(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
-    """OpenStax power/rewrite forms driven by ``basic_power_integrals`` catalog."""
+    """OpenStax power/rewrite forms driven by ``basic_power_integrals`` catalog.
+
+    High D locks out D=0 poly_sum / √x leftovers. Same six old builders.
+    """
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
         catalog_form_meta,
         implemented_forms,
@@ -1157,12 +1188,20 @@ def _sample_power(
     )
 
     var = spec.variable
+    d = float(spec.d_spend)
     catalog = load_form_catalog("basic_power_integrals")
+    allowed = set(power_forms_for_difficulty(d))
     pool = _gated_form_pool(catalog, spec) or implemented_forms(catalog)
-    form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
+    pool = [f for f in pool if str(f.get("form_id")) in allowed]
+    if not pool:
+        pool = [f for f in implemented_forms(catalog) if str(f.get("form_id")) in allowed]
+    form = select_form_id(pool, d=d, rng=rng)
     form_id = str(form["form_id"])
     include = spec.include_plus_c
-    meta_base = catalog_form_meta(form, catalog)
+    meta_base = {
+        **catalog_form_meta(form, catalog),
+        "generator": POWER_GENERATOR,
+    }
 
     if form_id == "sqrt_x":
         prompt = rf"\int \sqrt{{{var}}}\,d{var}"

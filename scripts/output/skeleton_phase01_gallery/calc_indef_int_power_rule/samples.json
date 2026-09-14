@@ -51,6 +51,12 @@
           "poly_sum"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -114,6 +120,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -129,7 +138,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "poly_sum"
+          "family": "poly_sum",
+          "form_id": "poly_sum",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "power_rule"
         },
         "effort_features": {
           "technique": "power",
@@ -220,6 +233,12 @@
           "sqrt_x"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -283,6 +302,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -298,7 +320,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "sqrt_x"
+          "family": "sqrt_x",
+          "form_id": "sqrt_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "power_rule_root"
         },
         "effort_features": {
           "technique": "power",
@@ -389,6 +415,12 @@
           "sqrt_x"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -452,6 +484,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -467,7 +502,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "sqrt_x"
+          "family": "sqrt_x",
+          "form_id": "sqrt_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "power_rule_root"
         },
         "effort_features": {
           "technique": "power",
@@ -558,6 +597,12 @@
           "poly_sum"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -624,6 +669,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -639,7 +687,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "poly_sum"
+          "family": "poly_sum",
+          "form_id": "poly_sum",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "power_rule"
         },
         "effort_features": {
           "technique": "power",
@@ -741,6 +793,12 @@
           "rewrite_over_x"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -807,6 +865,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -822,7 +883,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "rewrite_over_x"
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
         },
         "effort_features": {
           "technique": "power",
@@ -924,6 +989,12 @@
           "rewrite_over_x"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -990,6 +1061,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1005,7 +1079,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "rewrite_over_x"
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
         },
         "effort_features": {
           "technique": "power",
@@ -1084,10 +1162,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\int 6x^{4} + 2 \\, dx",
-      "answer_latex": "2x+\\frac{6}{5}x^{5}+C",
+      "prompt_latex": "\\int \\frac{1}{\\sqrt{x}}\\,dx",
+      "answer_latex": "2\\sqrt{x}+C",
       "skeleton_pattern": "",
-      "form_id": "poly_sum",
+      "form_id": "one_over_sqrt_x",
       "diagram_svg": "",
       "debug": [
         [
@@ -1100,11 +1178,17 @@
         ],
         [
           "form_id",
-          "poly_sum"
+          "one_over_sqrt_x"
         ],
         [
           "openstax_form",
-          "poly_sum"
+          "one_over_sqrt_x"
+        ],
+        [
+          "tricks_required",
+          [
+            "power"
+          ]
         ],
         [
           "construction",
@@ -1116,8 +1200,8 @@
         ]
       ],
       "metadata": {
-        "family": "poly_sum",
-        "structure_id": "integral_power_rule:poly_sum",
+        "family": "one_over_sqrt_x",
+        "structure_id": "integral_power_rule:one_over_sqrt_x",
         "technique": "power",
         "tricks_required": [
           "power"
@@ -1173,6 +1257,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1188,7 +1275,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "poly_sum"
+          "family": "one_over_sqrt_x",
+          "form_id": "one_over_sqrt_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "power_rule_root"
         },
         "effort_features": {
           "technique": "power",
@@ -1198,8 +1289,8 @@
           "pipeline_len": 1,
           "degree_max": 6,
           "coef_abs_max": 7,
-          "n_terms": 2,
-          "answer_len": 21,
+          "n_terms": 1,
+          "answer_len": 11,
           "nest_depth": 0,
           "pack": "integral_power",
           "methods": [
@@ -1220,7 +1311,7 @@
           ],
           "length": 1
         },
-        "shape_id": "poly_sum",
+        "shape_id": "one_over_sqrt_x",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -1237,11 +1328,11 @@
         "difficulty_cost_total": 4.5,
         "difficulty_shortfall": 11.5,
         "wrappers_applied": [],
-        "core_form_id": "poly_sum",
-        "openstax_form": "poly_sum",
-        "form_id": "poly_sum",
-        "openstax_case": "\u00a74.10 power rule",
-        "strategy": "power_rule",
+        "core_form_id": "one_over_sqrt_x",
+        "openstax_form": "one_over_sqrt_x",
+        "form_id": "one_over_sqrt_x",
+        "openstax_case": "\u00a74.10",
+        "strategy": "power_rule_root",
         "catalog_id": "basic_power_integrals",
         "generation_settings": {
           "require_positive_power": false,
@@ -1288,6 +1379,12 @@
         [
           "openstax_form",
           "rewrite_over_x"
+        ],
+        [
+          "tricks_required",
+          [
+            "power"
+          ]
         ],
         [
           "construction",
@@ -1356,6 +1453,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1371,7 +1471,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "rewrite_over_x"
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
         },
         "effort_features": {
           "technique": "power",
@@ -1473,6 +1577,12 @@
           "rewrite_over_x"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -1539,6 +1649,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1554,7 +1667,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "rewrite_over_x"
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
         },
         "effort_features": {
           "technique": "power",
@@ -1633,10 +1750,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\int 3x^{4} - 2 \\, dx",
-      "answer_latex": "-2x+\\frac{3}{5}x^{5}+C",
+      "prompt_latex": "\\int \\frac{1}{x^{3}}\\,dx",
+      "answer_latex": "-\\frac{1}{2}x^{-2}+C",
       "skeleton_pattern": "",
-      "form_id": "poly_sum",
+      "form_id": "neg_power",
       "diagram_svg": "",
       "debug": [
         [
@@ -1649,11 +1766,17 @@
         ],
         [
           "form_id",
-          "poly_sum"
+          "neg_power"
         ],
         [
           "openstax_form",
-          "poly_sum"
+          "neg_power"
+        ],
+        [
+          "tricks_required",
+          [
+            "power"
+          ]
         ],
         [
           "construction",
@@ -1665,8 +1788,8 @@
         ]
       ],
       "metadata": {
-        "family": "poly_sum",
-        "structure_id": "integral_power_rule:poly_sum",
+        "family": "neg_power",
+        "structure_id": "integral_power_rule:neg_power",
         "technique": "power",
         "tricks_required": [
           "power"
@@ -1722,6 +1845,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1737,7 +1863,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "poly_sum"
+          "family": "neg_power",
+          "form_id": "neg_power",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "power_rule_neg"
         },
         "effort_features": {
           "technique": "power",
@@ -1747,8 +1877,8 @@
           "pipeline_len": 1,
           "degree_max": 6,
           "coef_abs_max": 8,
-          "n_terms": 2,
-          "answer_len": 22,
+          "n_terms": 1,
+          "answer_len": 20,
           "nest_depth": 0,
           "pack": "integral_power",
           "methods": [
@@ -1769,7 +1899,7 @@
           ],
           "length": 1
         },
-        "shape_id": "poly_sum",
+        "shape_id": "neg_power",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -1786,11 +1916,11 @@
         "difficulty_cost_total": 4.5,
         "difficulty_shortfall": 17.5,
         "wrappers_applied": [],
-        "core_form_id": "poly_sum",
-        "openstax_form": "poly_sum",
-        "form_id": "poly_sum",
-        "openstax_case": "\u00a74.10 power rule",
-        "strategy": "power_rule",
+        "core_form_id": "neg_power",
+        "openstax_form": "neg_power",
+        "form_id": "neg_power",
+        "openstax_case": "\u00a74.10 negative powers \u2260 \u22121",
+        "strategy": "power_rule_neg",
         "catalog_id": "basic_power_integrals",
         "generation_settings": {
           "require_positive_power": false,
@@ -1837,6 +1967,12 @@
         [
           "openstax_form",
           "rewrite_over_x"
+        ],
+        [
+          "tricks_required",
+          [
+            "power"
+          ]
         ],
         [
           "construction",
@@ -1905,6 +2041,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1920,7 +2059,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "rewrite_over_x"
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
         },
         "effort_features": {
           "technique": "power",
@@ -2022,6 +2165,12 @@
           "rewrite_over_x"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -2088,6 +2237,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2103,7 +2255,11 @@
             "length": 1
           },
           "technique": "power",
-          "family": "rewrite_over_x"
+          "family": "rewrite_over_x",
+          "form_id": "rewrite_over_x",
+          "generator": "integral_power_rule",
+          "catalog_id": "basic_power_integrals",
+          "strategy": "rewrite_split"
         },
         "effort_features": {
           "technique": "power",

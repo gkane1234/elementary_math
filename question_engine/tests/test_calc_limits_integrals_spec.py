@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter
+import re
 
 import pytest
 
@@ -19,6 +20,7 @@ from question_engine.ml.schema import build_generation_record
 
 _LHOPITAL_EASY_LEFTOVER = ("lhopital_0_0_poly", "lhopital_0_0_trig")
 _DIRECT_EASY_LEFTOVER = ("poly_direct",)
+_REMOVABLE_EASY_LEFTOVER = ("removable_diff_sq",)
 
 _DIRECT_STAMP_MARKERS = {
     "poly_direct": (),
@@ -63,6 +65,34 @@ def _gen_direct(d: float, *, seed: int = 101):
             "include_answer_key": True,
         },
     )[0]
+
+
+def _gen_removable(d: float, *, seed: int = 101):
+    return _generate_for_type(
+        "calc_limits_at_removable_discontinuities",
+        {
+            "difficulty": d,
+            "seed": seed,
+            "count": 1,
+            "include_answer_key": True,
+        },
+    )[0]
+
+
+def _is_removable_diff_sq_prompt(prompt: str) -> bool:
+    compact = (prompt or "").replace(" ", "")
+    return bool(re.search(r"\\frac\{x\^\{2\}-\d+\}\{x-", compact))
+
+
+def _removable_stamp_matches(fid: str, prompt: str) -> bool:
+    p = prompt or ""
+    if fid == "removable_diff_sq":
+        return _is_removable_diff_sq_prompt(p)
+    if fid == "removable_rationalize":
+        return r"\sqrt" in p
+    if fid in {"removable_linear_factor", "removable_quad_shared"}:
+        return r"\sqrt" not in p and not _is_removable_diff_sq_prompt(p)
+    return True
 
 
 def test_limit_removable_emits_spec_snapshot():
@@ -209,6 +239,77 @@ def test_limit_direct_leftover_lockout_no_easy_poly():
                 q.prompt_latex,
             )
     assert len(high) >= 4
+
+
+def test_limit_removable_leftover_lockout_no_easy_diff_sq():
+    """Leftover lockout of D=0 (x²−a²)/(x−a) (old Mad-Lib) at D>=16."""
+    q0 = _gen_removable(0, seed=101)
+    md0 = q0.metadata or {}
+    snap0 = md0.get("spec_snapshot") or {}
+    assert md0.get("form_id") == "removable_diff_sq"
+    assert md0.get("generator") == "limit_removable"
+    assert snap0.get("form_id") == "removable_diff_sq"
+    assert snap0.get("generator") == "limit_removable"
+    assert r"\lim" in (q0.prompt_latex or "")
+    assert _is_removable_diff_sq_prompt(q0.prompt_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen_removable(0, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "removable_diff_sq"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_removable"
+        assert _removable_stamp_matches(str(fid), q.prompt_latex or "")
+    assert easy == {"removable_diff_sq"}
+
+    mid = set()
+    leftover_diff_sq = 0
+    for seed in range(40):
+        q = _gen_removable(8, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "removable_diff_sq":
+            leftover_diff_sq += 1
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_removable"
+        assert (q.metadata or {}).get("generator") == "limit_removable"
+        assert _removable_stamp_matches(str(fid), q.prompt_latex or ""), (
+            seed,
+            fid,
+            q.prompt_latex,
+        )
+    assert leftover_diff_sq >= 1
+    assert mid - set(_REMOVABLE_EASY_LEFTOVER)
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen_removable(d, seed=seed)
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid not in _REMOVABLE_EASY_LEFTOVER, (d, seed, fid, q.prompt_latex)
+            assert not _is_removable_diff_sq_prompt(q.prompt_latex or ""), (
+                d,
+                seed,
+                fid,
+                q.prompt_latex,
+            )
+            assert (q.metadata or {}).get("generator") == "limit_removable"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "limit_removable"
+            assert r"\lim" in (q.prompt_latex or "")
+            assert _removable_stamp_matches(str(fid), q.prompt_latex or ""), (
+                d,
+                seed,
+                fid,
+                q.prompt_latex,
+            )
+    assert len(high) >= 2
 
 
 def test_lhopital_indeterminate_form_diversity():

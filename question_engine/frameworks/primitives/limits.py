@@ -681,8 +681,8 @@ def _sample_removable_factor(
 ) -> tuple[str, str, str, str, dict[str, Any]]:
     var = spec.variable
     a = rng.randint(1, max(1, spec.approach_abs_max))
-    b = _coef(rng, max(2, spec.coef_abs_max))
-    # (x-a)(x-b)/(x-a) → x-b at x=a, value a-b; or (x^2-a^2)/(x-a)=x+a
+    d = float(spec.d_spend)
+    # (x-a)(x+b)/(x-a) → x+b at x=a; or leftover (x^2-a^2)/(x-a)=x+a
     kind_map = {
         "removable_diff_sq": "diff_sq",
         "removable_linear_factor": "linear_factor",
@@ -691,7 +691,21 @@ def _sample_removable_factor(
     if force_form_id and force_form_id in kind_map:
         kind = kind_map[force_form_id]
     else:
-        kind = rng.choice(["diff_sq", "linear_factor", "quad_shared"])
+        kinds = ["diff_sq", "linear_factor", "quad_shared"]
+        # Catalog leftover rem_diff_sq: d_max=10 — do not silently emit it.
+        if d > 10:
+            kinds = ["linear_factor", "quad_shared"]
+        kind = rng.choice(kinds)
+
+    def _other_root() -> int:
+        """Second factor root ≠ a, so expanded cancel is not leftover x²−a²."""
+        other = _coef(rng, max(2, spec.coef_abs_max))
+        for _ in range(16):
+            if other != a:
+                return other
+            other = _coef(rng, max(2, spec.coef_abs_max))
+        return a + 1 if a > 0 else -1
+
     if kind == "diff_sq":
         prompt = rf"\lim_{{{var} \to {a}}} \frac{{{var}^{{2}}-{a * a}}}{{{var}-{a}}}"
         answer = str(2 * a)
@@ -699,33 +713,28 @@ def _sample_removable_factor(
         wraps: list[str] = []
     elif kind == "linear_factor":
         # Expanded (x−a)(x+b) — never leave identical cancel factors visible.
+        b = _other_root()
         mid = b - a
         const = -a * b
-        if mid == 0:
-            body = f"{var}^{{2}}" + (f"+{const}" if const > 0 else str(const))
-        else:
-            mid_s = f"+{mid}" if mid > 0 else str(mid)
-            const_s = f"+{const}" if const > 0 else str(const)
-            body = f"{var}^{{2}}{mid_s}{var}{const_s}"
+        mid_s = f"+{mid}" if mid > 0 else str(mid)
+        const_s = f"+{const}" if const > 0 else str(const)
+        body = f"{var}^{{2}}{mid_s}{var}{const_s}"
         prompt = rf"\lim_{{{var} \to {a}}} \frac{{{body}}}{{{var}-{a}}}"
         answer = str(a + b)
         variant = "linear_factor"
         wraps = ["removable_expand"]
     else:
         # Expanded (x−a)(x+c)/(x−a) = x+c
-        c = _coef(rng, max(2, spec.coef_abs_max))
+        c = _other_root()
         mid = c - a
         const = -a * c
-        if mid == 0:
-            body = f"{var}^{{2}}" + (f"+{const}" if const > 0 else str(const))
-        else:
-            mid_s = f"+{mid}" if mid > 0 else str(mid)
-            const_s = f"+{const}" if const > 0 else str(const)
-            body = f"{var}^{{2}}{mid_s}{var}{const_s}"
+        mid_s = f"+{mid}" if mid > 0 else str(mid)
+        const_s = f"+{const}" if const > 0 else str(const)
+        body = f"{var}^{{2}}{mid_s}{var}{const_s}"
         prompt = rf"\lim_{{{var} \to {a}}} \frac{{{body}}}{{{var}-{a}}}"
         answer = str(a + c)
         variant = "quad_shared"
-        wraps = ["removable_expand"] if float(spec.d_spend) >= 8 else []
+        wraps = ["removable_expand"] if d >= 8 else []
     form, tech = "removable_factor", "factor_cancel"
     effort = _effort(
         form=form, technique=tech, degree=2, coef_hi=spec.coef_abs_max,

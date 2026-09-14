@@ -18,11 +18,44 @@ from question_engine.ml.schema import build_generation_record
 
 
 _LHOPITAL_EASY_LEFTOVER = ("lhopital_0_0_poly", "lhopital_0_0_trig")
+_DIRECT_EASY_LEFTOVER = ("poly_direct",)
+
+_DIRECT_STAMP_MARKERS = {
+    "poly_direct": (),
+    "rational_direct": (r"\frac",),
+    "direct_sqrt": (r"\sqrt", "sqrt"),
+    "direct_sin_shift": ("sin", "cos"),
+    "direct_exp": ("e^{",),
+    "direct_ln": (r"\ln",),
+    "direct_arctan": ("arctan",),
+    "squeeze_sin_over_x": ("sin",),
+}
+
+
+def _direct_stamp_matches(fid: str, prompt: str) -> bool:
+    markers = _DIRECT_STAMP_MARKERS.get(fid)
+    if markers is None:
+        return True
+    if fid == "poly_direct":
+        return r"\frac" not in prompt
+    return any(m in prompt for m in markers)
 
 
 def _gen_lhopital(d: float, *, seed: int = 101):
     return _generate_for_type(
         "calc_app_diff_lhopitals_rule",
+        {
+            "difficulty": d,
+            "seed": seed,
+            "count": 1,
+            "include_answer_key": True,
+        },
+    )[0]
+
+
+def _gen_direct(d: float, *, seed: int = 101):
+    return _generate_for_type(
+        "calc_limits_by_direct_evaluation",
         {
             "difficulty": d,
             "seed": seed,
@@ -110,6 +143,71 @@ def test_lhopital_leftover_lockout_no_easy_0_0():
             assert snap.get("form_id") == fid
             assert snap.get("generator") == "lhopitals_rule"
             assert r"\lim" in (q.prompt_latex or "")
+    assert len(high) >= 4
+
+
+def test_limit_direct_leftover_lockout_no_easy_poly():
+    """Leftover lockout of D=0 poly plug-in (old Mad-Lib) at D>=16."""
+    q0 = _gen_direct(0, seed=101)
+    md0 = q0.metadata or {}
+    snap0 = md0.get("spec_snapshot") or {}
+    assert md0.get("form_id") == "poly_direct"
+    assert md0.get("generator") == "limit_direct_evaluation"
+    assert snap0.get("form_id") == "poly_direct"
+    assert snap0.get("generator") == "limit_direct_evaluation"
+    assert r"\lim" in (q0.prompt_latex or "")
+    assert r"\frac" not in (q0.prompt_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen_direct(0, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "poly_direct"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_direct_evaluation"
+        assert _direct_stamp_matches(str(fid), q.prompt_latex or "")
+    assert easy == {"poly_direct"}
+
+    mid = set()
+    leftover_poly = 0
+    for seed in range(40):
+        q = _gen_direct(8, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "poly_direct":
+            leftover_poly += 1
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_direct_evaluation"
+        assert (q.metadata or {}).get("generator") == "limit_direct_evaluation"
+        assert _direct_stamp_matches(str(fid), q.prompt_latex or ""), (
+            seed,
+            fid,
+            q.prompt_latex,
+        )
+    assert leftover_poly >= 1
+    assert mid - set(_DIRECT_EASY_LEFTOVER)
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen_direct(d, seed=seed)
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid not in _DIRECT_EASY_LEFTOVER, (d, seed, fid, q.prompt_latex)
+            assert (q.metadata or {}).get("generator") == "limit_direct_evaluation"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "limit_direct_evaluation"
+            assert r"\lim" in (q.prompt_latex or "")
+            assert _direct_stamp_matches(str(fid), q.prompt_latex or ""), (
+                d,
+                seed,
+                fid,
+                q.prompt_latex,
+            )
     assert len(high) >= 4
 
 

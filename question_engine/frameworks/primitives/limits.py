@@ -466,8 +466,8 @@ def _sample_poly_direct(
         hit = _sample_expr_direct(rng, spec, force_form_id=force_form_id)
         if hit is not None:
             return hit
-    # Prefer shared expression generator when specials unlocked (mid+ D).
-    specials_on = any(
+    # Catalog leftover poly: do not silently swap in a special.
+    specials_on = force_form_id != "poly_direct" and any(
         [
             spec.allow_trig,
             spec.allow_exp,
@@ -666,8 +666,11 @@ def _sample_rational_direct(
             "function_classes": ["algebraic"],
             "effort_features": effort,
             "approach_value": a,
+            "form_id": "rational_direct",
+            "openstax_form": "rational_direct",
+            "core_form_id": "rational_direct",
         }
-    return _sample_poly_direct(rng, spec)
+    return _sample_poly_direct(rng, spec, force_form_id="poly_direct")
 
 
 def _sample_removable_factor(
@@ -1688,12 +1691,18 @@ def sample_limit_expression(
         prompt, answer, form, tech, extra = _sample_essential(
             rng, spec, force_form_id=catalog_fid or None
         )
-    elif catalog_fid == "rational_direct" or form == "rational_direct":
+    elif catalog_fid == "rational_direct":
         prompt, answer, form, tech, extra = _sample_rational_direct(rng, spec)
     elif catalog_fid.startswith("direct_") or catalog_fid == "squeeze_sin_over_x":
         prompt, answer, form, tech, extra = _sample_poly_direct(
             rng, spec, force_form_id=catalog_fid or None
         )
+    elif catalog_fid == "poly_direct":
+        prompt, answer, form, tech, extra = _sample_poly_direct(
+            rng, spec, force_form_id="poly_direct"
+        )
+    elif form == "rational_direct":
+        prompt, answer, form, tech, extra = _sample_rational_direct(rng, spec)
     else:
         prompt, answer, form, tech, extra = _sample_poly_direct(rng, spec)
 
@@ -1707,21 +1716,10 @@ def sample_limit_expression(
     if "indet_form" in extra:
         snap["indet_form"] = extra["indet_form"]
 
-    # Prefer fleshed form_id when it matches/refines the catalog pick; else catalog.
+    # Stamp what was actually generated. Catalog wins only when the builder
+    # did not set a form_id (pairwise leftover stamps must match latex).
     fleshed_fid = str(extra.get("form_id") or extra.get("openstax_form") or "")
-    if fleshed_fid and (
-        not catalog_fid
-        or fleshed_fid == catalog_fid
-        or fleshed_fid.startswith(catalog_fid)
-        or catalog_fid.startswith(fleshed_fid.split("_")[0])
-        or catalog_fid in {"continuity_classify"}
-        or (catalog_fid.startswith("piecewise_jump") and fleshed_fid.startswith("piecewise_jump"))
-        or (catalog_fid.startswith("essential_") and fleshed_fid.startswith("essential_"))
-        or (catalog_fid.startswith("lhopital") and fleshed_fid.startswith("lhopital"))
-    ):
-        fid = fleshed_fid or catalog_fid or form
-    else:
-        fid = catalog_fid or fleshed_fid or form
+    fid = fleshed_fid or catalog_fid or form
     core_fid = str(extra.get("core_form_id") or fid)
     snap["form_id"] = fid
     snap["family"] = fid

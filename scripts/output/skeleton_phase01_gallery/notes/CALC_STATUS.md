@@ -52,6 +52,8 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## Still thin / LIMITATIONS (not stubs)
 
+- Direct evaluation: leftover lockout of D=0 poly shipped; still D=16===D=22 specials/rational mix; D=8 can still emit leftover poly; frozen closed specials (same \(\sqrt{\,\cdot\,}\) / \(\arctan x\)); squeeze/known-limit on a plug-in leaf
+
 - Area under a curve: leftover lockout of \(y=x\) shipped; still three frozen monomials on \([0,b]\) (no \(\sin x\) / \(e^x\) / \(a\neq 0\))
 - Limit of sums: skipped — live is the FTC area stem (shared `area_under_curve`); no existing \(\lim\sum\) core (finite Riemann is the approximating sibling; tables is the tables sibling)
 - Riemann sum tables: leftover lockout of 3-point left shipped; still three frozen old builders (no story tables / \(L_n\) vs \(R_n\) / unequal \(\Delta x\)); D=16 can still emit 4-point leftover
@@ -108,6 +110,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_limits_by_direct_evaluation`:** Leftover lockout of D=0 poly plug-in (old Mad-Lib). D=0 `poly_direct` only (old easy); D=8 leftover poly + rational / trig / exp / ln / √ / arctan / squeeze; D=16/22 no `poly_direct`. Catalog pick honored so stamps match latex (no more `direct_sqrt` on rational). Stamps `form_id` + `generator=limit_direct_evaluation` on metadata and `spec_snapshot`; `select_form_id` / `live_quality_form_weights`. Shared generator also leftover-locks `pc_limits_by_direct_evaluation`. Did not invent ε–δ / removable / piecewise cores.
 - **`calc_app_diff_lhopitals_rule`:** Leftover lockout of D=0 0/0 poly and of old Mad-Lib \(\sin(kx)/x\). D=0 `lhopital_0_0_poly` only (old easy); D=8 leftover 0/0 + ∞/∞ / 0·∞ / ∞−∞; D=16/22 rewrite/multipass/exp (no `lhopital_0_0_poly`, no `lhopital_0_0_trig`). Stamps `form_id` + `generator=lhopitals_rule` on metadata and `spec_snapshot`; `select_form_id` / `live_quality_form_weights`. Did not invent Ex. 4.40 / \(\ln x/\cot x\) / ε–δ cores.
 - **`calc_indef_int_partial_fractions`:** Leftover lockout of D=0 two-linear and of single-term quad \(\int C/(x^2+a^2)\). D=0 two distinct linears (old easy); D=8 leftover two-linear + 3-linear / irred arctan/ln; D=16/22 3-linear / mixed / repeated (no two-linear, no single-term quad). Stamps `form_id` + `generator=integral_partial_fractions`; `select_form_id` / `live_quality_form_weights`. Named `pfd_form_preset=bc_bank` still intersects the leftover band. Did not invent cube / improper / \((x^2+1)^2\) / \(x^4+1\) cores.
 - **`calc_indef_int_general`:** Leftover lockout of D=0 table trig / power. D=0 table/power/ln-exp (old easy); D=8 leftover table + u-sub/parts/PFD/invtrig; D=16/22 no table, no power (parts/PFD/trig-sub/u-sub/leftover mid-trig). Stamps `form_id` + `generator=integral_general` on metadata and `spec_snapshot`; `select_form_id` / `live_quality_form_weights`. Did not invent Weierstrass / \(x^4+1\) / three-trick cores.

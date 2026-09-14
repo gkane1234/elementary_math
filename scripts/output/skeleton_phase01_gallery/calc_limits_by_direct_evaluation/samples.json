@@ -109,7 +109,11 @@
           "term_count_max": 3,
           "d_spend": 0.0,
           "form": "poly_direct",
-          "technique": "direct_eval"
+          "technique": "direct_eval",
+          "form_id": "poly_direct",
+          "family": "poly_direct",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "poly_direct",
@@ -250,7 +254,11 @@
           "term_count_max": 3,
           "d_spend": 0.0,
           "form": "poly_direct",
-          "technique": "direct_eval"
+          "technique": "direct_eval",
+          "form_id": "poly_direct",
+          "family": "poly_direct",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "poly_direct",
@@ -391,7 +399,11 @@
           "term_count_max": 3,
           "d_spend": 0.0,
           "form": "poly_direct",
-          "technique": "direct_eval"
+          "technique": "direct_eval",
+          "form_id": "poly_direct",
+          "family": "poly_direct",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "poly_direct",
@@ -451,8 +463,8 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\lim_{x \\to 4} \\frac{3x^{3} - 3x}{2x - 1}",
-      "answer_latex": "\\frac{180}{7}",
+      "prompt_latex": "\\lim_{x \\to 6} -\\left((2x-1)\\sqrt{x+4}\\right)",
+      "answer_latex": "-11\\sqrt{10}",
       "skeleton_pattern": "",
       "form_id": "direct_sqrt",
       "diagram_svg": "",
@@ -475,7 +487,7 @@
         ],
         [
           "form",
-          "rational_direct"
+          "expr_direct"
         ],
         [
           "construction",
@@ -488,14 +500,15 @@
       ],
       "metadata": {
         "family": "direct_sqrt",
-        "structure_id": "limit_direct_evaluation:rational_direct",
-        "form": "rational_direct",
+        "structure_id": "limit_direct_evaluation:expr_direct",
+        "form": "expr_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
         ],
         "function_classes": [
-          "algebraic"
+          "algebraic",
+          "roots"
         ],
         "upgrades": [
           "higher_degree",
@@ -537,42 +550,175 @@
           "degree_max": 4,
           "term_count_max": 3,
           "d_spend": 8.0,
-          "form": "rational_direct",
-          "technique": "direct_eval"
+          "form": "expr_direct",
+          "technique": "direct_eval",
+          "variant": "sqrt_poly",
+          "form_id": "direct_sqrt",
+          "family": "direct_sqrt",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "rational_direct",
+          "form": "expr_direct",
           "technique": "direct_eval",
           "degree_max": 4,
           "coef_abs_max": 6,
-          "n_terms": 2,
-          "answer_len": 13,
+          "n_terms": 1,
+          "answer_len": 11,
           "lhopital_steps": 0,
-          "nest_depth": 1,
+          "nest_depth": 0,
           "pack": "limit_direct",
           "methods": [
             "direct_eval"
           ]
         },
-        "shape_id": "rational_direct",
+        "shape_id": "expr_direct",
         "form_id": "direct_sqrt",
         "openstax_form": "direct_sqrt",
         "core_form_id": "direct_sqrt",
         "catalog_id": "limits",
-        "wrappers_applied": [],
+        "wrappers_applied": [
+          "sign"
+        ],
         "openstax_case": "\u00a72.3 roots",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
-        "approach_value": 4,
+        "variant": "sqrt_poly",
+        "expr_spec_snapshot": {
+          "variable": "x",
+          "allowed_ops": [
+            "*",
+            "+",
+            "^"
+          ],
+          "degree_min": 1,
+          "degree_max": 3,
+          "term_count_min": 1,
+          "term_count_max": 2,
+          "coef_abs_max": 6,
+          "allow_negative_coefs": true,
+          "allow_constant_term": true,
+          "require_leading": true,
+          "require_product": false,
+          "require_sum": true,
+          "require_power_of_poly": false,
+          "forbid_product": false,
+          "forbid_quotient": true,
+          "max_nesting": 1,
+          "max_factors": 2,
+          "paren_style": "minimal",
+          "assoc_bias": null,
+          "d_spend": 8.0,
+          "seed": null,
+          "allowed_functions": [
+            "exp",
+            "invtrig",
+            "log",
+            "roots",
+            "trig"
+          ],
+          "require_function": null,
+          "prefer_chained_fn": true,
+          "prefer_special_structure": true,
+          "min_special_nodes": 1,
+          "allow_rational_powers": false,
+          "allow_quotient": false,
+          "deep_chain": false,
+          "extra_term": false,
+          "allow_integer_exponents": true,
+          "allow_fractional_exponents": false,
+          "allow_irrational_exponents": false,
+          "allow_negative_exponents": false,
+          "irrational_exponent_set": [
+            "e",
+            "pi",
+            "sqrt2",
+            "sqrt3"
+          ],
+          "mix_fn_classes": true,
+          "allow_fn_power": false,
+          "prefer_fn_power": false,
+          "derivative_order": 1,
+          "course_tag": "calc",
+          "factor_count_min": 1,
+          "factor_count_max": 2,
+          "composition_depth": 0
+        },
+        "dressing_specs": [
+          {
+            "variable": "x",
+            "allowed_ops": [
+              "*",
+              "+",
+              "^"
+            ],
+            "degree_min": 1,
+            "degree_max": 1,
+            "term_count_min": 2,
+            "term_count_max": 2,
+            "coef_abs_max": 4,
+            "allow_negative_coefs": true,
+            "allow_constant_term": true,
+            "require_leading": true,
+            "require_product": false,
+            "require_sum": true,
+            "require_power_of_poly": false,
+            "forbid_product": true,
+            "forbid_quotient": true,
+            "max_nesting": 0,
+            "max_factors": 2,
+            "paren_style": "minimal",
+            "assoc_bias": null,
+            "d_spend": 8.0,
+            "seed": null,
+            "allowed_functions": [],
+            "require_function": null,
+            "prefer_chained_fn": false,
+            "prefer_special_structure": false,
+            "min_special_nodes": 0,
+            "allow_rational_powers": false,
+            "allow_quotient": false,
+            "deep_chain": false,
+            "extra_term": false,
+            "allow_integer_exponents": true,
+            "allow_fractional_exponents": false,
+            "allow_irrational_exponents": false,
+            "allow_negative_exponents": false,
+            "irrational_exponent_set": [
+              "e",
+              "pi",
+              "sqrt2",
+              "sqrt3"
+            ],
+            "mix_fn_classes": false,
+            "allow_fn_power": false,
+            "prefer_fn_power": false,
+            "derivative_order": 1,
+            "course_tag": "calc",
+            "factor_count_min": 1,
+            "factor_count_max": 2,
+            "composition_depth": 0
+          }
+        ],
         "difficulty_costs": [
           {
             "source": "form",
             "feature": "direct_sqrt",
             "cost": 6.0
+          },
+          {
+            "source": "dress",
+            "feature": "spec_sign",
+            "cost": 0.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_roots",
+            "cost": 1.0
           }
         ],
-        "difficulty_cost_total": 6.0,
-        "difficulty_shortfall": 2.0,
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -599,8 +745,8 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\lim_{x \\to 1} -\\frac{4x^{2} + 2}{4x + 3}",
-      "answer_latex": "-\\frac{6}{7}",
+      "prompt_latex": "\\lim_{x \\to 0} -4\\arctan(x)",
+      "answer_latex": "0",
       "skeleton_pattern": "",
       "form_id": "direct_arctan",
       "diagram_svg": "",
@@ -623,7 +769,7 @@
         ],
         [
           "form",
-          "rational_direct"
+          "expr_direct"
         ],
         [
           "construction",
@@ -636,14 +782,14 @@
       ],
       "metadata": {
         "family": "direct_arctan",
-        "structure_id": "limit_direct_evaluation:rational_direct",
-        "form": "rational_direct",
+        "structure_id": "limit_direct_evaluation:expr_direct",
+        "form": "expr_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
         ],
         "function_classes": [
-          "algebraic"
+          "invtrig"
         ],
         "upgrades": [
           "higher_degree",
@@ -685,24 +831,29 @@
           "degree_max": 4,
           "term_count_max": 3,
           "d_spend": 8.0,
-          "form": "rational_direct",
-          "technique": "direct_eval"
+          "form": "expr_direct",
+          "technique": "direct_eval",
+          "variant": "arctan_linear",
+          "form_id": "direct_arctan",
+          "family": "direct_arctan",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "rational_direct",
+          "form": "expr_direct",
           "technique": "direct_eval",
           "degree_max": 4,
           "coef_abs_max": 6,
-          "n_terms": 2,
-          "answer_len": 11,
+          "n_terms": 1,
+          "answer_len": 1,
           "lhopital_steps": 0,
-          "nest_depth": 1,
+          "nest_depth": 0,
           "pack": "limit_direct",
           "methods": [
             "direct_eval"
           ]
         },
-        "shape_id": "rational_direct",
+        "shape_id": "expr_direct",
         "form_id": "direct_arctan",
         "openstax_form": "direct_arctan",
         "core_form_id": "direct_arctan",
@@ -713,7 +864,67 @@
         "openstax_case": "\u00a72.3 invtrig",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
-        "approach_value": 1,
+        "variant": "arctan_linear",
+        "expr_spec_snapshot": {
+          "variable": "x",
+          "allowed_ops": [
+            "*",
+            "+",
+            "^"
+          ],
+          "degree_min": 1,
+          "degree_max": 3,
+          "term_count_min": 1,
+          "term_count_max": 2,
+          "coef_abs_max": 6,
+          "allow_negative_coefs": true,
+          "allow_constant_term": true,
+          "require_leading": true,
+          "require_product": false,
+          "require_sum": true,
+          "require_power_of_poly": false,
+          "forbid_product": false,
+          "forbid_quotient": true,
+          "max_nesting": 1,
+          "max_factors": 2,
+          "paren_style": "minimal",
+          "assoc_bias": null,
+          "d_spend": 8.0,
+          "seed": null,
+          "allowed_functions": [
+            "exp",
+            "invtrig",
+            "log",
+            "roots",
+            "trig"
+          ],
+          "require_function": null,
+          "prefer_chained_fn": true,
+          "prefer_special_structure": true,
+          "min_special_nodes": 1,
+          "allow_rational_powers": false,
+          "allow_quotient": false,
+          "deep_chain": false,
+          "extra_term": false,
+          "allow_integer_exponents": true,
+          "allow_fractional_exponents": false,
+          "allow_irrational_exponents": false,
+          "allow_negative_exponents": false,
+          "irrational_exponent_set": [
+            "e",
+            "pi",
+            "sqrt2",
+            "sqrt3"
+          ],
+          "mix_fn_classes": true,
+          "allow_fn_power": false,
+          "prefer_fn_power": false,
+          "derivative_order": 1,
+          "course_tag": "calc",
+          "factor_count_min": 1,
+          "factor_count_max": 2,
+          "composition_depth": 0
+        },
         "dressing_specs": [
           {
             "variable": "x",
@@ -780,10 +991,14 @@
             "source": "dress",
             "feature": "spec_sign",
             "cost": 0.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_invtrig",
+            "cost": 2.0
           }
         ],
-        "difficulty_cost_total": 6.5,
-        "difficulty_shortfall": 1.5,
+        "difficulty_cost_total": 8.5,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -899,7 +1114,11 @@
           "d_spend": 8.0,
           "form": "expr_direct",
           "technique": "direct_eval",
-          "variant": "ln_exp"
+          "variant": "ln_exp",
+          "form_id": "direct_ln",
+          "family": "direct_ln",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "expr_direct",
@@ -1092,8 +1311,8 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\lim_{x \\to 4} 3\\frac{2x^{3} + 6x}{-4x + 7}",
-      "answer_latex": "-\\frac{152}{3}",
+      "prompt_latex": "\\lim_{x \\to 6} -\\left((2x-1)\\sqrt{x+4}\\right)",
+      "answer_latex": "-11\\sqrt{10}",
       "skeleton_pattern": "",
       "form_id": "direct_sqrt",
       "diagram_svg": "",
@@ -1116,7 +1335,7 @@
         ],
         [
           "form",
-          "rational_direct"
+          "expr_direct"
         ],
         [
           "construction",
@@ -1129,14 +1348,15 @@
       ],
       "metadata": {
         "family": "direct_sqrt",
-        "structure_id": "limit_direct_evaluation:rational_direct",
-        "form": "rational_direct",
+        "structure_id": "limit_direct_evaluation:expr_direct",
+        "form": "expr_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
         ],
         "function_classes": [
-          "algebraic"
+          "algebraic",
+          "roots"
         ],
         "upgrades": [
           "exp_log",
@@ -1179,35 +1399,100 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 16.0,
-          "form": "rational_direct",
-          "technique": "direct_eval"
+          "form": "expr_direct",
+          "technique": "direct_eval",
+          "variant": "sqrt_poly",
+          "form_id": "direct_sqrt",
+          "family": "direct_sqrt",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "rational_direct",
+          "form": "expr_direct",
           "technique": "direct_eval",
           "degree_max": 5,
           "coef_abs_max": 7,
-          "n_terms": 2,
-          "answer_len": 14,
+          "n_terms": 1,
+          "answer_len": 11,
           "lhopital_steps": 0,
-          "nest_depth": 1,
+          "nest_depth": 0,
           "pack": "limit_direct",
           "methods": [
             "direct_eval"
           ]
         },
-        "shape_id": "rational_direct",
+        "shape_id": "expr_direct",
         "form_id": "direct_sqrt",
         "openstax_form": "direct_sqrt",
         "core_form_id": "direct_sqrt",
         "catalog_id": "limits",
         "wrappers_applied": [
-          "constant_multiple"
+          "sign"
         ],
         "openstax_case": "\u00a72.3 roots",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
-        "approach_value": 4,
+        "variant": "sqrt_poly",
+        "expr_spec_snapshot": {
+          "variable": "x",
+          "allowed_ops": [
+            "*",
+            "+",
+            "^"
+          ],
+          "degree_min": 1,
+          "degree_max": 4,
+          "term_count_min": 1,
+          "term_count_max": 3,
+          "coef_abs_max": 7,
+          "allow_negative_coefs": true,
+          "allow_constant_term": true,
+          "require_leading": true,
+          "require_product": false,
+          "require_sum": true,
+          "require_power_of_poly": false,
+          "forbid_product": false,
+          "forbid_quotient": true,
+          "max_nesting": 3,
+          "max_factors": 2,
+          "paren_style": "minimal",
+          "assoc_bias": null,
+          "d_spend": 16.0,
+          "seed": null,
+          "allowed_functions": [
+            "exp",
+            "invtrig",
+            "log",
+            "roots",
+            "trig"
+          ],
+          "require_function": null,
+          "prefer_chained_fn": true,
+          "prefer_special_structure": true,
+          "min_special_nodes": 1,
+          "allow_rational_powers": false,
+          "allow_quotient": false,
+          "deep_chain": false,
+          "extra_term": false,
+          "allow_integer_exponents": true,
+          "allow_fractional_exponents": false,
+          "allow_irrational_exponents": false,
+          "allow_negative_exponents": false,
+          "irrational_exponent_set": [
+            "e",
+            "pi",
+            "sqrt2",
+            "sqrt3"
+          ],
+          "mix_fn_classes": true,
+          "allow_fn_power": false,
+          "prefer_fn_power": false,
+          "derivative_order": 1,
+          "course_tag": "calc",
+          "factor_count_min": 1,
+          "factor_count_max": 2,
+          "composition_depth": 0
+        },
         "dressing_specs": [
           {
             "variable": "x",
@@ -1272,8 +1557,13 @@
           },
           {
             "source": "dress",
-            "feature": "spec_scale",
-            "cost": 1.5
+            "feature": "spec_sign",
+            "cost": 0.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_roots",
+            "cost": 1.0
           }
         ],
         "difficulty_cost_total": 7.5,
@@ -1304,8 +1594,8 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\lim_{x \\to 1} -\\frac{3x^{2} + 1}{3x + 2}",
-      "answer_latex": "-\\frac{4}{5}",
+      "prompt_latex": "\\lim_{x \\to 0} -4\\arctan(x)",
+      "answer_latex": "0",
       "skeleton_pattern": "",
       "form_id": "direct_arctan",
       "diagram_svg": "",
@@ -1328,7 +1618,7 @@
         ],
         [
           "form",
-          "rational_direct"
+          "expr_direct"
         ],
         [
           "construction",
@@ -1341,14 +1631,14 @@
       ],
       "metadata": {
         "family": "direct_arctan",
-        "structure_id": "limit_direct_evaluation:rational_direct",
-        "form": "rational_direct",
+        "structure_id": "limit_direct_evaluation:expr_direct",
+        "form": "expr_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
         ],
         "function_classes": [
-          "algebraic"
+          "invtrig"
         ],
         "upgrades": [
           "exp_log",
@@ -1391,24 +1681,29 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 16.0,
-          "form": "rational_direct",
-          "technique": "direct_eval"
+          "form": "expr_direct",
+          "technique": "direct_eval",
+          "variant": "arctan_linear",
+          "form_id": "direct_arctan",
+          "family": "direct_arctan",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "rational_direct",
+          "form": "expr_direct",
           "technique": "direct_eval",
           "degree_max": 5,
           "coef_abs_max": 7,
-          "n_terms": 2,
-          "answer_len": 11,
+          "n_terms": 1,
+          "answer_len": 1,
           "lhopital_steps": 0,
-          "nest_depth": 1,
+          "nest_depth": 0,
           "pack": "limit_direct",
           "methods": [
             "direct_eval"
           ]
         },
-        "shape_id": "rational_direct",
+        "shape_id": "expr_direct",
         "form_id": "direct_arctan",
         "openstax_form": "direct_arctan",
         "core_form_id": "direct_arctan",
@@ -1419,7 +1714,67 @@
         "openstax_case": "\u00a72.3 invtrig",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
-        "approach_value": 1,
+        "variant": "arctan_linear",
+        "expr_spec_snapshot": {
+          "variable": "x",
+          "allowed_ops": [
+            "*",
+            "+",
+            "^"
+          ],
+          "degree_min": 1,
+          "degree_max": 4,
+          "term_count_min": 1,
+          "term_count_max": 3,
+          "coef_abs_max": 7,
+          "allow_negative_coefs": true,
+          "allow_constant_term": true,
+          "require_leading": true,
+          "require_product": false,
+          "require_sum": true,
+          "require_power_of_poly": false,
+          "forbid_product": false,
+          "forbid_quotient": true,
+          "max_nesting": 3,
+          "max_factors": 2,
+          "paren_style": "minimal",
+          "assoc_bias": null,
+          "d_spend": 16.0,
+          "seed": null,
+          "allowed_functions": [
+            "exp",
+            "invtrig",
+            "log",
+            "roots",
+            "trig"
+          ],
+          "require_function": null,
+          "prefer_chained_fn": true,
+          "prefer_special_structure": true,
+          "min_special_nodes": 1,
+          "allow_rational_powers": false,
+          "allow_quotient": false,
+          "deep_chain": false,
+          "extra_term": false,
+          "allow_integer_exponents": true,
+          "allow_fractional_exponents": false,
+          "allow_irrational_exponents": false,
+          "allow_negative_exponents": false,
+          "irrational_exponent_set": [
+            "e",
+            "pi",
+            "sqrt2",
+            "sqrt3"
+          ],
+          "mix_fn_classes": true,
+          "allow_fn_power": false,
+          "prefer_fn_power": false,
+          "derivative_order": 1,
+          "course_tag": "calc",
+          "factor_count_min": 1,
+          "factor_count_max": 2,
+          "composition_depth": 0
+        },
         "dressing_specs": [
           {
             "variable": "x",
@@ -1486,10 +1841,15 @@
             "source": "dress",
             "feature": "spec_sign",
             "cost": 0.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_invtrig",
+            "cost": 2.0
           }
         ],
-        "difficulty_cost_total": 6.5,
-        "difficulty_shortfall": 9.5,
+        "difficulty_cost_total": 8.5,
+        "difficulty_shortfall": 7.5,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1606,7 +1966,11 @@
           "d_spend": 16.0,
           "form": "expr_direct",
           "technique": "direct_eval",
-          "variant": "ln_exp"
+          "variant": "ln_exp",
+          "form_id": "direct_ln",
+          "family": "direct_ln",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "expr_direct",
@@ -1860,8 +2224,8 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\lim_{x \\to 4} 3\\frac{-2x^{3} + 3x}{6x - 7}",
-      "answer_latex": "-\\frac{348}{17}",
+      "prompt_latex": "\\lim_{x \\to 6} -\\left((2x-1)\\sqrt{x+4}\\right)",
+      "answer_latex": "-11\\sqrt{10}",
       "skeleton_pattern": "",
       "form_id": "direct_sqrt",
       "diagram_svg": "",
@@ -1884,7 +2248,7 @@
         ],
         [
           "form",
-          "rational_direct"
+          "expr_direct"
         ],
         [
           "construction",
@@ -1897,14 +2261,15 @@
       ],
       "metadata": {
         "family": "direct_sqrt",
-        "structure_id": "limit_direct_evaluation:rational_direct",
-        "form": "rational_direct",
+        "structure_id": "limit_direct_evaluation:expr_direct",
+        "form": "expr_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
         ],
         "function_classes": [
-          "algebraic"
+          "algebraic",
+          "roots"
         ],
         "upgrades": [
           "exp_log",
@@ -1947,35 +2312,100 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 22.0,
-          "form": "rational_direct",
-          "technique": "direct_eval"
+          "form": "expr_direct",
+          "technique": "direct_eval",
+          "variant": "sqrt_poly",
+          "form_id": "direct_sqrt",
+          "family": "direct_sqrt",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "rational_direct",
+          "form": "expr_direct",
           "technique": "direct_eval",
           "degree_max": 5,
           "coef_abs_max": 8,
-          "n_terms": 2,
-          "answer_len": 15,
+          "n_terms": 1,
+          "answer_len": 11,
           "lhopital_steps": 0,
-          "nest_depth": 1,
+          "nest_depth": 0,
           "pack": "limit_direct",
           "methods": [
             "direct_eval"
           ]
         },
-        "shape_id": "rational_direct",
+        "shape_id": "expr_direct",
         "form_id": "direct_sqrt",
         "openstax_form": "direct_sqrt",
         "core_form_id": "direct_sqrt",
         "catalog_id": "limits",
         "wrappers_applied": [
-          "constant_multiple"
+          "sign"
         ],
         "openstax_case": "\u00a72.3 roots",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
-        "approach_value": 4,
+        "variant": "sqrt_poly",
+        "expr_spec_snapshot": {
+          "variable": "x",
+          "allowed_ops": [
+            "*",
+            "+",
+            "^"
+          ],
+          "degree_min": 1,
+          "degree_max": 4,
+          "term_count_min": 1,
+          "term_count_max": 3,
+          "coef_abs_max": 8,
+          "allow_negative_coefs": true,
+          "allow_constant_term": true,
+          "require_leading": true,
+          "require_product": false,
+          "require_sum": true,
+          "require_power_of_poly": false,
+          "forbid_product": false,
+          "forbid_quotient": true,
+          "max_nesting": 3,
+          "max_factors": 2,
+          "paren_style": "minimal",
+          "assoc_bias": null,
+          "d_spend": 22.0,
+          "seed": null,
+          "allowed_functions": [
+            "exp",
+            "invtrig",
+            "log",
+            "roots",
+            "trig"
+          ],
+          "require_function": null,
+          "prefer_chained_fn": true,
+          "prefer_special_structure": true,
+          "min_special_nodes": 1,
+          "allow_rational_powers": false,
+          "allow_quotient": false,
+          "deep_chain": false,
+          "extra_term": false,
+          "allow_integer_exponents": true,
+          "allow_fractional_exponents": false,
+          "allow_irrational_exponents": false,
+          "allow_negative_exponents": false,
+          "irrational_exponent_set": [
+            "e",
+            "pi",
+            "sqrt2",
+            "sqrt3"
+          ],
+          "mix_fn_classes": true,
+          "allow_fn_power": false,
+          "prefer_fn_power": false,
+          "derivative_order": 1,
+          "course_tag": "calc",
+          "factor_count_min": 1,
+          "factor_count_max": 2,
+          "composition_depth": 0
+        },
         "dressing_specs": [
           {
             "variable": "x",
@@ -2040,8 +2470,13 @@
           },
           {
             "source": "dress",
-            "feature": "spec_scale",
-            "cost": 1.5
+            "feature": "spec_sign",
+            "cost": 0.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_roots",
+            "cost": 1.0
           }
         ],
         "difficulty_cost_total": 7.5,
@@ -2072,8 +2507,8 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\lim_{x \\to 1} -\\frac{-x^{2} + 8}{-3x - 8}",
-      "answer_latex": "\\frac{7}{11}",
+      "prompt_latex": "\\lim_{x \\to 0} -4\\arctan(x)",
+      "answer_latex": "0",
       "skeleton_pattern": "",
       "form_id": "direct_arctan",
       "diagram_svg": "",
@@ -2096,7 +2531,7 @@
         ],
         [
           "form",
-          "rational_direct"
+          "expr_direct"
         ],
         [
           "construction",
@@ -2109,14 +2544,14 @@
       ],
       "metadata": {
         "family": "direct_arctan",
-        "structure_id": "limit_direct_evaluation:rational_direct",
-        "form": "rational_direct",
+        "structure_id": "limit_direct_evaluation:expr_direct",
+        "form": "expr_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
         ],
         "function_classes": [
-          "algebraic"
+          "invtrig"
         ],
         "upgrades": [
           "exp_log",
@@ -2159,24 +2594,29 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 22.0,
-          "form": "rational_direct",
-          "technique": "direct_eval"
+          "form": "expr_direct",
+          "technique": "direct_eval",
+          "variant": "arctan_linear",
+          "form_id": "direct_arctan",
+          "family": "direct_arctan",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "rational_direct",
+          "form": "expr_direct",
           "technique": "direct_eval",
           "degree_max": 5,
           "coef_abs_max": 8,
-          "n_terms": 2,
-          "answer_len": 13,
+          "n_terms": 1,
+          "answer_len": 1,
           "lhopital_steps": 0,
-          "nest_depth": 1,
+          "nest_depth": 0,
           "pack": "limit_direct",
           "methods": [
             "direct_eval"
           ]
         },
-        "shape_id": "rational_direct",
+        "shape_id": "expr_direct",
         "form_id": "direct_arctan",
         "openstax_form": "direct_arctan",
         "core_form_id": "direct_arctan",
@@ -2187,7 +2627,67 @@
         "openstax_case": "\u00a72.3 invtrig",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
-        "approach_value": 1,
+        "variant": "arctan_linear",
+        "expr_spec_snapshot": {
+          "variable": "x",
+          "allowed_ops": [
+            "*",
+            "+",
+            "^"
+          ],
+          "degree_min": 1,
+          "degree_max": 4,
+          "term_count_min": 1,
+          "term_count_max": 3,
+          "coef_abs_max": 8,
+          "allow_negative_coefs": true,
+          "allow_constant_term": true,
+          "require_leading": true,
+          "require_product": false,
+          "require_sum": true,
+          "require_power_of_poly": false,
+          "forbid_product": false,
+          "forbid_quotient": true,
+          "max_nesting": 3,
+          "max_factors": 2,
+          "paren_style": "minimal",
+          "assoc_bias": null,
+          "d_spend": 22.0,
+          "seed": null,
+          "allowed_functions": [
+            "exp",
+            "invtrig",
+            "log",
+            "roots",
+            "trig"
+          ],
+          "require_function": null,
+          "prefer_chained_fn": true,
+          "prefer_special_structure": true,
+          "min_special_nodes": 1,
+          "allow_rational_powers": false,
+          "allow_quotient": false,
+          "deep_chain": false,
+          "extra_term": false,
+          "allow_integer_exponents": true,
+          "allow_fractional_exponents": false,
+          "allow_irrational_exponents": false,
+          "allow_negative_exponents": false,
+          "irrational_exponent_set": [
+            "e",
+            "pi",
+            "sqrt2",
+            "sqrt3"
+          ],
+          "mix_fn_classes": true,
+          "allow_fn_power": false,
+          "prefer_fn_power": false,
+          "derivative_order": 1,
+          "course_tag": "calc",
+          "factor_count_min": 1,
+          "factor_count_max": 2,
+          "composition_depth": 0
+        },
         "dressing_specs": [
           {
             "variable": "x",
@@ -2254,10 +2754,15 @@
             "source": "dress",
             "feature": "spec_sign",
             "cost": 0.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_invtrig",
+            "cost": 2.0
           }
         ],
-        "difficulty_cost_total": 6.5,
-        "difficulty_shortfall": 15.5,
+        "difficulty_cost_total": 8.5,
+        "difficulty_shortfall": 13.5,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -2374,7 +2879,11 @@
           "d_spend": 22.0,
           "form": "expr_direct",
           "technique": "direct_eval",
-          "variant": "ln_exp"
+          "variant": "ln_exp",
+          "form_id": "direct_ln",
+          "family": "direct_ln",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "expr_direct",

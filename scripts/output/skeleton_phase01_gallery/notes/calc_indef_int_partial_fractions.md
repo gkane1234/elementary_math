@@ -40,7 +40,7 @@ Opt-out flag used: _none — live catalog on `integrals.py` PFD sampler_
 |------|-----|-------------------------------------------|
 | OpenStax Calculus Volume 2 §3.4 Partial Fractions | https://openstax.org/books/calculus-volume-2/pages/3-4-partial-fractions | Distinct linear; repeated linear; irreducible quadratic \(\to\) arctan/ln; mixed; improper (long division) |
 
-Catalog forms: `distinct_linear_2` (`d_max=10`), `distinct_linear_3`, `irreducible_quad_arctan`, `irreducible_quad_ln`, `mixed_linear_quad`, `repeated_linear_square`. Stubs remain: `repeated_linear_cube`, `improper_long_division`.
+Catalog forms: `distinct_linear_2` (`d_max=10`), `distinct_linear_3`, `irreducible_quad_arctan`, `irreducible_quad_ln`, `mixed_linear_quad`, `repeated_linear_square`. Named preset `pfd_form_preset=bc_bank`. Stubs/deferred: `repeated_linear_cube`, `improper_long_division`, `repeated_quad_square` (\((x^2+1)^2\)), `x4_plus_1` (\(1/(x^4+1)\)).
 
 ## Variety notes
 
@@ -48,7 +48,7 @@ D=0 stays one easy frame (two linears). Mid/high D rotate §3.4 families. Not a 
 
 ## Limitations
 
-- **Status:** shipped — catalog `d_max` lockout of two-linear leftovers at high D. Remaining `LIMITATIONS`: `repeated_linear_cube` and `improper_long_division` still stubs (constructive spine / long-division front-end missing); high D can still emit single-term quad \(\int C/(x^2+a^2)\) (not a decomposition); mixed-form latex can look over-parenthesized.
+- **Status:** shipped — catalog `d_max` lockout of two-linear leftovers at high D; `pfd_form_preset=bc_bank` for §4 lookalikes the existing core can emit. Remaining `LIMITATIONS`: `repeated_linear_cube` and `improper_long_division` still stubs; `repeated_quad_square` / `x4_plus_1` deferred (no repeated-quad spine / no honest \(x^4+1\) factorization); high D can still emit single-term quad \(\int C/(x^2+a^2)\) (not a decomposition); mixed-form latex can look over-parenthesized.
 - **Generator:** `integral_partial_fractions`
 
 ## Proposed engine (reuse vs new)

@@ -222,6 +222,16 @@ def test_parts_mid_d_scales_inner():
     assert scaled >= 8, scaled
 
 
+def test_parts_hard_emh_preset_selects_bc_bank():
+    from question_engine.settings.presets import apply_difficulty_presets
+
+    settings = apply_difficulty_presets(
+        {"difficulty_tier": "hard", "seed": 11, "count": 1, "include_answer_key": True},
+        type_id="calc_indef_int_integration_by_parts",
+    )
+    assert settings["parts_form_preset"] == "bc_bank"
+
+
 def test_parts_bc_bank_catalog_and_deferred():
     cat = load_form_catalog("integration_by_parts")
     imp = {str(f["form_id"]) for f in implemented_forms(cat)}

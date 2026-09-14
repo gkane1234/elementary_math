@@ -12,8 +12,8 @@
 - **Skill:** Evaluate an indefinite integral with integration by parts (LIATE).
 - **D=0:** One parts step, coefficient 1 — rotate OpenStax easy shapes: \(\int \ln x\,dx\), \(\int x e^x\,dx\), \(\int x\sin x\,dx\), \(\int x\cos x\,dx\).
 - **Mid D (≈8):** Same one-step families with real inner scale: \(\ln(ax)\), \(x e^{kx}\), \(x\sin(kx)\).
-- **High D (≈16–22):** Tabular / repeated parts \(\int x^2 e^{kx}\), cyclic \(\int e^{ax}\sin(bx)\), \(\int \arctan(ax)\). Not \(\int \ln x\) again.
-- **Must not:** u-sub-only power chains; PFD rationals; derivative prompts.
+- **High D (≈16–22):** Tabular \(x^n e^{kx}\) / \(x^n\sin/cos\) (n≤3), \((\ln(ax))^{2,3}\), cyclic \(e^{ax}\sin/cos(bx)\), \(x\arctan\), \(x\arcsin\). Named preset `parts_form_preset=bc_bank`. Not \(\int \ln x\) again.
+- **Must not:** u-sub-only power chains; PFD rationals; derivative prompts; frozen bank LaTeX.
 
 ## What old path actually produced (real latex, D=0/8/16/22)
 
@@ -34,6 +34,8 @@ Opt-out flag used: `(none — live default is old path)`
 
 ## What live path produces now (real latex)
 
+Live `_generate_for_type` after BC bank §2 lookalikes. EMH-hard at D≥16 stamps `parts_form_preset=bc_bank`. `ln_alone` still has `d_max=8`.
+
 | D | seed | prompt_latex | answer_latex | shape notes |
 |---|------|--------------|--------------|-------------|
 | 0 | 101 | $\int \ln(x)\,dx$ | $x\ln(x)-x+C$ | `ln_alone`, k=1 |
@@ -43,9 +45,11 @@ Opt-out flag used: `(none — live default is old path)`
 | 8 | 207 | $\int x\cos(4x)\,dx$ | $\frac{1}{4}x\sin(4x)+\frac{1}{16}\cos(4x)+C$ | k=4 |
 | 8 | 44 | $\int xe^{4x}\,dx$ | $\frac{1}{16}e^{4x}(4x-1)+C$ | `poly1_exp` |
 | 16 | 101 | $\int x^{2}e^{3x}\,dx$ | $\frac{1}{27}e^{3x}(9x^{2}-6x+2)+C$ | tabular `poly2_exp` |
-| 16 | 207 | $\int \arctan(x)\,dx$ | $x\arctan(x)-\frac{1}{2}\ln(1+x^{2})+C$ | `arctan_alone` |
-| 16 | 44 | $\int e^{2x}\sin(x)\,dx$ | $\frac{e^{2x}(2\sin(x)-\cos(x))}{5}+C$ | cyclic |
-| 22 | 207 | $\int \arctan(3x)\,dx$ | $x\arctan(3x)-\frac{1}{6}\ln(1+9x^{2})+C$ | scaled invtrig |
+| 16 | 207 | $\int e^{2x}\cos(x)\,dx$ | $\frac{e^{2x}(2\cos(x)+\sin(x))}{5}+C$ | cyclic; bank preset |
+| 16 | 44 | $\int (\ln(3x))^{3}\,dx$ | $x(\ln(3x))^{3}-3x(\ln(3x))^{2}+6x\ln(3x)-6x+C$ | `ln_power_3` lookalike |
+| 22 | 207 | $\int e^{2x}\cos(x)\,dx$ | $\frac{e^{2x}(2\cos(x)+\sin(x))}{5}+C$ | cyclic, not \(\int\ln x\) |
+
+Opt-out flag used: `(none — live default is old path)`
 
 ## OpenStax examples + chapter/section cites
 
@@ -63,10 +67,10 @@ Not a WP. D=0 rotates several one-step LIATE frames (old path was ln-only). High
 
 ## Limitations
 
-- **Status:** shipped — catalog + coefficient scale. Remaining `LIMITATIONS`: \(\int x\arcsin x\) still stub; \(\sec^3\) owned by the trig-integrals leaf; no definite-parts evaluation on this indefinite leaf.
+- **Status:** shipped — catalog lookalikes + `parts_form_preset=bc_bank`. Remaining `LIMITATIONS`: \(\int x e^{ax}\sin(bx)\) (`poly_exp_trig`) deferred — no honest tabular/cyclic answer template; \(\int x\arccos x\) deferred as a duplicate of \(x\arcsin\); \(\int x^{2}\ln(x^{2}+a^{2})\) deferred; \(\sec^3\) owned by the trig-integrals leaf; no definite-parts evaluation on this indefinite leaf.
 - **Generator:** `integration_by_parts`
 
 ## Proposed engine (reuse vs new)
 
-- **Reuse:** `integrals.py` `_sample_parts` + `integration_by_parts.json`. Numeric hardness is inner \(k\) / \(a,b\), not padded `difficulty_costs`.
-- **Shipped this pass:** D=0 form rotation; `d_max` on easy leftovers; scaled \(k\); allow_log / allow_invtrig on so ln and arctan are honest LIATE.
+- **Reuse:** `integrals.py` `_sample_parts` + `integration_by_parts.json`. Numeric hardness is inner \(k\) / \(a,b\) / polynomial degree, not padded `difficulty_costs`.
+- **Shipped this pass:** BC bank §2 lookalikes (\(x^n e^{ax}\) n≤3, \(x^n\sin/\cos\), \(x^n\ln\), \((\ln)^{2,3}\), \(x\arctan\), \(x\arcsin\), cyclic); named preset `bc_bank`; `allow_*` tags; `ln_alone` leftover lockout kept.

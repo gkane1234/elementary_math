@@ -23,6 +23,8 @@ User-supplied drill bank (not OpenStax). Gold as **extra form families / high-D 
 | 11 | Hyperbolic | optional; `∫ dx/(1+cosh x)` only | deferred |
 
 Named u-sub preset: `u_sub_form_preset=bc_bank` (gallery slugs `u_sub_preset_bc_bank`, `_ln_exp`, `_trig`).
+Named parts preset: `parts_form_preset=bc_bank` (gallery `parts_preset_bc_bank`).
+Named PFD preset: `pfd_form_preset=bc_bank` (gallery `pfd_preset_bc_bank`).
 
 ## §1 inventory (u-sub)
 
@@ -51,14 +53,18 @@ Named u-sub preset: `u_sub_form_preset=bc_bank` (gallery slugs `u_sub_preset_bc_
 | 1.24 | ∫ x⁵/(x⁶+1)³ | implemented | `power_hex_neg` |
 | 1.25 | ∫ x³/√(1+x⁴) | implemented | `root_of_x4` |
 
-## §2 inventory (parts) — next slice
+## §2 inventory (parts)
 
 | Bank | Status | form_id |
 |------|--------|---------|
-| xeˣ, x²eˣ, x sin/cos, x ln, eˣ sin/cos, arctan | already | `poly1_exp`, `poly2_exp`, `poly1_sin/cos`, `poly1_ln`, `cyclic_*`, `arctan_alone` |
-| x³ e^{2x}, x³ cos, x² ln, (ln x)^{2,3} | missing | need `poly3_exp`, `poly3_cos`, `poly2_ln`, `ln_power_parts` |
-| x arctan, x arcsin/arccos | stub/missing | `poly1_arcsin` stub; `poly1_arctan` not in catalog |
-| x eˣ sin/cos, √x ln, ln(x²+1) | missing | needs extra parts templates |
+| xeˣ, x²eˣ, x sin/cos, x ln, eˣ sin/cos, arctan | implemented | `poly1_exp`, `poly2_exp`, `poly1_sin/cos`, `poly1_ln`, `cyclic_*`, `arctan_alone` |
+| x³ e^{2x}, x³ cos, x² ln, (ln x)^{2,3} | implemented | `poly3_exp`, `poly3_cos` / `poly3_sin`, `poly2_ln`, `ln_power_2`, `ln_power_3` |
+| x arctan, x arcsin, arcsin, √x ln / x^{3/2} ln, ln(x²+a²) | implemented | `poly1_arctan`, `poly1_arcsin`, `arcsin_alone`, `power_frac_ln`, `ln_quad` |
+| x eˣ sin/cos | deferred | `poly_exp_trig` — no honest closed template |
+| x arccos | deferred | `poly1_arccos` — duplicate of x arcsin |
+| x² ln(x²+1) | deferred | `poly2_ln_quad` |
+
+Named preset: `parts_form_preset=bc_bank` (gallery slug `parts_preset_bc_bank`). D=0 auto stays one-step LIATE.
 
 ## §3 inventory (trig) — next slice after u-sub
 
@@ -68,9 +74,11 @@ Already: odd/even sin/cos, tan/sec save-one, sec³, sec⁵, tan⁴, product-to-s
 
 **Deferred:** `csc5_reduction`, `tan4_sec3`, `one_over_a_plus_sin` / Weierstrass (`1/(2+sin)`, `1/(1+sin+cos)`).
 
-## §4–5 / 10 — later
+## §4 inventory (PFD)
 
-PFD three-linear / mixed / repeated already exist. Missing: `(x²+1)²`, `x⁴+1` factorization, improper long division (`improper_long_division` stub), repeated cube.
+Existing core lookalikes (not frozen bank LaTeX): `distinct_linear_2` / `_3`, `mixed_linear_quad`, `repeated_linear_square`, `irreducible_quad_arctan` / `_ln`. Named preset `pfd_form_preset=bc_bank` (gallery `pfd_preset_bc_bank`).
+
+**Deferred:** `repeated_quad_square` \((x^2+1)^2\), `x4_plus_1` \(1/(x^4+1)\) (no honest factorization in the PFD spine), `improper_long_division`, `repeated_linear_cube`.
 
 Trig-sub √(a²±x²) families already exist. Missing: x³/√(x²±a²) (u-sub actually), `(x²−a²)^{-3/2}`.
 

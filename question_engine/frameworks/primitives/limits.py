@@ -1079,12 +1079,23 @@ def _sample_essential(
         answer = r"\text{DNE}" if power % 2 == 1 else r"\infty"
         classes = ["algebraic"]
         allowed = ("sign", "constant_multiple", "cancel_factor", "unfactored_form")
-    else:
+    elif fid == "essential_1_over_x" or (not fid and d <= 10):
         core_fid = "essential_1_over_x"
         core = CoreExpr(kind="rational_pow", var=var, coef=1, power=1, center=0, approach=0)
         answer = r"\text{DNE}"
         classes = ["algebraic"]
         allowed = ("sign", "constant_multiple", "horizontal_shift", "cancel_factor", "unfactored_form")
+    else:
+        # Catalog leftover 1/x: d_max=10 — do not silently emit it.
+        core_fid = "essential_rational_va"
+        center = rng.randint(1, max(1, spec.approach_abs_max))
+        power = rng.choice([1, 2, 3, 4]) if d >= 8 else rng.choice([1, 2, 3])
+        core = CoreExpr(
+            kind="rational_pow", var=var, coef=1, power=power, center=center, approach=center
+        )
+        answer = r"\text{DNE}" if power % 2 == 1 else r"\infty"
+        classes = ["algebraic"]
+        allowed = ("sign", "constant_multiple", "cancel_factor", "unfactored_form")
 
     catalog_form = {"form_id": core_fid, "d_min": 0, "d_max": 20}
     core = complexity_wrap(

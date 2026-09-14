@@ -21,6 +21,16 @@ from question_engine.ml.schema import build_generation_record
 _LHOPITAL_EASY_LEFTOVER = ("lhopital_0_0_poly", "lhopital_0_0_trig")
 _DIRECT_EASY_LEFTOVER = ("poly_direct",)
 _REMOVABLE_EASY_LEFTOVER = ("removable_diff_sq",)
+_ESSENTIAL_EASY_LEFTOVER = ("essential_1_over_x",)
+
+_ESSENTIAL_STAMP_MARKERS = {
+    "essential_1_over_x": (r"\frac",),
+    "essential_1_over_x_sq": (r"\frac",),
+    "essential_rational_va": (r"\frac",),
+    "essential_sin_1_over_x": ("sin",),
+    "essential_cos_1_over_x": ("cos",),
+    "essential_tan_asymptote": ("tan",),
+}
 
 _DIRECT_STAMP_MARKERS = {
     "poly_direct": (),
@@ -77,6 +87,40 @@ def _gen_removable(d: float, *, seed: int = 101):
             "include_answer_key": True,
         },
     )[0]
+
+
+def _gen_essential(d: float, *, seed: int = 101):
+    return _generate_for_type(
+        "calc_limits_at_essential_discontinuities",
+        {
+            "difficulty": d,
+            "seed": seed,
+            "count": 1,
+            "include_answer_key": True,
+        },
+    )[0]
+
+
+def _is_essential_1_over_x_leftover_prompt(prompt: str) -> bool:
+    """Old Mad-Lib / D=0 leftover: lim x→0 of ±1/x (no shift, no higher power)."""
+    compact = (prompt or "").replace(" ", "")
+    return bool(re.fullmatch(r"\\lim_\{x\\to0\}-?\\frac\{1\}\{x\}", compact))
+
+
+def _essential_stamp_matches(fid: str, prompt: str) -> bool:
+    p = prompt or ""
+    if fid == "essential_sin_1_over_x":
+        return "sin" in p
+    if fid == "essential_cos_1_over_x":
+        return "cos" in p
+    if fid == "essential_tan_asymptote":
+        return "tan" in p
+    if fid in {"essential_1_over_x", "essential_1_over_x_sq", "essential_rational_va"}:
+        return r"\frac" in p and "sin" not in p and "cos" not in p and "tan" not in p
+    markers = _ESSENTIAL_STAMP_MARKERS.get(fid)
+    if markers is None:
+        return True
+    return any(m in p for m in markers)
 
 
 def _is_removable_diff_sq_prompt(prompt: str) -> bool:
@@ -310,6 +354,78 @@ def test_limit_removable_leftover_lockout_no_easy_diff_sq():
                 q.prompt_latex,
             )
     assert len(high) >= 2
+
+
+def test_limit_essential_leftover_lockout_no_easy_1_over_x():
+    """Leftover lockout of D=0 lim 1/x (old Mad-Lib) at D>=16."""
+    q0 = _gen_essential(0, seed=101)
+    md0 = q0.metadata or {}
+    snap0 = md0.get("spec_snapshot") or {}
+    assert md0.get("form_id") == "essential_1_over_x"
+    assert md0.get("generator") == "limit_essential"
+    assert snap0.get("form_id") == "essential_1_over_x"
+    assert snap0.get("generator") == "limit_essential"
+    assert r"\lim" in (q0.prompt_latex or "")
+    assert _is_essential_1_over_x_leftover_prompt(q0.prompt_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen_essential(0, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "essential_1_over_x"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_essential"
+        assert _essential_stamp_matches(str(fid), q.prompt_latex or "")
+        assert _is_essential_1_over_x_leftover_prompt(q.prompt_latex or "")
+    assert easy == {"essential_1_over_x"}
+
+    mid = set()
+    leftover_1x = 0
+    for seed in range(40):
+        q = _gen_essential(8, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "essential_1_over_x":
+            leftover_1x += 1
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_essential"
+        assert (q.metadata or {}).get("generator") == "limit_essential"
+        assert _essential_stamp_matches(str(fid), q.prompt_latex or ""), (
+            seed,
+            fid,
+            q.prompt_latex,
+        )
+    assert leftover_1x >= 1
+    assert mid - set(_ESSENTIAL_EASY_LEFTOVER)
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen_essential(d, seed=seed)
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid not in _ESSENTIAL_EASY_LEFTOVER, (d, seed, fid, q.prompt_latex)
+            assert not _is_essential_1_over_x_leftover_prompt(q.prompt_latex or ""), (
+                d,
+                seed,
+                fid,
+                q.prompt_latex,
+            )
+            assert (q.metadata or {}).get("generator") == "limit_essential"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "limit_essential"
+            assert r"\lim" in (q.prompt_latex or "")
+            assert _essential_stamp_matches(str(fid), q.prompt_latex or ""), (
+                d,
+                seed,
+                fid,
+                q.prompt_latex,
+            )
+    assert len(high) >= 4
 
 
 def test_lhopital_indeterminate_form_diversity():

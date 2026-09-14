@@ -37,8 +37,7 @@
 
 > **LIMITATIONS**
 
-- **Variety:** Only 2 distinct prompts across D=0/8/16/22 in notes table — limited stem rotation at fixed seed.
-- **Difficulty scaling:** Answer latex flat across D in notes table — D may be cosmetic until form unlocks change the student-visible stem.
+- **Status:** leftover lockout of D=0 \(1/x\) ships on the shared `limit_essential` generator (see `calc_limits_at_essential_discontinuities.md`). Remaining: D=16===D=22 osc/VA/tan mix; D=8 can still emit leftover \(1/x\); tan is frozen \(x\to\pi/2\); no figure-bank graphs.
+- **Variety:** Multi-seed pool now spans leftover \(1/x\) at D=8 plus osc/VA/tan; fixed seed 101 is still the same shifted \(\cos(1/x)\) from D=8 through D=22.
 - **OpenStax:** Cite present; gold shapes in cite column — do not invent new algebra beyond old-path + cite.
-- **Engine:** Live catalog generator; no deferred precalc_foundations stub (PC_DEFERRED empty).
-- **This pass:** Gallery + Limitations audit only. Implement leftover only if notes lock gold (not for flat-D / red-header variety leaves).
+- **Engine:** Live catalog generator; leftover lockout is on the shared calc leaf.

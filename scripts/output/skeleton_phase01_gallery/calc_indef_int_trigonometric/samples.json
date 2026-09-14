@@ -51,6 +51,12 @@
           "basic_sin_kx"
         ],
         [
+          "tricks_required",
+          [
+            "trig"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -114,6 +120,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -131,6 +140,7 @@
           "technique": "trig",
           "family": "basic_sin_kx",
           "form_id": "basic_sin_kx",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
           "strategy": "basic_antiderivative"
         },
@@ -221,6 +231,12 @@
           "basic_sec_tan"
         ],
         [
+          "tricks_required",
+          [
+            "trig"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -284,6 +300,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -301,6 +320,7 @@
           "technique": "trig",
           "family": "basic_sec_tan",
           "form_id": "basic_sec_tan",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
           "strategy": "basic_antiderivative"
         },
@@ -391,6 +411,12 @@
           "basic_sec_tan"
         ],
         [
+          "tricks_required",
+          [
+            "trig"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -454,6 +480,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -471,6 +500,7 @@
           "technique": "trig",
           "family": "basic_sec_tan",
           "form_id": "basic_sec_tan",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
           "strategy": "basic_antiderivative"
         },
@@ -561,6 +591,13 @@
           "cos_j_sin"
         ],
         [
+          "tricks_required",
+          [
+            "trig",
+            "u_sub"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -631,6 +668,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -655,6 +695,7 @@
           "technique": "trig+u_sub",
           "family": "cos_j_sin",
           "form_id": "cos_j_sin",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
           "strategy": "u_equals_cos"
         },
@@ -770,6 +811,13 @@
           "tan_k_sec2"
         ],
         [
+          "tricks_required",
+          [
+            "trig",
+            "u_sub"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -840,6 +888,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -864,6 +915,7 @@
           "technique": "trig+u_sub",
           "family": "tan_k_sec2",
           "form_id": "tan_k_sec2",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
           "strategy": "u_equals_tan"
         },
@@ -979,6 +1031,12 @@
           "tan2"
         ],
         [
+          "tricks_required",
+          [
+            "trig"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -1046,6 +1104,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1063,6 +1124,7 @@
           "technique": "trig",
           "family": "tan2",
           "form_id": "tan2",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
           "strategy": "pythagorean_rewrite"
         },
@@ -1146,10 +1208,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\int \\cos^{2}(x)\\sin(x)\\,dx",
-      "answer_latex": "-\\frac{1}{3}\\cos^{3}(x)+C",
+      "prompt_latex": "\\int \\cos^{2}(x)\\sin^{3}(x)\\,dx",
+      "answer_latex": "-\\frac{1}{3}\\cos^{3}(x)+\\frac{1}{5}\\cos^{5}(x)+C",
       "skeleton_pattern": "",
-      "form_id": "cos_j_sin",
+      "form_id": "sin_odd_cos_any",
       "diagram_svg": "",
       "debug": [
         [
@@ -1162,11 +1224,18 @@
         ],
         [
           "form_id",
-          "cos_j_sin"
+          "sin_odd_cos_any"
         ],
         [
           "openstax_form",
-          "cos_j_sin"
+          "sin_odd_cos_any"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig",
+            "u_sub"
+          ]
         ],
         [
           "construction",
@@ -1178,8 +1247,8 @@
         ]
       ],
       "metadata": {
-        "family": "cos_j_sin",
-        "structure_id": "integral_trigonometric:cos_j_sin",
+        "family": "sin_odd_cos_any",
+        "structure_id": "integral_trigonometric:sin_odd_cos_any",
         "technique": "trig+u_sub",
         "tricks_required": [
           "trig",
@@ -1239,6 +1308,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1261,10 +1333,11 @@
             "length": 2
           },
           "technique": "trig+u_sub",
-          "family": "cos_j_sin",
-          "form_id": "cos_j_sin",
+          "family": "sin_odd_cos_any",
+          "form_id": "sin_odd_cos_any",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
-          "strategy": "u_equals_cos"
+          "strategy": "odd_sin_power"
         },
         "effort_features": {
           "technique": "trig+u_sub",
@@ -1276,7 +1349,7 @@
           "degree_max": 6,
           "coef_abs_max": 7,
           "n_terms": 1,
-          "answer_len": 25,
+          "answer_len": 48,
           "nest_depth": 0,
           "pack": "integral_trig",
           "methods": [
@@ -1305,7 +1378,7 @@
           ],
           "length": 2
         },
-        "shape_id": "cos_j_sin",
+        "shape_id": "sin_odd_cos_any",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -1327,11 +1400,11 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 8.5,
         "wrappers_applied": [],
-        "core_form_id": "cos_j_sin",
-        "openstax_form": "cos_j_sin",
-        "form_id": "cos_j_sin",
-        "openstax_case": "Example 3.8 \u2014 \u222b cos^j x sin x dx",
-        "strategy": "u_equals_cos",
+        "core_form_id": "sin_odd_cos_any",
+        "openstax_form": "sin_odd_cos_any",
+        "form_id": "sin_odd_cos_any",
+        "openstax_case": "Example 3.9 / 3.11 \u2014 k odd",
+        "strategy": "odd_sin_power",
         "catalog_id": "trig_integrals",
         "generation_settings": {
           "term_count": 3,
@@ -1355,215 +1428,6 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\int \\csc^{3}(x)\\cot(x)\\,dx",
-      "answer_latex": "-\\frac{1}{3}\\csc^{3}(x)+C",
-      "skeleton_pattern": "",
-      "form_id": "csc_j_cot",
-      "diagram_svg": "",
-      "debug": [
-        [
-          "D / effective_d",
-          16.0
-        ],
-        [
-          "seed",
-          207
-        ],
-        [
-          "form_id",
-          "csc_j_cot"
-        ],
-        [
-          "openstax_form",
-          "csc_j_cot"
-        ],
-        [
-          "construction",
-          "forward_form_catalog"
-        ],
-        [
-          "has_diagram_svg",
-          false
-        ]
-      ],
-      "metadata": {
-        "family": "csc_j_cot",
-        "structure_id": "integral_trigonometric:csc_j_cot",
-        "technique": "trig+u_sub",
-        "tricks_required": [
-          "trig",
-          "u_sub"
-        ],
-        "methods_used": [
-          "trig",
-          "u_sub"
-        ],
-        "function_classes": [
-          "trig"
-        ],
-        "upgrades": [
-          "extra_term",
-          "higher_degree",
-          "use_trig"
-        ],
-        "effective_d": 16.0,
-        "band": "hard",
-        "generator": "integral_trigonometric",
-        "variable": "x",
-        "d_spend": 16.0,
-        "spec_snapshot": {
-          "pack": "integral_trig",
-          "variable": "x",
-          "definite": false,
-          "bound_abs_max": 5,
-          "tricks_allowed": [
-            "trig"
-          ],
-          "tricks_required": [
-            "trig",
-            "u_sub"
-          ],
-          "allow_trig": true,
-          "allow_exp": false,
-          "allow_log": false,
-          "allow_invtrig": false,
-          "allow_substitution": false,
-          "allow_parts": false,
-          "allow_pfd": false,
-          "allow_trig_sub": false,
-          "allow_ftc": false,
-          "require_substitution": false,
-          "require_parts": false,
-          "require_pfd": false,
-          "require_trig": true,
-          "require_trig_sub": false,
-          "include_plus_c": true,
-          "coef_abs_max": 7,
-          "degree_max": 6,
-          "term_count_max": 3,
-          "nest_budget": 1,
-          "parts_depth": 1,
-          "max_pipeline_len": 1,
-          "d_spend": 16.0,
-          "construction": "forward_form_catalog",
-          "u_sub_form_preset": "auto",
-          "u_sub_construction": "auto",
-          "pipeline": {
-            "stages": [
-              {
-                "trick": "trig",
-                "input_kind": "1",
-                "transform": "sample_trig_form",
-                "notes": ""
-              },
-              {
-                "trick": "u_sub",
-                "input_kind": "prior",
-                "transform": "derivative_backed_chain",
-                "notes": ""
-              }
-            ],
-            "tricks_required": [
-              "trig",
-              "u_sub"
-            ],
-            "length": 2
-          },
-          "technique": "trig+u_sub",
-          "family": "csc_j_cot",
-          "form_id": "csc_j_cot",
-          "catalog_id": "trig_integrals",
-          "strategy": "u_equals_csc"
-        },
-        "effort_features": {
-          "technique": "trig+u_sub",
-          "tricks_required": [
-            "trig",
-            "u_sub"
-          ],
-          "pipeline_len": 2,
-          "degree_max": 6,
-          "coef_abs_max": 7,
-          "n_terms": 1,
-          "answer_len": 25,
-          "nest_depth": 0,
-          "pack": "integral_trig",
-          "methods": [
-            "trig",
-            "u_sub"
-          ]
-        },
-        "pipeline": {
-          "stages": [
-            {
-              "trick": "trig",
-              "input_kind": "1",
-              "transform": "sample_trig_form",
-              "notes": ""
-            },
-            {
-              "trick": "u_sub",
-              "input_kind": "prior",
-              "transform": "derivative_backed_chain",
-              "notes": ""
-            }
-          ],
-          "tricks_required": [
-            "trig",
-            "u_sub"
-          ],
-          "length": 2
-        },
-        "shape_id": "csc_j_cot",
-        "construction": "forward_form_catalog",
-        "difficulty_costs": [
-          {
-            "source": "spec",
-            "feature": "extra_term",
-            "cost": 2.0
-          },
-          {
-            "source": "spec",
-            "feature": "higher_degree",
-            "cost": 2.5
-          },
-          {
-            "source": "spec",
-            "feature": "use_trig",
-            "cost": 3.0
-          }
-        ],
-        "difficulty_cost_total": 7.5,
-        "difficulty_shortfall": 8.5,
-        "wrappers_applied": [],
-        "core_form_id": "csc_j_cot",
-        "openstax_form": "csc_j_cot",
-        "form_id": "csc_j_cot",
-        "openstax_case": "\u00a73.2 cofunction sibling of sec^j tan",
-        "strategy": "u_equals_csc",
-        "catalog_id": "trig_integrals",
-        "generation_settings": {
-          "term_count": 3,
-          "power_max": 5,
-          "require_positive_power": false,
-          "difficulty": 16.0,
-          "seed": 207,
-          "include_answer_key": true,
-          "integers_only": true,
-          "only_x": true,
-          "_batch_index": 0
-        },
-        "instruction_latex": "\\text{Integrate.}"
-      }
-    },
-    {
-      "ok": true,
-      "warn": false,
-      "label": "D\u224816 \u00b7 seed=313",
-      "type_id": "calc_indef_int_trigonometric",
-      "difficulty": 16.0,
-      "band": "high",
-      "seed": 313,
       "prompt_latex": "\\int \\frac{\\sin(x)}{1+\\cos^{2}(x)}\\,dx",
       "answer_latex": "-\\arctan(\\cos(x))+C",
       "skeleton_pattern": "",
@@ -1576,7 +1440,7 @@
         ],
         [
           "seed",
-          313
+          207
         ],
         [
           "form_id",
@@ -1585,6 +1449,13 @@
         [
           "openstax_form",
           "sin_over_one_plus_cos2"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig",
+            "u_sub"
+          ]
         ],
         [
           "construction",
@@ -1657,6 +1528,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1681,6 +1555,227 @@
           "technique": "trig+u_sub",
           "family": "sin_over_one_plus_cos2",
           "form_id": "sin_over_one_plus_cos2",
+          "generator": "integral_trigonometric",
+          "catalog_id": "trig_integrals",
+          "strategy": "u_equals_cos"
+        },
+        "effort_features": {
+          "technique": "trig+u_sub",
+          "tricks_required": [
+            "trig",
+            "u_sub"
+          ],
+          "pipeline_len": 2,
+          "degree_max": 6,
+          "coef_abs_max": 7,
+          "n_terms": 1,
+          "answer_len": 19,
+          "nest_depth": 0,
+          "pack": "integral_trig",
+          "methods": [
+            "trig",
+            "u_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "trig",
+              "input_kind": "1",
+              "transform": "sample_trig_form",
+              "notes": ""
+            },
+            {
+              "trick": "u_sub",
+              "input_kind": "prior",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "trig",
+            "u_sub"
+          ],
+          "length": 2
+        },
+        "shape_id": "sin_over_one_plus_cos2",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 8.5,
+        "wrappers_applied": [],
+        "core_form_id": "sin_over_one_plus_cos2",
+        "openstax_form": "sin_over_one_plus_cos2",
+        "form_id": "sin_over_one_plus_cos2",
+        "openstax_case": "\u00a73.2 / u-sub into arctan (bank \u00a73.19\u20133.20)",
+        "strategy": "u_equals_cos",
+        "catalog_id": "trig_integrals",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 16.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=313",
+      "type_id": "calc_indef_int_trigonometric",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{\\sin(x)}{1+\\cos^{2}(x)}\\,dx",
+      "answer_latex": "-\\arctan(\\cos(x))+C",
+      "skeleton_pattern": "",
+      "form_id": "sin_over_one_plus_cos2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "sin_over_one_plus_cos2"
+        ],
+        [
+          "openstax_form",
+          "sin_over_one_plus_cos2"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig",
+            "u_sub"
+          ]
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "sin_over_one_plus_cos2",
+        "structure_id": "integral_trigonometric:sin_over_one_plus_cos2",
+        "technique": "trig+u_sub",
+        "tricks_required": [
+          "trig",
+          "u_sub"
+        ],
+        "methods_used": [
+          "trig",
+          "u_sub"
+        ],
+        "function_classes": [
+          "trig"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_trig"
+        ],
+        "effective_d": 16.0,
+        "band": "hard",
+        "generator": "integral_trigonometric",
+        "variable": "x",
+        "d_spend": 16.0,
+        "spec_snapshot": {
+          "pack": "integral_trig",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "trig"
+          ],
+          "tricks_required": [
+            "trig",
+            "u_sub"
+          ],
+          "allow_trig": true,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": false,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": true,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 7,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 16.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "trig",
+                "input_kind": "1",
+                "transform": "sample_trig_form",
+                "notes": ""
+              },
+              {
+                "trick": "u_sub",
+                "input_kind": "prior",
+                "transform": "derivative_backed_chain",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "trig",
+              "u_sub"
+            ],
+            "length": 2
+          },
+          "technique": "trig+u_sub",
+          "family": "sin_over_one_plus_cos2",
+          "form_id": "sin_over_one_plus_cos2",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
           "strategy": "u_equals_cos"
         },
@@ -1773,10 +1868,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\int \\cos^{2}(x)\\sin(x)\\,dx",
-      "answer_latex": "-\\frac{1}{3}\\cos^{3}(x)+C",
+      "prompt_latex": "\\int \\sin^{2}(x)\\cos^{2}(x)\\,dx",
+      "answer_latex": "\\frac{x}{8}-\\frac{1}{32}\\sin(4x)+C",
       "skeleton_pattern": "",
-      "form_id": "cos_j_sin",
+      "form_id": "sin_cos_both_even",
       "diagram_svg": "",
       "debug": [
         [
@@ -1789,11 +1884,17 @@
         ],
         [
           "form_id",
-          "cos_j_sin"
+          "sin_cos_both_even"
         ],
         [
           "openstax_form",
-          "cos_j_sin"
+          "sin_cos_both_even"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig"
+          ]
         ],
         [
           "construction",
@@ -1805,16 +1906,14 @@
         ]
       ],
       "metadata": {
-        "family": "cos_j_sin",
-        "structure_id": "integral_trigonometric:cos_j_sin",
-        "technique": "trig+u_sub",
+        "family": "sin_cos_both_even",
+        "structure_id": "integral_trigonometric:sin_cos_both_even",
+        "technique": "trig",
         "tricks_required": [
-          "trig",
-          "u_sub"
+          "trig"
         ],
         "methods_used": [
-          "trig",
-          "u_sub"
+          "trig"
         ],
         "function_classes": [
           "trig"
@@ -1838,8 +1937,7 @@
             "trig"
           ],
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
           "allow_trig": true,
           "allow_exp": false,
@@ -1866,6 +1964,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1873,42 +1974,34 @@
                 "input_kind": "1",
                 "transform": "sample_trig_form",
                 "notes": ""
-              },
-              {
-                "trick": "u_sub",
-                "input_kind": "prior",
-                "transform": "derivative_backed_chain",
-                "notes": ""
               }
             ],
             "tricks_required": [
-              "trig",
-              "u_sub"
+              "trig"
             ],
-            "length": 2
+            "length": 1
           },
-          "technique": "trig+u_sub",
-          "family": "cos_j_sin",
-          "form_id": "cos_j_sin",
+          "technique": "trig",
+          "family": "sin_cos_both_even",
+          "form_id": "sin_cos_both_even",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
-          "strategy": "u_equals_cos"
+          "strategy": "both_even_power_reduction"
         },
         "effort_features": {
-          "technique": "trig+u_sub",
+          "technique": "trig",
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
-          "pipeline_len": 2,
+          "pipeline_len": 1,
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 1,
-          "answer_len": 25,
+          "answer_len": 34,
           "nest_depth": 0,
           "pack": "integral_trig",
           "methods": [
-            "trig",
-            "u_sub"
+            "trig"
           ]
         },
         "pipeline": {
@@ -1918,21 +2011,14 @@
               "input_kind": "1",
               "transform": "sample_trig_form",
               "notes": ""
-            },
-            {
-              "trick": "u_sub",
-              "input_kind": "prior",
-              "transform": "derivative_backed_chain",
-              "notes": ""
             }
           ],
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
-          "length": 2
+          "length": 1
         },
-        "shape_id": "cos_j_sin",
+        "shape_id": "sin_cos_both_even",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -1954,11 +2040,11 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 14.5,
         "wrappers_applied": [],
-        "core_form_id": "cos_j_sin",
-        "openstax_form": "cos_j_sin",
-        "form_id": "cos_j_sin",
-        "openstax_case": "Example 3.8 \u2014 \u222b cos^j x sin x dx",
-        "strategy": "u_equals_cos",
+        "core_form_id": "sin_cos_both_even",
+        "openstax_form": "sin_cos_both_even",
+        "form_id": "sin_cos_both_even",
+        "openstax_case": "\u00a73.2 exercise 100 \u2014 \u222b sin\u00b2 cos\u00b2",
+        "strategy": "both_even_power_reduction",
         "catalog_id": "trig_integrals",
         "generation_settings": {
           "term_count": 3,
@@ -1982,10 +2068,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\int \\csc^{3}(x)\\cot(x)\\,dx",
-      "answer_latex": "-\\frac{1}{3}\\csc^{3}(x)+C",
+      "prompt_latex": "\\int \\frac{1}{1+\\cos(x)}\\,dx",
+      "answer_latex": "\\tan\\left(\\frac{x}{2}\\right)+C",
       "skeleton_pattern": "",
-      "form_id": "csc_j_cot",
+      "form_id": "one_over_one_plus_cos",
       "diagram_svg": "",
       "debug": [
         [
@@ -1998,11 +2084,17 @@
         ],
         [
           "form_id",
-          "csc_j_cot"
+          "one_over_one_plus_cos"
         ],
         [
           "openstax_form",
-          "csc_j_cot"
+          "one_over_one_plus_cos"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig"
+          ]
         ],
         [
           "construction",
@@ -2014,16 +2106,14 @@
         ]
       ],
       "metadata": {
-        "family": "csc_j_cot",
-        "structure_id": "integral_trigonometric:csc_j_cot",
-        "technique": "trig+u_sub",
+        "family": "one_over_one_plus_cos",
+        "structure_id": "integral_trigonometric:one_over_one_plus_cos",
+        "technique": "trig",
         "tricks_required": [
-          "trig",
-          "u_sub"
+          "trig"
         ],
         "methods_used": [
-          "trig",
-          "u_sub"
+          "trig"
         ],
         "function_classes": [
           "trig"
@@ -2047,8 +2137,7 @@
             "trig"
           ],
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
           "allow_trig": true,
           "allow_exp": false,
@@ -2075,6 +2164,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2082,42 +2174,34 @@
                 "input_kind": "1",
                 "transform": "sample_trig_form",
                 "notes": ""
-              },
-              {
-                "trick": "u_sub",
-                "input_kind": "prior",
-                "transform": "derivative_backed_chain",
-                "notes": ""
               }
             ],
             "tricks_required": [
-              "trig",
-              "u_sub"
+              "trig"
             ],
-            "length": 2
+            "length": 1
           },
-          "technique": "trig+u_sub",
-          "family": "csc_j_cot",
-          "form_id": "csc_j_cot",
+          "technique": "trig",
+          "family": "one_over_one_plus_cos",
+          "form_id": "one_over_one_plus_cos",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
-          "strategy": "u_equals_csc"
+          "strategy": "half_angle_rewrite"
         },
         "effort_features": {
-          "technique": "trig+u_sub",
+          "technique": "trig",
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
-          "pipeline_len": 2,
+          "pipeline_len": 1,
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 1,
-          "answer_len": 25,
+          "answer_len": 30,
           "nest_depth": 0,
           "pack": "integral_trig",
           "methods": [
-            "trig",
-            "u_sub"
+            "trig"
           ]
         },
         "pipeline": {
@@ -2127,21 +2211,14 @@
               "input_kind": "1",
               "transform": "sample_trig_form",
               "notes": ""
-            },
-            {
-              "trick": "u_sub",
-              "input_kind": "prior",
-              "transform": "derivative_backed_chain",
-              "notes": ""
             }
           ],
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
-          "length": 2
+          "length": 1
         },
-        "shape_id": "csc_j_cot",
+        "shape_id": "one_over_one_plus_cos",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -2163,11 +2240,11 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 14.5,
         "wrappers_applied": [],
-        "core_form_id": "csc_j_cot",
-        "openstax_form": "csc_j_cot",
-        "form_id": "csc_j_cot",
-        "openstax_case": "\u00a73.2 cofunction sibling of sec^j tan",
-        "strategy": "u_equals_csc",
+        "core_form_id": "one_over_one_plus_cos",
+        "openstax_form": "one_over_one_plus_cos",
+        "form_id": "one_over_one_plus_cos",
+        "openstax_case": "half-angle identity (bank \u00a73.22 / \u00a710.9)",
+        "strategy": "half_angle_rewrite",
         "catalog_id": "trig_integrals",
         "generation_settings": {
           "term_count": 3,
@@ -2191,10 +2268,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\int \\frac{\\sin(x)}{1+\\cos^{2}(x)}\\,dx",
-      "answer_latex": "-\\arctan(\\cos(x))+C",
+      "prompt_latex": "\\int \\frac{1}{1+\\cos(x)}\\,dx",
+      "answer_latex": "\\tan\\left(\\frac{x}{2}\\right)+C",
       "skeleton_pattern": "",
-      "form_id": "sin_over_one_plus_cos2",
+      "form_id": "one_over_one_plus_cos",
       "diagram_svg": "",
       "debug": [
         [
@@ -2207,11 +2284,17 @@
         ],
         [
           "form_id",
-          "sin_over_one_plus_cos2"
+          "one_over_one_plus_cos"
         ],
         [
           "openstax_form",
-          "sin_over_one_plus_cos2"
+          "one_over_one_plus_cos"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig"
+          ]
         ],
         [
           "construction",
@@ -2223,16 +2306,14 @@
         ]
       ],
       "metadata": {
-        "family": "sin_over_one_plus_cos2",
-        "structure_id": "integral_trigonometric:sin_over_one_plus_cos2",
-        "technique": "trig+u_sub",
+        "family": "one_over_one_plus_cos",
+        "structure_id": "integral_trigonometric:one_over_one_plus_cos",
+        "technique": "trig",
         "tricks_required": [
-          "trig",
-          "u_sub"
+          "trig"
         ],
         "methods_used": [
-          "trig",
-          "u_sub"
+          "trig"
         ],
         "function_classes": [
           "trig"
@@ -2256,8 +2337,7 @@
             "trig"
           ],
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
           "allow_trig": true,
           "allow_exp": false,
@@ -2284,6 +2364,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2291,42 +2374,34 @@
                 "input_kind": "1",
                 "transform": "sample_trig_form",
                 "notes": ""
-              },
-              {
-                "trick": "u_sub",
-                "input_kind": "prior",
-                "transform": "derivative_backed_chain",
-                "notes": ""
               }
             ],
             "tricks_required": [
-              "trig",
-              "u_sub"
+              "trig"
             ],
-            "length": 2
+            "length": 1
           },
-          "technique": "trig+u_sub",
-          "family": "sin_over_one_plus_cos2",
-          "form_id": "sin_over_one_plus_cos2",
+          "technique": "trig",
+          "family": "one_over_one_plus_cos",
+          "form_id": "one_over_one_plus_cos",
+          "generator": "integral_trigonometric",
           "catalog_id": "trig_integrals",
-          "strategy": "u_equals_cos"
+          "strategy": "half_angle_rewrite"
         },
         "effort_features": {
-          "technique": "trig+u_sub",
+          "technique": "trig",
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
-          "pipeline_len": 2,
+          "pipeline_len": 1,
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 1,
-          "answer_len": 19,
+          "answer_len": 30,
           "nest_depth": 0,
           "pack": "integral_trig",
           "methods": [
-            "trig",
-            "u_sub"
+            "trig"
           ]
         },
         "pipeline": {
@@ -2336,21 +2411,14 @@
               "input_kind": "1",
               "transform": "sample_trig_form",
               "notes": ""
-            },
-            {
-              "trick": "u_sub",
-              "input_kind": "prior",
-              "transform": "derivative_backed_chain",
-              "notes": ""
             }
           ],
           "tricks_required": [
-            "trig",
-            "u_sub"
+            "trig"
           ],
-          "length": 2
+          "length": 1
         },
-        "shape_id": "sin_over_one_plus_cos2",
+        "shape_id": "one_over_one_plus_cos",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -2372,11 +2440,11 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 14.5,
         "wrappers_applied": [],
-        "core_form_id": "sin_over_one_plus_cos2",
-        "openstax_form": "sin_over_one_plus_cos2",
-        "form_id": "sin_over_one_plus_cos2",
-        "openstax_case": "\u00a73.2 / u-sub into arctan (bank \u00a73.19\u20133.20)",
-        "strategy": "u_equals_cos",
+        "core_form_id": "one_over_one_plus_cos",
+        "openstax_form": "one_over_one_plus_cos",
+        "form_id": "one_over_one_plus_cos",
+        "openstax_case": "half-angle identity (bank \u00a73.22 / \u00a710.9)",
+        "strategy": "half_angle_rewrite",
         "catalog_id": "trig_integrals",
         "generation_settings": {
           "term_count": 3,

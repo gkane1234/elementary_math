@@ -1267,14 +1267,76 @@ def _trig_pow(fn: str, power: int, arg: str) -> str:
     return rf"\{fn}^{{{power}}}({arg})"
 
 
+TRIG_GENERATOR = "integral_trigonometric"
+
+_TRIG_TABLE = (
+    "basic_sin_kx",
+    "basic_cos_kx",
+    "basic_sec2",
+    "basic_sec_tan",
+    "basic_tan",
+)
+_TRIG_EASY_USUB = (
+    "cos_j_sin",
+    "sin_j_cos",
+)
+_TRIG_MID = (
+    "sin_even_power",
+    "cos_even_power",
+    "tan2",
+    "sin_odd_cos_any",
+    "cos_odd_sin_any",
+    "sec_j_tan",
+    "tan_k_sec2",
+)
+_TRIG_HIGH = (
+    "product_sin_a_cos_b",
+    "product_cos_a_cos_b",
+    "product_sin_a_sin_b",
+    "sin_cos_both_even",
+    "sin_cos_both_odd",
+    "csc_j_cot",
+    "sin_over_one_plus_cos2",
+    "tan_odd_alone",
+    "tan_sec_sec_even",
+    "tan_odd_sec_any",
+    "one_over_one_plus_cos",
+    "one_over_one_plus_sin",
+    "tan_even_reduction",
+    "sec3_reduction",
+    "sec_odd_reduction_n5",
+)
+
+_TRIG_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": _TRIG_TABLE + _TRIG_EASY_USUB + (
+        "sin_even_power",
+        "cos_even_power",
+        "tan2",
+    ),
+    "medium": _TRIG_EASY_USUB + _TRIG_MID + _TRIG_HIGH,
+    "hard": _TRIG_MID + _TRIG_HIGH,
+    "expert": _TRIG_HIGH,
+}
+
+
+def trig_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 table / D=8 ``cos_j_sin``; D=22 is high catalog only."""
+    if d < 8.0:
+        return _TRIG_BANDS["easy"]
+    if d < 16.0:
+        return _TRIG_BANDS["medium"]
+    if d < 20.0:
+        return _TRIG_BANDS["hard"]
+    return _TRIG_BANDS["expert"]
+
+
 def _sample_trig(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
     """Forward trig integrals driven by OpenStax §3.2 form catalog.
 
-    Selects a ``form_id`` (D-weighted) from ``openstax_form_catalogs/trig_integrals``
-    and builds a closed-form integrand matching that textbook case — not a single
-    bland ∫sin / ∫sin·cos template.
+    High D locks out D=0 table leftovers and D=8 ``cos_j_sin`` / ``sin_j_cos``.
+    Same implemented builders; catalog ``d_min`` still unlocks within each band.
     """
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
         implemented_forms,
@@ -1283,15 +1345,26 @@ def _sample_trig(
     )
 
     var = spec.variable
+    d = float(spec.d_spend)
     catalog = load_form_catalog("trig_integrals")
+    allowed = set(trig_forms_for_difficulty(d))
     pool = _gated_form_pool(catalog, spec)
     if not pool:
         if spec.allow_trig:
             pool = implemented_forms(catalog)
         else:
             return _sample_power(rng, spec)
-    form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
+    pool = [f for f in pool if str(f.get("form_id")) in allowed]
+    if not pool:
+        pool = [
+            f for f in implemented_forms(catalog) if str(f.get("form_id")) in allowed
+        ]
+    if not pool:
+        return _sample_power(rng, spec)
+    form = select_form_id(pool, d=d, rng=rng)
     form_id = str(form["form_id"])
+    if form_id not in allowed:
+        form_id = trig_forms_for_difficulty(d)[0]
     tricks = [str(t) for t in (form.get("tricks") or ["trig"])]
     k = rng.randint(1, max(1, min(6, spec.coef_abs_max)))
     include = spec.include_plus_c
@@ -1623,6 +1696,7 @@ def _sample_trig(
         "n_terms": 1,
         "construction": "forward_form_catalog",
         "catalog_id": catalog.get("catalog_id"),
+        "generator": TRIG_GENERATOR,
     }
 
 

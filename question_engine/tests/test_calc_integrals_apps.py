@@ -614,6 +614,124 @@ def test_indef_invtrig_d0_arctan_basic_high_d_scaled_lockout():
     assert expert == {"arctan_scaled", "arcsin_scaled"}
 
 
+def test_indef_trig_d0_table_high_d_lockout():
+    from question_engine.frameworks.primitives.integrals import (
+        trig_forms_for_difficulty,
+    )
+
+    assert trig_forms_for_difficulty(0)[:5] == (
+        "basic_sin_kx",
+        "basic_cos_kx",
+        "basic_sec2",
+        "basic_sec_tan",
+        "basic_tan",
+    )
+    assert "cos_j_sin" in trig_forms_for_difficulty(0)
+    med = trig_forms_for_difficulty(8)
+    assert "cos_j_sin" in med and "sin_odd_cos_any" in med
+    assert "basic_sin_kx" not in med
+    hard = trig_forms_for_difficulty(16)
+    assert "cos_j_sin" not in hard and "sin_j_cos" not in hard
+    assert "sin_odd_cos_any" in hard and "tan_even_reduction" in hard
+    expert_forms = trig_forms_for_difficulty(22)
+    assert expert_forms == (
+        "product_sin_a_cos_b",
+        "product_cos_a_cos_b",
+        "product_sin_a_sin_b",
+        "sin_cos_both_even",
+        "sin_cos_both_odd",
+        "csc_j_cot",
+        "sin_over_one_plus_cos2",
+        "tan_odd_alone",
+        "tan_sec_sec_even",
+        "tan_odd_sec_any",
+        "one_over_one_plus_cos",
+        "one_over_one_plus_sin",
+        "tan_even_reduction",
+        "sec3_reduction",
+        "sec_odd_reduction_n5",
+    )
+    assert "tan2" not in expert_forms
+    assert "sec_j_tan" not in expert_forms
+
+    q0 = _gen("calc_indef_int_trigonometric", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") in {
+        "basic_sin_kx",
+        "basic_cos_kx",
+        "basic_sec2",
+        "basic_sec_tan",
+    }
+    assert (q0.metadata or {}).get("generator") == "integral_trigonometric"
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == (q0.metadata or {}).get("form_id")
+    assert snap.get("generator") == "integral_trigonometric"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen("calc_indef_int_trigonometric", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert str(fid).startswith("basic_")
+        assert fid != "cos_j_sin"
+        assert (q.metadata or {}).get("generator") == "integral_trigonometric"
+        assert "+C" in (q.answer_latex or "")
+    assert easy <= {
+        "basic_sin_kx",
+        "basic_cos_kx",
+        "basic_sec2",
+        "basic_sec_tan",
+        "basic_tan",
+    }
+    assert len(easy) >= 3
+
+    mid = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_trigonometric", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert not str(fid).startswith("basic_")
+        assert (q.metadata or {}).get("generator") == "integral_trigonometric"
+        assert "+C" in (q.answer_latex or "")
+    assert mid & {"cos_j_sin", "sin_j_cos"}
+    assert mid & {"sin_odd_cos_any", "cos_odd_sin_any", "tan_k_sec2", "sec_j_tan"}
+
+    high = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_trigonometric", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid not in {"cos_j_sin", "sin_j_cos"}
+        assert not str(fid).startswith("basic_")
+        assert (q.metadata or {}).get("generator") == "integral_trigonometric"
+    assert high <= set(hard)
+    assert high & {"sin_odd_cos_any", "cos_odd_sin_any", "tan2", "tan_k_sec2", "sec_j_tan"}
+    assert high & {
+        "sin_cos_both_odd",
+        "csc_j_cot",
+        "tan_even_reduction",
+        "tan_sec_sec_even",
+        "one_over_one_plus_sin",
+        "product_sin_a_cos_b",
+    }
+
+    expert = set()
+    for seed in range(30):
+        q = _gen("calc_indef_int_trigonometric", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in expert_forms
+        assert fid not in {"cos_j_sin", "sin_j_cos", "tan2", "sin_even_power", "tan_k_sec2"}
+        assert (q.metadata or {}).get("generator") == "integral_trigonometric"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "integral_trigonometric"
+        assert "+C" in (q.answer_latex or "")
+    assert len(expert) >= 4
+    assert expert <= set(expert_forms)
+
+
 def test_indef_invtrig_quality_weights_tilt():
     from contextlib import nullcontext
     import random as _random

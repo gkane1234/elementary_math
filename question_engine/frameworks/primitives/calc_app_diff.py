@@ -1117,28 +1117,66 @@ def sample_motion(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     )
 
 
-def sample_motion_integral(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    d = _d(settings)
-    b = rng.randint(2, 5)
+MOTION_INTEGRAL_GENERATOR = "motion_along_a_line_integral"
+
+_MOTION_INT_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("disp_linear_v",),
+    "medium": ("disp_linear_v", "disp_const_v"),
+    "hard": ("disp_const_v", "disp_sign_change"),
+    "expert": ("disp_sign_change",),
+}
+
+
+def motion_integral_forms_for_difficulty(d: float) -> tuple[str, ...]:
     if d < 8.0:
-        prompt = (
-            rf"v(t)=2t.\quad\text{{Find the displacement from }}t=0\text{{ to }}t={b}."
-        )
-        return AppDiffItem(
-            prompt, str(b * b), "motion integral", "disp_linear_v",
-            {"b": b},
-        )
+        return _MOTION_INT_BANDS["easy"]
     if d < 16.0:
-        prompt = (
-            rf"v(t)={b}.\quad\text{{Find the displacement from }}t=0\text{{ to }}t={b}."
-        )
-        return AppDiffItem(
-            prompt, str(b * b), "motion integral", "disp_const_v",
-            {"b": b},
-        )
-    # v=2t-2c changes sign at t=c; displacement on [0,2c]
+        return _MOTION_INT_BANDS["medium"]
+    if d < 20.0:
+        return _MOTION_INT_BANDS["hard"]
+    return _MOTION_INT_BANDS["expert"]
+
+
+def _motion_int_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [MOTION_INTEGRAL_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_disp_linear_v(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: v=2t on [0,b]; displacement b²."""
+    b = rng.randint(2, 5)
+    prompt = (
+        rf"v(t)=2t.\quad\text{{Find the displacement from }}t=0\text{{ to }}t={b}."
+    )
+    return AppDiffItem(
+        prompt, str(b * b), "motion integral", "disp_linear_v",
+        {"b": b},
+    )
+
+
+def _sample_disp_const_v(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D=8: constant v=b on [0,b]; displacement b²."""
+    b = rng.randint(2, 5)
+    prompt = (
+        rf"v(t)={b}.\quad\text{{Find the displacement from }}t=0\text{{ to }}t={b}."
+    )
+    return AppDiffItem(
+        prompt, str(b * b), "motion integral", "disp_const_v",
+        {"b": b},
+    )
+
+
+def _sample_disp_sign_change(rng: random.Random) -> AppDiffItem:
+    """v=2t−2c changes sign at t=c; net displacement on [0,2c] is 0."""
     c = rng.randint(1, 3)
-    # s(t)=t^2-2c t, disp = s(2c)-s(0)=0
     prompt = (
         rf"v(t)=2t-{2 * c}.\quad\text{{Find the displacement from }}"
         rf"t=0\text{{ to }}t={2 * c}."
@@ -1146,6 +1184,46 @@ def sample_motion_integral(rng: random.Random, settings: dict[str, Any]) -> AppD
     return AppDiffItem(
         prompt, "0", "motion integral", "disp_sign_change",
         {"c": c, "note": "net displacement zero"},
+    )
+
+
+_MOTION_INT_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "disp_linear_v": _sample_disp_linear_v,
+    "disp_const_v": _sample_disp_const_v,
+    "disp_sign_change": _sample_disp_sign_change,
+}
+
+
+def sample_motion_integral(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Displacement from v(t). High D locks out linear leftover for sign-change."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = motion_integral_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _motion_int_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _MOTION_INT_BUILDERS:
+        fid = forms[0]
+    item = _MOTION_INT_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": MOTION_INTEGRAL_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": MOTION_INTEGRAL_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 

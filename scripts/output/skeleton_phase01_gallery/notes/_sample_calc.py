@@ -266,10 +266,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "WP frames over Diff/implicit core; several OpenStax frames at same D.",
     },
     "calc_app_int_motion_along_a_line_revisited": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "`calculus_foundations` stub — net-change/displacement from v(t) not locked.",
-        "skill": "Use FTC / net change for motion (displacement, distance).",
-        "engine": "Reuse Integral/FTC core + motion frames.",
+        "flag_why": "Shipped leftover lockout of linear v=2t; LIMITATIONS no distance / Ex. 5.24 nonzero net / quadratic v(t).",
+        "skill": "Use FTC / net change for displacement from v(t).",
+        "engine": "calc_app_diff `motion_along_a_line_integral` (linear leftover / const leftover / sign-change).",
     },
     "calc_diff_eq_introduction": {
         "force_flags": ["UNCLEAR"],

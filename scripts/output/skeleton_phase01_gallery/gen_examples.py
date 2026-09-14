@@ -2930,7 +2930,8 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_int_motion_along_a_line_revisited",
         "App — motion revisited (integral)",
-        "Displacement from v(t); net 0 when v changes sign. OpenStax Vol 1 §6.1 / §3.4.",
+        "D=0 linear leftover (old easy v=2t); D≥8 const v; high D "
+        "sign-change net 0 and locks out linear. OpenStax Vol 1 §5.4.",
     ),
     (
         "calc_diff_eq_introduction",

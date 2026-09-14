@@ -711,7 +711,94 @@ def test_motion_and_integral_not_generic_ddx():
     qi = _gen("calc_app_int_motion_along_a_line_revisited", 0, seed=101)[0]
     assert "displacement" in (qi.prompt_latex or "").lower()
     qih = _gen("calc_app_int_motion_along_a_line_revisited", 18, seed=3)[0]
-    assert "0" in (qih.answer_latex or "")
+    assert "0" in (qih.answer_latex or "") or (qih.metadata or {}).get(
+        "form_id"
+    ) in {"disp_const_v", "disp_sign_change"}
+
+
+def test_motion_integral_d0_linear_high_d_sign_change_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        motion_integral_forms_for_difficulty,
+    )
+
+    assert motion_integral_forms_for_difficulty(0) == ("disp_linear_v",)
+    med = motion_integral_forms_for_difficulty(8)
+    assert "disp_linear_v" in med and "disp_const_v" in med
+    hard = motion_integral_forms_for_difficulty(16)
+    assert "disp_linear_v" not in hard
+    assert hard == ("disp_const_v", "disp_sign_change")
+    assert motion_integral_forms_for_difficulty(22) == ("disp_sign_change",)
+
+    q0 = _gen("calc_app_int_motion_along_a_line_revisited", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "disp_linear_v"
+    assert (q0.metadata or {}).get("generator") == "motion_along_a_line_integral"
+    assert r"v(t)=2t." in (q0.prompt_latex or "")
+    assert "displacement" in (q0.prompt_latex or "").lower()
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "disp_linear_v"
+    assert snap.get("generator") == "motion_along_a_line_integral"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_int_motion_along_a_line_revisited", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "motion_along_a_line_integral"
+        assert r"v(t)=2t-" not in (q.prompt_latex or "")
+    assert "disp_linear_v" in mid
+    assert "disp_const_v" in mid
+    assert mid <= {"disp_linear_v", "disp_const_v"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_int_motion_along_a_line_revisited", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "disp_linear_v"
+        assert r"v(t)=2t." not in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "motion_along_a_line_integral"
+    assert high <= {"disp_const_v", "disp_sign_change"}
+    assert "disp_sign_change" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_int_motion_along_a_line_revisited", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "disp_sign_change"
+        assert (q.answer_latex or "") == "0"
+        assert r"v(t)=2t-" in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "motion_along_a_line_integral"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "disp_sign_change"
+        assert snap.get("generator") == "motion_along_a_line_integral"
+    assert expert == {"disp_sign_change"}
+
+
+def test_motion_integral_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_motion_integral,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_motion_integral(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"disp_linear_v": -2.5, "disp_const_v": 2.5})
+    assert tilted["disp_const_v"] > baseline["disp_const_v"]
 
 
 def test_motion_d0_eval_velocity_high_d_cubic_lockout():

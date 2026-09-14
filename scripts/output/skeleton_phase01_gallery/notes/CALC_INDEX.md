@@ -275,7 +275,7 @@ skill pair with a Calculus leaf. See `PRECALC_INDEX.md`.
 | `calc_app_int_volume_by_slicing_disks_and_washers` | `volume_disk_washer` | — |
 | `calc_app_int_volume_by_cylinders` | `volume_shell` | — |
 | `calc_app_int_volume_of_solids_with_known_cross_sections` | `volume_cross_sections` | — |
-| `calc_app_int_motion_along_a_line_revisited` | `calculus_foundations` | — |
+| `calc_app_int_motion_along_a_line_revisited` | `motion_along_a_line_integral` | — |
 | `calc_diff_eq_slope_fields` | `slope_field_interpret` | — |
 | `calc_diff_eq_introduction` | `calculus_foundations` | — |
 | `calc_diff_eq_separable` | `separable_diff_eq` | — |

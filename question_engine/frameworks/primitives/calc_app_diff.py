@@ -29,6 +29,7 @@ Kind = Literal[
     "motion_integral",
     "area_under_curve",
     "area_between_curves",
+    "def_int_mean_value",
     "de_intro",
     "slope_field",
     "separable",
@@ -2264,6 +2265,133 @@ def sample_area_under_curve(rng: random.Random, settings: dict[str, Any]) -> App
     )
 
 
+DEF_INT_MEAN_VALUE_GENERATOR = "def_int_mean_value"
+
+_DIMVT_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("dimvt_linear",),
+    "medium": ("dimvt_linear", "dimvt_quad"),
+    "hard": ("dimvt_quad", "dimvt_quad_coef"),
+    "expert": ("dimvt_quad_coef",),
+}
+
+
+def def_int_mean_value_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _DIMVT_BANDS["easy"]
+    if d < 16.0:
+        return _DIMVT_BANDS["medium"]
+    if d < 20.0:
+        return _DIMVT_BANDS["hard"]
+    return _DIMVT_BANDS["expert"]
+
+
+def _dimvt_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [DEF_INT_MEAN_VALUE_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _dimvt_limits(settings: dict[str, Any]) -> tuple[int, int]:
+    """Copy old `_def_int_mean_value` bound/k caps (min(6, bound_max), min(4, k_max))."""
+    return _auc_limits(settings)
+
+
+def _sample_dimvt_linear(rng: random.Random, b_hi: int) -> AppDiffItem:
+    """Old-path D=0: average value of f(x)=x on [0,b]."""
+    b = rng.randint(2, max(2, b_hi))
+    prompt = (
+        rf"\text{{Find the average value of }}f(x)=x"
+        rf"\text{{ on }}[0,{b}]."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(b, 2)), "average value (integral MVT)",
+        "dimvt_linear",
+        {"b": b},
+    )
+
+
+def _sample_dimvt_quad(rng: random.Random, b_hi: int) -> AppDiffItem:
+    """Old mid: average value of f(x)=x^2 on [0,b]."""
+    b = rng.randint(2, max(2, b_hi))
+    prompt = (
+        rf"\text{{Find the average value of }}f(x)=x^{{2}}"
+        rf"\text{{ on }}[0,{b}]."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(b**2, 3)), "average value (integral MVT)",
+        "dimvt_quad",
+        {"b": b},
+    )
+
+
+def _sample_dimvt_quad_coef(rng: random.Random, b_hi: int, k_hi: int) -> AppDiffItem:
+    """Old exclusive D≥10: average value of f(x)=k x^2 on [0,b]."""
+    b = rng.randint(2, max(2, b_hi))
+    k = rng.randint(2, max(2, k_hi))
+    f = format_monomial_latex(k, variable="x", degree=2) or f"{k}x^{{2}}"
+    prompt = (
+        rf"\text{{Find the average value of }}f(x)={f}"
+        rf"\text{{ on }}[0,{b}]."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(k * b**2, 3)), "average value (integral MVT)",
+        "dimvt_quad_coef",
+        {"b": b, "k": k},
+    )
+
+
+def sample_def_int_mean_value(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Average value of f on [0,b]. High D locks out f(x)=x leftover."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = def_int_mean_value_forms_for_difficulty(d)
+    b_hi, k_hi = _dimvt_limits(settings)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _dimvt_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "dimvt_linear" and fid in forms:
+        item = _sample_dimvt_linear(rng, b_hi)
+    elif fid == "dimvt_quad" and fid in forms:
+        item = _sample_dimvt_quad(rng, b_hi)
+    elif fid == "dimvt_quad_coef" and fid in forms:
+        item = _sample_dimvt_quad_coef(rng, b_hi, k_hi)
+    else:
+        fid = forms[0]
+        if fid == "dimvt_quad":
+            item = _sample_dimvt_quad(rng, b_hi)
+        elif fid == "dimvt_quad_coef":
+            item = _sample_dimvt_quad_coef(rng, b_hi, k_hi)
+        else:
+            item = _sample_dimvt_linear(rng, b_hi)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": DEF_INT_MEAN_VALUE_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": DEF_INT_MEAN_VALUE_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 AREA_BETWEEN_CURVES_GENERATOR = "area_between_curves"
 
 _ABC_BANDS: dict[str, tuple[str, ...]] = {
@@ -3164,6 +3292,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "motion_integral": sample_motion_integral,
     "area_under_curve": sample_area_under_curve,
     "area_between_curves": sample_area_between_curves,
+    "def_int_mean_value": sample_def_int_mean_value,
     "de_intro": sample_de_intro,
     "slope_field": sample_slope_field,
     "separable": sample_separable_de,

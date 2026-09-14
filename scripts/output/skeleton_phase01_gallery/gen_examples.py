@@ -2806,7 +2806,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_def_int_mean_value_theorem",
         "Integral MVT — average value",
-        "Average value of f on [a,b]. OpenStax Vol 1 §5.4 / §6.x.",
+        "Leftover lockout: D=0 f(x)=x; D=8 x leftover + f(x)=x^2; D=16 x^2 leftover + "
+        "k x^2 (no f(x)=x); D=22 k x^2 only. Average value on [0,b], no figures. "
+        "OpenStax Vol 1 §5.2 / §5.3.",
     ),
 
     (
@@ -3190,6 +3192,7 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             eng = "calc_apps"
         elif tid == "calc_def_int_mean_value_theorem":
             eng = "def_int_mvt"
+            extra_seeds = (101, 207, 313, 0, 2, 5, 7)
         elif tid == "calc_def_int_area_under_a_curve_by_limit_of_sums":
             eng = "area_under_curve"
         sections.append(

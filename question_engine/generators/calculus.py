@@ -1260,37 +1260,45 @@ def _second_fundamental_theorem(topic: str, settings: dict) -> list[Question]:
 
 
 def _def_int_mean_value(topic: str, settings: dict) -> list[Question]:
+    """Average value of f on [0,b]; leftover lockout of f(x)=x."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        DEF_INT_MEAN_VALUE_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _topic_structure(settings)
-    x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        b = random.randint(2, max(2, min(6, int(structure.get("bound_max", 5)))))
-        family = _pick_family(
-            structure,
-            ["linear"],
-            medium=["quad"],
-            hard=["quad_coef"],
-        )
-        if family == "linear":
-            f = x
-            avg = Fraction(b, 2)
-        elif family == "quad":
-            f = rf"{x}^{{2}}"
-            avg = Fraction(b**2, 3)
-        else:
-            k = random.randint(2, max(2, min(4, int(structure.get("k_max", 4)))))
-            f = format_monomial_latex(k, variable=x, degree=2) or f"{k}{x}^{{2}}"
-            avg = Fraction(k * b**2, 3)
-        prompt = (
-            rf"\text{{Find the average value of }}f({x})={f}"
-            rf"\text{{ on }}[0,{b}]."
-        )
-        answer = frac_latex(avg)
-        return prompt, "average value (integral MVT)", answer if include_answer_key else None
+        item = sample_app_diff("def_int_mean_value", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": DEF_INT_MEAN_VALUE_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": DEF_INT_MEAN_VALUE_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _slope_field_interpret(topic: str, settings: dict) -> list[Question]:

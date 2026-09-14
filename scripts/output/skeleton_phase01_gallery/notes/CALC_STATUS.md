@@ -58,6 +58,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Motion along a line (diff): leftover lockout + Ex. 3.36/3.35 cubics shipped; still no free-fall \(-16t^{2}\) / piecewise / trig / \(s(t)\) graph
 - Motion along a line revisited (integral): leftover lockout of \(v=2t\) shipped; still no \(\int|v|\) distance / Ex. 5.24 nonzero net / quadratic \(v(t)\)
 - Graphical comparison: no figure bank
+- Integral MVT (average value): leftover lockout of \(f(x)=x\) shipped; still three frozen monomials on \([0,b]\) (no \(\sin x\) / \(e^x\) / \(a\neq 0\) / find-\(c\)); D=16 can still emit \(x^{2}\) leftover
 - Slope, tangent, and normal lines: leftover lockout of D=0 poly/trig/exp/ln shipped; still no implicit/folium / \(x\cdot 5^{x}\) normals; D=16 can still emit reciprocal/radical leftover; generic `function_sketch` only
 - Linear approximations: leftover lockout of \(x^{2}\) shipped; still no Ex. 4.5 estimate-\(\sqrt{x}\) / Ex. 4.6 \(\sin x\) / cube-root / \((1+x)^{n}\); D=16 can still emit \(\sqrt{x}\) leftover
 - Differentials: leftover lockout of D=0 log/power/trig/exp shipped; still no \(\Delta y\) vs \(dy\) / cube-error / percent-error (Ex. 4.9–4.11); D=16 can still emit radical/reciprocal leftover
@@ -84,6 +85,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_def_int_mean_value_theorem`:** Leftover lockout of D=0 \(f(x)=x\). D=0 linear on \([0,b]\) (old easy); D=8 leftover linear + \(f(x)=x^{2}\); D=16 \(x^{2}\) leftover + \(kx^{2}\) (no \(f(x)=x\)); D=22 \(kx^{2}\) only. Stamps `form_id` + `generator=def_int_mean_value`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_int_area_between_curves`:** Leftover lockout of exclusive cliffs and of D=0 triangle \(y=k-x\) vs \(y=0\) at expert. D=0 \(y=x\) vs \(y=0\) (old easy); D=8 leftover axis-triangles + \(x^{2}\) vs \(0\) + three-line region (no two-curve yet); D=16 \(x^{2}\) leftover + three-line leftover + \(y=x\) vs \(y=x^{2}\) (no axis-triangles); D=22 two-curve only. Stamps `form_id` + `generator=area_between_curves`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_int_area_under_a_curve`:** Leftover lockout of D=0 \(y=x\). D=0 linear on \([0,b]\) (old easy); D=8 leftover linear + \(y=x^{2}\); D=16 \(x^{2}\) leftover + \(kx^{2}\) (no \(y=x\)); D=22 \(kx^{2}\) only. Stamps `form_id` + `generator=area_under_curve`; `select_form_id` / `live_quality_form_weights`. Shared generator also serves the limit-of-sums sibling (still FTC wording).
 - **`calc_app_diff_slope_tangent_and_normal_lines`:** Leftover lockout of D=0 poly/trig/exp/ln. D=0 easy mix (old easy, always tangent); D=8 leftover easy + \(1/x\) + radical (normals begin); D=16 reciprocal/radical leftover + cubic / nested (no poly/trig/exp/ln); D=22 cubic / \((x+p)/(x+q)\) / \(\sin(kx)\) only. Stamps `form_id` + `generator=tangent_normal_line`; `select_form_id` / `live_quality_form_weights`.

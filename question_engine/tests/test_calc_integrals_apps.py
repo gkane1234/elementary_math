@@ -241,6 +241,94 @@ def test_area_under_curve_quality_weights_tilt():
     assert tilted["auc_quad"] > baseline["auc_quad"]
 
 
+def test_def_int_mean_value_d0_linear_high_d_quad_coef_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        def_int_mean_value_forms_for_difficulty,
+    )
+
+    assert def_int_mean_value_forms_for_difficulty(0) == ("dimvt_linear",)
+    med = def_int_mean_value_forms_for_difficulty(8)
+    assert "dimvt_linear" in med and "dimvt_quad" in med
+    hard = def_int_mean_value_forms_for_difficulty(16)
+    assert "dimvt_linear" not in hard
+    assert hard == ("dimvt_quad", "dimvt_quad_coef")
+    assert def_int_mean_value_forms_for_difficulty(22) == ("dimvt_quad_coef",)
+
+    q0 = _gen("calc_def_int_mean_value_theorem", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "dimvt_linear"
+    assert (q0.metadata or {}).get("generator") == "def_int_mean_value"
+    assert r"f(x)=x\text{ on }" in (q0.prompt_latex or "")
+    assert r"x^{2}" not in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "dimvt_linear"
+    assert snap.get("generator") == "def_int_mean_value"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_def_int_mean_value_theorem", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "def_int_mean_value"
+        assert r"f(x)=2x^{2}" not in (q.prompt_latex or "")
+        assert r"f(x)=3x^{2}" not in (q.prompt_latex or "")
+        assert r"f(x)=4x^{2}" not in (q.prompt_latex or "")
+    assert "dimvt_linear" in mid
+    assert "dimvt_quad" in mid
+    assert mid <= {"dimvt_linear", "dimvt_quad"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_def_int_mean_value_theorem", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "dimvt_linear"
+        assert r"f(x)=x\text{ on }" not in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "def_int_mean_value"
+    assert high <= {"dimvt_quad", "dimvt_quad_coef"}
+    assert "dimvt_quad_coef" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_def_int_mean_value_theorem", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "dimvt_quad_coef"
+        p = q.prompt_latex or ""
+        assert r"f(x)=x\text{ on }" not in p
+        assert r"x^{2}" in p
+        assert (q.metadata or {}).get("generator") == "def_int_mean_value"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "dimvt_quad_coef"
+        assert snap.get("generator") == "def_int_mean_value"
+    assert expert == {"dimvt_quad_coef"}
+
+
+def test_def_int_mean_value_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_def_int_mean_value,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_def_int_mean_value(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"dimvt_linear": -2.5, "dimvt_quad": 2.5})
+    assert tilted["dimvt_quad"] > baseline["dimvt_quad"]
+
+
 def test_area_between_curves_d0_linear_high_d_two_curve_lockout():
     from question_engine.frameworks.primitives.calc_app_diff import (
         area_between_curves_forms_for_difficulty,

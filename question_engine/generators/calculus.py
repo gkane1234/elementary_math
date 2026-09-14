@@ -972,42 +972,45 @@ def _volume_disk_washer(topic: str, settings: dict) -> list[Question]:
 
 
 def _volume_shell(topic: str, settings: dict) -> list[Question]:
+    """Rotate about the y-axis (shell); leftover lockout of exclusive y=x."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        VOLUME_SHELL_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    from question_engine.settings.params import calc_application_structure_from_continuous
-
-    structure = calc_application_structure_from_continuous(settings)
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        if structure is not None:
-            n = random.randint(2, max(2, int(structure["bound_max"])))
-            band = structure["band"]
-        else:
-            n = random.randint(2, 4) if tier != "hard" else random.randint(2, 5)
-            band = tier
-        if band == "easy":
-            prompt = (
-                rf"\text{{Find the volume of the solid formed by rotating }}"
-                rf"y={x}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
-            )
-            answer = _pi_frac(2 * n**3, 3)
-        elif band == "medium":
-            prompt = (
-                rf"\text{{Find the volume of the solid formed by rotating }}"
-                rf"y={x}^{{2}}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
-            )
-            answer = _pi_frac(n**4, 2)
-        else:
-            prompt = (
-                rf"\text{{Find the volume of the solid formed by rotating }}"
-                rf"y={n}-{x}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
-            )
-            answer = _pi_frac(n**3, 3)
-        return prompt, "volume by shells", answer if include_answer_key else None
+        item = sample_app_diff("volume_shell", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": VOLUME_SHELL_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": VOLUME_SHELL_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _volume_cross_sections(topic: str, settings: dict) -> list[Question]:

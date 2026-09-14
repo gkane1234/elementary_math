@@ -275,6 +275,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Find the volume of a solid of revolution by disks or washers about the x-axis.",
         "engine": "calc_app_diff `volume_disk_washer` (disk-linear leftover / disk-quadratic leftover / washer).",
     },
+    "calc_app_int_volume_by_cylinders": {
+        "flag_why": "Shipped leftover lockout of exclusive y=x; LIMITATIONS three frozen old builders / no Ex. 6.12 1/x / Ex. 6.13 2x-x^2 / x-axis shells.",
+        "skill": "Find the volume of a solid of revolution by cylindrical shells about the y-axis.",
+        "engine": "calc_app_diff `volume_shell` (linear leftover / quadratic leftover / y=n-x).",
+    },
     "calc_app_diff_slope_tangent_and_normal_lines": {
         "flag_why": "Shipped leftover lockout of D=0 poly/trig/exp/ln; LIMITATIONS no implicit/folium / x·5^x normals.",
         "skill": "Find the tangent (and sometimes normal) line to y=f(x) at x=a.",

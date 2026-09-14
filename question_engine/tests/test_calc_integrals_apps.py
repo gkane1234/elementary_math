@@ -519,6 +519,101 @@ def test_volume_disk_washer_quality_weights_tilt():
     assert tilted["vdw_disk_quadratic"] > baseline["vdw_disk_quadratic"]
 
 
+def test_volume_shell_d0_linear_high_d_line_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        volume_shell_forms_for_difficulty,
+    )
+
+    assert volume_shell_forms_for_difficulty(0) == ("vsh_linear",)
+    med = volume_shell_forms_for_difficulty(8)
+    assert "vsh_linear" in med and "vsh_quadratic" in med
+    assert "vsh_line" not in med
+    hard = volume_shell_forms_for_difficulty(16)
+    assert "vsh_linear" not in hard
+    assert hard == ("vsh_quadratic", "vsh_line")
+    assert volume_shell_forms_for_difficulty(22) == ("vsh_line",)
+
+    q0 = _gen("calc_app_int_volume_by_cylinders", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "vsh_linear"
+    assert (q0.metadata or {}).get("generator") == "volume_shell"
+    p0 = q0.prompt_latex or ""
+    assert r"y=x\text{ on }" in p0
+    assert r"x^{2}" not in p0
+    assert "shell method" in p0
+    assert r"y\text{-axis" in p0
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "vsh_linear"
+    assert snap.get("generator") == "volume_shell"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_int_volume_by_cylinders", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "volume_shell"
+        p = q.prompt_latex or ""
+        assert "shell method" in p
+        stripped = p.replace(r"y=x^{2}", "").replace(r"y=x", "")
+        assert "-x" not in stripped
+    assert "vsh_linear" in mid
+    assert "vsh_quadratic" in mid
+    assert mid <= {"vsh_linear", "vsh_quadratic"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_int_volume_by_cylinders", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "vsh_linear"
+        p = q.prompt_latex or ""
+        assert r"y=x\text{ on }" not in p
+        assert (q.metadata or {}).get("generator") == "volume_shell"
+    assert high <= {"vsh_quadratic", "vsh_line"}
+    assert "vsh_line" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_int_volume_by_cylinders", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "vsh_line"
+        p = q.prompt_latex or ""
+        assert "shell method" in p
+        assert r"y=x^{2}" not in p
+        assert r"y=x\text{ on }" not in p
+        assert (q.metadata or {}).get("generator") == "volume_shell"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "vsh_line"
+        assert snap.get("generator") == "volume_shell"
+    assert expert == {"vsh_line"}
+
+
+def test_volume_shell_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_volume_shell,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_volume_shell(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"vsh_linear": -2.5, "vsh_quadratic": 2.5})
+    assert tilted["vsh_quadratic"] > baseline["vsh_quadratic"]
+
+
 def test_def_int_mean_value_d0_linear_high_d_quad_coef_lockout():
     from question_engine.frameworks.primitives.calc_app_diff import (
         def_int_mean_value_forms_for_difficulty,

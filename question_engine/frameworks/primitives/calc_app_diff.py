@@ -30,6 +30,7 @@ Kind = Literal[
     "area_under_curve",
     "area_between_curves",
     "volume_disk_washer",
+    "volume_shell",
     "def_int_mean_value",
     "riemann_sum_tables",
     "de_intro",
@@ -2847,6 +2848,136 @@ def sample_volume_disk_washer(rng: random.Random, settings: dict[str, Any]) -> A
     )
 
 
+VOLUME_SHELL_GENERATOR = "volume_shell"
+
+_VSH_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("vsh_linear",),
+    "medium": ("vsh_linear", "vsh_quadratic"),
+    "hard": ("vsh_quadratic", "vsh_line"),
+    "expert": ("vsh_line",),
+}
+
+
+def volume_shell_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of exclusive cliffs (old band == easy/medium/hard)."""
+    if d < 8.0:
+        return _VSH_BANDS["easy"]
+    if d < 16.0:
+        return _VSH_BANDS["medium"]
+    if d < 20.0:
+        return _VSH_BANDS["hard"]
+    return _VSH_BANDS["expert"]
+
+
+def _vsh_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [VOLUME_SHELL_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _vsh_bound_max(settings: dict[str, Any]) -> int:
+    """Copy old ``_volume_shell`` bound_max from application structure."""
+    structure = calc_application_structure_from_continuous(settings)
+    if structure is not None:
+        return max(2, int(structure.get("bound_max", 4)))
+    d = _d(settings)
+    if d < 16.0:
+        return 4
+    return 5
+
+
+def _sample_vsh_linear(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old-path D=0: rotate y=x on [0,n] about the y-axis (shell)."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{Find the volume of the solid formed by rotating }}"
+        rf"y={x}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
+    )
+    return AppDiffItem(
+        prompt, _vdw_pi_frac(2 * n**3, 3), "volume by shells", "vsh_linear",
+        {"n": n},
+    )
+
+
+def _sample_vsh_quadratic(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old mid: rotate y=x^2 on [0,n] about the y-axis (shell)."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{Find the volume of the solid formed by rotating }}"
+        rf"y={x}^{{2}}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
+    )
+    return AppDiffItem(
+        prompt, _vdw_pi_frac(n**4, 2), "volume by shells", "vsh_quadratic",
+        {"n": n},
+    )
+
+
+def _sample_vsh_line(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old exclusive high D: rotate y=n-x on [0,n] about the y-axis (shell)."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{Find the volume of the solid formed by rotating }}"
+        rf"y={n}-{x}\text{{ on }}[0,{n}]\text{{ about the }}y\text{{-axis (shell method).}}"
+    )
+    return AppDiffItem(
+        prompt, _vdw_pi_frac(n**3, 3), "volume by shells", "vsh_line",
+        {"n": n},
+    )
+
+
+def sample_volume_shell(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Rotate about the y-axis (shell). High D locks out leftover y=x."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = volume_shell_forms_for_difficulty(d)
+    n_hi = _vsh_bound_max(settings)
+    x = str(settings.get("variable", "x"))
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _vsh_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "vsh_linear" and fid in forms:
+        item = _sample_vsh_linear(rng, x, n_hi)
+    elif fid == "vsh_quadratic" and fid in forms:
+        item = _sample_vsh_quadratic(rng, x, n_hi)
+    elif fid == "vsh_line" and fid in forms:
+        item = _sample_vsh_line(rng, x, n_hi)
+    else:
+        fid = forms[0]
+        if fid == "vsh_quadratic":
+            item = _sample_vsh_quadratic(rng, x, n_hi)
+        elif fid == "vsh_line":
+            item = _sample_vsh_line(rng, x, n_hi)
+        else:
+            item = _sample_vsh_linear(rng, x, n_hi)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": VOLUME_SHELL_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": VOLUME_SHELL_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 DE_INTRO_GENERATOR = "de_introduction"
 
 _DE_INTRO_BANDS: dict[str, tuple[str, ...]] = {
@@ -3578,6 +3709,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "area_under_curve": sample_area_under_curve,
     "area_between_curves": sample_area_between_curves,
     "volume_disk_washer": sample_volume_disk_washer,
+    "volume_shell": sample_volume_shell,
     "def_int_mean_value": sample_def_int_mean_value,
     "riemann_sum_tables": sample_riemann_sum_tables,
     "de_intro": sample_de_intro,

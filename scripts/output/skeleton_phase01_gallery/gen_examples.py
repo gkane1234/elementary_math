@@ -2732,8 +2732,10 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_related_rates",
         "App — related rates (OpenStax frames)",
-        "Rotates circle / balloon / ladder / shadow / airplane (not circle-only). "
-        "OpenStax Vol 1 §4.1. D=0 circle only.",
+        "Rotates OpenStax §4.1 frames (circle / balloon / ladder / shadow / "
+        "cone-drain / two-rate / rocket angle). D=0 circle only; high D locks "
+        "out easy leftovers and adds extra chain (two rates, similar-triangle "
+        "inverse, elevation angle).",
     ),
     (
         "calc_app_diff_slope_tangent_and_normal_lines",
@@ -2946,6 +2948,7 @@ def _calc_sec(
     slug: str | None = None,
     pattern: str = "",
     extra_settings: dict[str, Any] | None = None,
+    ladder_seeds: tuple[int, ...] | None = None,
 ) -> dict[str, Any]:
     rec: dict[str, Any] = {
         "slug": slug or type_id,
@@ -2955,7 +2958,7 @@ def _calc_sec(
         "type_id": type_id,
         "aliases": [],
         "ladder_ds": (0.0, 8.0, 16.0, 22.0),
-        "ladder_seeds": (101, 207, 313),
+        "ladder_seeds": ladder_seeds or (101, 207, 313),
         "blurb": blurb,
     }
     if extra_settings:
@@ -3126,8 +3129,11 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
     sections: list[dict[str, Any]] = []
     for tid, title, blurb in CALC_INTEGRAL_APP_SHIPPED:
         eng = "integrals"
+        extra_seeds: tuple[int, ...] | None = None
         if "related_rates" in tid:
             eng = "related_rates_frames"
+            # Extra seeds so same-D rotation is visible (101/207/313 can collide).
+            extra_seeds = (101, 207, 313, 0, 2, 5, 7)
         elif tid == "calc_app_int_area_under_a_curve":
             eng = "area_under_curve"
         elif tid == "calc_app_int_area_between_curves":
@@ -3144,7 +3150,9 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             eng = "def_int_mvt"
         elif tid == "calc_def_int_area_under_a_curve_by_limit_of_sums":
             eng = "area_under_curve"
-        sections.append(_calc_sec(tid, title, blurb, engine=eng))
+        sections.append(
+            _calc_sec(tid, title, blurb, engine=eng, ladder_seeds=extra_seeds)
+        )
     for tid in sorted(CALC_UNCLEAR):
         title = CALC_UNCLEAR_TITLES.get(tid, f"{tid} (UNCLEAR)")
         sections.append(

@@ -1,7 +1,8 @@
 """OpenStax-style related-rates story frames (Calc Vol 1 §4.1).
 
 Rotate distinct geometry frames at the same D — not circle/sphere/cone only.
-Algebra shapes stay solvable by one differentiation + plug-in.
+Algebra shapes stay closed-form (differentiate + plug). High D adds chain
+(similar-triangle inverse, two given rates, angle) rather than padded costs.
 """
 
 from __future__ import annotations
@@ -19,6 +20,17 @@ class RelatedRatesItem:
     label: str
     frame_id: str
     metadata: dict[str, Any]
+
+
+def _frac(num: int, den: int) -> str:
+    g = math.gcd(num, den)
+    num //= g
+    den //= g
+    if den < 0:
+        num, den = -num, -den
+    if den == 1:
+        return str(num)
+    return rf"\frac{{{num}}}{{{den}}}"
 
 
 def _circle_area(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesItem:
@@ -56,9 +68,7 @@ def _sphere_volume(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedR
 def _balloon_radius(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesItem:
     """OpenStax §4.1 balloon: volume rate given, find dr/dt."""
     r = rng.randint(2, max(2, min(8, r_max)))
-    # Choose integer dV/dt so dr/dt = dV/(4π r^2) is a clean multiple of 1/π
-    # dr/dt = k / (4 r^2) with answer (k/(4 r^2)) / π? Better: give dV/dt = 4π r^2 * m
-    # so answer is m cm/s.
+    # Give dV/dt = 4π r^2 * m so the answer is m cm/s.
     m = rng.randint(1, max(1, rate_max))
     dvdt = 4 * r * r * m  # without π in the numeric coeff; prompt includes π
     return RelatedRatesItem(
@@ -103,24 +113,13 @@ def _ladder(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesIte
     L, x, y = rng.choice(pool)
     dxdt = rng.randint(1, max(1, rate_max))
     # x dx/dt + y dy/dt = 0 → dy/dt = -(x/y) dx/dt
-    # answer magnitude as positive "sliding down" rate
-    # Keep fraction if needed
-    num = x * dxdt
-    den = y
-    g = math.gcd(num, den)
-    num //= g
-    den //= g
-    if den == 1:
-        ans = str(num)
-    else:
-        ans = rf"\frac{{{num}}}{{{den}}}"
     return RelatedRatesItem(
         prompt_latex=(
             rf"\text{{A }}{L}\text{{-ft ladder leans against a wall. The base slides "
             rf"away at }} {dxdt}\text{{ ft/s. How fast is the top sliding down when "
             rf"the base is }} {x}\text{{ ft from the wall?}}"
         ),
-        answer_latex=ans,
+        answer_latex=_frac(x * dxdt, y),
         label="related rates ladder",
         frame_id="sliding_ladder",
         metadata={"L": L, "x": x, "y": y, "dxdt": dxdt, "quantity": "height_rate"},
@@ -137,12 +136,6 @@ def _shadow(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesIte
         H = h + 6
     dxdt = rng.randint(2, max(2, rate_max + 1))
     x = rng.randint(4, max(4, r_max + 2))
-    tip_num = H * dxdt
-    tip_den = H - h
-    g = math.gcd(tip_num, tip_den)
-    tip_num //= g
-    tip_den //= g
-    ans = str(tip_num) if tip_den == 1 else rf"\frac{{{tip_num}}}{{{tip_den}}}"
     return RelatedRatesItem(
         prompt_latex=(
             rf"\text{{A }}{H}\text{{-ft lamp post casts a shadow of a }}{h}\text{{-ft "
@@ -150,7 +143,7 @@ def _shadow(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesIte
             rf"the shadow moving away from the post when the person is }} {x}"
             rf"\text{{ ft from the post?}}"
         ),
-        answer_latex=ans,
+        answer_latex=_frac(H * dxdt, H - h),
         label="related rates shadow",
         frame_id="lamp_shadow",
         metadata={
@@ -170,15 +163,7 @@ def _airplane(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesI
     triples = ((5, 3, 4), (10, 6, 8), (13, 5, 12), (15, 9, 12), (25, 7, 24))
     pool = [t for t in triples if t[2] <= max(8, r_max + 4)] or list(triples)
     s, x, h = rng.choice(pool)
-    dxdt = rng.randint(2, max(2, rate_max + 2)) * 100  # mph-ish scale optional
-    # Keep numbers modest: use ft/s style small ints
     dxdt = rng.randint(2, max(2, rate_max + 2))
-    num = x * dxdt
-    den = s
-    g = math.gcd(num, den)
-    num //= g
-    den //= g
-    ans = str(num) if den == 1 else rf"\frac{{{num}}}{{{den}}}"
     return RelatedRatesItem(
         prompt_latex=(
             rf"\text{{An airplane flies at a constant elevation of }} {h}\text{{ km. "
@@ -187,10 +172,142 @@ def _airplane(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesI
             rf"{dxdt}\text{{ km/s, how fast is the distance from the spotter to the "
             rf"plane changing?}}"
         ),
-        answer_latex=ans,
+        answer_latex=_frac(x * dxdt, s),
         label="related rates airplane",
         frame_id="airplane_distance",
         metadata={"s": s, "x": x, "h": h, "dxdt": dxdt, "quantity": "slant_rate"},
+    )
+
+
+def _cone_drain(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesItem:
+    """Inverse similar-triangle cone: given dV/dt, find dh/dt (OpenStax gravel/funnel)."""
+    k = rng.choice([2, 3, 4])
+    h = rng.randint(2, max(2, min(8, r_max)))
+    m = rng.randint(1, max(1, rate_max))
+    # V = (1/3)π r^2 h with r = k h → V = (k^2/3) π h^3
+    # dV/dt = k^2 π h^2 dh/dt. Give dV/dt = n π with n = k^2 h^2 m so dh/dt = m.
+    n = k * k * h * h * m
+    if rng.choice([True, False]):
+        prompt = (
+            rf"\text{{Gravel falls onto a conical pile with radius }} {k}\text{{ times "
+            rf"the height at }} {n}\pi\text{{ ft}}^{{3}}\text{{/min. How fast is the "
+            rf"height increasing when }} h = {h}\text{{ ft?}}"
+        )
+        story = "gravel"
+    else:
+        prompt = (
+            rf"\text{{Water drains from a conical tank (similar shape, }} r={k}h\text{{) "
+            rf"at }} {n}\pi\text{{ ft}}^{{3}}\text{{/s. How fast is the water height "
+            rf"falling when }} h = {h}\text{{ ft?}}"
+        )
+        story = "funnel"
+    return RelatedRatesItem(
+        prompt_latex=prompt,
+        answer_latex=str(m),
+        label="related rates cone drain",
+        frame_id="cone_drain",
+        metadata={
+            "k": k,
+            "h": h,
+            "dvdt_over_pi": n,
+            "dhdt": m,
+            "story": story,
+            "quantity": "height_rate",
+        },
+    )
+
+
+def _two_rate_distance(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesItem:
+    """Two given rates on a right triangle (OpenStax bikes / planes / helicopter)."""
+    triples = ((5, 3, 4), (10, 6, 8), (13, 5, 12), (15, 9, 12), (25, 7, 24), (25, 15, 20))
+    pool = [t for t in triples if t[1] <= max(5, r_max + 2)] or list(triples)
+    s, x, y = rng.choice(pool)
+    dxdt = rng.randint(2, max(2, rate_max + 1))
+    dydt = rng.randint(2, max(2, rate_max + 1))
+    # s^2 = x^2 + y^2 → ds/dt = (x dx/dt + y dy/dt) / s
+    ans = _frac(x * dxdt + y * dydt, s)
+    kind = rng.choice(["bikes", "cars", "planes", "helicopter"])
+    if kind == "bikes":
+        prompt = (
+            rf"\text{{Two bicyclists leave the same intersection, one riding east at }} "
+            rf"{dxdt}\text{{ mph and the other north at }} {dydt}\text{{ mph. How fast "
+            rf"is the distance between them changing when they are }} {x}\text{{ mi "
+            rf"east and }} {y}\text{{ mi north of the intersection?}}"
+        )
+    elif kind == "cars":
+        prompt = (
+            rf"\text{{Two cars leave an intersection, one east at }} {dxdt}\text{{ mi/h "
+            rf"and one north at }} {dydt}\text{{ mi/h. How fast is the distance between "
+            rf"the cars changing when they are }} {x}\text{{ mi east and }} {y}"
+            rf"\text{{ mi north of the intersection?}}"
+        )
+    elif kind == "planes":
+        prompt = (
+            rf"\text{{Airplane A flies east at }} {dxdt}\text{{ mi/h and airplane B flies "
+            rf"north at }} {dydt}\text{{ mi/h, both at the same altitude. When A is }} "
+            rf"{x}\text{{ mi east of an airport and B is }} {y}\text{{ mi north of it, "
+            rf"how fast is the distance between the airplanes changing?}}"
+        )
+    else:
+        prompt = (
+            rf"\text{{A helicopter rises at }} {dydt}\text{{ ft/s while you run along the "
+            rf"ground at }} {dxdt}\text{{ ft/s starting from under it. How fast is the "
+            rf"distance between you changing when the helicopter is }} {y}\text{{ ft up "
+            rf"and you are }} {x}\text{{ ft away?}}"
+        )
+    return RelatedRatesItem(
+        prompt_latex=prompt,
+        answer_latex=ans,
+        label="related rates two-rate distance",
+        frame_id="two_rate_distance",
+        metadata={
+            "s": s,
+            "x": x,
+            "y": y,
+            "dxdt": dxdt,
+            "dydt": dydt,
+            "story": kind,
+            "quantity": "slant_rate",
+        },
+    )
+
+
+def _rocket_angle(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesItem:
+    """Elevation angle of a rocket/camera (OpenStax Example 4.3 / ex. 38)."""
+    # x fixed, h changing, θ = arctan(h/x) → dθ/dt = x/(x^2+h^2) · dh/dt = x dh/dt / s^2
+    triples = ((3, 4, 5), (5, 12, 13), (8, 6, 10), (9, 12, 15), (7, 24, 25))
+    pool = [t for t in triples if t[0] <= max(8, r_max + 4)] or list(triples)
+    x, h, s = rng.choice(pool)
+    dhdt = rng.randint(2, max(2, rate_max + 2))
+    ans = _frac(x * dhdt, s * s)
+    if rng.choice([True, False]):
+        prompt = (
+            rf"\text{{A rocket rises vertically. A camera }} {x}\text{{ ft from the "
+            rf"launch pad stays aimed at the rocket. When the rocket is }} {h}\text{{ ft "
+            rf"up, its speed is }} {dhdt}\text{{ ft/s. How fast is the camera's elevation "
+            rf"angle changing?}}"
+        )
+        story = "rocket"
+    else:
+        prompt = (
+            rf"\text{{A bottle rocket rises at }} {dhdt}\text{{ ft/s. You stand }} "
+            rf"{x}\text{{ ft from the launch point. How fast is the angle of elevation "
+            rf"changing when the rocket is }} {h}\text{{ ft in the air?}}"
+        )
+        story = "bottle_rocket"
+    return RelatedRatesItem(
+        prompt_latex=prompt,
+        answer_latex=ans,
+        label="related rates rocket angle",
+        frame_id="rocket_angle",
+        metadata={
+            "x": x,
+            "h": h,
+            "s": s,
+            "dhdt": dhdt,
+            "story": story,
+            "quantity": "angle_rate",
+        },
     )
 
 
@@ -202,23 +319,45 @@ _FRAME_BUILDERS: dict[str, Callable[..., RelatedRatesItem]] = {
     "sliding_ladder": _ladder,
     "lamp_shadow": _shadow,
     "airplane_distance": _airplane,
+    "cone_drain": _cone_drain,
+    "two_rate_distance": _two_rate_distance,
+    "rocket_angle": _rocket_angle,
 }
 
 
 # D-band unlocks (OpenStax §4.1 rotation). D=0 stays circle-only (old easy).
+# Easy leftovers lock out at higher bands (same idea as PFD d_max).
 FRAME_BANDS: dict[str, tuple[str, ...]] = {
     "easy": ("expanding_circle",),
     "medium": ("expanding_circle", "expanding_sphere", "balloon_radius"),
-    "hard": (
-        "expanding_circle",
-        "expanding_sphere",
-        "balloon_radius",
-        "cone_similar",
+    "hard": ("balloon_radius", "cone_similar", "sliding_ladder"),
+    "very_hard": (
         "sliding_ladder",
         "lamp_shadow",
         "airplane_distance",
+        "cone_drain",
+    ),
+    "expert": (
+        "lamp_shadow",
+        "airplane_distance",
+        "cone_drain",
+        "two_rate_distance",
+        "rocket_angle",
     ),
 }
+
+
+def related_frames_for_difficulty(d: float) -> tuple[str, ...]:
+    """Map continuous D → OpenStax §4.1 frames. Easy leftovers lock out at high D."""
+    if d < 4.0:
+        return FRAME_BANDS["easy"]
+    if d < 10.0:
+        return FRAME_BANDS["medium"]
+    if d < 16.0:
+        return FRAME_BANDS["hard"]
+    if d < 20.0:
+        return FRAME_BANDS["very_hard"]
+    return FRAME_BANDS["expert"]
 
 
 def sample_related_rates_frame(

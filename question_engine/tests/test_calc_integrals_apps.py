@@ -8,6 +8,7 @@ from question_engine.api.handler import _generate_for_type
 from question_engine.frameworks.primitives.integrals import sample_integral_expression
 from question_engine.frameworks.primitives.related_rates_frames import (
     FRAME_BANDS,
+    related_frames_for_difficulty,
     sample_related_rates_frame,
 )
 from question_engine.settings.params import calc_application_structure_from_continuous
@@ -40,25 +41,51 @@ def test_related_rates_d0_circle_only():
     assert frames == {"expanding_circle"}
 
 
-def test_related_rates_high_d_openstax_variety():
+def test_related_rates_easy_leftovers_lock_out():
+    """Circle/sphere leftovers drop after medium (PFD-style d_max)."""
+    assert related_frames_for_difficulty(0) == ("expanding_circle",)
+    med = related_frames_for_difficulty(8)
+    assert "expanding_circle" in med and "balloon_radius" in med
+    hard = related_frames_for_difficulty(12)
+    assert "expanding_circle" not in hard and "expanding_sphere" not in hard
+    assert set(hard) == {"balloon_radius", "cone_similar", "sliding_ladder"}
+    vh = related_frames_for_difficulty(16)
+    assert "balloon_radius" not in vh and "expanding_circle" not in vh
+    assert "cone_drain" in vh and "sliding_ladder" in vh
+    exp = related_frames_for_difficulty(22)
+    assert "sliding_ladder" not in exp
+    assert "two_rate_distance" in exp and "rocket_angle" in exp
     a20 = calc_application_structure_from_continuous({"difficulty": 20})
     assert a20 is not None
-    assert "sliding_ladder" in a20["related_frames"]
-    assert "lamp_shadow" in a20["related_frames"]
-    assert "airplane_distance" in a20["related_frames"]
-    assert "balloon_radius" in a20["related_frames"]
-    frames: set[str] = set()
+    assert a20["related_frames"] == related_frames_for_difficulty(20)
+
+
+def test_related_rates_high_d_openstax_variety():
+    frames16: set[str] = set()
     for seed in range(40):
         q = _gen("calc_app_diff_related_rates", 16, seed=seed)[0]
         fid = (q.metadata or {}).get("frame_id") or (q.metadata or {}).get(
             "related_rates_frame"
         )
         assert fid, q.prompt_latex
-        frames.add(str(fid))
+        frames16.add(str(fid))
         assert q.answer_latex
-    # Must not be circle/sphere/cone-only
-    assert len(frames) >= 5, frames
-    assert frames & {"sliding_ladder", "lamp_shadow", "airplane_distance", "balloon_radius"}
+        assert fid != "expanding_circle"
+        assert fid != "expanding_sphere"
+    assert len(frames16) >= 3, frames16
+    assert frames16 & {"sliding_ladder", "lamp_shadow", "airplane_distance", "cone_drain"}
+
+    frames22: set[str] = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_related_rates", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("frame_id") or (q.metadata or {}).get(
+            "related_rates_frame"
+        )
+        assert fid, q.prompt_latex
+        frames22.add(str(fid))
+        assert fid not in {"expanding_circle", "expanding_sphere", "balloon_radius", "sliding_ladder"}
+    assert len(frames22) >= 4, frames22
+    assert frames22 & {"two_rate_distance", "rocket_angle", "cone_drain"}
 
 
 def test_related_rates_frame_builders_solvable():

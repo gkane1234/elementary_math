@@ -271,12 +271,26 @@ def effort_calc_related_rates(prompt: str, answer: str = "") -> tuple[float, dic
     p = prompt.lower()
     feats: dict[str, Any] = {}
     e = 10.0
-    if "sphere" in p:
-        feats["shape"] = "sphere"
-        e = 14.0
-    elif "cone" in p:
+    if "elevation angle" in p or "angle of elevation" in p or "camera" in p:
+        feats["shape"] = "angle"
+        e = 19.0
+    elif "bicycl" in p or "intersection" in p or "helicopter" in p or (
+        "airplane a" in p and "airplane b" in p
+    ):
+        feats["shape"] = "two_rate"
+        e = 18.0
+    elif "shadow" in p or "lamp" in p:
+        feats["shape"] = "shadow"
+        e = 17.0
+    elif "ladder" in p:
+        feats["shape"] = "ladder"
+        e = 16.0
+    elif "gravel" in p or "conical tank" in p or "cone keeps" in p or "cone" in p:
         feats["shape"] = "cone"
         e = 15.0
+    elif "balloon" in p or "sphere" in p:
+        feats["shape"] = "sphere"
+        e = 14.0
     else:
         feats["shape"] = "circle"
         e = 10.0

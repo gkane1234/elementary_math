@@ -235,7 +235,11 @@ def test_sequence_trig_proof_calc_app_knobs():
     assert a0["related_shapes"] == ("circle",)
     assert a0["related_frames"] == ("expanding_circle",)
     assert "cone" in a20["related_shapes"]
-    assert "sliding_ladder" in a20["related_frames"]
+    assert "two_rate_distance" in a20["related_frames"]
+    assert "expanding_circle" not in a20["related_frames"]
+    a16 = calc_application_structure_from_continuous({"difficulty": 16})
+    assert a16 is not None
+    assert "sliding_ladder" in a16["related_frames"]
     assert a0["radius_max"] < a20["radius_max"]
     assert a0["bound_max"] < a20["bound_max"]
 
@@ -440,14 +444,26 @@ def test_smoke_calc_apps_structure_differs():
                 frames20.add("sliding_ladder")
             elif "balloon" in text:
                 frames20.add("balloon_radius")
+            elif "gravel" in text or "conical tank" in text:
+                frames20.add("cone_drain")
             elif "sphere" in text:
                 frames20.add("expanding_sphere")
             elif "cone" in text:
                 frames20.add("cone_similar")
+            elif "elevation" in text or "rocket" in text:
+                frames20.add("rocket_angle")
+            elif "bicycl" in text or "helicopter" in text or "intersection" in text:
+                frames20.add("two_rate_distance")
             else:
-                frames20.add("expanding_circle")
-    assert "expanding_circle" in frames20
-    assert frames20 - {"expanding_circle"}, frames20
+                frames20.add("other")
+    assert "expanding_circle" not in frames20, frames20
+    assert frames20 & {
+        "cone_drain",
+        "two_rate_distance",
+        "rocket_angle",
+        "lamp_shadow",
+        "airplane_distance",
+    }, frames20
 
     for seed in range(6):
         text0 = (

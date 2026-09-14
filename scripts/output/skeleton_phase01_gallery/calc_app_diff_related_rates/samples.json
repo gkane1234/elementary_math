@@ -15,9 +15,13 @@
     "ladder_seeds": [
       101,
       207,
-      313
+      313,
+      0,
+      2,
+      5,
+      7
     ],
-    "blurb": "Rotates circle / balloon / ladder / shadow / airplane (not circle-only). OpenStax Vol 1 \u00a74.1. D=0 circle only."
+    "blurb": "Rotates OpenStax \u00a74.1 frames (circle / balloon / ladder / shadow / cone-drain / two-rate / rocket angle). D=0 circle only; high D locks out easy leftovers and adds extra chain (two rates, similar-triangle inverse, elevation angle)."
   },
   "rows": [
     {
@@ -222,6 +226,286 @@
           "power_max": 3,
           "difficulty": 0.0,
           "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=0",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 0,
+      "prompt_latex": "\\text{The radius of a circle increases at } 1\\text{ cm/s. How fast is the area increasing when } r = 5\\text{ cm?}",
+      "answer_latex": "10\\pi",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,187.3 L 34.3,181.4 L 40.7,175.7 L 47.0,170.2 L 53.3,165.0 L 59.7,160.0 L 66.0,155.2 L 72.3,150.6 L 78.7,146.2 L 85.0,142.1 L 91.3,138.1 L 97.7,134.4 L 104.0,130.9 L 110.3,127.7 L 116.7,124.6 L 123.0,121.8 L 129.3,119.2 L 135.7,116.8 L 142.0,114.6 L 148.3,112.6 L 154.7,110.9 L 161.0,109.4 L 167.3,108.0 L 173.7,107.0 L 180.0,106.1 L 186.3,105.4 L 192.7,105.0 L 199.0,104.8 L 205.3,104.8 L 211.7,105.0 L 218.0,105.5 L 224.3,106.1 L 230.7,107.0 L 237.0,108.1 L 243.3,109.4 L 249.7,111.0 L 256.0,112.7 L 262.3,114.7 L 268.7,116.9 L 275.0,119.3 L 281.3,121.9 L 287.7,124.8 L 294.0,127.9 L 300.3,131.1 L 306.7,134.7 L 313.0,138.4 L 319.3,142.3 L 325.7,146.5 L 332.0,150.9\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"29.3\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "frame_id",
+          "expanding_circle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": -0.256,
+          "b": 0.222,
+          "c": 0.143,
+          "touch_x": -0.05,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 3
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,187.3 L 34.3,181.4 L 40.7,175.7 L 47.0,170.2 L 53.3,165.0 L 59.7,160.0 L 66.0,155.2 L 72.3,150.6 L 78.7,146.2 L 85.0,142.1 L 91.3,138.1 L 97.7,134.4 L 104.0,130.9 L 110.3,127.7 L 116.7,124.6 L 123.0,121.8 L 129.3,119.2 L 135.7,116.8 L 142.0,114.6 L 148.3,112.6 L 154.7,110.9 L 161.0,109.4 L 167.3,108.0 L 173.7,107.0 L 180.0,106.1 L 186.3,105.4 L 192.7,105.0 L 199.0,104.8 L 205.3,104.8 L 211.7,105.0 L 218.0,105.5 L 224.3,106.1 L 230.7,107.0 L 237.0,108.1 L 243.3,109.4 L 249.7,111.0 L 256.0,112.7 L 262.3,114.7 L 268.7,116.9 L 275.0,119.3 L 281.3,121.9 L 287.7,124.8 L 294.0,127.9 L 300.3,131.1 L 306.7,134.7 L 313.0,138.4 L 319.3,142.3 L 325.7,146.5 L 332.0,150.9\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"29.3\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "expanding_circle",
+        "related_rates_frame": "expanding_circle",
+        "r": 5,
+        "drdt": 1,
+        "quantity": "area",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=2",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 2,
+      "prompt_latex": "\\text{The radius of a circle increases at } 1\\text{ cm/s. How fast is the area increasing when } r = 2\\text{ cm?}",
+      "answer_latex": "4\\pi",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,28.0 L 47.0,28.0 L 53.3,28.0 L 59.7,32.9 L 66.0,38.9 L 72.3,44.7 L 78.7,50.1 L 85.0,55.3 L 91.3,60.3 L 97.7,64.9 L 104.0,69.3 L 110.3,73.4 L 116.7,77.3 L 123.0,80.9 L 129.3,84.2 L 135.7,87.2 L 142.0,90.0 L 148.3,92.5 L 154.7,94.7 L 161.0,96.6 L 167.3,98.3 L 173.7,99.7 L 180.0,100.9 L 186.3,101.7 L 192.7,102.3 L 199.0,102.7 L 205.3,102.7 L 211.7,102.5 L 218.0,102.0 L 224.3,101.3 L 230.7,100.2 L 237.0,98.9 L 243.3,97.4 L 249.7,95.5 L 256.0,93.4 L 262.3,91.0 L 268.7,88.4 L 275.0,85.5 L 281.3,82.3 L 287.7,78.8 L 294.0,75.1 L 300.3,71.1 L 306.7,66.8 L 313.0,62.3 L 319.3,57.4 L 325.7,52.4 L 332.0,47.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"33.7\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "frame_id",
+          "expanding_circle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.317,
+          "b": -0.294,
+          "c": 0.334,
+          "touch_x": 0.582,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,28.0 L 47.0,28.0 L 53.3,28.0 L 59.7,32.9 L 66.0,38.9 L 72.3,44.7 L 78.7,50.1 L 85.0,55.3 L 91.3,60.3 L 97.7,64.9 L 104.0,69.3 L 110.3,73.4 L 116.7,77.3 L 123.0,80.9 L 129.3,84.2 L 135.7,87.2 L 142.0,90.0 L 148.3,92.5 L 154.7,94.7 L 161.0,96.6 L 167.3,98.3 L 173.7,99.7 L 180.0,100.9 L 186.3,101.7 L 192.7,102.3 L 199.0,102.7 L 205.3,102.7 L 211.7,102.5 L 218.0,102.0 L 224.3,101.3 L 230.7,100.2 L 237.0,98.9 L 243.3,97.4 L 249.7,95.5 L 256.0,93.4 L 262.3,91.0 L 268.7,88.4 L 275.0,85.5 L 281.3,82.3 L 287.7,78.8 L 294.0,75.1 L 300.3,71.1 L 306.7,66.8 L 313.0,62.3 L 319.3,57.4 L 325.7,52.4 L 332.0,47.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"33.7\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "expanding_circle",
+        "related_rates_frame": "expanding_circle",
+        "r": 2,
+        "drdt": 1,
+        "quantity": "area",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=5",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 5,
+      "prompt_latex": "\\text{The radius of a circle increases at } 3\\text{ cm/s. How fast is the area increasing when } r = 4\\text{ cm?}",
+      "answer_latex": "24\\pi",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,73.4 L 34.3,77.6 L 40.7,81.6 L 47.0,85.4 L 53.3,89.0 L 59.7,92.4 L 66.0,95.5 L 72.3,98.4 L 78.7,101.0 L 85.0,103.5 L 91.3,105.7 L 97.7,107.7 L 104.0,109.5 L 110.3,111.0 L 116.7,112.3 L 123.0,113.4 L 129.3,114.3 L 135.7,114.9 L 142.0,115.3 L 148.3,115.5 L 154.7,115.5 L 161.0,115.2 L 167.3,114.7 L 173.7,114.0 L 180.0,113.1 L 186.3,111.9 L 192.7,110.5 L 199.0,108.9 L 205.3,107.0 L 211.7,105.0 L 218.0,102.7 L 224.3,100.2 L 230.7,97.4 L 237.0,94.5 L 243.3,91.3 L 249.7,87.8 L 256.0,84.2 L 262.3,80.3 L 268.7,76.2 L 275.0,71.9 L 281.3,67.4 L 287.7,62.6 L 294.0,57.6 L 300.3,52.4 L 306.7,46.9 L 313.0,41.2 L 319.3,35.3 L 325.7,29.2 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"30.7\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "frame_id",
+          "expanding_circle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.264,
+          "b": 0.308,
+          "c": -0.112,
+          "touch_x": -0.476,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 3
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,73.4 L 34.3,77.6 L 40.7,81.6 L 47.0,85.4 L 53.3,89.0 L 59.7,92.4 L 66.0,95.5 L 72.3,98.4 L 78.7,101.0 L 85.0,103.5 L 91.3,105.7 L 97.7,107.7 L 104.0,109.5 L 110.3,111.0 L 116.7,112.3 L 123.0,113.4 L 129.3,114.3 L 135.7,114.9 L 142.0,115.3 L 148.3,115.5 L 154.7,115.5 L 161.0,115.2 L 167.3,114.7 L 173.7,114.0 L 180.0,113.1 L 186.3,111.9 L 192.7,110.5 L 199.0,108.9 L 205.3,107.0 L 211.7,105.0 L 218.0,102.7 L 224.3,100.2 L 230.7,97.4 L 237.0,94.5 L 243.3,91.3 L 249.7,87.8 L 256.0,84.2 L 262.3,80.3 L 268.7,76.2 L 275.0,71.9 L 281.3,67.4 L 287.7,62.6 L 294.0,57.6 L 300.3,52.4 L 306.7,46.9 L 313.0,41.2 L 319.3,35.3 L 325.7,29.2 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"30.7\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "expanding_circle",
+        "related_rates_frame": "expanding_circle",
+        "r": 4,
+        "drdt": 3,
+        "quantity": "area",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=7",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 7,
+      "prompt_latex": "\\text{The radius of a circle increases at } 2\\text{ cm/s. How fast is the area increasing when } r = 3\\text{ cm?}",
+      "answer_latex": "12\\pi",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.4 L 40.7,35.2 L 47.0,41.8 L 53.3,48.1 L 59.7,54.2 L 66.0,60.0 L 72.3,65.5 L 78.7,70.8 L 85.0,75.9 L 91.3,80.7 L 97.7,85.2 L 104.0,89.5 L 110.3,93.5 L 116.7,97.2 L 123.0,100.7 L 129.3,104.0 L 135.7,107.0 L 142.0,109.7 L 148.3,112.2 L 154.7,114.4 L 161.0,116.4 L 167.3,118.1 L 173.7,119.5 L 180.0,120.7 L 186.3,121.7 L 192.7,122.4 L 199.0,122.8 L 205.3,123.0 L 211.7,122.9 L 218.0,122.5 L 224.3,121.9 L 230.7,121.1 L 237.0,120.0 L 243.3,118.6 L 249.7,117.0 L 256.0,115.1 L 262.3,113.0 L 268.7,110.6 L 275.0,108.0 L 281.3,105.1 L 287.7,101.9 L 294.0,98.5 L 300.3,94.8 L 306.7,90.9 L 313.0,86.7 L 319.3,82.3 L 325.7,77.6 L 332.0,72.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"37.4\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "frame_id",
+          "expanding_circle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "simple",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.3,
+          "b": -0.313,
+          "c": -0.393,
+          "touch_x": -0.747,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 3
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.4 L 40.7,35.2 L 47.0,41.8 L 53.3,48.1 L 59.7,54.2 L 66.0,60.0 L 72.3,65.5 L 78.7,70.8 L 85.0,75.9 L 91.3,80.7 L 97.7,85.2 L 104.0,89.5 L 110.3,93.5 L 116.7,97.2 L 123.0,100.7 L 129.3,104.0 L 135.7,107.0 L 142.0,109.7 L 148.3,112.2 L 154.7,114.4 L 161.0,116.4 L 167.3,118.1 L 173.7,119.5 L 180.0,120.7 L 186.3,121.7 L 192.7,122.4 L 199.0,122.8 L 205.3,123.0 L 211.7,122.9 L 218.0,122.5 L 224.3,121.9 L 230.7,121.1 L 237.0,120.0 L 243.3,118.6 L 249.7,117.0 L 256.0,115.1 L 262.3,113.0 L 268.7,110.6 L 275.0,108.0 L 281.3,105.1 L 287.7,101.9 L 294.0,98.5 L 300.3,94.8 L 306.7,90.9 L 313.0,86.7 L 319.3,82.3 L 325.7,77.6 L 332.0,72.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"37.4\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "expanding_circle",
+        "related_rates_frame": "expanding_circle",
+        "r": 3,
+        "drdt": 2,
+        "quantity": "area",
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 7,
           "include_answer_key": true,
           "integers_only": true,
           "only_x": true,
@@ -446,13 +730,294 @@
     {
       "ok": true,
       "warn": false,
+      "label": "D\u22488 \u00b7 seed=0",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 0,
+      "prompt_latex": "\\text{The radius of a sphere increases at } 4\\text{ cm/s. How fast is the volume increasing when } r = 8\\text{ cm?}",
+      "answer_latex": "1024\\pi",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,187.3 L 34.3,181.4 L 40.7,175.7 L 47.0,170.2 L 53.3,165.0 L 59.7,160.0 L 66.0,155.2 L 72.3,150.6 L 78.7,146.2 L 85.0,142.1 L 91.3,138.1 L 97.7,134.4 L 104.0,130.9 L 110.3,127.7 L 116.7,124.6 L 123.0,121.8 L 129.3,119.2 L 135.7,116.8 L 142.0,114.6 L 148.3,112.6 L 154.7,110.9 L 161.0,109.4 L 167.3,108.0 L 173.7,107.0 L 180.0,106.1 L 186.3,105.4 L 192.7,105.0 L 199.0,104.8 L 205.3,104.8 L 211.7,105.0 L 218.0,105.5 L 224.3,106.1 L 230.7,107.0 L 237.0,108.1 L 243.3,109.4 L 249.7,111.0 L 256.0,112.7 L 262.3,114.7 L 268.7,116.9 L 275.0,119.3 L 281.3,121.9 L 287.7,124.8 L 294.0,127.9 L 300.3,131.1 L 306.7,134.7 L 313.0,138.4 L 319.3,142.3 L 325.7,146.5 L 332.0,150.9\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"33.5\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "frame_id",
+          "expanding_sphere"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "standard",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": -0.256,
+          "b": 0.222,
+          "c": 0.143,
+          "touch_x": -0.05,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 4
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,187.3 L 34.3,181.4 L 40.7,175.7 L 47.0,170.2 L 53.3,165.0 L 59.7,160.0 L 66.0,155.2 L 72.3,150.6 L 78.7,146.2 L 85.0,142.1 L 91.3,138.1 L 97.7,134.4 L 104.0,130.9 L 110.3,127.7 L 116.7,124.6 L 123.0,121.8 L 129.3,119.2 L 135.7,116.8 L 142.0,114.6 L 148.3,112.6 L 154.7,110.9 L 161.0,109.4 L 167.3,108.0 L 173.7,107.0 L 180.0,106.1 L 186.3,105.4 L 192.7,105.0 L 199.0,104.8 L 205.3,104.8 L 211.7,105.0 L 218.0,105.5 L 224.3,106.1 L 230.7,107.0 L 237.0,108.1 L 243.3,109.4 L 249.7,111.0 L 256.0,112.7 L 262.3,114.7 L 268.7,116.9 L 275.0,119.3 L 281.3,121.9 L 287.7,124.8 L 294.0,127.9 L 300.3,131.1 L 306.7,134.7 L 313.0,138.4 L 319.3,142.3 L 325.7,146.5 L 332.0,150.9\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"33.5\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "expanding_sphere",
+        "related_rates_frame": "expanding_sphere",
+        "r": 8,
+        "drdt": 4,
+        "quantity": "volume",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=2",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 2,
+      "prompt_latex": "\\text{The radius of a circle increases at } 1\\text{ cm/s. How fast is the area increasing when } r = 2\\text{ cm?}",
+      "answer_latex": "4\\pi",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,65.1 L 34.3,70.3 L 40.7,75.1 L 47.0,79.5 L 53.3,83.6 L 59.7,87.3 L 66.0,90.6 L 72.3,93.6 L 78.7,96.2 L 85.0,98.5 L 91.3,100.4 L 97.7,102.0 L 104.0,103.2 L 110.3,104.0 L 116.7,104.4 L 123.0,104.5 L 129.3,104.3 L 135.7,103.7 L 142.0,102.7 L 148.3,101.3 L 154.7,99.6 L 161.0,97.6 L 167.3,95.1 L 173.7,92.4 L 180.0,89.2 L 186.3,85.7 L 192.7,81.8 L 199.0,77.6 L 205.3,73.0 L 211.7,68.1 L 218.0,62.7 L 224.3,57.1 L 230.7,51.0 L 237.0,44.6 L 243.3,37.9 L 249.7,30.8 L 256.0,28.0 L 262.3,28.0 L 268.7,28.0 L 275.0,28.0 L 281.3,28.0 L 287.7,28.0 L 294.0,28.0 L 300.3,28.0 L 306.7,28.0 L 313.0,28.0 L 319.3,28.0 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"104.0\" cy=\"110.0\" r=\"35.3\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "frame_id",
+          "expanding_circle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "standard",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.317,
+          "b": -0.294,
+          "c": 0.334,
+          "touch_x": 0.582,
+          "window": [
+            -2,
+            6
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,65.1 L 34.3,70.3 L 40.7,75.1 L 47.0,79.5 L 53.3,83.6 L 59.7,87.3 L 66.0,90.6 L 72.3,93.6 L 78.7,96.2 L 85.0,98.5 L 91.3,100.4 L 97.7,102.0 L 104.0,103.2 L 110.3,104.0 L 116.7,104.4 L 123.0,104.5 L 129.3,104.3 L 135.7,103.7 L 142.0,102.7 L 148.3,101.3 L 154.7,99.6 L 161.0,97.6 L 167.3,95.1 L 173.7,92.4 L 180.0,89.2 L 186.3,85.7 L 192.7,81.8 L 199.0,77.6 L 205.3,73.0 L 211.7,68.1 L 218.0,62.7 L 224.3,57.1 L 230.7,51.0 L 237.0,44.6 L 243.3,37.9 L 249.7,30.8 L 256.0,28.0 L 262.3,28.0 L 268.7,28.0 L 275.0,28.0 L 281.3,28.0 L 287.7,28.0 L 294.0,28.0 L 300.3,28.0 L 306.7,28.0 L 313.0,28.0 L 319.3,28.0 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"104.0\" cy=\"110.0\" r=\"35.3\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "expanding_circle",
+        "related_rates_frame": "expanding_circle",
+        "r": 2,
+        "drdt": 1,
+        "quantity": "area",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=5",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 5,
+      "prompt_latex": "\\text{A spherical balloon is filled with air at } 192\\pi\\text{ cm}^{3}\\text{/s. How fast is the radius increasing when } r = 4\\text{ cm?}",
+      "answer_latex": "3",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,73.4 L 34.3,77.6 L 40.7,81.6 L 47.0,85.4 L 53.3,89.0 L 59.7,92.4 L 66.0,95.5 L 72.3,98.4 L 78.7,101.0 L 85.0,103.5 L 91.3,105.7 L 97.7,107.7 L 104.0,109.5 L 110.3,111.0 L 116.7,112.3 L 123.0,113.4 L 129.3,114.3 L 135.7,114.9 L 142.0,115.3 L 148.3,115.5 L 154.7,115.5 L 161.0,115.2 L 167.3,114.7 L 173.7,114.0 L 180.0,113.1 L 186.3,111.9 L 192.7,110.5 L 199.0,108.9 L 205.3,107.0 L 211.7,105.0 L 218.0,102.7 L 224.3,100.2 L 230.7,97.4 L 237.0,94.5 L 243.3,91.3 L 249.7,87.8 L 256.0,84.2 L 262.3,80.3 L 268.7,76.2 L 275.0,71.9 L 281.3,67.4 L 287.7,62.6 L 294.0,57.6 L 300.3,52.4 L 306.7,46.9 L 313.0,41.2 L 319.3,35.3 L 325.7,29.2 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"37.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "frame_id",
+          "balloon_radius"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "standard",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.264,
+          "b": 0.308,
+          "c": -0.112,
+          "touch_x": -0.476,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,73.4 L 34.3,77.6 L 40.7,81.6 L 47.0,85.4 L 53.3,89.0 L 59.7,92.4 L 66.0,95.5 L 72.3,98.4 L 78.7,101.0 L 85.0,103.5 L 91.3,105.7 L 97.7,107.7 L 104.0,109.5 L 110.3,111.0 L 116.7,112.3 L 123.0,113.4 L 129.3,114.3 L 135.7,114.9 L 142.0,115.3 L 148.3,115.5 L 154.7,115.5 L 161.0,115.2 L 167.3,114.7 L 173.7,114.0 L 180.0,113.1 L 186.3,111.9 L 192.7,110.5 L 199.0,108.9 L 205.3,107.0 L 211.7,105.0 L 218.0,102.7 L 224.3,100.2 L 230.7,97.4 L 237.0,94.5 L 243.3,91.3 L 249.7,87.8 L 256.0,84.2 L 262.3,80.3 L 268.7,76.2 L 275.0,71.9 L 281.3,67.4 L 287.7,62.6 L 294.0,57.6 L 300.3,52.4 L 306.7,46.9 L 313.0,41.2 L 319.3,35.3 L 325.7,29.2 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"37.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "balloon_radius",
+        "related_rates_frame": "balloon_radius",
+        "r": 4,
+        "dvdt_over_pi": 192,
+        "drdt": 3,
+        "quantity": "radius",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=7",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 7,
+      "prompt_latex": "\\text{The radius of a sphere increases at } 4\\text{ cm/s. How fast is the volume increasing when } r = 3\\text{ cm?}",
+      "answer_latex": "144\\pi",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.4 L 40.7,35.2 L 47.0,41.8 L 53.3,48.1 L 59.7,54.2 L 66.0,60.0 L 72.3,65.5 L 78.7,70.8 L 85.0,75.9 L 91.3,80.7 L 97.7,85.2 L 104.0,89.5 L 110.3,93.5 L 116.7,97.2 L 123.0,100.7 L 129.3,104.0 L 135.7,107.0 L 142.0,109.7 L 148.3,112.2 L 154.7,114.4 L 161.0,116.4 L 167.3,118.1 L 173.7,119.5 L 180.0,120.7 L 186.3,121.7 L 192.7,122.4 L 199.0,122.8 L 205.3,123.0 L 211.7,122.9 L 218.0,122.5 L 224.3,121.9 L 230.7,121.1 L 237.0,120.0 L 243.3,118.6 L 249.7,117.0 L 256.0,115.1 L 262.3,113.0 L 268.7,110.6 L 275.0,108.0 L 281.3,105.1 L 287.7,101.9 L 294.0,98.5 L 300.3,94.8 L 306.7,90.9 L 313.0,86.7 L 319.3,82.3 L 325.7,77.6 L 332.0,72.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"28.8\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "frame_id",
+          "expanding_sphere"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "standard",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.3,
+          "b": -0.313,
+          "c": -0.393,
+          "touch_x": -0.747,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 6
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.4 L 40.7,35.2 L 47.0,41.8 L 53.3,48.1 L 59.7,54.2 L 66.0,60.0 L 72.3,65.5 L 78.7,70.8 L 85.0,75.9 L 91.3,80.7 L 97.7,85.2 L 104.0,89.5 L 110.3,93.5 L 116.7,97.2 L 123.0,100.7 L 129.3,104.0 L 135.7,107.0 L 142.0,109.7 L 148.3,112.2 L 154.7,114.4 L 161.0,116.4 L 167.3,118.1 L 173.7,119.5 L 180.0,120.7 L 186.3,121.7 L 192.7,122.4 L 199.0,122.8 L 205.3,123.0 L 211.7,122.9 L 218.0,122.5 L 224.3,121.9 L 230.7,121.1 L 237.0,120.0 L 243.3,118.6 L 249.7,117.0 L 256.0,115.1 L 262.3,113.0 L 268.7,110.6 L 275.0,108.0 L 281.3,105.1 L 287.7,101.9 L 294.0,98.5 L 300.3,94.8 L 306.7,90.9 L 313.0,86.7 L 319.3,82.3 L 325.7,77.6 L 332.0,72.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"28.8\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "expanding_sphere",
+        "related_rates_frame": "expanding_sphere",
+        "r": 3,
+        "drdt": 4,
+        "quantity": "volume",
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
       "label": "D\u224816 \u00b7 seed=101",
       "type_id": "calc_app_diff_related_rates",
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{A }10\\text{-ft ladder leans against a wall. The base slides away at } 5\\text{ ft/s. How fast is the top sliding down when the base is } 6\\text{ ft from the wall?}",
-      "answer_latex": "\\frac{15}{4}",
+      "prompt_latex": "\\text{A }20\\text{-ft lamp post casts a shadow of a }6\\text{-ft person walking away at } 5\\text{ ft/s. How fast is the tip of the shadow moving away from the post when the person is } 4\\text{ ft from the post?}",
+      "answer_latex": "\\frac{50}{7}",
       "skeleton_pattern": "",
       "form_id": null,
       "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,144.9 L 34.3,140.9 L 40.7,137.1 L 47.0,133.6 L 53.3,130.2 L 59.7,127.1 L 66.0,124.3 L 72.3,121.6 L 78.7,119.2 L 85.0,117.0 L 91.3,115.0 L 97.7,113.3 L 104.0,111.8 L 110.3,110.5 L 116.7,109.4 L 123.0,108.6 L 129.3,108.0 L 135.7,107.6 L 142.0,107.4 L 148.3,107.5 L 154.7,107.8 L 161.0,108.3 L 167.3,109.0 L 173.7,110.0 L 180.0,111.2 L 186.3,112.6 L 192.7,114.3 L 199.0,116.2 L 205.3,118.3 L 211.7,120.6 L 218.0,123.2 L 224.3,125.9 L 230.7,129.0 L 237.0,132.2 L 243.3,135.7 L 249.7,139.3 L 256.0,143.3 L 262.3,147.4 L 268.7,151.8 L 275.0,156.4 L 281.3,161.2 L 287.7,166.2 L 294.0,171.5 L 300.3,177.0 L 306.7,182.7 L 313.0,188.7 L 319.3,192.0 L 325.7,192.0 L 332.0,192.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"36.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
@@ -467,7 +1032,7 @@
         ],
         [
           "frame_id",
-          "sliding_ladder"
+          "lamp_shadow"
         ],
         [
           "has_diagram_svg",
@@ -495,13 +1060,13 @@
           "riemann_n": 5
         },
         "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,144.9 L 34.3,140.9 L 40.7,137.1 L 47.0,133.6 L 53.3,130.2 L 59.7,127.1 L 66.0,124.3 L 72.3,121.6 L 78.7,119.2 L 85.0,117.0 L 91.3,115.0 L 97.7,113.3 L 104.0,111.8 L 110.3,110.5 L 116.7,109.4 L 123.0,108.6 L 129.3,108.0 L 135.7,107.6 L 142.0,107.4 L 148.3,107.5 L 154.7,107.8 L 161.0,108.3 L 167.3,109.0 L 173.7,110.0 L 180.0,111.2 L 186.3,112.6 L 192.7,114.3 L 199.0,116.2 L 205.3,118.3 L 211.7,120.6 L 218.0,123.2 L 224.3,125.9 L 230.7,129.0 L 237.0,132.2 L 243.3,135.7 L 249.7,139.3 L 256.0,143.3 L 262.3,147.4 L 268.7,151.8 L 275.0,156.4 L 281.3,161.2 L 287.7,166.2 L 294.0,171.5 L 300.3,177.0 L 306.7,182.7 L 313.0,188.7 L 319.3,192.0 L 325.7,192.0 L 332.0,192.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"36.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
-        "frame_id": "sliding_ladder",
-        "related_rates_frame": "sliding_ladder",
-        "L": 10,
-        "x": 6,
-        "y": 8,
+        "frame_id": "lamp_shadow",
+        "related_rates_frame": "lamp_shadow",
+        "H": 20,
+        "h": 6,
+        "x": 4,
         "dxdt": 5,
-        "quantity": "height_rate",
+        "quantity": "shadow_tip_rate",
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -523,8 +1088,8 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{A }25\\text{-ft ladder leans against a wall. The base slides away at } 2\\text{ ft/s. How fast is the top sliding down when the base is } 7\\text{ ft from the wall?}",
-      "answer_latex": "\\frac{7}{12}",
+      "prompt_latex": "\\text{A }15\\text{-ft lamp post casts a shadow of a }5\\text{-ft person walking away at } 7\\text{ ft/s. How fast is the tip of the shadow moving away from the post when the person is } 9\\text{ ft from the post?}",
+      "answer_latex": "\\frac{21}{2}",
       "skeleton_pattern": "",
       "form_id": null,
       "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"35.9\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
@@ -539,7 +1104,7 @@
         ],
         [
           "frame_id",
-          "sliding_ladder"
+          "lamp_shadow"
         ],
         [
           "has_diagram_svg",
@@ -567,13 +1132,13 @@
           "riemann_n": 4
         },
         "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"35.9\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
-        "frame_id": "sliding_ladder",
-        "related_rates_frame": "sliding_ladder",
-        "L": 25,
-        "x": 7,
-        "y": 24,
-        "dxdt": 2,
-        "quantity": "height_rate",
+        "frame_id": "lamp_shadow",
+        "related_rates_frame": "lamp_shadow",
+        "H": 15,
+        "h": 5,
+        "x": 9,
+        "dxdt": 7,
+        "quantity": "shadow_tip_rate",
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -595,8 +1160,8 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{A }10\\text{-ft ladder leans against a wall. The base slides away at } 6\\text{ ft/s. How fast is the top sliding down when the base is } 6\\text{ ft from the wall?}",
-      "answer_latex": "\\frac{9}{2}",
+      "prompt_latex": "\\text{A }18\\text{-ft lamp post casts a shadow of a }6\\text{-ft person walking away at } 2\\text{ ft/s. How fast is the tip of the shadow moving away from the post when the person is } 7\\text{ ft from the post?}",
+      "answer_latex": "3",
       "skeleton_pattern": "",
       "form_id": null,
       "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,31.5 L 47.0,38.8 L 53.3,45.8 L 59.7,52.5 L 66.0,58.8 L 72.3,64.8 L 78.7,70.4 L 85.0,75.7 L 91.3,80.6 L 97.7,85.2 L 104.0,89.5 L 110.3,93.4 L 116.7,96.9 L 123.0,100.1 L 129.3,103.0 L 135.7,105.5 L 142.0,107.7 L 148.3,109.6 L 154.7,111.1 L 161.0,112.2 L 167.3,113.0 L 173.7,113.5 L 180.0,113.6 L 186.3,113.3 L 192.7,112.8 L 199.0,111.9 L 205.3,110.6 L 211.7,109.0 L 218.0,107.0 L 224.3,104.7 L 230.7,102.1 L 237.0,99.1 L 243.3,95.8 L 249.7,92.1 L 256.0,88.1 L 262.3,83.7 L 268.7,79.0 L 275.0,73.9 L 281.3,68.5 L 287.7,62.8 L 294.0,56.7 L 300.3,50.3 L 306.7,43.5 L 313.0,36.4 L 319.3,28.9 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"34.0\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
@@ -611,7 +1176,7 @@
         ],
         [
           "frame_id",
-          "sliding_ladder"
+          "lamp_shadow"
         ],
         [
           "has_diagram_svg",
@@ -639,13 +1204,13 @@
           "riemann_n": 3
         },
         "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,31.5 L 47.0,38.8 L 53.3,45.8 L 59.7,52.5 L 66.0,58.8 L 72.3,64.8 L 78.7,70.4 L 85.0,75.7 L 91.3,80.6 L 97.7,85.2 L 104.0,89.5 L 110.3,93.4 L 116.7,96.9 L 123.0,100.1 L 129.3,103.0 L 135.7,105.5 L 142.0,107.7 L 148.3,109.6 L 154.7,111.1 L 161.0,112.2 L 167.3,113.0 L 173.7,113.5 L 180.0,113.6 L 186.3,113.3 L 192.7,112.8 L 199.0,111.9 L 205.3,110.6 L 211.7,109.0 L 218.0,107.0 L 224.3,104.7 L 230.7,102.1 L 237.0,99.1 L 243.3,95.8 L 249.7,92.1 L 256.0,88.1 L 262.3,83.7 L 268.7,79.0 L 275.0,73.9 L 281.3,68.5 L 287.7,62.8 L 294.0,56.7 L 300.3,50.3 L 306.7,43.5 L 313.0,36.4 L 319.3,28.9 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"34.0\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
-        "frame_id": "sliding_ladder",
-        "related_rates_frame": "sliding_ladder",
-        "L": 10,
-        "x": 6,
-        "y": 8,
-        "dxdt": 6,
-        "quantity": "height_rate",
+        "frame_id": "lamp_shadow",
+        "related_rates_frame": "lamp_shadow",
+        "H": 18,
+        "h": 6,
+        "x": 7,
+        "dxdt": 2,
+        "quantity": "shadow_tip_rate",
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -662,13 +1227,302 @@
     {
       "ok": true,
       "warn": false,
+      "label": "D\u224816 \u00b7 seed=0",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{Water drains from a conical tank (similar shape, } r=3h\\text{) at } 108\\pi\\text{ ft}^{3}\\text{/s. How fast is the water height falling when } h = 2\\text{ ft?}",
+      "answer_latex": "3",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,187.3 L 34.3,181.4 L 40.7,175.7 L 47.0,170.2 L 53.3,165.0 L 59.7,160.0 L 66.0,155.2 L 72.3,150.6 L 78.7,146.2 L 85.0,142.1 L 91.3,138.1 L 97.7,134.4 L 104.0,130.9 L 110.3,127.7 L 116.7,124.6 L 123.0,121.8 L 129.3,119.2 L 135.7,116.8 L 142.0,114.6 L 148.3,112.6 L 154.7,110.9 L 161.0,109.4 L 167.3,108.0 L 173.7,107.0 L 180.0,106.1 L 186.3,105.4 L 192.7,105.0 L 199.0,104.8 L 205.3,104.8 L 211.7,105.0 L 218.0,105.5 L 224.3,106.1 L 230.7,107.0 L 237.0,108.1 L 243.3,109.4 L 249.7,111.0 L 256.0,112.7 L 262.3,114.7 L 268.7,116.9 L 275.0,119.3 L 281.3,121.9 L 287.7,124.8 L 294.0,127.9 L 300.3,131.1 L 306.7,134.7 L 313.0,138.4 L 319.3,142.3 L 325.7,146.5 L 332.0,150.9\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"33.5\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "frame_id",
+          "cone_drain"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": -0.256,
+          "b": 0.222,
+          "c": 0.143,
+          "touch_x": -0.05,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 4
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,187.3 L 34.3,181.4 L 40.7,175.7 L 47.0,170.2 L 53.3,165.0 L 59.7,160.0 L 66.0,155.2 L 72.3,150.6 L 78.7,146.2 L 85.0,142.1 L 91.3,138.1 L 97.7,134.4 L 104.0,130.9 L 110.3,127.7 L 116.7,124.6 L 123.0,121.8 L 129.3,119.2 L 135.7,116.8 L 142.0,114.6 L 148.3,112.6 L 154.7,110.9 L 161.0,109.4 L 167.3,108.0 L 173.7,107.0 L 180.0,106.1 L 186.3,105.4 L 192.7,105.0 L 199.0,104.8 L 205.3,104.8 L 211.7,105.0 L 218.0,105.5 L 224.3,106.1 L 230.7,107.0 L 237.0,108.1 L 243.3,109.4 L 249.7,111.0 L 256.0,112.7 L 262.3,114.7 L 268.7,116.9 L 275.0,119.3 L 281.3,121.9 L 287.7,124.8 L 294.0,127.9 L 300.3,131.1 L 306.7,134.7 L 313.0,138.4 L 319.3,142.3 L 325.7,146.5 L 332.0,150.9\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"33.5\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "cone_drain",
+        "related_rates_frame": "cone_drain",
+        "k": 3,
+        "h": 2,
+        "dvdt_over_pi": 108,
+        "dhdt": 3,
+        "story": "funnel",
+        "quantity": "height_rate",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=2",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{A }5\\text{-ft ladder leans against a wall. The base slides away at } 1\\text{ ft/s. How fast is the top sliding down when the base is } 3\\text{ ft from the wall?}",
+      "answer_latex": "\\frac{3}{4}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,65.1 L 34.3,70.3 L 40.7,75.1 L 47.0,79.5 L 53.3,83.6 L 59.7,87.3 L 66.0,90.6 L 72.3,93.6 L 78.7,96.2 L 85.0,98.5 L 91.3,100.4 L 97.7,102.0 L 104.0,103.2 L 110.3,104.0 L 116.7,104.4 L 123.0,104.5 L 129.3,104.3 L 135.7,103.7 L 142.0,102.7 L 148.3,101.3 L 154.7,99.6 L 161.0,97.6 L 167.3,95.1 L 173.7,92.4 L 180.0,89.2 L 186.3,85.7 L 192.7,81.8 L 199.0,77.6 L 205.3,73.0 L 211.7,68.1 L 218.0,62.7 L 224.3,57.1 L 230.7,51.0 L 237.0,44.6 L 243.3,37.9 L 249.7,30.8 L 256.0,28.0 L 262.3,28.0 L 268.7,28.0 L 275.0,28.0 L 281.3,28.0 L 287.7,28.0 L 294.0,28.0 L 300.3,28.0 L 306.7,28.0 L 313.0,28.0 L 319.3,28.0 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"104.0\" cy=\"110.0\" r=\"35.3\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "frame_id",
+          "sliding_ladder"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.317,
+          "b": -0.294,
+          "c": 0.334,
+          "touch_x": 0.582,
+          "window": [
+            -2,
+            6
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,65.1 L 34.3,70.3 L 40.7,75.1 L 47.0,79.5 L 53.3,83.6 L 59.7,87.3 L 66.0,90.6 L 72.3,93.6 L 78.7,96.2 L 85.0,98.5 L 91.3,100.4 L 97.7,102.0 L 104.0,103.2 L 110.3,104.0 L 116.7,104.4 L 123.0,104.5 L 129.3,104.3 L 135.7,103.7 L 142.0,102.7 L 148.3,101.3 L 154.7,99.6 L 161.0,97.6 L 167.3,95.1 L 173.7,92.4 L 180.0,89.2 L 186.3,85.7 L 192.7,81.8 L 199.0,77.6 L 205.3,73.0 L 211.7,68.1 L 218.0,62.7 L 224.3,57.1 L 230.7,51.0 L 237.0,44.6 L 243.3,37.9 L 249.7,30.8 L 256.0,28.0 L 262.3,28.0 L 268.7,28.0 L 275.0,28.0 L 281.3,28.0 L 287.7,28.0 L 294.0,28.0 L 300.3,28.0 L 306.7,28.0 L 313.0,28.0 L 319.3,28.0 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"104.0\" cy=\"110.0\" r=\"35.3\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "sliding_ladder",
+        "related_rates_frame": "sliding_ladder",
+        "L": 5,
+        "x": 3,
+        "y": 4,
+        "dxdt": 1,
+        "quantity": "height_rate",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=5",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{An airplane flies at a constant elevation of } 12\\text{ km. A spotter is } 5\\text{ km horizontally from the point on the ground directly below the plane. If the plane's horizontal speed is } 8\\text{ km/s, how fast is the distance from the spotter to the plane changing?}",
+      "answer_latex": "\\frac{40}{13}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,73.4 L 34.3,77.6 L 40.7,81.6 L 47.0,85.4 L 53.3,89.0 L 59.7,92.4 L 66.0,95.5 L 72.3,98.4 L 78.7,101.0 L 85.0,103.5 L 91.3,105.7 L 97.7,107.7 L 104.0,109.5 L 110.3,111.0 L 116.7,112.3 L 123.0,113.4 L 129.3,114.3 L 135.7,114.9 L 142.0,115.3 L 148.3,115.5 L 154.7,115.5 L 161.0,115.2 L 167.3,114.7 L 173.7,114.0 L 180.0,113.1 L 186.3,111.9 L 192.7,110.5 L 199.0,108.9 L 205.3,107.0 L 211.7,105.0 L 218.0,102.7 L 224.3,100.2 L 230.7,97.4 L 237.0,94.5 L 243.3,91.3 L 249.7,87.8 L 256.0,84.2 L 262.3,80.3 L 268.7,76.2 L 275.0,71.9 L 281.3,67.4 L 287.7,62.6 L 294.0,57.6 L 300.3,52.4 L 306.7,46.9 L 313.0,41.2 L 319.3,35.3 L 325.7,29.2 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"37.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "frame_id",
+          "airplane_distance"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.264,
+          "b": 0.308,
+          "c": -0.112,
+          "touch_x": -0.476,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,73.4 L 34.3,77.6 L 40.7,81.6 L 47.0,85.4 L 53.3,89.0 L 59.7,92.4 L 66.0,95.5 L 72.3,98.4 L 78.7,101.0 L 85.0,103.5 L 91.3,105.7 L 97.7,107.7 L 104.0,109.5 L 110.3,111.0 L 116.7,112.3 L 123.0,113.4 L 129.3,114.3 L 135.7,114.9 L 142.0,115.3 L 148.3,115.5 L 154.7,115.5 L 161.0,115.2 L 167.3,114.7 L 173.7,114.0 L 180.0,113.1 L 186.3,111.9 L 192.7,110.5 L 199.0,108.9 L 205.3,107.0 L 211.7,105.0 L 218.0,102.7 L 224.3,100.2 L 230.7,97.4 L 237.0,94.5 L 243.3,91.3 L 249.7,87.8 L 256.0,84.2 L 262.3,80.3 L 268.7,76.2 L 275.0,71.9 L 281.3,67.4 L 287.7,62.6 L 294.0,57.6 L 300.3,52.4 L 306.7,46.9 L 313.0,41.2 L 319.3,35.3 L 325.7,29.2 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"37.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "airplane_distance",
+        "related_rates_frame": "airplane_distance",
+        "s": 13,
+        "x": 5,
+        "h": 12,
+        "dxdt": 8,
+        "quantity": "slant_rate",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=7",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{An airplane flies at a constant elevation of } 8\\text{ km. A spotter is } 6\\text{ km horizontally from the point on the ground directly below the plane. If the plane's horizontal speed is } 5\\text{ km/s, how fast is the distance from the spotter to the plane changing?}",
+      "answer_latex": "3",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.4 L 40.7,35.2 L 47.0,41.8 L 53.3,48.1 L 59.7,54.2 L 66.0,60.0 L 72.3,65.5 L 78.7,70.8 L 85.0,75.9 L 91.3,80.7 L 97.7,85.2 L 104.0,89.5 L 110.3,93.5 L 116.7,97.2 L 123.0,100.7 L 129.3,104.0 L 135.7,107.0 L 142.0,109.7 L 148.3,112.2 L 154.7,114.4 L 161.0,116.4 L 167.3,118.1 L 173.7,119.5 L 180.0,120.7 L 186.3,121.7 L 192.7,122.4 L 199.0,122.8 L 205.3,123.0 L 211.7,122.9 L 218.0,122.5 L 224.3,121.9 L 230.7,121.1 L 237.0,120.0 L 243.3,118.6 L 249.7,117.0 L 256.0,115.1 L 262.3,113.0 L 268.7,110.6 L 275.0,108.0 L 281.3,105.1 L 287.7,101.9 L 294.0,98.5 L 300.3,94.8 L 306.7,90.9 L 313.0,86.7 L 319.3,82.3 L 325.7,77.6 L 332.0,72.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"28.8\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "frame_id",
+          "airplane_distance"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.3,
+          "b": -0.313,
+          "c": -0.393,
+          "touch_x": -0.747,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 6
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.4 L 40.7,35.2 L 47.0,41.8 L 53.3,48.1 L 59.7,54.2 L 66.0,60.0 L 72.3,65.5 L 78.7,70.8 L 85.0,75.9 L 91.3,80.7 L 97.7,85.2 L 104.0,89.5 L 110.3,93.5 L 116.7,97.2 L 123.0,100.7 L 129.3,104.0 L 135.7,107.0 L 142.0,109.7 L 148.3,112.2 L 154.7,114.4 L 161.0,116.4 L 167.3,118.1 L 173.7,119.5 L 180.0,120.7 L 186.3,121.7 L 192.7,122.4 L 199.0,122.8 L 205.3,123.0 L 211.7,122.9 L 218.0,122.5 L 224.3,121.9 L 230.7,121.1 L 237.0,120.0 L 243.3,118.6 L 249.7,117.0 L 256.0,115.1 L 262.3,113.0 L 268.7,110.6 L 275.0,108.0 L 281.3,105.1 L 287.7,101.9 L 294.0,98.5 L 300.3,94.8 L 306.7,90.9 L 313.0,86.7 L 319.3,82.3 L 325.7,77.6 L 332.0,72.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"28.8\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "airplane_distance",
+        "related_rates_frame": "airplane_distance",
+        "s": 10,
+        "x": 6,
+        "h": 8,
+        "dxdt": 5,
+        "quantity": "slant_rate",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
       "label": "D\u224822 \u00b7 seed=101",
       "type_id": "calc_app_diff_related_rates",
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{A }10\\text{-ft ladder leans against a wall. The base slides away at } 5\\text{ ft/s. How fast is the top sliding down when the base is } 6\\text{ ft from the wall?}",
-      "answer_latex": "\\frac{15}{4}",
+      "prompt_latex": "\\text{A bottle rocket rises at } 7\\text{ ft/s. You stand } 5\\text{ ft from the launch point. How fast is the angle of elevation changing when the rocket is } 12\\text{ ft in the air?}",
+      "answer_latex": "\\frac{35}{169}",
       "skeleton_pattern": "",
       "form_id": null,
       "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,144.9 L 34.3,140.9 L 40.7,137.1 L 47.0,133.6 L 53.3,130.2 L 59.7,127.1 L 66.0,124.3 L 72.3,121.6 L 78.7,119.2 L 85.0,117.0 L 91.3,115.0 L 97.7,113.3 L 104.0,111.8 L 110.3,110.5 L 116.7,109.4 L 123.0,108.6 L 129.3,108.0 L 135.7,107.6 L 142.0,107.4 L 148.3,107.5 L 154.7,107.8 L 161.0,108.3 L 167.3,109.0 L 173.7,110.0 L 180.0,111.2 L 186.3,112.6 L 192.7,114.3 L 199.0,116.2 L 205.3,118.3 L 211.7,120.6 L 218.0,123.2 L 224.3,125.9 L 230.7,129.0 L 237.0,132.2 L 243.3,135.7 L 249.7,139.3 L 256.0,143.3 L 262.3,147.4 L 268.7,151.8 L 275.0,156.4 L 281.3,161.2 L 287.7,166.2 L 294.0,171.5 L 300.3,177.0 L 306.7,182.7 L 313.0,188.7 L 319.3,192.0 L 325.7,192.0 L 332.0,192.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"36.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
@@ -683,7 +1537,7 @@
         ],
         [
           "frame_id",
-          "sliding_ladder"
+          "rocket_angle"
         ],
         [
           "has_diagram_svg",
@@ -711,13 +1565,14 @@
           "riemann_n": 5
         },
         "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,144.9 L 34.3,140.9 L 40.7,137.1 L 47.0,133.6 L 53.3,130.2 L 59.7,127.1 L 66.0,124.3 L 72.3,121.6 L 78.7,119.2 L 85.0,117.0 L 91.3,115.0 L 97.7,113.3 L 104.0,111.8 L 110.3,110.5 L 116.7,109.4 L 123.0,108.6 L 129.3,108.0 L 135.7,107.6 L 142.0,107.4 L 148.3,107.5 L 154.7,107.8 L 161.0,108.3 L 167.3,109.0 L 173.7,110.0 L 180.0,111.2 L 186.3,112.6 L 192.7,114.3 L 199.0,116.2 L 205.3,118.3 L 211.7,120.6 L 218.0,123.2 L 224.3,125.9 L 230.7,129.0 L 237.0,132.2 L 243.3,135.7 L 249.7,139.3 L 256.0,143.3 L 262.3,147.4 L 268.7,151.8 L 275.0,156.4 L 281.3,161.2 L 287.7,166.2 L 294.0,171.5 L 300.3,177.0 L 306.7,182.7 L 313.0,188.7 L 319.3,192.0 L 325.7,192.0 L 332.0,192.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"36.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
-        "frame_id": "sliding_ladder",
-        "related_rates_frame": "sliding_ladder",
-        "L": 10,
-        "x": 6,
-        "y": 8,
-        "dxdt": 5,
-        "quantity": "height_rate",
+        "frame_id": "rocket_angle",
+        "related_rates_frame": "rocket_angle",
+        "x": 5,
+        "h": 12,
+        "s": 13,
+        "dhdt": 7,
+        "story": "bottle_rocket",
+        "quantity": "angle_rate",
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -739,8 +1594,8 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{A }25\\text{-ft ladder leans against a wall. The base slides away at } 6\\text{ ft/s. How fast is the top sliding down when the base is } 15\\text{ ft from the wall?}",
-      "answer_latex": "\\frac{9}{2}",
+      "prompt_latex": "\\text{A rocket rises vertically. A camera } 7\\text{ ft from the launch pad stays aimed at the rocket. When the rocket is } 24\\text{ ft up, its speed is } 5\\text{ ft/s. How fast is the camera's elevation angle changing?}",
+      "answer_latex": "\\frac{7}{125}",
       "skeleton_pattern": "",
       "form_id": null,
       "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"35.9\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
@@ -755,7 +1610,7 @@
         ],
         [
           "frame_id",
-          "sliding_ladder"
+          "rocket_angle"
         ],
         [
           "has_diagram_svg",
@@ -783,13 +1638,14 @@
           "riemann_n": 4
         },
         "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,34.4 L 47.0,40.5 L 53.3,46.4 L 59.7,52.0 L 66.0,57.3 L 72.3,62.3 L 78.7,67.1 L 85.0,71.6 L 91.3,75.7 L 97.7,79.7 L 104.0,83.3 L 110.3,86.6 L 116.7,89.7 L 123.0,92.5 L 129.3,95.0 L 135.7,97.2 L 142.0,99.2 L 148.3,100.8 L 154.7,102.2 L 161.0,103.3 L 167.3,104.2 L 173.7,104.7 L 180.0,105.0 L 186.3,105.0 L 192.7,104.7 L 199.0,104.1 L 205.3,103.2 L 211.7,102.1 L 218.0,100.7 L 224.3,99.0 L 230.7,97.0 L 237.0,94.8 L 243.3,92.2 L 249.7,89.4 L 256.0,86.3 L 262.3,82.9 L 268.7,79.3 L 275.0,75.3 L 281.3,71.1 L 287.7,66.6 L 294.0,61.9 L 300.3,56.8 L 306.7,51.5 L 313.0,45.8 L 319.3,40.0 L 325.7,33.8 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"35.9\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
-        "frame_id": "sliding_ladder",
-        "related_rates_frame": "sliding_ladder",
-        "L": 25,
-        "x": 15,
-        "y": 20,
-        "dxdt": 6,
-        "quantity": "height_rate",
+        "frame_id": "rocket_angle",
+        "related_rates_frame": "rocket_angle",
+        "x": 7,
+        "h": 24,
+        "s": 25,
+        "dhdt": 5,
+        "story": "rocket",
+        "quantity": "angle_rate",
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -811,8 +1667,8 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{A }10\\text{-ft ladder leans against a wall. The base slides away at } 6\\text{ ft/s. How fast is the top sliding down when the base is } 6\\text{ ft from the wall?}",
-      "answer_latex": "\\frac{9}{2}",
+      "prompt_latex": "\\text{A bottle rocket rises at } 8\\text{ ft/s. You stand } 5\\text{ ft from the launch point. How fast is the angle of elevation changing when the rocket is } 12\\text{ ft in the air?}",
+      "answer_latex": "\\frac{40}{169}",
       "skeleton_pattern": "",
       "form_id": null,
       "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,31.5 L 47.0,38.8 L 53.3,45.8 L 59.7,52.5 L 66.0,58.8 L 72.3,64.8 L 78.7,70.4 L 85.0,75.7 L 91.3,80.6 L 97.7,85.2 L 104.0,89.5 L 110.3,93.4 L 116.7,96.9 L 123.0,100.1 L 129.3,103.0 L 135.7,105.5 L 142.0,107.7 L 148.3,109.6 L 154.7,111.1 L 161.0,112.2 L 167.3,113.0 L 173.7,113.5 L 180.0,113.6 L 186.3,113.3 L 192.7,112.8 L 199.0,111.9 L 205.3,110.6 L 211.7,109.0 L 218.0,107.0 L 224.3,104.7 L 230.7,102.1 L 237.0,99.1 L 243.3,95.8 L 249.7,92.1 L 256.0,88.1 L 262.3,83.7 L 268.7,79.0 L 275.0,73.9 L 281.3,68.5 L 287.7,62.8 L 294.0,56.7 L 300.3,50.3 L 306.7,43.5 L 313.0,36.4 L 319.3,28.9 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"34.0\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
@@ -827,7 +1683,7 @@
         ],
         [
           "frame_id",
-          "sliding_ladder"
+          "rocket_angle"
         ],
         [
           "has_diagram_svg",
@@ -855,18 +1711,311 @@
           "riemann_n": 3
         },
         "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.0 L 40.7,31.5 L 47.0,38.8 L 53.3,45.8 L 59.7,52.5 L 66.0,58.8 L 72.3,64.8 L 78.7,70.4 L 85.0,75.7 L 91.3,80.6 L 97.7,85.2 L 104.0,89.5 L 110.3,93.4 L 116.7,96.9 L 123.0,100.1 L 129.3,103.0 L 135.7,105.5 L 142.0,107.7 L 148.3,109.6 L 154.7,111.1 L 161.0,112.2 L 167.3,113.0 L 173.7,113.5 L 180.0,113.6 L 186.3,113.3 L 192.7,112.8 L 199.0,111.9 L 205.3,110.6 L 211.7,109.0 L 218.0,107.0 L 224.3,104.7 L 230.7,102.1 L 237.0,99.1 L 243.3,95.8 L 249.7,92.1 L 256.0,88.1 L 262.3,83.7 L 268.7,79.0 L 275.0,73.9 L 281.3,68.5 L 287.7,62.8 L 294.0,56.7 L 300.3,50.3 L 306.7,43.5 L 313.0,36.4 L 319.3,28.9 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"34.0\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
-        "frame_id": "sliding_ladder",
-        "related_rates_frame": "sliding_ladder",
-        "L": 10,
-        "x": 6,
-        "y": 8,
-        "dxdt": 6,
-        "quantity": "height_rate",
+        "frame_id": "rocket_angle",
+        "related_rates_frame": "rocket_angle",
+        "x": 5,
+        "h": 12,
+        "s": 13,
+        "dhdt": 8,
+        "story": "bottle_rocket",
+        "quantity": "angle_rate",
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
           "difficulty": 22.0,
           "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=0",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{A helicopter rises at } 4\\text{ ft/s while you run along the ground at } 2\\text{ ft/s starting from under it. How fast is the distance between you changing when the helicopter is } 12\\text{ ft up and you are } 9\\text{ ft away?}",
+      "answer_latex": "\\frac{22}{5}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,187.3 L 34.3,181.4 L 40.7,175.7 L 47.0,170.2 L 53.3,165.0 L 59.7,160.0 L 66.0,155.2 L 72.3,150.6 L 78.7,146.2 L 85.0,142.1 L 91.3,138.1 L 97.7,134.4 L 104.0,130.9 L 110.3,127.7 L 116.7,124.6 L 123.0,121.8 L 129.3,119.2 L 135.7,116.8 L 142.0,114.6 L 148.3,112.6 L 154.7,110.9 L 161.0,109.4 L 167.3,108.0 L 173.7,107.0 L 180.0,106.1 L 186.3,105.4 L 192.7,105.0 L 199.0,104.8 L 205.3,104.8 L 211.7,105.0 L 218.0,105.5 L 224.3,106.1 L 230.7,107.0 L 237.0,108.1 L 243.3,109.4 L 249.7,111.0 L 256.0,112.7 L 262.3,114.7 L 268.7,116.9 L 275.0,119.3 L 281.3,121.9 L 287.7,124.8 L 294.0,127.9 L 300.3,131.1 L 306.7,134.7 L 313.0,138.4 L 319.3,142.3 L 325.7,146.5 L 332.0,150.9\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"33.5\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "frame_id",
+          "two_rate_distance"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": -0.256,
+          "b": 0.222,
+          "c": 0.143,
+          "touch_x": -0.05,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 4
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,187.3 L 34.3,181.4 L 40.7,175.7 L 47.0,170.2 L 53.3,165.0 L 59.7,160.0 L 66.0,155.2 L 72.3,150.6 L 78.7,146.2 L 85.0,142.1 L 91.3,138.1 L 97.7,134.4 L 104.0,130.9 L 110.3,127.7 L 116.7,124.6 L 123.0,121.8 L 129.3,119.2 L 135.7,116.8 L 142.0,114.6 L 148.3,112.6 L 154.7,110.9 L 161.0,109.4 L 167.3,108.0 L 173.7,107.0 L 180.0,106.1 L 186.3,105.4 L 192.7,105.0 L 199.0,104.8 L 205.3,104.8 L 211.7,105.0 L 218.0,105.5 L 224.3,106.1 L 230.7,107.0 L 237.0,108.1 L 243.3,109.4 L 249.7,111.0 L 256.0,112.7 L 262.3,114.7 L 268.7,116.9 L 275.0,119.3 L 281.3,121.9 L 287.7,124.8 L 294.0,127.9 L 300.3,131.1 L 306.7,134.7 L 313.0,138.4 L 319.3,142.3 L 325.7,146.5 L 332.0,150.9\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"33.5\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "two_rate_distance",
+        "related_rates_frame": "two_rate_distance",
+        "s": 15,
+        "x": 9,
+        "y": 12,
+        "dxdt": 2,
+        "dydt": 4,
+        "story": "helicopter",
+        "quantity": "slant_rate",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=2",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{A }12\\text{-ft lamp post casts a shadow of a }5\\text{-ft person walking away at } 4\\text{ ft/s. How fast is the tip of the shadow moving away from the post when the person is } 17\\text{ ft from the post?}",
+      "answer_latex": "\\frac{48}{7}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,65.1 L 34.3,70.3 L 40.7,75.1 L 47.0,79.5 L 53.3,83.6 L 59.7,87.3 L 66.0,90.6 L 72.3,93.6 L 78.7,96.2 L 85.0,98.5 L 91.3,100.4 L 97.7,102.0 L 104.0,103.2 L 110.3,104.0 L 116.7,104.4 L 123.0,104.5 L 129.3,104.3 L 135.7,103.7 L 142.0,102.7 L 148.3,101.3 L 154.7,99.6 L 161.0,97.6 L 167.3,95.1 L 173.7,92.4 L 180.0,89.2 L 186.3,85.7 L 192.7,81.8 L 199.0,77.6 L 205.3,73.0 L 211.7,68.1 L 218.0,62.7 L 224.3,57.1 L 230.7,51.0 L 237.0,44.6 L 243.3,37.9 L 249.7,30.8 L 256.0,28.0 L 262.3,28.0 L 268.7,28.0 L 275.0,28.0 L 281.3,28.0 L 287.7,28.0 L 294.0,28.0 L 300.3,28.0 L 306.7,28.0 L 313.0,28.0 L 319.3,28.0 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"104.0\" cy=\"110.0\" r=\"35.3\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "frame_id",
+          "lamp_shadow"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.317,
+          "b": -0.294,
+          "c": 0.334,
+          "touch_x": 0.582,
+          "window": [
+            -2,
+            6
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,65.1 L 34.3,70.3 L 40.7,75.1 L 47.0,79.5 L 53.3,83.6 L 59.7,87.3 L 66.0,90.6 L 72.3,93.6 L 78.7,96.2 L 85.0,98.5 L 91.3,100.4 L 97.7,102.0 L 104.0,103.2 L 110.3,104.0 L 116.7,104.4 L 123.0,104.5 L 129.3,104.3 L 135.7,103.7 L 142.0,102.7 L 148.3,101.3 L 154.7,99.6 L 161.0,97.6 L 167.3,95.1 L 173.7,92.4 L 180.0,89.2 L 186.3,85.7 L 192.7,81.8 L 199.0,77.6 L 205.3,73.0 L 211.7,68.1 L 218.0,62.7 L 224.3,57.1 L 230.7,51.0 L 237.0,44.6 L 243.3,37.9 L 249.7,30.8 L 256.0,28.0 L 262.3,28.0 L 268.7,28.0 L 275.0,28.0 L 281.3,28.0 L 287.7,28.0 L 294.0,28.0 L 300.3,28.0 L 306.7,28.0 L 313.0,28.0 L 319.3,28.0 L 325.7,28.0 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"104.0\" cy=\"110.0\" r=\"35.3\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "lamp_shadow",
+        "related_rates_frame": "lamp_shadow",
+        "H": 12,
+        "h": 5,
+        "x": 17,
+        "dxdt": 4,
+        "quantity": "shadow_tip_rate",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=5",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{A rocket rises vertically. A camera } 8\\text{ ft from the launch pad stays aimed at the rocket. When the rocket is } 6\\text{ ft up, its speed is } 7\\text{ ft/s. How fast is the camera's elevation angle changing?}",
+      "answer_latex": "\\frac{14}{25}",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,73.4 L 34.3,77.6 L 40.7,81.6 L 47.0,85.4 L 53.3,89.0 L 59.7,92.4 L 66.0,95.5 L 72.3,98.4 L 78.7,101.0 L 85.0,103.5 L 91.3,105.7 L 97.7,107.7 L 104.0,109.5 L 110.3,111.0 L 116.7,112.3 L 123.0,113.4 L 129.3,114.3 L 135.7,114.9 L 142.0,115.3 L 148.3,115.5 L 154.7,115.5 L 161.0,115.2 L 167.3,114.7 L 173.7,114.0 L 180.0,113.1 L 186.3,111.9 L 192.7,110.5 L 199.0,108.9 L 205.3,107.0 L 211.7,105.0 L 218.0,102.7 L 224.3,100.2 L 230.7,97.4 L 237.0,94.5 L 243.3,91.3 L 249.7,87.8 L 256.0,84.2 L 262.3,80.3 L 268.7,76.2 L 275.0,71.9 L 281.3,67.4 L 287.7,62.6 L 294.0,57.6 L 300.3,52.4 L 306.7,46.9 L 313.0,41.2 L 319.3,35.3 L 325.7,29.2 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"37.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "frame_id",
+          "rocket_angle"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.264,
+          "b": 0.308,
+          "c": -0.112,
+          "touch_x": -0.476,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 5
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,73.4 L 34.3,77.6 L 40.7,81.6 L 47.0,85.4 L 53.3,89.0 L 59.7,92.4 L 66.0,95.5 L 72.3,98.4 L 78.7,101.0 L 85.0,103.5 L 91.3,105.7 L 97.7,107.7 L 104.0,109.5 L 110.3,111.0 L 116.7,112.3 L 123.0,113.4 L 129.3,114.3 L 135.7,114.9 L 142.0,115.3 L 148.3,115.5 L 154.7,115.5 L 161.0,115.2 L 167.3,114.7 L 173.7,114.0 L 180.0,113.1 L 186.3,111.9 L 192.7,110.5 L 199.0,108.9 L 205.3,107.0 L 211.7,105.0 L 218.0,102.7 L 224.3,100.2 L 230.7,97.4 L 237.0,94.5 L 243.3,91.3 L 249.7,87.8 L 256.0,84.2 L 262.3,80.3 L 268.7,76.2 L 275.0,71.9 L 281.3,67.4 L 287.7,62.6 L 294.0,57.6 L 300.3,52.4 L 306.7,46.9 L 313.0,41.2 L 319.3,35.3 L 325.7,29.2 L 332.0,28.0\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"37.1\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "rocket_angle",
+        "related_rates_frame": "rocket_angle",
+        "x": 8,
+        "h": 6,
+        "s": 10,
+        "dhdt": 7,
+        "story": "rocket",
+        "quantity": "angle_rate",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the related rates problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=7",
+      "type_id": "calc_app_diff_related_rates",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{Gravel falls onto a conical pile with radius } 2\\text{ times the height at } 600\\pi\\text{ ft}^{3}\\text{/min. How fast is the height increasing when } h = 5\\text{ ft?}",
+      "answer_latex": "6",
+      "skeleton_pattern": "",
+      "form_id": null,
+      "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.4 L 40.7,35.2 L 47.0,41.8 L 53.3,48.1 L 59.7,54.2 L 66.0,60.0 L 72.3,65.5 L 78.7,70.8 L 85.0,75.9 L 91.3,80.7 L 97.7,85.2 L 104.0,89.5 L 110.3,93.5 L 116.7,97.2 L 123.0,100.7 L 129.3,104.0 L 135.7,107.0 L 142.0,109.7 L 148.3,112.2 L 154.7,114.4 L 161.0,116.4 L 167.3,118.1 L 173.7,119.5 L 180.0,120.7 L 186.3,121.7 L 192.7,122.4 L 199.0,122.8 L 205.3,123.0 L 211.7,122.9 L 218.0,122.5 L 224.3,121.9 L 230.7,121.1 L 237.0,120.0 L 243.3,118.6 L 249.7,117.0 L 256.0,115.1 L 262.3,113.0 L 268.7,110.6 L 275.0,108.0 L 281.3,105.1 L 287.7,101.9 L 294.0,98.5 L 300.3,94.8 L 306.7,90.9 L 313.0,86.7 L 319.3,82.3 L 325.7,77.6 L 332.0,72.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"28.8\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "frame_id",
+          "cone_drain"
+        ],
+        [
+          "has_diagram_svg",
+          true
+        ]
+      ],
+      "metadata": {
+        "figure_family": "function_sketch",
+        "figure_complexity": "complex",
+        "figure_params": {
+          "features": [
+            "curve",
+            "related_rates_circle",
+            "related_rates_ladder"
+          ],
+          "curve_kind": "parabola",
+          "a": 0.3,
+          "b": -0.313,
+          "c": -0.393,
+          "touch_x": -0.747,
+          "window": [
+            -3,
+            3
+          ],
+          "riemann_n": 6
+        },
+        "diagram_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"220\" viewBox=\"0 0 360 220\"><rect width=\"360\" height=\"220\" fill=\"#fafafa\"/><line x1=\"28\" y1=\"110.0\" x2=\"332\" y2=\"110.0\" stroke=\"#64748b\" stroke-width=\"1.5\"/><line x1=\"180.0\" y1=\"28\" x2=\"180.0\" y2=\"192\" stroke=\"#64748b\" stroke-width=\"1.5\"/><path d=\"M 28.0,28.0 L 34.3,28.4 L 40.7,35.2 L 47.0,41.8 L 53.3,48.1 L 59.7,54.2 L 66.0,60.0 L 72.3,65.5 L 78.7,70.8 L 85.0,75.9 L 91.3,80.7 L 97.7,85.2 L 104.0,89.5 L 110.3,93.5 L 116.7,97.2 L 123.0,100.7 L 129.3,104.0 L 135.7,107.0 L 142.0,109.7 L 148.3,112.2 L 154.7,114.4 L 161.0,116.4 L 167.3,118.1 L 173.7,119.5 L 180.0,120.7 L 186.3,121.7 L 192.7,122.4 L 199.0,122.8 L 205.3,123.0 L 211.7,122.9 L 218.0,122.5 L 224.3,121.9 L 230.7,121.1 L 237.0,120.0 L 243.3,118.6 L 249.7,117.0 L 256.0,115.1 L 262.3,113.0 L 268.7,110.6 L 275.0,108.0 L 281.3,105.1 L 287.7,101.9 L 294.0,98.5 L 300.3,94.8 L 306.7,90.9 L 313.0,86.7 L 319.3,82.3 L 325.7,77.6 L 332.0,72.6\" fill=\"none\" stroke=\"#1d4ed8\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"52.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"119.2\" y1=\"110.0\" x2=\"256.0\" y2=\"110.0\" stroke=\"#94a3b8\" stroke-width=\"1.2\" stroke-dasharray=\"3 2\"/><circle cx=\"180.0\" cy=\"110.0\" r=\"28.8\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/></svg>",
+        "frame_id": "cone_drain",
+        "related_rates_frame": "cone_drain",
+        "k": 2,
+        "h": 5,
+        "dvdt_over_pi": 600,
+        "dhdt": 6,
+        "story": "gravel",
+        "quantity": "height_rate",
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 7,
           "include_answer_key": true,
           "integers_only": true,
           "only_x": true,

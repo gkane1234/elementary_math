@@ -330,6 +330,110 @@ def test_definite_u_sub_has_limits_no_plus_c():
     )
 
 
+def test_definite_usub_d0_linear_high_d_du_over_u_lockout():
+    from question_engine.frameworks.primitives.integrals import (
+        definite_usub_forms_for_difficulty,
+    )
+
+    assert definite_usub_forms_for_difficulty(0) == ("definite_power_linear_du",)
+    med = definite_usub_forms_for_difficulty(8)
+    assert med == ("definite_power_linear_du", "definite_power_quad_x_du")
+    hard = definite_usub_forms_for_difficulty(16)
+    assert hard == ("definite_power_quad_x_du", "definite_du_over_u")
+    assert "definite_power_linear_du" not in hard
+    assert definite_usub_forms_for_difficulty(22) == ("definite_du_over_u",)
+
+    q0 = _gen("calc_def_int_substitution_with_change_of_variables", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "definite_power_linear_du"
+    assert (q0.metadata or {}).get("generator") == "integral_definite_substitution"
+    p0 = q0.prompt_latex or ""
+    assert r"\int_" in p0
+    assert r"x^{2}+1" not in p0
+    assert r"\frac" not in p0
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "definite_power_linear_du"
+    assert snap.get("generator") == "integral_definite_substitution"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_def_int_substitution_with_change_of_variables", 8, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert (q.metadata or {}).get("generator") == "integral_definite_substitution"
+        p = q.prompt_latex or ""
+        assert r"\frac" not in p
+        assert "+C" not in (q.answer_latex or "")
+    assert "definite_power_linear_du" in mid
+    assert "definite_power_quad_x_du" in mid
+    assert mid <= {"definite_power_linear_du", "definite_power_quad_x_du"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen(
+            "calc_def_int_substitution_with_change_of_variables", 16, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "definite_power_linear_du"
+        p = q.prompt_latex or ""
+        assert r"\left(" not in p or r"x^{2}+1" in p
+        assert (q.metadata or {}).get("generator") == "integral_definite_substitution"
+    assert high <= {"definite_power_quad_x_du", "definite_du_over_u"}
+    assert "definite_power_quad_x_du" in high
+    assert "definite_du_over_u" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_def_int_substitution_with_change_of_variables", 22, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "definite_du_over_u"
+        p = q.prompt_latex or ""
+        assert r"\frac" in p
+        assert r"x^{2}+1" in p
+        assert r"\left(" not in p
+        assert (q.metadata or {}).get("generator") == "integral_definite_substitution"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "definite_du_over_u"
+        assert snap.get("generator") == "integral_definite_substitution"
+    assert expert == {"definite_du_over_u"}
+
+
+def test_definite_usub_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.integrals import (
+        sample_integral_expression,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                sample = sample_integral_expression(
+                    {"difficulty": 8.0, "include_answer_key": True},
+                    generator_key="integral_definite_substitution",
+                    rng=_random.Random(i),
+                )
+                c[sample.metadata.get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts(
+        {"definite_power_linear_du": -2.5, "definite_power_quad_x_du": 2.5}
+    )
+    assert tilted["definite_power_quad_x_du"] > baseline["definite_power_quad_x_du"]
+
+
 def test_indef_power_and_pfd_still_live():
     p = _gen("calc_indef_int_power_rule", 0, seed=101)[0]
     assert r"\int" in (p.prompt_latex or "")

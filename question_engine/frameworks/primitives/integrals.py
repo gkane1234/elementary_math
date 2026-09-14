@@ -2735,58 +2735,116 @@ def _sample_trig_sub(
 # ---------------------------------------------------------------------------
 
 
+DEFINITE_USUB_GENERATOR = "integral_definite_substitution"
+
+_DEFINITE_USUB_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("definite_power_linear_du",),
+    "medium": ("definite_power_linear_du", "definite_power_quad_x_du"),
+    "hard": ("definite_power_quad_x_du", "definite_du_over_u"),
+    "expert": ("definite_du_over_u",),
+}
+
+
+def definite_usub_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 linear changed-limits; D=22 is du/u only."""
+    if d < 8.0:
+        return _DEFINITE_USUB_BANDS["easy"]
+    if d < 16.0:
+        return _DEFINITE_USUB_BANDS["medium"]
+    if d < 20.0:
+        return _DEFINITE_USUB_BANDS["hard"]
+    return _DEFINITE_USUB_BANDS["expert"]
+
+
+def _definite_usub_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [DEFINITE_USUB_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_definite_power_linear_du(
+    rng: random.Random, spec: IntegralSpec, d: float
+) -> tuple[str, str]:
+    """Old-path D=0 leftover: ∫_0^b p(px+q)^n dx (linear u)."""
+    var = spec.variable
+    p = rng.randint(2, max(2, min(4, spec.coef_abs_max)))
+    q = rng.randint(0, max(0, min(3, spec.coef_abs_max)))
+    n = rng.randint(2, 3 if d < 10 else 5)
+    lo = 0
+    hi = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
+    u_lo = p * lo + q
+    u_hi = p * hi + q
+    inner = format_linear_latex(p, q, variable=var)
+    prompt = rf"\int_{{{lo}}}^{{{hi}}} {p}\left({inner}\right)^{{{n}}}\,d{var}"
+    ans = Fraction(u_hi ** (n + 1) - u_lo ** (n + 1), n + 1)
+    return prompt, frac_latex(ans)
+
+
+def _sample_definite_power_quad_x_du(
+    rng: random.Random, spec: IntegralSpec, d: float
+) -> tuple[str, str]:
+    """Old mid unlock: ∫_0^a 2x (x²+1)^n dx, u=x²+1."""
+    var = spec.variable
+    a = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
+    n = rng.randint(2, 2 if d < 14 else 3)
+    prompt = rf"\int_{{0}}^{{{a}}} 2{var}\left({var}^{{2}}+1\right)^{{{n}}}\,d{var}"
+    u_hi = a * a + 1
+    ans = Fraction(u_hi ** (n + 1) - 1, n + 1)
+    return prompt, frac_latex(ans)
+
+
+def _sample_definite_du_over_u(
+    rng: random.Random, spec: IntegralSpec
+) -> tuple[str, str]:
+    """Old high unlock: ∫_0^a 2x/(x²+1) dx = ln(a²+1)."""
+    var = spec.variable
+    a = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
+    prompt = rf"\int_{{0}}^{{{a}}} \frac{{2{var}}}{{{var}^{{2}}+1}}\,d{var}"
+    return prompt, rf"\ln({a * a + 1})"
+
+
 def _sample_definite_u_sub(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
     """Definite u-sub with changed limits (OpenStax Vol 1 §5.5).
 
-    D=0: ∫_a^b c(cx+d)^n with linear u (numeric hardness first).
-    Higher D: quadratic inner / 1/u forms.
+    High D locks out D=0 linear leftover. Same three old builders.
     """
-    var = spec.variable
-    d = float(spec.d_spend)
-    pool = ["power_linear"]
-    if d >= 8:
-        pool.append("quad_power")
-    if d >= 12:
-        pool.append("du_over_u")
-    family = rng.choice(pool)
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
 
-    if family == "power_linear":
-        # u = px + q; ∫_lo^hi p (px+q)^n dx = 1/(n+1) [(p·hi+q)^{n+1} - (p·lo+q)^{n+1}]
-        p = rng.randint(2, max(2, min(4, spec.coef_abs_max)))
-        q = rng.randint(0, max(0, min(3, spec.coef_abs_max)))
-        n = rng.randint(2, 3 if d < 10 else 5)
-        lo = 0
-        hi = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
-        u_lo = p * lo + q
-        u_hi = p * hi + q
-        inner = format_linear_latex(p, q, variable=var)
-        prompt = rf"\int_{{{lo}}}^{{{hi}}} {p}\left({inner}\right)^{{{n}}}\,d{var}"
-        # F = 1/(n+1) u^{n+1}
-        ans = Fraction(u_hi ** (n + 1) - u_lo ** (n + 1), n + 1)
-        answer = frac_latex(ans)
-        form_id = "definite_power_linear_du"
-    elif family == "quad_power":
-        # ∫_0^a 2x (x²+1)^n dx, u=x²+1 → [1/(n+1) u^{n+1}]_1^{a²+1}
-        a = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
-        n = rng.randint(2, 2 if d < 14 else 3)
-        prompt = rf"\int_{{0}}^{{{a}}} 2{var}\left({var}^{{2}}+1\right)^{{{n}}}\,d{var}"
-        u_hi = a * a + 1
-        ans = Fraction(u_hi ** (n + 1) - 1, n + 1)
-        answer = frac_latex(ans)
-        form_id = "definite_power_quad_x_du"
+    d = float(spec.d_spend)
+    forms = definite_usub_forms_for_difficulty(d)
+    form = select_form_id(_definite_usub_form_rows(forms), d=d, rng=rng)
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "definite_power_linear_du" and fid in forms:
+        prompt, answer = _sample_definite_power_linear_du(rng, spec, d)
+    elif fid == "definite_power_quad_x_du" and fid in forms:
+        prompt, answer = _sample_definite_power_quad_x_du(rng, spec, d)
+    elif fid == "definite_du_over_u" and fid in forms:
+        prompt, answer = _sample_definite_du_over_u(rng, spec)
     else:
-        # ∫_0^a 2x/(x²+1) dx = ln(a²+1)
-        a = rng.randint(1, max(1, min(3, spec.bound_abs_max)))
-        prompt = rf"\int_{{0}}^{{{a}}} \frac{{2{var}}}{{{var}^{{2}}+1}}\,d{var}"
-        answer = rf"\ln({a * a + 1})"
-        form_id = "definite_du_over_u"
+        fid = forms[0]
+        if fid == "definite_power_quad_x_du":
+            prompt, answer = _sample_definite_power_quad_x_du(rng, spec, d)
+        elif fid == "definite_du_over_u":
+            prompt, answer = _sample_definite_du_over_u(rng, spec)
+        else:
+            prompt, answer = _sample_definite_power_linear_du(rng, spec, d)
 
     return prompt, answer, {
         "function_classes": ["algebraic"],
-        "family": form_id,
-        "form_id": form_id,
+        "family": fid,
+        "form_id": fid,
+        "generator": DEFINITE_USUB_GENERATOR,
         "n_terms": 1,
         "definite": True,
         "tricks_required": ["u_sub"],

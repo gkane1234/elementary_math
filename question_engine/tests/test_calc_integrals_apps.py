@@ -560,6 +560,104 @@ def test_newton_quality_weights_tilt():
     assert tilted["newton_one_cubic"] > baseline["newton_one_cubic"]
 
 
+def test_differentials_d0_easy_high_d_nested_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        differential_forms_for_difficulty,
+    )
+
+    easy = ("poly_power", "poly_quad", "trig", "exp", "ln")
+    assert differential_forms_for_difficulty(0) == easy
+    med = differential_forms_for_difficulty(8)
+    assert "ln" in med and "poly_power" in med
+    assert "radical" in med and "reciprocal" in med
+    assert "chain_exp" not in med and "quotient" not in med
+    hard = differential_forms_for_difficulty(16)
+    assert "ln" not in hard and "poly_power" not in hard and "trig" not in hard
+    assert hard == (
+        "radical", "reciprocal", "product", "quotient", "chain_exp", "eval_dx",
+    )
+    assert differential_forms_for_difficulty(22) == (
+        "product", "quotient", "chain_exp", "eval_dx",
+    )
+
+    q0 = _gen("calc_app_diff_differentials", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") in easy
+    assert (q0.metadata or {}).get("generator") == "differentials"
+    assert r"find }dy" in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") in easy
+    assert snap.get("generator") == "differentials"
+
+    d0 = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_differentials", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        d0.add(fid)
+        assert fid in easy
+        assert (q.metadata or {}).get("generator") == "differentials"
+        assert (q.metadata or {}).get("structure_id", "").startswith("differentials:")
+    assert len(d0) >= 3, d0
+
+    mid = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_differentials", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "differentials"
+    assert mid & {"ln", "poly_power", "poly_quad", "trig", "exp"}
+    assert mid & {"radical", "reciprocal"}
+    assert mid <= set(med)
+
+    high = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_differentials", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid not in easy
+        assert (q.metadata or {}).get("generator") == "differentials"
+    assert high <= set(hard)
+    assert high & {"product", "quotient", "chain_exp", "eval_dx"}
+    assert high & {"radical", "reciprocal"}
+
+    expert = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_differentials", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in {"product", "quotient", "chain_exp", "eval_dx"}
+        assert fid not in easy
+        assert fid not in {"radical", "reciprocal"}
+        assert (q.metadata or {}).get("generator") == "differentials"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "differentials"
+    assert len(expert) >= 2, expert
+
+
+def test_differentials_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_differentials,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_differentials(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"ln": -2.5, "reciprocal": 2.5})
+    assert tilted["reciprocal"] > baseline["reciprocal"]
+
+
 def test_optimization_frames_unlock():
     frames = set()
     for seed in range(20):

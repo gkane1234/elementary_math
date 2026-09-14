@@ -12,7 +12,11 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Callable, Literal
 
-from question_engine.generators.utils import format_polynomial_latex, frac_latex
+from question_engine.generators.utils import (
+    format_linear_latex,
+    format_polynomial_latex,
+    frac_latex,
+)
 from question_engine.settings.params import calc_application_structure_from_continuous
 
 Kind = Literal[
@@ -33,6 +37,7 @@ Kind = Literal[
     "curve_sketching",
     "graphical_f_fp",
     "related_rates",
+    "differentials",
 ]
 
 
@@ -969,6 +974,287 @@ def sample_newton(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
             "form_id": fid,
             "family": fid,
             "generator": NEWTON_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
+DIFFERENTIALS_GENERATOR = "differentials"
+
+_DIFF_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("poly_power", "poly_quad", "trig", "exp", "ln"),
+    "medium": (
+        "poly_power", "poly_quad", "trig", "exp", "ln", "radical", "reciprocal",
+    ),
+    "hard": (
+        "radical", "reciprocal", "product", "quotient", "chain_exp", "eval_dx",
+    ),
+    "expert": ("product", "quotient", "chain_exp", "eval_dx"),
+}
+
+
+def differential_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _DIFF_BANDS["easy"]
+    if d < 16.0:
+        return _DIFF_BANDS["medium"]
+    if d < 20.0:
+        return _DIFF_BANDS["hard"]
+    return _DIFF_BANDS["expert"]
+
+
+def _diff_d(settings: dict[str, Any]) -> float:
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        try:
+            return max(0.0, float(settings["difficulty"]))
+        except (TypeError, ValueError):
+            pass
+    tier = str(settings.get("difficulty_tier", "")).strip().lower()
+    return {"easy": 0.0, "medium": 8.0, "hard": 16.0}.get(tier, _d(settings))
+
+
+def _diff_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [DIFFERENTIALS_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _diff_poly_y(rng: random.Random, coeffs: list[int], x: str) -> str:
+    """Old-path poly display: standard / reversed / factored x(x+b)."""
+    from question_engine.generators.calculus_pilot import _poly_display
+
+    style = rng.choice(["standard", "reversed", "factored_linear"])
+    return _poly_display(coeffs, x, style=style)
+
+
+def _sample_diff_poly_power(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D=0: y=x^n, n∈{2,3,4,5}."""
+    n = rng.randint(2, 5)
+    y = f"{x}^{{{n}}}"
+    dy = rf"{n}{x}^{{{n - 1}}}\,d{x}" if n - 1 != 1 else rf"{n}{x}\,d{x}"
+    if n - 1 == 0:
+        dy = rf"{n}\,d{x}"
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy={dy}",
+        "differential",
+        "poly_power",
+        {"n": n, "variant": f"power:{n}"},
+    )
+
+
+def _sample_diff_poly_quad(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D=0: OpenStax Ex. 4.8 y=x^2+bx (also reversed / factored)."""
+    b = rng.randint(1, 5)
+    coeffs = [1, b, 0]
+    y = _diff_poly_y(rng, coeffs, x)
+    inner = format_linear_latex(2, b, variable=x)
+    dy = rf"\left({inner}\right)\,d{x}"
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy={dy}",
+        "differential",
+        "poly_quad",
+        {"b": b},
+    )
+
+
+def _sample_diff_trig(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D=0: y=sin/cos/tan (OpenStax Ex. 4.8 includes cos x)."""
+    fn = rng.choice(["sin", "cos", "tan"])
+    if fn == "sin":
+        y = rng.choice([rf"\sin({x})", rf"\sin {x}"])
+        dy = rf"\cos({x})\,d{x}"
+    elif fn == "cos":
+        y = rng.choice([rf"\cos({x})", rf"\cos {x}"])
+        dy = rf"-\sin({x})\,d{x}"
+    else:
+        y = rf"\tan({x})"
+        dy = rf"\sec^{{2}}({x})\,d{x}"
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy={dy}",
+        "differential",
+        "trig",
+        {"variant": fn},
+    )
+
+
+def _sample_diff_exp(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D=0 leftover: y=e^{kx} / exp(kx)."""
+    k = rng.randint(1, 4)
+    form = rng.choice(["e", "exp"])
+    y = rng.choice(
+        [
+            rf"e^{{{k}{x}}}" if k != 1 else rf"e^{{{x}}}",
+            rf"\exp({k}{x})" if k != 1 else rf"\exp({x})",
+        ]
+    )
+    dy = rf"{k}e^{{{k}{x}}}\,d{x}" if k != 1 else rf"e^{{{x}}}\,d{x}"
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy={dy}",
+        "differential",
+        "exp",
+        {"k": k, "variant": f"{form}:k{k}"},
+    )
+
+
+def _sample_diff_ln(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D=0 leftover: y=ln x / ln|x| / log(x)."""
+    form = rng.choice(["ln", "ln_abs", "log"])
+    y = rng.choice([rf"\ln({x})", rf"\ln|{x}|", rf"\log({x})"])
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy=\frac{{1}}{{{x}}}\,d{x}",
+        "differential",
+        "ln",
+        {"variant": form},
+    )
+
+
+def _sample_diff_radical(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D≥5 unlock: y=√x or x^{1/2}."""
+    form = rng.choice(["sqrt", "half_power"])
+    y = rng.choice([rf"\sqrt{{{x}}}", rf"{x}^{{1/2}}"])
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy=\frac{{1}}{{2\sqrt{{{x}}}}}\,d{x}",
+        "differential",
+        "radical",
+        {"variant": form},
+    )
+
+
+def _sample_diff_reciprocal(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D≥5 unlock: y=1/x or x^{-1}."""
+    form = rng.choice(["frac", "neg_power"])
+    y = rng.choice([rf"\frac{{1}}{{{x}}}", rf"{x}^{{-1}}"])
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy=-\frac{{1}}{{{x}^{{2}}}}\,d{x}",
+        "differential",
+        "reciprocal",
+        {"variant": form},
+    )
+
+
+def _sample_diff_product(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path nested: y=x sin x."""
+    form = rng.choice(["juxtapose", "sin_first", "cdot"])
+    y = rng.choice(
+        [rf"{x}\sin({x})", rf"\sin({x})\,{x}", rf"{x}\cdot\sin({x})"]
+    )
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy=\left(\sin({x})+{x}\cos({x})\right)\,d{x}",
+        "differential",
+        "product",
+        {"variant": form},
+    )
+
+
+def _sample_diff_quotient(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path nested: y=x/(x+1)."""
+    form = rng.choice(["frac", "neg_power"])
+    y = rng.choice(
+        [
+            rf"\frac{{{x}}}{{{x}+1}}",
+            rf"{x}({x}+1)^{{-1}}",
+        ]
+    )
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy=\frac{{1}}{{\left({x}+1\right)^{{2}}}}\,d{x}",
+        "differential",
+        "quotient",
+        {"variant": form},
+    )
+
+
+def _sample_diff_chain_exp(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path nested: y=e^{x^2}."""
+    form = rng.choice(["e", "exp"])
+    y = rng.choice([rf"e^{{{x}^{{2}}}}", rf"\exp({x}^{{2}})"])
+    return AppDiffItem(
+        rf"\text{{For }}y={y},\text{{ find }}dy.",
+        rf"dy=2{x}e^{{{x}^{{2}}}}\,d{x}",
+        "differential",
+        "chain_exp",
+        {"variant": form},
+    )
+
+
+def _sample_diff_eval_dx(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path nested: OpenStax Ex. 4.8 evaluate dy at x=a, dx=h."""
+    a = rng.randint(2, 5)
+    h = rng.choice([Fraction(1, 10), Fraction(1, 5), Fraction(1, 2)])
+    b = rng.randint(1, 4)
+    coeffs = [1, b, 0]
+    y = _diff_poly_y(rng, coeffs, x)
+    slope = 2 * a + b
+    dy_val = frac_latex(Fraction(slope) * h)
+    prompt = (
+        rf"\text{{For }}y={y},\text{{ find }}dy\text{{ when }}"
+        rf"{x}={a}\text{{ and }}d{x}={frac_latex(h)}."
+    )
+    return AppDiffItem(
+        prompt, dy_val, "differential evaluation", "eval_dx",
+        {"a": a, "h": str(h), "b": b},
+    )
+
+
+_DIFF_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "poly_power": _sample_diff_poly_power,
+    "poly_quad": _sample_diff_poly_quad,
+    "trig": _sample_diff_trig,
+    "exp": _sample_diff_exp,
+    "ln": _sample_diff_ln,
+    "radical": _sample_diff_radical,
+    "reciprocal": _sample_diff_reciprocal,
+    "product": _sample_diff_product,
+    "quotient": _sample_diff_quotient,
+    "chain_exp": _sample_diff_chain_exp,
+    "eval_dx": _sample_diff_eval_dx,
+}
+
+
+def sample_differentials(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """dy = f'(x) dx. High D locks out D=0 log/power leftovers; D=22 nested only."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _diff_d(settings)
+    forms = differential_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _diff_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _DIFF_BUILDERS:
+        fid = forms[0]
+    item = _DIFF_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": DIFFERENTIALS_GENERATOR,
+        "structure_id": f"{DIFFERENTIALS_GENERATOR}:{fid}",
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": DIFFERENTIALS_GENERATOR,
         },
     }
     return AppDiffItem(
@@ -1967,6 +2253,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "curve_sketching": sample_curve_sketching,
     "graphical_f_fp": sample_graphical_f_fp,
     "related_rates": sample_related_rates,
+    "differentials": sample_differentials,
 }
 
 

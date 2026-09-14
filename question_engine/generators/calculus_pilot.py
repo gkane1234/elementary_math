@@ -575,155 +575,47 @@ def _tangent_normal_line(topic: str, settings: dict) -> list[Question]:
 
 
 def _differential_families(structure: dict) -> list[str]:
+    """Leftover bands (easy mix; lock out log/power at high D; D=22 nested only)."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        differential_forms_for_difficulty,
+    )
+
     d = float(structure.get("difficulty", 8.0))
-    families = ["poly_power", "poly_quad"]
-    if structure.get("allow_trig") or d < 6.0:
-        # Keep a light trig sample at low D (OpenStax 4.2 includes cos x early).
-        families.append("trig")
-    if d >= 5.0:
-        families.extend(["radical", "reciprocal"])
-    if structure.get("allow_exp"):
-        families.append("exp")
-    if structure.get("allow_ln") or d >= 12.0:
-        families.append("ln")
-    if structure.get("allow_nested") or d >= 14.0:
-        families.extend(["product", "quotient", "chain_exp", "eval_dx"])
-    elif d >= 10.0:
-        families.append("eval_dx")
-    return families
+    return list(differential_forms_for_difficulty(d))
 
 
 def _differentials(topic: str, settings: dict) -> list[Question]:
+    """Delegate to leftover-lockout sampler (same builders, exclusive bands)."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        DIFFERENTIALS_GENERATOR,
+        sample_differentials,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _pilot_structure(settings)
-    x = str(settings.get("variable", "x"))
-    last: dict = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        family = random.choice(_differential_families(structure))
-        variant: str | None = None
-
-        if family == "poly_power":
-            n = random.randint(2, 5)
-            y = f"{x}^{{{n}}}"
-            dy = rf"{n}{x}^{{{n - 1}}}\,d{x}" if n - 1 != 1 else rf"{n}{x}\,d{x}"
-            if n - 1 == 0:
-                dy = rf"{n}\,d{x}"
-            variant = f"power:{n}"
-        elif family == "poly_quad":
-            # OpenStax: y = x^2 + 2x — also reversed / factored
-            b = random.randint(1, 5)
-            coeffs = [1, b, 0]
-            style = random.choice(["standard", "reversed", "factored_linear"])
-            y = _poly_display(coeffs, x, style=style)
-            # dy = (2x+b) dx
-            inner = format_linear_latex(2, b, variable=x)
-            dy = rf"\left({inner}\right)\,d{x}"
-            variant = style
-        elif family == "trig":
-            fn = random.choice(["sin", "cos", "tan"])
-            variant = fn
-            # alternate: sin x vs \sin(x)
-            if fn == "sin":
-                y = random.choice([rf"\sin({x})", rf"\sin {x}"])
-                dy = rf"\cos({x})\,d{x}"
-            elif fn == "cos":
-                y = random.choice([rf"\cos({x})", rf"\cos {x}"])
-                dy = rf"-\sin({x})\,d{x}"
-            else:
-                y = rf"\tan({x})"
-                dy = rf"\sec^{{2}}({x})\,d{x}"
-        elif family == "exp":
-            k = random.randint(1, 4)
-            form = random.choice(["e", "exp"])
-            variant = f"{form}:k{k}"
-            y = random.choice(
-                [
-                    rf"e^{{{k}{x}}}" if k != 1 else rf"e^{{{x}}}",
-                    rf"\exp({k}{x})" if k != 1 else rf"\exp({x})",
-                ]
-            )
-            dy = (
-                rf"{k}e^{{{k}{x}}}\,d{x}"
-                if k != 1
-                else rf"e^{{{x}}}\,d{x}"
-            )
-        elif family == "radical":
-            form = random.choice(["sqrt", "half_power"])
-            variant = form
-            y = random.choice([rf"\sqrt{{{x}}}", rf"{x}^{{1/2}}"])
-            dy = rf"\frac{{1}}{{2\sqrt{{{x}}}}}\,d{x}"
-        elif family == "reciprocal":
-            form = random.choice(["frac", "neg_power"])
-            variant = form
-            y = random.choice([rf"\frac{{1}}{{{x}}}", rf"{x}^{{-1}}"])
-            dy = rf"-\frac{{1}}{{{x}^{{2}}}}\,d{x}"
-        elif family == "product":
-            # y = x sin x
-            form = random.choice(["juxtapose", "sin_first", "cdot"])
-            variant = form
-            y = random.choice(
-                [rf"{x}\sin({x})", rf"\sin({x})\,{x}", rf"{x}\cdot\sin({x})"]
-            )
-            dy = rf"\left(\sin({x})+{x}\cos({x})\right)\,d{x}"
-        elif family == "quotient":
-            form = random.choice(["frac", "neg_power"])
-            variant = form
-            y = random.choice(
-                [
-                    rf"\frac{{{x}}}{{{x}+1}}",
-                    rf"{x}({x}+1)^{{-1}}",
-                ]
-            )
-            dy = rf"\frac{{1}}{{\left({x}+1\right)^{{2}}}}\,d{x}"
-        elif family == "chain_exp":
-            # y = e^{x^2}
-            form = random.choice(["e", "exp"])
-            variant = form
-            y = random.choice([rf"e^{{{x}^{{2}}}}", rf"\exp({x}^{{2}})"])
-            dy = rf"2{x}e^{{{x}^{{2}}}}\,d{x}"
-        elif family == "ln":
-            form = random.choice(["ln", "ln_abs", "log"])
-            variant = form
-            y = random.choice([rf"\ln({x})", rf"\ln|{x}|", rf"\log({x})"])
-            dy = rf"\frac{{1}}{{{x}}}\,d{x}"
-        else:  # eval_dx — OpenStax style: find dy when x=a, dx=h
-            a = random.randint(2, 5)
-            h = random.choice([Fraction(1, 10), Fraction(1, 5), Fraction(1, 2)])
-            b = random.randint(1, 4)
-            coeffs = [1, b, 0]
-            style = random.choice(["standard", "reversed", "factored_linear"])
-            variant = style
-            y = _poly_display(coeffs, x, style=style)
-            # dy = (2x+b) dx at x=a
-            slope = 2 * a + b
-            dy_val = frac_latex(Fraction(slope) * h)
-            prompt = (
-                rf"\text{{For }}y={y},\text{{ find }}dy\text{{ when }}"
-                rf"{x}={a}\text{{ and }}d{x}={frac_latex(h)}."
-            )
-            answer = dy_val
-            last["meta"] = _family_structure_meta(
-                family,
-                generator="differentials",
-                structure=structure,
-                variant=variant,
-            )
-            return prompt, "differential evaluation", answer if include_answer_key else None
-
-        last["meta"] = _family_structure_meta(
-            family,
-            generator="differentials",
-            structure=structure,
-            variant=variant,
-        )
-        prompt = rf"\text{{For }}y={y},\text{{ find }}dy."
-        answer = rf"dy={dy}"
-        return prompt, "differential", answer if include_answer_key else None
+        item = sample_differentials(random, settings)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": DIFFERENTIALS_GENERATOR,
+            "structure_id": f"{DIFFERENTIALS_GENERATOR}:{fid}",
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": DIFFERENTIALS_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
     def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
-        return dict(last.get("meta") or {})
+        return dict(getattr(build, "_last_meta", {}) or {})
 
     return _make_questions(
         topic,

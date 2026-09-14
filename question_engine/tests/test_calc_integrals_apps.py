@@ -587,6 +587,80 @@ def test_volume_shell_d0_linear_high_d_line_lockout():
     assert expert == {"vsh_line"}
 
 
+def test_volume_cross_sections_d0_square_high_d_semi_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        volume_cross_sections_forms_for_difficulty,
+    )
+
+    assert volume_cross_sections_forms_for_difficulty(0) == ("vcs_square",)
+    med = volume_cross_sections_forms_for_difficulty(8)
+    assert "vcs_square" in med and "vcs_equilateral" in med
+    assert "vcs_semicircle" not in med
+    hard = volume_cross_sections_forms_for_difficulty(16)
+    assert "vcs_square" not in hard
+    assert hard == ("vcs_equilateral", "vcs_semicircle")
+    assert volume_cross_sections_forms_for_difficulty(22) == ("vcs_semicircle",)
+
+    q0 = _gen(
+        "calc_app_int_volume_of_solids_with_known_cross_sections", 0, seed=101
+    )[0]
+    assert (q0.metadata or {}).get("form_id") == "vcs_square"
+    assert (q0.metadata or {}).get("generator") == "volume_cross_sections"
+    p0 = q0.prompt_latex or ""
+    assert "square cross sections" in p0
+    assert "equilateral" not in p0
+    assert "semicircle" not in p0
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "vcs_square"
+    assert snap.get("generator") == "volume_cross_sections"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_app_int_volume_of_solids_with_known_cross_sections", 8, seed=seed
+        )[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "volume_cross_sections"
+        p = q.prompt_latex or ""
+        assert "semicircle" not in p
+        assert "square" in p or "equilateral" in p
+    assert "vcs_square" in mid
+    assert "vcs_equilateral" in mid
+    assert mid <= {"vcs_square", "vcs_equilateral"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen(
+            "calc_app_int_volume_of_solids_with_known_cross_sections", 16, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "vcs_square"
+        p = q.prompt_latex or ""
+        assert "square cross sections" not in p
+        assert (q.metadata or {}).get("generator") == "volume_cross_sections"
+    assert high <= {"vcs_equilateral", "vcs_semicircle"}
+    assert "vcs_semicircle" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_app_int_volume_of_solids_with_known_cross_sections", 22, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "vcs_semicircle"
+        p = q.prompt_latex or ""
+        assert "semicircles with diameter" in p
+        assert "square" not in p
+        assert "equilateral" not in p
+        assert (q.metadata or {}).get("generator") == "volume_cross_sections"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "vcs_semicircle"
+        assert snap.get("generator") == "volume_cross_sections"
+    assert expert == {"vcs_semicircle"}
+
+
 def test_volume_shell_quality_weights_tilt():
     from contextlib import nullcontext
     import random as _random
@@ -612,6 +686,33 @@ def test_volume_shell_quality_weights_tilt():
     baseline = _counts(None)
     tilted = _counts({"vsh_linear": -2.5, "vsh_quadratic": 2.5})
     assert tilted["vsh_quadratic"] > baseline["vsh_quadratic"]
+
+
+def test_volume_cross_sections_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_volume_cross_sections,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_volume_cross_sections(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"vcs_square": -2.5, "vcs_equilateral": 2.5})
+    assert tilted["vcs_equilateral"] > baseline["vcs_equilateral"]
 
 
 def test_def_int_mean_value_d0_linear_high_d_quad_coef_lockout():

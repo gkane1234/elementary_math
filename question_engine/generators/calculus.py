@@ -913,22 +913,6 @@ def _mean_value_theorem(topic: str, settings: dict) -> list[Question]:
     return APP["mean_value_theorem"](topic, settings)
 
 
-def _pi_frac(numer: int, denom: int) -> str:
-    """Format (numer/denom)·π as tidy LaTeX."""
-    value = Fraction(numer, denom)
-    if value.denominator == 1:
-        if value.numerator == 1:
-            return r"\pi"
-        if value.numerator == -1:
-            return r"-\pi"
-        return rf"{value.numerator}\pi"
-    if value.numerator == 1:
-        return rf"\frac{{\pi}}{{{value.denominator}}}"
-    if value.numerator == -1:
-        return rf"-\frac{{\pi}}{{{value.denominator}}}"
-    return rf"\frac{{{value.numerator}\pi}}{{{value.denominator}}}"
-
-
 def _volume_disk_washer(topic: str, settings: dict) -> list[Question]:
     """Rotate about the x-axis; leftover lockout of disk y=x."""
     from question_engine.frameworks.primitives.calc_app_diff import (
@@ -1014,42 +998,45 @@ def _volume_shell(topic: str, settings: dict) -> list[Question]:
 
 
 def _volume_cross_sections(topic: str, settings: dict) -> list[Question]:
+    """Known cross sections; leftover lockout of exclusive squares."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        VOLUME_CROSS_SECTIONS_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    from question_engine.settings.params import calc_application_structure_from_continuous
-
-    structure = calc_application_structure_from_continuous(settings)
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        if structure is not None:
-            n = random.randint(2, max(2, int(structure["bound_max"])))
-            band = structure["band"]
-        else:
-            n = random.randint(2, 5)
-            band = tier
-        if band == "easy":
-            prompt = (
-                rf"\text{{A solid has square cross sections of side length }}{x}"
-                rf"\text{{ for }}0\le {x}\le {n}.\text{{ Find its volume.}}"
-            )
-            answer = frac_latex(Fraction(n**3, 3))
-        elif band == "medium":
-            prompt = (
-                rf"\text{{A solid has equilateral-triangle cross sections of side }}{x}"
-                rf"\text{{ for }}0\le {x}\le {n}.\text{{ Find its volume.}}"
-            )
-            answer = rf"\frac{{{n**3}\sqrt{{3}}}}{{12}}"
-        else:
-            prompt = (
-                rf"\text{{Cross sections perpendicular to the }}{x}\text{{-axis on }}[0,{n}]"
-                rf"\text{{ are semicircles with diameter }}{x}.\text{{ Find the volume.}}"
-            )
-            answer = _pi_frac(n**3, 24)
-        return prompt, "volume cross sections", answer if include_answer_key else None
+        item = sample_app_diff("volume_cross_sections", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": VOLUME_CROSS_SECTIONS_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": VOLUME_CROSS_SECTIONS_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _integral_log_exp(topic: str, settings: dict) -> list[Question]:

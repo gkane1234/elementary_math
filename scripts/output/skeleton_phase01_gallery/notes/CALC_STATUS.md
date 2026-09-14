@@ -58,6 +58,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Area between curves: leftover lockout of exclusive cliffs and of \(y=k-x\) vs \(y=0\) at expert; still five frozen old builders (no Ex. 6.1 two-line / Ex. 6.2 parabola-vs-line / \(dy\)); D=22 is frozen \(y=x\) vs \(y=x^{2}\)
 - Volume disks/washers: leftover lockout of disk \(y=x\) shipped (already in `volume_methods`); still three frozen old builders (no Ex. 6.8 \(\sqrt{x}\) / Ex. 6.10 washer \(1/x\) / \(y\)-axis); D=16/22 washer \(y=n\) vs \(y=x\) only
 - Volume by cylinders: leftover lockout of exclusive \(y=x\) shipped; still three frozen old builders (no Ex. 6.12 \(1/x\) / Ex. 6.13 \(2x-x^{2}\) / \(x\)-axis shells); D=16 can still emit \(y=x^{2}\) leftover
+- Volume known cross sections: leftover lockout of exclusive squares shipped; still three frozen old builders (no Ex. 6.6 pyramid / Ex. 68 circular-base squares / Ex. 69 triangular-base semicircles / Ex. 72 isosceles); D=16 can still emit equilateral leftover
 
 - Motion along a line (diff): leftover lockout + Ex. 3.36/3.35 cubics shipped; still no free-fall \(-16t^{2}\) / piecewise / trig / \(s(t)\) graph
 - Motion along a line revisited (integral): leftover lockout of \(v=2t\) shipped; still no \(\int|v|\) distance / Ex. 5.24 nonzero net / quadratic \(v(t)\)
@@ -91,6 +92,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_app_int_volume_of_solids_with_known_cross_sections`:** Leftover lockout of exclusive cliffs / D=0 square. D=0 square of side \(x\) on \([0,n]\) (old easy); D=8 leftover square + equilateral; D=16 equilateral leftover + semicircle (no square); D=22 semicircle only. Stamps `form_id` + `generator=volume_cross_sections`; `select_form_id` / `live_quality_form_weights`. Did not invent pyramid / circular-base / triangular-base / isosceles cores.
 - **`calc_app_int_volume_by_cylinders`:** Leftover lockout of exclusive cliffs / D=0 \(y=x\). D=0 shell \(y=x\) on \([0,n]\) (old easy); D=8 leftover linear + shell \(y=x^{2}\); D=16 \(x^{2}\) leftover + \(y=n-x\) (no \(y=x\)); D=22 \(y=n-x\) only. Stamps `form_id` + `generator=volume_shell`; `select_form_id` / `live_quality_form_weights`. Did not invent \(1/x\) / \(2x-x^{2}\) / \(x\)-axis cores.
 - **`calc_app_int_volume_by_slicing_disks_and_washers`:** Leftover lockout of disk \(y=x\) (already dropped at high D in `volume_methods`; now stamps `form_id` + `generator=volume_disk_washer`). D=0 disk \(y=x\) on \([0,n]\) (old easy); D=8 leftover disk linear + disk \(y=x^{2}\); D=16/22 washer \(y=n\) vs \(y=x\) only (no disk leftover). `select_form_id` / `live_quality_form_weights`. Did not invent \(\sqrt{x}\) / \(1/x\) / \(y\)-axis cores.
 - **`calc_def_int_riemann_sum_tables`:** Leftover lockout of D=0 3-point left. D=0 \(f(0),f(1),f(2)\) left on \([0,2]\) (old easy); D=8 leftover 3-point + 4-point L/R; D=16 4-point leftover + midpoint (no 3-point left); D=22 midpoint only. Stamps `form_id` + `generator=riemann_sum_tables`; `select_form_id` / `live_quality_form_weights`.

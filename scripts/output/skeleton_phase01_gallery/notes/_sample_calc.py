@@ -280,6 +280,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Find the volume of a solid of revolution by cylindrical shells about the y-axis.",
         "engine": "calc_app_diff `volume_shell` (linear leftover / quadratic leftover / y=n-x).",
     },
+    "calc_app_int_volume_of_solids_with_known_cross_sections": {
+        "flag_why": "Shipped leftover lockout of exclusive squares; LIMITATIONS three frozen old builders / no Ex. 6.6 pyramid / Ex. 68 circular-base squares / Ex. 69 triangular-base semicircles.",
+        "skill": "Find the volume of a solid whose cross sections are a given shape (integrate area).",
+        "engine": "calc_app_diff `volume_cross_sections` (square leftover / equilateral leftover / semicircle).",
+    },
     "calc_app_diff_slope_tangent_and_normal_lines": {
         "flag_why": "Shipped leftover lockout of D=0 poly/trig/exp/ln; LIMITATIONS no implicit/folium / x·5^x normals.",
         "skill": "Find the tangent (and sometimes normal) line to y=f(x) at x=a.",

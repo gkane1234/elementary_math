@@ -31,6 +31,7 @@ Kind = Literal[
     "area_between_curves",
     "volume_disk_washer",
     "volume_shell",
+    "volume_cross_sections",
     "def_int_mean_value",
     "riemann_sum_tables",
     "de_intro",
@@ -2978,6 +2979,136 @@ def sample_volume_shell(rng: random.Random, settings: dict[str, Any]) -> AppDiff
     )
 
 
+VOLUME_CROSS_SECTIONS_GENERATOR = "volume_cross_sections"
+
+_VCS_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("vcs_square",),
+    "medium": ("vcs_square", "vcs_equilateral"),
+    "hard": ("vcs_equilateral", "vcs_semicircle"),
+    "expert": ("vcs_semicircle",),
+}
+
+
+def volume_cross_sections_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of exclusive cliffs (old band == easy/medium/hard)."""
+    if d < 8.0:
+        return _VCS_BANDS["easy"]
+    if d < 16.0:
+        return _VCS_BANDS["medium"]
+    if d < 20.0:
+        return _VCS_BANDS["hard"]
+    return _VCS_BANDS["expert"]
+
+
+def _vcs_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [VOLUME_CROSS_SECTIONS_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _vcs_bound_max(settings: dict[str, Any]) -> int:
+    """Copy old ``_volume_cross_sections`` bound_max from application structure."""
+    structure = calc_application_structure_from_continuous(settings)
+    if structure is not None:
+        return max(2, int(structure.get("bound_max", 4)))
+    return 5
+
+
+def _sample_vcs_square(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old-path D=0: square cross sections of side x on [0, n]."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{A solid has square cross sections of side length }}{x}"
+        rf"\text{{ for }}0\le {x}\le {n}.\text{{ Find its volume.}}"
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(n**3, 3)), "volume cross sections",
+        "vcs_square", {"n": n},
+    )
+
+
+def _sample_vcs_equilateral(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old mid: equilateral-triangle cross sections of side x on [0, n]."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{A solid has equilateral-triangle cross sections of side }}{x}"
+        rf"\text{{ for }}0\le {x}\le {n}.\text{{ Find its volume.}}"
+    )
+    # Old path left n^3/12 unreduced (e.g. 64√3/12, not 16√3/3).
+    return AppDiffItem(
+        prompt, rf"\frac{{{n**3}\sqrt{{3}}}}{{12}}", "volume cross sections",
+        "vcs_equilateral", {"n": n},
+    )
+
+
+def _sample_vcs_semicircle(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old exclusive high D: semicircles with diameter x on [0, n]."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{Cross sections perpendicular to the }}{x}\text{{-axis on }}[0,{n}]"
+        rf"\text{{ are semicircles with diameter }}{x}.\text{{ Find the volume.}}"
+    )
+    return AppDiffItem(
+        prompt, _vdw_pi_frac(n**3, 24), "volume cross sections",
+        "vcs_semicircle", {"n": n},
+    )
+
+
+def sample_volume_cross_sections(
+    rng: random.Random, settings: dict[str, Any]
+) -> AppDiffItem:
+    """Known cross sections. High D locks out leftover squares."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = volume_cross_sections_forms_for_difficulty(d)
+    n_hi = _vcs_bound_max(settings)
+    x = str(settings.get("variable", "x"))
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _vcs_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "vcs_square" and fid in forms:
+        item = _sample_vcs_square(rng, x, n_hi)
+    elif fid == "vcs_equilateral" and fid in forms:
+        item = _sample_vcs_equilateral(rng, x, n_hi)
+    elif fid == "vcs_semicircle" and fid in forms:
+        item = _sample_vcs_semicircle(rng, x, n_hi)
+    else:
+        fid = forms[0]
+        if fid == "vcs_equilateral":
+            item = _sample_vcs_equilateral(rng, x, n_hi)
+        elif fid == "vcs_semicircle":
+            item = _sample_vcs_semicircle(rng, x, n_hi)
+        else:
+            item = _sample_vcs_square(rng, x, n_hi)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": VOLUME_CROSS_SECTIONS_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": VOLUME_CROSS_SECTIONS_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 DE_INTRO_GENERATOR = "de_introduction"
 
 _DE_INTRO_BANDS: dict[str, tuple[str, ...]] = {
@@ -3710,6 +3841,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "area_between_curves": sample_area_between_curves,
     "volume_disk_washer": sample_volume_disk_washer,
     "volume_shell": sample_volume_shell,
+    "volume_cross_sections": sample_volume_cross_sections,
     "def_int_mean_value": sample_def_int_mean_value,
     "riemann_sum_tables": sample_riemann_sum_tables,
     "de_intro": sample_de_intro,

@@ -2837,7 +2837,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_int_volume_of_solids_with_known_cross_sections",
         "App — known cross sections",
-        "Square / equilateral / semicircle. OpenStax Vol 1 §6.2.",
+        "Leftover lockout: D=0 square; D=8 leftover square + equilateral; "
+        "D=16 equilateral leftover + semicircle (no square); D=22 semicircle only. "
+        "Text square/equilateral/semicircle, no figures. OpenStax Vol 1 §6.2.",
     ),
 
     (

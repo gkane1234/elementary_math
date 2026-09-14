@@ -28,10 +28,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\int \\frac{3\\left(\\cos(2x)\\right)-1}{\\left(\\cos(2x)\\right)\\left(\\cos(2x)-1\\right)}\\left(-2\\sin(2x)\\right)\\,dx",
-      "answer_latex": "\\ln|\\left(\\cos(2x)\\right)|+2\\ln|\\left(\\cos(2x)-1\\right)|+C",
+      "prompt_latex": "\\int \\frac{3\\left(e^{3x}\\right)-1}{\\left(e^{3x}\\right)\\left(e^{3x}-1\\right)}\\cdot 3e^{3x}\\,dx",
+      "answer_latex": "\\ln|\\left(e^{3x}\\right)|+2\\ln|\\left(e^{3x}-1\\right)|+C",
       "skeleton_pattern": "",
-      "form_id": "u_sub_then_pfd_trig",
+      "form_id": "u_sub_then_pfd_exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -44,11 +44,18 @@
         ],
         [
           "form_id",
-          "u_sub_then_pfd_trig"
+          "u_sub_then_pfd_exp"
         ],
         [
           "openstax_form",
-          "u_sub_then_pfd_trig"
+          "u_sub_then_pfd_exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
         ],
         [
           "construction",
@@ -60,8 +67,8 @@
         ]
       ],
       "metadata": {
-        "family": "u_sub_then_pfd_trig",
-        "structure_id": "integral_multi_trick:u_sub_then_pfd_trig",
+        "family": "u_sub_then_pfd_exp",
+        "structure_id": "integral_multi_trick:u_sub_then_pfd_exp",
         "technique": "u_sub+pfd",
         "tricks_required": [
           "u_sub",
@@ -73,8 +80,8 @@
         ],
         "function_classes": [
           "algebraic",
-          "log",
-          "trig"
+          "exp",
+          "log"
         ],
         "upgrades": [
           "use_pfd",
@@ -124,13 +131,16 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
                 "trick": "u_sub",
                 "input_kind": "1",
                 "transform": "compose_transcendental_inner",
-                "notes": "u=\\cos(2x), du factor=-2\\sin(2x)"
+                "notes": "u=e^{3x}, du factor=3e^{3x}"
               },
               {
                 "trick": "pfd",
@@ -146,7 +156,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__trig_cos"
+          "family": "u_sub_then_pfd_exp",
+          "form_id": "u_sub_then_pfd_exp",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -158,7 +171,7 @@
           "degree_max": 3,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 58,
+          "answer_len": 54,
           "nest_depth": 2,
           "pack": "integral_multi_trick",
           "methods": [
@@ -187,16 +200,16 @@
           ],
           "length": 2
         },
-        "shape_id": "u_sub_then_pfd_trig",
+        "shape_id": "u_sub_then_pfd_exp",
         "construction": "pipeline_shared_u_sub",
         "difficulty_costs": [],
         "difficulty_cost_total": 0.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "u_sub_then_pfd_trig",
-        "u_latex": "\\cos(2x)",
-        "du_factor": "-2\\sin(2x)",
-        "u_inner_family": "trig_cos",
+        "core_form_id": "u_sub_then_pfd_exp",
+        "u_latex": "e^{3x}",
+        "du_factor": "3e^{3x}",
+        "u_inner_family": "exp",
         "u_sub_spec": {
           "pack": "u_sub_pfd_wrap",
           "variable": "x",
@@ -204,9 +217,7 @@
           "coef_abs_max": 6,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "poly",
-            "trig"
+            "exp"
           ],
           "u_outer_allowed": [
             "power"
@@ -241,8 +252,8 @@
           "level": "L4",
           "has_quadratic": false
         },
-        "openstax_form": "u_sub_then_pfd_trig",
-        "form_id": "u_sub_then_pfd_trig",
+        "openstax_form": "u_sub_then_pfd_exp",
+        "form_id": "u_sub_then_pfd_exp",
         "catalog_id": "partial_fractions",
         "generation_settings": {
           "allow_substitution": true,
@@ -273,8 +284,8 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "\\int \\frac{0\\left(\\sin(x)\\right)+1}{\\left(\\sin(x)-1\\right)\\left(\\sin(x)-2\\right)}\\cdot \\cos(x)\\,dx",
-      "answer_latex": "-\\ln|\\left(\\sin(x)-1\\right)|+\\ln|\\left(\\sin(x)-2\\right)|+C",
+      "prompt_latex": "\\int \\frac{0\\left(\\sin(2x)\\right)+1}{\\left(\\sin(2x)-1\\right)\\left(\\sin(2x)-2\\right)}\\cdot 2\\cos(2x)\\,dx",
+      "answer_latex": "-\\ln|\\left(\\sin(2x)-1\\right)|+\\ln|\\left(\\sin(2x)-2\\right)|+C",
       "skeleton_pattern": "",
       "form_id": "u_sub_then_pfd_trig",
       "diagram_svg": "",
@@ -294,6 +305,13 @@
         [
           "openstax_form",
           "u_sub_then_pfd_trig"
+        ],
+        [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
         ],
         [
           "construction",
@@ -369,13 +387,16 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
                 "trick": "u_sub",
                 "input_kind": "1",
                 "transform": "compose_transcendental_inner",
-                "notes": "u=\\sin(x), du factor=\\cos(x)"
+                "notes": "u=\\sin(2x), du factor=2\\cos(2x)"
               },
               {
                 "trick": "pfd",
@@ -391,7 +412,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__trig_sin"
+          "family": "u_sub_then_pfd_trig",
+          "form_id": "u_sub_then_pfd_trig",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -403,7 +427,7 @@
           "degree_max": 3,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 58,
+          "answer_len": 60,
           "nest_depth": 2,
           "pack": "integral_multi_trick",
           "methods": [
@@ -439,8 +463,8 @@
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
         "core_form_id": "u_sub_then_pfd_trig",
-        "u_latex": "\\sin(x)",
-        "du_factor": "\\cos(x)",
+        "u_latex": "\\sin(2x)",
+        "du_factor": "2\\cos(2x)",
         "u_inner_family": "trig_sin",
         "u_sub_spec": {
           "pack": "u_sub_pfd_wrap",
@@ -449,8 +473,6 @@
           "coef_abs_max": 6,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "poly",
             "trig"
           ],
           "u_outer_allowed": [
@@ -518,8 +540,8 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "\\int 3\\frac{3x + 3-7}{\\left(3x + 3-3\\right)\\left(3x + 3+1\\right)}\\,dx",
-      "answer_latex": "-\\ln|\\left(3x + 3-3\\right)|+2\\ln|\\left(3x + 3+1\\right)|+C",
+      "prompt_latex": "\\int \\frac{e^{x}-7}{\\left(e^{x}-3\\right)\\left(e^{x}+1\\right)}e^{x}\\,dx",
+      "answer_latex": "-\\ln|\\left(e^{x}-3\\right)|+2\\ln|\\left(e^{x}+1\\right)|+C",
       "skeleton_pattern": "",
       "form_id": "u_sub_then_pfd_exp",
       "diagram_svg": "",
@@ -539,6 +561,13 @@
         [
           "openstax_form",
           "u_sub_then_pfd_exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
         ],
         [
           "construction",
@@ -563,6 +592,7 @@
         ],
         "function_classes": [
           "algebraic",
+          "exp",
           "log"
         ],
         "upgrades": [
@@ -613,13 +643,16 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
                 "trick": "u_sub",
                 "input_kind": "1",
                 "transform": "compose_transcendental_inner",
-                "notes": "u=3x + 3, du factor=3"
+                "notes": "u=e^{x}, du factor=e^{x}"
               },
               {
                 "trick": "pfd",
@@ -635,7 +668,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__poly_linear"
+          "family": "u_sub_then_pfd_exp",
+          "form_id": "u_sub_then_pfd_exp",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -647,7 +683,7 @@
           "degree_max": 3,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 57,
+          "answer_len": 55,
           "nest_depth": 2,
           "pack": "integral_multi_trick",
           "methods": [
@@ -683,9 +719,9 @@
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
         "core_form_id": "u_sub_then_pfd_exp",
-        "u_latex": "3x + 3",
-        "du_factor": "3",
-        "u_inner_family": "poly_linear",
+        "u_latex": "e^{x}",
+        "du_factor": "e^{x}",
+        "u_inner_family": "exp",
         "u_sub_spec": {
           "pack": "u_sub_pfd_wrap",
           "variable": "x",
@@ -693,9 +729,7 @@
           "coef_abs_max": 6,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "poly",
-            "trig"
+            "exp"
           ],
           "u_outer_allowed": [
             "power"
@@ -762,10 +796,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\int \\frac{2\\left(\\ln|3x + 3|\\right)+3}{\\left(\\ln|3x + 3|\\right)^{2}+9}\\frac{3}{3x + 3}\\,dx",
-      "answer_latex": "\\ln|\\ln|3x + 3| - 2|+\\ln|\\ln|3x + 3|^{2}+9|+\\arctan(\\frac{\\ln|3x + 3|}{3})+C",
+      "prompt_latex": "\\int \\frac{2\\left(\\cos(x)\\right)+3}{\\left(\\cos(x)\\right)^{2}+9}\\left(-\\sin(x)\\right)\\,dx",
+      "answer_latex": "\\ln|\\cos(x) - 2|+\\ln|\\cos(x)^{2}+9|+\\arctan(\\frac{\\cos(x)}{3})+C",
       "skeleton_pattern": "",
-      "form_id": "u_sub_then_pfd_log",
+      "form_id": "u_sub_then_pfd_trig",
       "diagram_svg": "",
       "debug": [
         [
@@ -778,11 +812,18 @@
         ],
         [
           "form_id",
-          "u_sub_then_pfd_log"
+          "u_sub_then_pfd_trig"
         ],
         [
           "openstax_form",
-          "u_sub_then_pfd_log"
+          "u_sub_then_pfd_trig"
+        ],
+        [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
         ],
         [
           "construction",
@@ -794,8 +835,8 @@
         ]
       ],
       "metadata": {
-        "family": "u_sub_then_pfd_log",
-        "structure_id": "integral_multi_trick:u_sub_then_pfd_log",
+        "family": "u_sub_then_pfd_trig",
+        "structure_id": "integral_multi_trick:u_sub_then_pfd_trig",
         "technique": "u_sub+pfd",
         "tricks_required": [
           "u_sub",
@@ -808,7 +849,8 @@
         "function_classes": [
           "algebraic",
           "invtrig",
-          "log"
+          "log",
+          "trig"
         ],
         "upgrades": [
           "extra_term",
@@ -861,13 +903,16 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
                 "trick": "u_sub",
                 "input_kind": "1",
                 "transform": "compose_transcendental_inner",
-                "notes": "u=\\ln|3x + 3|, du factor=\\frac{3}{3x + 3}"
+                "notes": "u=\\cos(x), du factor=-\\sin(x)"
               },
               {
                 "trick": "pfd",
@@ -883,7 +928,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__log"
+          "family": "u_sub_then_pfd_trig",
+          "form_id": "u_sub_then_pfd_trig",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -895,7 +943,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 76,
+          "answer_len": 64,
           "nest_depth": 2,
           "pack": "integral_multi_trick",
           "methods": [
@@ -924,7 +972,7 @@
           ],
           "length": 2
         },
-        "shape_id": "u_sub_then_pfd_log",
+        "shape_id": "u_sub_then_pfd_trig",
         "construction": "pipeline_shared_u_sub",
         "difficulty_costs": [
           {
@@ -946,10 +994,10 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
-        "core_form_id": "u_sub_then_pfd_log",
-        "u_latex": "\\ln|3x + 3|",
-        "du_factor": "\\frac{3}{3x + 3}",
-        "u_inner_family": "log",
+        "core_form_id": "u_sub_then_pfd_trig",
+        "u_latex": "\\cos(x)",
+        "du_factor": "-\\sin(x)",
+        "u_inner_family": "trig_cos",
         "u_sub_spec": {
           "pack": "u_sub_pfd_wrap",
           "variable": "x",
@@ -957,8 +1005,6 @@
           "coef_abs_max": 6,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "log",
             "trig"
           ],
           "u_outer_allowed": [
@@ -996,8 +1042,8 @@
           "level": "L4",
           "has_quadratic": true
         },
-        "openstax_form": "u_sub_then_pfd_log",
-        "form_id": "u_sub_then_pfd_log",
+        "openstax_form": "u_sub_then_pfd_trig",
+        "form_id": "u_sub_then_pfd_trig",
         "catalog_id": "partial_fractions",
         "generation_settings": {
           "allow_substitution": true,
@@ -1028,8 +1074,8 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\int \\frac{-7}{\\left(\\ln|2x + 2|\\right)^{2}+9}\\frac{2}{2x + 2}\\,dx",
-      "answer_latex": "-2\\ln|\\ln|2x + 2| - 1|-\\frac{7}{3}\\arctan(\\frac{\\ln|2x + 2|}{3})+C",
+      "prompt_latex": "\\int \\frac{-7}{\\left(\\ln|x + 2|\\right)^{2}+9}\\frac{1}{x + 2}\\,dx",
+      "answer_latex": "-2\\ln|\\ln|x + 2| - 1|-\\frac{7}{3}\\arctan(\\frac{\\ln|x + 2|}{3})+C",
       "skeleton_pattern": "",
       "form_id": "u_sub_then_pfd_log",
       "diagram_svg": "",
@@ -1049,6 +1095,13 @@
         [
           "openstax_form",
           "u_sub_then_pfd_log"
+        ],
+        [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
         ],
         [
           "construction",
@@ -1127,13 +1180,16 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
                 "trick": "u_sub",
                 "input_kind": "1",
                 "transform": "compose_transcendental_inner",
-                "notes": "u=\\ln|2x + 2|, du factor=\\frac{2}{2x + 2}"
+                "notes": "u=\\ln|x + 2|, du factor=\\frac{1}{x + 2}"
               },
               {
                 "trick": "pfd",
@@ -1149,7 +1205,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__log"
+          "family": "u_sub_then_pfd_log",
+          "form_id": "u_sub_then_pfd_log",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -1161,7 +1220,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 66,
+          "answer_len": 64,
           "nest_depth": 2,
           "pack": "integral_multi_trick",
           "methods": [
@@ -1213,8 +1272,8 @@
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
         "core_form_id": "u_sub_then_pfd_log",
-        "u_latex": "\\ln|2x + 2|",
-        "du_factor": "\\frac{2}{2x + 2}",
+        "u_latex": "\\ln|x + 2|",
+        "du_factor": "\\frac{1}{x + 2}",
         "u_inner_family": "log",
         "u_sub_spec": {
           "pack": "u_sub_pfd_wrap",
@@ -1223,9 +1282,7 @@
           "coef_abs_max": 6,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "log",
-            "trig"
+            "log"
           ],
           "u_outer_allowed": [
             "power"
@@ -1317,6 +1374,13 @@
           "u_sub_then_pfd_log"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
+        ],
+        [
           "construction",
           "pipeline_shared_u_sub"
         ],
@@ -1393,6 +1457,9 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1415,7 +1482,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__log"
+          "family": "u_sub_then_pfd_log",
+          "form_id": "u_sub_then_pfd_log",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -1489,9 +1559,7 @@
           "coef_abs_max": 6,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "log",
-            "trig"
+            "log"
           ],
           "u_outer_allowed": [
             "power"
@@ -1583,6 +1651,13 @@
           "u_sub_then_pfd_log"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
+        ],
+        [
           "construction",
           "pipeline_shared_u_sub"
         ],
@@ -1659,6 +1734,9 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1681,7 +1759,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__log"
+          "family": "u_sub_then_pfd_log",
+          "form_id": "u_sub_then_pfd_log",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -1765,9 +1846,7 @@
           "coef_abs_max": 7,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "log",
-            "trig"
+            "log"
           ],
           "u_outer_allowed": [
             "power"
@@ -1836,8 +1915,8 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\int \\frac{2}{\\left(\\ln|2x + 1|\\right)^{2}+4}\\frac{2}{2x + 1}\\,dx",
-      "answer_latex": "-2\\ln|\\ln|2x + 1| - 4|+\\arctan(\\frac{\\ln|2x + 1|}{2})+C",
+      "prompt_latex": "\\int \\frac{2}{\\left(\\ln|x + 1|\\right)^{2}+4}\\frac{1}{x + 1}\\,dx",
+      "answer_latex": "-2\\ln|\\ln|x + 1| - 4|+\\arctan(\\frac{\\ln|x + 1|}{2})+C",
       "skeleton_pattern": "",
       "form_id": "u_sub_then_pfd_log",
       "diagram_svg": "",
@@ -1857,6 +1936,13 @@
         [
           "openstax_form",
           "u_sub_then_pfd_log"
+        ],
+        [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
         ],
         [
           "construction",
@@ -1935,13 +2021,16 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
                 "trick": "u_sub",
                 "input_kind": "1",
                 "transform": "compose_transcendental_inner",
-                "notes": "u=\\ln|2x + 1|, du factor=\\frac{2}{2x + 1}"
+                "notes": "u=\\ln|x + 1|, du factor=\\frac{1}{x + 1}"
               },
               {
                 "trick": "pfd",
@@ -1957,7 +2046,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__log"
+          "family": "u_sub_then_pfd_log",
+          "form_id": "u_sub_then_pfd_log",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -1969,7 +2061,7 @@
           "degree_max": 6,
           "coef_abs_max": 7,
           "n_terms": 2,
-          "answer_len": 55,
+          "answer_len": 53,
           "nest_depth": 2,
           "pack": "integral_multi_trick",
           "methods": [
@@ -2031,8 +2123,8 @@
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
         "core_form_id": "u_sub_then_pfd_log",
-        "u_latex": "\\ln|2x + 1|",
-        "du_factor": "\\frac{2}{2x + 1}",
+        "u_latex": "\\ln|x + 1|",
+        "du_factor": "\\frac{1}{x + 1}",
         "u_inner_family": "log",
         "u_sub_spec": {
           "pack": "u_sub_pfd_wrap",
@@ -2041,9 +2133,7 @@
           "coef_abs_max": 7,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "log",
-            "trig"
+            "log"
           ],
           "u_outer_allowed": [
             "power"
@@ -2135,6 +2225,13 @@
           "u_sub_then_pfd_log"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
+        ],
+        [
           "construction",
           "pipeline_shared_u_sub"
         ],
@@ -2211,6 +2308,9 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2233,7 +2333,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__log"
+          "family": "u_sub_then_pfd_log",
+          "form_id": "u_sub_then_pfd_log",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -2317,9 +2420,7 @@
           "coef_abs_max": 7,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "log",
-            "trig"
+            "log"
           ],
           "u_outer_allowed": [
             "power"
@@ -2388,8 +2489,8 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\int \\frac{3}{\\left(\\ln|3x - 2|\\right)^{2}+9}\\frac{3}{3x - 2}\\,dx",
-      "answer_latex": "2\\ln|\\ln|3x - 2| - 2|+\\arctan(\\frac{\\ln|3x - 2|}{3})+C",
+      "prompt_latex": "\\int \\frac{3}{\\left(\\ln|x - 2|\\right)^{2}+9}\\frac{1}{x - 2}\\,dx",
+      "answer_latex": "2\\ln|\\ln|x - 2| - 2|+\\arctan(\\frac{\\ln|x - 2|}{3})+C",
       "skeleton_pattern": "",
       "form_id": "u_sub_then_pfd_log",
       "diagram_svg": "",
@@ -2409,6 +2510,13 @@
         [
           "openstax_form",
           "u_sub_then_pfd_log"
+        ],
+        [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
         ],
         [
           "construction",
@@ -2488,13 +2596,16 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
                 "trick": "u_sub",
                 "input_kind": "1",
                 "transform": "compose_transcendental_inner",
-                "notes": "u=\\ln|3x - 2|, du factor=\\frac{3}{3x - 2}"
+                "notes": "u=\\ln|x - 2|, du factor=\\frac{1}{x - 2}"
               },
               {
                 "trick": "pfd",
@@ -2510,7 +2621,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__log"
+          "family": "u_sub_then_pfd_log",
+          "form_id": "u_sub_then_pfd_log",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -2522,7 +2636,7 @@
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 2,
-          "answer_len": 54,
+          "answer_len": 52,
           "nest_depth": 2,
           "pack": "integral_multi_trick",
           "methods": [
@@ -2589,8 +2703,8 @@
         "difficulty_shortfall": 1.5,
         "wrappers_applied": [],
         "core_form_id": "u_sub_then_pfd_log",
-        "u_latex": "\\ln|3x - 2|",
-        "du_factor": "\\frac{3}{3x - 2}",
+        "u_latex": "\\ln|x - 2|",
+        "du_factor": "\\frac{1}{x - 2}",
         "u_inner_family": "log",
         "u_sub_spec": {
           "pack": "u_sub_pfd_wrap",
@@ -2599,9 +2713,7 @@
           "coef_abs_max": 8,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "log",
-            "trig"
+            "log"
           ],
           "u_outer_allowed": [
             "power"
@@ -2670,10 +2782,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\int \\frac{2\\left(\\cos(x)\\right)-7}{\\left(\\cos(x)\\right)^{2}+16}\\left(-\\sin(x)\\right)\\,dx",
-      "answer_latex": "14\\ln|\\cos(x) + 13|+\\ln|\\cos(x)^{2}+16|-\\frac{7}{4}\\arctan(\\frac{\\cos(x)}{4})+C",
+      "prompt_latex": "\\int \\frac{2\\left(\\ln|x + 8|\\right)-7}{\\left(\\ln|x + 8|\\right)^{2}+16}\\frac{1}{x + 8}\\,dx",
+      "answer_latex": "14\\ln|\\ln|x + 8| + 13|+\\ln|\\ln|x + 8|^{2}+16|-\\frac{7}{4}\\arctan(\\frac{\\ln|x + 8|}{4})+C",
       "skeleton_pattern": "",
-      "form_id": "u_sub_then_pfd_trig",
+      "form_id": "u_sub_then_pfd_log",
       "diagram_svg": "",
       "debug": [
         [
@@ -2686,294 +2798,18 @@
         ],
         [
           "form_id",
-          "u_sub_then_pfd_trig"
+          "u_sub_then_pfd_log"
         ],
         [
           "openstax_form",
-          "u_sub_then_pfd_trig"
+          "u_sub_then_pfd_log"
         ],
         [
-          "construction",
-          "pipeline_shared_u_sub"
-        ],
-        [
-          "has_diagram_svg",
-          false
-        ]
-      ],
-      "metadata": {
-        "family": "u_sub_then_pfd_trig",
-        "structure_id": "integral_multi_trick:u_sub_then_pfd_trig",
-        "technique": "u_sub+pfd",
-        "tricks_required": [
-          "u_sub",
-          "pfd"
-        ],
-        "methods_used": [
-          "u_sub",
-          "pfd"
-        ],
-        "function_classes": [
-          "algebraic",
-          "invtrig",
-          "log",
-          "trig"
-        ],
-        "upgrades": [
-          "extra_term",
-          "higher_degree",
-          "pipeline_len_2",
-          "use_exp_log",
-          "use_pfd",
-          "use_u_sub"
-        ],
-        "effective_d": 22.0,
-        "band": "hard",
-        "generator": "integral_multi_trick",
-        "variable": "x",
-        "d_spend": 22.0,
-        "spec_snapshot": {
-          "pack": "integral_multi_trick",
-          "variable": "x",
-          "definite": false,
-          "bound_abs_max": 5,
-          "tricks_allowed": [
-            "ln_exp",
-            "pfd",
-            "u_sub"
-          ],
-          "tricks_required": [
-            "u_sub",
-            "pfd"
-          ],
-          "allow_trig": false,
-          "allow_exp": false,
-          "allow_log": true,
-          "allow_invtrig": false,
-          "allow_substitution": true,
-          "allow_parts": false,
-          "allow_pfd": true,
-          "allow_trig_sub": false,
-          "allow_ftc": false,
-          "require_substitution": true,
-          "require_parts": false,
-          "require_pfd": true,
-          "require_trig": false,
-          "require_trig_sub": false,
-          "include_plus_c": true,
-          "coef_abs_max": 8,
-          "degree_max": 6,
-          "term_count_max": 3,
-          "nest_budget": 2,
-          "parts_depth": 1,
-          "max_pipeline_len": 2,
-          "d_spend": 22.0,
-          "construction": "pipeline_shared_u_sub",
-          "u_sub_form_preset": "auto",
-          "u_sub_construction": "auto",
-          "pipeline": {
-            "stages": [
-              {
-                "trick": "u_sub",
-                "input_kind": "1",
-                "transform": "compose_transcendental_inner",
-                "notes": "u=\\cos(x), du factor=-\\sin(x)"
-              },
-              {
-                "trick": "pfd",
-                "input_kind": "prior",
-                "transform": "partial_fractions.seed_partial_fraction_target",
-                "notes": "PFD in u (ln and/or arctan)"
-              }
-            ],
-            "tricks_required": [
-              "u_sub",
-              "pfd"
-            ],
-            "length": 2
-          },
-          "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__trig_cos"
-        },
-        "effort_features": {
-          "technique": "u_sub+pfd",
-          "tricks_required": [
-            "u_sub",
-            "pfd"
-          ],
-          "pipeline_len": 2,
-          "degree_max": 6,
-          "coef_abs_max": 8,
-          "n_terms": 2,
-          "answer_len": 79,
-          "nest_depth": 2,
-          "pack": "integral_multi_trick",
-          "methods": [
+          "tricks_required",
+          [
             "u_sub",
             "pfd"
           ]
-        },
-        "pipeline": {
-          "stages": [
-            {
-              "trick": "u_sub",
-              "input_kind": "1",
-              "transform": "derivative_backed_chain",
-              "notes": ""
-            },
-            {
-              "trick": "pfd",
-              "input_kind": "prior",
-              "transform": "seed_pfd_forward",
-              "notes": ""
-            }
-          ],
-          "tricks_required": [
-            "u_sub",
-            "pfd"
-          ],
-          "length": 2
-        },
-        "shape_id": "u_sub_then_pfd_trig",
-        "construction": "pipeline_shared_u_sub",
-        "difficulty_costs": [
-          {
-            "source": "spec",
-            "feature": "extra_term",
-            "cost": 2.0
-          },
-          {
-            "source": "spec",
-            "feature": "higher_degree",
-            "cost": 2.5
-          },
-          {
-            "source": "spec",
-            "feature": "use_exp_log",
-            "cost": 3.0
-          },
-          {
-            "source": "spec",
-            "feature": "use_u_sub",
-            "cost": 3.5
-          },
-          {
-            "source": "spec",
-            "feature": "use_pfd",
-            "cost": 4.5
-          },
-          {
-            "source": "spec",
-            "feature": "pipeline_len_2",
-            "cost": 5.0
-          }
-        ],
-        "difficulty_cost_total": 20.5,
-        "difficulty_shortfall": 1.5,
-        "wrappers_applied": [],
-        "core_form_id": "u_sub_then_pfd_trig",
-        "u_latex": "\\cos(x)",
-        "du_factor": "-\\sin(x)",
-        "u_inner_family": "trig_cos",
-        "u_sub_spec": {
-          "pack": "u_sub_pfd_wrap",
-          "variable": "x",
-          "d_spend": 22.0,
-          "coef_abs_max": 8,
-          "degree_max": 4,
-          "u_inner_allowed": [
-            "exp",
-            "log",
-            "trig"
-          ],
-          "u_outer_allowed": [
-            "power"
-          ],
-          "allow_trig_inner": true,
-          "allow_exp_inner": true,
-          "allow_log_inner": true,
-          "allow_poly_inner": true,
-          "allow_invtrig_inner": false,
-          "allow_composite_inner": false,
-          "require_du_factor": true,
-          "prefer_composite": false
-        },
-        "has_quadratic": true,
-        "pfd_source": "partial_fractions.seed_partial_fraction_target",
-        "pf_target": {
-          "kind": "partial_fractions",
-          "terms": [
-            {
-              "A": "14",
-              "root": "-13",
-              "multiplicity": 1,
-              "kind": "linear"
-            },
-            {
-              "A": "-7",
-              "root": "0",
-              "multiplicity": 1,
-              "kind": "quadratic",
-              "lin_coef": "2",
-              "quad_a2": "16"
-            }
-          ],
-          "level": "L4",
-          "has_quadratic": true
-        },
-        "openstax_form": "u_sub_then_pfd_trig",
-        "form_id": "u_sub_then_pfd_trig",
-        "catalog_id": "partial_fractions",
-        "generation_settings": {
-          "allow_substitution": true,
-          "allow_pfd": true,
-          "require_substitution": true,
-          "require_pfd": true,
-          "allow_log": true,
-          "max_pipeline_len": 2,
-          "include_plus_c": true,
-          "term_count": 3,
-          "power_max": 5,
-          "require_positive_power": false,
-          "difficulty": 22.0,
-          "seed": 207,
-          "include_answer_key": true,
-          "integers_only": true,
-          "only_x": true,
-          "_batch_index": 0
-        },
-        "instruction_latex": "\\text{Integrate.}"
-      }
-    },
-    {
-      "ok": true,
-      "warn": false,
-      "label": "D\u224822 \u00b7 seed=313",
-      "type_id": "calc_indef_int_multi_trick",
-      "difficulty": 22.0,
-      "band": "high",
-      "seed": 313,
-      "prompt_latex": "\\int \\frac{-2\\left(\\ln|2x - 3|\\right)}{\\left(\\ln|2x - 3|\\right)^{2}+9}\\frac{2}{2x - 3}\\,dx",
-      "answer_latex": "-\\ln|\\ln|2x - 3| - 2|-\\ln|\\ln|2x - 3|^{2}+9|+C",
-      "skeleton_pattern": "",
-      "form_id": "u_sub_then_pfd_log",
-      "diagram_svg": "",
-      "debug": [
-        [
-          "D / effective_d",
-          22.0
-        ],
-        [
-          "seed",
-          313
-        ],
-        [
-          "form_id",
-          "u_sub_then_pfd_log"
-        ],
-        [
-          "openstax_form",
-          "u_sub_then_pfd_log"
         ],
         [
           "construction",
@@ -3053,13 +2889,16 @@
           "construction": "pipeline_shared_u_sub",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
                 "trick": "u_sub",
                 "input_kind": "1",
                 "transform": "compose_transcendental_inner",
-                "notes": "u=\\ln|2x - 3|, du factor=\\frac{2}{2x - 3}"
+                "notes": "u=\\ln|x + 8|, du factor=\\frac{1}{x + 8}"
               },
               {
                 "trick": "pfd",
@@ -3075,7 +2914,10 @@
             "length": 2
           },
           "technique": "u_sub+pfd",
-          "family": "u_sub_then_pfd__log"
+          "family": "u_sub_then_pfd_log",
+          "form_id": "u_sub_then_pfd_log",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
         },
         "effort_features": {
           "technique": "u_sub+pfd",
@@ -3087,7 +2929,7 @@
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 2,
-          "answer_len": 46,
+          "answer_len": 88,
           "nest_depth": 2,
           "pack": "integral_multi_trick",
           "methods": [
@@ -3154,8 +2996,8 @@
         "difficulty_shortfall": 1.5,
         "wrappers_applied": [],
         "core_form_id": "u_sub_then_pfd_log",
-        "u_latex": "\\ln|2x - 3|",
-        "du_factor": "\\frac{2}{2x - 3}",
+        "u_latex": "\\ln|x + 8|",
+        "du_factor": "\\frac{1}{x + 8}",
         "u_inner_family": "log",
         "u_sub_spec": {
           "pack": "u_sub_pfd_wrap",
@@ -3164,9 +3006,300 @@
           "coef_abs_max": 8,
           "degree_max": 4,
           "u_inner_allowed": [
-            "exp",
-            "log",
-            "trig"
+            "log"
+          ],
+          "u_outer_allowed": [
+            "power"
+          ],
+          "allow_trig_inner": true,
+          "allow_exp_inner": true,
+          "allow_log_inner": true,
+          "allow_poly_inner": true,
+          "allow_invtrig_inner": false,
+          "allow_composite_inner": false,
+          "require_du_factor": true,
+          "prefer_composite": false
+        },
+        "has_quadratic": true,
+        "pfd_source": "partial_fractions.seed_partial_fraction_target",
+        "pf_target": {
+          "kind": "partial_fractions",
+          "terms": [
+            {
+              "A": "14",
+              "root": "-13",
+              "multiplicity": 1,
+              "kind": "linear"
+            },
+            {
+              "A": "-7",
+              "root": "0",
+              "multiplicity": 1,
+              "kind": "quadratic",
+              "lin_coef": "2",
+              "quad_a2": "16"
+            }
+          ],
+          "level": "L4",
+          "has_quadratic": true
+        },
+        "openstax_form": "u_sub_then_pfd_log",
+        "form_id": "u_sub_then_pfd_log",
+        "catalog_id": "partial_fractions",
+        "generation_settings": {
+          "allow_substitution": true,
+          "allow_pfd": true,
+          "require_substitution": true,
+          "require_pfd": true,
+          "allow_log": true,
+          "max_pipeline_len": 2,
+          "include_plus_c": true,
+          "term_count": 3,
+          "power_max": 5,
+          "require_positive_power": false,
+          "difficulty": 22.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=313",
+      "type_id": "calc_indef_int_multi_trick",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 313,
+      "prompt_latex": "\\int \\frac{-2\\left(\\ln|x - 3|\\right)}{\\left(\\ln|x - 3|\\right)^{2}+9}\\frac{1}{x - 3}\\,dx",
+      "answer_latex": "-\\ln|\\ln|x - 3| - 2|-\\ln|\\ln|x - 3|^{2}+9|+C",
+      "skeleton_pattern": "",
+      "form_id": "u_sub_then_pfd_log",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "u_sub_then_pfd_log"
+        ],
+        [
+          "openstax_form",
+          "u_sub_then_pfd_log"
+        ],
+        [
+          "tricks_required",
+          [
+            "u_sub",
+            "pfd"
+          ]
+        ],
+        [
+          "construction",
+          "pipeline_shared_u_sub"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "u_sub_then_pfd_log",
+        "structure_id": "integral_multi_trick:u_sub_then_pfd_log",
+        "technique": "u_sub+pfd",
+        "tricks_required": [
+          "u_sub",
+          "pfd"
+        ],
+        "methods_used": [
+          "u_sub",
+          "pfd"
+        ],
+        "function_classes": [
+          "algebraic",
+          "invtrig",
+          "log"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "pipeline_len_2",
+          "use_exp_log",
+          "use_pfd",
+          "use_u_sub"
+        ],
+        "effective_d": 22.0,
+        "band": "hard",
+        "generator": "integral_multi_trick",
+        "variable": "x",
+        "d_spend": 22.0,
+        "spec_snapshot": {
+          "pack": "integral_multi_trick",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "ln_exp",
+            "pfd",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "u_sub",
+            "pfd"
+          ],
+          "allow_trig": false,
+          "allow_exp": false,
+          "allow_log": true,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": true,
+          "allow_trig_sub": false,
+          "allow_ftc": false,
+          "require_substitution": true,
+          "require_parts": false,
+          "require_pfd": true,
+          "require_trig": false,
+          "require_trig_sub": false,
+          "include_plus_c": true,
+          "coef_abs_max": 8,
+          "degree_max": 6,
+          "term_count_max": 3,
+          "nest_budget": 2,
+          "parts_depth": 1,
+          "max_pipeline_len": 2,
+          "d_spend": 22.0,
+          "construction": "pipeline_shared_u_sub",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "u_sub",
+                "input_kind": "1",
+                "transform": "compose_transcendental_inner",
+                "notes": "u=\\ln|x - 3|, du factor=\\frac{1}{x - 3}"
+              },
+              {
+                "trick": "pfd",
+                "input_kind": "prior",
+                "transform": "partial_fractions.seed_partial_fraction_target",
+                "notes": "PFD in u (ln and/or arctan)"
+              }
+            ],
+            "tricks_required": [
+              "u_sub",
+              "pfd"
+            ],
+            "length": 2
+          },
+          "technique": "u_sub+pfd",
+          "family": "u_sub_then_pfd_log",
+          "form_id": "u_sub_then_pfd_log",
+          "generator": "integral_multi_trick",
+          "catalog_id": "partial_fractions"
+        },
+        "effort_features": {
+          "technique": "u_sub+pfd",
+          "tricks_required": [
+            "u_sub",
+            "pfd"
+          ],
+          "pipeline_len": 2,
+          "degree_max": 6,
+          "coef_abs_max": 8,
+          "n_terms": 2,
+          "answer_len": 44,
+          "nest_depth": 2,
+          "pack": "integral_multi_trick",
+          "methods": [
+            "u_sub",
+            "pfd"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "u_sub",
+              "input_kind": "1",
+              "transform": "derivative_backed_chain",
+              "notes": ""
+            },
+            {
+              "trick": "pfd",
+              "input_kind": "prior",
+              "transform": "seed_pfd_forward",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "u_sub",
+            "pfd"
+          ],
+          "length": 2
+        },
+        "shape_id": "u_sub_then_pfd_log",
+        "construction": "pipeline_shared_u_sub",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_exp_log",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
+            "feature": "use_u_sub",
+            "cost": 3.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_pfd",
+            "cost": 4.5
+          },
+          {
+            "source": "spec",
+            "feature": "pipeline_len_2",
+            "cost": 5.0
+          }
+        ],
+        "difficulty_cost_total": 20.5,
+        "difficulty_shortfall": 1.5,
+        "wrappers_applied": [],
+        "core_form_id": "u_sub_then_pfd_log",
+        "u_latex": "\\ln|x - 3|",
+        "du_factor": "\\frac{1}{x - 3}",
+        "u_inner_family": "log",
+        "u_sub_spec": {
+          "pack": "u_sub_pfd_wrap",
+          "variable": "x",
+          "d_spend": 22.0,
+          "coef_abs_max": 8,
+          "degree_max": 4,
+          "u_inner_allowed": [
+            "log"
           ],
           "u_outer_allowed": [
             "power"

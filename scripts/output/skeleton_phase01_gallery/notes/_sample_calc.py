@@ -356,14 +356,20 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Indefinite invtrig antiderivative after u-sub +C.",
         "engine": "Reuse `integrals.py` `_sample_u_sub_derivative_backed` flavor invtrig + arctan_chain / reverse-chain.",
     },
+    "calc_indef_int_power_rule_with_substitution": {
+        "flag_why": "Skip further leftover lockout: EMH presets + stamps already; LIMITATIONS D=0 frozen power_linear_du / D=16===D=22 challenging mix.",
+        "skill": "Indefinite power antiderivative after u-sub +C.",
+        "engine": "Reuse `integrals.py` `_sample_u_sub_derivative_backed` flavor power + u_substitution.json presets.",
+    },
     "calc_indef_int_trigonometric_with_substitution": {
         "note": "Catalog name says trig substitution; generator is `integral_trig_substitution` (Calc 2 §3.3).",
         "skill": "Integrate using a trigonometric substitution.",
         "engine": "Reuse `integrals.py` / OpenStax trig-sub form catalog.",
     },
     "calc_indef_int_multi_trick": {
-        "skill": "Integrate with a multi-step technique pipeline (e.g. u-sub then PFD).",
-        "engine": "Reuse `integrals.py` multi-trick path; keep form catalogs.",
+        "flag_why": "Shipped leftover lockout of D=0 linear/exp/trig; LIMITATIONS D=16===D=22 log-only / no u-sub-then-parts.",
+        "skill": "Integrate with a multi-step technique pipeline (u-sub then PFD).",
+        "engine": "Reuse `integrals.py` `_sample_pipeline_u_sub_then_pfd` (linear leftover / exp+trig leftover / log).",
     },
 }
 

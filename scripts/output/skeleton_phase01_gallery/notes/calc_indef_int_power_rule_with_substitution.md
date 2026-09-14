@@ -7,35 +7,36 @@
 
 ---
 
-## Limitations
-
-- **Status:** shipped — live generator
-- **Generator:** `integral_substitution`
-- **Remaining limits:** Named `u_sub_form_preset` families (from `u_substitution.json`) and reverse-chain (`expr_skeleton` Diff → integrand \(F'(g)g'\)) are live. `power_cubic_x2_du` (OpenStax Checkpoint 5.25/5.26) is now in the power flavor and the `challenging` preset. Reverse-chain elides Diff AST `x^{1}` on this consumer. Gaps: reverse-chain still shows unsimplified juxtaposition (`2x(-4)`); `challenging` on this leaf stays algebraic (cubic / root-quad / alteration) — trig/exp challenging lives on the ln/exp host; BC bank §1 algebraic families (`power_quad_neg`, …) unlock via `bc_bank` / mid-high D, not D=0; OpenStax §5.5 exercise breadth is still not the full textbook set.
-
 ## What the question should look like (D=0 vs high D)
 
-- **Skill:** Practice power rule with substitution.
-- **D=0:** As simple as old easy at D=0 — copy live samples below.
-- **High D (≈16–22):** Numeric hardness first; technique/format unlocks by D≈16–22.
-- **Must not:** Wrong-topic shapes; derivative-only prompts on integral leaves; equation dumps without story on WP/optimization/related-rates.
+- **Skill:** Indefinite power antiderivative after u-sub \(+C\) (OpenStax Vol. 1 §5.5).
+- **D=0:** Old easy leftover is catalog \(\int a(ax+b)^n\,dx\) (`power_linear_du`).
+- **Mid D (≈8):** EMH `power_quadratic` — \(\int 2x(x^{2}+c)^n\) / \(\int x\sqrt{x^{2}+c}\) (`power_quad_x_du` / `root_quad_x_du`).
+- **High D (≈16–22):** EMH `challenging` ∩ power flavor (Checkpoint 5.25/5.26 cubic / Example 5.31 root-quad leftover / Example 5.31-style alteration).
+- **Must not:** Table \(\int x^n\) (non-sub sibling); padded `difficulty_costs`; new cores; leftover-lock named `u_sub_preset_power_linear` / `power_quadratic` / `challenging` showcases empty at expert.
 
 ## What old path actually produced (real latex, D=0/8/16/22)
 
-Live `_generate_for_type` at default path. No skeleton opt-out — live generator **is** the old path for these Calculus leaves.
+Live `_generate_for_type` with **no opt-out**. Live path is `calculus_integrals` → `_sample_u_sub_derivative_backed` flavor `power`. EMH presets already band leftover families: easy `u_sub_form_preset=power_linear` / catalog; medium `power_quadratic` / catalog; hard `challenging` / auto. Catalog `d_max` already locks `power_linear_du` at D>10. `form_id` / `generator=integral_substitution` already stamped on metadata and `spec_snapshot` (40/40).
+
+40-seed counts: D=0 `power_linear_du` 40; D=8 `root_quad_x_du` 22 / `power_quad_x_du` 18 (no linear); D=16/22 identical (`power_cubic_x2_du` 15 / `alteration_linear_over_root` 14 / `root_quad_x_du` 11). No `power_linear_du` at D≥8.
 
 | D | seed | prompt_latex | answer_latex | shape notes |
 |---|------|--------------|--------------|-------------|
-| 0 | 101 | $\int 2\left(2x + 2\right)^{2}\,dx$ | $\frac{1}{3}\left(2x + 2\right)^{3}+C$ | catalog `power_linear_du` |
-| 0 | 207 | $\int 2\left(2x + 2\right)^{2}\,dx$ | $\frac{1}{3}\left(2x + 2\right)^{3}+C$ | catalog `power_linear_du` |
-| 8 | 101 | $\int 3\left(3x + 4\right)^{2}\,dx$ | $\frac{1}{3}\left(3x + 4\right)^{3}+C$ | catalog `power_linear_du` |
-| 8 | 207 | $\int \frac{2x+1}{x^{2}+x+2}\,dx$ | $\ln|x^{2}+x+2|+C$ | catalog `du_over_u_quadratic` (BC bank §1.17) |
-| 16 | 101 | $\int 2x\left(x^{2}+9\right)^{2}\,dx$ | $\frac{1}{3}\left(x^{2}+9\right)^{3}+C$ | catalog `power_quad_x_du` |
-| 16 | 207 | $\int \frac{x^{5}}{\left(x^{6}+2\right)^{4}}\,dx$ | $-\frac{1}{18\left(x^{6}+2\right)^{3}}+C$ | catalog `power_hex_neg` (BC bank §1.24) |
-| 22 | 101 | $\int 2x\left(x^{2}+1\right)^{4}\,dx$ | $\frac{1}{5}\left(x^{2}+1\right)^{5}+C$ | catalog `power_quad_x_du` |
-| 22 | 207 | $\int \frac{x^{5}}{\left(x^{6}+6\right)^{2}}\,dx$ | $-\frac{1}{6\left(x^{6}+6\right)}+C$ | catalog `power_hex_neg` |
+| 0 | 101 | $\int 2\left(2x + 2\right)^{2}\,dx$ | $\frac{1}{3}\left(2x + 2\right)^{3}+C$ | `power_linear_du` (easy preset `power_linear`) |
+| 0 | 207 | $\int 2\left(2x + 2\right)^{2}\,dx$ | $\frac{1}{3}\left(2x + 2\right)^{3}+C$ | same D=0 leftover |
+| 8 | 101 | $\int 2x\left(x^{2}+5\right)^{2}\,dx$ | $\frac{1}{3}\left(x^{2}+5\right)^{3}+C$ | `power_quad_x_du` (medium `power_quadratic`) |
+| 8 | 207 | $\int x\sqrt{x^{2}+1}\,dx$ | $\frac{1}{3}\left(x^{2}+1\right)^{\frac{3}{2}}+C$ | `root_quad_x_du` Example 5.31 family |
+| 16 | 101 | $\int x^{2}\left(x^{3}+9\right)^{2}\,dx$ | $\frac{1}{9}\left(x^{3}+9\right)^{3}+C$ | `power_cubic_x2_du` Checkpoint 5.25 leftover in `challenging` |
+| 16 | 207 | $\int \frac{x}{\sqrt{x-1}}\,dx$ | $\frac{2}{3}\left(x-1\right)^{\frac{3}{2}}+2\sqrt{x-1}+C$ | `alteration_linear_over_root` |
+| 22 | 101 | $\int x^{2}\left(x^{3}-1\right)^{4}\,dx$ | $\frac{1}{15}\left(x^{3}-1\right)^{5}+C$ | same hard preset as D=16; numeric_tier 4 |
+| 22 | 207 | $\int \frac{x}{\sqrt{x-1}}\,dx$ | $\frac{2}{3}\left(x-1\right)^{\frac{3}{2}}+2\sqrt{x-1}+C$ | no `power_linear_du` |
 
-Opt-out flag used: `(none — live default is old path)`
+Opt-out flag used: _(none — live generator is the old path)_
+
+## Live now — skip further leftover lockout
+
+Already rich enough: EMH leftover mix + stamps. Exclusive bands on `auto` would not change live `_generate_for_type` (named presets). Lockout *under* named presets would empty `u_sub_preset_power_linear` / `u_sub_preset_power_quadratic` / `u_sub_preset_challenging` at expert. `root_quad_x_du` leftover at D≥16 is the medium family staying in `challenging` ∩ power (same as cubic leftover on the ln/exp host). Did not invent cores. `select_form_id` / `live_quality_form_weights` already apply inside each preset.
 
 ## OpenStax examples + chapter/section cites
 
@@ -43,18 +44,21 @@ Paraphrase stems; cite Calculus Volume 1 / 2 + URL. Do not dump copyrighted text
 
 | Cite | URL | What to copy (shape / frame, not wording) |
 |------|-----|-------------------------------------------|
-| OpenStax Calculus Volume 1 §5.5 | https://openstax.org/books/calculus-volume-1/pages/5-5-substitution | u-sub on power compositions — e.g. Example 5.30: Using Substitution to Find an Antiderivative Use substitution to find the antiderivative $\int 6 x \left(\right. 3 x^{2} + 4 \left.\right)^{4} d x .$; Example 5.31: Using Substitution with Alteration Use substitution to find $\int z \sqrt{z^{2} - 5} d z .$ |
+| OpenStax Calculus Volume 1 §5.5 | https://openstax.org/books/calculus-volume-1/pages/5-5-substitution | u-sub on power compositions — Example 5.30 \(\int 6x(3x^{2}+4)^{4}\) (`power_quad_x_du`); Example 5.31 \(\int z\sqrt{z^{2}-5}\) (`root_quad_x_du` / alteration); Checkpoint 5.25/5.26 cubic (`power_cubic_x2_du`). Catalog D=0 leftover is linear \(u=ax+b\). |
 
-Local HTML / mine: `textbooks/openstax/html/calculus-volume-1/` · `scripts/output/example_mining/calculus-volume-1/stage1/` (and volume-2).
+Local HTML / mine: `textbooks/openstax/html/calculus-volume-1/` · `scripts/output/example_mining/calculus-volume-1/stage1/` (5-5).
 
 ## Variety notes
 
-Not a Mad-Lib WP unless related-rates / optimization / growth-decay. Algebra/technique shapes follow old path samples above; OpenStax frames win for story variety.
+Not a WP. D=0 is the named `power_linear` leftover (old easy). Mid D is `power_quadratic`. High D is `challenging` ∩ power (three implemented algebraic builders). Do not invent a new trig/exp challenging core on this host (those live on the ln/exp sibling). D=16 and D=22 share the hard preset (intentional skip of a fourth EMH band).
 
-## Proposed engine (reuse vs new) — proposal only
+## Limitations
 
-- **Proposal:** Reuse `integrals.py` + `u_substitution.json` form presets; reverse-chain via Diff `expr_skeleton` (`sample_reverse_chain_integral`).
-- **Presets:** `auto` / `power_linear` / `power_quadratic` / `challenging` / … on `u_sub_form_preset`; `u_sub_construction` = `auto` | `catalog` | `reverse_chain`.
-- **Reuse Diff?** Yes — only as reverse chain (sample F∘g, prompt is F′).
+- **Status:** skipped further leftover lockout — live already stamps `form_id` + `generator=integral_substitution`; EMH presets already drop `power_linear_du` at D≥8. Remaining `LIMITATIONS`: D=0 frozen `power_linear_du`; D=16 and D=22 are the same `challenging` mix (cubic / root-quad leftover stays at expert); reverse-chain nested F∘g still richer than §5.5 drills when `u_sub_construction=auto` at format_tier≥1 (live 40-seed stayed catalog); BC-bank §1 algebraic families unlock via named `bc_bank`, not the hard default; named showcases `u_sub_preset_*` / `u_sub_reverse_chain` stay full family; reverse-chain still shows unsimplified juxtaposition (`2x(-4)`).
+- **Live pairwise:** each item stamps `form_id`, `generator=integral_substitution`, and `family`; copies `form_id` / `generator` onto `spec_snapshot`. Form pick uses `select_form_id` so `live_quality_form_weights` can tilt.
+- **Generator:** `integral_substitution`
 
-_Catalog generator `integral_substitution`; limits/differentiation owned by other agent._
+## Proposed engine (reuse vs new)
+
+- **Reuse:** existing `_sample_u_sub_derivative_backed` flavor `power` + `u_substitution.json` presets (`power_linear`, `power_quadratic`, `challenging`, `bc_bank`) + reverse-chain. Depth = document skip, not a new exclusive-band overlay on named presets.
+- **Not this pass:** exclusive leftover bands; new expert EMH preset; locking `root_quad_x_du` out of `challenging` (that *is* the named mix).

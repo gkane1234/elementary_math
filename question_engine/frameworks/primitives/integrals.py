@@ -3997,6 +3997,54 @@ def _sample_pfd_integral(
 # Multi-trick: genuine u_sub then PFD (rational in u · u')
 # ---------------------------------------------------------------------------
 
+MULTI_TRICK_GENERATOR = "integral_multi_trick"
+
+_MULTI_TRICK_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": (
+        "u_sub_then_pfd_linear",
+        "u_sub_then_pfd_exp",
+        "u_sub_then_pfd_trig",
+    ),
+    "medium": (
+        "u_sub_then_pfd_exp",
+        "u_sub_then_pfd_trig",
+        "u_sub_then_pfd_log",
+    ),
+    "hard": ("u_sub_then_pfd_log",),
+    "expert": ("u_sub_then_pfd_log",),
+}
+
+_MULTI_TRICK_INNER_PREFER: dict[str, tuple[str, ...]] = {
+    "u_sub_then_pfd_linear": ("poly",),
+    "u_sub_then_pfd_exp": ("exp",),
+    "u_sub_then_pfd_trig": ("trig",),
+    "u_sub_then_pfd_log": ("log",),
+}
+
+
+def multi_trick_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 linear/exp/trig wraps; D=22 is log only."""
+    if d < 8.0:
+        return _MULTI_TRICK_BANDS["easy"]
+    if d < 16.0:
+        return _MULTI_TRICK_BANDS["medium"]
+    if d < 20.0:
+        return _MULTI_TRICK_BANDS["hard"]
+    return _MULTI_TRICK_BANDS["expert"]
+
+
+def _multi_trick_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [MULTI_TRICK_GENERATOR],
+        }
+        for fid in forms
+    ]
+
 
 def _rational_latex_in_u(target, u_sym: str = "u") -> tuple[str, str]:
     """Combined rational latex in variable ``u_sym`` + antideriv in u."""
@@ -4050,22 +4098,33 @@ def _sample_pipeline_u_sub_then_pfd(
       - u = sin x → R(sin x)·cos x
       - u = cos x → R(cos x)·(−sin x)  (sign absorbed)
       - u = ln x  → R(ln x)/x
-      - u = ax+b (a≥2) only as low-D fallback
+      - u = ax+b (a≥2) only as D=0 leftover
+
+    High D locks out D=0 linear/exp/trig leftovers. Same four old builders.
     """
     from question_engine.frameworks.primitives import u_substitution as usub
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
 
     var = spec.variable
+    d = float(spec.d_spend)
     target = _seed_pfd_target(rng, spec, n_terms=2)
     if len(target.terms) < 1:
         return _sample_pfd_integral(rng, spec)
 
+    forms = multi_trick_forms_for_difficulty(d)
+    form = select_form_id(_multi_trick_form_rows(forms), d=d, rng=rng)
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in forms:
+        fid = forms[0]
+    prefer = list(_MULTI_TRICK_INNER_PREFER.get(fid) or ("exp",))
+
     wrap_spec = usub.pack_u_sub_for_pfd_wrap(
-        float(spec.d_spend),
+        d,
         variable=var,
         coef_abs_max=spec.coef_abs_max,
     )
-    # Prefer transcendental inners so PFD-in-x is impossible
-    prefer = ["exp", "trig", "log"] if spec.d_spend >= 6 else ["exp", "trig", "poly"]
     inner = usub.sample_u_inner_only(wrap_spec, rng=rng, prefer=prefer)
     fam = str(inner["family"])
     u_tex = str(inner["u_latex"])
@@ -4125,17 +4184,12 @@ def _sample_pipeline_u_sub_then_pfd(
     classes = ["algebraic", "log"] + list(inner.get("classes") or [])
     if has_q:
         classes.append("invtrig")
-    if fam.startswith("exp"):
-        fid = "u_sub_then_pfd_exp"
-    elif fam.startswith("trig") or fam.startswith("log"):
-        fid = "u_sub_then_pfd_trig" if fam.startswith("trig") else "u_sub_then_pfd_log"
-    else:
-        fid = "u_sub_then_pfd_exp"
     return prompt, answer, {
         "function_classes": sorted(set(classes)),
-        "family": f"u_sub_then_pfd__{fam}",
+        "family": fid,
         "form_id": fid,
         "openstax_form": fid,
+        "generator": MULTI_TRICK_GENERATOR,
         "catalog_id": "partial_fractions",
         "n_terms": len(target.terms),
         "construction": "pipeline_shared_u_sub",

@@ -939,6 +939,85 @@ def test_indef_invtrig_sub_stamps_and_high_d_no_arctan_of_linear():
     assert high == {"invtrig_arctan", "invtrig_arcsin"}
 
 
+def test_indef_power_sub_stamps_and_high_d_no_power_linear_du():
+    """EMH presets already lock power_linear_du out of D≥8; stamps already live.
+
+    Further exclusive leftover bands on auto would not change live generate
+    (named power_linear / power_quadratic / challenging). Skip — do not empty
+    showcases.
+    """
+    q0 = _gen(
+        "calc_indef_int_power_rule_with_substitution",
+        0,
+        seed=101,
+    )[0]
+    assert (q0.metadata or {}).get("form_id") == "power_linear_du"
+    assert (q0.metadata or {}).get("generator") == "integral_substitution"
+    snap0 = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap0.get("form_id") == "power_linear_du"
+    assert snap0.get("generator") == "integral_substitution"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_indef_int_power_rule_with_substitution",
+            0,
+            seed=seed,
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "power_linear_du"
+        assert (q.metadata or {}).get("generator") == "integral_substitution"
+        assert "+C" in (q.answer_latex or "")
+    assert easy == {"power_linear_du"}
+
+    mid = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_indef_int_power_rule_with_substitution",
+            8,
+            seed=seed,
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert fid in {"power_quad_x_du", "root_quad_x_du"}
+        assert fid != "power_linear_du"
+        assert (q.metadata or {}).get("generator") == "integral_substitution"
+    assert mid == {"power_quad_x_du", "root_quad_x_du"}
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen(
+                "calc_indef_int_power_rule_with_substitution",
+                d,
+                seed=seed,
+            )[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid != "power_linear_du"
+            assert fid in {
+                "power_cubic_x2_du",
+                "alteration_linear_over_root",
+                "root_quad_x_du",
+            }
+            assert (q.metadata or {}).get("generator") == "integral_substitution"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "integral_substitution"
+            assert "+C" in (q.answer_latex or "")
+    challenging = {
+        "power_cubic_x2_du",
+        "alteration_linear_over_root",
+        "root_quad_x_du",
+    }
+    assert high <= challenging
+    assert "power_cubic_x2_du" in high
+    assert "alteration_linear_over_root" in high
+
+
 def test_indef_log_exp_sub_stamps_and_high_d_no_du_over_u_trig():
     """EMH presets already lock du_over_u_trig out of D≥16; stamps already live.
 
@@ -1032,6 +1111,130 @@ def test_indef_log_exp_quality_weights_tilt():
     baseline = _counts(None)
     tilted = _counts({"ln": -2.5, "base_a": 2.5})
     assert tilted["base_a"] > baseline["base_a"]
+
+
+def test_indef_multi_trick_d0_linear_exp_trig_high_d_log_lockout():
+    from question_engine.frameworks.primitives.integrals import (
+        multi_trick_forms_for_difficulty,
+    )
+
+    assert multi_trick_forms_for_difficulty(0) == (
+        "u_sub_then_pfd_linear",
+        "u_sub_then_pfd_exp",
+        "u_sub_then_pfd_trig",
+    )
+    med = multi_trick_forms_for_difficulty(8)
+    assert "u_sub_then_pfd_log" in med
+    assert "u_sub_then_pfd_linear" not in med
+    assert med == (
+        "u_sub_then_pfd_exp",
+        "u_sub_then_pfd_trig",
+        "u_sub_then_pfd_log",
+    )
+    assert multi_trick_forms_for_difficulty(16) == ("u_sub_then_pfd_log",)
+    assert multi_trick_forms_for_difficulty(22) == ("u_sub_then_pfd_log",)
+
+    q0 = _gen("calc_indef_int_multi_trick", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") in {
+        "u_sub_then_pfd_linear",
+        "u_sub_then_pfd_exp",
+        "u_sub_then_pfd_trig",
+    }
+    assert (q0.metadata or {}).get("generator") == "integral_multi_trick"
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == (q0.metadata or {}).get("form_id")
+    assert snap.get("generator") == "integral_multi_trick"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_multi_trick", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid in {
+            "u_sub_then_pfd_linear",
+            "u_sub_then_pfd_exp",
+            "u_sub_then_pfd_trig",
+        }
+        assert fid != "u_sub_then_pfd_log"
+        assert (q.metadata or {}).get("generator") == "integral_multi_trick"
+        assert "+C" in (q.answer_latex or "")
+        if fid == "u_sub_then_pfd_linear":
+            inner = str((q.metadata or {}).get("u_inner_family") or "")
+            assert inner.startswith("poly")
+            assert r"e^" not in (q.prompt_latex or "")
+            assert r"\ln" not in (q.prompt_latex or "")
+    assert easy == {
+        "u_sub_then_pfd_linear",
+        "u_sub_then_pfd_exp",
+        "u_sub_then_pfd_trig",
+    }
+
+    mid = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_multi_trick", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert fid != "u_sub_then_pfd_linear"
+        assert (q.metadata or {}).get("generator") == "integral_multi_trick"
+        assert "+C" in (q.answer_latex or "")
+    assert "u_sub_then_pfd_log" in mid
+    assert mid <= {
+        "u_sub_then_pfd_exp",
+        "u_sub_then_pfd_trig",
+        "u_sub_then_pfd_log",
+    }
+    assert mid & {"u_sub_then_pfd_exp", "u_sub_then_pfd_trig"}
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(30):
+            q = _gen("calc_indef_int_multi_trick", d, seed=seed)[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid == "u_sub_then_pfd_log"
+            assert fid not in {
+                "u_sub_then_pfd_linear",
+                "u_sub_then_pfd_exp",
+                "u_sub_then_pfd_trig",
+            }
+            assert (q.metadata or {}).get("generator") == "integral_multi_trick"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == "u_sub_then_pfd_log"
+            assert snap.get("generator") == "integral_multi_trick"
+            assert r"\ln" in (q.prompt_latex or "")
+            assert "+C" in (q.answer_latex or "")
+    assert high == {"u_sub_then_pfd_log"}
+
+
+def test_indef_multi_trick_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.integrals import (
+        sample_integral_expression,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                sample = sample_integral_expression(
+                    {"difficulty": 8.0, "include_answer_key": True},
+                    generator_key="integral_multi_trick",
+                    rng=_random.Random(i),
+                )
+                c[sample.metadata.get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"u_sub_then_pfd_exp": -2.5, "u_sub_then_pfd_log": 2.5})
+    assert tilted["u_sub_then_pfd_log"] > baseline["u_sub_then_pfd_log"]
 
 
 def test_area_under_curve_d0_simple():

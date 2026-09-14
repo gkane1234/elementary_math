@@ -11,7 +11,7 @@
 
 - **Status:** shipped — constructive (gallery-wired this wave)
 - **Generator:** `definition_of_derivative`
-- **Remaining limits:** Dedicated constructive / Mad-Lib-meta generators (not expr_skeleton gallery topics). Gaps: table/figure UX still text-only; logarithmic / inverse-function depth vs OpenStax §3.8–3.9 limited; implicit remains Mad-Lib (see that leaf).
+- **Remaining limits:** Dedicated constructive / Mad-Lib-meta generators (not expr_skeleton gallery topics). Shared leftover lockout with `calc_app_diff_limits_in_form_of_definition_of_derivative` (easy \(x^{2}\) limits drop at high D). Gaps: no general \(f\) / trig / exp definition limits.
 
 ## What the question should look like (D=0 vs high D)
 

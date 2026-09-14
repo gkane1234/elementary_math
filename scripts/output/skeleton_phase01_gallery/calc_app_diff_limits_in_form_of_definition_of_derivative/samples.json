@@ -17,7 +17,7 @@
       207,
       313
     ],
-    "blurb": "Recognize lim as f'(a). OpenStax Vol 1 \u00a73.1."
+    "blurb": "Leftover lockout: D=0 x^2 x\u2192a / h\u21920; D=8 leftover easy + cube/kx^2/named; D=16 medium leftover + 1/x / sqrt / named-poly (no x^2 leftover); D=22 1/x / sqrt / named-poly only. OpenStax Vol 1 \u00a73.1."
   },
   "rows": [
     {
@@ -31,7 +31,7 @@
       "prompt_latex": "\\lim_{x\\to 1}\\frac{x^{2}-1}{x-1}",
       "answer_latex": "2",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "limit_x",
       "diagram_svg": "",
       "debug": [
         [
@@ -45,6 +45,10 @@
         [
           "seed",
           101
+        ],
+        [
+          "form_id",
+          "limit_x"
         ],
         [
           "has_diagram_svg",
@@ -106,10 +110,12 @@
           "unlock_roots": false,
           "n_max": 2,
           "k_max": 2,
+          "form_id": "limit_x",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "limit_x",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -150,10 +156,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "\\lim_{h\\to 0}\\frac{(1+h)^{2}-1}{h}",
+      "prompt_latex": "\\lim_{x\\to 1}\\frac{x^{2}-1}{x-1}",
       "answer_latex": "2",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "limit_x",
       "diagram_svg": "",
       "debug": [
         [
@@ -169,126 +175,8 @@
           207
         ],
         [
-          "has_diagram_svg",
-          false
-        ]
-      ],
-      "metadata": {
-        "generator": "definition_of_derivative",
-        "family": "limit_h",
-        "structure_id": "definition_of_derivative:limit_h",
-        "shape_id": "limit_h",
-        "band": "easy",
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "power"
-        ],
-        "chain_depth": 0,
-        "derivative_order": 1,
-        "effective_d": 0.0,
-        "spec_snapshot": {
-          "pack": "structured_definition_of_derivative",
-          "family": "limit_h",
-          "generator": "definition_of_derivative",
-          "derivative_order": 1,
-          "chain_depth": 0,
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "power"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_hyperbolic": true,
-          "allow_roots": true,
-          "allow_invtrig": true,
-          "allow_chain": false,
-          "allow_product": false,
-          "allow_quotient": false,
-          "allow_implicit": true,
-          "require_chain": false,
-          "require_product": false,
-          "require_quotient": false,
-          "require_implicit": false,
-          "coef_hi": 3,
-          "power_max": 4,
-          "term_budget": 2,
-          "band": "easy",
-          "difficulty": 0.0,
-          "unlock_medium": false,
-          "unlock_hard": false,
-          "unlock_advanced": false,
-          "unlock_trig": false,
-          "unlock_exp": false,
-          "unlock_log": false,
-          "unlock_roots": false,
-          "n_max": 2,
-          "k_max": 2,
-          "effort_answer_len": 1
-        },
-        "skeleton_source": "structured_definition_of_derivative",
-        "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-        "effort_features": {
-          "answer_len": 1,
-          "nest_depth": 0,
-          "chain_applications": 0,
-          "product_applications": 0,
-          "quotient_applications": 0,
-          "n_factors": 0,
-          "n_terms": 1,
-          "degree_max": 4,
-          "coef_abs_max": 3,
-          "has_fn_power": false,
-          "derivative_order": 1,
-          "methods": [
-            "power"
-          ],
-          "n_fn_nodes": 0,
-          "pack": "structured_definition_of_derivative",
-          "family": "limit_h"
-        },
-        "generation_settings": {
-          "term_count": 2,
-          "power_max": 3,
-          "difficulty": 0.0,
-          "seed": 207,
-          "include_answer_key": true,
-          "integers_only": true,
-          "only_x": true,
-          "_batch_index": 0
-        },
-        "instruction_latex": "\\text{Find the limit.}"
-      }
-    },
-    {
-      "ok": true,
-      "warn": false,
-      "label": "D\u22480 \u00b7 seed=313",
-      "type_id": "calc_app_diff_limits_in_form_of_definition_of_derivative",
-      "difficulty": 0.0,
-      "band": "low",
-      "seed": 313,
-      "prompt_latex": "\\lim_{x\\to 1}\\frac{x^{2}-1}{x-1}",
-      "answer_latex": "2",
-      "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
-      "diagram_svg": "",
-      "debug": [
-        [
-          "skeleton_pattern",
-          "Diff(structured_definition_of_derivative)"
-        ],
-        [
-          "D / effective_d",
-          0.0
-        ],
-        [
-          "seed",
-          313
+          "form_id",
+          "limit_x"
         ],
         [
           "has_diagram_svg",
@@ -350,10 +238,140 @@
           "unlock_roots": false,
           "n_max": 2,
           "k_max": 2,
+          "form_id": "limit_x",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "limit_x",
+        "effort_features": {
+          "answer_len": 1,
+          "nest_depth": 0,
+          "chain_applications": 0,
+          "product_applications": 0,
+          "quotient_applications": 0,
+          "n_factors": 0,
+          "n_terms": 1,
+          "degree_max": 4,
+          "coef_abs_max": 3,
+          "has_fn_power": false,
+          "derivative_order": 1,
+          "methods": [
+            "power"
+          ],
+          "n_fn_nodes": 0,
+          "pack": "structured_definition_of_derivative",
+          "family": "limit_x"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the limit.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_app_diff_limits_in_form_of_definition_of_derivative",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\lim_{x\\to 1}\\frac{x^{2}-1}{x-1}",
+      "answer_latex": "2",
+      "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+      "form_id": "limit_x",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(structured_definition_of_derivative)"
+        ],
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "limit_x"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "generator": "definition_of_derivative",
+        "family": "limit_x",
+        "structure_id": "definition_of_derivative:limit_x",
+        "shape_id": "limit_x",
+        "band": "easy",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "chain_depth": 0,
+        "derivative_order": 1,
+        "effective_d": 0.0,
+        "spec_snapshot": {
+          "pack": "structured_definition_of_derivative",
+          "family": "limit_x",
+          "generator": "definition_of_derivative",
+          "derivative_order": 1,
+          "chain_depth": 0,
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "power"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": false,
+          "allow_product": false,
+          "allow_quotient": false,
+          "allow_implicit": true,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "require_implicit": false,
+          "coef_hi": 3,
+          "power_max": 4,
+          "term_budget": 2,
+          "band": "easy",
+          "difficulty": 0.0,
+          "unlock_medium": false,
+          "unlock_hard": false,
+          "unlock_advanced": false,
+          "unlock_trig": false,
+          "unlock_exp": false,
+          "unlock_log": false,
+          "unlock_roots": false,
+          "n_max": 2,
+          "k_max": 2,
+          "form_id": "limit_x",
+          "effort_answer_len": 1
+        },
+        "skeleton_source": "structured_definition_of_derivative",
+        "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "limit_x",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -394,10 +412,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\text{Use the definition to find }f'(2)\\text{ for }f(x)=3x^{2}.",
-      "answer_latex": "12",
+      "prompt_latex": "\\text{Use the definition to find }f'(2)\\text{ for }f(x)=4x^{2}.",
+      "answer_latex": "16",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "named",
       "diagram_svg": "",
       "debug": [
         [
@@ -411,6 +429,10 @@
         [
           "seed",
           101
+        ],
+        [
+          "form_id",
+          "named"
         ],
         [
           "has_diagram_svg",
@@ -472,10 +494,12 @@
           "unlock_roots": true,
           "n_max": 4,
           "k_max": 4,
+          "form_id": "named",
           "effort_answer_len": 2
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "named",
         "effort_features": {
           "answer_len": 2,
           "nest_depth": 0,
@@ -516,10 +540,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\lim_{x\\to 2}\\frac{x^{2}-4}{x-2}",
-      "answer_latex": "4",
+      "prompt_latex": "\\lim_{h\\to 0}\\frac{2(2+h)^{2}-8}{h}",
+      "answer_latex": "8",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "linear_coef",
       "diagram_svg": "",
       "debug": [
         [
@@ -535,15 +559,19 @@
           207
         ],
         [
+          "form_id",
+          "linear_coef"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "definition_of_derivative",
-        "family": "limit_x",
-        "structure_id": "definition_of_derivative:limit_x",
-        "shape_id": "limit_x",
+        "family": "linear_coef",
+        "structure_id": "definition_of_derivative:linear_coef",
+        "shape_id": "linear_coef",
         "band": "medium",
         "function_classes": [
           "algebraic"
@@ -556,7 +584,7 @@
         "effective_d": 8.0,
         "spec_snapshot": {
           "pack": "structured_definition_of_derivative",
-          "family": "limit_x",
+          "family": "linear_coef",
           "generator": "definition_of_derivative",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -594,10 +622,12 @@
           "unlock_roots": true,
           "n_max": 4,
           "k_max": 4,
+          "form_id": "linear_coef",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "linear_coef",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -615,7 +645,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_definition_of_derivative",
-          "family": "limit_x"
+          "family": "linear_coef"
         },
         "generation_settings": {
           "term_count": 3,
@@ -638,10 +668,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\lim_{h\\to 0}\\frac{3(2+h)^{2}-12}{h}",
+      "prompt_latex": "\\text{Use the definition to find }f'(2)\\text{ for }f(x)=3x^{2}.",
       "answer_latex": "12",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "named",
       "diagram_svg": "",
       "debug": [
         [
@@ -657,15 +687,19 @@
           313
         ],
         [
+          "form_id",
+          "named"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "definition_of_derivative",
-        "family": "linear_coef",
-        "structure_id": "definition_of_derivative:linear_coef",
-        "shape_id": "linear_coef",
+        "family": "named",
+        "structure_id": "definition_of_derivative:named",
+        "shape_id": "named",
         "band": "medium",
         "function_classes": [
           "algebraic"
@@ -678,7 +712,7 @@
         "effective_d": 8.0,
         "spec_snapshot": {
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef",
+          "family": "named",
           "generator": "definition_of_derivative",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -716,10 +750,12 @@
           "unlock_roots": true,
           "n_max": 4,
           "k_max": 4,
+          "form_id": "named",
           "effort_answer_len": 2
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "named",
         "effort_features": {
           "answer_len": 2,
           "nest_depth": 0,
@@ -737,7 +773,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef"
+          "family": "named"
         },
         "generation_settings": {
           "term_count": 3,
@@ -760,10 +796,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\lim_{h\\to 0}\\frac{4(5+h)^{2}-100}{h}",
-      "answer_latex": "40",
+      "prompt_latex": "\\text{Use the definition to find }f'(5)\\text{ for }f(x)=-1 + 3x^{2}.",
+      "answer_latex": "30",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "poly",
       "diagram_svg": "",
       "debug": [
         [
@@ -779,15 +815,19 @@
           101
         ],
         [
+          "form_id",
+          "poly"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "definition_of_derivative",
-        "family": "linear_coef",
-        "structure_id": "definition_of_derivative:linear_coef",
-        "shape_id": "linear_coef",
+        "family": "poly",
+        "structure_id": "definition_of_derivative:poly",
+        "shape_id": "poly",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -800,7 +840,7 @@
         "effective_d": 16.0,
         "spec_snapshot": {
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef",
+          "family": "poly",
           "generator": "definition_of_derivative",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -838,10 +878,12 @@
           "unlock_roots": true,
           "n_max": 7,
           "k_max": 6,
+          "form_id": "poly",
           "effort_answer_len": 2
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "poly",
         "effort_features": {
           "answer_len": 2,
           "nest_depth": 0,
@@ -859,7 +901,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef"
+          "family": "poly"
         },
         "generation_settings": {
           "term_count": 4,
@@ -882,10 +924,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\lim_{h\\to 0}\\frac{4(5+h)^{2}-100}{h}",
-      "answer_latex": "40",
+      "prompt_latex": "\\lim_{h\\to 0}\\frac{\\frac{1}{5+h}-\\frac{1}{5}}{h}",
+      "answer_latex": "-\\frac{1}{25}",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "reciprocal",
       "diagram_svg": "",
       "debug": [
         [
@@ -901,15 +943,19 @@
           207
         ],
         [
+          "form_id",
+          "reciprocal"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "definition_of_derivative",
-        "family": "linear_coef",
-        "structure_id": "definition_of_derivative:linear_coef",
-        "shape_id": "linear_coef",
+        "family": "reciprocal",
+        "structure_id": "definition_of_derivative:reciprocal",
+        "shape_id": "reciprocal",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -922,7 +968,7 @@
         "effective_d": 16.0,
         "spec_snapshot": {
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef",
+          "family": "reciprocal",
           "generator": "definition_of_derivative",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -960,12 +1006,14 @@
           "unlock_roots": true,
           "n_max": 7,
           "k_max": 6,
-          "effort_answer_len": 2
+          "form_id": "reciprocal",
+          "effort_answer_len": 13
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "reciprocal",
         "effort_features": {
-          "answer_len": 2,
+          "answer_len": 13,
           "nest_depth": 0,
           "chain_applications": 0,
           "product_applications": 0,
@@ -981,7 +1029,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef"
+          "family": "reciprocal"
         },
         "generation_settings": {
           "term_count": 4,
@@ -1007,7 +1055,7 @@
       "prompt_latex": "\\lim_{h\\to 0}\\frac{(5+h)^{3}-125}{h}",
       "answer_latex": "75",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "cube",
       "diagram_svg": "",
       "debug": [
         [
@@ -1021,6 +1069,10 @@
         [
           "seed",
           313
+        ],
+        [
+          "form_id",
+          "cube"
         ],
         [
           "has_diagram_svg",
@@ -1082,10 +1134,12 @@
           "unlock_roots": true,
           "n_max": 7,
           "k_max": 6,
+          "form_id": "cube",
           "effort_answer_len": 2
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "cube",
         "effort_features": {
           "answer_len": 2,
           "nest_depth": 0,
@@ -1126,10 +1180,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\lim_{h\\to 0}\\frac{4(5+h)^{2}-100}{h}",
-      "answer_latex": "40",
+      "prompt_latex": "\\text{Use the definition to find }f'(5)\\text{ for }f(x)=-1 + 3x^{2}.",
+      "answer_latex": "30",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "poly",
       "diagram_svg": "",
       "debug": [
         [
@@ -1145,15 +1199,19 @@
           101
         ],
         [
+          "form_id",
+          "poly"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "definition_of_derivative",
-        "family": "linear_coef",
-        "structure_id": "definition_of_derivative:linear_coef",
-        "shape_id": "linear_coef",
+        "family": "poly",
+        "structure_id": "definition_of_derivative:poly",
+        "shape_id": "poly",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1166,7 +1224,7 @@
         "effective_d": 22.0,
         "spec_snapshot": {
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef",
+          "family": "poly",
           "generator": "definition_of_derivative",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1204,10 +1262,12 @@
           "unlock_roots": true,
           "n_max": 8,
           "k_max": 7,
+          "form_id": "poly",
           "effort_answer_len": 2
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "poly",
         "effort_features": {
           "answer_len": 2,
           "nest_depth": 0,
@@ -1225,7 +1285,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef"
+          "family": "poly"
         },
         "generation_settings": {
           "term_count": 4,
@@ -1248,10 +1308,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\lim_{h\\to 0}\\frac{4(5+h)^{2}-100}{h}",
-      "answer_latex": "40",
+      "prompt_latex": "\\lim_{h\\to 0}\\frac{\\sqrt{9+h}-\\sqrt{9}}{h}",
+      "answer_latex": "\\frac{1}{6}",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "sqrt",
       "diagram_svg": "",
       "debug": [
         [
@@ -1267,15 +1327,19 @@
           207
         ],
         [
+          "form_id",
+          "sqrt"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "definition_of_derivative",
-        "family": "linear_coef",
-        "structure_id": "definition_of_derivative:linear_coef",
-        "shape_id": "linear_coef",
+        "family": "sqrt",
+        "structure_id": "definition_of_derivative:sqrt",
+        "shape_id": "sqrt",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1288,7 +1352,7 @@
         "effective_d": 22.0,
         "spec_snapshot": {
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef",
+          "family": "sqrt",
           "generator": "definition_of_derivative",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1326,12 +1390,14 @@
           "unlock_roots": true,
           "n_max": 8,
           "k_max": 7,
-          "effort_answer_len": 2
+          "form_id": "sqrt",
+          "effort_answer_len": 11
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "sqrt",
         "effort_features": {
-          "answer_len": 2,
+          "answer_len": 11,
           "nest_depth": 0,
           "chain_applications": 0,
           "product_applications": 0,
@@ -1347,7 +1413,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef"
+          "family": "sqrt"
         },
         "generation_settings": {
           "term_count": 4,
@@ -1370,10 +1436,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\lim_{h\\to 0}\\frac{(5+h)^{3}-125}{h}",
-      "answer_latex": "75",
+      "prompt_latex": "\\lim_{h\\to 0}\\frac{\\frac{1}{5+h}-\\frac{1}{5}}{h}",
+      "answer_latex": "-\\frac{1}{25}",
       "skeleton_pattern": "Diff(structured_definition_of_derivative)",
-      "form_id": null,
+      "form_id": "reciprocal",
       "diagram_svg": "",
       "debug": [
         [
@@ -1389,15 +1455,19 @@
           313
         ],
         [
+          "form_id",
+          "reciprocal"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "definition_of_derivative",
-        "family": "cube",
-        "structure_id": "definition_of_derivative:cube",
-        "shape_id": "cube",
+        "family": "reciprocal",
+        "structure_id": "definition_of_derivative:reciprocal",
+        "shape_id": "reciprocal",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1410,7 +1480,7 @@
         "effective_d": 22.0,
         "spec_snapshot": {
           "pack": "structured_definition_of_derivative",
-          "family": "cube",
+          "family": "reciprocal",
           "generator": "definition_of_derivative",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1448,12 +1518,14 @@
           "unlock_roots": true,
           "n_max": 8,
           "k_max": 7,
-          "effort_answer_len": 2
+          "form_id": "reciprocal",
+          "effort_answer_len": 13
         },
         "skeleton_source": "structured_definition_of_derivative",
         "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "reciprocal",
         "effort_features": {
-          "answer_len": 2,
+          "answer_len": 13,
           "nest_depth": 0,
           "chain_applications": 0,
           "product_applications": 0,
@@ -1469,7 +1541,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_definition_of_derivative",
-          "family": "cube"
+          "family": "reciprocal"
         },
         "generation_settings": {
           "term_count": 4,

@@ -218,6 +218,10 @@ def _madlibs_meta(generator_key: str, structure: dict, *, pack: str | None = Non
             meta["skeleton_pattern"] = f"Diff(inverse_functions:{fid})"
         if variant:
             meta["variant"] = variant
+        fid_stamp = form_id or meta.get("form_id")
+        if fid_stamp:
+            meta["form_id"] = fid_stamp
+            snap["form_id"] = fid_stamp
         last["meta"] = meta
 
     def metadata_builder(_p: str, _t: str, answer: str | None) -> dict:
@@ -931,22 +935,85 @@ def _instantaneous_rate_of_change(topic: str, settings: dict) -> list[Question]:
     )
 
 
+DEFINITION_OF_DERIVATIVE_GENERATOR = "definition_of_derivative"
+
+_DOD_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("limit_h", "limit_x"),
+    "medium": ("limit_h", "limit_x", "cube", "linear_coef", "named"),
+    "hard": ("cube", "linear_coef", "named", "reciprocal", "sqrt", "poly"),
+    "expert": ("reciprocal", "sqrt", "poly"),
+}
+
+
+def definition_of_derivative_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of easy x² limits (old accumulate kept them at high D)."""
+    if d < 8.0:
+        return _DOD_BANDS["easy"]
+    if d < 16.0:
+        return _DOD_BANDS["medium"]
+    if d < 20.0:
+        return _DOD_BANDS["hard"]
+    return _DOD_BANDS["expert"]
+
+
+def _dod_form_rows(forms: tuple[str, ...]) -> list[dict]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [DEFINITION_OF_DERIVATIVE_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _settings_numeric_d(settings: dict) -> float | None:
+    raw = settings.get("difficulty")
+    if raw is None or raw == "":
+        return None
+    try:
+        return max(0.0, float(raw))
+    except (TypeError, ValueError):
+        return None
+
+
 def _definition_of_derivative(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     structure = _rule_structure(settings)
     x = str(settings.get("variable", "x"))
     note, metadata_builder = _madlibs_meta("definition_of_derivative", structure)
+    numeric_d = _settings_numeric_d(settings)
 
     def build() -> tuple[str, str, str | None]:
         a = random.randint(1, max(1, min(5, int(structure.get("n_max", 5)))))
-        family = _pick_family(
-            structure,
-            ["limit_h", "limit_x"],
-            medium=["cube", "linear_coef", "named"],
-            hard=["reciprocal", "sqrt", "poly"],
-        )
-        note(family)
+        if numeric_d is not None:
+            from question_engine.frameworks.primitives.openstax_form_catalogs import (
+                select_form_id,
+            )
+
+            forms = definition_of_derivative_forms_for_difficulty(numeric_d)
+            qw = settings.get("live_quality_form_weights")
+            quality_weights = qw if isinstance(qw, dict) else None
+            form = select_form_id(
+                _dod_form_rows(forms),
+                d=numeric_d,
+                rng=random,
+                quality_weights=quality_weights,
+            )
+            family = str(form.get("form_id") or forms[0])
+            if family not in forms:
+                family = forms[0]
+        else:
+            family = _pick_family(
+                structure,
+                ["limit_h", "limit_x"],
+                medium=["cube", "linear_coef", "named"],
+                hard=["reciprocal", "sqrt", "poly"],
+            )
+        note(family, form_id=family)
         if family == "limit_h":
             prompt = rf"\lim_{{h\to 0}}\frac{{({a}+h)^{{2}}-{a * a}}}{{h}}"
             answer = str(2 * a)

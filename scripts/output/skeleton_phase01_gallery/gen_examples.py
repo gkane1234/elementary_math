@@ -2869,7 +2869,8 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_diff_definition_of_the_derivative",
         "Diff — definition of the derivative",
-        "Limit definition. OpenStax Vol 1 §3.1.",
+        "Shared leftover lockout with the app limits-as-definition leaf. "
+        "OpenStax Vol 1 §3.1.",
     ),
 
     (
@@ -2887,7 +2888,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_limits_in_form_of_definition_of_derivative",
         "App — limits as definition of derivative",
-        "Recognize lim as f'(a). OpenStax Vol 1 §3.1.",
+        "Leftover lockout: D=0 x^2 x→a / h→0; D=8 leftover easy + cube/kx^2/named; "
+        "D=16 medium leftover + 1/x / sqrt / named-poly (no x^2 leftover); "
+        "D=22 1/x / sqrt / named-poly only. OpenStax Vol 1 §3.1.",
     ),
     (
         "calc_app_diff_relative_extrema",

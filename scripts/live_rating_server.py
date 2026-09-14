@@ -1,27 +1,33 @@
 #!/usr/bin/env python3
-"""Local live adaptive human-rating loop (v1).
+"""Local live adaptive human-rating loop (pairwise Bayesian utility).
 
-Stratified continuous-D → generate → rate → append JSONL → next.
+Default next action generates two candidates (A/B). Choose A better / B better
+/ tie. The model is a Bayesian linear utility with uncertainty; once ready it
+picks informative pairs and reweights form_id at generate time.
 
 Usage:
   $env:PYTHONPATH='.'
   python scripts/live_rating_server.py
   # open http://127.0.0.1:8777/
+  # default UI campaign = all_topics
 
-  # CLI smoke:
-  python scripts/live_rating_server.py --list-types
-  python scripts/live_rating_server.py --next --type-id g6_introduction_to_ratios --session smoke_g6
-  python scripts/live_rating_server.py --submit --session smoke_g6 --type-id g6_introduction_to_ratios --rating 3 --minutes 1 --notes "fake"
-  python scripts/live_rating_server.py --coverage --session smoke_g6 --type-id g6_introduction_to_ratios
+  # CLI smoke (all-topics campaign, pairwise):
+  python scripts/live_rating_server.py --next --campaign all_topics --session smoke_all
+  python scripts/live_rating_server.py --submit --campaign all_topics --session smoke_all --winner a
+  python scripts/live_rating_server.py --coverage --campaign all_topics --session smoke_all
+
+  # Single-item (legacy --rating):
+  python scripts/live_rating_server.py --next --single --campaign all_topics --session smoke_abs
+  python scripts/live_rating_server.py --submit --campaign all_topics --session smoke_abs --rating 3
 
 API:
   GET  /api/types
-  GET  /api/coverage?type_id=&session=
-  GET|POST /api/next   body/query: type_id, session?, difficulty?, seed?
-  POST /api/submit     body: type_id, session?, rating_id?, rating_1_to_5, minutes?, notes?,
-                             topic_fit_ok?, latex_ok?, broken?, skip?
+  GET  /api/coverage?type_id=&session=&campaign=
+  GET|POST /api/next   pair=1 (default) → {pair, coverage}; pair=0 → {item, coverage}
+  POST /api/submit     winner=a|b|tie (pair) or rating_1_to_5 (single)
 
-v2 (not here): uncertainty BO, inverse human model, pairwise, full knob registry.
+``/api/next`` stamps ``predicted_rating``, ``predicted_std``, ``n_train``,
+``n_pairs``, ``model_ready``.
 """
 
 from __future__ import annotations
@@ -40,9 +46,16 @@ sys.path.insert(0, str(ROOT))
 import question_engine.types  # noqa: F401 — register catalogs
 
 from question_engine.ml.live_rating import (  # noqa: E402
+    ALL_TOPICS_CAMPAIGN,
     LIVE_ROOT,
+    MIN_PAIRS,
+    MIN_TRAIN,
+    SKELETON_DERIV_CAMPAIGN,
+    SKELETON_DERIV_TYPE_IDS,
     LiveRatingSession,
+    MultiTypeCampaign,
     list_types,
+    open_live_session,
     pick_next_difficulty,
 )
 
@@ -94,12 +107,15 @@ def _ensure_katex_vendor() -> Path | None:
 
 def build_html() -> str:
     katex = _katex_head()
+    skel_types_js = json.dumps(list(SKELETON_DERIV_TYPE_IDS))
+    min_train = int(MIN_TRAIN)
+    min_pairs = int(MIN_PAIRS)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Polynomial — live rater (v1)</title>
+<title>Polynomial — live rater (all topics)</title>
 {katex}
 <style>
 :root {{ color-scheme: light; --ink:#1a1a1a; --muted:#5a5a5a; --line:#cfc8bc; --bg:#f7f4ee; --card:#fffdf8; --accent:#1f4d3a; --warn:#8a4b2a; }}
@@ -126,12 +142,25 @@ main {{ max-width: 52rem; margin: 0 auto; padding: 1.25rem; }}
   box-shadow: 0 1px 0 rgba(0,0,0,0.03); }}
 .meta {{ display:flex; flex-wrap:wrap; gap:0.35rem 0.75rem; font-size:0.82rem; color:var(--muted); margin-bottom:0.75rem; }}
 .meta code {{ color:var(--ink); background:#efe9df; padding:0.05rem 0.3rem; border-radius:3px; }}
-.prompt {{ font-size:1.15rem; margin:0.75rem 0; min-height:2.5rem; }}
+.pred {{ margin:0.5rem 0 0.75rem; padding:0.55rem 0.7rem; border-radius:4px; background:#e8f0ea; font-size:0.92rem; }}
+.pred.cold {{ background:#f3ebe3; color:var(--warn); }}
+.prompt-block {{ margin:0.85rem 0 1rem; padding:0.7rem 0.8rem 0.85rem; border:1px solid var(--line);
+  border-radius:5px; background:#fff; }}
+.prompt-label {{ margin:0 0 0.4rem; font-size:0.78rem; font-weight:700; letter-spacing:0.06em;
+  text-transform:uppercase; color:var(--accent); }}
+.prompt {{ font-size:1.2rem; margin:0.15rem 0 0.55rem; min-height:2.2rem; }}
+.prompt-fallback-note {{ margin:0 0 0.45rem; font-size:0.82rem; color:var(--warn); }}
+.prompt-raw {{ margin:0.35rem 0 0; font-size:0.82rem; color:var(--muted); }}
+.prompt-raw summary {{ cursor:pointer; }}
+.prompt-raw pre {{ margin:0.4rem 0 0; padding:0.45rem 0.55rem; background:#efe9df; border-radius:4px;
+  overflow:auto; white-space:pre-wrap; word-break:break-word; font-family:Consolas, "Courier New", monospace;
+  font-size:0.8rem; color:var(--ink); }}
 .answer {{ margin:0.5rem 0 1rem; padding:0.6rem 0.75rem; background:#f0ebe3; border-radius:4px; }}
 .answer summary {{ cursor:pointer; color:var(--muted); }}
 .rate-row {{ display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; margin:0.75rem 0; }}
 .flags {{ display:flex; flex-wrap:wrap; gap:0.75rem 1rem; font-size:0.9rem; color:var(--muted); margin:0.5rem 0; }}
 .flags label {{ display:flex; align-items:center; gap:0.3rem; }}
+.flags-hint {{ width:100%; font-size:0.78rem; color:var(--muted); margin:0; }}
 textarea {{ width:100%; min-height:3.5rem; border:1px solid var(--line); border-radius:4px; padding:0.45rem; background:#fff; }}
 .nav {{ display:flex; justify-content:space-between; gap:0.75rem; margin-top:1rem; }}
 .coverage {{ font-size:0.82rem; color:var(--muted); margin-top:0.75rem; font-variant-numeric: tabular-nums; }}
@@ -140,18 +169,37 @@ textarea {{ width:100%; min-height:3.5rem; border:1px solid var(--line); border-
 .toast.show {{ opacity:0.92; }}
 .status {{ color:var(--muted); font-size:0.85rem; }}
 .status.err {{ color:var(--warn); }}
+.skel-hint {{ font-size:0.78rem; color:var(--muted); margin-top:0.35rem; }}
+.pair-grid {{ display:grid; grid-template-columns: 1fr 1fr; gap:0.85rem; }}
+@media (max-width: 820px) {{ .pair-grid {{ grid-template-columns: 1fr; }} }}
+.side-card {{ border:1px solid var(--line); border-radius:5px; padding:0.65rem 0.75rem 0.8rem; background:#fff; }}
+.side-card.chosen {{ outline:2px solid var(--accent); }}
+.side-label {{ margin:0 0 0.35rem; font-size:0.78rem; font-weight:700; letter-spacing:0.06em;
+  text-transform:uppercase; color:var(--accent); }}
+.winner-row {{ display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; margin:1rem 0 0.5rem; }}
+button.winner-btn {{ min-width:7.2rem; background:#fff; color:var(--ink); border-color:var(--line); }}
+button.winner-btn.active {{ background:var(--accent); color:#fff; border-color:var(--accent); }}
+details.abs-rate {{ margin-top:0.65rem; font-size:0.85rem; color:var(--muted); }}
+details.abs-rate summary {{ cursor:pointer; }}
 </style>
 </head>
 <body>
 <header>
-  <h1>Polynomial — live rater (v1)</h1>
-  <p>Stratified continuous-D · rate → append → next. No GP/BO yet.</p>
+  <h1>Polynomial — live rater</h1>
+  <p>Pairwise A vs B · Bayesian utility with uncertainty · generation reweights preferred forms. Cold start until {min_pairs} pairs or {min_train} absolute ratings. Generation-process change resets the model.</p>
   <div class="toolbar">
+    <label>Campaign
+      <select id="campaign">
+        <option value="all_topics" selected>all_topics (every Ready leaf)</option>
+        <option value="skeleton_deriv">skeleton_deriv (calc_diff_* only)</option>
+        <option value="single">single type_id</option>
+      </select>
+    </label>
     <label>type_id
-      <input id="typeFilter" type="text" list="typeList" placeholder="filter…" style="width:14rem"/>
+      <input id="typeFilter" type="text" list="typeList" placeholder="(campaign picks)" style="width:14rem"/>
       <datalist id="typeList"></datalist>
     </label>
-    <label>Session <input id="session" type="text" placeholder="(defaults to type_id)" style="width:10rem"/></label>
+    <label>Session <input id="session" type="text" placeholder="all_topics" style="width:10rem"/></label>
     <button type="button" id="btnLoadTypes" class="secondary">Refresh types</button>
     <button type="button" id="btnNext">Load next</button>
     <span class="status" id="status"></span>
@@ -159,17 +207,67 @@ textarea {{ width:100%; min-height:3.5rem; border:1px solid var(--line); border-
 </header>
 <main>
   <div class="card" id="card">
-    <div class="meta" id="meta"><em>Pick a type_id and Load next.</em></div>
-    <div class="prompt" id="prompt"></div>
-    <details class="answer"><summary>Show answer</summary><div id="answer"></div></details>
-    <div class="rate-row" id="scores"><span>Rating:</span></div>
+    <div class="meta" id="meta"><em>Load next to start the all-topics campaign (A vs B).</em></div>
+    <div class="pred cold" id="pred">Model: cold start — predicted rating n/a</div>
+    <div class="pair-grid" id="pairGrid">
+      <section class="side-card" id="sideA">
+        <h2 class="side-label">A</h2>
+        <div class="meta" id="metaA"></div>
+        <section class="prompt-block">
+          <h3 class="prompt-label">Prompt</h3>
+          <div class="prompt" id="promptA"></div>
+          <p class="prompt-fallback-note" id="promptFallbackNoteA" hidden></p>
+          <details class="prompt-raw" open>
+            <summary>Raw prompt (LaTeX / text)</summary>
+            <pre id="promptRawA"></pre>
+          </details>
+        </section>
+        <details class="answer"><summary>Show answer</summary><div id="answerA"></div></details>
+        <div class="flags">
+          <p class="flags-hint">Check only if A is wrong. Unchecked = fine.</p>
+          <label><input type="checkbox" id="flagTopicFitA"/> incorrect topic fit</label>
+          <label><input type="checkbox" id="flagLatexA"/> latex broken</label>
+          <label><input type="checkbox" id="flagBrokenA"/> broken / bad gen</label>
+        </div>
+        <details class="abs-rate">
+          <summary>Optional absolute 1–5 (A)</summary>
+          <div class="rate-row" id="scoresA"><span>A rating:</span></div>
+        </details>
+        <div class="skel-hint" id="skelHintA"></div>
+      </section>
+      <section class="side-card" id="sideB">
+        <h2 class="side-label">B</h2>
+        <div class="meta" id="metaB"></div>
+        <section class="prompt-block">
+          <h3 class="prompt-label">Prompt</h3>
+          <div class="prompt" id="promptB"></div>
+          <p class="prompt-fallback-note" id="promptFallbackNoteB" hidden></p>
+          <details class="prompt-raw" open>
+            <summary>Raw prompt (LaTeX / text)</summary>
+            <pre id="promptRawB"></pre>
+          </details>
+        </section>
+        <details class="answer"><summary>Show answer</summary><div id="answerB"></div></details>
+        <div class="flags">
+          <p class="flags-hint">Check only if B is wrong. Unchecked = fine.</p>
+          <label><input type="checkbox" id="flagTopicFitB"/> incorrect topic fit</label>
+          <label><input type="checkbox" id="flagLatexB"/> latex broken</label>
+          <label><input type="checkbox" id="flagBrokenB"/> broken / bad gen</label>
+        </div>
+        <details class="abs-rate">
+          <summary>Optional absolute 1–5 (B)</summary>
+          <div class="rate-row" id="scoresB"><span>B rating:</span></div>
+        </details>
+        <div class="skel-hint" id="skelHintB"></div>
+      </section>
+    </div>
+    <div class="winner-row" id="winners">
+      <button type="button" class="winner-btn" data-winner="a">A better</button>
+      <button type="button" class="winner-btn" data-winner="tie">Tie</button>
+      <button type="button" class="winner-btn" data-winner="b">B better</button>
+    </div>
     <div class="rate-row">
       <label>Minutes <input id="minutes" type="number" min="0" step="0.5" style="width:5rem"/></label>
-    </div>
-    <div class="flags">
-      <label><input type="checkbox" id="flagTopicFit"/> topic_fit ok</label>
-      <label><input type="checkbox" id="flagLatex"/> latex ok</label>
-      <label><input type="checkbox" id="flagBroken"/> broken</label>
     </div>
     <label for="notes">Notes</label>
     <textarea id="notes" placeholder="Optional pedagogy / latex / topic flags"></textarea>
@@ -178,14 +276,20 @@ textarea {{ width:100%; min-height:3.5rem; border:1px solid var(--line); border-
       <button type="button" id="btnSubmit" disabled>Submit &amp; next</button>
     </div>
     <div class="coverage" id="coverage"></div>
+    <div class="skel-hint" id="skelHint"></div>
   </div>
 </main>
 <div class="toast" id="toast"></div>
 <script>
-const STORAGE_KEY = "poly_live_rater_v1";
+const STORAGE_KEY = "poly_live_rater_pair_v2";
+const SKELETON_TYPES = {skel_types_js};
+const MIN_TRAIN = {min_train};
+const MIN_PAIRS = {min_pairs};
 let types = [];
 let current = null;
-let currentScore = null;
+let currentWinner = null;
+let currentScoreA = null;
+let currentScoreB = null;
 
 function loadPrefs() {{
   try {{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{{}}"); }}
@@ -238,18 +342,31 @@ function renderMath() {{
   }}
 }}
 
+function campaignMode() {{
+  return document.getElementById("campaign").value;
+}}
 function typeId() {{
   return (document.getElementById("typeFilter").value || "").trim();
 }}
 function sessionName() {{
-  return (document.getElementById("session").value || "").trim() || null;
+  const raw = (document.getElementById("session").value || "").trim();
+  if (raw) return raw;
+  if (campaignMode() === "all_topics") return "all_topics";
+  if (campaignMode() === "skeleton_deriv") return "skeleton_deriv";
+  return null;
 }}
 
 function fillTypes(list) {{
   types = list || [];
   const dl = document.getElementById("typeList");
   dl.innerHTML = "";
-  for (const t of types) {{
+  const prefer = new Set(SKELETON_TYPES);
+  const ordered = [...types].sort((a,b) => {{
+    const ap = prefer.has(a.type_id) ? 0 : 1;
+    const bp = prefer.has(b.type_id) ? 0 : 1;
+    return ap - bp || String(a.type_id).localeCompare(String(b.type_id));
+  }});
+  for (const t of ordered) {{
     const opt = document.createElement("option");
     opt.value = t.type_id;
     opt.label = (t.category || "") + " / " + (t.name || t.type_id);
@@ -261,47 +378,148 @@ function showCoverage(cov) {{
   if (!cov) {{ document.getElementById("coverage").textContent = ""; return; }}
   const bins = cov.by_difficulty || {{}};
   const parts = Object.keys(bins).sort((a,b)=>Number(a)-Number(b)).map(k => "D" + k + "=" + bins[k]);
+  let typePart = "";
+  if (cov.by_generator) {{
+    const gkeys = Object.keys(cov.by_generator).filter(k => cov.by_generator[k] > 0);
+    if (gkeys.length)
+      typePart += " · gens " + gkeys.slice(0, 8).map(k => k + "=" + cov.by_generator[k]).join(",");
+  }}
+  if (cov.by_type) {{
+    const tkeys = Object.keys(cov.by_type).filter(k => cov.by_type[k] > 0);
+    typePart += " · types " + tkeys.slice(0, 8).map(k => k.replace("calc_diff_", "") + "=" + cov.by_type[k]).join(",");
+    if (tkeys.length > 8) typePart += "…";
+  }}
+  const modelBit = cov.model_ready
+    ? (" · model ready abs=" + (cov.n_train || 0) + " pairs=" + (cov.n_pairs || 0))
+    : (" · cold abs=" + (cov.n_train || 0) + "/" + (cov.min_train || MIN_TRAIN) +
+       " pairs=" + (cov.n_pairs || 0) + "/" + (cov.min_pairs || MIN_PAIRS));
+  const resetBit = cov.learning_reset ? " · reset (new gen rev)" : "";
+  const revBit = cov.engine_rev ? (" · rev " + cov.engine_rev) : "";
   document.getElementById("coverage").textContent =
-    "Rated " + (cov.n_ratings || 0) + " · " + parts.join(" · ") +
+    "Rated " + (cov.n_ratings || 0) + " · " + parts.join(" · ") + typePart + modelBit + resetBit + revBit +
     (cov.dir ? " · " + cov.dir : "");
 }}
 
-function showItem(it) {{
-  current = it;
-  currentScore = null;
-  document.querySelectorAll("button.score").forEach(b => b.classList.remove("active"));
-  document.getElementById("minutes").value = "";
-  document.getElementById("notes").value = "";
-  document.getElementById("flagTopicFit").checked = false;
-  document.getElementById("flagLatex").checked = false;
-  document.getElementById("flagBroken").checked = false;
-  document.getElementById("btnSubmit").disabled = !it;
-  if (!it) {{
-    document.getElementById("meta").innerHTML = "<em>No item.</em>";
-    document.getElementById("prompt").innerHTML = "";
-    document.getElementById("answer").innerHTML = "";
+function showPred(left, right) {{
+  const el = document.getElementById("pred");
+  const src = left || right;
+  if (!src) {{
+    el.className = "pred cold";
+    el.textContent = "Model: —";
     return;
   }}
-  document.getElementById("meta").innerHTML = [
+  if (src.model_ready) {{
+    el.className = "pred";
+    const bits = [];
+    if (left && left.predicted_rating != null)
+      bits.push("A " + Number(left.predicted_rating).toFixed(2) +
+        (left.predicted_std != null ? " ±" + Number(left.predicted_std).toFixed(2) : ""));
+    if (right && right.predicted_rating != null)
+      bits.push("B " + Number(right.predicted_rating).toFixed(2) +
+        (right.predicted_std != null ? " ±" + Number(right.predicted_std).toFixed(2) : ""));
+    el.textContent = (bits.length ? ("Predicted: " + bits.join(" · ")) : (src.model_message || "Model ready")) +
+      " · abs=" + (src.n_train || 0) + " pairs=" + (src.n_pairs || 0);
+  }} else {{
+    el.className = "pred cold";
+    el.textContent = src.model_message ||
+      ("Cold start: n/a until " + (src.min_pairs || MIN_PAIRS) + " pairs or " +
+       (src.min_train || MIN_TRAIN) + " abs (have pairs=" + (src.n_pairs || 0) +
+       ", abs=" + (src.n_train || 0) + ").");
+  }}
+}}
+
+function skelBits(it) {{
+  if (!it) return "";
+  const sf = it.skeleton_features || {{}};
+  const bits = [
+    sf.generator ? ("gen " + sf.generator) : null,
+    sf.form_id ? ("form " + sf.form_id) : null,
+    sf.skeleton_kind ? ("kind " + sf.skeleton_kind) : null,
+    sf.richness_band ? ("band " + sf.richness_band) : null,
+    sf.n_applies != null ? ("n_applies " + sf.n_applies) : null,
+    sf.degree_max != null ? ("deg " + sf.degree_max) : null,
+    sf.nest_depth_expr != null ? ("nest " + sf.nest_depth_expr) : null,
+  ].filter(Boolean);
+  return bits.length ? ("Skeleton: " + bits.join(" · ")) : "";
+}}
+
+function itemMetaHtml(it) {{
+  if (!it) return "";
+  return [
     "<span>type <code>" + it.type_id + "</code></span>",
     "<span>D <code>" + it.difficulty + "</code></span>",
     "<span>bin <code>" + it.bin + "</code></span>",
-    "<span>seed <code>" + it.seed + "</code></span>",
     it.generator ? "<span>gen <code>" + it.generator + "</code></span>" : "",
-    it.y_effort != null ? "<span>y_effort <code>" + it.y_effort + "</code></span>" : "",
+    (it.metadata && it.metadata.skeleton_source) ? "<span>skel <code>" + it.metadata.skeleton_source + "</code></span>" : "",
     it.engine_rev ? "<span>rev <code>" + it.engine_rev + "</code></span>" : "",
-    "<span>id <code>" + it.rating_id + "</code></span>"
+    it.rating_id ? "<span>id <code>" + it.rating_id + "</code></span>" : ""
   ].filter(Boolean).join("");
-  document.getElementById("prompt").innerHTML = wrapMath(it.prompt_latex || it.prompt_text || "");
-  document.getElementById("answer").innerHTML = wrapMath(it.answer_latex || it.answer_text || "");
-  const ans = document.querySelector("details.answer");
-  if (ans) ans.open = false;
+}}
+
+function fillPrompt(it, suffix) {{
+  const latex = ((it && it.prompt_latex) || "").trim();
+  const text = ((it && it.prompt_text) || "").trim();
+  const rawPrompt = latex || text;
+  document.getElementById("prompt" + suffix).innerHTML = wrapMath(rawPrompt);
+  const note = document.getElementById("promptFallbackNote" + suffix);
+  if (!latex && text) {{
+    note.hidden = false;
+    note.textContent = "prompt_latex is empty — showing prompt_text";
+  }} else if (!latex && !text) {{
+    note.hidden = false;
+    note.textContent = "prompt_latex and prompt_text are empty";
+  }} else {{
+    note.hidden = true;
+    note.textContent = "";
+  }}
+  document.getElementById("promptRaw" + suffix).textContent = rawPrompt || "(empty)";
+  document.getElementById("answer" + suffix).innerHTML = wrapMath((it && (it.answer_latex || it.answer_text)) || "");
+}}
+
+function resetFlags() {{
+  ["A", "B"].forEach(s => {{
+    document.getElementById("flagTopicFit" + s).checked = false;
+    document.getElementById("flagLatex" + s).checked = false;
+    document.getElementById("flagBroken" + s).checked = false;
+  }});
+  document.getElementById("minutes").value = "";
+  document.getElementById("notes").value = "";
+  currentWinner = null;
+  currentScoreA = null;
+  currentScoreB = null;
+  document.querySelectorAll("button.winner-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll("button.score").forEach(b => b.classList.remove("active"));
+  document.getElementById("sideA").classList.remove("chosen");
+  document.getElementById("sideB").classList.remove("chosen");
+}}
+
+function showPair(payload) {{
+  const left = payload && payload.left;
+  const right = payload && payload.right;
+  current = payload;
+  resetFlags();
+  document.getElementById("btnSubmit").disabled = !left || !right;
+  if (!left || !right) {{
+    document.getElementById("meta").innerHTML = "<em>No pair.</em>";
+    showPred(null, null);
+    return;
+  }}
+  document.getElementById("meta").innerHTML =
+    "<span>pair <code>" + (payload.pair_id || "") + "</code></span>";
+  document.getElementById("metaA").innerHTML = itemMetaHtml(left);
+  document.getElementById("metaB").innerHTML = itemMetaHtml(right);
+  fillPrompt(left, "A");
+  fillPrompt(right, "B");
+  document.getElementById("skelHintA").textContent = skelBits(left);
+  document.getElementById("skelHintB").textContent = skelBits(right);
+  showPred(left, right);
+  document.querySelectorAll("details.answer").forEach(el => {{ el.open = false; }});
   renderMath();
-  // LocalStorage backup of last item (offline recovery aid).
   const prefs = loadPrefs();
-  prefs.lastType = it.type_id;
+  prefs.lastType = left.type_id;
   prefs.lastSession = sessionName();
-  prefs.lastItem = {{ rating_id: it.rating_id, difficulty: it.difficulty, seed: it.seed }};
+  prefs.lastCampaign = campaignMode();
+  prefs.lastPair = {{ pair_id: payload.pair_id }};
   savePrefs(prefs);
 }}
 
@@ -313,19 +531,26 @@ async function refreshTypes() {{
 }}
 
 async function loadNext() {{
-  const tid = typeId();
-  if (!tid) {{ setStatus("Enter a type_id", true); return; }}
+  const mode = campaignMode();
+  if (mode === "single" && !typeId()) {{ setStatus("Enter a type_id", true); return; }}
   setStatus("Generating…");
   document.getElementById("btnNext").disabled = true;
   try {{
-    const body = {{ type_id: tid }};
+    const body = {{}};
     const sess = sessionName();
     if (sess) body.session = sess;
+    if (mode === "all_topics" || mode === "skeleton_deriv") {{
+      body.campaign = mode;
+      if (typeId()) body.type_id = typeId();
+    }} else {{
+      body.type_id = typeId();
+    }}
     const data = await api("POST", "/api/next", body);
-    showItem(data.item);
+    if (data.pair) showPair(data.pair);
+    else if (data.item) showPair({{ pair_id: data.item.rating_id, left: data.item, right: data.item }});
     showCoverage(data.coverage);
     setStatus("Ready");
-    toast("Next item");
+    toast("Next pair");
   }} catch (e) {{
     setStatus(String(e.message || e), true);
   }} finally {{
@@ -333,34 +558,39 @@ async function loadNext() {{
   }}
 }}
 
+function sideFlags(suffix, score) {{
+  return {{
+    topic_fit_ok: !document.getElementById("flagTopicFit" + suffix).checked,
+    latex_ok: !document.getElementById("flagLatex" + suffix).checked,
+    broken: document.getElementById("flagBroken" + suffix).checked,
+    rating_1_to_5: score
+  }};
+}}
+
 async function submit(skip) {{
   if (!current) return;
-  if (!skip && currentScore == null) {{ setStatus("Pick a rating 1–5", true); return; }}
+  if (!skip && !currentWinner) {{ setStatus("Pick A better, B better, or Tie", true); return; }}
   const minutesRaw = document.getElementById("minutes").value;
   const body = {{
-    type_id: typeId(),
     session: sessionName(),
-    rating_id: current.rating_id,
-    rating_1_to_5: skip ? null : currentScore,
+    pair_id: current.pair_id,
+    winner: skip ? null : currentWinner,
     minutes: minutesRaw === "" ? null : Number(minutesRaw),
     notes: document.getElementById("notes").value || null,
-    topic_fit_ok: document.getElementById("flagTopicFit").checked ? true : null,
-    latex_ok: document.getElementById("flagLatex").checked ? true : null,
-    broken: document.getElementById("flagBroken").checked ? true : null,
+    left: sideFlags("A", currentScoreA),
+    right: sideFlags("B", currentScoreB),
     skip: !!skip
   }};
-  // Only send flag true when checked; leave null otherwise (unchecked ≠ false).
-  if (!document.getElementById("flagTopicFit").checked) body.topic_fit_ok = null;
-  if (!document.getElementById("flagLatex").checked) body.latex_ok = null;
-  if (!document.getElementById("flagBroken").checked) body.broken = null;
+  if (campaignMode() === "all_topics" || campaignMode() === "skeleton_deriv")
+    body.campaign = campaignMode();
+  else body.type_id = typeId() || (current.left && current.left.type_id);
   setStatus(skip ? "Skipping…" : "Saving…");
   try {{
     const data = await api("POST", "/api/submit", body);
     showCoverage(data.coverage);
-    toast(skip ? "Skipped" : "Saved");
-    // Backup last rating locally.
+    toast(skip ? "Skipped" : "Saved · refit");
     const prefs = loadPrefs();
-    prefs.lastSubmit = {{ rating_id: body.rating_id, rating_1_to_5: body.rating_1_to_5, at: new Date().toISOString() }};
+    prefs.lastSubmit = {{ pair_id: body.pair_id, winner: body.winner, at: new Date().toISOString() }};
     savePrefs(prefs);
     await loadNext();
   }} catch (e) {{
@@ -368,32 +598,54 @@ async function submit(skip) {{
   }}
 }}
 
-const scores = document.getElementById("scores");
-for (let s = 1; s <= 5; s++) {{
-  const b = document.createElement("button");
-  b.type = "button";
-  b.className = "score";
-  b.dataset.score = String(s);
-  b.textContent = String(s);
-  b.addEventListener("click", () => {{
-    currentScore = s;
-    document.querySelectorAll("button.score").forEach(x =>
-      x.classList.toggle("active", Number(x.dataset.score) === currentScore));
-  }});
-  scores.appendChild(b);
+function bindScores(rowId, assign) {{
+  const scores = document.getElementById(rowId);
+  for (let s = 1; s <= 5; s++) {{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "score";
+    b.dataset.score = String(s);
+    b.textContent = String(s);
+    b.addEventListener("click", () => {{
+      assign(s);
+      scores.querySelectorAll("button.score").forEach(x =>
+        x.classList.toggle("active", Number(x.dataset.score) === s));
+    }});
+    scores.appendChild(b);
+  }}
 }}
+bindScores("scoresA", (s) => {{ currentScoreA = s; }});
+bindScores("scoresB", (s) => {{ currentScoreB = s; }});
+
+document.querySelectorAll("button.winner-btn").forEach(b => {{
+  b.addEventListener("click", () => {{
+    currentWinner = b.dataset.winner;
+    document.querySelectorAll("button.winner-btn").forEach(x =>
+      x.classList.toggle("active", x.dataset.winner === currentWinner));
+    document.getElementById("sideA").classList.toggle("chosen", currentWinner === "a");
+    document.getElementById("sideB").classList.toggle("chosen", currentWinner === "b");
+  }});
+}});
 
 document.getElementById("btnLoadTypes").addEventListener("click", () => refreshTypes().catch(e => setStatus(String(e.message||e), true)));
 document.getElementById("btnNext").addEventListener("click", () => loadNext());
 document.getElementById("btnSubmit").addEventListener("click", () => submit(false));
 document.getElementById("btnSkip").addEventListener("click", () => submit(true));
+document.getElementById("campaign").addEventListener("change", () => {{
+  const prefs = loadPrefs();
+  prefs.lastCampaign = campaignMode();
+  savePrefs(prefs);
+}});
 
 document.addEventListener("keydown", (e) => {{
-  if (e.target && (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT")) return;
-  if (e.key >= "1" && e.key <= "5") {{
-    currentScore = Number(e.key);
-    document.querySelectorAll("button.score").forEach(x =>
-      x.classList.toggle("active", Number(x.dataset.score) === currentScore));
+  if (e.target && (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
+  const k = (e.key || "").toLowerCase();
+  if (k === "a" || k === "b" || k === "t") {{
+    currentWinner = k === "t" ? "tie" : k;
+    document.querySelectorAll("button.winner-btn").forEach(x =>
+      x.classList.toggle("active", x.dataset.winner === currentWinner));
+    document.getElementById("sideA").classList.toggle("chosen", currentWinner === "a");
+    document.getElementById("sideB").classList.toggle("chosen", currentWinner === "b");
   }} else if (e.key === "Enter") {{
     submit(false);
   }}
@@ -401,8 +653,11 @@ document.addEventListener("keydown", (e) => {{
 
 (async function init() {{
   const prefs = loadPrefs();
+  if (prefs.lastCampaign) document.getElementById("campaign").value = prefs.lastCampaign;
   if (prefs.lastType) document.getElementById("typeFilter").value = prefs.lastType;
   if (prefs.lastSession) document.getElementById("session").value = prefs.lastSession;
+  else if (campaignMode() === "all_topics") document.getElementById("session").value = "all_topics";
+  else if (campaignMode() === "skeleton_deriv") document.getElementById("session").value = "skeleton_deriv";
   try {{
     await refreshTypes();
   }} catch (e) {{
@@ -415,16 +670,22 @@ document.addEventListener("keydown", (e) => {{
 """
 
 
-def _session_from_request(body: dict[str, Any], qs: dict[str, list[str]]) -> LiveRatingSession:
-    type_id = (body.get("type_id") or (qs.get("type_id") or [None])[0] or "").strip()
-    if not type_id:
-        raise ValueError("type_id required")
+def _session_from_request(body: dict[str, Any], qs: dict[str, list[str]]) -> LiveRatingSession | MultiTypeCampaign:
+    type_id = (body.get("type_id") or (qs.get("type_id") or [None])[0] or "").strip() or None
+    campaign = body.get("campaign")
+    if campaign is None:
+        campaign = (qs.get("campaign") or [None])[0]
+    if campaign is not None:
+        campaign = str(campaign).strip() or None
     session = body.get("session")
     if session is None:
         session = (qs.get("session") or [None])[0]
     if session is not None:
         session = str(session).strip() or None
-    return LiveRatingSession(type_id, session=session)
+    # Default browser open → all-topics when neither type nor campaign set.
+    if not type_id and not campaign:
+        campaign = ALL_TOPICS_CAMPAIGN
+    return open_live_session(type_id, session=session, campaign=campaign)
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -488,7 +749,17 @@ class Handler(BaseHTTPRequestHandler):
                 ready_only = (qs.get("ready_only") or ["1"])[0] != "0"
                 include_scaffolds = (qs.get("include_scaffolds") or ["0"])[0] == "1"
                 types = list_types(ready_only=ready_only, include_scaffolds=include_scaffolds)
-                self._json(200, {"types": types, "n": len(types)})
+                self._json(
+                    200,
+                    {
+                        "types": types,
+                        "n": len(types),
+                        "skeleton_deriv_types": list(SKELETON_DERIV_TYPE_IDS),
+                        "min_train": MIN_TRAIN,
+                        "min_pairs": MIN_PAIRS,
+                        "default_campaign": ALL_TOPICS_CAMPAIGN,
+                    },
+                )
                 return
             if path == "/api/coverage":
                 sess = _session_from_request({}, qs)
@@ -498,11 +769,21 @@ class Handler(BaseHTTPRequestHandler):
                 sess = _session_from_request({}, qs)
                 difficulty = (qs.get("difficulty") or [None])[0]
                 seed = (qs.get("seed") or [None])[0]
-                item = sess.generate_next(
-                    difficulty=float(difficulty) if difficulty is not None else None,
-                    seed=int(seed) if seed is not None else None,
-                )
-                self._json(200, {"item": item, "coverage": sess.coverage()})
+                pair_mode = (qs.get("pair") or ["1"])[0] != "0"
+                kwargs: dict[str, Any] = {
+                    "difficulty": float(difficulty) if difficulty is not None else None,
+                    "seed": int(seed) if seed is not None else None,
+                }
+                if isinstance(sess, MultiTypeCampaign):
+                    type_override = (qs.get("type_id") or [None])[0]
+                    if type_override:
+                        kwargs["type_id"] = type_override
+                if pair_mode:
+                    pair = sess.generate_next_pair(**kwargs)
+                    self._json(200, {"pair": pair, "coverage": sess.coverage()})
+                else:
+                    item = sess.generate_next(**kwargs)
+                    self._json(200, {"item": item, "coverage": sess.coverage()})
                 return
             self._json(404, {"error": "not found"})
         except Exception as exc:  # noqa: BLE001
@@ -517,23 +798,43 @@ class Handler(BaseHTTPRequestHandler):
                 sess = _session_from_request(body, {})
                 difficulty = body.get("difficulty")
                 seed = body.get("seed")
-                item = sess.generate_next(
-                    difficulty=float(difficulty) if difficulty is not None else None,
-                    seed=int(seed) if seed is not None else None,
-                )
-                self._json(200, {"item": item, "coverage": sess.coverage()})
+                pair_mode = body.get("pair", True)
+                kwargs: dict[str, Any] = {
+                    "difficulty": float(difficulty) if difficulty is not None else None,
+                    "seed": int(seed) if seed is not None else None,
+                }
+                if isinstance(sess, MultiTypeCampaign):
+                    # Optional pin; campaign still owns the session folder.
+                    raw_tid = str(body.get("type_id") or "").strip()
+                    if raw_tid and raw_tid not in {
+                        SKELETON_DERIV_CAMPAIGN,
+                        "__skeleton_deriv__",
+                        ALL_TOPICS_CAMPAIGN,
+                        "__all_topics__",
+                    }:
+                        kwargs["type_id"] = raw_tid
+                if pair_mode:
+                    pair = sess.generate_next_pair(**kwargs)
+                    self._json(200, {"pair": pair, "coverage": sess.coverage()})
+                else:
+                    item = sess.generate_next(**kwargs)
+                    self._json(200, {"item": item, "coverage": sess.coverage()})
                 return
             if path == "/api/submit":
                 sess = _session_from_request(body, {})
                 minutes = body.get("minutes")
                 result = sess.submit(
                     rating_id=body.get("rating_id"),
+                    pair_id=body.get("pair_id"),
+                    winner=body.get("winner"),
                     rating_1_to_5=body.get("rating_1_to_5"),
                     minutes=float(minutes) if minutes is not None and minutes != "" else None,
                     notes=body.get("notes"),
                     topic_fit_ok=body.get("topic_fit_ok"),
                     latex_ok=body.get("latex_ok"),
                     broken=body.get("broken"),
+                    left=body.get("left") if isinstance(body.get("left"), dict) else None,
+                    right=body.get("right") if isinstance(body.get("right"), dict) else None,
                     skip=bool(body.get("skip")),
                 )
                 self._json(200, result)
@@ -547,17 +848,64 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def _cli_next(args: argparse.Namespace) -> int:
-    sess = LiveRatingSession(args.type_id, session=args.session)
-    item = sess.generate_next(
-        difficulty=args.difficulty,
-        seed=args.seed,
-    )
+    sess = open_live_session(args.type_id, session=args.session, campaign=args.campaign)
+    kwargs: dict[str, Any] = {
+        "difficulty": args.difficulty,
+        "seed": args.seed,
+    }
+    if isinstance(sess, MultiTypeCampaign) and args.type_id and args.type_id not in {
+        SKELETON_DERIV_CAMPAIGN,
+        "__skeleton_deriv__",
+        ALL_TOPICS_CAMPAIGN,
+        "__all_topics__",
+    }:
+        kwargs["type_id"] = args.type_id
+    want_pair = not bool(getattr(args, "single", False))
+    if want_pair:
+        pair = sess.generate_next_pair(**kwargs)
+        left = pair.get("left") or {}
+        right = pair.get("right") or {}
+        lite = {
+            "pair_id": pair.get("pair_id"),
+            "mode": "pair",
+            "left": {
+                "rating_id": left.get("rating_id"),
+                "type_id": left.get("type_id"),
+                "difficulty": left.get("difficulty"),
+                "predicted_rating": left.get("predicted_rating"),
+                "predicted_std": left.get("predicted_std"),
+                "prompt_latex": (left.get("prompt_latex") or "")[:200],
+            },
+            "right": {
+                "rating_id": right.get("rating_id"),
+                "type_id": right.get("type_id"),
+                "difficulty": right.get("difficulty"),
+                "predicted_rating": right.get("predicted_rating"),
+                "predicted_std": right.get("predicted_std"),
+                "prompt_latex": (right.get("prompt_latex") or "")[:200],
+            },
+            "model_ready": left.get("model_ready"),
+            "n_train": left.get("n_train"),
+            "n_pairs": left.get("n_pairs"),
+            "model_message": left.get("model_message"),
+            "coverage": sess.coverage(),
+        }
+        print(json.dumps(lite, indent=2, ensure_ascii=False))
+        return 0
+    item = sess.generate_next(**kwargs)
     lite = {
         "rating_id": item["rating_id"],
         "type_id": item["type_id"],
         "difficulty": item["difficulty"],
         "bin": item["bin"],
         "seed": item["seed"],
+        "predicted_rating": item.get("predicted_rating"),
+        "predicted_std": item.get("predicted_std"),
+        "model_ready": item.get("model_ready"),
+        "n_train": item.get("n_train"),
+        "n_pairs": item.get("n_pairs"),
+        "model_message": item.get("model_message"),
+        "skeleton_features": item.get("skeleton_features"),
         "prompt_latex": (item.get("prompt_latex") or "")[:200],
         "coverage": sess.coverage(),
     }
@@ -566,9 +914,11 @@ def _cli_next(args: argparse.Namespace) -> int:
 
 
 def _cli_submit(args: argparse.Namespace) -> int:
-    sess = LiveRatingSession(args.type_id, session=args.session)
+    sess = open_live_session(args.type_id, session=args.session, campaign=args.campaign)
     result = sess.submit(
         rating_id=args.rating_id,
+        pair_id=getattr(args, "pair_id", None),
+        winner=getattr(args, "winner", None),
         rating_1_to_5=args.rating,
         minutes=args.minutes,
         notes=args.notes,
@@ -582,19 +932,27 @@ def _cli_submit(args: argparse.Namespace) -> int:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Live adaptive human-rating loop (v1)")
+    parser = argparse.ArgumentParser(description="Live adaptive human-rating loop (pairwise Bayesian utility)")
     parser.add_argument("--host", default=HOST)
     parser.add_argument("--port", type=int, default=PORT)
     parser.add_argument("--list-types", action="store_true")
     parser.add_argument("--include-scaffolds", action="store_true")
-    parser.add_argument("--next", action="store_true", help="CLI: generate next item")
-    parser.add_argument("--submit", action="store_true", help="CLI: submit rating for pending")
+    parser.add_argument("--next", action="store_true", help="CLI: generate next pair (default) or item")
+    parser.add_argument("--single", action="store_true", help="CLI --next: one item instead of a pair")
+    parser.add_argument("--submit", action="store_true", help="CLI: submit pair winner or rating")
     parser.add_argument("--coverage", action="store_true")
     parser.add_argument("--type-id", default=None)
+    parser.add_argument(
+        "--campaign",
+        default=None,
+        help=f"'{ALL_TOPICS_CAMPAIGN}' (default) or '{SKELETON_DERIV_CAMPAIGN}'",
+    )
     parser.add_argument("--session", default=None)
     parser.add_argument("--difficulty", type=float, default=None)
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--rating-id", default=None)
+    parser.add_argument("--pair-id", default=None)
+    parser.add_argument("--winner", choices=["a", "b", "tie"], default=None)
     parser.add_argument("--rating", type=int, default=None)
     parser.add_argument("--minutes", type=float, default=None)
     parser.add_argument("--notes", default=None)
@@ -611,7 +969,20 @@ def main() -> None:
 
     if args.list_types:
         types = list_types(ready_only=True, include_scaffolds=args.include_scaffolds)
-        print(json.dumps({"n": len(types), "types": types[:50], "truncated": len(types) > 50}, indent=2))
+        print(
+            json.dumps(
+                {
+                    "n": len(types),
+                    "types": types[:50],
+                    "truncated": len(types) > 50,
+                    "skeleton_deriv_types": list(SKELETON_DERIV_TYPE_IDS),
+                    "default_campaign": ALL_TOPICS_CAMPAIGN,
+                    "min_train": MIN_TRAIN,
+                    "min_pairs": MIN_PAIRS,
+                },
+                indent=2,
+            )
+        )
         return
 
     if args.demo_policy:
@@ -622,25 +993,30 @@ def main() -> None:
         return
 
     if args.coverage:
-        if not args.type_id:
-            parser.error("--type-id required with --coverage")
-        sess = LiveRatingSession(args.type_id, session=args.session)
+        if not args.type_id and not args.campaign:
+            args.campaign = ALL_TOPICS_CAMPAIGN
+        sess = open_live_session(args.type_id, session=args.session, campaign=args.campaign)
         print(json.dumps(sess.coverage(), indent=2))
         return
 
     if args.next:
-        if not args.type_id:
-            parser.error("--type-id required with --next")
+        if not args.type_id and not args.campaign:
+            args.campaign = ALL_TOPICS_CAMPAIGN
         raise SystemExit(_cli_next(args))
 
     if args.submit:
-        if not args.type_id:
-            parser.error("--type-id required with --submit")
+        if not args.type_id and not args.campaign:
+            args.campaign = ALL_TOPICS_CAMPAIGN
         raise SystemExit(_cli_submit(args))
 
     katex_root = _ensure_katex_vendor()
     Handler.katex_root = katex_root
     print(f"Live ratings root: {LIVE_ROOT}", flush=True)
+    print(
+        f"Default campaign: {ALL_TOPICS_CAMPAIGN} "
+        f"(min_pairs={MIN_PAIRS}, min_train={MIN_TRAIN})",
+        flush=True,
+    )
     print(f"Open http://{args.host}:{args.port}/", flush=True)
     if katex_root:
         print(f"KaTeX assets: {katex_root}", flush=True)

@@ -104,6 +104,24 @@ STRUCTURAL_HINT_KEYS: tuple[str, ...] = (
 
     "sample_log",
 
+    # expr_skeleton debug / richness features
+    "skeleton_source",
+    "skeleton_pattern",
+    "skeleton_kind",
+    "core_form_id",
+    "form_id",
+    "openstax_form",
+    "catalog_id",
+    "strategy",
+    "construction",
+    "conceptual_difficulty",
+    "cost_spend",
+    "richness_band",
+    "richness_knobs",
+    "inner_kind",
+    "productions",
+    "shared_inner",
+
 )
 
 
@@ -461,6 +479,18 @@ def _theta_full_from_question(
         "family",
 
         "structure_id",
+
+        "form_id",
+
+        "openstax_form",
+
+        "core_form_id",
+
+        "catalog_id",
+
+        "strategy",
+
+        "construction",
 
         "effective_d",
 

@@ -1626,56 +1626,124 @@ def _sample_trig(
     }
 
 
+LOG_EXP_GENERATOR = "integral_log_exp"
+
+_LOG_EXP_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("ln", "exp"),
+    "medium": ("ln", "exp", "ln_linear", "exp_k", "base_a"),
+    "hard": ("ln_linear", "exp_k", "base_a"),
+    "expert": ("ln_linear", "base_a"),
+}
+
+_LOG_EXP_LOG_FORMS = frozenset({"ln", "ln_linear"})
+_LOG_EXP_EXP_FORMS = frozenset({"exp", "exp_k", "base_a"})
+
+
+def log_exp_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 ∫1/x / ∫e^x; D=22 is ln_linear / base_a."""
+    if d < 8.0:
+        return _LOG_EXP_BANDS["easy"]
+    if d < 16.0:
+        return _LOG_EXP_BANDS["medium"]
+    if d < 20.0:
+        return _LOG_EXP_BANDS["hard"]
+    return _LOG_EXP_BANDS["expert"]
+
+
+def _log_exp_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [LOG_EXP_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _filter_log_exp_forms(
+    forms: tuple[str, ...], spec: IntegralSpec
+) -> tuple[str, ...]:
+    """Drop log vs exp families the teacher allow_* checkboxes forbid."""
+    out = [
+        fid
+        for fid in forms
+        if (fid in _LOG_EXP_LOG_FORMS and spec.allow_log)
+        or (fid in _LOG_EXP_EXP_FORMS and spec.allow_exp)
+    ]
+    if out:
+        return tuple(out)
+    fallback = [
+        fid
+        for fid in ("ln", "ln_linear", "exp", "exp_k", "base_a")
+        if (fid in _LOG_EXP_LOG_FORMS and spec.allow_log)
+        or (fid in _LOG_EXP_EXP_FORMS and spec.allow_exp)
+    ]
+    return tuple(fallback) or ("exp",)
+
+
 def _sample_ln_exp(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
+    """OpenStax §5.6 table ln/exp forms. High D locks out D=0 ∫1/x / ∫e^x.
+
+    Same five old builders. ``exp`` is always ∫e^x; ``exp_k`` always k≥2.
+    """
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
     var = spec.variable
-    k = rng.randint(1, max(1, min(5, spec.coef_abs_max)))
-    families: list[str] = []
-    if spec.allow_log:
-        families.extend(["ln", "ln_linear"])
-    if spec.allow_exp:
-        families.extend(["exp", "exp_k", "base_a"])
-    if not families:
-        families = ["exp"]
-    family = rng.choice(families)
+    d = float(spec.d_spend)
+    forms = _filter_log_exp_forms(log_exp_forms_for_difficulty(d), spec)
+    form = select_form_id(_log_exp_form_rows(forms), d=d, rng=rng)
+    family = str(form.get("form_id") or forms[0])
+    if family not in forms:
+        family = forms[0]
+    include = spec.include_plus_c
 
     if family == "ln":
         prompt = rf"\int \frac{{1}}{{{var}}}\,d{var}"
-        answer = _plus_c(rf"\ln|{var}|", include=spec.include_plus_c)
+        answer = _plus_c(rf"\ln|{var}|", include=include)
         classes = ["log"]
     elif family == "ln_linear":
         a = rng.randint(1, max(1, min(4, spec.coef_abs_max)))
         b = _coef(rng, max(2, spec.coef_abs_max))
         inner = format_linear_latex(a, b, variable=var)
         prompt = rf"\int \frac{{{a}}}{{{inner}}}\,d{var}"
-        answer = _plus_c(rf"\ln|{inner}|", include=spec.include_plus_c)
+        answer = _plus_c(rf"\ln|{inner}|", include=include)
         classes = ["log"]
     elif family == "base_a":
         base = rng.choice([2, 3, 5])
         prompt = rf"\int {base}^{{{var}}}\,d{var}"
         answer = _plus_c(
             rf"\frac{{{base}^{{{var}}}}}{{\ln {base}}}",
-            include=spec.include_plus_c,
+            include=include,
         )
         classes = ["exp"]
-    elif family == "exp_k" or k != 1:
-        prompt = rf"\int e^{{{k}{var}}}\,d{var}" if k != 1 else rf"\int e^{{{var}}}\,d{var}"
+    elif family == "exp_k":
+        k = rng.randint(2, max(2, min(5, spec.coef_abs_max)))
+        prompt = rf"\int e^{{{k}{var}}}\,d{var}"
         answer = _plus_c(
-            rf"\frac{{1}}{{{k}}}e^{{{k}{var}}}" if k != 1 else rf"e^{{{var}}}",
-            include=spec.include_plus_c,
+            rf"\frac{{1}}{{{k}}}e^{{{k}{var}}}",
+            include=include,
         )
-        family = "exp_k" if k != 1 else "exp"
         classes = ["exp"]
     else:
-        prompt = rf"\int e^{{{var}}}\,d{var}"
-        answer = _plus_c(rf"e^{{{var}}}", include=spec.include_plus_c)
         family = "exp"
+        prompt = rf"\int e^{{{var}}}\,d{var}"
+        answer = _plus_c(rf"e^{{{var}}}", include=include)
         classes = ["exp"]
     return prompt, answer, {
         "function_classes": classes,
         "family": family,
+        "form_id": family,
+        "openstax_form": family,
+        "generator": LOG_EXP_GENERATOR,
         "n_terms": 1,
+        "construction": "forward_form_catalog",
     }
 
 

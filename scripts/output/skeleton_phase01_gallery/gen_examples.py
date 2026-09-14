@@ -2655,7 +2655,7 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_indef_int_logarithmic_rule_and_exponentials",
         "Integral — ln / exp",
-        "Forward ln/exp forms. OpenStax Vol 1 §5.6 / Vol 2.",
+        "Leftover lockout of ∫1/x / ∫e^x. OpenStax Vol 1 §5.6.",
     ),
     (
         "calc_indef_int_trigonometric",

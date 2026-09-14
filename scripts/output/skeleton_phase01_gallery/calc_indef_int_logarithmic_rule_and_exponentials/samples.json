@@ -17,7 +17,7 @@
       207,
       313
     ],
-    "blurb": "Forward ln/exp forms. OpenStax Vol 1 \u00a75.6 / Vol 2."
+    "blurb": "Leftover lockout of \u222b1/x / \u222be^x. OpenStax Vol 1 \u00a75.6."
   },
   "rows": [
     {
@@ -28,10 +28,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\int \\frac{3}{3x + 3}\\,dx",
-      "answer_latex": "\\ln|3x + 3|+C",
+      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
+      "answer_latex": "\\ln|x|+C",
       "skeleton_pattern": "",
-      "form_id": "ln_linear",
+      "form_id": "ln",
       "diagram_svg": "",
       "debug": [
         [
@@ -44,15 +44,21 @@
         ],
         [
           "form_id",
-          "ln_linear"
+          "ln"
         ],
         [
           "openstax_form",
-          "ln_linear"
+          "ln"
+        ],
+        [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
         ],
         [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -60,8 +66,8 @@
         ]
       ],
       "metadata": {
-        "family": "ln_linear",
-        "structure_id": "integral_log_exp:ln_linear",
+        "family": "ln",
+        "structure_id": "integral_log_exp:ln",
         "technique": "ln_exp",
         "tricks_required": [
           "ln_exp"
@@ -111,9 +117,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 0.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -129,7 +138,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "ln_linear"
+          "family": "ln",
+          "form_id": "ln",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -140,7 +151,7 @@
           "degree_max": 3,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 13,
+          "answer_len": 8,
           "nest_depth": 0,
           "pack": "integral_ln_exp",
           "methods": [
@@ -161,15 +172,15 @@
           ],
           "length": 1
         },
-        "shape_id": "ln_linear",
-        "construction": "forward",
+        "shape_id": "ln",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [],
         "difficulty_cost_total": 0.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "ln_linear",
-        "form_id": "ln_linear",
-        "openstax_form": "ln_linear",
+        "core_form_id": "ln",
+        "openstax_form": "ln",
+        "form_id": "ln",
         "generation_settings": {
           "term_count": 1,
           "power_max": 3,
@@ -192,10 +203,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "\\int 3^{x}\\,dx",
-      "answer_latex": "\\frac{3^{x}}{\\ln 3}+C",
+      "prompt_latex": "\\int e^{x}\\,dx",
+      "answer_latex": "e^{x}+C",
       "skeleton_pattern": "",
-      "form_id": "base_a",
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -208,15 +219,21 @@
         ],
         [
           "form_id",
-          "base_a"
+          "exp"
         ],
         [
           "openstax_form",
-          "base_a"
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
         ],
         [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -224,8 +241,8 @@
         ]
       ],
       "metadata": {
-        "family": "base_a",
-        "structure_id": "integral_log_exp:base_a",
+        "family": "exp",
+        "structure_id": "integral_log_exp:exp",
         "technique": "ln_exp",
         "tricks_required": [
           "ln_exp"
@@ -275,9 +292,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 0.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -293,7 +313,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "base_a"
+          "family": "exp",
+          "form_id": "exp",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -304,7 +326,7 @@
           "degree_max": 3,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 21,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ln_exp",
           "methods": [
@@ -325,15 +347,15 @@
           ],
           "length": 1
         },
-        "shape_id": "base_a",
-        "construction": "forward",
+        "shape_id": "exp",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [],
         "difficulty_cost_total": 0.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "base_a",
-        "form_id": "base_a",
-        "openstax_form": "base_a",
+        "core_form_id": "exp",
+        "openstax_form": "exp",
+        "form_id": "exp",
         "generation_settings": {
           "term_count": 1,
           "power_max": 3,
@@ -356,10 +378,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
-      "answer_latex": "\\ln|x|+C",
+      "prompt_latex": "\\int e^{x}\\,dx",
+      "answer_latex": "e^{x}+C",
       "skeleton_pattern": "",
-      "form_id": "ln",
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -372,15 +394,21 @@
         ],
         [
           "form_id",
-          "ln"
+          "exp"
         ],
         [
           "openstax_form",
-          "ln"
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
         ],
         [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -388,8 +416,8 @@
         ]
       ],
       "metadata": {
-        "family": "ln",
-        "structure_id": "integral_log_exp:ln",
+        "family": "exp",
+        "structure_id": "integral_log_exp:exp",
         "technique": "ln_exp",
         "tricks_required": [
           "ln_exp"
@@ -398,7 +426,7 @@
           "ln_exp"
         ],
         "function_classes": [
-          "log"
+          "exp"
         ],
         "upgrades": [],
         "effective_d": 0.0,
@@ -439,9 +467,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 0.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -457,7 +488,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "ln"
+          "family": "exp",
+          "form_id": "exp",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -468,7 +501,7 @@
           "degree_max": 3,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 8,
+          "answer_len": 7,
           "nest_depth": 0,
           "pack": "integral_ln_exp",
           "methods": [
@@ -489,15 +522,15 @@
           ],
           "length": 1
         },
-        "shape_id": "ln",
-        "construction": "forward",
+        "shape_id": "exp",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [],
         "difficulty_cost_total": 0.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "ln",
-        "form_id": "ln",
-        "openstax_form": "ln",
+        "core_form_id": "exp",
+        "openstax_form": "exp",
+        "form_id": "exp",
         "generation_settings": {
           "term_count": 1,
           "power_max": 3,
@@ -520,10 +553,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\int \\frac{3}{3x + 3}\\,dx",
-      "answer_latex": "\\ln|3x + 3|+C",
+      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
+      "answer_latex": "\\ln|x|+C",
       "skeleton_pattern": "",
-      "form_id": "ln_linear",
+      "form_id": "ln",
       "diagram_svg": "",
       "debug": [
         [
@@ -536,15 +569,21 @@
         ],
         [
           "form_id",
-          "ln_linear"
+          "ln"
         ],
         [
           "openstax_form",
-          "ln_linear"
+          "ln"
+        ],
+        [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
         ],
         [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -552,8 +591,8 @@
         ]
       ],
       "metadata": {
-        "family": "ln_linear",
-        "structure_id": "integral_log_exp:ln_linear",
+        "family": "ln",
+        "structure_id": "integral_log_exp:ln",
         "technique": "ln_exp",
         "tricks_required": [
           "ln_exp"
@@ -607,9 +646,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 8.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -625,7 +667,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "ln_linear"
+          "family": "ln",
+          "form_id": "ln",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -636,7 +680,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 13,
+          "answer_len": 8,
           "nest_depth": 0,
           "pack": "integral_ln_exp",
           "methods": [
@@ -657,8 +701,8 @@
           ],
           "length": 1
         },
-        "shape_id": "ln_linear",
-        "construction": "forward",
+        "shape_id": "ln",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -679,9 +723,9 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
-        "core_form_id": "ln_linear",
-        "form_id": "ln_linear",
-        "openstax_form": "ln_linear",
+        "core_form_id": "ln",
+        "openstax_form": "ln",
+        "form_id": "ln",
         "generation_settings": {
           "term_count": 2,
           "power_max": 4,
@@ -704,8 +748,8 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\int 3^{x}\\,dx",
-      "answer_latex": "\\frac{3^{x}}{\\ln 3}+C",
+      "prompt_latex": "\\int 5^{x}\\,dx",
+      "answer_latex": "\\frac{5^{x}}{\\ln 5}+C",
       "skeleton_pattern": "",
       "form_id": "base_a",
       "diagram_svg": "",
@@ -727,8 +771,14 @@
           "base_a"
         ],
         [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
+        ],
+        [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -791,9 +841,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 8.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -809,7 +862,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "base_a"
+          "family": "base_a",
+          "form_id": "base_a",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -842,7 +897,7 @@
           "length": 1
         },
         "shape_id": "base_a",
-        "construction": "forward",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -864,8 +919,8 @@
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
         "core_form_id": "base_a",
-        "form_id": "base_a",
         "openstax_form": "base_a",
+        "form_id": "base_a",
         "generation_settings": {
           "term_count": 2,
           "power_max": 4,
@@ -888,10 +943,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
-      "answer_latex": "\\ln|x|+C",
+      "prompt_latex": "\\int 2^{x}\\,dx",
+      "answer_latex": "\\frac{2^{x}}{\\ln 2}+C",
       "skeleton_pattern": "",
-      "form_id": "ln",
+      "form_id": "base_a",
       "diagram_svg": "",
       "debug": [
         [
@@ -904,15 +959,21 @@
         ],
         [
           "form_id",
-          "ln"
+          "base_a"
         ],
         [
           "openstax_form",
-          "ln"
+          "base_a"
+        ],
+        [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
         ],
         [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -920,8 +981,8 @@
         ]
       ],
       "metadata": {
-        "family": "ln",
-        "structure_id": "integral_log_exp:ln",
+        "family": "base_a",
+        "structure_id": "integral_log_exp:base_a",
         "technique": "ln_exp",
         "tricks_required": [
           "ln_exp"
@@ -930,7 +991,7 @@
           "ln_exp"
         ],
         "function_classes": [
-          "log"
+          "exp"
         ],
         "upgrades": [
           "extra_term",
@@ -975,9 +1036,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 8.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -993,7 +1057,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "ln"
+          "family": "base_a",
+          "form_id": "base_a",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -1004,7 +1070,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 8,
+          "answer_len": 21,
           "nest_depth": 0,
           "pack": "integral_ln_exp",
           "methods": [
@@ -1025,8 +1091,8 @@
           ],
           "length": 1
         },
-        "shape_id": "ln",
-        "construction": "forward",
+        "shape_id": "base_a",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -1047,9 +1113,9 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
-        "core_form_id": "ln",
-        "form_id": "ln",
-        "openstax_form": "ln",
+        "core_form_id": "base_a",
+        "openstax_form": "base_a",
+        "form_id": "base_a",
         "generation_settings": {
           "term_count": 2,
           "power_max": 4,
@@ -1095,8 +1161,14 @@
           "ln_linear"
         ],
         [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
+        ],
+        [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -1159,9 +1231,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 16.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1177,7 +1252,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "ln_linear"
+          "family": "ln_linear",
+          "form_id": "ln_linear",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -1210,7 +1287,7 @@
           "length": 1
         },
         "shape_id": "ln_linear",
-        "construction": "forward",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -1232,8 +1309,8 @@
         "difficulty_shortfall": 8.5,
         "wrappers_applied": [],
         "core_form_id": "ln_linear",
-        "form_id": "ln_linear",
         "openstax_form": "ln_linear",
+        "form_id": "ln_linear",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1256,8 +1333,8 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\int 3^{x}\\,dx",
-      "answer_latex": "\\frac{3^{x}}{\\ln 3}+C",
+      "prompt_latex": "\\int 5^{x}\\,dx",
+      "answer_latex": "\\frac{5^{x}}{\\ln 5}+C",
       "skeleton_pattern": "",
       "form_id": "base_a",
       "diagram_svg": "",
@@ -1279,8 +1356,14 @@
           "base_a"
         ],
         [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
+        ],
+        [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -1343,9 +1426,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 16.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1361,7 +1447,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "base_a"
+          "family": "base_a",
+          "form_id": "base_a",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -1394,7 +1482,7 @@
           "length": 1
         },
         "shape_id": "base_a",
-        "construction": "forward",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -1416,8 +1504,8 @@
         "difficulty_shortfall": 8.5,
         "wrappers_applied": [],
         "core_form_id": "base_a",
-        "form_id": "base_a",
         "openstax_form": "base_a",
+        "form_id": "base_a",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1440,10 +1528,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
-      "answer_latex": "\\ln|x|+C",
+      "prompt_latex": "\\int 2^{x}\\,dx",
+      "answer_latex": "\\frac{2^{x}}{\\ln 2}+C",
       "skeleton_pattern": "",
-      "form_id": "ln",
+      "form_id": "base_a",
       "diagram_svg": "",
       "debug": [
         [
@@ -1456,15 +1544,21 @@
         ],
         [
           "form_id",
-          "ln"
+          "base_a"
         ],
         [
           "openstax_form",
-          "ln"
+          "base_a"
+        ],
+        [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
         ],
         [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -1472,8 +1566,8 @@
         ]
       ],
       "metadata": {
-        "family": "ln",
-        "structure_id": "integral_log_exp:ln",
+        "family": "base_a",
+        "structure_id": "integral_log_exp:base_a",
         "technique": "ln_exp",
         "tricks_required": [
           "ln_exp"
@@ -1482,7 +1576,7 @@
           "ln_exp"
         ],
         "function_classes": [
-          "log"
+          "exp"
         ],
         "upgrades": [
           "extra_term",
@@ -1527,9 +1621,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 16.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1545,7 +1642,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "ln"
+          "family": "base_a",
+          "form_id": "base_a",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -1556,7 +1655,7 @@
           "degree_max": 6,
           "coef_abs_max": 7,
           "n_terms": 1,
-          "answer_len": 8,
+          "answer_len": 21,
           "nest_depth": 0,
           "pack": "integral_ln_exp",
           "methods": [
@@ -1577,8 +1676,8 @@
           ],
           "length": 1
         },
-        "shape_id": "ln",
-        "construction": "forward",
+        "shape_id": "base_a",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -1599,9 +1698,9 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 8.5,
         "wrappers_applied": [],
-        "core_form_id": "ln",
-        "form_id": "ln",
-        "openstax_form": "ln",
+        "core_form_id": "base_a",
+        "openstax_form": "base_a",
+        "form_id": "base_a",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1647,8 +1746,14 @@
           "ln_linear"
         ],
         [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
+        ],
+        [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -1711,9 +1816,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 22.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1729,7 +1837,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "ln_linear"
+          "family": "ln_linear",
+          "form_id": "ln_linear",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -1762,7 +1872,7 @@
           "length": 1
         },
         "shape_id": "ln_linear",
-        "construction": "forward",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -1784,8 +1894,8 @@
         "difficulty_shortfall": 14.5,
         "wrappers_applied": [],
         "core_form_id": "ln_linear",
-        "form_id": "ln_linear",
         "openstax_form": "ln_linear",
+        "form_id": "ln_linear",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1808,8 +1918,8 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\int 3^{x}\\,dx",
-      "answer_latex": "\\frac{3^{x}}{\\ln 3}+C",
+      "prompt_latex": "\\int 5^{x}\\,dx",
+      "answer_latex": "\\frac{5^{x}}{\\ln 5}+C",
       "skeleton_pattern": "",
       "form_id": "base_a",
       "diagram_svg": "",
@@ -1831,8 +1941,14 @@
           "base_a"
         ],
         [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
+        ],
+        [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -1895,9 +2011,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 22.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1913,7 +2032,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "base_a"
+          "family": "base_a",
+          "form_id": "base_a",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -1946,7 +2067,7 @@
           "length": 1
         },
         "shape_id": "base_a",
-        "construction": "forward",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -1968,8 +2089,8 @@
         "difficulty_shortfall": 14.5,
         "wrappers_applied": [],
         "core_form_id": "base_a",
-        "form_id": "base_a",
         "openstax_form": "base_a",
+        "form_id": "base_a",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,
@@ -1992,10 +2113,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\int \\frac{1}{x}\\,dx",
-      "answer_latex": "\\ln|x|+C",
+      "prompt_latex": "\\int 2^{x}\\,dx",
+      "answer_latex": "\\frac{2^{x}}{\\ln 2}+C",
       "skeleton_pattern": "",
-      "form_id": "ln",
+      "form_id": "base_a",
       "diagram_svg": "",
       "debug": [
         [
@@ -2008,15 +2129,21 @@
         ],
         [
           "form_id",
-          "ln"
+          "base_a"
         ],
         [
           "openstax_form",
-          "ln"
+          "base_a"
+        ],
+        [
+          "tricks_required",
+          [
+            "ln_exp"
+          ]
         ],
         [
           "construction",
-          "forward"
+          "forward_form_catalog"
         ],
         [
           "has_diagram_svg",
@@ -2024,8 +2151,8 @@
         ]
       ],
       "metadata": {
-        "family": "ln",
-        "structure_id": "integral_log_exp:ln",
+        "family": "base_a",
+        "structure_id": "integral_log_exp:base_a",
         "technique": "ln_exp",
         "tricks_required": [
           "ln_exp"
@@ -2034,7 +2161,7 @@
           "ln_exp"
         ],
         "function_classes": [
-          "log"
+          "exp"
         ],
         "upgrades": [
           "extra_term",
@@ -2079,9 +2206,12 @@
           "parts_depth": 1,
           "max_pipeline_len": 1,
           "d_spend": 22.0,
-          "construction": "forward",
+          "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2097,7 +2227,9 @@
             "length": 1
           },
           "technique": "ln_exp",
-          "family": "ln"
+          "family": "base_a",
+          "form_id": "base_a",
+          "generator": "integral_log_exp"
         },
         "effort_features": {
           "technique": "ln_exp",
@@ -2108,7 +2240,7 @@
           "degree_max": 6,
           "coef_abs_max": 8,
           "n_terms": 1,
-          "answer_len": 8,
+          "answer_len": 21,
           "nest_depth": 0,
           "pack": "integral_ln_exp",
           "methods": [
@@ -2129,8 +2261,8 @@
           ],
           "length": 1
         },
-        "shape_id": "ln",
-        "construction": "forward",
+        "shape_id": "base_a",
+        "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
             "source": "spec",
@@ -2151,9 +2283,9 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 14.5,
         "wrappers_applied": [],
-        "core_form_id": "ln",
-        "form_id": "ln",
-        "openstax_form": "ln",
+        "core_form_id": "base_a",
+        "openstax_form": "base_a",
+        "form_id": "base_a",
         "generation_settings": {
           "term_count": 3,
           "power_max": 5,

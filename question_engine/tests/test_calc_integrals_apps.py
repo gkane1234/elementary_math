@@ -544,6 +544,115 @@ def test_indef_power_quality_weights_tilt():
     assert tilted["rewrite_over_x"] > baseline["rewrite_over_x"]
 
 
+def test_indef_log_exp_d0_ln_exp_high_d_linear_base_a_lockout():
+    from question_engine.frameworks.primitives.integrals import (
+        log_exp_forms_for_difficulty,
+    )
+
+    assert log_exp_forms_for_difficulty(0) == ("ln", "exp")
+    med = log_exp_forms_for_difficulty(8)
+    assert med == ("ln", "exp", "ln_linear", "exp_k", "base_a")
+    hard = log_exp_forms_for_difficulty(16)
+    assert hard == ("ln_linear", "exp_k", "base_a")
+    assert "ln" not in hard and "exp" not in hard
+    assert log_exp_forms_for_difficulty(22) == ("ln_linear", "base_a")
+
+    q0 = _gen(
+        "calc_indef_int_logarithmic_rule_and_exponentials", 0, seed=101
+    )[0]
+    assert (q0.metadata or {}).get("form_id") in {"ln", "exp"}
+    assert (q0.metadata or {}).get("generator") == "integral_log_exp"
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") in {"ln", "exp"}
+    assert snap.get("generator") == "integral_log_exp"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_indef_int_logarithmic_rule_and_exponentials", 0, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid in {"ln", "exp"}
+        assert (q.metadata or {}).get("generator") == "integral_log_exp"
+        p = q.prompt_latex or ""
+        assert r"\frac{1}{" in p or r"e^{" in p
+        assert r"^{x}" not in p or r"e^{" in p
+    assert easy == {"ln", "exp"}
+
+    mid = set()
+    for seed in range(40):
+        q = _gen(
+            "calc_indef_int_logarithmic_rule_and_exponentials", 8, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert (q.metadata or {}).get("generator") == "integral_log_exp"
+        assert "+C" in (q.answer_latex or "")
+    assert "ln" in mid and "exp" in mid
+    assert mid & {"ln_linear", "exp_k", "base_a"}
+
+    high = set()
+    for seed in range(40):
+        q = _gen(
+            "calc_indef_int_logarithmic_rule_and_exponentials", 16, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid not in {"ln", "exp"}
+        assert (q.metadata or {}).get("generator") == "integral_log_exp"
+    assert high <= {"ln_linear", "exp_k", "base_a"}
+    assert "ln_linear" in high and "base_a" in high
+
+    expert = set()
+    for seed in range(30):
+        q = _gen(
+            "calc_indef_int_logarithmic_rule_and_exponentials", 22, seed=seed
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in {"ln_linear", "base_a"}
+        assert (q.metadata or {}).get("generator") == "integral_log_exp"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") in {"ln_linear", "base_a"}
+        assert snap.get("generator") == "integral_log_exp"
+        p = q.prompt_latex or ""
+        assert r"e^{" not in p
+        assert r"\frac{1}{x}" not in p.replace(" ", "")
+    assert expert == {"ln_linear", "base_a"}
+
+
+def test_indef_log_exp_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.integrals import (
+        sample_integral_expression,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                sample = sample_integral_expression(
+                    {"difficulty": 8.0, "include_answer_key": True},
+                    generator_key="integral_log_exp",
+                    rng=_random.Random(i),
+                )
+                c[sample.metadata.get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"ln": -2.5, "base_a": 2.5})
+    assert tilted["base_a"] > baseline["base_a"]
+
+
 def test_area_under_curve_d0_simple():
     q = _gen("calc_app_int_area_under_a_curve", 0, seed=101)[0]
     assert "area under" in (q.prompt_latex or "").lower()

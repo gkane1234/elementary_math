@@ -2824,7 +2824,8 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_int_volume_by_slicing_disks_and_washers",
         "App — disk / washer volumes",
-        "Rotate about x-axis. OpenStax Vol 1 §6.2.",
+        "Leftover lockout: D=0 disk y=x; D=8 leftover linear + disk x^2; "
+        "D=16/22 washer y=n vs y=x only. OpenStax Vol 1 §6.2.",
     ),
 
     (

@@ -56,6 +56,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Limit of sums: skipped — live is the FTC area stem (shared `area_under_curve`); no existing \(\lim\sum\) core (finite Riemann is the approximating sibling; tables is the tables sibling)
 - Riemann sum tables: leftover lockout of 3-point left shipped; still three frozen old builders (no story tables / \(L_n\) vs \(R_n\) / unequal \(\Delta x\)); D=16 can still emit 4-point leftover
 - Area between curves: leftover lockout of exclusive cliffs and of \(y=k-x\) vs \(y=0\) at expert; still five frozen old builders (no Ex. 6.1 two-line / Ex. 6.2 parabola-vs-line / \(dy\)); D=22 is frozen \(y=x\) vs \(y=x^{2}\)
+- Volume disks/washers: leftover lockout of disk \(y=x\) shipped (already in `volume_methods`); still three frozen old builders (no Ex. 6.8 \(\sqrt{x}\) / Ex. 6.10 washer \(1/x\) / \(y\)-axis); D=16/22 washer \(y=n\) vs \(y=x\) only
 
 - Motion along a line (diff): leftover lockout + Ex. 3.36/3.35 cubics shipped; still no free-fall \(-16t^{2}\) / piecewise / trig / \(s(t)\) graph
 - Motion along a line revisited (integral): leftover lockout of \(v=2t\) shipped; still no \(\int|v|\) distance / Ex. 5.24 nonzero net / quadratic \(v(t)\)
@@ -89,6 +90,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_app_int_volume_by_slicing_disks_and_washers`:** Leftover lockout of disk \(y=x\) (already dropped at high D in `volume_methods`; now stamps `form_id` + `generator=volume_disk_washer`). D=0 disk \(y=x\) on \([0,n]\) (old easy); D=8 leftover disk linear + disk \(y=x^{2}\); D=16/22 washer \(y=n\) vs \(y=x\) only (no disk leftover). `select_form_id` / `live_quality_form_weights`. Did not invent \(\sqrt{x}\) / \(1/x\) / \(y\)-axis cores.
 - **`calc_def_int_riemann_sum_tables`:** Leftover lockout of D=0 3-point left. D=0 \(f(0),f(1),f(2)\) left on \([0,2]\) (old easy); D=8 leftover 3-point + 4-point L/R; D=16 4-point leftover + midpoint (no 3-point left); D=22 midpoint only. Stamps `form_id` + `generator=riemann_sum_tables`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_def_int_area_under_a_curve_by_limit_of_sums`:** Skip. Live `_generate_for_type` is the FTC sibling stem (`Find the area under \(y=\ldots\)`). Existing Riemann cores are finite-\(n\) (`riemann_approximate_area`) or tables (`riemann_sum_tables`), not OpenStax Ex. 5.7 definition. Did not invent a \(\lim\sum\) core. Shared leftover lockout of \(y=x\) already on `area_under_curve`. Flags `UNCLEAR` / `LIMITATIONS` / `NOT_IMPLEMENTED`.
 - **`calc_def_int_second_fundamental_theorem_of_calculus`:** Leftover lockout of D=0 \(t^{2}\). D=0 \(\frac{d}{dx}\int_a^{x} t^{2}\) (old easy); D=8 leftover poly + \(\sin t\); D=16 \(\sin t\) leftover + chain \(g(x)=kx\) (no \(t^{2}\)); D=22 chain only. Stamps `form_id` + `generator=second_fundamental_theorem`; `select_form_id` / `live_quality_form_weights`.

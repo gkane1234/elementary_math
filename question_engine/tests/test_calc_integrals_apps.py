@@ -433,6 +433,92 @@ def test_area_under_curve_quality_weights_tilt():
     assert tilted["auc_quad"] > baseline["auc_quad"]
 
 
+def test_volume_disk_washer_d0_linear_high_d_washer_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        volume_disk_washer_forms_for_difficulty,
+    )
+
+    assert volume_disk_washer_forms_for_difficulty(0) == ("vdw_disk_linear",)
+    med = volume_disk_washer_forms_for_difficulty(8)
+    assert "vdw_disk_linear" in med and "vdw_disk_quadratic" in med
+    assert "vdw_washer" not in med
+    # volume_methods leftover: disk_linear out at d>=10; disk_quadratic out at d>=16.
+    mid_hard = volume_disk_washer_forms_for_difficulty(12)
+    assert "vdw_disk_linear" not in mid_hard
+    assert mid_hard == ("vdw_disk_quadratic", "vdw_washer")
+    assert volume_disk_washer_forms_for_difficulty(16) == ("vdw_washer",)
+    assert volume_disk_washer_forms_for_difficulty(22) == ("vdw_washer",)
+
+    q0 = _gen("calc_app_int_volume_by_slicing_disks_and_washers", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "vdw_disk_linear"
+    assert (q0.metadata or {}).get("generator") == "volume_disk_washer"
+    p0 = q0.prompt_latex or ""
+    assert r"y=x\text{ on }" in p0
+    assert r"x^{2}" not in p0
+    assert "disk method" in p0
+    assert "washer" not in p0.lower()
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "vdw_disk_linear"
+    assert snap.get("generator") == "volume_disk_washer"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_int_volume_by_slicing_disks_and_washers", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "volume_disk_washer"
+        assert "washer" not in (q.prompt_latex or "").lower()
+        assert "region between" not in (q.prompt_latex or "").lower()
+    assert "vdw_disk_linear" in mid
+    assert "vdw_disk_quadratic" in mid
+    assert mid <= {"vdw_disk_linear", "vdw_disk_quadratic"}
+
+    for d in (16, 22):
+        seen = set()
+        for seed in range(24):
+            q = _gen(
+                "calc_app_int_volume_by_slicing_disks_and_washers", d, seed=seed
+            )[0]
+            fid = (q.metadata or {}).get("form_id")
+            seen.add(fid)
+            assert fid == "vdw_washer"
+            p = q.prompt_latex or ""
+            assert "washer method" in p
+            assert "disk method" not in p
+            assert r"y=x^{2}" not in p
+            assert (q.metadata or {}).get("generator") == "volume_disk_washer"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == "vdw_washer"
+            assert snap.get("generator") == "volume_disk_washer"
+        assert seen == {"vdw_washer"}
+
+
+def test_volume_disk_washer_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_volume_disk_washer,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_volume_disk_washer(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"vdw_disk_linear": -2.5, "vdw_disk_quadratic": 2.5})
+    assert tilted["vdw_disk_quadratic"] > baseline["vdw_disk_quadratic"]
+
+
 def test_def_int_mean_value_d0_linear_high_d_quad_coef_lockout():
     from question_engine.frameworks.primitives.calc_app_diff import (
         def_int_mean_value_forms_for_difficulty,

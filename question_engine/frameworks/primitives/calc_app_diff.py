@@ -29,6 +29,7 @@ Kind = Literal[
     "motion_integral",
     "area_under_curve",
     "area_between_curves",
+    "volume_disk_washer",
     "def_int_mean_value",
     "riemann_sum_tables",
     "de_intro",
@@ -2690,6 +2691,162 @@ def sample_area_between_curves(rng: random.Random, settings: dict[str, Any]) -> 
     )
 
 
+VOLUME_DISK_WASHER_GENERATOR = "volume_disk_washer"
+
+_VDW_METHOD_TO_FORM = {
+    "disk_linear": "vdw_disk_linear",
+    "disk_quadratic": "vdw_disk_quadratic",
+    "washer": "vdw_washer",
+    # Old volume_methods aliases all emitted the washer builder.
+    "shell": "vdw_washer",
+    "cross_semi": "vdw_washer",
+}
+
+
+def volume_disk_washer_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Copy leftover cliffs from ``volume_methods`` (disk_linear out at d>=10)."""
+    structure = calc_application_structure_from_continuous({"difficulty": d})
+    methods = (
+        structure["volume_methods"] if structure is not None else ("disk_linear",)
+    )
+    out: list[str] = []
+    seen: set[str] = set()
+    for method in methods:
+        fid = _VDW_METHOD_TO_FORM.get(str(method))
+        if fid and fid not in seen:
+            seen.add(fid)
+            out.append(fid)
+    return tuple(out) or ("vdw_disk_linear",)
+
+
+def _vdw_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [VOLUME_DISK_WASHER_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _vdw_bound_max(settings: dict[str, Any]) -> int:
+    """Copy old ``_volume_disk_washer`` bound_max from application structure."""
+    structure = calc_application_structure_from_continuous(settings)
+    if structure is not None:
+        return max(2, int(structure.get("bound_max", 4)))
+    d = _d(settings)
+    if d < 4.0:
+        return 4
+    if d < 16.0:
+        return 5
+    return 6
+
+
+def _vdw_pi_frac(numer: int, denom: int) -> str:
+    """Format (numer/denom)·π as tidy LaTeX (old ``_pi_frac``)."""
+    value = Fraction(numer, denom)
+    if value.denominator == 1:
+        if value.numerator == 1:
+            return r"\pi"
+        if value.numerator == -1:
+            return r"-\pi"
+        return rf"{value.numerator}\pi"
+    if value.numerator == 1:
+        return rf"\frac{{\pi}}{{{value.denominator}}}"
+    if value.numerator == -1:
+        return rf"-\frac{{\pi}}{{{value.denominator}}}"
+    return rf"\frac{{{value.numerator}\pi}}{{{value.denominator}}}"
+
+
+def _sample_vdw_disk_linear(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old-path D=0: rotate y=x on [0,n] about the x-axis (disk)."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{Find the volume of the solid formed by rotating }}"
+        rf"y={x}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
+    )
+    return AppDiffItem(
+        prompt, _vdw_pi_frac(n**3, 3), "volume disk/washer", "vdw_disk_linear",
+        {"n": n},
+    )
+
+
+def _sample_vdw_disk_quadratic(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old mid: rotate y=x^2 on [0,n] about the x-axis (disk)."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{Find the volume of the solid formed by rotating }}"
+        rf"y={x}^{{2}}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
+    )
+    return AppDiffItem(
+        prompt, _vdw_pi_frac(n**5, 5), "volume disk/washer", "vdw_disk_quadratic",
+        {"n": n},
+    )
+
+
+def _sample_vdw_washer(rng: random.Random, x: str, n_hi: int) -> AppDiffItem:
+    """Old exclusive high D: washer between y=n and y=x on [0,n]."""
+    n = rng.randint(2, max(2, n_hi))
+    prompt = (
+        rf"\text{{Find the volume of the solid formed by rotating the region between }}"
+        rf"y={n}\text{{ and }}y={x}\text{{ on }}[0,{n}]"
+        rf"\text{{ about the }}{x}\text{{-axis (washer method).}}"
+    )
+    return AppDiffItem(
+        prompt, _vdw_pi_frac(2 * n**3, 3), "volume disk/washer", "vdw_washer",
+        {"n": n},
+    )
+
+
+def sample_volume_disk_washer(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Rotate about the x-axis. High D locks out disk y=x leftover."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = volume_disk_washer_forms_for_difficulty(d)
+    n_hi = _vdw_bound_max(settings)
+    x = str(settings.get("variable", "x"))
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _vdw_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "vdw_disk_linear" and fid in forms:
+        item = _sample_vdw_disk_linear(rng, x, n_hi)
+    elif fid == "vdw_disk_quadratic" and fid in forms:
+        item = _sample_vdw_disk_quadratic(rng, x, n_hi)
+    elif fid == "vdw_washer" and fid in forms:
+        item = _sample_vdw_washer(rng, x, n_hi)
+    else:
+        fid = forms[0]
+        if fid == "vdw_disk_quadratic":
+            item = _sample_vdw_disk_quadratic(rng, x, n_hi)
+        elif fid == "vdw_washer":
+            item = _sample_vdw_washer(rng, x, n_hi)
+        else:
+            item = _sample_vdw_disk_linear(rng, x, n_hi)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": VOLUME_DISK_WASHER_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": VOLUME_DISK_WASHER_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 DE_INTRO_GENERATOR = "de_introduction"
 
 _DE_INTRO_BANDS: dict[str, tuple[str, ...]] = {
@@ -3420,6 +3577,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "motion_integral": sample_motion_integral,
     "area_under_curve": sample_area_under_curve,
     "area_between_curves": sample_area_between_curves,
+    "volume_disk_washer": sample_volume_disk_washer,
     "def_int_mean_value": sample_def_int_mean_value,
     "riemann_sum_tables": sample_riemann_sum_tables,
     "de_intro": sample_de_intro,

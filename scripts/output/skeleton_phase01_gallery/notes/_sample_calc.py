@@ -270,6 +270,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Find the area between two graphs via ∫(top−bottom) dx.",
         "engine": "calc_app_diff `area_between_curves` (linear-axis leftover / quad leftover / three-line leftover / two-curve).",
     },
+    "calc_app_int_volume_by_slicing_disks_and_washers": {
+        "flag_why": "Shipped leftover lockout of disk y=x (already in volume_methods); LIMITATIONS three frozen old builders / no Ex. 6.8 sqrt / Ex. 6.10 1/x washer / y-axis.",
+        "skill": "Find the volume of a solid of revolution by disks or washers about the x-axis.",
+        "engine": "calc_app_diff `volume_disk_washer` (disk-linear leftover / disk-quadratic leftover / washer).",
+    },
     "calc_app_diff_slope_tangent_and_normal_lines": {
         "flag_why": "Shipped leftover lockout of D=0 poly/trig/exp/ln; LIMITATIONS no implicit/folium / x·5^x normals.",
         "skill": "Find the tangent (and sometimes normal) line to y=f(x) at x=a.",

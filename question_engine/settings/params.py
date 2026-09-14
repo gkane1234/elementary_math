@@ -674,6 +674,9 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
     # related_frames: OpenStax §4.1 rotation + easy leftover lockout
     # (see related_rates_frames.related_frames_for_difficulty).
     # related_shapes kept for volume/legacy callers (circle/sphere/cone).
+    # volume_methods: leftover lockout of disk_linear (out at d>=10) and
+    # disk_quadratic (out at d>=16). shell/cross_semi aliases collapsed —
+    # those leaves have their own generators; this leaf's high-D builder is washer.
     from question_engine.frameworks.primitives.optimization_frames import (
         optimization_frames_for_difficulty,
     )
@@ -722,7 +725,7 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
             "bound_max": 5 + int((d - 10) // 3),
             "related_shapes": ("circle", "sphere", "cone"),
             "related_frames": related_frames,
-            "volume_methods": ("disk_quadratic", "washer", "shell"),
+            "volume_methods": ("disk_quadratic", "washer"),
             "de_family": "homogeneous",
             "opt_perimeter_max": 36 + int(d),
             "opt_shapes": ("square", "rectangle", "cylinder"),
@@ -736,7 +739,7 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
         "bound_max": min(8, 5 + int((d - 16) // 3)),
         "related_shapes": ("circle", "sphere", "cone"),
         "related_frames": related_frames,
-        "volume_methods": ("washer", "shell", "cross_semi"),
+        "volume_methods": ("washer",),
         "de_family": "homogeneous",
         "opt_perimeter_max": min(80, 40 + int(d)),
         "opt_shapes": ("square", "rectangle", "cylinder"),

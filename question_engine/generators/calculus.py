@@ -930,63 +930,45 @@ def _pi_frac(numer: int, denom: int) -> str:
 
 
 def _volume_disk_washer(topic: str, settings: dict) -> list[Question]:
+    """Rotate about the x-axis; leftover lockout of disk y=x."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        VOLUME_DISK_WASHER_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    from question_engine.settings.params import calc_application_structure_from_continuous
-
-    structure = calc_application_structure_from_continuous(settings)
-    tier = _difficulty_tier(settings)
-    x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        if structure is not None:
-            n = random.randint(2, max(2, int(structure["bound_max"])))
-            method = random.choice(list(structure["volume_methods"]))
-            if method == "disk_linear":
-                prompt = (
-                    rf"\text{{Find the volume of the solid formed by rotating }}"
-                    rf"y={x}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
-                )
-                answer = _pi_frac(n**3, 3)
-            elif method == "disk_quadratic":
-                prompt = (
-                    rf"\text{{Find the volume of the solid formed by rotating }}"
-                    rf"y={x}^{{2}}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
-                )
-                answer = _pi_frac(n**5, 5)
-            else:
-                # washer / shell / cross_semi → washer form here
-                prompt = (
-                    rf"\text{{Find the volume of the solid formed by rotating the region between }}"
-                    rf"y={n}\text{{ and }}y={x}\text{{ on }}[0,{n}]"
-                    rf"\text{{ about the }}{x}\text{{-axis (washer method).}}"
-                )
-                answer = _pi_frac(2 * n**3, 3)
-            return prompt, "volume disk/washer", answer if include_answer_key else None
+        item = sample_app_diff("volume_disk_washer", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": VOLUME_DISK_WASHER_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": VOLUME_DISK_WASHER_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-        n = random.randint(2, 4) if tier == "easy" else random.randint(2, 5)
-        if tier == "easy":
-            prompt = (
-                rf"\text{{Find the volume of the solid formed by rotating }}"
-                rf"y={x}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
-            )
-            answer = _pi_frac(n**3, 3)
-        elif tier == "medium":
-            prompt = (
-                rf"\text{{Find the volume of the solid formed by rotating }}"
-                rf"y={x}^{{2}}\text{{ on }}[0,{n}]\text{{ about the }}{x}\text{{-axis (disk method).}}"
-            )
-            answer = _pi_frac(n**5, 5)
-        else:
-            prompt = (
-                rf"\text{{Find the volume of the solid formed by rotating the region between }}"
-                rf"y={n}\text{{ and }}y={x}\text{{ on }}[0,{n}]"
-                rf"\text{{ about the }}{x}\text{{-axis (washer method).}}"
-            )
-            answer = _pi_frac(2 * n**3, 3)
-        return prompt, "volume disk/washer", answer if include_answer_key else None
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
 
-    return _make_questions(topic, count, include_answer_key, build)
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _volume_shell(topic: str, settings: dict) -> list[Question]:

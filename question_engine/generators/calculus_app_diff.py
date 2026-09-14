@@ -558,6 +558,48 @@ def _motion_along_a_line_integral(topic: str, settings: dict) -> list[Question]:
     )
 
 
+def _de_introduction(topic: str, settings: dict) -> list[Question]:
+    """Verify a proposed DE solution; stamps live-loop form_id / generator."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        DE_INTRO_GENERATOR,
+        sample_app_diff,
+    )
+
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+
+    def build() -> tuple[str, str, str | None]:
+        item = sample_app_diff("de_intro", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": DE_INTRO_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": DE_INTRO_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
+
+
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "relative_extrema": _relative_extrema,
     "absolute_extrema": _absolute_extrema,
@@ -567,7 +609,7 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "newtons_method": _newtons_method,
     "motion_along_a_line": _motion_along_a_line,
     "motion_along_a_line_integral": _motion_along_a_line_integral,
-    "de_introduction": _framework("de_intro", "DE introduction"),
+    "de_introduction": _de_introduction,
     "optimization_applied": _optimization_applied,
     "intervals_increase_decrease": _intervals_increase_decrease,
     "curve_sketching": _curve_sketching,

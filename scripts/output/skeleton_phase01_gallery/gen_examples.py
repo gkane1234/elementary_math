@@ -2936,7 +2936,8 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_diff_eq_introduction",
         "DE — introduction",
-        "Verify exponential then Euler solutions. OpenStax Vol 2 §4.1.",
+        "D=0 exponential leftover (old easy y=Ce^{kx}); D≥8 Euler y=Cx^n; "
+        "high D locks out exp. OpenStax Vol 2 §4.1.",
     ),
 
 ]

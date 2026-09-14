@@ -1227,16 +1227,52 @@ def sample_motion_integral(rng: random.Random, settings: dict[str, Any]) -> AppD
     )
 
 
-def sample_de_intro(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    d = _d(settings)
+DE_INTRO_GENERATOR = "de_introduction"
+
+_DE_INTRO_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("verify_exp",),
+    "medium": ("verify_exp", "verify_euler"),
+    "hard": ("verify_euler",),
+    "expert": ("verify_euler",),
+}
+
+
+def de_intro_forms_for_difficulty(d: float) -> tuple[str, ...]:
     if d < 8.0:
-        k = rng.randint(2, 5)
-        prompt = rf"\text{{Verify that }}y=Ce^{{{k}x}}\text{{ solves }}y'={k}y."
-        answer = rf"y'={k}Ce^{{{k}x}}={k}y"
-        return AppDiffItem(
-            prompt, answer, "DE intro", "verify_exp",
-            {"k": k},
-        )
+        return _DE_INTRO_BANDS["easy"]
+    if d < 16.0:
+        return _DE_INTRO_BANDS["medium"]
+    if d < 20.0:
+        return _DE_INTRO_BANDS["hard"]
+    return _DE_INTRO_BANDS["expert"]
+
+
+def _de_intro_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [DE_INTRO_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_verify_exp(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: y=Ce^{kx} solves y'=ky (OpenStax Vol 2 §4.1 verify)."""
+    k = rng.randint(2, 5)
+    prompt = rf"\text{{Verify that }}y=Ce^{{{k}x}}\text{{ solves }}y'={k}y."
+    answer = rf"y'={k}Ce^{{{k}x}}={k}y"
+    return AppDiffItem(
+        prompt, answer, "DE intro", "verify_exp",
+        {"k": k},
+    )
+
+
+def _sample_verify_euler(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D≥8: y=Cx^n solves x y'=n y for x>0."""
     n = rng.randint(2, 4)
     prompt = (
         rf"\text{{Verify that }}y=Cx^{{{n}}}\text{{ solves }}"
@@ -1246,6 +1282,45 @@ def sample_de_intro(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem
     return AppDiffItem(
         prompt, answer, "DE intro", "verify_euler",
         {"n": n},
+    )
+
+
+_DE_INTRO_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "verify_exp": _sample_verify_exp,
+    "verify_euler": _sample_verify_euler,
+}
+
+
+def sample_de_intro(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Verify a proposed DE solution. High D locks out exponential leftover."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = de_intro_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _de_intro_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _DE_INTRO_BUILDERS:
+        fid = forms[0]
+    item = _DE_INTRO_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": DE_INTRO_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": DE_INTRO_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 

@@ -271,10 +271,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "calc_app_diff `motion_along_a_line_integral` (linear leftover / const leftover / sign-change).",
     },
     "calc_diff_eq_introduction": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "`calculus_foundations` verify-solution stubs; OpenStax Vol 2 §4.1 richer.",
-        "skill": "Verify a proposed solution or classify a DE.",
-        "engine": "Keep constructive verify path; expand forms later.",
+        "flag_why": "Shipped leftover lockout of exp verify; LIMITATIONS no classify-order / IVP find-C / trig verify.",
+        "skill": "Verify a proposed family solves a first-order DE.",
+        "engine": "calc_app_diff `de_introduction` (exp leftover / Euler power).",
     },
     "calc_indef_int_trigonometric_with_substitution": {
         "note": "Catalog name says trig substitution; generator is `integral_trig_substitution` (Calc 2 §3.3).",

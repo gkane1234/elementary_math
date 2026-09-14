@@ -873,12 +873,86 @@ def test_motion_quality_weights_tilt():
     assert tilted["particle_at_rest"] > baseline["particle_at_rest"]
 
 
-def test_de_intro_verify_exp_then_euler():
+def test_de_intro_d0_exp_high_d_euler_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        de_intro_forms_for_difficulty,
+    )
+
+    assert de_intro_forms_for_difficulty(0) == ("verify_exp",)
+    med = de_intro_forms_for_difficulty(8)
+    assert "verify_exp" in med and "verify_euler" in med
+    hard = de_intro_forms_for_difficulty(16)
+    assert "verify_exp" not in hard
+    assert hard == ("verify_euler",)
+    assert de_intro_forms_for_difficulty(22) == ("verify_euler",)
+
     q0 = _gen("calc_diff_eq_introduction", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "verify_exp"
+    assert (q0.metadata or {}).get("generator") == "de_introduction"
     assert "Verify" in (q0.prompt_latex or "")
     assert "e^" in (q0.prompt_latex or "")
-    qh = _gen("calc_diff_eq_introduction", 16, seed=101)[0]
-    assert "Cx" in (qh.prompt_latex or "") or "x^{" in (qh.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "verify_exp"
+    assert snap.get("generator") == "de_introduction"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_diff_eq_introduction", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "de_introduction"
+        assert "Verify" in (q.prompt_latex or "")
+    assert "verify_exp" in mid
+    assert "verify_euler" in mid
+    assert mid <= {"verify_exp", "verify_euler"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_diff_eq_introduction", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid == "verify_euler"
+        assert "e^" not in (q.prompt_latex or "")
+        assert "Cx" in (q.prompt_latex or "") or "x^{" in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "de_introduction"
+    assert high == {"verify_euler"}
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_diff_eq_introduction", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "verify_euler"
+        assert "e^" not in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "de_introduction"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "verify_euler"
+        assert snap.get("generator") == "de_introduction"
+    assert expert == {"verify_euler"}
+
+
+def test_de_intro_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_de_intro,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_de_intro(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"verify_exp": -2.5, "verify_euler": 2.5})
+    assert tilted["verify_euler"] > baseline["verify_euler"]
 
 
 def test_curve_sketch_d0_parabola_high_d_shifted_lockout():

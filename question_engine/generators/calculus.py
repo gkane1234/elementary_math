@@ -1370,84 +1370,48 @@ def _separable_diff_eq(topic: str, settings: dict) -> list[Question]:
 
 
 def _calc_continuous_growth_decay(topic: str, settings: dict) -> list[Question]:
-    """Continuous y'=ky models — OpenStax Calc Vol 1 §6.8 / Vol 2 §4.x.
+    """Continuous y'=ky; leftover lockout of easy growth story.
 
     Distinct from Algebra discrete ``exponential_growth_decay`` (% per period).
     """
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        GROWTH_DECAY_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    from question_engine.settings.params import calc_application_structure_from_continuous
-
-    structure = calc_application_structure_from_continuous(settings)
-    tier = _difficulty_tier(settings)
-    band = str(structure["band"]) if structure is not None else tier
-
-    # (article, name, unit, time_unit)
-    contexts_growth = (
-        ("A", "population", "people", "years"),
-        ("A", "bacterial culture", "cells", "hours"),
-        ("An", "investment", "dollars", "years"),
-    )
-    contexts_decay = (
-        ("A", "radioactive sample", "grams", "years"),
-        ("A", "medicine dose", "mg", "hours"),
-        ("A", "population", "people", "years"),
-    )
 
     def build() -> tuple[str, str, str | None]:
-        if band == "easy":
-            k = random.randint(1, 3)
-            y0 = random.choice([10, 20, 50, 100])
-            t = random.randint(1, 3)
-            art, name, unit, time_unit = random.choice(contexts_growth)
-            prompt = (
-                rf"\text{{{art} {name} of }}{y0}\text{{ {unit} grows continuously according to }}"
-                rf"y'={k}y.\text{{ Find }}y({t})\text{{ ({time_unit}).}}"
-            )
-            answer = rf"{y0}e^{{{k * t}}}"
-        elif band == "medium":
-            if random.choice([True, False]):
-                # decay
-                k = random.randint(1, 3)
-                y0 = random.choice([80, 100, 200])
-                t = random.randint(1, 4)
-                art, name, unit, time_unit = random.choice(contexts_decay)
-                prompt = (
-                    rf"\text{{{art} {name} of }}{y0}\text{{ {unit} decays continuously according to }}"
-                    rf"y'=-{k}y.\text{{ Find }}y({t})\text{{ ({time_unit}).}}"
-                )
-                answer = rf"{y0}e^{{-{k * t}}}"
-            else:
-                # solve IVP for formula
-                k = random.randint(2, 4)
-                y0 = random.randint(2, 8)
-                prompt = (
-                    rf"\text{{Solve }}y'={k}y,\ y(0)={y0}."
-                )
-                answer = rf"y={y0}e^{{{k}x}}"
-        else:
-            # doubling / half-life style: find amount after n doubling times
-            if random.choice([True, False]):
-                y0 = random.choice([50, 100, 200])
-                n_dbl = random.randint(2, 4)
-                art, name, unit, _tu = random.choice(contexts_growth)
-                prompt = (
-                    rf"\text{{{art} {name} of }}{y0}\text{{ {unit} doubles continuously every }}"
-                    rf"T\text{{ years. How much is present after }}{n_dbl}T\text{{ years?}}"
-                )
-                answer = str(y0 * (2**n_dbl))
-            else:
-                y0 = random.choice([64, 128, 256])
-                n_half = random.randint(2, 4)
-                art, name, unit, _tu = random.choice(contexts_decay)
-                prompt = (
-                    rf"\text{{{art} {name} of }}{y0}\text{{ {unit} has continuous half-life }}"
-                    rf"T.\text{{ How much remains after }}{n_half}T?"
-                )
-                answer = str(y0 // (2**n_half))
-        return prompt, "continuous growth/decay", answer if include_answer_key else None
+        item = sample_app_diff("growth_decay", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": GROWTH_DECAY_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": GROWTH_DECAY_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _calculus_foundations(topic: str, settings: dict) -> list[Question]:

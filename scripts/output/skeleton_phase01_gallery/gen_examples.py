@@ -2842,7 +2842,7 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_diff_eq_exponential_growth_and_decay",
         "DE — continuous growth/decay",
-        "y'=ky models (not Algebra discrete %). OpenStax Vol 1 §6.8.",
+        "Leftover lockout: D=0 growth story y'=ky; D=8 growth leftover + decay + IVP; D=16 decay/IVP leftover + doubling/half-life (no growth); D=22 doubling/half-life only. OpenStax Vol 1 §6.8 / Vol 2 §4.2.",
     ),
 
     (

@@ -1014,6 +1014,102 @@ def test_slope_field_quality_weights_tilt():
     assert tilted["sf_x_plus_y"] > baseline["sf_x_plus_y"]
 
 
+def test_growth_decay_d0_story_high_d_half_life_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        growth_decay_forms_for_difficulty,
+    )
+
+    assert growth_decay_forms_for_difficulty(0) == ("egd_growth_story",)
+    med = growth_decay_forms_for_difficulty(8)
+    assert "egd_growth_story" in med
+    assert "egd_decay_story" in med and "egd_ivp" in med
+    hard = growth_decay_forms_for_difficulty(16)
+    assert "egd_growth_story" not in hard
+    assert hard == ("egd_decay_story", "egd_ivp", "egd_doubling", "egd_half_life")
+    assert growth_decay_forms_for_difficulty(22) == ("egd_doubling", "egd_half_life")
+
+    q0 = _gen("calc_diff_eq_exponential_growth_and_decay", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "egd_growth_story"
+    assert (q0.metadata or {}).get("generator") == "calc_continuous_growth_decay"
+    p0 = q0.prompt_latex or ""
+    assert "grows continuously" in p0
+    assert "y'=" in p0 and "y'=-" not in p0
+    assert "Solve" not in p0
+    assert "half-life" not in p0 and "doubles" not in p0
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "egd_growth_story"
+    assert snap.get("generator") == "calc_continuous_growth_decay"
+
+    mid = set()
+    for seed in range(36):
+        q = _gen("calc_diff_eq_exponential_growth_and_decay", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "calc_continuous_growth_decay"
+        p = q.prompt_latex or ""
+        assert "half-life" not in p
+        assert "doubles" not in p
+    assert "egd_growth_story" in mid
+    assert "egd_decay_story" in mid
+    assert "egd_ivp" in mid
+    assert mid <= {"egd_growth_story", "egd_decay_story", "egd_ivp"}
+
+    high = set()
+    for seed in range(40):
+        q = _gen("calc_diff_eq_exponential_growth_and_decay", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "egd_growth_story"
+        p = q.prompt_latex or ""
+        assert "grows continuously" not in p
+        assert (q.metadata or {}).get("generator") == "calc_continuous_growth_decay"
+    leftover = {"egd_decay_story", "egd_ivp"}
+    hard_forms = {"egd_doubling", "egd_half_life"}
+    assert high <= leftover | hard_forms
+    assert high & leftover
+    assert high & hard_forms
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_diff_eq_exponential_growth_and_decay", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        p = q.prompt_latex or ""
+        assert fid in {"egd_doubling", "egd_half_life"}
+        assert "grows continuously" not in p
+        assert "Solve" not in p
+        assert "decays continuously" not in p
+        assert (q.metadata or {}).get("generator") == "calc_continuous_growth_decay"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "calc_continuous_growth_decay"
+    assert expert == {"egd_doubling", "egd_half_life"}
+
+
+def test_growth_decay_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_growth_decay,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_growth_decay(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"egd_growth_story": -2.5, "egd_ivp": 2.5})
+    assert tilted["egd_ivp"] > baseline["egd_ivp"]
+
+
 def test_separable_d0_poly_high_d_homogeneous_lockout():
     from question_engine.frameworks.primitives.calc_app_diff import (
         separable_forms_for_difficulty,

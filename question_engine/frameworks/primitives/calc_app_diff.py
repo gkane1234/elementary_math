@@ -25,6 +25,7 @@ Kind = Literal[
     "de_intro",
     "slope_field",
     "separable",
+    "growth_decay",
     "optimization",
     "increase_decrease",
     "mean_value",
@@ -1550,6 +1551,170 @@ def sample_separable_de(rng: random.Random, settings: dict[str, Any]) -> AppDiff
     )
 
 
+GROWTH_DECAY_GENERATOR = "calc_continuous_growth_decay"
+
+_GROWTH_DECAY_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("egd_growth_story",),
+    "medium": ("egd_growth_story", "egd_decay_story", "egd_ivp"),
+    "hard": ("egd_decay_story", "egd_ivp", "egd_doubling", "egd_half_life"),
+    "expert": ("egd_doubling", "egd_half_life"),
+}
+
+_EGD_GROWTH_CONTEXTS = (
+    ("A", "population", "people", "years"),
+    ("A", "bacterial culture", "cells", "hours"),
+    ("An", "investment", "dollars", "years"),
+)
+_EGD_DECAY_CONTEXTS = (
+    ("A", "radioactive sample", "grams", "years"),
+    ("A", "medicine dose", "mg", "hours"),
+    ("A", "population", "people", "years"),
+)
+
+
+def growth_decay_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _GROWTH_DECAY_BANDS["easy"]
+    if d < 16.0:
+        return _GROWTH_DECAY_BANDS["medium"]
+    if d < 20.0:
+        return _GROWTH_DECAY_BANDS["hard"]
+    return _GROWTH_DECAY_BANDS["expert"]
+
+
+def _growth_decay_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [GROWTH_DECAY_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_egd_growth_story(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: story find y(t) from y'=ky (OpenStax Vol 1 §6.8)."""
+    k = rng.randint(1, 3)
+    y0 = rng.choice([10, 20, 50, 100])
+    t = rng.randint(1, 3)
+    art, name, unit, time_unit = rng.choice(_EGD_GROWTH_CONTEXTS)
+    prompt = (
+        rf"\text{{{art} {name} of }}{y0}\text{{ {unit} grows continuously according to }}"
+        rf"y'={k}y.\text{{ Find }}y({t})\text{{ ({time_unit}).}}"
+    )
+    answer = rf"{y0}e^{{{k * t}}}"
+    return AppDiffItem(
+        prompt, answer, "continuous growth/decay", "egd_growth_story",
+        {"k": k, "y0": y0, "t": t},
+    )
+
+
+def _sample_egd_decay_story(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D=8: story find y(t) from y'=-ky."""
+    k = rng.randint(1, 3)
+    y0 = rng.choice([80, 100, 200])
+    t = rng.randint(1, 4)
+    art, name, unit, time_unit = rng.choice(_EGD_DECAY_CONTEXTS)
+    prompt = (
+        rf"\text{{{art} {name} of }}{y0}\text{{ {unit} decays continuously according to }}"
+        rf"y'=-{k}y.\text{{ Find }}y({t})\text{{ ({time_unit}).}}"
+    )
+    answer = rf"{y0}e^{{-{k * t}}}"
+    return AppDiffItem(
+        prompt, answer, "continuous growth/decay", "egd_decay_story",
+        {"k": k, "y0": y0, "t": t},
+    )
+
+
+def _sample_egd_ivp(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D=8: solve y'=ky, y(0)=y0."""
+    k = rng.randint(2, 4)
+    y0 = rng.randint(2, 8)
+    prompt = rf"\text{{Solve }}y'={k}y,\ y(0)={y0}."
+    answer = rf"y={y0}e^{{{k}x}}"
+    return AppDiffItem(
+        prompt, answer, "continuous growth/decay", "egd_ivp",
+        {"k": k, "y0": y0},
+    )
+
+
+def _sample_egd_doubling(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D≥16: amount after n doubling times."""
+    y0 = rng.choice([50, 100, 200])
+    n_dbl = rng.randint(2, 4)
+    art, name, unit, _tu = rng.choice(_EGD_GROWTH_CONTEXTS)
+    prompt = (
+        rf"\text{{{art} {name} of }}{y0}\text{{ {unit} doubles continuously every }}"
+        rf"T\text{{ years. How much is present after }}{n_dbl}T\text{{ years?}}"
+    )
+    answer = str(y0 * (2 ** n_dbl))
+    return AppDiffItem(
+        prompt, answer, "continuous growth/decay", "egd_doubling",
+        {"y0": y0, "n": n_dbl},
+    )
+
+
+def _sample_egd_half_life(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D≥16: amount after n half-lives."""
+    y0 = rng.choice([64, 128, 256])
+    n_half = rng.randint(2, 4)
+    art, name, unit, _tu = rng.choice(_EGD_DECAY_CONTEXTS)
+    prompt = (
+        rf"\text{{{art} {name} of }}{y0}\text{{ {unit} has continuous half-life }}"
+        rf"T.\text{{ How much remains after }}{n_half}T?"
+    )
+    answer = str(y0 // (2 ** n_half))
+    return AppDiffItem(
+        prompt, answer, "continuous growth/decay", "egd_half_life",
+        {"y0": y0, "n": n_half},
+    )
+
+
+_GROWTH_DECAY_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "egd_growth_story": _sample_egd_growth_story,
+    "egd_decay_story": _sample_egd_decay_story,
+    "egd_ivp": _sample_egd_ivp,
+    "egd_doubling": _sample_egd_doubling,
+    "egd_half_life": _sample_egd_half_life,
+}
+
+
+def sample_growth_decay(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Continuous y'=ky. High D locks out easy growth leftover, then mid IVP/decay."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = growth_decay_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _growth_decay_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _GROWTH_DECAY_BUILDERS:
+        fid = forms[0]
+    item = _GROWTH_DECAY_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": GROWTH_DECAY_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": GROWTH_DECAY_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 def sample_optimization(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     """OpenStax §4.7 WP frames; ``form_id`` is the frame id for the live loop."""
     from question_engine.frameworks.primitives.optimization_frames import (
@@ -1796,6 +1961,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "de_intro": sample_de_intro,
     "slope_field": sample_slope_field,
     "separable": sample_separable_de,
+    "growth_decay": sample_growth_decay,
     "optimization": sample_optimization,
     "increase_decrease": sample_intervals_increase,
     "curve_sketching": sample_curve_sketching,

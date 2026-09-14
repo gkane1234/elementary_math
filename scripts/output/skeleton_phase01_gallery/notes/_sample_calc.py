@@ -285,6 +285,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Separate variables, integrate, apply the initial condition.",
         "engine": "calc_app_diff `separable_diff_eq` (poly leftover / exp leftover / homogeneous y/x).",
     },
+    "calc_diff_eq_exponential_growth_and_decay": {
+        "flag_why": "Shipped leftover lockout of story y'=ky; LIMITATIONS no Newton's cooling / logistic / find-k from data.",
+        "skill": "Solve continuous y'=ky stories, IVPs, and half-life / doubling counts.",
+        "engine": "calc_app_diff `calc_continuous_growth_decay` (growth leftover / decay leftover / IVP / doubling / half-life).",
+    },
     "calc_indef_int_trigonometric_with_substitution": {
         "note": "Catalog name says trig substitution; generator is `integral_trig_substitution` (Calc 2 §3.3).",
         "skill": "Integrate using a trigonometric substitution.",
@@ -491,6 +496,7 @@ def _engine_proposal(entry) -> str:
     if gen in {
         "slope_field_interpret",
         "separable_diff_eq",
+        "calc_continuous_growth_decay",
         "exponential_growth_decay",
     }:
         return "Keep DE constructive/pilot path; not Diff skeleton."

@@ -822,6 +822,28 @@ def plan_trick_pipeline(
     )
 
 
+_GENERAL_TRICK_BANDS: dict[str, tuple[str, ...]] = {
+    # D=0 leftover: table / power / ln-exp. D=8 keeps those leftovers.
+    "easy": ("power", "trig", "ln_exp"),
+    "medium": ("power", "trig", "ln_exp", "u_sub", "parts", "pfd", "invtrig"),
+    # D>=16 drops D=0 power leftover. Table trig is locked in
+    # ``general_trig_forms_for_difficulty`` (D=8 leftover mix; D>=16 no table).
+    "hard": ("trig", "ln_exp", "u_sub", "parts", "pfd", "invtrig", "trig_sub"),
+    "expert": ("trig", "ln_exp", "u_sub", "parts", "pfd", "invtrig", "trig_sub"),
+}
+
+
+def general_tricks_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 power / table-trig techniques on the mixed leaf."""
+    if d < 8.0:
+        return _GENERAL_TRICK_BANDS["easy"]
+    if d < 16.0:
+        return _GENERAL_TRICK_BANDS["medium"]
+    if d < 20.0:
+        return _GENERAL_TRICK_BANDS["hard"]
+    return _GENERAL_TRICK_BANDS["expert"]
+
+
 def _plan_general_pipeline(
     spec: IntegralSpec,
     *,
@@ -830,29 +852,34 @@ def _plan_general_pipeline(
 ) -> TrickPipeline:
     """D-gated mix of allowed techniques for ``integral_general``.
 
-    D=0 stays table/power. Bank-hard families (parts/PFD/trig-sub) unlock mid/high D.
-    Toggles drop the corresponding technique entirely.
+    D=0 stays table/power. D=8 keeps those leftovers plus u-sub/parts/PFD/invtrig.
+    High D locks out D=0 power leftover. Toggles drop the corresponding technique.
     """
     d = float(spec.d_spend)
-    weighted: list[tuple[str, float]] = [("power", 3.2 if d < 6 else 0.7)]
-    if spec.allow_trig:
+    allowed = set(general_tricks_for_difficulty(d))
+    weighted: list[tuple[str, float]] = []
+    if "power" in allowed:
+        weighted.append(("power", 3.2 if d < 6 else 0.7))
+    if spec.allow_trig and "trig" in allowed:
         weighted.append(("trig", 1.3 if d >= 2 else 0.35))
-    if spec.allow_exp or spec.allow_log:
+    if (spec.allow_exp or spec.allow_log) and "ln_exp" in allowed:
         weighted.append(("ln_exp", 1.1 if d >= 2 else 0.3))
-    if spec.allow_invtrig and d >= 6:
+    if spec.allow_invtrig and "invtrig" in allowed:
         weighted.append(("invtrig", 1.0))
-    if spec.allow_substitution and d >= 4:
+    if spec.allow_substitution and "u_sub" in allowed:
         weighted.append(("u_sub", 1.6 if d >= 8 else 0.85))
-    if spec.allow_parts and d >= 8:
+    if spec.allow_parts and "parts" in allowed:
         weighted.append(("parts", 1.3 if d >= 12 else 0.55))
-    if spec.allow_pfd and d >= 8:
+    if spec.allow_pfd and "pfd" in allowed:
         weighted.append(("pfd", 1.3 if d >= 12 else 0.55))
-    if spec.allow_trig_sub and d >= 10:
+    if spec.allow_trig_sub and "trig_sub" in allowed:
         weighted.append(("trig_sub", 1.0))
     if "use_parts" in purchased and spec.allow_parts:
         weighted = [(t, w * (1.8 if t == "parts" else 1.0)) for t, w in weighted]
     if "use_pfd" in purchased and spec.allow_pfd:
         weighted = [(t, w * (1.8 if t == "pfd" else 1.0)) for t, w in weighted]
+    if not weighted:
+        weighted = [("power", 1.0)]
     tricks, weights = zip(*weighted)
     chosen = rng.choices(list(tricks), weights=list(weights), k=1)[0]
     return TrickPipeline(
@@ -1330,13 +1357,35 @@ def trig_forms_for_difficulty(d: float) -> tuple[str, ...]:
     return _TRIG_BANDS["expert"]
 
 
+_GENERAL_TRIG_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": _TRIG_TABLE,
+    "medium": _TRIG_TABLE + _TRIG_EASY_USUB + _TRIG_MID,
+    "hard": _TRIG_EASY_USUB + _TRIG_MID + _TRIG_HIGH,
+    "expert": _TRIG_HIGH,
+}
+
+
+def general_trig_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Mixed-leaf leftover lockout of D=0 table trig; D=8 keeps table leftover."""
+    if d < 8.0:
+        return _GENERAL_TRIG_BANDS["easy"]
+    if d < 16.0:
+        return _GENERAL_TRIG_BANDS["medium"]
+    if d < 20.0:
+        return _GENERAL_TRIG_BANDS["hard"]
+    return _GENERAL_TRIG_BANDS["expert"]
+
+
 def _sample_trig(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
     """Forward trig integrals driven by OpenStax §3.2 form catalog.
 
-    High D locks out D=0 table leftovers and D=8 ``cos_j_sin`` / ``sin_j_cos``.
-    Same implemented builders; catalog ``d_min`` still unlocks within each band.
+    Dedicated trig leaf: high D locks out D=0 table leftovers and D=8
+    ``cos_j_sin`` / ``sin_j_cos``. Mixed ``integral_general`` pack uses
+    ``general_trig_forms_for_difficulty`` (D=8 keeps table leftover; D>=16
+    drops table) and equal ``d_min``/``d_weight`` inside the leftover band so
+    table can actually emit at D=8. Same implemented builders.
     """
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
         implemented_forms,
@@ -1347,7 +1396,12 @@ def _sample_trig(
     var = spec.variable
     d = float(spec.d_spend)
     catalog = load_form_catalog("trig_integrals")
-    allowed = set(trig_forms_for_difficulty(d))
+    band = (
+        general_trig_forms_for_difficulty(d)
+        if spec.pack == "integral_general"
+        else trig_forms_for_difficulty(d)
+    )
+    allowed = set(band)
     pool = _gated_form_pool(catalog, spec)
     if not pool:
         if spec.allow_trig:
@@ -1361,10 +1415,17 @@ def _sample_trig(
         ]
     if not pool:
         return _sample_power(rng, spec)
+    if spec.pack == "integral_general":
+        # Equal competition inside the leftover band (same pattern as log-exp
+        # / multi-trick rows). Catalog d_min / table d_max=4 would otherwise
+        # starve D=0 leftovers at D=8.
+        pool = [
+            {**f, "d_min": 0.0, "d_max": None, "d_weight": 1.0} for f in pool
+        ]
     form = select_form_id(pool, d=d, rng=rng)
     form_id = str(form["form_id"])
     if form_id not in allowed:
-        form_id = trig_forms_for_difficulty(d)[0]
+        form_id = band[0]
     tricks = [str(t) for t in (form.get("tricks") or ["trig"])]
     k = rng.randint(1, max(1, min(6, spec.coef_abs_max)))
     include = spec.include_plus_c
@@ -4535,7 +4596,9 @@ def sample_integral_expression(
         meta["family"] = fid
         snap["form_id"] = fid
         snap["family"] = fid
-        snap["generator"] = str(extra.get("generator") or meta.get("generator") or key)
+        # Leaf key wins for pairwise (mixed general otherwise inherits the
+        # sub-sampler: integral_power_rule / integral_trigonometric / …).
+        snap["generator"] = key
         if extra.get("catalog_id"):
             snap["catalog_id"] = extra["catalog_id"]
         if extra.get("strategy"):

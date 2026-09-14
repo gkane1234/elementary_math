@@ -3529,3 +3529,161 @@ def test_bc_integral_leaves_emit_form_id_via_select_form_id():
         assert meta.get("form_id")
         assert meta["form_id"] in bank, (key, meta["form_id"])
 
+
+_GENERAL_TABLE = {
+    "basic_sin_kx",
+    "basic_cos_kx",
+    "basic_sec2",
+    "basic_sec_tan",
+    "basic_tan",
+}
+_GENERAL_POWER = {
+    "poly_sum",
+    "sqrt_x",
+    "one_over_sqrt_x",
+    "x_sqrt_x",
+    "neg_power",
+    "rewrite_over_x",
+}
+_GENERAL_D0 = _GENERAL_TABLE | {"poly_sum", "sqrt_x", "ln", "exp"}
+
+
+def test_indef_parts_stamps_and_high_d_no_ln_alone():
+    """catalog d_max=8 + EMH bc_bank already drop ln_alone at D>=16; stamps live.
+
+    Further exclusive leftover bands on auto would not change live generate
+    at D>=16 (named bc_bank). Skip — do not empty parts_preset_bc_bank.
+    """
+    q0 = _gen("calc_indef_int_integration_by_parts", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "ln_alone"
+    assert (q0.metadata or {}).get("generator") == "integration_by_parts"
+    snap0 = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap0.get("form_id") == "ln_alone"
+    assert snap0.get("generator") == "integration_by_parts"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert r"\ln" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_integration_by_parts", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid in {"ln_alone", "poly1_exp", "poly1_sin", "poly1_cos"}
+        assert (q.metadata or {}).get("generator") == "integration_by_parts"
+        assert "+C" in (q.answer_latex or "")
+    assert len(easy) >= 3
+
+    mid = set()
+    leftover_mid = 0
+    for seed in range(40):
+        q = _gen("calc_indef_int_integration_by_parts", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "ln_alone":
+            leftover_mid += 1
+        assert fid in {
+            "ln_alone",
+            "poly1_exp",
+            "poly1_sin",
+            "poly1_cos",
+            "poly1_ln",
+        }
+        assert (q.metadata or {}).get("generator") == "integration_by_parts"
+    assert leftover_mid >= 1
+    assert mid - {"ln_alone"}
+
+    from question_engine.frameworks.primitives.integrals import PARTS_FORM_PRESETS
+
+    bank = set(PARTS_FORM_PRESETS["bc_bank"] or ())
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen("calc_indef_int_integration_by_parts", d, seed=seed)[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid != "ln_alone"
+            assert fid not in {"poly1_exp", "poly1_sin", "poly1_cos"}
+            assert fid in bank
+            assert (q.metadata or {}).get("generator") == "integration_by_parts"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "integration_by_parts"
+            assert "+C" in (q.answer_latex or "")
+    assert len(high) >= 4
+
+
+def test_indef_general_d0_table_trig_leftover_lockout():
+    """Leftover lockout of D=0 table trig / power on the mixed general leaf."""
+    from question_engine.frameworks.primitives.integrals import (
+        general_tricks_for_difficulty,
+        general_trig_forms_for_difficulty,
+    )
+
+    assert general_tricks_for_difficulty(0) == ("power", "trig", "ln_exp")
+    assert "power" in general_tricks_for_difficulty(8)
+    assert "power" not in general_tricks_for_difficulty(16)
+    assert "power" not in general_tricks_for_difficulty(22)
+    assert "trig_sub" not in general_tricks_for_difficulty(8)
+    assert "trig_sub" in general_tricks_for_difficulty(16)
+
+    assert set(general_trig_forms_for_difficulty(0)) == _GENERAL_TABLE
+    assert _GENERAL_TABLE <= set(general_trig_forms_for_difficulty(8))
+    assert not (_GENERAL_TABLE & set(general_trig_forms_for_difficulty(16)))
+    assert not (_GENERAL_TABLE & set(general_trig_forms_for_difficulty(22)))
+
+    q0 = _gen("calc_indef_int_general", 0, seed=207)[0]
+    assert (q0.metadata or {}).get("form_id") in _GENERAL_TABLE
+    assert (q0.metadata or {}).get("generator") == "integral_general"
+    snap0 = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap0.get("form_id") == (q0.metadata or {}).get("form_id")
+    assert snap0.get("generator") == "integral_general"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_general", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid in _GENERAL_D0, (seed, fid, q.prompt_latex)
+        assert (q.metadata or {}).get("generator") == "integral_general"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("generator") == "integral_general"
+        assert snap.get("form_id") == fid
+        assert "+C" in (q.answer_latex or "")
+    assert easy & _GENERAL_TABLE
+    assert easy & {"poly_sum", "sqrt_x"}
+
+    mid = set()
+    leftover_table = 0
+    for seed in range(80):
+        q = _gen("calc_indef_int_general", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid in _GENERAL_TABLE:
+            leftover_table += 1
+        assert (q.metadata or {}).get("generator") == "integral_general"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("generator") == "integral_general"
+        assert snap.get("form_id") == fid
+        assert "+C" in (q.answer_latex or "")
+    assert leftover_table >= 1
+    assert mid - _GENERAL_TABLE - {"poly_sum", "sqrt_x", "ln", "exp"}
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen("calc_indef_int_general", d, seed=seed)[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid not in _GENERAL_TABLE, (d, seed, fid, q.prompt_latex)
+            assert fid not in _GENERAL_POWER, (d, seed, fid, q.prompt_latex)
+            assert fid not in {"ln", "exp"}
+            assert (q.metadata or {}).get("generator") == "integral_general"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "integral_general"
+            assert "+C" in (q.answer_latex or "")
+    assert len(high) >= 4
+

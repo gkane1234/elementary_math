@@ -63,14 +63,19 @@ Local HTML / mine: `textbooks/openstax/html/calculus-volume-2/` · `scripts/outp
 
 ## Variety notes
 
-Not a WP. D=0 rotates several one-step LIATE frames (old path was ln-only). High D uses catalog `d_max` so `ln_alone` cannot dominate.
+Not a WP. D=0 rotates several one-step LIATE frames (old path was ln-only). High D uses catalog `d_max` so `ln_alone` cannot dominate. EMH-hard is named `parts_form_preset=bc_bank`.
+
+## Live now — skip further leftover lockout
+
+Already rich enough: leftover mix + stamps. Live `_generate_for_type` already stamps `form_id` + `generator=integration_by_parts` on metadata and `spec_snapshot` (40/40). Easy `ln_alone` has catalog `d_max=8`. D=8 leftover mix is `ln_alone` / `poly1_ln` / scaled `poly1_exp|sin|cos`. D=16–22 is named `bc_bank` (no `ln_alone`, no `poly1_exp|sin|cos`). Exclusive leftover bands on `auto` would not change live at D≥16 (named preset). Lockout *under* `bc_bank` would empty `parts_preset_bc_bank`. Did not invent `poly_exp_trig` / `poly1_arccos` / `poly2_ln_quad` cores.
 
 ## Limitations
 
-- **Status:** shipped — catalog lookalikes + `parts_form_preset=bc_bank`. Remaining `LIMITATIONS`: \(\int x e^{ax}\sin(bx)\) (`poly_exp_trig`) deferred — no honest tabular/cyclic answer template; \(\int x\arccos x\) deferred as a duplicate of \(x\arcsin\); \(\int x^{2}\ln(x^{2}+a^{2})\) deferred; \(\sec^3\) owned by the trig-integrals leaf; no definite-parts evaluation on this indefinite leaf.
+- **Status:** skipped further leftover lockout — live already stamps `form_id` + `generator=integration_by_parts`; catalog `d_max=8` + EMH `bc_bank` already drop `ln_alone` at D≥16. Remaining `LIMITATIONS`: \(\int x e^{ax}\sin(bx)\) (`poly_exp_trig`) deferred — no honest tabular/cyclic answer template; \(\int x\arccos x\) deferred as a duplicate of \(x\arcsin\); \(\int x^{2}\ln(x^{2}+a^{2})\) deferred; \(\sec^3\) owned by the trig-integrals leaf; no definite-parts evaluation on this indefinite leaf; D=16 and D=22 are the same `bc_bank` mix.
+- **Live pairwise:** each item stamps `form_id`, `generator=integration_by_parts`, and `family`; copies `form_id` / `generator` onto `spec_snapshot`. Form pick uses `select_form_id` so `live_quality_form_weights` can tilt.
 - **Generator:** `integration_by_parts`
 
 ## Proposed engine (reuse vs new)
 
-- **Reuse:** `integrals.py` `_sample_parts` + `integration_by_parts.json`. Numeric hardness is inner \(k\) / \(a,b\) / polynomial degree, not padded `difficulty_costs`.
-- **Shipped this pass:** BC bank §2 lookalikes (\(x^n e^{ax}\) n≤3, \(x^n\sin/\cos\), \(x^n\ln\), \((\ln)^{2,3}\), \(x\arctan\), \(x\arcsin\), cyclic); named preset `bc_bank`; `allow_*` tags; `ln_alone` leftover lockout kept.
+- **Reuse:** `integrals.py` `_sample_parts` + `integration_by_parts.json`. Numeric hardness is inner \(k\) / \(a,b\) / polynomial degree, not padded `difficulty_costs`. Depth = document skip, not a new exclusive-band overlay on named presets.
+- **Not this pass:** exclusive leftover bands; locking `ln_power_*` / cyclic leftovers out of `bc_bank` (that *is* the named mix); inventing a closed template for `poly_exp_trig`.

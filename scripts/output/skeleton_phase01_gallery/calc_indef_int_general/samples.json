@@ -51,6 +51,12 @@
           "sqrt_x"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -121,6 +127,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -138,6 +147,7 @@
           "technique": "power",
           "family": "sqrt_x",
           "form_id": "sqrt_x",
+          "generator": "integral_general",
           "catalog_id": "basic_power_integrals",
           "strategy": "power_rule_root"
         },
@@ -215,10 +225,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "\\int \\sec(x)\\tan(x)\\,dx",
-      "answer_latex": "\\sec(x)+C",
+      "prompt_latex": "\\int \\tan(x)\\,dx",
+      "answer_latex": "-\\ln|\\cos(x)|+C",
       "skeleton_pattern": "",
-      "form_id": "basic_sec_tan",
+      "form_id": "basic_tan",
       "diagram_svg": "",
       "debug": [
         [
@@ -231,11 +241,18 @@
         ],
         [
           "form_id",
-          "basic_sec_tan"
+          "basic_tan"
         ],
         [
           "openstax_form",
-          "basic_sec_tan"
+          "basic_tan"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig",
+            "u_sub"
+          ]
         ],
         [
           "construction",
@@ -247,14 +264,16 @@
         ]
       ],
       "metadata": {
-        "family": "basic_sec_tan",
-        "structure_id": "integral_general:basic_sec_tan",
-        "technique": "trig",
+        "family": "basic_tan",
+        "structure_id": "integral_general:basic_tan",
+        "technique": "trig+u_sub",
         "tricks_required": [
-          "trig"
+          "trig",
+          "u_sub"
         ],
         "methods_used": [
-          "trig"
+          "trig",
+          "u_sub"
         ],
         "function_classes": [
           "trig"
@@ -281,7 +300,8 @@
             "u_sub"
           ],
           "tricks_required": [
-            "trig"
+            "trig",
+            "u_sub"
           ],
           "allow_trig": true,
           "allow_exp": true,
@@ -308,6 +328,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -315,33 +338,43 @@
                 "input_kind": "1",
                 "transform": "sample_trig_form",
                 "notes": ""
+              },
+              {
+                "trick": "u_sub",
+                "input_kind": "prior",
+                "transform": "derivative_backed_chain",
+                "notes": ""
               }
             ],
             "tricks_required": [
-              "trig"
+              "trig",
+              "u_sub"
             ],
-            "length": 1
+            "length": 2
           },
-          "technique": "trig",
-          "family": "basic_sec_tan",
-          "form_id": "basic_sec_tan",
+          "technique": "trig+u_sub",
+          "family": "basic_tan",
+          "form_id": "basic_tan",
+          "generator": "integral_general",
           "catalog_id": "trig_integrals",
-          "strategy": "basic_antiderivative"
+          "strategy": "rewrite_sin_over_cos_u_sub"
         },
         "effort_features": {
-          "technique": "trig",
+          "technique": "trig+u_sub",
           "tricks_required": [
-            "trig"
+            "trig",
+            "u_sub"
           ],
-          "pipeline_len": 1,
+          "pipeline_len": 2,
           "degree_max": 3,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 9,
+          "answer_len": 15,
           "nest_depth": 0,
           "pack": "integral_general",
           "methods": [
-            "trig"
+            "trig",
+            "u_sub"
           ]
         },
         "pipeline": {
@@ -351,24 +384,31 @@
               "input_kind": "1",
               "transform": "sample_trig_form",
               "notes": ""
+            },
+            {
+              "trick": "u_sub",
+              "input_kind": "prior",
+              "transform": "derivative_backed_chain",
+              "notes": ""
             }
           ],
           "tricks_required": [
-            "trig"
+            "trig",
+            "u_sub"
           ],
-          "length": 1
+          "length": 2
         },
-        "shape_id": "basic_sec_tan",
+        "shape_id": "basic_tan",
         "construction": "forward_form_catalog",
         "difficulty_costs": [],
         "difficulty_cost_total": 0.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "basic_sec_tan",
-        "openstax_form": "basic_sec_tan",
-        "form_id": "basic_sec_tan",
-        "openstax_case": "\u00a73.2 exercise 87",
-        "strategy": "basic_antiderivative",
+        "core_form_id": "basic_tan",
+        "openstax_form": "basic_tan",
+        "form_id": "basic_tan",
+        "openstax_case": "\u00a73.2 exercise 88 (scaled)",
+        "strategy": "rewrite_sin_over_cos_u_sub",
         "catalog_id": "trig_integrals",
         "generation_settings": {
           "allow_trig": true,
@@ -423,6 +463,12 @@
         [
           "openstax_form",
           "basic_sin_kx"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig"
+          ]
         ],
         [
           "construction",
@@ -495,6 +541,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -512,6 +561,7 @@
           "technique": "trig",
           "family": "basic_sin_kx",
           "form_id": "basic_sin_kx",
+          "generator": "integral_general",
           "catalog_id": "trig_integrals",
           "strategy": "basic_antiderivative"
         },
@@ -612,6 +662,12 @@
           "rewrite_over_x"
         ],
         [
+          "tricks_required",
+          [
+            "power"
+          ]
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -686,6 +742,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -703,6 +762,7 @@
           "technique": "power",
           "family": "rewrite_over_x",
           "form_id": "rewrite_over_x",
+          "generator": "integral_general",
           "catalog_id": "basic_power_integrals",
           "strategy": "rewrite_split"
         },
@@ -819,6 +879,16 @@
           "poly1_cos"
         ],
         [
+          "tricks_required",
+          [
+            "parts"
+          ]
+        ],
+        [
+          "parts_form_preset",
+          "auto"
+        ],
+        [
           "construction",
           "forward_form_catalog"
         ],
@@ -893,6 +963,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -910,6 +983,7 @@
           "technique": "parts",
           "family": "poly1_cos",
           "form_id": "poly1_cos",
+          "generator": "integral_general",
           "catalog_id": "integration_by_parts",
           "strategy": "parts_poly_trig"
         },
@@ -971,6 +1045,7 @@
         "openstax_case": "\u00a73.1 poly \u00d7 cos",
         "strategy": "parts_poly_trig",
         "catalog_id": "integration_by_parts",
+        "parts_form_preset": "auto",
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1024,6 +1099,16 @@
         [
           "openstax_form",
           "ln_alone"
+        ],
+        [
+          "tricks_required",
+          [
+            "parts"
+          ]
+        ],
+        [
+          "parts_form_preset",
+          "auto"
         ],
         [
           "construction",
@@ -1100,6 +1185,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1117,6 +1205,7 @@
           "technique": "parts",
           "family": "ln_alone",
           "form_id": "ln_alone",
+          "generator": "integral_general",
           "catalog_id": "integration_by_parts",
           "strategy": "parts_ln"
         },
@@ -1178,6 +1267,7 @@
         "openstax_case": "\u00a73.1 classic \u222b ln x",
         "strategy": "parts_ln",
         "catalog_id": "integration_by_parts",
+        "parts_form_preset": "auto",
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1210,10 +1300,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\int \\frac{x^{2}+1\\sqrt[3]{x}}{x}\\,dx",
-      "answer_latex": "\\frac{1}{2}x^{2}+3x^{\\frac{1}{3}}+C",
+      "prompt_latex": "\\int \\sin^{3}(x)\\cos^{3}(x)\\,dx",
+      "answer_latex": "\\frac{1}{4}\\sin^{4}(x)-\\frac{1}{6}\\sin^{6}(x)+C",
       "skeleton_pattern": "",
-      "form_id": "rewrite_over_x",
+      "form_id": "sin_cos_both_odd",
       "diagram_svg": "",
       "debug": [
         [
@@ -1226,11 +1316,18 @@
         ],
         [
           "form_id",
-          "rewrite_over_x"
+          "sin_cos_both_odd"
         ],
         [
           "openstax_form",
-          "rewrite_over_x"
+          "sin_cos_both_odd"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig",
+            "u_sub"
+          ]
         ],
         [
           "construction",
@@ -1242,17 +1339,19 @@
         ]
       ],
       "metadata": {
-        "family": "rewrite_over_x",
-        "structure_id": "integral_general:rewrite_over_x",
-        "technique": "power",
+        "family": "sin_cos_both_odd",
+        "structure_id": "integral_general:sin_cos_both_odd",
+        "technique": "trig+u_sub",
         "tricks_required": [
-          "power"
+          "trig",
+          "u_sub"
         ],
         "methods_used": [
-          "power"
+          "trig",
+          "u_sub"
         ],
         "function_classes": [
-          "algebraic"
+          "trig"
         ],
         "upgrades": [
           "extra_term",
@@ -1282,7 +1381,8 @@
             "u_sub"
           ],
           "tricks_required": [
-            "power"
+            "trig",
+            "u_sub"
           ],
           "allow_trig": true,
           "allow_exp": true,
@@ -1309,57 +1409,77 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
-                "trick": "power",
+                "trick": "trig",
                 "input_kind": "1",
-                "transform": "sample_power_poly",
+                "transform": "sample_trig_form",
+                "notes": ""
+              },
+              {
+                "trick": "u_sub",
+                "input_kind": "prior",
+                "transform": "derivative_backed_chain",
                 "notes": ""
               }
             ],
             "tricks_required": [
-              "power"
+              "trig",
+              "u_sub"
             ],
-            "length": 1
+            "length": 2
           },
-          "technique": "power",
-          "family": "rewrite_over_x",
-          "form_id": "rewrite_over_x",
-          "catalog_id": "basic_power_integrals",
-          "strategy": "rewrite_split"
+          "technique": "trig+u_sub",
+          "family": "sin_cos_both_odd",
+          "form_id": "sin_cos_both_odd",
+          "generator": "integral_general",
+          "catalog_id": "trig_integrals",
+          "strategy": "both_odd_save_one"
         },
         "effort_features": {
-          "technique": "power",
+          "technique": "trig+u_sub",
           "tricks_required": [
-            "power"
+            "trig",
+            "u_sub"
           ],
-          "pipeline_len": 1,
+          "pipeline_len": 2,
           "degree_max": 6,
           "coef_abs_max": 7,
-          "n_terms": 2,
-          "answer_len": 35,
+          "n_terms": 1,
+          "answer_len": 47,
           "nest_depth": 0,
           "pack": "integral_general",
           "methods": [
-            "power"
+            "trig",
+            "u_sub"
           ]
         },
         "pipeline": {
           "stages": [
             {
-              "trick": "power",
+              "trick": "trig",
               "input_kind": "1",
-              "transform": "sample_power_poly",
+              "transform": "sample_trig_form",
+              "notes": ""
+            },
+            {
+              "trick": "u_sub",
+              "input_kind": "prior",
+              "transform": "derivative_backed_chain",
               "notes": ""
             }
           ],
           "tricks_required": [
-            "power"
+            "trig",
+            "u_sub"
           ],
-          "length": 1
+          "length": 2
         },
-        "shape_id": "rewrite_over_x",
+        "shape_id": "sin_cos_both_odd",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -1391,12 +1511,12 @@
         "difficulty_cost_total": 14.0,
         "difficulty_shortfall": 2.0,
         "wrappers_applied": [],
-        "core_form_id": "rewrite_over_x",
-        "openstax_form": "rewrite_over_x",
-        "form_id": "rewrite_over_x",
-        "openstax_case": "\u00a74.10 rewrite",
-        "strategy": "rewrite_split",
-        "catalog_id": "basic_power_integrals",
+        "core_form_id": "sin_cos_both_odd",
+        "openstax_form": "sin_cos_both_odd",
+        "form_id": "sin_cos_both_odd",
+        "openstax_case": "\u00a73.2 both-odd (bank \u00a73 sin\u00b3cos\u00b3)",
+        "strategy": "both_odd_save_one",
+        "catalog_id": "trig_integrals",
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1452,6 +1572,16 @@
           "repeated_linear_square"
         ],
         [
+          "tricks_required",
+          [
+            "pfd"
+          ]
+        ],
+        [
+          "pfd_form_preset",
+          "auto"
+        ],
+        [
           "construction",
           "partial_fractions.combine_pf_to_rational"
         ],
@@ -1529,6 +1659,9 @@
           "construction": "partial_fractions.combine_pf_to_rational",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1546,6 +1679,7 @@
           "technique": "pfd",
           "family": "repeated_linear_square",
           "form_id": "repeated_linear_square",
+          "generator": "integral_general",
           "catalog_id": "partial_fractions",
           "strategy": "pfd_repeated"
         },
@@ -1619,6 +1753,7 @@
         "openstax_case": "\u00a73.4 repeated linear",
         "strategy": "pfd_repeated",
         "catalog_id": "partial_fractions",
+        "pfd_form_preset": "auto",
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1651,10 +1786,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\int \\frac{x^{2}}{\\sqrt{4-x^{2}}}\\,dx",
-      "answer_latex": "-\\frac{1}{2}x\\sqrt{4-x^{2}}+2\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "prompt_latex": "\\int \\frac{x^{2}}{\\sqrt{x^{2}+4}}\\,dx",
+      "answer_latex": "\\frac{1}{2}x\\sqrt{x^{2}+4}-2\\ln\\left|x+\\sqrt{x^{2}+4}\\right|+C",
       "skeleton_pattern": "",
-      "form_id": "x2_over_sqrt_a2_minus_x2",
+      "form_id": "x2_over_sqrt_x2_plus_a2",
       "diagram_svg": "",
       "debug": [
         [
@@ -1667,11 +1802,21 @@
         ],
         [
           "form_id",
-          "x2_over_sqrt_a2_minus_x2"
+          "x2_over_sqrt_x2_plus_a2"
         ],
         [
           "openstax_form",
-          "x2_over_sqrt_a2_minus_x2"
+          "x2_over_sqrt_x2_plus_a2"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig_sub"
+          ]
+        ],
+        [
+          "trig_sub_form_preset",
+          "auto"
         ],
         [
           "construction",
@@ -1683,8 +1828,8 @@
         ]
       ],
       "metadata": {
-        "family": "x2_over_sqrt_a2_minus_x2",
-        "structure_id": "integral_general:x2_over_sqrt_a2_minus_x2",
+        "family": "x2_over_sqrt_x2_plus_a2",
+        "structure_id": "integral_general:x2_over_sqrt_x2_plus_a2",
         "technique": "trig_sub",
         "tricks_required": [
           "trig_sub"
@@ -1751,6 +1896,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1766,10 +1914,11 @@
             "length": 1
           },
           "technique": "trig_sub",
-          "family": "x2_over_sqrt_a2_minus_x2",
-          "form_id": "x2_over_sqrt_a2_minus_x2",
+          "family": "x2_over_sqrt_x2_plus_a2",
+          "form_id": "x2_over_sqrt_x2_plus_a2",
+          "generator": "integral_general",
           "catalog_id": "trig_substitution",
-          "strategy": "sin_sub"
+          "strategy": "tan_sub"
         },
         "effort_features": {
           "technique": "trig_sub",
@@ -1801,7 +1950,7 @@
           ],
           "length": 1
         },
-        "shape_id": "x2_over_sqrt_a2_minus_x2",
+        "shape_id": "x2_over_sqrt_x2_plus_a2",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -1833,14 +1982,15 @@
         "difficulty_cost_total": 14.0,
         "difficulty_shortfall": 2.0,
         "wrappers_applied": [],
-        "core_form_id": "x2_over_sqrt_a2_minus_x2",
-        "trig_sub_kind": "sin",
+        "core_form_id": "x2_over_sqrt_x2_plus_a2",
+        "trig_sub_kind": "tan",
         "trig_sub_exponent": "1/2",
-        "openstax_form": "x2_over_sqrt_a2_minus_x2",
-        "form_id": "x2_over_sqrt_a2_minus_x2",
-        "openstax_case": "Checkpoint 3.14 related",
-        "strategy": "sin_sub",
+        "openstax_form": "x2_over_sqrt_x2_plus_a2",
+        "form_id": "x2_over_sqrt_x2_plus_a2",
+        "openstax_case": "\u00a73.3 x\u00b2/\u221a sibling; BC bank \u00a75",
+        "strategy": "tan_sub",
         "catalog_id": "trig_substitution",
+        "trig_sub_form_preset": "auto",
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1873,10 +2023,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\int \\frac{x^{2}+1\\sqrt[3]{x}}{x}\\,dx",
-      "answer_latex": "\\frac{1}{2}x^{2}+3x^{\\frac{1}{3}}+C",
+      "prompt_latex": "\\int \\frac{\\cos(x)}{1+\\sin^{2}(x)}\\,dx",
+      "answer_latex": "\\arctan(\\sin(x))+C",
       "skeleton_pattern": "",
-      "form_id": "rewrite_over_x",
+      "form_id": "sin_over_one_plus_cos2",
       "diagram_svg": "",
       "debug": [
         [
@@ -1889,11 +2039,18 @@
         ],
         [
           "form_id",
-          "rewrite_over_x"
+          "sin_over_one_plus_cos2"
         ],
         [
           "openstax_form",
-          "rewrite_over_x"
+          "sin_over_one_plus_cos2"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig",
+            "u_sub"
+          ]
         ],
         [
           "construction",
@@ -1905,17 +2062,19 @@
         ]
       ],
       "metadata": {
-        "family": "rewrite_over_x",
-        "structure_id": "integral_general:rewrite_over_x",
-        "technique": "power",
+        "family": "sin_over_one_plus_cos2",
+        "structure_id": "integral_general:sin_over_one_plus_cos2",
+        "technique": "trig+u_sub",
         "tricks_required": [
-          "power"
+          "trig",
+          "u_sub"
         ],
         "methods_used": [
-          "power"
+          "trig",
+          "u_sub"
         ],
         "function_classes": [
-          "algebraic"
+          "trig"
         ],
         "upgrades": [
           "extra_term",
@@ -1947,7 +2106,8 @@
             "u_sub"
           ],
           "tricks_required": [
-            "power"
+            "trig",
+            "u_sub"
           ],
           "allow_trig": true,
           "allow_exp": true,
@@ -1974,57 +2134,77 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
-                "trick": "power",
+                "trick": "trig",
                 "input_kind": "1",
-                "transform": "sample_power_poly",
+                "transform": "sample_trig_form",
+                "notes": ""
+              },
+              {
+                "trick": "u_sub",
+                "input_kind": "prior",
+                "transform": "derivative_backed_chain",
                 "notes": ""
               }
             ],
             "tricks_required": [
-              "power"
+              "trig",
+              "u_sub"
             ],
-            "length": 1
+            "length": 2
           },
-          "technique": "power",
-          "family": "rewrite_over_x",
-          "form_id": "rewrite_over_x",
-          "catalog_id": "basic_power_integrals",
-          "strategy": "rewrite_split"
+          "technique": "trig+u_sub",
+          "family": "sin_over_one_plus_cos2",
+          "form_id": "sin_over_one_plus_cos2",
+          "generator": "integral_general",
+          "catalog_id": "trig_integrals",
+          "strategy": "u_equals_cos"
         },
         "effort_features": {
-          "technique": "power",
+          "technique": "trig+u_sub",
           "tricks_required": [
-            "power"
+            "trig",
+            "u_sub"
           ],
-          "pipeline_len": 1,
+          "pipeline_len": 2,
           "degree_max": 6,
           "coef_abs_max": 8,
-          "n_terms": 2,
-          "answer_len": 35,
+          "n_terms": 1,
+          "answer_len": 18,
           "nest_depth": 0,
           "pack": "integral_general",
           "methods": [
-            "power"
+            "trig",
+            "u_sub"
           ]
         },
         "pipeline": {
           "stages": [
             {
-              "trick": "power",
+              "trick": "trig",
               "input_kind": "1",
-              "transform": "sample_power_poly",
+              "transform": "sample_trig_form",
+              "notes": ""
+            },
+            {
+              "trick": "u_sub",
+              "input_kind": "prior",
+              "transform": "derivative_backed_chain",
               "notes": ""
             }
           ],
           "tricks_required": [
-            "power"
+            "trig",
+            "u_sub"
           ],
-          "length": 1
+          "length": 2
         },
-        "shape_id": "rewrite_over_x",
+        "shape_id": "sin_over_one_plus_cos2",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -2066,12 +2246,12 @@
         "difficulty_cost_total": 21.5,
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
-        "core_form_id": "rewrite_over_x",
-        "openstax_form": "rewrite_over_x",
-        "form_id": "rewrite_over_x",
-        "openstax_case": "\u00a74.10 rewrite",
-        "strategy": "rewrite_split",
-        "catalog_id": "basic_power_integrals",
+        "core_form_id": "sin_over_one_plus_cos2",
+        "openstax_form": "sin_over_one_plus_cos2",
+        "form_id": "sin_over_one_plus_cos2",
+        "openstax_case": "\u00a73.2 / u-sub into arctan (bank \u00a73.19\u20133.20)",
+        "strategy": "u_equals_cos",
+        "catalog_id": "trig_integrals",
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -2127,6 +2307,16 @@
           "repeated_linear_square"
         ],
         [
+          "tricks_required",
+          [
+            "pfd"
+          ]
+        ],
+        [
+          "pfd_form_preset",
+          "auto"
+        ],
+        [
           "construction",
           "partial_fractions.combine_pf_to_rational"
         ],
@@ -2206,6 +2396,9 @@
           "construction": "partial_fractions.combine_pf_to_rational",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2223,6 +2416,7 @@
           "technique": "pfd",
           "family": "repeated_linear_square",
           "form_id": "repeated_linear_square",
+          "generator": "integral_general",
           "catalog_id": "partial_fractions",
           "strategy": "pfd_repeated"
         },
@@ -2306,6 +2500,7 @@
         "openstax_case": "\u00a73.4 repeated linear",
         "strategy": "pfd_repeated",
         "catalog_id": "partial_fractions",
+        "pfd_form_preset": "auto",
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -2338,10 +2533,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\int \\frac{x^{2}}{\\sqrt{4-x^{2}}}\\,dx",
-      "answer_latex": "-\\frac{1}{2}x\\sqrt{4-x^{2}}+2\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "prompt_latex": "\\int \\frac{x^{2}}{\\sqrt{x^{2}+4}}\\,dx",
+      "answer_latex": "\\frac{1}{2}x\\sqrt{x^{2}+4}-2\\ln\\left|x+\\sqrt{x^{2}+4}\\right|+C",
       "skeleton_pattern": "",
-      "form_id": "x2_over_sqrt_a2_minus_x2",
+      "form_id": "x2_over_sqrt_x2_plus_a2",
       "diagram_svg": "",
       "debug": [
         [
@@ -2354,11 +2549,21 @@
         ],
         [
           "form_id",
-          "x2_over_sqrt_a2_minus_x2"
+          "x2_over_sqrt_x2_plus_a2"
         ],
         [
           "openstax_form",
-          "x2_over_sqrt_a2_minus_x2"
+          "x2_over_sqrt_x2_plus_a2"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig_sub"
+          ]
+        ],
+        [
+          "trig_sub_form_preset",
+          "auto"
         ],
         [
           "construction",
@@ -2370,8 +2575,8 @@
         ]
       ],
       "metadata": {
-        "family": "x2_over_sqrt_a2_minus_x2",
-        "structure_id": "integral_general:x2_over_sqrt_a2_minus_x2",
+        "family": "x2_over_sqrt_x2_plus_a2",
+        "structure_id": "integral_general:x2_over_sqrt_x2_plus_a2",
         "technique": "trig_sub",
         "tricks_required": [
           "trig_sub"
@@ -2440,6 +2645,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "auto",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2455,10 +2663,11 @@
             "length": 1
           },
           "technique": "trig_sub",
-          "family": "x2_over_sqrt_a2_minus_x2",
-          "form_id": "x2_over_sqrt_a2_minus_x2",
+          "family": "x2_over_sqrt_x2_plus_a2",
+          "form_id": "x2_over_sqrt_x2_plus_a2",
+          "generator": "integral_general",
           "catalog_id": "trig_substitution",
-          "strategy": "sin_sub"
+          "strategy": "tan_sub"
         },
         "effort_features": {
           "technique": "trig_sub",
@@ -2490,7 +2699,7 @@
           ],
           "length": 1
         },
-        "shape_id": "x2_over_sqrt_a2_minus_x2",
+        "shape_id": "x2_over_sqrt_x2_plus_a2",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -2532,14 +2741,15 @@
         "difficulty_cost_total": 21.5,
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
-        "core_form_id": "x2_over_sqrt_a2_minus_x2",
-        "trig_sub_kind": "sin",
+        "core_form_id": "x2_over_sqrt_x2_plus_a2",
+        "trig_sub_kind": "tan",
         "trig_sub_exponent": "1/2",
-        "openstax_form": "x2_over_sqrt_a2_minus_x2",
-        "form_id": "x2_over_sqrt_a2_minus_x2",
-        "openstax_case": "Checkpoint 3.14 related",
-        "strategy": "sin_sub",
+        "openstax_form": "x2_over_sqrt_x2_plus_a2",
+        "form_id": "x2_over_sqrt_x2_plus_a2",
+        "openstax_case": "\u00a73.3 x\u00b2/\u221a sibling; BC bank \u00a75",
+        "strategy": "tan_sub",
         "catalog_id": "trig_substitution",
+        "trig_sub_form_preset": "auto",
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,

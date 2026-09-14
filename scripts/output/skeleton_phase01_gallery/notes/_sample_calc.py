@@ -346,6 +346,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Solve continuous y'=ky stories, IVPs, and half-life / doubling counts.",
         "engine": "calc_app_diff `calc_continuous_growth_decay` (growth leftover / decay leftover / IVP / doubling / half-life).",
     },
+    "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution": {
+        "flag_why": "Skip further leftover lockout: EMH presets + stamps already; LIMITATIONS D=0 majority du_over_u_trig / D=16===D=22 challenging.",
+        "skill": "Indefinite ln/exp antiderivative after u-sub +C.",
+        "engine": "Reuse `integrals.py` `_sample_u_sub_derivative_backed` flavor ln_exp + u_substitution.json presets.",
+    },
     "calc_indef_int_trigonometric_with_substitution": {
         "note": "Catalog name says trig substitution; generator is `integral_trig_substitution` (Calc 2 §3.3).",
         "skill": "Integrate using a trigonometric substitution.",

@@ -870,6 +870,72 @@ def test_indef_log_exp_d0_ln_exp_high_d_linear_base_a_lockout():
     assert expert == {"ln_linear", "base_a"}
 
 
+def test_indef_log_exp_sub_stamps_and_high_d_no_du_over_u_trig():
+    """EMH presets already lock du_over_u_trig out of D≥16; stamps already live.
+
+    Further exclusive leftover bands on auto would not change live generate
+    (named du_over_u / exp_chain / challenging). Skip — do not empty showcases.
+    """
+    q0 = _gen(
+        "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+        0,
+        seed=101,
+    )[0]
+    assert (q0.metadata or {}).get("form_id") in {
+        "du_over_u_linear",
+        "du_over_u_trig",
+    }
+    assert (q0.metadata or {}).get("generator") == "integral_log_exp_substitution"
+    snap0 = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap0.get("form_id") == (q0.metadata or {}).get("form_id")
+    assert snap0.get("generator") == "integral_log_exp_substitution"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+            0,
+            seed=seed,
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid in {"du_over_u_linear", "du_over_u_trig"}
+        assert (q.metadata or {}).get("generator") == "integral_log_exp_substitution"
+    assert easy == {"du_over_u_linear", "du_over_u_trig"}
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen(
+                "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
+                d,
+                seed=seed,
+            )[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid != "du_over_u_trig"
+            assert fid != "du_over_u_linear"
+            assert (q.metadata or {}).get("generator") == (
+                "integral_log_exp_substitution"
+            )
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "integral_log_exp_substitution"
+            assert "+C" in (q.answer_latex or "")
+    challenging = {
+        "exp_of_cubic",
+        "exp_of_quartic",
+        "exp_root_chain",
+        "exp_power_of_exp",
+        "ln_squared_chain",
+        "nested_trig_exp",
+    }
+    assert high & challenging, high
+    assert "du_over_u_trig" not in high
+
+
 def test_indef_log_exp_quality_weights_tilt():
     from contextlib import nullcontext
     import random as _random

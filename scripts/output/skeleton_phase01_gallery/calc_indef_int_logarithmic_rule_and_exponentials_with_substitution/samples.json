@@ -51,6 +51,16 @@
           "du_over_u_linear"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "du_over_u"
+        ],
+        [
           "numeric_tier",
           0
         ],
@@ -96,12 +106,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -126,6 +137,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "du_over_u",
           "u_sub_construction": "catalog",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -143,6 +157,7 @@
           "technique": "u_sub",
           "family": "du_over_u_linear",
           "form_id": "du_over_u_linear",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "du_over_u"
         },
@@ -237,6 +252,17 @@
           "du_over_u_trig"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub",
+            "trig"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "du_over_u"
+        ],
+        [
           "numeric_tier",
           0
         ],
@@ -256,12 +282,14 @@
       "metadata": {
         "family": "du_over_u_trig",
         "structure_id": "integral_log_exp_substitution:du_over_u_trig",
-        "technique": "u_sub",
+        "technique": "u_sub+trig",
         "tricks_required": [
-          "u_sub"
+          "u_sub",
+          "trig"
         ],
         "methods_used": [
-          "u_sub"
+          "u_sub",
+          "trig"
         ],
         "function_classes": [
           "trig"
@@ -281,12 +309,14 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
-            "u_sub"
+            "u_sub",
+            "trig"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -311,6 +341,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "du_over_u",
           "u_sub_construction": "catalog",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -318,25 +351,34 @@
                 "input_kind": "1",
                 "transform": "derivative_backed_chain",
                 "notes": ""
+              },
+              {
+                "trick": "trig",
+                "input_kind": "prior",
+                "transform": "sample_trig_form",
+                "notes": ""
               }
             ],
             "tricks_required": [
-              "u_sub"
+              "u_sub",
+              "trig"
             ],
-            "length": 1
+            "length": 2
           },
-          "technique": "u_sub",
+          "technique": "u_sub+trig",
           "family": "du_over_u_trig",
           "form_id": "du_over_u_trig",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "trig_power_u_sub"
         },
         "effort_features": {
-          "technique": "u_sub",
+          "technique": "u_sub+trig",
           "tricks_required": [
-            "u_sub"
+            "u_sub",
+            "trig"
           ],
-          "pipeline_len": 1,
+          "pipeline_len": 2,
           "degree_max": 4,
           "coef_abs_max": 4,
           "n_terms": 1,
@@ -344,7 +386,8 @@
           "nest_depth": 0,
           "pack": "integral_log_exp_sub",
           "methods": [
-            "u_sub"
+            "u_sub",
+            "trig"
           ]
         },
         "pipeline": {
@@ -354,12 +397,19 @@
               "input_kind": "1",
               "transform": "derivative_backed_chain",
               "notes": ""
+            },
+            {
+              "trick": "trig",
+              "input_kind": "prior",
+              "transform": "sample_trig_form",
+              "notes": ""
             }
           ],
           "tricks_required": [
-            "u_sub"
+            "u_sub",
+            "trig"
           ],
-          "length": 1
+          "length": 2
         },
         "shape_id": "du_over_u_trig",
         "construction": "forward_form_catalog",
@@ -422,6 +472,17 @@
           "du_over_u_trig"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub",
+            "trig"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "du_over_u"
+        ],
+        [
           "numeric_tier",
           0
         ],
@@ -441,12 +502,14 @@
       "metadata": {
         "family": "du_over_u_trig",
         "structure_id": "integral_log_exp_substitution:du_over_u_trig",
-        "technique": "u_sub",
+        "technique": "u_sub+trig",
         "tricks_required": [
-          "u_sub"
+          "u_sub",
+          "trig"
         ],
         "methods_used": [
-          "u_sub"
+          "u_sub",
+          "trig"
         ],
         "function_classes": [
           "trig"
@@ -466,12 +529,14 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
-            "u_sub"
+            "u_sub",
+            "trig"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -496,6 +561,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "du_over_u",
           "u_sub_construction": "catalog",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -503,25 +571,34 @@
                 "input_kind": "1",
                 "transform": "derivative_backed_chain",
                 "notes": ""
+              },
+              {
+                "trick": "trig",
+                "input_kind": "prior",
+                "transform": "sample_trig_form",
+                "notes": ""
               }
             ],
             "tricks_required": [
-              "u_sub"
+              "u_sub",
+              "trig"
             ],
-            "length": 1
+            "length": 2
           },
-          "technique": "u_sub",
+          "technique": "u_sub+trig",
           "family": "du_over_u_trig",
           "form_id": "du_over_u_trig",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "trig_power_u_sub"
         },
         "effort_features": {
-          "technique": "u_sub",
+          "technique": "u_sub+trig",
           "tricks_required": [
-            "u_sub"
+            "u_sub",
+            "trig"
           ],
-          "pipeline_len": 1,
+          "pipeline_len": 2,
           "degree_max": 4,
           "coef_abs_max": 4,
           "n_terms": 1,
@@ -529,7 +606,8 @@
           "nest_depth": 0,
           "pack": "integral_log_exp_sub",
           "methods": [
-            "u_sub"
+            "u_sub",
+            "trig"
           ]
         },
         "pipeline": {
@@ -539,12 +617,19 @@
               "input_kind": "1",
               "transform": "derivative_backed_chain",
               "notes": ""
+            },
+            {
+              "trick": "trig",
+              "input_kind": "prior",
+              "transform": "sample_trig_form",
+              "notes": ""
             }
           ],
           "tricks_required": [
-            "u_sub"
+            "u_sub",
+            "trig"
           ],
-          "length": 1
+          "length": 2
         },
         "shape_id": "du_over_u_trig",
         "construction": "forward_form_catalog",
@@ -607,6 +692,16 @@
           "exp_of_trig"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "exp_chain"
+        ],
+        [
           "numeric_tier",
           2
         ],
@@ -640,7 +735,7 @@
         "upgrades": [
           "extra_term",
           "higher_degree",
-          "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 8.0,
@@ -655,12 +750,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -685,6 +781,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "exp_chain",
           "u_sub_construction": "catalog",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -702,6 +801,7 @@
           "technique": "u_sub",
           "family": "exp_of_trig",
           "form_id": "exp_of_trig",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_composite_trig"
         },
@@ -750,7 +850,7 @@
           },
           {
             "source": "spec",
-            "feature": "use_exp_log",
+            "feature": "use_trig",
             "cost": 3.0
           }
         ],
@@ -812,6 +912,16 @@
           "exp_of_quartic"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "exp_chain"
+        ],
+        [
           "numeric_tier",
           2
         ],
@@ -845,7 +955,7 @@
         "upgrades": [
           "extra_term",
           "higher_degree",
-          "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 8.0,
@@ -860,12 +970,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -890,6 +1001,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "exp_chain",
           "u_sub_construction": "catalog",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -907,6 +1021,7 @@
           "technique": "u_sub",
           "family": "exp_of_quartic",
           "form_id": "exp_of_quartic",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_quartic"
         },
@@ -955,7 +1070,7 @@
           },
           {
             "source": "spec",
-            "feature": "use_exp_log",
+            "feature": "use_trig",
             "cost": 3.0
           }
         ],
@@ -1018,6 +1133,16 @@
           "exp_of_quartic"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "exp_chain"
+        ],
+        [
           "numeric_tier",
           2
         ],
@@ -1051,7 +1176,7 @@
         "upgrades": [
           "extra_term",
           "higher_degree",
-          "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 8.0,
@@ -1066,12 +1191,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -1096,6 +1222,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "exp_chain",
           "u_sub_construction": "catalog",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1113,6 +1242,7 @@
           "technique": "u_sub",
           "family": "exp_of_quartic",
           "form_id": "exp_of_quartic",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_quartic"
         },
@@ -1161,7 +1291,7 @@
           },
           {
             "source": "spec",
-            "feature": "use_exp_log",
+            "feature": "use_trig",
             "cost": 3.0
           }
         ],
@@ -1224,6 +1354,16 @@
           "exp_of_cubic"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "challenging"
+        ],
+        [
           "numeric_tier",
           3
         ],
@@ -1257,8 +1397,8 @@
         "upgrades": [
           "extra_term",
           "higher_degree",
-          "nested_u",
           "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 16.0,
@@ -1273,12 +1413,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -1303,6 +1444,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "challenging",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1320,6 +1464,7 @@
           "technique": "u_sub",
           "family": "exp_of_cubic",
           "form_id": "exp_of_cubic",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_cubic"
         },
@@ -1368,6 +1513,11 @@
           },
           {
             "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
             "feature": "use_exp_log",
             "cost": 3.0
           },
@@ -1375,15 +1525,10 @@
             "source": "spec",
             "feature": "use_u_sub",
             "cost": 3.5
-          },
-          {
-            "source": "spec",
-            "feature": "nested_u",
-            "cost": 3.5
           }
         ],
-        "difficulty_cost_total": 14.5,
-        "difficulty_shortfall": 1.5,
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
         "wrappers_applied": [],
         "core_form_id": "exp_of_cubic",
         "openstax_form": "exp_of_cubic",
@@ -1441,6 +1586,16 @@
           "nested_trig_exp"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "challenging"
+        ],
+        [
           "numeric_tier",
           3
         ],
@@ -1474,8 +1629,8 @@
         "upgrades": [
           "extra_term",
           "higher_degree",
-          "nested_u",
           "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 16.0,
@@ -1490,12 +1645,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -1520,6 +1676,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "challenging",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1537,6 +1696,7 @@
           "technique": "u_sub",
           "family": "nested_trig_exp",
           "form_id": "nested_trig_exp",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_composite_trig_scaled"
         },
@@ -1585,6 +1745,11 @@
           },
           {
             "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
             "feature": "use_exp_log",
             "cost": 3.0
           },
@@ -1592,15 +1757,10 @@
             "source": "spec",
             "feature": "use_u_sub",
             "cost": 3.5
-          },
-          {
-            "source": "spec",
-            "feature": "nested_u",
-            "cost": 3.5
           }
         ],
-        "difficulty_cost_total": 14.5,
-        "difficulty_shortfall": 1.5,
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
         "wrappers_applied": [],
         "core_form_id": "nested_trig_exp",
         "openstax_form": "nested_trig_exp",
@@ -1657,6 +1817,16 @@
           "nested_trig_exp"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "challenging"
+        ],
+        [
           "numeric_tier",
           3
         ],
@@ -1690,8 +1860,8 @@
         "upgrades": [
           "extra_term",
           "higher_degree",
-          "nested_u",
           "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 16.0,
@@ -1706,12 +1876,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -1736,6 +1907,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "challenging",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1753,6 +1927,7 @@
           "technique": "u_sub",
           "family": "nested_trig_exp",
           "form_id": "nested_trig_exp",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_composite_trig_scaled"
         },
@@ -1801,6 +1976,11 @@
           },
           {
             "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
             "feature": "use_exp_log",
             "cost": 3.0
           },
@@ -1808,15 +1988,10 @@
             "source": "spec",
             "feature": "use_u_sub",
             "cost": 3.5
-          },
-          {
-            "source": "spec",
-            "feature": "nested_u",
-            "cost": 3.5
           }
         ],
-        "difficulty_cost_total": 14.5,
-        "difficulty_shortfall": 1.5,
+        "difficulty_cost_total": 14.0,
+        "difficulty_shortfall": 2.0,
         "wrappers_applied": [],
         "core_form_id": "nested_trig_exp",
         "openstax_form": "nested_trig_exp",
@@ -1873,6 +2048,16 @@
           "exp_of_cubic"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "challenging"
+        ],
+        [
           "numeric_tier",
           4
         ],
@@ -1908,6 +2093,7 @@
           "higher_degree",
           "nested_u",
           "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 22.0,
@@ -1922,12 +2108,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -1952,6 +2139,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "challenging",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -1969,6 +2159,7 @@
           "technique": "u_sub",
           "family": "exp_of_cubic",
           "form_id": "exp_of_cubic",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_cubic"
         },
@@ -2017,6 +2208,11 @@
           },
           {
             "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
             "feature": "use_exp_log",
             "cost": 3.0
           },
@@ -2031,8 +2227,8 @@
             "cost": 3.5
           }
         ],
-        "difficulty_cost_total": 14.5,
-        "difficulty_shortfall": 7.5,
+        "difficulty_cost_total": 17.5,
+        "difficulty_shortfall": 4.5,
         "wrappers_applied": [],
         "core_form_id": "exp_of_cubic",
         "openstax_form": "exp_of_cubic",
@@ -2090,6 +2286,16 @@
           "nested_trig_exp"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "challenging"
+        ],
+        [
           "numeric_tier",
           4
         ],
@@ -2125,6 +2331,7 @@
           "higher_degree",
           "nested_u",
           "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 22.0,
@@ -2139,12 +2346,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -2169,6 +2377,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "challenging",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2186,6 +2397,7 @@
           "technique": "u_sub",
           "family": "nested_trig_exp",
           "form_id": "nested_trig_exp",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_composite_trig_scaled"
         },
@@ -2234,6 +2446,11 @@
           },
           {
             "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
             "feature": "use_exp_log",
             "cost": 3.0
           },
@@ -2248,8 +2465,8 @@
             "cost": 3.5
           }
         ],
-        "difficulty_cost_total": 14.5,
-        "difficulty_shortfall": 7.5,
+        "difficulty_cost_total": 17.5,
+        "difficulty_shortfall": 4.5,
         "wrappers_applied": [],
         "core_form_id": "nested_trig_exp",
         "openstax_form": "nested_trig_exp",
@@ -2306,6 +2523,16 @@
           "nested_trig_exp"
         ],
         [
+          "tricks_required",
+          [
+            "u_sub"
+          ]
+        ],
+        [
+          "u_sub_form_preset",
+          "challenging"
+        ],
+        [
           "numeric_tier",
           4
         ],
@@ -2341,6 +2568,7 @@
           "higher_degree",
           "nested_u",
           "use_exp_log",
+          "use_trig",
           "use_u_sub"
         ],
         "effective_d": 22.0,
@@ -2355,12 +2583,13 @@
           "bound_abs_max": 5,
           "tricks_allowed": [
             "ln_exp",
+            "trig",
             "u_sub"
           ],
           "tricks_required": [
             "u_sub"
           ],
-          "allow_trig": false,
+          "allow_trig": true,
           "allow_exp": true,
           "allow_log": true,
           "allow_invtrig": false,
@@ -2385,6 +2614,9 @@
           "construction": "forward_form_catalog",
           "u_sub_form_preset": "challenging",
           "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "auto",
           "pipeline": {
             "stages": [
               {
@@ -2402,6 +2634,7 @@
           "technique": "u_sub",
           "family": "nested_trig_exp",
           "form_id": "nested_trig_exp",
+          "generator": "integral_log_exp_substitution",
           "catalog_id": "u_substitution",
           "strategy": "exp_composite_trig_scaled"
         },
@@ -2450,6 +2683,11 @@
           },
           {
             "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          },
+          {
+            "source": "spec",
             "feature": "use_exp_log",
             "cost": 3.0
           },
@@ -2464,8 +2702,8 @@
             "cost": 3.5
           }
         ],
-        "difficulty_cost_total": 14.5,
-        "difficulty_shortfall": 7.5,
+        "difficulty_cost_total": 17.5,
+        "difficulty_shortfall": 4.5,
         "wrappers_applied": [],
         "core_form_id": "nested_trig_exp",
         "openstax_form": "nested_trig_exp",

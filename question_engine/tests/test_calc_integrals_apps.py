@@ -1018,6 +1018,93 @@ def test_indef_power_sub_stamps_and_high_d_no_power_linear_du():
     assert "alteration_linear_over_root" in high
 
 
+def test_indef_trig_sub_stamps_and_high_d_no_sqrt_a2_minus_x2():
+    """EMH presets already lock sqrt_a2_minus_x2 out of D≥16; stamps already live.
+
+    Further exclusive leftover bands on auto would not change live generate
+    at D≥16 (named bc_bank). Skip — do not empty trig_sub_preset_bc_bank.
+    """
+    q0 = _gen(
+        "calc_indef_int_trigonometric_with_substitution",
+        0,
+        seed=101,
+    )[0]
+    assert (q0.metadata or {}).get("form_id") == "sqrt_a2_minus_x2"
+    assert (q0.metadata or {}).get("generator") == "integral_trig_substitution"
+    snap0 = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap0.get("form_id") == "sqrt_a2_minus_x2"
+    assert snap0.get("generator") == "integral_trig_substitution"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert r"\sqrt{" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen(
+            "calc_indef_int_trigonometric_with_substitution",
+            0,
+            seed=seed,
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "sqrt_a2_minus_x2"
+        assert (q.metadata or {}).get("generator") == "integral_trig_substitution"
+        assert "+C" in (q.answer_latex or "")
+    assert easy == {"sqrt_a2_minus_x2"}
+
+    mid = set()
+    leftover_mid = 0
+    for seed in range(40):
+        q = _gen(
+            "calc_indef_int_trigonometric_with_substitution",
+            8,
+            seed=seed,
+        )[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "sqrt_a2_minus_x2":
+            leftover_mid += 1
+        assert (q.metadata or {}).get("generator") == "integral_trig_substitution"
+    assert leftover_mid <= 2
+    assert mid - {"sqrt_a2_minus_x2"}
+
+    bank = {
+        "sqrt_a2_plus_x2",
+        "sqrt_x2_minus_a2",
+        "one_over_sqrt_x2_plus_a2",
+        "one_over_sqrt_x2_minus_a2",
+        "x2_over_sqrt_a2_minus_x2",
+        "x2_over_sqrt_x2_plus_a2",
+        "x2_over_sqrt_x2_minus_a2",
+        "pow_3_2_a2_minus",
+        "pow_3_2_a2_plus",
+        "pow_m3_2_a2_plus",
+        "pow_m3_2_a2_minus",
+        "pow_m3_2_x2_minus",
+    }
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen(
+                "calc_indef_int_trigonometric_with_substitution",
+                d,
+                seed=seed,
+            )[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid != "sqrt_a2_minus_x2"
+            assert fid in bank
+            assert (q.metadata or {}).get("generator") == (
+                "integral_trig_substitution"
+            )
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "integral_trig_substitution"
+            assert "+C" in (q.answer_latex or "")
+    assert high <= bank
+    assert len(high) >= 4
+
+
 def test_indef_log_exp_sub_stamps_and_high_d_no_du_over_u_trig():
     """EMH presets already lock du_over_u_trig out of D≥16; stamps already live.
 

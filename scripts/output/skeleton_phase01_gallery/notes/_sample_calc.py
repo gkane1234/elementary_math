@@ -362,9 +362,10 @@ META: dict[str, dict[str, Any]] = {
         "engine": "Reuse `integrals.py` `_sample_u_sub_derivative_backed` flavor power + u_substitution.json presets.",
     },
     "calc_indef_int_trigonometric_with_substitution": {
+        "flag_why": "Skip further leftover lockout: EMH presets + stamps already; LIMITATIONS D=0 frozen sqrt_a2_minus_x2 / D=16===D=22 bc_bank mix.",
         "note": "Catalog name says trig substitution; generator is `integral_trig_substitution` (Calc 2 §3.3).",
         "skill": "Integrate using a trigonometric substitution.",
-        "engine": "Reuse `integrals.py` / OpenStax trig-sub form catalog.",
+        "engine": "Reuse `integrals.py` `_sample_trig_sub` + trig_substitution.json + named bc_bank.",
     },
     "calc_indef_int_multi_trick": {
         "flag_why": "Shipped leftover lockout of D=0 linear/exp/trig; LIMITATIONS D=16===D=22 log-only / no u-sub-then-parts.",

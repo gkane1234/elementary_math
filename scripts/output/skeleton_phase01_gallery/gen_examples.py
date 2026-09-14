@@ -2830,7 +2830,7 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_diff_eq_slope_fields",
         "DE — slope field interpret",
-        "Evaluate y' at a point. OpenStax Vol 2 §4.1–4.2.",
+        "Leftover lockout: D=0 y'=x; D=8 x leftover + y'=x+y; D=16 x+y leftover + y'=xy (no y'=x); D=22 y'=xy only. Eval at a point, no figures. OpenStax Vol 2 §4.2.",
     ),
 
     (

@@ -60,6 +60,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Curve sketching: leftover lockout + shifted inflections shipped; still text checklist only (no SVG / asymptotes)
 - Newton: leftover lockout + two cubic steps shipped; still no Ex. 4.46 \(x^{3}-3x+1\) / failure / two-step quadratic
 - DE intro: leftover lockout of \(y=Ce^{kx}\) shipped; still no classify-order / IVP find-\(C\) / trig verify (D=16 and D=22 both Euler-only)
+- Slope fields: leftover lockout of \(y'=x\) shipped; still eval-at-a-point only (no direction-field figures / match-the-sketch); three frozen RHSs
 - Separable: leftover lockout of \(dy/dx=ax\) shipped; still no OpenStax mixes (\(x/y\), logistic); D=22 is the single frozen \(y/x\), \(y(1)=4\) IVP
 - Optimization: leftover lockout + §4.7 frames shipped; still no travel-time / Norman window / solids-in-solids
 - Increase/decrease: leftover lockout + Ex. 4.17 cubics shipped; still no fractional-power first-derivative test
@@ -76,6 +77,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_diff_eq_slope_fields`:** Leftover lockout of \(y'=x\). D=0 eval \(y'=x\) at a lattice point (old easy); D=8 \(y'=x\) leftover + \(y'=x+y\); D=16 \(y'=x+y\) leftover + \(y'=xy\) (no \(y'=x\)); D=22 \(y'=xy\) only. Stamps `form_id` + `generator=slope_field_interpret`; `select_form_id` / `live_quality_form_weights`. No slope-field figures.
 - **`calc_diff_eq_separable`:** Leftover lockout of poly \(dy/dx=ax\). D=0 poly IVP (old easy); D=8 poly leftover + exp \(dy/dx=ky\); D=16 exp leftover + homogeneous \(y/x\) (no poly); D=22 homogeneous only. Stamps `form_id` + `generator=separable_diff_eq`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_diff_eq_introduction`:** Leftover lockout of exponential verify \(y=Ce^{kx}\). D=0 exp verify (old easy); D=8 exp leftover + Euler \(y=Cx^{n}\); D=16/22 Euler only (no third old form). Stamps `form_id` + `generator=de_introduction`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_int_motion_along_a_line_revisited`:** Leftover lockout of linear \(v=2t\). D=0 linear displacement (old easy); D=8 linear leftover + const \(v=b\); D=16 const leftover + sign-change (no linear); D=22 sign-change only (net 0). Stamps `form_id` + `generator=motion_along_a_line_integral`; `select_form_id` / `live_quality_form_weights`.

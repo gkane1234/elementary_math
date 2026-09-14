@@ -1286,32 +1286,45 @@ def _def_int_mean_value(topic: str, settings: dict) -> list[Question]:
 
 
 def _slope_field_interpret(topic: str, settings: dict) -> list[Question]:
-    """Interpret slope fields by evaluating dy/dx at a point (no sketch UI)."""
+    """Eval y' at a point; leftover lockout of y'=x. No slope-field figures."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        SLOPE_FIELD_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _topic_structure(settings)
 
     def build() -> tuple[str, str, str | None]:
-        px = random.randint(-3, 3)
-        py = random.randint(-3, 3)
-        family = _pick_family(
-            structure,
-            ["x_only"],
-            medium=["x_plus_y"],
-            hard=["xy"],
-        )
-        if family == "x_only":
-            prompt = rf"\text{{For }}y'=x,\text{{ what is the slope at }}({px},{py})?"
-            answer = str(px)
-        elif family == "x_plus_y":
-            prompt = rf"\text{{For }}y'=x+y,\text{{ what is the slope at }}({px},{py})?"
-            answer = str(px + py)
-        else:
-            prompt = rf"\text{{For }}y'=xy,\text{{ what is the slope at }}({px},{py})?"
-            answer = str(px * py)
-        return prompt, "slope field interpret", answer if include_answer_key else None
+        item = sample_app_diff("slope_field", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": SLOPE_FIELD_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": SLOPE_FIELD_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _separable_diff_eq(topic: str, settings: dict) -> list[Question]:

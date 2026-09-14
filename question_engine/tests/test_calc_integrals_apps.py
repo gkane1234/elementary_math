@@ -930,6 +930,90 @@ def test_de_intro_d0_exp_high_d_euler_lockout():
     assert expert == {"verify_euler"}
 
 
+def test_slope_field_d0_x_high_d_xy_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        slope_field_forms_for_difficulty,
+    )
+
+    assert slope_field_forms_for_difficulty(0) == ("sf_x",)
+    med = slope_field_forms_for_difficulty(8)
+    assert "sf_x" in med and "sf_x_plus_y" in med
+    hard = slope_field_forms_for_difficulty(16)
+    assert "sf_x" not in hard
+    assert hard == ("sf_x_plus_y", "sf_xy")
+    assert slope_field_forms_for_difficulty(22) == ("sf_xy",)
+
+    q0 = _gen("calc_diff_eq_slope_fields", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "sf_x"
+    assert (q0.metadata or {}).get("generator") == "slope_field_interpret"
+    assert "y'=x," in (q0.prompt_latex or "")
+    assert "x+y" not in (q0.prompt_latex or "")
+    assert "xy" not in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "sf_x"
+    assert snap.get("generator") == "slope_field_interpret"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_diff_eq_slope_fields", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "slope_field_interpret"
+        assert "y'=xy" not in (q.prompt_latex or "")
+    assert "sf_x" in mid
+    assert "sf_x_plus_y" in mid
+    assert mid <= {"sf_x", "sf_x_plus_y"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_diff_eq_slope_fields", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "sf_x"
+        p = q.prompt_latex or ""
+        assert "y'=x," not in p
+        assert (q.metadata or {}).get("generator") == "slope_field_interpret"
+    assert high <= {"sf_x_plus_y", "sf_xy"}
+    assert "sf_xy" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_diff_eq_slope_fields", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "sf_xy"
+        assert "y'=xy" in (q.prompt_latex or "")
+        assert (q.metadata or {}).get("generator") == "slope_field_interpret"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "sf_xy"
+        assert snap.get("generator") == "slope_field_interpret"
+    assert expert == {"sf_xy"}
+
+
+def test_slope_field_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_slope_field,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_slope_field(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"sf_x": -2.5, "sf_x_plus_y": 2.5})
+    assert tilted["sf_x_plus_y"] > baseline["sf_x_plus_y"]
+
+
 def test_separable_d0_poly_high_d_homogeneous_lockout():
     from question_engine.frameworks.primitives.calc_app_diff import (
         separable_forms_for_difficulty,

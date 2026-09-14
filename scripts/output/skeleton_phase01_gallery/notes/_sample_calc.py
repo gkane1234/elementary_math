@@ -196,7 +196,7 @@ TYPE_CITES: dict[str, list[tuple[str, str, str, str | None, str]]] = {
         ("v1", "5.4 Integration Formulas and the Net Change Theorem", "5-4-integration-formulas-and-the-net-change-theorem", "5-4-integration-formulas-and-the-net-change-theorem.json", "net change / displacement from v(t)"),
     ],
     "calc_diff_eq_slope_fields": [
-        ("v2", "4.1 Basics of Differential Equations", "4-1-basics-of-differential-equations", None, "match/interpret slope field"),
+        ("v2", "4.2 Direction Fields and Numerical Methods", "4-2-direction-fields-and-numerical-methods", None, "evaluate F(x,y) at a lattice point (no sketch)"),
     ],
     "calc_diff_eq_introduction": [
         ("v2", "4.1 Basics of Differential Equations", "4-1-basics-of-differential-equations", None, "verify solution; classify order"),
@@ -274,6 +274,11 @@ META: dict[str, dict[str, Any]] = {
         "flag_why": "Shipped leftover lockout of exp verify; LIMITATIONS no classify-order / IVP find-C / trig verify.",
         "skill": "Verify a proposed family solves a first-order DE.",
         "engine": "calc_app_diff `de_introduction` (exp leftover / Euler power).",
+    },
+    "calc_diff_eq_slope_fields": {
+        "flag_why": "Shipped leftover lockout of y'=x; LIMITATIONS eval-at-a-point only (no direction-field figures).",
+        "skill": "Evaluate y'=F(x,y) at a lattice point (read a slope-field hash).",
+        "engine": "calc_app_diff `slope_field_interpret` (y'=x leftover / y'=x+y leftover / y'=xy).",
     },
     "calc_diff_eq_separable": {
         "flag_why": "Shipped leftover lockout of poly dy/dx=ax; LIMITATIONS frozen y/x IVP / no OpenStax mixes / logistic.",

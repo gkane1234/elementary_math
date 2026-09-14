@@ -23,6 +23,7 @@ Kind = Literal[
     "motion",
     "motion_integral",
     "de_intro",
+    "slope_field",
     "separable",
     "optimization",
     "increase_decrease",
@@ -1325,6 +1326,115 @@ def sample_de_intro(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem
     )
 
 
+SLOPE_FIELD_GENERATOR = "slope_field_interpret"
+
+_SLOPE_FIELD_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("sf_x",),
+    "medium": ("sf_x", "sf_x_plus_y"),
+    "hard": ("sf_x_plus_y", "sf_xy"),
+    "expert": ("sf_xy",),
+}
+
+
+def slope_field_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _SLOPE_FIELD_BANDS["easy"]
+    if d < 16.0:
+        return _SLOPE_FIELD_BANDS["medium"]
+    if d < 20.0:
+        return _SLOPE_FIELD_BANDS["hard"]
+    return _SLOPE_FIELD_BANDS["expert"]
+
+
+def _slope_field_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [SLOPE_FIELD_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_sf_x(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: evaluate y'=x at a lattice point (OpenStax Vol 2 §4.2)."""
+    px = rng.randint(-3, 3)
+    py = rng.randint(-3, 3)
+    prompt = rf"\text{{For }}y'=x,\text{{ what is the slope at }}({px},{py})?"
+    answer = str(px)
+    return AppDiffItem(
+        prompt, answer, "slope field interpret", "sf_x",
+        {"px": px, "py": py},
+    )
+
+
+def _sample_sf_x_plus_y(rng: random.Random) -> AppDiffItem:
+    """Old mid: evaluate y'=x+y at a lattice point."""
+    px = rng.randint(-3, 3)
+    py = rng.randint(-3, 3)
+    prompt = rf"\text{{For }}y'=x+y,\text{{ what is the slope at }}({px},{py})?"
+    answer = str(px + py)
+    return AppDiffItem(
+        prompt, answer, "slope field interpret", "sf_x_plus_y",
+        {"px": px, "py": py},
+    )
+
+
+def _sample_sf_xy(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D≥16: evaluate y'=xy at a lattice point."""
+    px = rng.randint(-3, 3)
+    py = rng.randint(-3, 3)
+    prompt = rf"\text{{For }}y'=xy,\text{{ what is the slope at }}({px},{py})?"
+    answer = str(px * py)
+    return AppDiffItem(
+        prompt, answer, "slope field interpret", "sf_xy",
+        {"px": px, "py": py},
+    )
+
+
+_SLOPE_FIELD_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "sf_x": _sample_sf_x,
+    "sf_x_plus_y": _sample_sf_x_plus_y,
+    "sf_xy": _sample_sf_xy,
+}
+
+
+def sample_slope_field(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Eval y' at a point. High D locks out y'=x leftover, then y'=x+y leftover."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = slope_field_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _slope_field_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _SLOPE_FIELD_BUILDERS:
+        fid = forms[0]
+    item = _SLOPE_FIELD_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": SLOPE_FIELD_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": SLOPE_FIELD_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 SEPARABLE_GENERATOR = "separable_diff_eq"
 
 _SEPARABLE_BANDS: dict[str, tuple[str, ...]] = {
@@ -1684,6 +1794,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "motion": sample_motion,
     "motion_integral": sample_motion_integral,
     "de_intro": sample_de_intro,
+    "slope_field": sample_slope_field,
     "separable": sample_separable_de,
     "optimization": sample_optimization,
     "increase_decrease": sample_intervals_increase,

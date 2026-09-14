@@ -15,9 +15,13 @@
     "ladder_seeds": [
       101,
       207,
-      313
+      313,
+      0,
+      2,
+      5,
+      7
     ],
-    "blurb": "Quadratic sign-chart style. OpenStax Vol 1 \u00a74.5."
+    "blurb": "D=0 parabola leftover (old easy); D\u22658 unlocks odd cubics; high D shifted cubics (OpenStax Ex. 4.17) and locks out the parabola. OpenStax Vol 1 \u00a74.5."
   },
   "rows": [
     {
@@ -28,10 +32,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} - 4x- 3 \\text{ is increasing.}",
-      "answer_latex": "(2, \\infty)",
+      "prompt_latex": "\\text{Find the intervals where }f(x)=x^{2} - 2x + 3\\text{ is increasing.}",
+      "answer_latex": "\\left(1,\\infty\\right)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "parabola_increasing",
       "diagram_svg": "",
       "debug": [
         [
@@ -43,11 +47,26 @@
           101
         ],
         [
+          "form_id",
+          "parabola_increasing"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "b": -2,
+        "c": 3,
+        "crit": "1",
+        "form_id": "parabola_increasing",
+        "family": "parabola_increasing",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "parabola_increasing",
+          "family": "parabola_increasing",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -55,7 +74,8 @@
           "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -68,10 +88,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} + 5x+ 2 \\text{ is increasing.}",
-      "answer_latex": "(-2.5, \\infty)",
+      "prompt_latex": "\\text{Find the intervals where }f(x)=x^{2} - x - 3\\text{ is increasing.}",
+      "answer_latex": "\\left(\\frac{1}{2},\\infty\\right)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "parabola_increasing",
       "diagram_svg": "",
       "debug": [
         [
@@ -83,11 +103,26 @@
           207
         ],
         [
+          "form_id",
+          "parabola_increasing"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "b": -1,
+        "c": -3,
+        "crit": "1/2",
+        "form_id": "parabola_increasing",
+        "family": "parabola_increasing",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "parabola_increasing",
+          "family": "parabola_increasing",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -95,7 +130,8 @@
           "seed": 207,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -108,10 +144,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} + 7x+ 3 \\text{ is increasing.}",
-      "answer_latex": "(-3.5, \\infty)",
+      "prompt_latex": "\\text{Find the intervals where }f(x)=x^{2} + 5x + 2\\text{ is increasing.}",
+      "answer_latex": "\\left(-\\frac{5}{2},\\infty\\right)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "parabola_increasing",
       "diagram_svg": "",
       "debug": [
         [
@@ -123,11 +159,26 @@
           313
         ],
         [
+          "form_id",
+          "parabola_increasing"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "b": 5,
+        "c": 2,
+        "crit": "-5/2",
+        "form_id": "parabola_increasing",
+        "family": "parabola_increasing",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "parabola_increasing",
+          "family": "parabola_increasing",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -135,7 +186,232 @@
           "seed": 313,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=0",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the intervals where }f(x)=x^{2} + 5x - 5\\text{ is increasing.}",
+      "answer_latex": "\\left(-\\frac{5}{2},\\infty\\right)",
+      "skeleton_pattern": "",
+      "form_id": "parabola_increasing",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "parabola_increasing"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "b": 5,
+        "c": -5,
+        "crit": "-5/2",
+        "form_id": "parabola_increasing",
+        "family": "parabola_increasing",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "parabola_increasing",
+          "family": "parabola_increasing",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=2",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the intervals where }f(x)=x^{2} - 7x - 4\\text{ is increasing.}",
+      "answer_latex": "\\left(\\frac{7}{2},\\infty\\right)",
+      "skeleton_pattern": "",
+      "form_id": "parabola_increasing",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "parabola_increasing"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "b": -7,
+        "c": -4,
+        "crit": "7/2",
+        "form_id": "parabola_increasing",
+        "family": "parabola_increasing",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "parabola_increasing",
+          "family": "parabola_increasing",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=5",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the intervals where }f(x)=x^{2} + 3x + 5\\text{ is increasing.}",
+      "answer_latex": "\\left(-\\frac{3}{2},\\infty\\right)",
+      "skeleton_pattern": "",
+      "form_id": "parabola_increasing",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "parabola_increasing"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "b": 3,
+        "c": 5,
+        "crit": "-3/2",
+        "form_id": "parabola_increasing",
+        "family": "parabola_increasing",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "parabola_increasing",
+          "family": "parabola_increasing",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=7",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the intervals where }f(x)=x^{2} - 4x + 1\\text{ is increasing.}",
+      "answer_latex": "\\left(2,\\infty\\right)",
+      "skeleton_pattern": "",
+      "form_id": "parabola_increasing",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "parabola_increasing"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "b": -4,
+        "c": 1,
+        "crit": "2",
+        "form_id": "parabola_increasing",
+        "family": "parabola_increasing",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "parabola_increasing",
+          "family": "parabola_increasing",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -148,10 +424,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} - 6x- 1 \\text{ is increasing.}",
-      "answer_latex": "(3, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3}-12x-2.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-2)\\cup(2,\\infty);\\text{ decreasing on }(-2,2)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_odd_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -163,11 +439,25 @@
           101
         ],
         [
+          "form_id",
+          "cubic_odd_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "a": 2,
+        "c": -2,
+        "form_id": "cubic_odd_sign_chart",
+        "family": "cubic_odd_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_odd_sign_chart",
+          "family": "cubic_odd_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -175,7 +465,8 @@
           "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -188,10 +479,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} - 8x- 5 \\text{ is increasing.}",
-      "answer_latex": "(4, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3}-12x+1.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-2)\\cup(2,\\infty);\\text{ decreasing on }(-2,2)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_odd_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -203,11 +494,25 @@
           207
         ],
         [
+          "form_id",
+          "cubic_odd_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "a": 2,
+        "c": 1,
+        "form_id": "cubic_odd_sign_chart",
+        "family": "cubic_odd_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_odd_sign_chart",
+          "family": "cubic_odd_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -215,7 +520,8 @@
           "seed": 207,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -228,10 +534,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} - 3x+ 1 \\text{ is increasing.}",
-      "answer_latex": "(1.5, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3}-48x+2.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-4)\\cup(4,\\infty);\\text{ decreasing on }(-4,4)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_odd_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -243,11 +549,25 @@
           313
         ],
         [
+          "form_id",
+          "cubic_odd_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "a": 4,
+        "c": 2,
+        "form_id": "cubic_odd_sign_chart",
+        "family": "cubic_odd_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_odd_sign_chart",
+          "family": "cubic_odd_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -255,7 +575,229 @@
           "seed": 313,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=0",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3}-48x.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-4)\\cup(4,\\infty);\\text{ decreasing on }(-4,4)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_odd_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "cubic_odd_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 4,
+        "c": 0,
+        "form_id": "cubic_odd_sign_chart",
+        "family": "cubic_odd_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_odd_sign_chart",
+          "family": "cubic_odd_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=2",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3}-3x.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-1)\\cup(1,\\infty);\\text{ decreasing on }(-1,1)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_odd_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "cubic_odd_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 1,
+        "c": 0,
+        "form_id": "cubic_odd_sign_chart",
+        "family": "cubic_odd_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_odd_sign_chart",
+          "family": "cubic_odd_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=5",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3}-27x-2.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-3)\\cup(3,\\infty);\\text{ decreasing on }(-3,3)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_odd_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "cubic_odd_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 3,
+        "c": -2,
+        "form_id": "cubic_odd_sign_chart",
+        "family": "cubic_odd_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_odd_sign_chart",
+          "family": "cubic_odd_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=7",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the intervals where }f(x)=x^{2} - 4x + 1\\text{ is increasing.}",
+      "answer_latex": "\\left(2,\\infty\\right)",
+      "skeleton_pattern": "",
+      "form_id": "parabola_increasing",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "parabola_increasing"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "b": -4,
+        "c": 1,
+        "crit": "2",
+        "form_id": "parabola_increasing",
+        "family": "parabola_increasing",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "parabola_increasing",
+          "family": "parabola_increasing",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -268,10 +810,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} - 7x- 3 \\text{ is increasing.}",
-      "answer_latex": "(3.5, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} - 3x^{2} - 24x - 1.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-2)\\cup(4,\\infty);\\text{ decreasing on }(-2,4)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_shifted_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -283,11 +825,26 @@
           101
         ],
         [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "p": -2,
+        "q": 4,
+        "c": -1,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -295,7 +852,8 @@
           "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -308,10 +866,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} - 6x+ 5 \\text{ is increasing.}",
-      "answer_latex": "(3, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} + 6x^{2} - 15x + 1.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-5)\\cup(1,\\infty);\\text{ decreasing on }(-5,1)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_shifted_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -323,11 +881,26 @@
           207
         ],
         [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "p": -5,
+        "q": 1,
+        "c": 1,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -335,7 +908,8 @@
           "seed": 207,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -348,10 +922,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} - 2x+ 1 \\text{ is increasing.}",
-      "answer_latex": "(1, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} + 6x^{2} - 15x - 2.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-5)\\cup(1,\\infty);\\text{ decreasing on }(-5,1)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_shifted_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -363,11 +937,26 @@
           313
         ],
         [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "p": -5,
+        "q": 1,
+        "c": -2,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -375,7 +964,231 @@
           "seed": 313,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=0",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} + 3x^{2} - 24x.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-4)\\cup(2,\\infty);\\text{ decreasing on }(-4,2)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -4,
+        "q": 2,
+        "c": 0,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=2",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} - 3x^{2} - 9x.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-1)\\cup(3,\\infty);\\text{ decreasing on }(-1,3)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -1,
+        "q": 3,
+        "c": 0,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=5",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} + 6x^{2} - 15x - 1.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-5)\\cup(1,\\infty);\\text{ decreasing on }(-5,1)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -5,
+        "q": 1,
+        "c": -1,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=7",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3}-12x+2.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-2)\\cup(2,\\infty);\\text{ decreasing on }(-2,2)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_odd_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "cubic_odd_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 2,
+        "c": 2,
+        "form_id": "cubic_odd_sign_chart",
+        "family": "cubic_odd_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_odd_sign_chart",
+          "family": "cubic_odd_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -388,10 +1201,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} + 6x- 2 \\text{ is increasing.}",
-      "answer_latex": "(-3, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} - 3x^{2} - 24x - 1.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-2)\\cup(4,\\infty);\\text{ decreasing on }(-2,4)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_shifted_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -403,11 +1216,26 @@
           101
         ],
         [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "p": -2,
+        "q": 4,
+        "c": -1,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -415,7 +1243,8 @@
           "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -428,10 +1257,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} - 5x+ 4 \\text{ is increasing.}",
-      "answer_latex": "(2.5, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} + 6x^{2} - 15x + 1.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-5)\\cup(1,\\infty);\\text{ decreasing on }(-5,1)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_shifted_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -443,11 +1272,26 @@
           207
         ],
         [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "p": -5,
+        "q": 1,
+        "c": 1,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -455,7 +1299,8 @@
           "seed": 207,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }
@@ -468,10 +1313,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Find the intervals where } f(x) = x^{2} + 8x- 1 \\text{ is increasing.}",
-      "answer_latex": "(-4, \\infty)",
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} + 6x^{2} - 15x - 2.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-5)\\cup(1,\\infty);\\text{ decreasing on }(-5,1)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "cubic_shifted_sign_chart",
       "diagram_svg": "",
       "debug": [
         [
@@ -483,11 +1328,26 @@
           313
         ],
         [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
+        "p": -5,
+        "q": 1,
+        "c": -2,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -495,7 +1355,232 @@
           "seed": 313,
           "include_answer_key": true,
           "integers_only": true,
-          "only_x": true
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=0",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} + 3x^{2} - 24x.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-4)\\cup(2,\\infty);\\text{ decreasing on }(-4,2)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -4,
+        "q": 2,
+        "c": 0,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=2",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} - 3x^{2} - 9x.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-1)\\cup(3,\\infty);\\text{ decreasing on }(-1,3)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -1,
+        "q": 3,
+        "c": 0,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=5",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} + 6x^{2} - 15x - 1.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-5)\\cup(1,\\infty);\\text{ decreasing on }(-5,1)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -5,
+        "q": 1,
+        "c": -1,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find intervals of increase and decrease.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=7",
+      "type_id": "calc_app_diff_intervals_of_increase_and_decrease",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the intervals of increase and decrease of }f(x)=x^{3} - 3x^{2} - 24x - 2.",
+      "answer_latex": "\\text{increasing on }(-\\infty,-2)\\cup(4,\\infty);\\text{ decreasing on }(-2,4)",
+      "skeleton_pattern": "",
+      "form_id": "cubic_shifted_sign_chart",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "cubic_shifted_sign_chart"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "p": -2,
+        "q": 4,
+        "c": -2,
+        "form_id": "cubic_shifted_sign_chart",
+        "family": "cubic_shifted_sign_chart",
+        "generator": "intervals_increase_decrease",
+        "spec_snapshot": {
+          "form_id": "cubic_shifted_sign_chart",
+          "family": "cubic_shifted_sign_chart",
+          "generator": "intervals_increase_decrease"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Find intervals of increase and decrease.}"
       }

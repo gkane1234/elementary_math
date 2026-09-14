@@ -674,11 +674,15 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
     # related_frames: OpenStax §4.1 rotation + easy leftover lockout
     # (see related_rates_frames.related_frames_for_difficulty).
     # related_shapes kept for volume/legacy callers (circle/sphere/cone).
+    from question_engine.frameworks.primitives.optimization_frames import (
+        optimization_frames_for_difficulty,
+    )
     from question_engine.frameworks.primitives.related_rates_frames import (
         related_frames_for_difficulty,
     )
 
     related_frames = related_frames_for_difficulty(d)
+    opt_frames = optimization_frames_for_difficulty(d)
     if d < 4.0:
         return {
             "difficulty": d,
@@ -692,6 +696,7 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
             "de_family": "poly",
             "opt_perimeter_max": 20,
             "opt_shapes": ("square",),
+            "opt_frames": opt_frames,
         }
     if d < 10.0:
         return {
@@ -706,6 +711,7 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
             "de_family": "exp",
             "opt_perimeter_max": 24 + int(d),
             "opt_shapes": ("square", "rectangle"),
+            "opt_frames": opt_frames,
         }
     if d < 16.0:
         return {
@@ -720,6 +726,7 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
             "de_family": "homogeneous",
             "opt_perimeter_max": 36 + int(d),
             "opt_shapes": ("square", "rectangle", "cylinder"),
+            "opt_frames": opt_frames,
         }
     return {
         "difficulty": d,
@@ -733,6 +740,7 @@ def calc_application_structure_from_continuous(settings: dict) -> dict | None:
         "de_family": "homogeneous",
         "opt_perimeter_max": min(80, 40 + int(d)),
         "opt_shapes": ("square", "rectangle", "cylinder"),
+        "opt_frames": opt_frames,
     }
 
 

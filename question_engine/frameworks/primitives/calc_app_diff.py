@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from typing import Any, Callable, Literal
 
-from question_engine.generators.utils import frac_latex
+from question_engine.generators.utils import format_polynomial_latex, frac_latex
 from question_engine.settings.params import calc_application_structure_from_continuous
 
 Kind = Literal[
@@ -24,6 +24,7 @@ Kind = Literal[
     "motion_integral",
     "de_intro",
     "optimization",
+    "increase_decrease",
     "curve_sketching",
     "graphical_f_fp",
     "related_rates",
@@ -120,6 +121,135 @@ def sample_absolute_extrema(rng: random.Random, settings: dict[str, Any]) -> App
     return AppDiffItem(
         prompt, answer, "absolute extrema", "closed_interval_cubic",
         {"a": a, "interval": (lo, hi)},
+    )
+
+
+INCREASE_DECREASE_GENERATOR = "intervals_increase_decrease"
+
+_INCDEC_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("parabola_increasing",),
+    "medium": ("parabola_increasing", "cubic_odd_sign_chart"),
+    "hard": ("cubic_odd_sign_chart", "cubic_shifted_sign_chart"),
+    "expert": ("cubic_shifted_sign_chart",),
+}
+
+
+def increase_decrease_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _INCDEC_BANDS["easy"]
+    if d < 16.0:
+        return _INCDEC_BANDS["medium"]
+    if d < 20.0:
+        return _INCDEC_BANDS["hard"]
+    return _INCDEC_BANDS["expert"]
+
+
+def _incdec_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [INCREASE_DECREASE_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _poly_body(coeffs: list[int]) -> str:
+    return format_polynomial_latex(coeffs, variable="x")
+
+
+def _sample_parabola_increasing(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: f=x^2+bx+c, increasing on (-b/2, ∞)."""
+    b = rng.randint(-8, 8)
+    while b == 0:
+        b = rng.randint(-8, 8)
+    c = rng.randint(-5, 5)
+    crit = frac_latex(Fraction(-b, 2))
+    body = _poly_body([1, b, c])
+    prompt = rf"\text{{Find the intervals where }}f(x)={body}\text{{ is increasing.}}"
+    answer = rf"\left({crit},\infty\right)"
+    return AppDiffItem(
+        prompt, answer, "intervals of increase", "parabola_increasing",
+        {"b": b, "c": c, "crit": str(Fraction(-b, 2))},
+    )
+
+
+def _sample_cubic_odd_sign_chart(rng: random.Random) -> AppDiffItem:
+    """Reuse ``_cubic_odd``: f'=3(x-a)(x+a). OpenStax §4.5 odd-cubic shape."""
+    a, c, body = _cubic_odd(rng)
+    prompt = (
+        rf"\text{{Find the intervals of increase and decrease of }}f(x)={body}."
+    )
+    answer = (
+        rf"\text{{increasing on }}(-\infty,{-a})\cup({a},\infty);"
+        rf"\text{{ decreasing on }}({-a},{a})"
+    )
+    return AppDiffItem(
+        prompt, answer, "intervals of increase", "cubic_odd_sign_chart",
+        {"a": a, "c": c},
+    )
+
+
+def _sample_cubic_shifted_sign_chart(rng: random.Random) -> AppDiffItem:
+    """Ex. 4.17 shape: integer crits p<q, f'=3(x-p)(x-q), p+q even."""
+    p, q = rng.choice(((-1, 3), (-2, 4), (-3, 1), (-4, 2), (-1, 5), (-5, 1)))
+    c = rng.choice([0, 1, -1, -2])
+    a_coef = (3 * (p + q)) // 2
+    b_coef = 3 * p * q
+    body = _poly_body([1, -a_coef, b_coef, c])
+    prompt = (
+        rf"\text{{Find the intervals of increase and decrease of }}f(x)={body}."
+    )
+    answer = (
+        rf"\text{{increasing on }}(-\infty,{p})\cup({q},\infty);"
+        rf"\text{{ decreasing on }}({p},{q})"
+    )
+    return AppDiffItem(
+        prompt, answer, "intervals of increase", "cubic_shifted_sign_chart",
+        {"p": p, "q": q, "c": c},
+    )
+
+
+_INCDEC_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "parabola_increasing": _sample_parabola_increasing,
+    "cubic_odd_sign_chart": _sample_cubic_odd_sign_chart,
+    "cubic_shifted_sign_chart": _sample_cubic_shifted_sign_chart,
+}
+
+
+def sample_intervals_increase(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """First-derivative sign chart. Reuses extrema cubics; D=0 stays the old parabola."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = increase_decrease_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _incdec_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _INCDEC_BUILDERS:
+        fid = forms[0]
+    item = _INCDEC_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": INCREASE_DECREASE_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": INCREASE_DECREASE_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 
@@ -277,52 +407,32 @@ def sample_de_intro(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem
 
 
 def sample_optimization(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    structure = calc_application_structure_from_continuous(settings)
-    frames = tuple(structure["opt_frames"]) if structure and structure.get("opt_frames") else ("rectangle_perimeter",)
-    d = _d(settings)
-    if d < 8.0:
-        frames = ("rectangle_perimeter",)
-    elif d < 16.0:
-        frames = ("rectangle_perimeter", "garden_three_sides")
-    else:
-        frames = ("garden_three_sides", "open_box")
-    fid = rng.choice(frames)
-    if fid == "rectangle_perimeter":
-        peri = 4 * rng.randint(3, 12)
-        side = peri // 4
-        prompt = (
-            rf"\text{{A rectangle has perimeter }}{peri}."
-            rf"\text{{ What dimensions maximize area?}}"
-        )
-        return AppDiffItem(
-            prompt, f"{side} by {side}", "optimization", "rectangle_perimeter",
-            {"frame_id": fid, "peri": peri},
-        )
-    if fid == "garden_three_sides":
-        # Fence L on three sides; max area at width L/4, length L/2.
-        L = 4 * rng.randint(4, 10)
-        w, ell = L // 4, L // 2
-        prompt = (
-            rf"\text{{A rectangular garden uses a wall as one side and }}"
-            rf"{L}\text{{ ft of fence for the other three. What dimensions maximize area?}}"
-        )
-        return AppDiffItem(
-            prompt, rf"{w}\text{{ (sides) by }}{ell}\text{{ (along wall)}}",
-            "optimization", "garden_three_sides",
-            {"frame_id": fid, "L": L},
-        )
-    # open box from square sheet, cut x, V=x(S-2x)^2, x=S/6
-    S = 6 * rng.randint(2, 5)
-    x = S // 6
-    vol = (2 * S**3) // 27
-    prompt = (
-        rf"\text{{An open box is made from a }}{S}\text{{ by }}{S}"
-        rf"\text{{ square sheet by cutting equal squares from each corner. "
-        rf"What cut size }}x\text{{ maximizes volume?}}"
+    """OpenStax §4.7 WP frames; ``form_id`` is the frame id for the live loop."""
+    from question_engine.frameworks.primitives.optimization_frames import (
+        optimization_frames_for_difficulty,
+        optimization_live_metadata,
+        sample_optimization_frame,
     )
+
+    d = _d(settings)
+    structure = calc_application_structure_from_continuous(settings)
+    if structure is None:
+        frames: tuple[str, ...] = ("rectangle_perimeter",)
+    else:
+        raw = structure.get("opt_frames")
+        frames = tuple(str(f) for f in raw) if raw else optimization_frames_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    item = sample_optimization_frame(
+        rng, frames=frames, d=d, quality_weights=quality_weights
+    )
+    meta = optimization_live_metadata(item)
     return AppDiffItem(
-        prompt, str(x), "optimization", "open_box",
-        {"frame_id": fid, "S": S, "V": vol},
+        item.prompt_latex,
+        item.answer_latex,
+        item.label,
+        item.frame_id,
+        meta,
     )
 
 
@@ -435,6 +545,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "motion_integral": sample_motion_integral,
     "de_intro": sample_de_intro,
     "optimization": sample_optimization,
+    "increase_decrease": sample_intervals_increase,
     "curve_sketching": sample_curve_sketching,
     "graphical_f_fp": sample_graphical_f_fp,
     "related_rates": sample_related_rates,

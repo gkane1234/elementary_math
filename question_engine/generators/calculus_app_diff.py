@@ -95,6 +95,91 @@ def _related_rates_simple(topic: str, settings: dict) -> list[Question]:
     )
 
 
+def _optimization_applied(topic: str, settings: dict) -> list[Question]:
+    """Optimization via OpenStax §4.7 frames; stamps live-loop form_id / generator."""
+    from question_engine.frameworks.primitives.calc_app_diff import sample_app_diff
+    from question_engine.frameworks.primitives.optimization_frames import (
+        OPTIMIZATION_GENERATOR,
+    )
+
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+
+    def build() -> tuple[str, str, str | None]:
+        item = sample_app_diff("optimization", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": OPTIMIZATION_GENERATOR,
+            "frame_id": fid,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": OPTIMIZATION_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
+
+
+def _intervals_increase_decrease(topic: str, settings: dict) -> list[Question]:
+    """First-derivative sign chart; stamps live-loop form_id / generator."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        INCREASE_DECREASE_GENERATOR,
+        sample_app_diff,
+    )
+
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+
+    def build() -> tuple[str, str, str | None]:
+        item = sample_app_diff("increase_decrease", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": INCREASE_DECREASE_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": INCREASE_DECREASE_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
+
+
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "relative_extrema": _framework("relative_extrema", "relative extrema"),
     "absolute_extrema": _framework("absolute_extrema", "absolute extrema"),
@@ -105,7 +190,8 @@ GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
         "motion_integral", "motion (integral)"
     ),
     "de_introduction": _framework("de_intro", "DE introduction"),
-    "optimization_applied": _framework("optimization", "optimization"),
+    "optimization_applied": _optimization_applied,
+    "intervals_increase_decrease": _intervals_increase_decrease,
     "curve_sketching": _framework("curve_sketching", "curve sketching"),
     "graphical_f_fp": _framework("graphical_f_fp", "graphs of f and f'"),
     "related_rates_simple": _related_rates_simple,

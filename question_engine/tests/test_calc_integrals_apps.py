@@ -194,14 +194,143 @@ def test_optimization_frames_unlock():
     for seed in range(20):
         q = _gen("calc_app_diff_optimization", 0, seed=seed)[0]
         frames.add((q.metadata or {}).get("form_id"))
-        assert "perimeter" in (q.prompt_latex or "")
+        text = (q.prompt_latex or "").lower()
+        assert "perimeter" in text or "fencing" in text
+        assert (q.metadata or {}).get("generator") == "optimization_applied"
     assert frames == {"rectangle_perimeter"}
     high = set()
     for seed in range(25):
         q = _gen("calc_app_diff_optimization", 18, seed=seed)[0]
         high.add((q.metadata or {}).get("form_id") or (q.metadata or {}).get("frame_id"))
         assert q.answer_latex
+    assert "rectangle_perimeter" not in high
+    assert high <= {"garden_three_sides", "open_box", "linear_revenue"}
     assert high & {"garden_three_sides", "open_box"}
+
+
+def test_optimization_easy_leftovers_lock_out():
+    from question_engine.frameworks.primitives.optimization_frames import (
+        optimization_frames_for_difficulty,
+    )
+
+    assert optimization_frames_for_difficulty(0) == ("rectangle_perimeter",)
+    med = optimization_frames_for_difficulty(8)
+    assert "rectangle_perimeter" in med and "garden_three_sides" in med
+    hard = optimization_frames_for_difficulty(16)
+    assert "rectangle_perimeter" not in hard
+    assert "linear_revenue" in hard and "open_box" in hard
+    expert = set(optimization_frames_for_difficulty(22))
+    assert "garden_three_sides" not in expert
+    assert "rectangle_perimeter" not in expert
+    assert expert >= {
+        "inscribed_ellipse",
+        "closed_cylinder",
+        "inscribed_triangle",
+        "open_box_rect",
+    }
+    seen = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_optimization", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        seen.add(fid)
+        assert fid not in {"rectangle_perimeter", "garden_three_sides", "linear_revenue"}
+        assert (q.metadata or {}).get("generator") == "optimization_applied"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "optimization_applied"
+    assert len(seen) >= 3, seen
+
+
+def test_optimization_quality_weights_tilt_frame_mix():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+    from question_engine.frameworks.primitives.optimization_frames import (
+        optimization_frames_for_difficulty,
+        sample_optimization_frame,
+    )
+
+    frames = optimization_frames_for_difficulty(8.0)
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_optimization_frame(
+                    _random.Random(i), frames=frames, d=8.0
+                )
+                c[item.frame_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"rectangle_perimeter": -2.5, "garden_three_sides": 2.5})
+    assert tilted["garden_three_sides"] > baseline["garden_three_sides"]
+
+
+def test_increase_decrease_d0_parabola_high_d_cubic_lockout():
+    q0 = _gen("calc_app_diff_intervals_of_increase_and_decrease", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "parabola_increasing"
+    assert (q0.metadata or {}).get("generator") == "intervals_increase_decrease"
+    assert "increasing" in (q0.prompt_latex or "").lower()
+    assert r"x^{2}" in (q0.prompt_latex or "") or r"x^2" in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "parabola_increasing"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_intervals_of_increase_and_decrease", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+    assert "parabola_increasing" in mid
+    assert "cubic_odd_sign_chart" in mid
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_intervals_of_increase_and_decrease", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "parabola_increasing"
+        assert "decreasing" in (q.answer_latex or "")
+        assert (q.metadata or {}).get("generator") == "intervals_increase_decrease"
+    assert high <= {"cubic_odd_sign_chart", "cubic_shifted_sign_chart"}
+    assert "cubic_shifted_sign_chart" in high
+
+    expert = set()
+    for seed in range(20):
+        q = _gen("calc_app_diff_intervals_of_increase_and_decrease", 22, seed=seed)[0]
+        expert.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("form_id") == "cubic_shifted_sign_chart"
+    assert expert == {"cubic_shifted_sign_chart"}
+
+
+def test_increase_decrease_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_intervals_increase,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_intervals_increase(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"parabola_increasing": -2.5, "cubic_odd_sign_chart": 2.5})
+    assert tilted["cubic_odd_sign_chart"] > baseline["cubic_odd_sign_chart"]
 
 
 def test_motion_and_integral_not_generic_ddx():

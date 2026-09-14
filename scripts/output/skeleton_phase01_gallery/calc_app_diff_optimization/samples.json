@@ -1,7 +1,7 @@
 {
   "section": {
     "slug": "calc_app_diff_optimization",
-    "title": "App \u2014 optimization",
+    "title": "App \u2014 optimization (OpenStax frames)",
     "pattern": "",
     "engine": "calc_apps",
     "type_id": "calc_app_diff_optimization",
@@ -15,9 +15,13 @@
     "ladder_seeds": [
       101,
       207,
-      313
+      313,
+      0,
+      2,
+      5,
+      7
     ],
-    "blurb": "Rectangle / three-sided garden / open box. OpenStax Vol 1 \u00a74.7."
+    "blurb": "Rotates OpenStax \u00a74.7 frames (pen / garden-or-river / box / revenue / inscribed rectangle / cylinder). D=0 rectangle-only; high D locks out easy leftovers."
   },
   "rows": [
     {
@@ -28,8 +32,8 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\text{A rectangle has perimeter }44.\\text{ What dimensions maximize area?}",
-      "answer_latex": "11 by 11",
+      "prompt_latex": "\\text{You have }24\\text{ ft of fencing to construct a rectangular pen. What dimensions maximize the area?}",
+      "answer_latex": "6 by 6",
       "skeleton_pattern": "",
       "form_id": "rectangle_perimeter",
       "diagram_svg": "",
@@ -56,10 +60,18 @@
         ]
       ],
       "metadata": {
+        "peri": 24,
+        "side": 6,
+        "story": "cattle_pen",
         "form_id": "rectangle_perimeter",
         "family": "rectangle_perimeter",
+        "generator": "optimization_applied",
         "frame_id": "rectangle_perimeter",
-        "peri": 44,
+        "spec_snapshot": {
+          "form_id": "rectangle_perimeter",
+          "family": "rectangle_perimeter",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -81,8 +93,8 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "\\text{A rectangle has perimeter }20.\\text{ What dimensions maximize area?}",
-      "answer_latex": "5 by 5",
+      "prompt_latex": "\\text{A rectangle has perimeter }48.\\text{ What dimensions maximize area?}",
+      "answer_latex": "12 by 12",
       "skeleton_pattern": "",
       "form_id": "rectangle_perimeter",
       "diagram_svg": "",
@@ -109,10 +121,18 @@
         ]
       ],
       "metadata": {
+        "peri": 48,
+        "side": 12,
+        "story": "generic_rectangle",
         "form_id": "rectangle_perimeter",
         "family": "rectangle_perimeter",
+        "generator": "optimization_applied",
         "frame_id": "rectangle_perimeter",
-        "peri": 20,
+        "spec_snapshot": {
+          "form_id": "rectangle_perimeter",
+          "family": "rectangle_perimeter",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -134,7 +154,7 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "\\text{A rectangle has perimeter }36.\\text{ What dimensions maximize area?}",
+      "prompt_latex": "\\text{You have }36\\text{ ft of fencing to construct a rectangular pen. What dimensions maximize the area?}",
       "answer_latex": "9 by 9",
       "skeleton_pattern": "",
       "form_id": "rectangle_perimeter",
@@ -162,10 +182,18 @@
         ]
       ],
       "metadata": {
+        "peri": 36,
+        "side": 9,
+        "story": "cattle_pen",
         "form_id": "rectangle_perimeter",
         "family": "rectangle_perimeter",
+        "generator": "optimization_applied",
         "frame_id": "rectangle_perimeter",
-        "peri": 36,
+        "spec_snapshot": {
+          "form_id": "rectangle_perimeter",
+          "family": "rectangle_perimeter",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -182,24 +210,24 @@
     {
       "ok": true,
       "warn": false,
-      "label": "D\u22488 \u00b7 seed=101",
+      "label": "D\u22480 \u00b7 seed=0",
       "type_id": "calc_app_diff_optimization",
-      "difficulty": 8.0,
-      "band": "mid",
-      "seed": 101,
-      "prompt_latex": "\\text{A rectangle has perimeter }44.\\text{ What dimensions maximize area?}",
-      "answer_latex": "11 by 11",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 0,
+      "prompt_latex": "\\text{A rectangle has perimeter }36.\\text{ What dimensions maximize area?}",
+      "answer_latex": "9 by 9",
       "skeleton_pattern": "",
       "form_id": "rectangle_perimeter",
       "diagram_svg": "",
       "debug": [
         [
           "D / effective_d",
-          8.0
+          0.0
         ],
         [
           "seed",
-          101
+          0
         ],
         [
           "form_id",
@@ -215,10 +243,263 @@
         ]
       ],
       "metadata": {
+        "peri": 36,
+        "side": 9,
+        "story": "generic_rectangle",
         "form_id": "rectangle_perimeter",
         "family": "rectangle_perimeter",
+        "generator": "optimization_applied",
         "frame_id": "rectangle_perimeter",
-        "peri": 44,
+        "spec_snapshot": {
+          "form_id": "rectangle_perimeter",
+          "family": "rectangle_perimeter",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=2",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 2,
+      "prompt_latex": "\\text{A rectangle has perimeter }12.\\text{ What dimensions maximize area?}",
+      "answer_latex": "3 by 3",
+      "skeleton_pattern": "",
+      "form_id": "rectangle_perimeter",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "rectangle_perimeter"
+        ],
+        [
+          "frame_id",
+          "rectangle_perimeter"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "peri": 12,
+        "side": 3,
+        "story": "generic_rectangle",
+        "form_id": "rectangle_perimeter",
+        "family": "rectangle_perimeter",
+        "generator": "optimization_applied",
+        "frame_id": "rectangle_perimeter",
+        "spec_snapshot": {
+          "form_id": "rectangle_perimeter",
+          "family": "rectangle_perimeter",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=5",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 5,
+      "prompt_latex": "\\text{A rectangle has perimeter }32.\\text{ What dimensions maximize area?}",
+      "answer_latex": "8 by 8",
+      "skeleton_pattern": "",
+      "form_id": "rectangle_perimeter",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "rectangle_perimeter"
+        ],
+        [
+          "frame_id",
+          "rectangle_perimeter"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "peri": 32,
+        "side": 8,
+        "story": "generic_rectangle",
+        "form_id": "rectangle_perimeter",
+        "family": "rectangle_perimeter",
+        "generator": "optimization_applied",
+        "frame_id": "rectangle_perimeter",
+        "spec_snapshot": {
+          "form_id": "rectangle_perimeter",
+          "family": "rectangle_perimeter",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=7",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 7,
+      "prompt_latex": "\\text{You have }20\\text{ ft of fencing to construct a rectangular pen. What dimensions maximize the area?}",
+      "answer_latex": "5 by 5",
+      "skeleton_pattern": "",
+      "form_id": "rectangle_perimeter",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "rectangle_perimeter"
+        ],
+        [
+          "frame_id",
+          "rectangle_perimeter"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "peri": 20,
+        "side": 5,
+        "story": "cattle_pen",
+        "form_id": "rectangle_perimeter",
+        "family": "rectangle_perimeter",
+        "generator": "optimization_applied",
+        "frame_id": "rectangle_perimeter",
+        "spec_snapshot": {
+          "form_id": "rectangle_perimeter",
+          "family": "rectangle_perimeter",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=101",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 101,
+      "prompt_latex": "\\text{You have }20\\text{ ft of fencing to make a rectangular pen along a river (no fence on the river side). What dimensions maximize area?}",
+      "answer_latex": "5\\text{ (sides) by }10\\text{ (along river)}",
+      "skeleton_pattern": "",
+      "form_id": "garden_three_sides",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "garden_three_sides"
+        ],
+        [
+          "frame_id",
+          "garden_three_sides"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "L": 20,
+        "w": 5,
+        "ell": 10,
+        "story": "river_pen",
+        "form_id": "garden_three_sides",
+        "family": "garden_three_sides",
+        "generator": "optimization_applied",
+        "frame_id": "garden_three_sides",
+        "spec_snapshot": {
+          "form_id": "garden_three_sides",
+          "family": "garden_three_sides",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -240,10 +521,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\text{A rectangle has perimeter }20.\\text{ What dimensions maximize area?}",
-      "answer_latex": "5 by 5",
+      "prompt_latex": "\\text{A rectangular garden uses a wall as one side and }36\\text{ ft of fence for the other three. What dimensions maximize area?}",
+      "answer_latex": "9\\text{ (sides) by }18\\text{ (along wall)}",
       "skeleton_pattern": "",
-      "form_id": "rectangle_perimeter",
+      "form_id": "garden_three_sides",
       "diagram_svg": "",
       "debug": [
         [
@@ -256,11 +537,11 @@
         ],
         [
           "form_id",
-          "rectangle_perimeter"
+          "garden_three_sides"
         ],
         [
           "frame_id",
-          "rectangle_perimeter"
+          "garden_three_sides"
         ],
         [
           "has_diagram_svg",
@@ -268,10 +549,19 @@
         ]
       ],
       "metadata": {
-        "form_id": "rectangle_perimeter",
-        "family": "rectangle_perimeter",
-        "frame_id": "rectangle_perimeter",
-        "peri": 20,
+        "L": 36,
+        "w": 9,
+        "ell": 18,
+        "story": "garden_wall",
+        "form_id": "garden_three_sides",
+        "family": "garden_three_sides",
+        "generator": "optimization_applied",
+        "frame_id": "garden_three_sides",
+        "spec_snapshot": {
+          "form_id": "garden_three_sides",
+          "family": "garden_three_sides",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -293,10 +583,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\text{A rectangle has perimeter }36.\\text{ What dimensions maximize area?}",
-      "answer_latex": "9 by 9",
+      "prompt_latex": "\\text{You have }36\\text{ ft of fencing to make a rectangular pen along a river (no fence on the river side). What dimensions maximize area?}",
+      "answer_latex": "9\\text{ (sides) by }18\\text{ (along river)}",
       "skeleton_pattern": "",
-      "form_id": "rectangle_perimeter",
+      "form_id": "garden_three_sides",
       "diagram_svg": "",
       "debug": [
         [
@@ -309,11 +599,11 @@
         ],
         [
           "form_id",
-          "rectangle_perimeter"
+          "garden_three_sides"
         ],
         [
           "frame_id",
-          "rectangle_perimeter"
+          "garden_three_sides"
         ],
         [
           "has_diagram_svg",
@@ -321,10 +611,19 @@
         ]
       ],
       "metadata": {
-        "form_id": "rectangle_perimeter",
-        "family": "rectangle_perimeter",
-        "frame_id": "rectangle_perimeter",
-        "peri": 36,
+        "L": 36,
+        "w": 9,
+        "ell": 18,
+        "story": "river_pen",
+        "form_id": "garden_three_sides",
+        "family": "garden_three_sides",
+        "generator": "optimization_applied",
+        "frame_id": "garden_three_sides",
+        "spec_snapshot": {
+          "form_id": "garden_three_sides",
+          "family": "garden_three_sides",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -341,24 +640,24 @@
     {
       "ok": true,
       "warn": false,
-      "label": "D\u224816 \u00b7 seed=101",
+      "label": "D\u22488 \u00b7 seed=0",
       "type_id": "calc_app_diff_optimization",
-      "difficulty": 16.0,
-      "band": "high",
-      "seed": 101,
-      "prompt_latex": "\\text{A rectangular garden uses a wall as one side and }32\\text{ ft of fence for the other three. What dimensions maximize area?}",
-      "answer_latex": "8\\text{ (sides) by }16\\text{ (along wall)}",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 0,
+      "prompt_latex": "\\text{You have }40\\text{ ft of fencing to make a rectangular pen along a river (no fence on the river side). What dimensions maximize area?}",
+      "answer_latex": "10\\text{ (sides) by }20\\text{ (along river)}",
       "skeleton_pattern": "",
       "form_id": "garden_three_sides",
       "diagram_svg": "",
       "debug": [
         [
           "D / effective_d",
-          16.0
+          8.0
         ],
         [
           "seed",
-          101
+          0
         ],
         [
           "form_id",
@@ -374,10 +673,264 @@
         ]
       ],
       "metadata": {
+        "L": 40,
+        "w": 10,
+        "ell": 20,
+        "story": "river_pen",
         "form_id": "garden_three_sides",
         "family": "garden_three_sides",
+        "generator": "optimization_applied",
         "frame_id": "garden_three_sides",
-        "L": 32,
+        "spec_snapshot": {
+          "form_id": "garden_three_sides",
+          "family": "garden_three_sides",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=2",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 2,
+      "prompt_latex": "\\text{A rectangular garden uses a wall as one side and }40\\text{ ft of fence for the other three. What dimensions maximize area?}",
+      "answer_latex": "10\\text{ (sides) by }20\\text{ (along wall)}",
+      "skeleton_pattern": "",
+      "form_id": "garden_three_sides",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "garden_three_sides"
+        ],
+        [
+          "frame_id",
+          "garden_three_sides"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "L": 40,
+        "w": 10,
+        "ell": 20,
+        "story": "garden_wall",
+        "form_id": "garden_three_sides",
+        "family": "garden_three_sides",
+        "generator": "optimization_applied",
+        "frame_id": "garden_three_sides",
+        "spec_snapshot": {
+          "form_id": "garden_three_sides",
+          "family": "garden_three_sides",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=5",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 5,
+      "prompt_latex": "\\text{You have }36\\text{ ft of fencing to make a rectangular pen along a river (no fence on the river side). What dimensions maximize area?}",
+      "answer_latex": "9\\text{ (sides) by }18\\text{ (along river)}",
+      "skeleton_pattern": "",
+      "form_id": "garden_three_sides",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "garden_three_sides"
+        ],
+        [
+          "frame_id",
+          "garden_three_sides"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "L": 36,
+        "w": 9,
+        "ell": 18,
+        "story": "river_pen",
+        "form_id": "garden_three_sides",
+        "family": "garden_three_sides",
+        "generator": "optimization_applied",
+        "frame_id": "garden_three_sides",
+        "spec_snapshot": {
+          "form_id": "garden_three_sides",
+          "family": "garden_three_sides",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=7",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 7,
+      "prompt_latex": "\\text{You have }20\\text{ ft of fencing to construct a rectangular pen. What dimensions maximize the area?}",
+      "answer_latex": "5 by 5",
+      "skeleton_pattern": "",
+      "form_id": "rectangle_perimeter",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "rectangle_perimeter"
+        ],
+        [
+          "frame_id",
+          "rectangle_perimeter"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "peri": 20,
+        "side": 5,
+        "story": "cattle_pen",
+        "form_id": "rectangle_perimeter",
+        "family": "rectangle_perimeter",
+        "generator": "optimization_applied",
+        "frame_id": "rectangle_perimeter",
+        "spec_snapshot": {
+          "form_id": "rectangle_perimeter",
+          "family": "rectangle_perimeter",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=101",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{An open box is made from a }18\\text{ by }18\\text{ square sheet by cutting equal squares from each corner. What cut size }x\\text{ maximizes volume?}",
+      "answer_latex": "3",
+      "skeleton_pattern": "",
+      "form_id": "open_box",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "open_box"
+        ],
+        [
+          "frame_id",
+          "open_box"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "S": 18,
+        "x": 3,
+        "form_id": "open_box",
+        "family": "open_box",
+        "generator": "optimization_applied",
+        "frame_id": "open_box",
+        "spec_snapshot": {
+          "form_id": "open_box",
+          "family": "open_box",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -399,10 +952,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{A rectangular garden uses a wall as one side and }36\\text{ ft of fence for the other three. What dimensions maximize area?}",
-      "answer_latex": "9\\text{ (sides) by }18\\text{ (along wall)}",
+      "prompt_latex": "\\text{An open box is made from a }18\\text{ by }18\\text{ square sheet by cutting equal squares from each corner. What cut size }x\\text{ maximizes volume?}",
+      "answer_latex": "3",
       "skeleton_pattern": "",
-      "form_id": "garden_three_sides",
+      "form_id": "open_box",
       "diagram_svg": "",
       "debug": [
         [
@@ -415,11 +968,11 @@
         ],
         [
           "form_id",
-          "garden_three_sides"
+          "open_box"
         ],
         [
           "frame_id",
-          "garden_three_sides"
+          "open_box"
         ],
         [
           "has_diagram_svg",
@@ -427,10 +980,17 @@
         ]
       ],
       "metadata": {
-        "form_id": "garden_three_sides",
-        "family": "garden_three_sides",
-        "frame_id": "garden_three_sides",
-        "L": 36,
+        "S": 18,
+        "x": 3,
+        "form_id": "open_box",
+        "family": "open_box",
+        "generator": "optimization_applied",
+        "frame_id": "open_box",
+        "spec_snapshot": {
+          "form_id": "open_box",
+          "family": "open_box",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -452,10 +1012,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{A rectangular garden uses a wall as one side and }36\\text{ ft of fence for the other three. What dimensions maximize area?}",
-      "answer_latex": "9\\text{ (sides) by }18\\text{ (along wall)}",
+      "prompt_latex": "\\text{An open box is made from a }30\\text{ by }30\\text{ square sheet by cutting equal squares from each corner. What cut size }x\\text{ maximizes volume?}",
+      "answer_latex": "5",
       "skeleton_pattern": "",
-      "form_id": "garden_three_sides",
+      "form_id": "open_box",
       "diagram_svg": "",
       "debug": [
         [
@@ -468,11 +1028,11 @@
         ],
         [
           "form_id",
-          "garden_three_sides"
+          "open_box"
         ],
         [
           "frame_id",
-          "garden_three_sides"
+          "open_box"
         ],
         [
           "has_diagram_svg",
@@ -480,10 +1040,17 @@
         ]
       ],
       "metadata": {
-        "form_id": "garden_three_sides",
-        "family": "garden_three_sides",
-        "frame_id": "garden_three_sides",
-        "L": 36,
+        "S": 30,
+        "x": 5,
+        "form_id": "open_box",
+        "family": "open_box",
+        "generator": "optimization_applied",
+        "frame_id": "open_box",
+        "spec_snapshot": {
+          "form_id": "open_box",
+          "family": "open_box",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -500,24 +1067,206 @@
     {
       "ok": true,
       "warn": false,
-      "label": "D\u224822 \u00b7 seed=101",
+      "label": "D\u224816 \u00b7 seed=0",
       "type_id": "calc_app_diff_optimization",
-      "difficulty": 22.0,
+      "difficulty": 16.0,
       "band": "high",
-      "seed": 101,
-      "prompt_latex": "\\text{A rectangular garden uses a wall as one side and }32\\text{ ft of fence for the other three. What dimensions maximize area?}",
-      "answer_latex": "8\\text{ (sides) by }16\\text{ (along wall)}",
+      "seed": 0,
+      "prompt_latex": "\\text{A rental company rents }n(p)=320-2p\\text{ cars per day at price }p\\text{ dollars. What price maximizes revenue }R=p\\,n(p)?",
+      "answer_latex": "80",
+      "skeleton_pattern": "",
+      "form_id": "linear_revenue",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "linear_revenue"
+        ],
+        [
+          "frame_id",
+          "linear_revenue"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "N": 320,
+        "k": 2,
+        "p_star": 80,
+        "form_id": "linear_revenue",
+        "family": "linear_revenue",
+        "generator": "optimization_applied",
+        "frame_id": "linear_revenue",
+        "spec_snapshot": {
+          "form_id": "linear_revenue",
+          "family": "linear_revenue",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=2",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{A rental company rents }n(p)=1000-5p\\text{ cars per day at price }p\\text{ dollars. What price maximizes revenue }R=p\\,n(p)?",
+      "answer_latex": "100",
+      "skeleton_pattern": "",
+      "form_id": "linear_revenue",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "linear_revenue"
+        ],
+        [
+          "frame_id",
+          "linear_revenue"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "N": 1000,
+        "k": 5,
+        "p_star": 100,
+        "form_id": "linear_revenue",
+        "family": "linear_revenue",
+        "generator": "optimization_applied",
+        "frame_id": "linear_revenue",
+        "spec_snapshot": {
+          "form_id": "linear_revenue",
+          "family": "linear_revenue",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=5",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{An open box is made from a }24\\text{ by }24\\text{ square sheet by cutting equal squares from each corner. What cut size }x\\text{ maximizes volume?}",
+      "answer_latex": "4",
+      "skeleton_pattern": "",
+      "form_id": "open_box",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "open_box"
+        ],
+        [
+          "frame_id",
+          "open_box"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "S": 24,
+        "x": 4,
+        "form_id": "open_box",
+        "family": "open_box",
+        "generator": "optimization_applied",
+        "frame_id": "open_box",
+        "spec_snapshot": {
+          "form_id": "open_box",
+          "family": "open_box",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=7",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{You have }20\\text{ ft of fencing to make a rectangular pen along a river (no fence on the river side). What dimensions maximize area?}",
+      "answer_latex": "5\\text{ (sides) by }10\\text{ (along river)}",
       "skeleton_pattern": "",
       "form_id": "garden_three_sides",
       "diagram_svg": "",
       "debug": [
         [
           "D / effective_d",
-          22.0
+          16.0
         ],
         [
           "seed",
-          101
+          7
         ],
         [
           "form_id",
@@ -533,10 +1282,80 @@
         ]
       ],
       "metadata": {
+        "L": 20,
+        "w": 5,
+        "ell": 10,
+        "story": "river_pen",
         "form_id": "garden_three_sides",
         "family": "garden_three_sides",
+        "generator": "optimization_applied",
         "frame_id": "garden_three_sides",
-        "L": 32,
+        "spec_snapshot": {
+          "form_id": "garden_three_sides",
+          "family": "garden_three_sides",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=101",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 101,
+      "prompt_latex": "\\text{A rectangle is inscribed in the circle }x^{2}+y^{2}=9.\\text{ What dimensions maximize its area?}",
+      "answer_latex": "3\\sqrt{2}\\text{ by }3\\sqrt{2}",
+      "skeleton_pattern": "",
+      "form_id": "inscribed_ellipse",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "inscribed_ellipse"
+        ],
+        [
+          "frame_id",
+          "inscribed_ellipse"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 3,
+        "b": 3,
+        "shape": "circle",
+        "form_id": "inscribed_ellipse",
+        "family": "inscribed_ellipse",
+        "generator": "optimization_applied",
+        "frame_id": "inscribed_ellipse",
+        "spec_snapshot": {
+          "form_id": "inscribed_ellipse",
+          "family": "inscribed_ellipse",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -558,10 +1377,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{A rectangular garden uses a wall as one side and }36\\text{ ft of fence for the other three. What dimensions maximize area?}",
-      "answer_latex": "9\\text{ (sides) by }18\\text{ (along wall)}",
+      "prompt_latex": "\\text{A rectangle is inscribed in the circle }x^{2}+y^{2}=4.\\text{ What dimensions maximize its area?}",
+      "answer_latex": "2\\sqrt{2}\\text{ by }2\\sqrt{2}",
       "skeleton_pattern": "",
-      "form_id": "garden_three_sides",
+      "form_id": "inscribed_ellipse",
       "diagram_svg": "",
       "debug": [
         [
@@ -574,11 +1393,11 @@
         ],
         [
           "form_id",
-          "garden_three_sides"
+          "inscribed_ellipse"
         ],
         [
           "frame_id",
-          "garden_three_sides"
+          "inscribed_ellipse"
         ],
         [
           "has_diagram_svg",
@@ -586,10 +1405,18 @@
         ]
       ],
       "metadata": {
-        "form_id": "garden_three_sides",
-        "family": "garden_three_sides",
-        "frame_id": "garden_three_sides",
-        "L": 36,
+        "a": 2,
+        "b": 2,
+        "shape": "circle",
+        "form_id": "inscribed_ellipse",
+        "family": "inscribed_ellipse",
+        "generator": "optimization_applied",
+        "frame_id": "inscribed_ellipse",
+        "spec_snapshot": {
+          "form_id": "inscribed_ellipse",
+          "family": "inscribed_ellipse",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -611,10 +1438,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{A rectangular garden uses a wall as one side and }36\\text{ ft of fence for the other three. What dimensions maximize area?}",
-      "answer_latex": "9\\text{ (sides) by }18\\text{ (along wall)}",
+      "prompt_latex": "\\text{A rectangle is inscribed in the ellipse }\\frac{x^{2}}{16}+\\frac{y^{2}}{1}=1.\\text{ What dimensions maximize its area?}",
+      "answer_latex": "4\\sqrt{2}\\text{ by }\\sqrt{2}",
       "skeleton_pattern": "",
-      "form_id": "garden_three_sides",
+      "form_id": "inscribed_ellipse",
       "diagram_svg": "",
       "debug": [
         [
@@ -627,11 +1454,11 @@
         ],
         [
           "form_id",
-          "garden_three_sides"
+          "inscribed_ellipse"
         ],
         [
           "frame_id",
-          "garden_three_sides"
+          "inscribed_ellipse"
         ],
         [
           "has_diagram_svg",
@@ -639,15 +1466,265 @@
         ]
       ],
       "metadata": {
-        "form_id": "garden_three_sides",
-        "family": "garden_three_sides",
-        "frame_id": "garden_three_sides",
-        "L": 36,
+        "a": 4,
+        "b": 1,
+        "shape": "ellipse",
+        "form_id": "inscribed_ellipse",
+        "family": "inscribed_ellipse",
+        "generator": "optimization_applied",
+        "frame_id": "inscribed_ellipse",
+        "spec_snapshot": {
+          "form_id": "inscribed_ellipse",
+          "family": "inscribed_ellipse",
+          "generator": "optimization_applied"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
           "difficulty": 22.0,
           "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=0",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the dimensions of the largest rectangle in the first quadrant that fits in the triangle bounded by }x=0,\\ y=0,\\text{ and }\\frac{x}{10}+\\frac{y}{6}=1.",
+      "answer_latex": "5 by 3",
+      "skeleton_pattern": "",
+      "form_id": "inscribed_triangle",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "inscribed_triangle"
+        ],
+        [
+          "frame_id",
+          "inscribed_triangle"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 10,
+        "b": 6,
+        "form_id": "inscribed_triangle",
+        "family": "inscribed_triangle",
+        "generator": "optimization_applied",
+        "frame_id": "inscribed_triangle",
+        "spec_snapshot": {
+          "form_id": "inscribed_triangle",
+          "family": "inscribed_triangle",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=2",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the dimensions of the largest rectangle in the first quadrant that fits in the triangle bounded by }x=0,\\ y=0,\\text{ and }\\frac{x}{4}+\\frac{y}{6}=1.",
+      "answer_latex": "2 by 3",
+      "skeleton_pattern": "",
+      "form_id": "inscribed_triangle",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "inscribed_triangle"
+        ],
+        [
+          "frame_id",
+          "inscribed_triangle"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 4,
+        "b": 6,
+        "form_id": "inscribed_triangle",
+        "family": "inscribed_triangle",
+        "generator": "optimization_applied",
+        "frame_id": "inscribed_triangle",
+        "spec_snapshot": {
+          "form_id": "inscribed_triangle",
+          "family": "inscribed_triangle",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=5",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the dimensions of the closed cylinder of volume }54\\pi\\text{ that has the least surface area.}",
+      "answer_latex": "r=3,\\ h=6",
+      "skeleton_pattern": "",
+      "form_id": "closed_cylinder",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "closed_cylinder"
+        ],
+        [
+          "frame_id",
+          "closed_cylinder"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "r": 3,
+        "h": 6,
+        "V_over_pi": 54,
+        "form_id": "closed_cylinder",
+        "family": "closed_cylinder",
+        "generator": "optimization_applied",
+        "frame_id": "closed_cylinder",
+        "spec_snapshot": {
+          "form_id": "closed_cylinder",
+          "family": "closed_cylinder",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the optimization problem.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=7",
+      "type_id": "calc_app_diff_optimization",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{An open-top box is made from a }24\\text{ in. by }36\\text{ in. sheet by cutting equal squares from each corner. What cut size }x\\text{ maximizes volume?}",
+      "answer_latex": "6",
+      "skeleton_pattern": "",
+      "form_id": "open_box_rect",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "open_box_rect"
+        ],
+        [
+          "frame_id",
+          "open_box_rect"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "L": 24,
+        "W": 36,
+        "x": 6,
+        "form_id": "open_box_rect",
+        "family": "open_box_rect",
+        "generator": "optimization_applied",
+        "frame_id": "open_box_rect",
+        "spec_snapshot": {
+          "form_id": "open_box_rect",
+          "family": "open_box_rect",
+          "generator": "optimization_applied"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 7,
           "include_answer_key": true,
           "integers_only": true,
           "only_x": true,

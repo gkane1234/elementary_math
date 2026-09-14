@@ -570,24 +570,10 @@ def _derivative_ln_exp(topic: str, settings: dict) -> list[Question]:
 
 
 def _intervals_increase_decrease(topic: str, settings: dict) -> list[Question]:
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
+    """Delegate to calculus_app_diff (live form_id / generator stamps)."""
+    from question_engine.generators.calculus_app_diff import GENERATORS as APP
 
-    def build() -> tuple[str, str, str | None]:
-        # f(x) = x^2 + bx + c → critical point at x = -b/2
-        b = random_int_range(-8, 8, exclude={0})
-        c = random.randint(-5, 5)
-        crit = -b / 2
-        sign_b = f"+ {b}x" if b > 0 else f"- {-b}x"
-        sign_c = f"+ {c}" if c > 0 else (f"- {-c}" if c < 0 else "")
-        prompt = (
-            f"\\text{{Find the intervals where }} f(x) = x^{{2}} {sign_b}{sign_c} "
-            f"\\text{{ is increasing.}}"
-        )
-        answer = f"({crit:g}, \\infty)" if include_answer_key else None
-        return prompt, "intervals of increase", answer
-
-    return _make_questions(topic, count, include_answer_key, build)
+    return APP["intervals_increase_decrease"](topic, settings)
 
 
 def _lhopitals_rule(topic: str, settings: dict) -> list[Question]:

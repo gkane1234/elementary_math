@@ -2758,7 +2758,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_intervals_of_increase_and_decrease",
         "App — intervals of increase/decrease",
-        "Quadratic sign-chart style. OpenStax Vol 1 §4.5.",
+        "D=0 parabola leftover (old easy); D≥8 unlocks odd cubics; high D "
+        "shifted cubics (OpenStax Ex. 4.17) and locks out the parabola. "
+        "OpenStax Vol 1 §4.5.",
     ),
 
     (
@@ -2885,8 +2887,10 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     ),
     (
         "calc_app_diff_optimization",
-        "App — optimization",
-        "Rectangle / three-sided garden / open box. OpenStax Vol 1 §4.7.",
+        "App — optimization (OpenStax frames)",
+        "Rotates OpenStax §4.7 frames (pen / garden-or-river / box / revenue / "
+        "inscribed rectangle / cylinder). D=0 rectangle-only; high D locks out "
+        "easy leftovers.",
     ),
     (
         "calc_app_diff_curve_sketching",
@@ -3133,6 +3137,12 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
         if "related_rates" in tid:
             eng = "related_rates_frames"
             # Extra seeds so same-D rotation is visible (101/207/313 can collide).
+            extra_seeds = (101, 207, 313, 0, 2, 5, 7)
+        elif tid in (
+            "calc_app_diff_optimization",
+            "calc_app_diff_intervals_of_increase_and_decrease",
+        ):
+            eng = "calc_apps"
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)
         elif tid == "calc_app_int_area_under_a_curve":
             eng = "area_under_curve"

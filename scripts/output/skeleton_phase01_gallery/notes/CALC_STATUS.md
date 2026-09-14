@@ -30,6 +30,7 @@
 | `u_sub_preset_bc_bank_ln_exp` | ln/exp u-sub leaf | `bc_bank` / catalog |
 | `parts_preset_bc_bank` | parts leaf | `parts_form_preset=bc_bank` (Calc BC §2) |
 | `pfd_preset_bc_bank` | PFD leaf | `pfd_form_preset=bc_bank` (Calc BC §4) |
+| `trig_sub_preset_bc_bank` | trig-sub leaf | `trig_sub_form_preset=bc_bank` (Calc BC §5) |
 | `u_sub_reverse_chain` | power u-sub leaf | reverse_chain |
 | `u_sub_reverse_chain_ln_exp` | ln/exp u-sub leaf | reverse_chain |
 | `u_sub_reverse_chain_invtrig` | invtrig u-sub leaf | reverse_chain + arctan_chain |
@@ -60,6 +61,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Logarithmic differentiation: catalog families only (not a general \(u^v\) AST)
 - Parts: definite IBP not on the indefinite leaf; \(\int x e^{ax}\sin(bx)\) deferred
 - PFD: cube multiplicity and improper (long division) still stubs; \((x^2+1)^2\) / \(1/(x^4+1)\) deferred; high D can still emit single-term quad arctan/ln
+- Trig-sub: \(\sqrt{a^2-x^2}/x\) still no closed template; \(x/\sqrt{\,\cdot\,}\) and \(x^3/\sqrt{\,\cdot\,}\) are u-sub (wrong leaf)
 
 ## This pass (2026-09-14)
 
@@ -67,6 +69,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - **U-sub BC bank §1:** named preset `bc_bank` (negative powers of poly, ln^n/x, e^x/(a+e^x)^n, trig'/(a+trig)^n). D=0 auto stays OpenStax easy. Bank file: `scripts/output/example_mining/challenging_indefinite_integrals_bc.tex`.
 - **IBP BC bank §2 lookalikes:** `poly3_exp`, `poly3_sin/cos`, `poly2_cos`, `poly2_ln`, `ln_power_2/3`, `poly1_arctan`, `poly1_arcsin`, `arcsin_alone`, `power_frac_ln`, `ln_quad`. Deferred: `poly_exp_trig`, `poly1_arccos`, `poly2_ln_quad`.
 - **PFD BC bank §4:** named preset `pfd_form_preset=bc_bank` on existing distinct-linear / mixed / repeated-square / irred-quad cores. Deferred: `x4_plus_1`, `repeated_quad_square`.
+- **Trig-sub BC bank §5:** named preset `trig_sub_form_preset=bc_bank` on existing √ / 1/√ / \(x^2/\sqrt\) / \((\,)^{±3/2}\) cores plus honest siblings \(x^2/\sqrt{x^2\pm a^2}\) and \((x^2-a^2)^{-3/2}\). D=0 auto stays \(\sqrt{a^2-x^2}\). Deferred: \(\sqrt{a^2-x^2}/x\), \(x/\sqrt\), \(x^3/\sqrt\), table arcsin \(1/\sqrt{a^2-x^2}\).
 - **`calc_diff_implicit`:** `derivatives.json` form_ids with `d_min`/`d_max`; D=0 circle; mid xy/ellipse; high trig/exp/folium. Cleared UNCLEAR / LOW_VARIETY.
 - **`calc_diff_logarithmic`:** catalog-routed `logdiff_*`; D=0 power; mid product/quotient/root; high \(x^x\) / \((x+1)^x\) / \((\sin x)^x\). High D cannot emit `logdiff_power`.
 - **`calc_diff_other_base_logarithms_and_exponentials`:** catalog-routed `other_base_*`; D=0 \(a^x\) / \(\log_a x\); mid \(a^{kx}\) / \(\log_a(ax+b)\); high \(a^{x^2}\) / \(x a^x\) / log-power. High D cannot emit leftover \(a^x\).

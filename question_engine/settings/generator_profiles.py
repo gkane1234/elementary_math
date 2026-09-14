@@ -1393,6 +1393,7 @@ _RAW_GENERATOR_SETTING_CONFIGS: dict[str, TypeSettingConfig] = {    # Equations
             "require_substitution": False,
             "require_trig_sub": True,
             "include_plus_c": True,
+            "trig_sub_form_preset": "auto",
         },
     ),
     "integral_log_exp_substitution": TypeSettingConfig(

@@ -2680,7 +2680,7 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_indef_int_trigonometric_with_substitution",
         "Integral — trig sub",
-        "Genuine a²±x² forms (not plain u-sub). OpenStax Vol 2 §3.3.",
+        "Genuine a²±x² forms (not plain u-sub). OpenStax Vol 2 §3.3. Named preset <code>trig_sub_form_preset=bc_bank</code> for §5 lookalikes; <code>√(a²−x²)/x</code> deferred.",
     ),
     (
         "calc_indef_int_inverse_trigonometric_with_substitution",
@@ -3089,7 +3089,7 @@ CALC_USUB_PRESET_SHOWCASE: list[tuple[str, str, str, str, dict[str, Any]]] = [
 ]
 
 
-# Named IBP / PFD bank presets (Calc BC drill bank §2 / §4).
+# Named IBP / PFD / trig-sub bank presets (Calc BC drill bank §2 / §4 / §5).
 CALC_PARTS_PFD_PRESET_SHOWCASE: list[tuple[str, str, str, str, dict[str, Any]]] = [
     (
         "parts_preset_bc_bank",
@@ -3108,6 +3108,16 @@ CALC_PARTS_PFD_PRESET_SHOWCASE: list[tuple[str, str, str, str, dict[str, Any]]] 
         "(distinct linear 2/3, mixed linear-quad, repeated square, irreducible quad). "
         "<code>1/(x^4+1)</code> and <code>(x^2+1)^2</code> stay deferred.",
         {"pfd_form_preset": "bc_bank"},
+    ),
+    (
+        "trig_sub_preset_bc_bank",
+        "calc_indef_int_trigonometric_with_substitution",
+        "Trig-sub preset — bc_bank",
+        "Forced BC bank §5 algebraic-radical lookalikes "
+        "(<code>√(x²±a²)</code>, <code>1/√</code>, <code>x²/√</code>, "
+        "<code>( )^{±3/2}</code>). Host D=0 stays OpenStax "
+        "<code>√(a²−x²)</code>. <code>√(a²−x²)/x</code> and <code>x³/√</code> deferred.",
+        {"trig_sub_form_preset": "bc_bank"},
     ),
 ]
 
@@ -3629,6 +3639,7 @@ def _debug_rows(meta: dict[str, Any], gen: dict[str, Any]) -> list[tuple[str, An
         ("u_sub_form_preset", meta.get("u_sub_form_preset")),
         ("parts_form_preset", meta.get("parts_form_preset")),
         ("pfd_form_preset", meta.get("pfd_form_preset")),
+        ("trig_sub_form_preset", meta.get("trig_sub_form_preset")),
         ("k / cancel_factor_count", k),
         ("dens_style", meta.get("dens_style")),
         ("excluded_values", meta.get("excluded_values")),

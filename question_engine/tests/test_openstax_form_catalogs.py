@@ -329,6 +329,89 @@ def test_pfd_bc_bank_preset_lookalikes():
     assert seen & {"distinct_linear_3", "mixed_linear_quad", "repeated_linear_square"}, seen
 
 
+def test_trig_sub_hard_emh_preset_selects_bc_bank():
+    from question_engine.settings.presets import apply_difficulty_presets
+
+    settings = apply_difficulty_presets(
+        {"difficulty_tier": "hard", "seed": 11, "count": 1, "include_answer_key": True},
+        type_id="calc_indef_int_trigonometric_with_substitution",
+    )
+    assert settings["trig_sub_form_preset"] == "bc_bank"
+
+
+def test_trig_sub_bc_bank_catalog_and_deferred():
+    cat = load_form_catalog("trig_substitution")
+    imp = {str(f["form_id"]) for f in implemented_forms(cat)}
+    for fid in (
+        "sqrt_a2_minus_x2",
+        "sqrt_a2_plus_x2",
+        "sqrt_x2_minus_a2",
+        "x2_over_sqrt_a2_minus_x2",
+        "x2_over_sqrt_x2_plus_a2",
+        "x2_over_sqrt_x2_minus_a2",
+        "pow_m3_2_a2_minus",
+        "pow_m3_2_a2_plus",
+        "pow_m3_2_x2_minus",
+        "pow_3_2_a2_minus",
+    ):
+        assert fid in imp, fid
+        form = next(f for f in cat["forms"] if f["form_id"] == fid)
+        assert "allow_trig_sub" in (form.get("requires_allows") or []), fid
+    gaps = {str(f["form_id"]) for f in catalog_gaps(cat)}
+    assert "sqrt_over_x_a2_minus" in gaps
+    assert "x3_over_sqrt" in gaps
+    assert "x_over_sqrt_x2_minus_a2" in gaps
+    assert "one_over_sqrt_a2_minus_x2" in gaps
+
+
+def test_trig_sub_bc_bank_preset_lookalikes():
+    from question_engine.frameworks.primitives.integrals import TRIG_SUB_FORM_PRESETS
+
+    bank = TRIG_SUB_FORM_PRESETS["bc_bank"]
+    prompts: set[str] = set()
+    seen: set[str] = set()
+    for seed in range(80):
+        sample = sample_integral_expression(
+            {
+                "difficulty": 16,
+                "seed": seed,
+                "include_answer_key": True,
+                "trig_sub_form_preset": "bc_bank",
+            },
+            generator_key="integral_trig_substitution",
+        )
+        fid = _form_id(sample.as_metadata())
+        assert fid in bank, (seed, fid, sample.prompt_latex)
+        assert fid != "sqrt_a2_minus_x2"
+        assert fid != "sqrt_over_x_a2_minus"
+        assert "+C" in (sample.answer_latex or "")
+        tricks = sample.as_metadata().get("tricks_required") or []
+        assert "trig_sub" in tricks, (seed, tricks)
+        prompts.add(sample.prompt_latex or "")
+        seen.add(fid)
+    assert len(prompts) >= 6, prompts
+    assert len(seen) >= 4, seen
+    frozen = {
+        r"\int \sqrt{9-x^{2}}\,dx",
+        r"\int \frac{x^{2}}{\sqrt{9-x^{2}}}\,dx",
+        r"\int \frac{1}{\left(9-x^{2}\right)^{\frac{3}{2}}}\,dx",
+    }
+    assert any(p not in frozen for p in prompts), prompts
+
+
+def test_trig_sub_d0_stays_openstax_easy():
+    """Host auto D=0 stays ∫√(a²−x²) even after bank families exist."""
+    for seed in range(30):
+        sample = sample_integral_expression(
+            {"difficulty": 0, "seed": seed, "include_answer_key": True},
+            generator_key="integral_trig_substitution",
+        )
+        fid = _form_id(sample.as_metadata())
+        assert fid == "sqrt_a2_minus_x2", (seed, fid, sample.prompt_latex)
+        assert r"\sqrt{" in (sample.prompt_latex or "")
+        assert "+C" in (sample.answer_latex or "")
+
+
 def test_u_sub_catalog_diversity():
     cat = load_form_catalog("u_substitution")
     implemented = {str(f["form_id"]) for f in implemented_forms(cat)}

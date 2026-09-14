@@ -1,7 +1,7 @@
 {
   "section": {
-    "slug": "calc_indef_int_trigonometric_with_substitution",
-    "title": "Integral \u2014 trig sub",
+    "slug": "trig_sub_preset_bc_bank",
+    "title": "Trig-sub preset \u2014 bc_bank",
     "pattern": "",
     "engine": "integrals",
     "type_id": "calc_indef_int_trigonometric_with_substitution",
@@ -17,7 +17,10 @@
       207,
       313
     ],
-    "blurb": "Genuine a\u00b2\u00b1x\u00b2 forms (not plain u-sub). OpenStax Vol 2 \u00a73.3. Named preset <code>trig_sub_form_preset=bc_bank</code> for \u00a75 lookalikes; <code>\u221a(a\u00b2\u2212x\u00b2)/x</code> deferred."
+    "blurb": "Forced BC bank \u00a75 algebraic-radical lookalikes (<code>\u221a(x\u00b2\u00b1a\u00b2)</code>, <code>1/\u221a</code>, <code>x\u00b2/\u221a</code>, <code>( )^{\u00b13/2}</code>). Host D=0 stays OpenStax <code>\u221a(a\u00b2\u2212x\u00b2)</code>. <code>\u221a(a\u00b2\u2212x\u00b2)/x</code> and <code>x\u00b3/\u221a</code> deferred.",
+    "extra_settings": {
+      "trig_sub_form_preset": "bc_bank"
+    }
   },
   "rows": [
     {
@@ -28,10 +31,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\int \\sqrt{4-x^{2}}\\,dx",
-      "answer_latex": "\\frac{1}{2}x\\sqrt{4-x^{2}}+2\\arcsin\\left(\\frac{x}{2}\\right)+C",
+      "prompt_latex": "\\int \\sqrt{4+x^{2}}\\,dx",
+      "answer_latex": "\\frac{1}{2}x\\sqrt{4+x^{2}}+2\\ln\\left|x+\\sqrt{4+x^{2}}\\right|+C",
       "skeleton_pattern": "",
-      "form_id": "sqrt_a2_minus_x2",
+      "form_id": "sqrt_a2_plus_x2",
       "diagram_svg": "",
       "debug": [
         [
@@ -44,11 +47,11 @@
         ],
         [
           "form_id",
-          "sqrt_a2_minus_x2"
+          "sqrt_a2_plus_x2"
         ],
         [
           "openstax_form",
-          "sqrt_a2_minus_x2"
+          "sqrt_a2_plus_x2"
         ],
         [
           "tricks_required",
@@ -58,7 +61,7 @@
         ],
         [
           "trig_sub_form_preset",
-          "auto"
+          "bc_bank"
         ],
         [
           "construction",
@@ -70,8 +73,8 @@
         ]
       ],
       "metadata": {
-        "family": "sqrt_a2_minus_x2",
-        "structure_id": "integral_trig_substitution:sqrt_a2_minus_x2",
+        "family": "sqrt_a2_plus_x2",
+        "structure_id": "integral_trig_substitution:sqrt_a2_plus_x2",
         "technique": "trig_sub",
         "tricks_required": [
           "trig_sub"
@@ -131,7 +134,7 @@
           "u_sub_construction": "auto",
           "parts_form_preset": "auto",
           "pfd_form_preset": "auto",
-          "trig_sub_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
           "pipeline": {
             "stages": [
               {
@@ -147,207 +150,10 @@
             "length": 1
           },
           "technique": "trig_sub",
-          "family": "sqrt_a2_minus_x2",
-          "form_id": "sqrt_a2_minus_x2",
+          "family": "sqrt_a2_plus_x2",
+          "form_id": "sqrt_a2_plus_x2",
           "catalog_id": "trig_substitution",
-          "strategy": "sin_sub"
-        },
-        "effort_features": {
-          "technique": "trig_sub",
-          "tricks_required": [
-            "trig_sub"
-          ],
-          "pipeline_len": 1,
-          "degree_max": 4,
-          "coef_abs_max": 4,
-          "n_terms": 1,
-          "answer_len": 61,
-          "nest_depth": 0,
-          "pack": "integral_trig_sub",
-          "methods": [
-            "trig_sub"
-          ]
-        },
-        "pipeline": {
-          "stages": [
-            {
-              "trick": "trig_sub",
-              "input_kind": "1",
-              "transform": "sample_trig_sub_form",
-              "notes": ""
-            }
-          ],
-          "tricks_required": [
-            "trig_sub"
-          ],
-          "length": 1
-        },
-        "shape_id": "sqrt_a2_minus_x2",
-        "construction": "forward_form_catalog",
-        "difficulty_costs": [],
-        "difficulty_cost_total": 0.0,
-        "difficulty_shortfall": 0.0,
-        "wrappers_applied": [],
-        "core_form_id": "sqrt_a2_minus_x2",
-        "trig_sub_kind": "sin",
-        "trig_sub_exponent": "1/2",
-        "openstax_form": "sqrt_a2_minus_x2",
-        "form_id": "sqrt_a2_minus_x2",
-        "openstax_case": "Example 3.21",
-        "strategy": "sin_sub",
-        "catalog_id": "trig_substitution",
-        "trig_sub_form_preset": "auto",
-        "generation_settings": {
-          "allow_trig": true,
-          "allow_trig_sub": true,
-          "allow_substitution": true,
-          "require_substitution": false,
-          "require_trig_sub": true,
-          "include_plus_c": true,
-          "trig_sub_form_preset": "auto",
-          "difficulty": 0.0,
-          "coef_min": -4,
-          "coef_max": 4,
-          "seed": 101,
-          "include_answer_key": true,
-          "integers_only": true,
-          "only_x": true,
-          "_batch_index": 0
-        },
-        "instruction_latex": "\\text{Integrate using a trigonometric substitution.}"
-      }
-    },
-    {
-      "ok": true,
-      "warn": false,
-      "label": "D\u22480 \u00b7 seed=207",
-      "type_id": "calc_indef_int_trigonometric_with_substitution",
-      "difficulty": 0.0,
-      "band": "low",
-      "seed": 207,
-      "prompt_latex": "\\int \\sqrt{16-x^{2}}\\,dx",
-      "answer_latex": "\\frac{1}{2}x\\sqrt{16-x^{2}}+8\\arcsin\\left(\\frac{x}{4}\\right)+C",
-      "skeleton_pattern": "",
-      "form_id": "sqrt_a2_minus_x2",
-      "diagram_svg": "",
-      "debug": [
-        [
-          "D / effective_d",
-          0.0
-        ],
-        [
-          "seed",
-          207
-        ],
-        [
-          "form_id",
-          "sqrt_a2_minus_x2"
-        ],
-        [
-          "openstax_form",
-          "sqrt_a2_minus_x2"
-        ],
-        [
-          "tricks_required",
-          [
-            "trig_sub"
-          ]
-        ],
-        [
-          "trig_sub_form_preset",
-          "auto"
-        ],
-        [
-          "construction",
-          "forward_form_catalog"
-        ],
-        [
-          "has_diagram_svg",
-          false
-        ]
-      ],
-      "metadata": {
-        "family": "sqrt_a2_minus_x2",
-        "structure_id": "integral_trig_substitution:sqrt_a2_minus_x2",
-        "technique": "trig_sub",
-        "tricks_required": [
-          "trig_sub"
-        ],
-        "methods_used": [
-          "trig_sub"
-        ],
-        "function_classes": [
-          "trig",
-          "algebraic"
-        ],
-        "upgrades": [
-          "use_trig_sub"
-        ],
-        "effective_d": 0.0,
-        "band": "easy",
-        "generator": "integral_trig_substitution",
-        "variable": "x",
-        "d_spend": 0.0,
-        "spec_snapshot": {
-          "pack": "integral_trig_sub",
-          "variable": "x",
-          "definite": false,
-          "bound_abs_max": 5,
-          "tricks_allowed": [
-            "trig",
-            "trig_sub",
-            "u_sub"
-          ],
-          "tricks_required": [
-            "trig_sub"
-          ],
-          "allow_trig": true,
-          "allow_exp": false,
-          "allow_log": false,
-          "allow_invtrig": false,
-          "allow_substitution": true,
-          "allow_parts": false,
-          "allow_pfd": false,
-          "allow_trig_sub": true,
-          "allow_ftc": false,
-          "require_substitution": false,
-          "require_parts": false,
-          "require_pfd": false,
-          "require_trig": false,
-          "require_trig_sub": true,
-          "include_plus_c": true,
-          "coef_abs_max": 4,
-          "degree_max": 4,
-          "term_count_max": 3,
-          "nest_budget": 1,
-          "parts_depth": 1,
-          "max_pipeline_len": 1,
-          "d_spend": 0.0,
-          "construction": "forward_form_catalog",
-          "u_sub_form_preset": "auto",
-          "u_sub_construction": "auto",
-          "parts_form_preset": "auto",
-          "pfd_form_preset": "auto",
-          "trig_sub_form_preset": "auto",
-          "pipeline": {
-            "stages": [
-              {
-                "trick": "trig_sub",
-                "input_kind": "1",
-                "transform": "sample_trig_sub_form",
-                "notes": ""
-              }
-            ],
-            "tricks_required": [
-              "trig_sub"
-            ],
-            "length": 1
-          },
-          "technique": "trig_sub",
-          "family": "sqrt_a2_minus_x2",
-          "form_id": "sqrt_a2_minus_x2",
-          "catalog_id": "trig_substitution",
-          "strategy": "sin_sub"
+          "strategy": "tan_sub"
         },
         "effort_features": {
           "technique": "trig_sub",
@@ -379,21 +185,21 @@
           ],
           "length": 1
         },
-        "shape_id": "sqrt_a2_minus_x2",
+        "shape_id": "sqrt_a2_plus_x2",
         "construction": "forward_form_catalog",
         "difficulty_costs": [],
         "difficulty_cost_total": 0.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "sqrt_a2_minus_x2",
-        "trig_sub_kind": "sin",
+        "core_form_id": "sqrt_a2_plus_x2",
+        "trig_sub_kind": "tan",
         "trig_sub_exponent": "1/2",
-        "openstax_form": "sqrt_a2_minus_x2",
-        "form_id": "sqrt_a2_minus_x2",
-        "openstax_case": "Example 3.21",
-        "strategy": "sin_sub",
+        "openstax_form": "sqrt_a2_plus_x2",
+        "form_id": "sqrt_a2_plus_x2",
+        "openstax_case": "\u00a73.3 a\u00b2+x\u00b2 family",
+        "strategy": "tan_sub",
         "catalog_id": "trig_substitution",
-        "trig_sub_form_preset": "auto",
+        "trig_sub_form_preset": "bc_bank",
         "generation_settings": {
           "allow_trig": true,
           "allow_trig_sub": true,
@@ -401,11 +207,11 @@
           "require_substitution": false,
           "require_trig_sub": true,
           "include_plus_c": true,
-          "trig_sub_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
           "difficulty": 0.0,
           "coef_min": -4,
           "coef_max": 4,
-          "seed": 207,
+          "seed": 101,
           "include_answer_key": true,
           "integers_only": true,
           "only_x": true,
@@ -417,15 +223,15 @@
     {
       "ok": true,
       "warn": false,
-      "label": "D\u22480 \u00b7 seed=313",
+      "label": "D\u22480 \u00b7 seed=207",
       "type_id": "calc_indef_int_trigonometric_with_substitution",
       "difficulty": 0.0,
       "band": "low",
-      "seed": 313,
-      "prompt_latex": "\\int \\sqrt{9-x^{2}}\\,dx",
-      "answer_latex": "\\frac{1}{2}x\\sqrt{9-x^{2}}+\\frac{9}{2}\\arcsin\\left(\\frac{x}{3}\\right)+C",
+      "seed": 207,
+      "prompt_latex": "\\int \\frac{1}{\\sqrt{x^{2}+16}}\\,dx",
+      "answer_latex": "\\ln\\left|x+\\sqrt{x^{2}+16}\\right|+C",
       "skeleton_pattern": "",
-      "form_id": "sqrt_a2_minus_x2",
+      "form_id": "one_over_sqrt_x2_plus_a2",
       "diagram_svg": "",
       "debug": [
         [
@@ -434,15 +240,15 @@
         ],
         [
           "seed",
-          313
+          207
         ],
         [
           "form_id",
-          "sqrt_a2_minus_x2"
+          "one_over_sqrt_x2_plus_a2"
         ],
         [
           "openstax_form",
-          "sqrt_a2_minus_x2"
+          "one_over_sqrt_x2_plus_a2"
         ],
         [
           "tricks_required",
@@ -452,7 +258,7 @@
         ],
         [
           "trig_sub_form_preset",
-          "auto"
+          "bc_bank"
         ],
         [
           "construction",
@@ -464,8 +270,8 @@
         ]
       ],
       "metadata": {
-        "family": "sqrt_a2_minus_x2",
-        "structure_id": "integral_trig_substitution:sqrt_a2_minus_x2",
+        "family": "one_over_sqrt_x2_plus_a2",
+        "structure_id": "integral_trig_substitution:one_over_sqrt_x2_plus_a2",
         "technique": "trig_sub",
         "tricks_required": [
           "trig_sub"
@@ -525,7 +331,7 @@
           "u_sub_construction": "auto",
           "parts_form_preset": "auto",
           "pfd_form_preset": "auto",
-          "trig_sub_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
           "pipeline": {
             "stages": [
               {
@@ -541,10 +347,10 @@
             "length": 1
           },
           "technique": "trig_sub",
-          "family": "sqrt_a2_minus_x2",
-          "form_id": "sqrt_a2_minus_x2",
+          "family": "one_over_sqrt_x2_plus_a2",
+          "form_id": "one_over_sqrt_x2_plus_a2",
           "catalog_id": "trig_substitution",
-          "strategy": "sin_sub"
+          "strategy": "tan_sub"
         },
         "effort_features": {
           "technique": "trig_sub",
@@ -555,7 +361,7 @@
           "degree_max": 4,
           "coef_abs_max": 4,
           "n_terms": 1,
-          "answer_len": 71,
+          "answer_len": 35,
           "nest_depth": 0,
           "pack": "integral_trig_sub",
           "methods": [
@@ -576,21 +382,21 @@
           ],
           "length": 1
         },
-        "shape_id": "sqrt_a2_minus_x2",
+        "shape_id": "one_over_sqrt_x2_plus_a2",
         "construction": "forward_form_catalog",
         "difficulty_costs": [],
         "difficulty_cost_total": 0.0,
         "difficulty_shortfall": 0.0,
         "wrappers_applied": [],
-        "core_form_id": "sqrt_a2_minus_x2",
-        "trig_sub_kind": "sin",
-        "trig_sub_exponent": "1/2",
-        "openstax_form": "sqrt_a2_minus_x2",
-        "form_id": "sqrt_a2_minus_x2",
-        "openstax_case": "Example 3.21",
-        "strategy": "sin_sub",
+        "core_form_id": "one_over_sqrt_x2_plus_a2",
+        "trig_sub_kind": "tan",
+        "trig_sub_exponent": "-1/2",
+        "openstax_form": "one_over_sqrt_x2_plus_a2",
+        "form_id": "one_over_sqrt_x2_plus_a2",
+        "openstax_case": "Example 3.24",
+        "strategy": "tan_sub",
         "catalog_id": "trig_substitution",
-        "trig_sub_form_preset": "auto",
+        "trig_sub_form_preset": "bc_bank",
         "generation_settings": {
           "allow_trig": true,
           "allow_trig_sub": true,
@@ -598,7 +404,204 @@
           "require_substitution": false,
           "require_trig_sub": true,
           "include_plus_c": true,
-          "trig_sub_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
+          "difficulty": 0.0,
+          "coef_min": -4,
+          "coef_max": 4,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate using a trigonometric substitution.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=313",
+      "type_id": "calc_indef_int_trigonometric_with_substitution",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 313,
+      "prompt_latex": "\\int \\sqrt{9+x^{2}}\\,dx",
+      "answer_latex": "\\frac{1}{2}x\\sqrt{9+x^{2}}+\\frac{9}{2}\\ln\\left|x+\\sqrt{9+x^{2}}\\right|+C",
+      "skeleton_pattern": "",
+      "form_id": "sqrt_a2_plus_x2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "sqrt_a2_plus_x2"
+        ],
+        [
+          "openstax_form",
+          "sqrt_a2_plus_x2"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig_sub"
+          ]
+        ],
+        [
+          "trig_sub_form_preset",
+          "bc_bank"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "sqrt_a2_plus_x2",
+        "structure_id": "integral_trig_substitution:sqrt_a2_plus_x2",
+        "technique": "trig_sub",
+        "tricks_required": [
+          "trig_sub"
+        ],
+        "methods_used": [
+          "trig_sub"
+        ],
+        "function_classes": [
+          "trig",
+          "algebraic"
+        ],
+        "upgrades": [
+          "use_trig_sub"
+        ],
+        "effective_d": 0.0,
+        "band": "easy",
+        "generator": "integral_trig_substitution",
+        "variable": "x",
+        "d_spend": 0.0,
+        "spec_snapshot": {
+          "pack": "integral_trig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "allow_trig": true,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": true,
+          "include_plus_c": true,
+          "coef_abs_max": 4,
+          "degree_max": 4,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 0.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "trig_sub",
+                "input_kind": "1",
+                "transform": "sample_trig_sub_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "trig_sub"
+            ],
+            "length": 1
+          },
+          "technique": "trig_sub",
+          "family": "sqrt_a2_plus_x2",
+          "form_id": "sqrt_a2_plus_x2",
+          "catalog_id": "trig_substitution",
+          "strategy": "tan_sub"
+        },
+        "effort_features": {
+          "technique": "trig_sub",
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 4,
+          "coef_abs_max": 4,
+          "n_terms": 1,
+          "answer_len": 72,
+          "nest_depth": 0,
+          "pack": "integral_trig_sub",
+          "methods": [
+            "trig_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "trig_sub",
+              "input_kind": "1",
+              "transform": "sample_trig_sub_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "sqrt_a2_plus_x2",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [],
+        "difficulty_cost_total": 0.0,
+        "difficulty_shortfall": 0.0,
+        "wrappers_applied": [],
+        "core_form_id": "sqrt_a2_plus_x2",
+        "trig_sub_kind": "tan",
+        "trig_sub_exponent": "1/2",
+        "openstax_form": "sqrt_a2_plus_x2",
+        "form_id": "sqrt_a2_plus_x2",
+        "openstax_case": "\u00a73.3 a\u00b2+x\u00b2 family",
+        "strategy": "tan_sub",
+        "catalog_id": "trig_substitution",
+        "trig_sub_form_preset": "bc_bank",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_trig_sub": true,
+          "allow_substitution": true,
+          "require_substitution": false,
+          "require_trig_sub": true,
+          "include_plus_c": true,
+          "trig_sub_form_preset": "bc_bank",
           "difficulty": 0.0,
           "coef_min": -4,
           "coef_max": 4,
@@ -619,8 +622,224 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\int \\sqrt{4+x^{2}}\\,dx",
-      "answer_latex": "\\frac{1}{2}x\\sqrt{4+x^{2}}+2\\ln\\left|x+\\sqrt{4+x^{2}}\\right|+C",
+      "prompt_latex": "\\int \\sqrt{x^{2}-4}\\,dx",
+      "answer_latex": "\\frac{1}{2}x\\sqrt{x^{2}-4}-2\\ln\\left|x+\\sqrt{x^{2}-4}\\right|+C",
+      "skeleton_pattern": "",
+      "form_id": "sqrt_x2_minus_a2",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          101
+        ],
+        [
+          "form_id",
+          "sqrt_x2_minus_a2"
+        ],
+        [
+          "openstax_form",
+          "sqrt_x2_minus_a2"
+        ],
+        [
+          "tricks_required",
+          [
+            "trig_sub"
+          ]
+        ],
+        [
+          "trig_sub_form_preset",
+          "bc_bank"
+        ],
+        [
+          "construction",
+          "forward_form_catalog"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "family": "sqrt_x2_minus_a2",
+        "structure_id": "integral_trig_substitution:sqrt_x2_minus_a2",
+        "technique": "trig_sub",
+        "tricks_required": [
+          "trig_sub"
+        ],
+        "methods_used": [
+          "trig_sub"
+        ],
+        "function_classes": [
+          "trig",
+          "algebraic"
+        ],
+        "upgrades": [
+          "extra_term",
+          "higher_degree",
+          "use_trig",
+          "use_trig_sub"
+        ],
+        "effective_d": 8.0,
+        "band": "medium",
+        "generator": "integral_trig_substitution",
+        "variable": "x",
+        "d_spend": 8.0,
+        "spec_snapshot": {
+          "pack": "integral_trig_sub",
+          "variable": "x",
+          "definite": false,
+          "bound_abs_max": 5,
+          "tricks_allowed": [
+            "trig",
+            "trig_sub",
+            "u_sub"
+          ],
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "allow_trig": true,
+          "allow_exp": false,
+          "allow_log": false,
+          "allow_invtrig": false,
+          "allow_substitution": true,
+          "allow_parts": false,
+          "allow_pfd": false,
+          "allow_trig_sub": true,
+          "allow_ftc": false,
+          "require_substitution": false,
+          "require_parts": false,
+          "require_pfd": false,
+          "require_trig": false,
+          "require_trig_sub": true,
+          "include_plus_c": true,
+          "coef_abs_max": 6,
+          "degree_max": 5,
+          "term_count_max": 3,
+          "nest_budget": 1,
+          "parts_depth": 1,
+          "max_pipeline_len": 1,
+          "d_spend": 8.0,
+          "construction": "forward_form_catalog",
+          "u_sub_form_preset": "auto",
+          "u_sub_construction": "auto",
+          "parts_form_preset": "auto",
+          "pfd_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
+          "pipeline": {
+            "stages": [
+              {
+                "trick": "trig_sub",
+                "input_kind": "1",
+                "transform": "sample_trig_sub_form",
+                "notes": ""
+              }
+            ],
+            "tricks_required": [
+              "trig_sub"
+            ],
+            "length": 1
+          },
+          "technique": "trig_sub",
+          "family": "sqrt_x2_minus_a2",
+          "form_id": "sqrt_x2_minus_a2",
+          "catalog_id": "trig_substitution",
+          "strategy": "sec_sub"
+        },
+        "effort_features": {
+          "technique": "trig_sub",
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "pipeline_len": 1,
+          "degree_max": 5,
+          "coef_abs_max": 6,
+          "n_terms": 1,
+          "answer_len": 62,
+          "nest_depth": 0,
+          "pack": "integral_trig_sub",
+          "methods": [
+            "trig_sub"
+          ]
+        },
+        "pipeline": {
+          "stages": [
+            {
+              "trick": "trig_sub",
+              "input_kind": "1",
+              "transform": "sample_trig_sub_form",
+              "notes": ""
+            }
+          ],
+          "tricks_required": [
+            "trig_sub"
+          ],
+          "length": 1
+        },
+        "shape_id": "sqrt_x2_minus_a2",
+        "construction": "forward_form_catalog",
+        "difficulty_costs": [
+          {
+            "source": "spec",
+            "feature": "extra_term",
+            "cost": 2.0
+          },
+          {
+            "source": "spec",
+            "feature": "higher_degree",
+            "cost": 2.5
+          },
+          {
+            "source": "spec",
+            "feature": "use_trig",
+            "cost": 3.0
+          }
+        ],
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 0.5,
+        "wrappers_applied": [],
+        "core_form_id": "sqrt_x2_minus_a2",
+        "trig_sub_kind": "sec",
+        "trig_sub_exponent": "1/2",
+        "openstax_form": "sqrt_x2_minus_a2",
+        "form_id": "sqrt_x2_minus_a2",
+        "openstax_case": "\u00a73.3 x\u00b2\u2212a\u00b2 family",
+        "strategy": "sec_sub",
+        "catalog_id": "trig_substitution",
+        "trig_sub_form_preset": "bc_bank",
+        "generation_settings": {
+          "allow_trig": true,
+          "allow_trig_sub": true,
+          "allow_substitution": true,
+          "require_substitution": false,
+          "require_trig_sub": true,
+          "include_plus_c": true,
+          "trig_sub_form_preset": "bc_bank",
+          "difficulty": 8.0,
+          "coef_min": -6,
+          "coef_max": 6,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Integrate using a trigonometric substitution.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_indef_int_trigonometric_with_substitution",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\int \\sqrt{16+x^{2}}\\,dx",
+      "answer_latex": "\\frac{1}{2}x\\sqrt{16+x^{2}}+8\\ln\\left|x+\\sqrt{16+x^{2}}\\right|+C",
       "skeleton_pattern": "",
       "form_id": "sqrt_a2_plus_x2",
       "diagram_svg": "",
@@ -631,7 +850,7 @@
         ],
         [
           "seed",
-          101
+          207
         ],
         [
           "form_id",
@@ -649,7 +868,7 @@
         ],
         [
           "trig_sub_form_preset",
-          "auto"
+          "bc_bank"
         ],
         [
           "construction",
@@ -725,7 +944,7 @@
           "u_sub_construction": "auto",
           "parts_form_preset": "auto",
           "pfd_form_preset": "auto",
-          "trig_sub_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
           "pipeline": {
             "stages": [
               {
@@ -755,7 +974,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 62,
+          "answer_len": 64,
           "nest_depth": 0,
           "pack": "integral_trig_sub",
           "methods": [
@@ -806,7 +1025,7 @@
         "openstax_case": "\u00a73.3 a\u00b2+x\u00b2 family",
         "strategy": "tan_sub",
         "catalog_id": "trig_substitution",
-        "trig_sub_form_preset": "auto",
+        "trig_sub_form_preset": "bc_bank",
         "generation_settings": {
           "allow_trig": true,
           "allow_trig_sub": true,
@@ -814,223 +1033,7 @@
           "require_substitution": false,
           "require_trig_sub": true,
           "include_plus_c": true,
-          "trig_sub_form_preset": "auto",
-          "difficulty": 8.0,
-          "coef_min": -6,
-          "coef_max": 6,
-          "seed": 101,
-          "include_answer_key": true,
-          "integers_only": true,
-          "only_x": true,
-          "_batch_index": 0
-        },
-        "instruction_latex": "\\text{Integrate using a trigonometric substitution.}"
-      }
-    },
-    {
-      "ok": true,
-      "warn": false,
-      "label": "D\u22488 \u00b7 seed=207",
-      "type_id": "calc_indef_int_trigonometric_with_substitution",
-      "difficulty": 8.0,
-      "band": "mid",
-      "seed": 207,
-      "prompt_latex": "\\int \\sqrt{16-x^{2}}\\,dx",
-      "answer_latex": "\\frac{1}{2}x\\sqrt{16-x^{2}}+8\\arcsin\\left(\\frac{x}{4}\\right)+C",
-      "skeleton_pattern": "",
-      "form_id": "sqrt_a2_minus_x2",
-      "diagram_svg": "",
-      "debug": [
-        [
-          "D / effective_d",
-          8.0
-        ],
-        [
-          "seed",
-          207
-        ],
-        [
-          "form_id",
-          "sqrt_a2_minus_x2"
-        ],
-        [
-          "openstax_form",
-          "sqrt_a2_minus_x2"
-        ],
-        [
-          "tricks_required",
-          [
-            "trig_sub"
-          ]
-        ],
-        [
-          "trig_sub_form_preset",
-          "auto"
-        ],
-        [
-          "construction",
-          "forward_form_catalog"
-        ],
-        [
-          "has_diagram_svg",
-          false
-        ]
-      ],
-      "metadata": {
-        "family": "sqrt_a2_minus_x2",
-        "structure_id": "integral_trig_substitution:sqrt_a2_minus_x2",
-        "technique": "trig_sub",
-        "tricks_required": [
-          "trig_sub"
-        ],
-        "methods_used": [
-          "trig_sub"
-        ],
-        "function_classes": [
-          "trig",
-          "algebraic"
-        ],
-        "upgrades": [
-          "extra_term",
-          "higher_degree",
-          "use_trig",
-          "use_trig_sub"
-        ],
-        "effective_d": 8.0,
-        "band": "medium",
-        "generator": "integral_trig_substitution",
-        "variable": "x",
-        "d_spend": 8.0,
-        "spec_snapshot": {
-          "pack": "integral_trig_sub",
-          "variable": "x",
-          "definite": false,
-          "bound_abs_max": 5,
-          "tricks_allowed": [
-            "trig",
-            "trig_sub",
-            "u_sub"
-          ],
-          "tricks_required": [
-            "trig_sub"
-          ],
-          "allow_trig": true,
-          "allow_exp": false,
-          "allow_log": false,
-          "allow_invtrig": false,
-          "allow_substitution": true,
-          "allow_parts": false,
-          "allow_pfd": false,
-          "allow_trig_sub": true,
-          "allow_ftc": false,
-          "require_substitution": false,
-          "require_parts": false,
-          "require_pfd": false,
-          "require_trig": false,
-          "require_trig_sub": true,
-          "include_plus_c": true,
-          "coef_abs_max": 6,
-          "degree_max": 5,
-          "term_count_max": 3,
-          "nest_budget": 1,
-          "parts_depth": 1,
-          "max_pipeline_len": 1,
-          "d_spend": 8.0,
-          "construction": "forward_form_catalog",
-          "u_sub_form_preset": "auto",
-          "u_sub_construction": "auto",
-          "parts_form_preset": "auto",
-          "pfd_form_preset": "auto",
-          "trig_sub_form_preset": "auto",
-          "pipeline": {
-            "stages": [
-              {
-                "trick": "trig_sub",
-                "input_kind": "1",
-                "transform": "sample_trig_sub_form",
-                "notes": ""
-              }
-            ],
-            "tricks_required": [
-              "trig_sub"
-            ],
-            "length": 1
-          },
-          "technique": "trig_sub",
-          "family": "sqrt_a2_minus_x2",
-          "form_id": "sqrt_a2_minus_x2",
-          "catalog_id": "trig_substitution",
-          "strategy": "sin_sub"
-        },
-        "effort_features": {
-          "technique": "trig_sub",
-          "tricks_required": [
-            "trig_sub"
-          ],
-          "pipeline_len": 1,
-          "degree_max": 5,
-          "coef_abs_max": 6,
-          "n_terms": 1,
-          "answer_len": 62,
-          "nest_depth": 0,
-          "pack": "integral_trig_sub",
-          "methods": [
-            "trig_sub"
-          ]
-        },
-        "pipeline": {
-          "stages": [
-            {
-              "trick": "trig_sub",
-              "input_kind": "1",
-              "transform": "sample_trig_sub_form",
-              "notes": ""
-            }
-          ],
-          "tricks_required": [
-            "trig_sub"
-          ],
-          "length": 1
-        },
-        "shape_id": "sqrt_a2_minus_x2",
-        "construction": "forward_form_catalog",
-        "difficulty_costs": [
-          {
-            "source": "spec",
-            "feature": "extra_term",
-            "cost": 2.0
-          },
-          {
-            "source": "spec",
-            "feature": "higher_degree",
-            "cost": 2.5
-          },
-          {
-            "source": "spec",
-            "feature": "use_trig",
-            "cost": 3.0
-          }
-        ],
-        "difficulty_cost_total": 7.5,
-        "difficulty_shortfall": 0.5,
-        "wrappers_applied": [],
-        "core_form_id": "sqrt_a2_minus_x2",
-        "trig_sub_kind": "sin",
-        "trig_sub_exponent": "1/2",
-        "openstax_form": "sqrt_a2_minus_x2",
-        "form_id": "sqrt_a2_minus_x2",
-        "openstax_case": "Example 3.21",
-        "strategy": "sin_sub",
-        "catalog_id": "trig_substitution",
-        "trig_sub_form_preset": "auto",
-        "generation_settings": {
-          "allow_trig": true,
-          "allow_trig_sub": true,
-          "allow_substitution": true,
-          "require_substitution": false,
-          "require_trig_sub": true,
-          "include_plus_c": true,
-          "trig_sub_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
           "difficulty": 8.0,
           "coef_min": -6,
           "coef_max": 6,
@@ -1051,10 +1054,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\int \\sqrt{16-x^{2}}\\,dx",
-      "answer_latex": "\\frac{1}{2}x\\sqrt{16-x^{2}}+8\\arcsin\\left(\\frac{x}{4}\\right)+C",
+      "prompt_latex": "\\int \\sqrt{16+x^{2}}\\,dx",
+      "answer_latex": "\\frac{1}{2}x\\sqrt{16+x^{2}}+8\\ln\\left|x+\\sqrt{16+x^{2}}\\right|+C",
       "skeleton_pattern": "",
-      "form_id": "sqrt_a2_minus_x2",
+      "form_id": "sqrt_a2_plus_x2",
       "diagram_svg": "",
       "debug": [
         [
@@ -1067,11 +1070,11 @@
         ],
         [
           "form_id",
-          "sqrt_a2_minus_x2"
+          "sqrt_a2_plus_x2"
         ],
         [
           "openstax_form",
-          "sqrt_a2_minus_x2"
+          "sqrt_a2_plus_x2"
         ],
         [
           "tricks_required",
@@ -1081,7 +1084,7 @@
         ],
         [
           "trig_sub_form_preset",
-          "auto"
+          "bc_bank"
         ],
         [
           "construction",
@@ -1093,8 +1096,8 @@
         ]
       ],
       "metadata": {
-        "family": "sqrt_a2_minus_x2",
-        "structure_id": "integral_trig_substitution:sqrt_a2_minus_x2",
+        "family": "sqrt_a2_plus_x2",
+        "structure_id": "integral_trig_substitution:sqrt_a2_plus_x2",
         "technique": "trig_sub",
         "tricks_required": [
           "trig_sub"
@@ -1157,7 +1160,7 @@
           "u_sub_construction": "auto",
           "parts_form_preset": "auto",
           "pfd_form_preset": "auto",
-          "trig_sub_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
           "pipeline": {
             "stages": [
               {
@@ -1173,10 +1176,10 @@
             "length": 1
           },
           "technique": "trig_sub",
-          "family": "sqrt_a2_minus_x2",
-          "form_id": "sqrt_a2_minus_x2",
+          "family": "sqrt_a2_plus_x2",
+          "form_id": "sqrt_a2_plus_x2",
           "catalog_id": "trig_substitution",
-          "strategy": "sin_sub"
+          "strategy": "tan_sub"
         },
         "effort_features": {
           "technique": "trig_sub",
@@ -1187,7 +1190,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 1,
-          "answer_len": 62,
+          "answer_len": 64,
           "nest_depth": 0,
           "pack": "integral_trig_sub",
           "methods": [
@@ -1208,7 +1211,7 @@
           ],
           "length": 1
         },
-        "shape_id": "sqrt_a2_minus_x2",
+        "shape_id": "sqrt_a2_plus_x2",
         "construction": "forward_form_catalog",
         "difficulty_costs": [
           {
@@ -1230,15 +1233,15 @@
         "difficulty_cost_total": 7.5,
         "difficulty_shortfall": 0.5,
         "wrappers_applied": [],
-        "core_form_id": "sqrt_a2_minus_x2",
-        "trig_sub_kind": "sin",
+        "core_form_id": "sqrt_a2_plus_x2",
+        "trig_sub_kind": "tan",
         "trig_sub_exponent": "1/2",
-        "openstax_form": "sqrt_a2_minus_x2",
-        "form_id": "sqrt_a2_minus_x2",
-        "openstax_case": "Example 3.21",
-        "strategy": "sin_sub",
+        "openstax_form": "sqrt_a2_plus_x2",
+        "form_id": "sqrt_a2_plus_x2",
+        "openstax_case": "\u00a73.3 a\u00b2+x\u00b2 family",
+        "strategy": "tan_sub",
         "catalog_id": "trig_substitution",
-        "trig_sub_form_preset": "auto",
+        "trig_sub_form_preset": "bc_bank",
         "generation_settings": {
           "allow_trig": true,
           "allow_trig_sub": true,
@@ -1246,7 +1249,7 @@
           "require_substitution": false,
           "require_trig_sub": true,
           "include_plus_c": true,
-          "trig_sub_form_preset": "auto",
+          "trig_sub_form_preset": "bc_bank",
           "difficulty": 8.0,
           "coef_min": -6,
           "coef_max": 6,

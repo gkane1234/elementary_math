@@ -12,7 +12,9 @@
     }
   },
   "taxonomy_notes": [
-    "a²−x² (x=a sinθ), a²+x² (x=a tanθ), x²−a² (x=a secθ); fractional powers ±3/2 ±5/2; optional linear wrap u=x+b."
+    "a²−x² (x=a sinθ), a²+x² (x=a tanθ), x²−a² (x=a secθ); fractional powers ±3/2 ±5/2; optional linear wrap u=x+b.",
+    "Calc BC drill bank §5 lookalikes: named preset trig_sub_form_preset=bc_bank (√(x²±a²), 1/√, x²/√, ( )^{±3/2}). D=0 auto stays ∫√(a²−x²).",
+    "Deferred: √(a²−x²)/x (no closed-form template), x/√ and x³/√ (u-sub, wrong leaf), 1/√(a²−x²) (arcsin table / invtrig leaf)."
   ],
   "forms": [
     {
@@ -142,6 +144,46 @@
       ]
     },
     {
+      "form_id": "x2_over_sqrt_x2_plus_a2",
+      "description": "∫ x²/√(x²+a²) dx — x = a tan θ (BC §5 lookalike)",
+      "strategy": "tan_sub",
+      "constraints": {
+        "radicand": "x2+a2",
+        "num": "x2"
+      },
+      "d_min": 8,
+      "d_weight": 1.7,
+      "generation_status": "implemented",
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.3 x²/√ sibling; BC bank §5",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
+    },
+    {
+      "form_id": "x2_over_sqrt_x2_minus_a2",
+      "description": "∫ x²/√(x²−a²) dx — x = a sec θ (BC §5 lookalike)",
+      "strategy": "sec_sub",
+      "constraints": {
+        "radicand": "x2-a2",
+        "num": "x2"
+      },
+      "d_min": 8,
+      "d_weight": 1.7,
+      "generation_status": "implemented",
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.3 x²/√ sibling; BC bank §5",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
+    },
+    {
       "form_id": "one_over_x2_sqrt_x2_plus_a2",
       "description": "∫ 1/(x² √(x²+a²)) dx",
       "strategy": "tan_sub",
@@ -242,6 +284,26 @@
       ]
     },
     {
+      "form_id": "pow_m3_2_x2_minus",
+      "description": "∫ 1/(x²−a²)^{3/2} dx — x = a sec θ (BC §5 lookalike)",
+      "strategy": "sec_sub",
+      "constraints": {
+        "power": "-3/2",
+        "radicand": "x2-a2"
+      },
+      "d_min": 12,
+      "d_weight": 1.5,
+      "generation_status": "implemented",
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§3.3 (x²−a²)^{-3/2}; BC bank §5",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
+    },
+    {
       "form_id": "pow_m5_2_a2_plus",
       "description": "∫ 1/(a²+x²)^{5/2} dx",
       "strategy": "tan_sub",
@@ -301,6 +363,67 @@
       "gap_reason": "Needs dedicated closed-form template (ln + sqrt mix)",
       "requires_allows": [
         "allow_trig_sub"
+      ]
+    },
+    {
+      "form_id": "one_over_sqrt_a2_minus_x2",
+      "description": "∫ 1/√(a²−x²) dx — table arcsin, not a trig-sub drill",
+      "strategy": "sin_sub",
+      "constraints": {
+        "radicand": "a2-x2",
+        "power": "-1/2"
+      },
+      "d_min": 2,
+      "d_weight": 0.4,
+      "generation_status": "deferred",
+      "tricks": [
+        "trig_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "§5.7 invtrig table (not §3.3)",
+      "gap_reason": "Closed form is arcsin(x/a); host is calc_indef_int_inverse_trigonometric, not this leaf",
+      "requires_allows": [
+        "allow_trig_sub"
+      ]
+    },
+    {
+      "form_id": "x_over_sqrt_x2_minus_a2",
+      "description": "∫ x/√(x²−a²) dx — u-sub (du=2x dx), not trig-sub",
+      "strategy": "u_sub",
+      "constraints": {
+        "kind": "x_over_sqrt"
+      },
+      "d_min": 4,
+      "d_weight": 0.3,
+      "generation_status": "deferred",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "BC bank §5.17 — wrong technique for this leaf",
+      "gap_reason": "Visible x dx is power u-sub (root_quad family), not x=a secθ",
+      "requires_allows": [
+        "allow_substitution"
+      ]
+    },
+    {
+      "form_id": "x3_over_sqrt",
+      "description": "∫ x³/√(x²±a²) dx — rewrite x²=(radicand)∓a² then u-sub",
+      "strategy": "u_sub",
+      "constraints": {
+        "kind": "x3_over_sqrt"
+      },
+      "d_min": 10,
+      "d_weight": 0.3,
+      "generation_status": "deferred",
+      "tricks": [
+        "u_sub"
+      ],
+      "example_item_ids": [],
+      "openstax_case": "BC bank §5.18–5.19 — algebraic rewrite, not trig-sub",
+      "gap_reason": "Honest path is x² rewrite then u-sub; no dedicated trig-sub closed template",
+      "requires_allows": [
+        "allow_substitution"
       ]
     },
     {

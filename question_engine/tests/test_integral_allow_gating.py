@@ -28,6 +28,10 @@ TRIG_FORM_IDS = {
     str(f["form_id"])
     for f in implemented_forms(load_form_catalog("trig_integrals"))
 }
+TRIG_SUB_FORM_IDS = {
+    str(f["form_id"])
+    for f in implemented_forms(load_form_catalog("trig_substitution"))
+}
 USUB_TRIG_FORM_IDS = {
     str(f["form_id"])
     for f in implemented_forms(load_form_catalog("u_substitution"))
@@ -143,6 +147,23 @@ def test_general_allow_trig_off_excludes_trig_bank_families():
         assert fid not in USUB_TRIG_FORM_IDS, (seed, fid, sample.prompt_latex)
         tricks = list(sample.as_metadata().get("tricks_required") or [])
         assert "trig" not in tricks, (seed, tricks, sample.prompt_latex)
+
+
+def test_general_allow_trig_sub_off_excludes_trig_sub_families():
+    for seed in range(80):
+        sample = sample_integral_expression(
+            {
+                "difficulty": 16,
+                "seed": seed,
+                "include_answer_key": True,
+                "allow_trig_sub": False,
+            },
+            generator_key="integral_general",
+        )
+        fid = _fid(sample)
+        assert fid not in TRIG_SUB_FORM_IDS, (seed, fid, sample.prompt_latex)
+        tricks = list(sample.as_metadata().get("tricks_required") or [])
+        assert "trig_sub" not in tricks, (seed, tricks, sample.prompt_latex)
 
 
 def test_usub_leaf_allow_trig_off_drops_trig_bank_forms():

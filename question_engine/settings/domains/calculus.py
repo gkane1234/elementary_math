@@ -629,4 +629,12 @@ def integral_settings(
             options=["auto", "bc_bank"],
             group="integral_techniques",
         ),
+        SettingField(
+            "trig_sub_form_preset",
+            "Trigonometric-substitution form family",
+            "select",
+            "auto",
+            options=["auto", "bc_bank"],
+            group="integral_techniques",
+        ),
     ]

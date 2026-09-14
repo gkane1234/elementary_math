@@ -14,7 +14,7 @@ User-supplied drill bank (not OpenStax). Gold as **extra form families / high-D 
 | 2 | Integration by parts | `calc_indef_int_integration_by_parts` | `integration_by_parts.json` |
 | 3 | Trigonometric integrals | `calc_indef_int_trigonometric` | `trig_integrals.json` |
 | 4 | Rational functions / PFD | `calc_indef_int_partial_fractions` | `partial_fractions.json` |
-| 5 | Algebraic radicals / trig sub | (trig-sub leaf; see `trig_substitution.json`) | `trig_substitution.json` |
+| 5 | Algebraic radicals / trig sub | `calc_indef_int_trigonometric_with_substitution` | `trig_substitution.json` preset `bc_bank` |
 | 6 | Mixed / clever | split: PFD / u-sub / long-division | `partial_fractions` + `u_substitution` |
 | 7 | Log, invtrig, nested | ln/exp u-sub + parts | `u_substitution` + `integration_by_parts` |
 | 8 | Multiple techniques | `calc_indef_int_multi_trick` | pipeline forms |
@@ -25,6 +25,7 @@ User-supplied drill bank (not OpenStax). Gold as **extra form families / high-D 
 Named u-sub preset: `u_sub_form_preset=bc_bank` (gallery slugs `u_sub_preset_bc_bank`, `_ln_exp`, `_trig`).
 Named parts preset: `parts_form_preset=bc_bank` (gallery `parts_preset_bc_bank`).
 Named PFD preset: `pfd_form_preset=bc_bank` (gallery `pfd_preset_bc_bank`).
+Named trig-sub preset: `trig_sub_form_preset=bc_bank` (gallery `trig_sub_preset_bc_bank`).
 
 ## §1 inventory (u-sub)
 
@@ -80,6 +81,14 @@ Existing core lookalikes (not frozen bank LaTeX): `distinct_linear_2` / `_3`, `m
 
 **Deferred:** `repeated_quad_square` \((x^2+1)^2\), `x4_plus_1` \(1/(x^4+1)\) (no honest factorization in the PFD spine), `improper_long_division`, `repeated_linear_cube`.
 
-Trig-sub √(a²±x²) families already exist. Missing: x³/√(x²±a²) (u-sub actually), `(x²−a²)^{-3/2}`.
+## §5 inventory (trig-sub)
+
+Existing core lookalikes (not frozen bank LaTeX): `sqrt_a2_minus_x2` (D=0 auto), `sqrt_a2_plus_x2`, `sqrt_x2_minus_a2`, `one_over_sqrt_x2_plus_a2` / `_minus`, `x2_over_sqrt_a2_minus_x2` / `_x2_plus_a2` / `_x2_minus_a2`, `pow_3_2_*`, `pow_m3_2_a2_plus` / `_a2_minus` / `_x2_minus`. Named preset `trig_sub_form_preset=bc_bank` (gallery `trig_sub_preset_bc_bank`).
+
+**Deferred:** `sqrt_over_x_a2_minus` \(\sqrt{a^2-x^2}/x\) (no closed ln+sqrt template), `x_over_sqrt_x2_minus_a2` and `x3_over_sqrt` (u-sub / rewrite, wrong leaf), `one_over_sqrt_a2_minus_x2` (arcsin table on invtrig).
+
+## §6 inventory (mixed / clever)
+
+**Not started this pass.** \(x^2/(x^2+1)\) rewrite needs improper long division (`improper_long_division` still stub). Complete-the-square \(\int dx/(x^2+2x+5)\) is not an existing invtrig/PFD construction (table forms are \(a^2+x^2\) / \(a^2+b^2x^2\) only). Honest leftovers already on PFD (`irreducible_quad_arctan`) and u-sub (`du_over_u` quadratic).
 
 §10 `x⁴+1`, `x⁶+1`, 1/(1+tan x): **deferred** (need PFD of x⁴+1 / Weierstrass).

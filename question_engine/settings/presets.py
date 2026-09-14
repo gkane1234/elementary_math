@@ -3011,6 +3011,34 @@ GENERATOR_DIFFICULTY_PRESETS["calc_indef_int_partial_fractions"] = dict(
     _INTEGRAL_PFD_TIERS
 )
 
+# Calc BC bank §5 named trig-sub form preset (real catalog form_id set).
+_INTEGRAL_TRIG_SUB_TIERS: TierPresets = {
+    "easy": {
+        "difficulty": 3,
+        "trig_sub_form_preset": "auto",
+        "coef_min": -4,
+        "coef_max": 4,
+    },
+    "medium": {
+        "difficulty": 8,
+        "trig_sub_form_preset": "auto",
+        "coef_min": -6,
+        "coef_max": 6,
+    },
+    "hard": {
+        "difficulty": 16,
+        "trig_sub_form_preset": "bc_bank",
+        "coef_min": -10,
+        "coef_max": 10,
+    },
+}
+GENERATOR_DIFFICULTY_PRESETS["integral_trig_substitution"] = dict(
+    _INTEGRAL_TRIG_SUB_TIERS
+)
+GENERATOR_DIFFICULTY_PRESETS["calc_indef_int_trigonometric_with_substitution"] = dict(
+    _INTEGRAL_TRIG_SUB_TIERS
+)
+
 
 def _normalize_tier(tier: Any) -> str | None:
     if tier is None:

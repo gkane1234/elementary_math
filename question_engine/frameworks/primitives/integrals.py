@@ -358,9 +358,10 @@ class IntegralSpec:
     u_sub_form_preset: str = "auto"
     # auto | catalog | reverse_chain
     u_sub_construction: str = "auto"
-    # Named IBP / PFD families (settings ``parts_form_preset`` / ``pfd_form_preset``).
+    # Named IBP / PFD / trig-sub families (settings ``*_form_preset``).
     parts_form_preset: str = "auto"
     pfd_form_preset: str = "auto"
+    trig_sub_form_preset: str = "auto"
 
     def snapshot(self) -> dict[str, Any]:
         return {
@@ -397,6 +398,7 @@ class IntegralSpec:
             "u_sub_construction": self.u_sub_construction,
             "parts_form_preset": self.parts_form_preset,
             "pfd_form_preset": self.pfd_form_preset,
+            "trig_sub_form_preset": self.trig_sub_form_preset,
         }
 
 
@@ -1064,6 +1066,7 @@ def build_integral_spec(
         u_sub_construction=str(settings.get("u_sub_construction") or "auto").strip().lower(),
         parts_form_preset=str(settings.get("parts_form_preset") or "auto").strip().lower(),
         pfd_form_preset=str(settings.get("pfd_form_preset") or "auto").strip().lower(),
+        trig_sub_form_preset=str(settings.get("trig_sub_form_preset") or "auto").strip().lower(),
     )
 
 
@@ -1749,6 +1752,29 @@ PFD_FORM_PRESETS: dict[str, frozenset[str] | None] = {
 }
 PFD_FORM_PRESET_OPTIONS: tuple[str, ...] = tuple(PFD_FORM_PRESETS.keys())
 
+# Calc BC drill bank §5 families the existing trig-sub sampler can emit.
+# D=0 auto stays ∫√(a²−x²); easy OpenStax form is not in this hard set.
+TRIG_SUB_FORM_PRESETS: dict[str, frozenset[str] | None] = {
+    "auto": None,
+    "bc_bank": frozenset(
+        {
+            "sqrt_a2_plus_x2",
+            "sqrt_x2_minus_a2",
+            "one_over_sqrt_x2_plus_a2",
+            "one_over_sqrt_x2_minus_a2",
+            "x2_over_sqrt_a2_minus_x2",
+            "x2_over_sqrt_x2_plus_a2",
+            "x2_over_sqrt_x2_minus_a2",
+            "pow_3_2_a2_minus",
+            "pow_3_2_a2_plus",
+            "pow_m3_2_a2_plus",
+            "pow_m3_2_a2_minus",
+            "pow_m3_2_x2_minus",
+        }
+    ),
+}
+TRIG_SUB_FORM_PRESET_OPTIONS: tuple[str, ...] = tuple(TRIG_SUB_FORM_PRESETS.keys())
+
 
 def resolve_parts_form_preset(name: str | None) -> frozenset[str] | None:
     key = str(name or "auto").strip().lower()
@@ -1762,6 +1788,13 @@ def resolve_pfd_form_preset(name: str | None) -> frozenset[str] | None:
     if key not in PFD_FORM_PRESETS:
         return None
     return PFD_FORM_PRESETS[key]
+
+
+def resolve_trig_sub_form_preset(name: str | None) -> frozenset[str] | None:
+    key = str(name or "auto").strip().lower()
+    if key not in TRIG_SUB_FORM_PRESETS:
+        return None
+    return TRIG_SUB_FORM_PRESETS[key]
 
 
 def _parts_kx(k: int, var: str) -> str:
@@ -2328,20 +2361,6 @@ def _sample_trig_sub(
     """
     var = spec.variable
     a = rng.randint(2, max(2, min(5, spec.coef_abs_max)))
-    b_shift = 0
-    if with_u_wrap:
-        b_shift = rng.choice([-3, -2, -1, 1, 2, 3])
-
-    # Inner linear for wrap: u = x + b (always parenthesize when shifted so
-    # ``(1/2)u`` does not parse as ``(1/2)x - 2``).
-    if b_shift == 0:
-        u = var
-        u_disp = var
-        u2 = f"{var}^{{2}}"
-    else:
-        u = format_linear_latex(1, b_shift, variable=var)
-        u_disp = rf"\left({u}\right)"
-        u2 = rf"{u_disp}^{{2}}"
 
     # Catalog-driven form_id (family names match catalog entries).
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
@@ -2362,8 +2381,30 @@ def _sample_trig_sub(
         "pow_3_2_a2_plus",
         "pow_m3_2_a2_plus",
         "pow_m3_2_a2_minus",
+        "pow_m3_2_x2_minus",
     }
-    extra = wrap_ok if b_shift != 0 else None
+    preset_ids = resolve_trig_sub_form_preset(spec.trig_sub_form_preset)
+    extra: set[str] | None = set(preset_ids) if preset_ids else None
+    do_wrap = bool(with_u_wrap)
+    if do_wrap:
+        allowed_wrap = wrap_ok if extra is None else (extra & wrap_ok)
+        if allowed_wrap:
+            extra = allowed_wrap if extra is not None else wrap_ok
+        else:
+            do_wrap = False
+    b_shift = rng.choice([-3, -2, -1, 1, 2, 3]) if do_wrap else 0
+
+    # Inner linear for wrap: u = x + b (always parenthesize when shifted so
+    # ``(1/2)u`` does not parse as ``(1/2)x - 2``).
+    if b_shift == 0:
+        u = var
+        u_disp = var
+        u2 = f"{var}^{{2}}"
+    else:
+        u = format_linear_latex(1, b_shift, variable=var)
+        u_disp = rf"\left({u}\right)"
+        u2 = rf"{u_disp}^{{2}}"
+
     pool = _gated_form_pool(catalog, spec, extra_ids=extra)
     if not pool:
         pool = _gated_form_pool(catalog, spec)
@@ -2432,6 +2473,26 @@ def _sample_trig_sub(
             include=spec.include_plus_c,
         )
         sub = "sin"
+    elif family == "x2_over_sqrt_x2_plus_a2":
+        tricks = ["trig_sub"]
+        b_shift = 0
+        prompt = rf"\int \frac{{{var}^{{2}}}}{{\sqrt{{{var}^{{2}}+{a2}}}}}\,d{var}"
+        answer = _plus_c(
+            rf"\frac{{1}}{{2}}{var}\sqrt{{{var}^{{2}}+{a2}}}"
+            rf"-{half_a2}\ln\left|{var}+\sqrt{{{var}^{{2}}+{a2}}}\right|",
+            include=spec.include_plus_c,
+        )
+        sub = "tan"
+    elif family == "x2_over_sqrt_x2_minus_a2":
+        tricks = ["trig_sub"]
+        b_shift = 0
+        prompt = rf"\int \frac{{{var}^{{2}}}}{{\sqrt{{{var}^{{2}}-{a2}}}}}\,d{var}"
+        answer = _plus_c(
+            rf"\frac{{1}}{{2}}{var}\sqrt{{{var}^{{2}}-{a2}}}"
+            rf"+{half_a2}\ln\left|{var}+\sqrt{{{var}^{{2}}-{a2}}}\right|",
+            include=spec.include_plus_c,
+        )
+        sub = "sec"
     elif family == "pow_3_2_a2_minus":
         # OpenStax: ∫ (a²−x²)^{3/2} dx after x=a sinθ
         power = Fraction(3, 2)
@@ -2467,6 +2528,14 @@ def _sample_trig_sub(
             include=spec.include_plus_c,
         )
         sub = "sin"
+    elif family == "pow_m3_2_x2_minus":
+        power = Fraction(-3, 2)
+        prompt = rf"\int \frac{{1}}{{\left({u2}-{a2}\right)^{{\frac{{3}}{{2}}}}}}\,d{var}"
+        answer = _plus_c(
+            rf"-\frac{{{u}}}{{{a2}\sqrt{{{u2}-{a2}}}}}",
+            include=spec.include_plus_c,
+        )
+        sub = "sec"
     elif family == "pow_m5_2_a2_plus":
         power = Fraction(-5, 2)
         prompt = rf"\int \frac{{1}}{{\left({a2}+{u2}\right)^{{\frac{{5}}{{2}}}}}}\,d{var}"
@@ -2486,6 +2555,7 @@ def _sample_trig_sub(
         )
         sub = "sin"
     else:
+        # Catalog fallback: denser rational×sqrt (OpenStax, not BC §5).
         tricks = ["trig_sub"]
         b_shift = 0
         power = Fraction(-1, 2)
@@ -2509,6 +2579,7 @@ def _sample_trig_sub(
         "trig_sub_kind": sub,
         "trig_sub_exponent": str(power),
         "tricks_required": tricks,
+        "trig_sub_form_preset": spec.trig_sub_form_preset,
         "u_linear": [1, b_shift] if b_shift != 0 else None,
         "nest": 1 if b_shift != 0 else 0,
     }
@@ -3960,6 +4031,7 @@ def sample_integral_expression(
         "u_sub_form_preset",
         "parts_form_preset",
         "pfd_form_preset",
+        "trig_sub_form_preset",
         "omit_du_constant",
         "numeric_tier",
         "format_tier",

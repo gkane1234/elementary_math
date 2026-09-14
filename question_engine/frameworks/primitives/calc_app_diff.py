@@ -890,28 +890,147 @@ def sample_newton(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     )
 
 
-def sample_motion(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    d = _d(settings)
-    n = rng.randint(2, 6)
+MOTION_GENERATOR = "motion_along_a_line"
+
+_MOTION_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("eval_velocity",),
+    "medium": ("eval_velocity", "particle_at_rest"),
+    "hard": ("particle_at_rest", "cubic_at_rest"),
+    "expert": ("cubic_at_rest", "cubic_speed_sign"),
+}
+
+
+def motion_forms_for_difficulty(d: float) -> tuple[str, ...]:
     if d < 8.0:
-        prompt = rf"s(t)=t^{{2}}-{n}t.\quad\text{{Find }}v({n})."
-        return AppDiffItem(
-            prompt, str(n), "motion", "eval_velocity",
-            {"n": n, "ask": "v"},
-        )
+        return _MOTION_BANDS["easy"]
     if d < 16.0:
-        # v=2t-n = 0 at t=n/2; require even n
-        n = rng.choice([2, 4, 6])
-        prompt = rf"s(t)=t^{{2}}-{n}t.\quad\text{{When is the particle at rest?}}"
-        t_rest = frac_latex(Fraction(n, 2))
-        return AppDiffItem(
-            prompt, rf"t={t_rest}", "motion", "particle_at_rest",
-            {"n": n, "ask": "rest"},
-        )
-    prompt = rf"s(t)=t^{{2}}-{n}t.\quad\text{{Find }}a(t)."
+        return _MOTION_BANDS["medium"]
+    if d < 20.0:
+        return _MOTION_BANDS["hard"]
+    return _MOTION_BANDS["expert"]
+
+
+def _motion_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [MOTION_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_eval_velocity(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: s=t²−nt, v(n)=n."""
+    n = rng.randint(2, 6)
+    prompt = rf"s(t)=t^{{2}}-{n}t.\quad\text{{Find }}v({n})."
     return AppDiffItem(
-        prompt, "2", "motion", "acceleration_const",
-        {"n": n, "ask": "a"},
+        prompt, str(n), "motion along a line", "eval_velocity",
+        {"n": n, "ask": "v"},
+    )
+
+
+def _sample_particle_at_rest(rng: random.Random) -> AppDiffItem:
+    """Old-path mid D leftover: s=t²−nt, rest at t=n/2 (even n)."""
+    n = rng.choice([2, 4, 6])
+    prompt = rf"s(t)=t^{{2}}-{n}t.\quad\text{{When is the particle at rest?}}"
+    t_rest = frac_latex(Fraction(n, 2))
+    return AppDiffItem(
+        prompt, rf"t={t_rest}", "motion along a line", "particle_at_rest",
+        {"n": n, "ask": "rest"},
+    )
+
+
+def _positive_cubic_rest_times(
+    rng: random.Random,
+) -> tuple[int, int, int, list[int]]:
+    """Ex. 3.36: v=3(t−p)(t−q) with p,q>0 and p+q even so coeffs are ints."""
+    p, q = rng.choice(((1, 3), (2, 4), (1, 5), (2, 6), (3, 5)))
+    c = rng.choice([0, 1, -1, 2, 4])
+    a_coef = (3 * (p + q)) // 2
+    b_coef = 3 * p * q
+    return p, q, c, [1, -a_coef, b_coef, c]
+
+
+def _sample_cubic_at_rest(rng: random.Random) -> AppDiffItem:
+    """OpenStax Ex. 3.36: cubic s(t), particle at rest at two positive times."""
+    p, q, c, coeffs = _positive_cubic_rest_times(rng)
+    body = format_polynomial_latex(coeffs, variable="t")
+    prompt = rf"s(t)={body}.\quad\text{{When is the particle at rest?}}"
+    answer = rf"t={p},\,t={q}"
+    return AppDiffItem(
+        prompt, answer, "motion along a line", "cubic_at_rest",
+        {"p": p, "q": q, "c": c, "ask": "rest"},
+    )
+
+
+def _sample_cubic_speed_sign(rng: random.Random) -> AppDiffItem:
+    """OpenStax Ex. 3.35: s=t³−kt+c; direction and speeding up / slowing down."""
+    t0 = rng.choice((1, 2))
+    k = rng.choice([2, 4, 5, 6, 8])
+    if k == 3 * t0 * t0:
+        k = 4 if t0 == 1 else 8
+    c = rng.choice([0, 1, 2, -1])
+    body = format_polynomial_latex([1, 0, -k, c], variable="t")
+    v = 3 * t0 * t0 - k
+    a = 6 * t0
+    direction = "left to right" if v > 0 else "right to left"
+    speed = "speeding up" if (v > 0) == (a > 0) else "slowing down"
+    prompt = (
+        rf"s(t)={body}.\quad\text{{Find }}v({t0})\text{{ and }}a({t0})."
+        rf"\text{{ Is the particle moving left to right or right to left? "
+        rf"Speeding up or slowing down?}}"
+    )
+    answer = (
+        rf"v({t0})={v},\,a({t0})={a};\text{{ {direction}; {speed}}}"
+    )
+    return AppDiffItem(
+        prompt, answer, "motion along a line", "cubic_speed_sign",
+        {"t0": t0, "k": k, "c": c, "v": v, "a": a, "ask": "speed_sign"},
+    )
+
+
+_MOTION_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "eval_velocity": _sample_eval_velocity,
+    "particle_at_rest": _sample_particle_at_rest,
+    "cubic_at_rest": _sample_cubic_at_rest,
+    "cubic_speed_sign": _sample_cubic_speed_sign,
+}
+
+
+def sample_motion(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """s(t)→v/a motion. High D locks out t²−nt leftovers for OpenStax cubics."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = motion_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _motion_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _MOTION_BUILDERS:
+        fid = forms[0]
+    item = _MOTION_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": MOTION_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": MOTION_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 

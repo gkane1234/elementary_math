@@ -120,7 +120,7 @@ skill pair with a Calculus leaf. See `PRECALC_INDEX.md`.
 | `calc_diff_definition_of_the_derivative` | `pc_definition_of_the_derivative` | `definition_of_derivative` | no |
 | `calc_diff_instantaneous_rates_of_change` | `pc_instantaneous_rates_of_change` | `instantaneous_rate_of_change` | no |
 | `calc_diff_power_rule` | `pc_power_rule_for_differentiation` | `derivative_power_rule` | yes |
-| `calc_app_diff_motion_along_a_line` | `pc_motion_along_a_line` | `calculus_foundations` | no |
+| `calc_app_diff_motion_along_a_line` | `pc_motion_along_a_line` | `motion_along_a_line` | no |
 | `calc_app_diff_limits_in_form_of_definition_of_derivative` | `pc_definition_of_the_derivative` | `definition_of_derivative` | no |
 | `calc_indef_int_power_rule` | `pc_indefinite_integrals` | `integral_power_rule` | no |
 | `calc_def_int_approximating_area_under_a_curve` | `pc_approximating_area_under_a_curve` | `riemann_approximate_area` | no |
@@ -245,7 +245,7 @@ skill pair with a Calculus leaf. See `PRECALC_INDEX.md`.
 | `calc_app_diff_optimization` | `calculus_foundations` | — |
 | `calc_app_diff_curve_sketching` | `curve_sketching` | — |
 | `calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime` | `calculus_foundations` | — |
-| `calc_app_diff_motion_along_a_line` | `calculus_foundations` | — |
+| `calc_app_diff_motion_along_a_line` | `motion_along_a_line` | — |
 | `calc_app_diff_related_rates` | `related_rates_simple` | — |
 | `calc_app_diff_differentials` | `differentials` | — |
 | `calc_app_diff_linear_approximations` | `linear_approximation` | — |

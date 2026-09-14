@@ -2917,7 +2917,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_motion_along_a_line",
         "App — motion along a line",
-        "s(t) → v, rest, a(t). OpenStax Vol 1 §3.4.",
+        "D=0 quadratic leftover (old easy eval v); D≥8 rest; high D "
+        "OpenStax Ex. 3.36 cubics (two rest times) and Ex. 3.35 speed/direction, "
+        "locks out t^2-nt. OpenStax Vol 1 §3.4.",
     ),
     (
         "calc_app_diff_newtons_method",

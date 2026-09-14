@@ -642,6 +642,78 @@ def test_motion_and_integral_not_generic_ddx():
     assert "0" in (qih.answer_latex or "")
 
 
+def test_motion_d0_eval_velocity_high_d_cubic_lockout():
+    q0 = _gen("calc_app_diff_motion_along_a_line", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "eval_velocity"
+    assert (q0.metadata or {}).get("generator") == "motion_along_a_line"
+    assert r"s(t)=t^{2}" in (q0.prompt_latex or "")
+    assert r"Find }v(" in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "eval_velocity"
+    assert snap.get("generator") == "motion_along_a_line"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_motion_along_a_line", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert r"t^{2}" in (q.prompt_latex or "")
+    assert "eval_velocity" in mid
+    assert "particle_at_rest" in mid
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_motion_along_a_line", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "eval_velocity"
+        assert fid != "acceleration_const"
+        assert (q.metadata or {}).get("generator") == "motion_along_a_line"
+        assert "at rest" in (q.prompt_latex or "")
+    assert high <= {"particle_at_rest", "cubic_at_rest"}
+    assert "cubic_at_rest" in high
+
+    expert = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_motion_along_a_line", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid not in {"eval_velocity", "particle_at_rest", "acceleration_const"}
+        plain = (q.prompt_latex or "").replace(" ", "")
+        assert "s(t)=t^{2}-" not in plain
+        assert (q.metadata or {}).get("generator") == "motion_along_a_line"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "motion_along_a_line"
+    assert expert <= {"cubic_at_rest", "cubic_speed_sign"}
+    assert "cubic_at_rest" in expert
+    assert "cubic_speed_sign" in expert
+
+
+def test_motion_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_motion,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_motion(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"eval_velocity": -2.5, "particle_at_rest": 2.5})
+    assert tilted["particle_at_rest"] > baseline["particle_at_rest"]
+
+
 def test_de_intro_verify_exp_then_euler():
     q0 = _gen("calc_diff_eq_introduction", 0, seed=101)[0]
     assert "Verify" in (q0.prompt_latex or "")

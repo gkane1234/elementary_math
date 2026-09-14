@@ -250,10 +250,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "Leave leaf until figure bank exists; not Diff skeleton.",
     },
     "calc_app_diff_motion_along_a_line": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "`calculus_foundations` stub — s/v/a motion prompts may fall through to generic d/dx.",
-        "skill": "From s(t) find velocity/acceleration; interpret motion.",
-        "engine": "Reuse Diff for derivatives of s(t); add motion narrative frames.",
+        "flag_why": "Shipped leftover lockout + Ex. 3.36/3.35 cubics; LIMITATIONS no free-fall / piecewise / trig / s(t) graph.",
+        "skill": "From s(t) find velocity / rest / direction and speeding up vs slowing down.",
+        "engine": "calc_app_diff `motion_along_a_line` (quadratic leftover / cubic rest / cubic speed-sign).",
     },
     "calc_app_diff_newtons_method": {
         "force_flags": ["UNCLEAR"],

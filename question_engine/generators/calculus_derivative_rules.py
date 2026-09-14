@@ -922,28 +922,81 @@ def _average_rate_of_change(topic: str, settings: dict) -> list[Question]:
     )
 
 
+INSTANTANEOUS_RATE_GENERATOR = "instantaneous_rate_of_change"
+
+_IRC_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("power",),
+    "medium": ("power", "poly", "sqrt", "reciprocal"),
+    "hard": ("poly", "sqrt", "reciprocal", "cubic", "trig", "exp"),
+    "expert": ("cubic", "trig", "exp"),
+}
+
+
+def instantaneous_rate_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of easy x^n (old accumulate kept it at high D)."""
+    if d < 8.0:
+        return _IRC_BANDS["easy"]
+    if d < 16.0:
+        return _IRC_BANDS["medium"]
+    if d < 20.0:
+        return _IRC_BANDS["hard"]
+    return _IRC_BANDS["expert"]
+
+
+def _irc_form_rows(forms: tuple[str, ...]) -> list[dict]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [INSTANTANEOUS_RATE_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
 def _instantaneous_rate_of_change(topic: str, settings: dict) -> list[Question]:
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     structure = _rule_structure(settings)
     x = str(settings.get("variable", "x"))
     note, metadata_builder = _madlibs_meta("instantaneous_rate_of_change", structure)
+    numeric_d = _settings_numeric_d(settings)
 
     def build() -> tuple[str, str, str | None]:
         a = random.randint(1, max(1, min(4, int(structure.get("n_max", 4)))))
-        extra = []
-        if structure.get("allow_trig") or structure.get("unlock_trig"):
-            extra.append("trig")
-        if structure.get("allow_exp") or structure.get("unlock_exp"):
-            extra.append("exp")
-        family = _pick_family(
-            structure,
-            ["power"],
-            medium=["poly", "sqrt", "reciprocal"],
-            hard=["cubic"],
-            extra=extra if structure.get("unlock_hard") else None,
-        )
-        note(family)
+        if numeric_d is not None:
+            from question_engine.frameworks.primitives.openstax_form_catalogs import (
+                select_form_id,
+            )
+
+            forms = instantaneous_rate_forms_for_difficulty(numeric_d)
+            qw = settings.get("live_quality_form_weights")
+            quality_weights = qw if isinstance(qw, dict) else None
+            form = select_form_id(
+                _irc_form_rows(forms),
+                d=numeric_d,
+                rng=random,
+                quality_weights=quality_weights,
+            )
+            family = str(form.get("form_id") or forms[0])
+            if family not in forms:
+                family = forms[0]
+        else:
+            extra = []
+            if structure.get("allow_trig") or structure.get("unlock_trig"):
+                extra.append("trig")
+            if structure.get("allow_exp") or structure.get("unlock_exp"):
+                extra.append("exp")
+            family = _pick_family(
+                structure,
+                ["power"],
+                medium=["poly", "sqrt", "reciprocal"],
+                hard=["cubic"],
+                extra=extra if structure.get("unlock_hard") else None,
+            )
+        note(family, form_id=family)
         if family == "power":
             n = random.randint(2, max(2, min(4, int(structure.get("power_max", 4)))))
             f = f"{x}^{{{n}}}"

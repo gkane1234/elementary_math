@@ -28,10 +28,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=x^{3}\\text{ at }x=1.",
-      "answer_latex": "3",
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=x^{4}\\text{ at }x=1.",
+      "answer_latex": "4",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "power",
       "diagram_svg": "",
       "debug": [
         [
@@ -45,6 +45,10 @@
         [
           "seed",
           101
+        ],
+        [
+          "form_id",
+          "power"
         ],
         [
           "has_diagram_svg",
@@ -106,10 +110,12 @@
           "unlock_roots": false,
           "n_max": 2,
           "k_max": 2,
+          "form_id": "power",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "power",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -153,7 +159,7 @@
       "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=x^{2}\\text{ at }x=1.",
       "answer_latex": "2",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "power",
       "diagram_svg": "",
       "debug": [
         [
@@ -167,6 +173,10 @@
         [
           "seed",
           207
+        ],
+        [
+          "form_id",
+          "power"
         ],
         [
           "has_diagram_svg",
@@ -228,10 +238,12 @@
           "unlock_roots": false,
           "n_max": 2,
           "k_max": 2,
+          "form_id": "power",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "power",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -275,7 +287,7 @@
       "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=x^{3}\\text{ at }x=1.",
       "answer_latex": "3",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "power",
       "diagram_svg": "",
       "debug": [
         [
@@ -289,6 +301,10 @@
         [
           "seed",
           313
+        ],
+        [
+          "form_id",
+          "power"
         ],
         [
           "has_diagram_svg",
@@ -350,10 +366,12 @@
           "unlock_roots": false,
           "n_max": 2,
           "k_max": 2,
+          "form_id": "power",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "power",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -394,10 +412,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=\\sqrt{x}\\text{ at }x=4.",
-      "answer_latex": "\\frac{1}{4}",
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=x^{-1}\\text{ at }x=3.",
+      "answer_latex": "-\\frac{1}{9}",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "reciprocal",
       "diagram_svg": "",
       "debug": [
         [
@@ -413,248 +431,8 @@
           101
         ],
         [
-          "has_diagram_svg",
-          false
-        ]
-      ],
-      "metadata": {
-        "generator": "instantaneous_rate_of_change",
-        "family": "sqrt",
-        "structure_id": "instantaneous_rate_of_change:sqrt",
-        "shape_id": "sqrt",
-        "band": "medium",
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "power"
-        ],
-        "chain_depth": 0,
-        "derivative_order": 1,
-        "effective_d": 8.0,
-        "spec_snapshot": {
-          "pack": "structured_instantaneous_rate_of_change",
-          "family": "sqrt",
-          "generator": "instantaneous_rate_of_change",
-          "derivative_order": 1,
-          "chain_depth": 0,
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "power"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_hyperbolic": true,
-          "allow_roots": true,
-          "allow_invtrig": true,
-          "allow_chain": true,
-          "allow_product": true,
-          "allow_quotient": true,
-          "allow_implicit": true,
-          "require_chain": false,
-          "require_product": false,
-          "require_quotient": false,
-          "require_implicit": false,
-          "coef_hi": 5,
-          "power_max": 5,
-          "term_budget": 3,
-          "band": "medium",
-          "difficulty": 8.0,
-          "unlock_medium": true,
-          "unlock_hard": false,
-          "unlock_advanced": false,
-          "unlock_trig": true,
-          "unlock_exp": true,
-          "unlock_log": false,
-          "unlock_roots": true,
-          "n_max": 4,
-          "k_max": 4,
-          "effort_answer_len": 11
-        },
-        "skeleton_source": "structured_instantaneous_rate_of_change",
-        "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-        "effort_features": {
-          "answer_len": 11,
-          "nest_depth": 0,
-          "chain_applications": 0,
-          "product_applications": 0,
-          "quotient_applications": 0,
-          "n_factors": 0,
-          "n_terms": 1,
-          "degree_max": 5,
-          "coef_abs_max": 5,
-          "has_fn_power": false,
-          "derivative_order": 1,
-          "methods": [
-            "power"
-          ],
-          "n_fn_nodes": 0,
-          "pack": "structured_instantaneous_rate_of_change",
-          "family": "sqrt"
-        },
-        "generation_settings": {
-          "term_count": 3,
-          "power_max": 4,
-          "difficulty": 8.0,
-          "seed": 101,
-          "include_answer_key": true,
-          "integers_only": true,
-          "only_x": true,
-          "_batch_index": 0
-        },
-        "instruction_latex": "\\text{Find the instantaneous rate of change.}"
-      }
-    },
-    {
-      "ok": true,
-      "warn": false,
-      "label": "D\u22488 \u00b7 seed=207",
-      "type_id": "calc_diff_instantaneous_rates_of_change",
-      "difficulty": 8.0,
-      "band": "mid",
-      "seed": 207,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=x^{2} + 1\\text{ at }x=2.",
-      "answer_latex": "4",
-      "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
-      "diagram_svg": "",
-      "debug": [
-        [
-          "skeleton_pattern",
-          "Diff(structured_instantaneous_rate_of_change)"
-        ],
-        [
-          "D / effective_d",
-          8.0
-        ],
-        [
-          "seed",
-          207
-        ],
-        [
-          "has_diagram_svg",
-          false
-        ]
-      ],
-      "metadata": {
-        "generator": "instantaneous_rate_of_change",
-        "family": "poly",
-        "structure_id": "instantaneous_rate_of_change:poly",
-        "shape_id": "poly",
-        "band": "medium",
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "power"
-        ],
-        "chain_depth": 0,
-        "derivative_order": 1,
-        "effective_d": 8.0,
-        "spec_snapshot": {
-          "pack": "structured_instantaneous_rate_of_change",
-          "family": "poly",
-          "generator": "instantaneous_rate_of_change",
-          "derivative_order": 1,
-          "chain_depth": 0,
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "power"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_hyperbolic": true,
-          "allow_roots": true,
-          "allow_invtrig": true,
-          "allow_chain": true,
-          "allow_product": true,
-          "allow_quotient": true,
-          "allow_implicit": true,
-          "require_chain": false,
-          "require_product": false,
-          "require_quotient": false,
-          "require_implicit": false,
-          "coef_hi": 5,
-          "power_max": 5,
-          "term_budget": 3,
-          "band": "medium",
-          "difficulty": 8.0,
-          "unlock_medium": true,
-          "unlock_hard": false,
-          "unlock_advanced": false,
-          "unlock_trig": true,
-          "unlock_exp": true,
-          "unlock_log": false,
-          "unlock_roots": true,
-          "n_max": 4,
-          "k_max": 4,
-          "effort_answer_len": 1
-        },
-        "skeleton_source": "structured_instantaneous_rate_of_change",
-        "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-        "effort_features": {
-          "answer_len": 1,
-          "nest_depth": 0,
-          "chain_applications": 0,
-          "product_applications": 0,
-          "quotient_applications": 0,
-          "n_factors": 0,
-          "n_terms": 1,
-          "degree_max": 5,
-          "coef_abs_max": 5,
-          "has_fn_power": false,
-          "derivative_order": 1,
-          "methods": [
-            "power"
-          ],
-          "n_fn_nodes": 0,
-          "pack": "structured_instantaneous_rate_of_change",
-          "family": "poly"
-        },
-        "generation_settings": {
-          "term_count": 3,
-          "power_max": 4,
-          "difficulty": 8.0,
-          "seed": 207,
-          "include_answer_key": true,
-          "integers_only": true,
-          "only_x": true,
-          "_batch_index": 0
-        },
-        "instruction_latex": "\\text{Find the instantaneous rate of change.}"
-      }
-    },
-    {
-      "ok": true,
-      "warn": false,
-      "label": "D\u22488 \u00b7 seed=313",
-      "type_id": "calc_diff_instantaneous_rates_of_change",
-      "difficulty": 8.0,
-      "band": "mid",
-      "seed": 313,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=\\frac{1}{x}\\text{ at }x=4.",
-      "answer_latex": "-\\frac{1}{16}",
-      "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
-      "diagram_svg": "",
-      "debug": [
-        [
-          "skeleton_pattern",
-          "Diff(structured_instantaneous_rate_of_change)"
-        ],
-        [
-          "D / effective_d",
-          8.0
-        ],
-        [
-          "seed",
-          313
+          "form_id",
+          "reciprocal"
         ],
         [
           "has_diagram_svg",
@@ -716,10 +494,268 @@
           "unlock_roots": true,
           "n_max": 4,
           "k_max": 4,
+          "form_id": "reciprocal",
+          "effort_answer_len": 12
+        },
+        "skeleton_source": "structured_instantaneous_rate_of_change",
+        "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "reciprocal",
+        "effort_features": {
+          "answer_len": 12,
+          "nest_depth": 0,
+          "chain_applications": 0,
+          "product_applications": 0,
+          "quotient_applications": 0,
+          "n_factors": 0,
+          "n_terms": 1,
+          "degree_max": 5,
+          "coef_abs_max": 5,
+          "has_fn_power": false,
+          "derivative_order": 1,
+          "methods": [
+            "power"
+          ],
+          "n_fn_nodes": 0,
+          "pack": "structured_instantaneous_rate_of_change",
+          "family": "reciprocal"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 101,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the instantaneous rate of change.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=207",
+      "type_id": "calc_diff_instantaneous_rates_of_change",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 207,
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=x^{1/2}\\text{ at }x=1.",
+      "answer_latex": "\\frac{1}{2}",
+      "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+      "form_id": "sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(structured_instantaneous_rate_of_change)"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          207
+        ],
+        [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "generator": "instantaneous_rate_of_change",
+        "family": "sqrt",
+        "structure_id": "instantaneous_rate_of_change:sqrt",
+        "shape_id": "sqrt",
+        "band": "medium",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "chain_depth": 0,
+        "derivative_order": 1,
+        "effective_d": 8.0,
+        "spec_snapshot": {
+          "pack": "structured_instantaneous_rate_of_change",
+          "family": "sqrt",
+          "generator": "instantaneous_rate_of_change",
+          "derivative_order": 1,
+          "chain_depth": 0,
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "power"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": true,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "require_implicit": false,
+          "coef_hi": 5,
+          "power_max": 5,
+          "term_budget": 3,
+          "band": "medium",
+          "difficulty": 8.0,
+          "unlock_medium": true,
+          "unlock_hard": false,
+          "unlock_advanced": false,
+          "unlock_trig": true,
+          "unlock_exp": true,
+          "unlock_log": false,
+          "unlock_roots": true,
+          "n_max": 4,
+          "k_max": 4,
+          "form_id": "sqrt",
+          "effort_answer_len": 11
+        },
+        "skeleton_source": "structured_instantaneous_rate_of_change",
+        "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "sqrt",
+        "effort_features": {
+          "answer_len": 11,
+          "nest_depth": 0,
+          "chain_applications": 0,
+          "product_applications": 0,
+          "quotient_applications": 0,
+          "n_factors": 0,
+          "n_terms": 1,
+          "degree_max": 5,
+          "coef_abs_max": 5,
+          "has_fn_power": false,
+          "derivative_order": 1,
+          "methods": [
+            "power"
+          ],
+          "n_fn_nodes": 0,
+          "pack": "structured_instantaneous_rate_of_change",
+          "family": "sqrt"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 207,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the instantaneous rate of change.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=313",
+      "type_id": "calc_diff_instantaneous_rates_of_change",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 313,
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=x^{-1}\\text{ at }x=4.",
+      "answer_latex": "-\\frac{1}{16}",
+      "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+      "form_id": "reciprocal",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "skeleton_pattern",
+          "Diff(structured_instantaneous_rate_of_change)"
+        ],
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          313
+        ],
+        [
+          "form_id",
+          "reciprocal"
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "generator": "instantaneous_rate_of_change",
+        "family": "reciprocal",
+        "structure_id": "instantaneous_rate_of_change:reciprocal",
+        "shape_id": "reciprocal",
+        "band": "medium",
+        "function_classes": [
+          "algebraic"
+        ],
+        "methods_used": [
+          "power"
+        ],
+        "chain_depth": 0,
+        "derivative_order": 1,
+        "effective_d": 8.0,
+        "spec_snapshot": {
+          "pack": "structured_instantaneous_rate_of_change",
+          "family": "reciprocal",
+          "generator": "instantaneous_rate_of_change",
+          "derivative_order": 1,
+          "chain_depth": 0,
+          "function_classes": [
+            "algebraic"
+          ],
+          "methods_used": [
+            "power"
+          ],
+          "allow_trig": true,
+          "allow_exp": true,
+          "allow_log": true,
+          "allow_hyperbolic": true,
+          "allow_roots": true,
+          "allow_invtrig": true,
+          "allow_chain": true,
+          "allow_product": true,
+          "allow_quotient": true,
+          "allow_implicit": true,
+          "require_chain": false,
+          "require_product": false,
+          "require_quotient": false,
+          "require_implicit": false,
+          "coef_hi": 5,
+          "power_max": 5,
+          "term_budget": 3,
+          "band": "medium",
+          "difficulty": 8.0,
+          "unlock_medium": true,
+          "unlock_hard": false,
+          "unlock_advanced": false,
+          "unlock_trig": true,
+          "unlock_exp": true,
+          "unlock_log": false,
+          "unlock_roots": true,
+          "n_max": 4,
+          "k_max": 4,
+          "form_id": "reciprocal",
           "effort_answer_len": 13
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "reciprocal",
         "effort_features": {
           "answer_len": 13,
           "nest_depth": 0,
@@ -760,10 +796,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=2x^{3} - 3x\\text{ at }x=2.",
-      "answer_latex": "21",
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=e^{3x}\\text{ at }x=0.",
+      "answer_latex": "3",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -779,15 +815,19 @@
           101
         ],
         [
+          "form_id",
+          "exp"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "instantaneous_rate_of_change",
-        "family": "cubic",
-        "structure_id": "instantaneous_rate_of_change:cubic",
-        "shape_id": "cubic",
+        "family": "exp",
+        "structure_id": "instantaneous_rate_of_change:exp",
+        "shape_id": "exp",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -800,7 +840,7 @@
         "effective_d": 16.0,
         "spec_snapshot": {
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "cubic",
+          "family": "exp",
           "generator": "instantaneous_rate_of_change",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -838,12 +878,14 @@
           "unlock_roots": true,
           "n_max": 7,
           "k_max": 6,
-          "effort_answer_len": 2
+          "form_id": "exp",
+          "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "exp",
         "effort_features": {
-          "answer_len": 2,
+          "answer_len": 1,
           "nest_depth": 0,
           "chain_applications": 0,
           "product_applications": 0,
@@ -859,7 +901,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "cubic"
+          "family": "exp"
         },
         "generation_settings": {
           "term_count": 4,
@@ -885,7 +927,7 @@
       "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=\\sin(x)\\text{ at }x=0.",
       "answer_latex": "1",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "trig",
       "diagram_svg": "",
       "debug": [
         [
@@ -899,6 +941,10 @@
         [
           "seed",
           207
+        ],
+        [
+          "form_id",
+          "trig"
         ],
         [
           "has_diagram_svg",
@@ -960,10 +1006,12 @@
           "unlock_roots": true,
           "n_max": 7,
           "k_max": 6,
+          "form_id": "trig",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "trig",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -1004,10 +1052,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=\\cos(x)\\text{ at }x=0.",
-      "answer_latex": "0",
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=e^{2x}\\text{ at }x=0.",
+      "answer_latex": "2",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -1023,15 +1071,19 @@
           313
         ],
         [
+          "form_id",
+          "exp"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "instantaneous_rate_of_change",
-        "family": "trig",
-        "structure_id": "instantaneous_rate_of_change:trig",
-        "shape_id": "trig",
+        "family": "exp",
+        "structure_id": "instantaneous_rate_of_change:exp",
+        "shape_id": "exp",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1044,7 +1096,7 @@
         "effective_d": 16.0,
         "spec_snapshot": {
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "trig",
+          "family": "exp",
           "generator": "instantaneous_rate_of_change",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1082,10 +1134,12 @@
           "unlock_roots": true,
           "n_max": 7,
           "k_max": 6,
+          "form_id": "exp",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "exp",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -1103,7 +1157,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "trig"
+          "family": "exp"
         },
         "generation_settings": {
           "term_count": 4,
@@ -1126,10 +1180,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=2x^{3} - 3x\\text{ at }x=2.",
-      "answer_latex": "21",
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=e^{3x}\\text{ at }x=0.",
+      "answer_latex": "3",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -1145,15 +1199,19 @@
           101
         ],
         [
+          "form_id",
+          "exp"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "instantaneous_rate_of_change",
-        "family": "cubic",
-        "structure_id": "instantaneous_rate_of_change:cubic",
-        "shape_id": "cubic",
+        "family": "exp",
+        "structure_id": "instantaneous_rate_of_change:exp",
+        "shape_id": "exp",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1166,7 +1224,7 @@
         "effective_d": 22.0,
         "spec_snapshot": {
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "cubic",
+          "family": "exp",
           "generator": "instantaneous_rate_of_change",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1204,12 +1262,14 @@
           "unlock_roots": true,
           "n_max": 8,
           "k_max": 7,
-          "effort_answer_len": 2
+          "form_id": "exp",
+          "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "exp",
         "effort_features": {
-          "answer_len": 2,
+          "answer_len": 1,
           "nest_depth": 0,
           "chain_applications": 0,
           "product_applications": 0,
@@ -1225,7 +1285,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "cubic"
+          "family": "exp"
         },
         "generation_settings": {
           "term_count": 4,
@@ -1248,10 +1308,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=\\sin(x)\\text{ at }x=0.",
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=e^{x}\\text{ at }x=0.",
       "answer_latex": "1",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -1267,15 +1327,19 @@
           207
         ],
         [
+          "form_id",
+          "exp"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "instantaneous_rate_of_change",
-        "family": "trig",
-        "structure_id": "instantaneous_rate_of_change:trig",
-        "shape_id": "trig",
+        "family": "exp",
+        "structure_id": "instantaneous_rate_of_change:exp",
+        "shape_id": "exp",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1288,7 +1352,7 @@
         "effective_d": 22.0,
         "spec_snapshot": {
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "trig",
+          "family": "exp",
           "generator": "instantaneous_rate_of_change",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1326,10 +1390,12 @@
           "unlock_roots": true,
           "n_max": 8,
           "k_max": 7,
+          "form_id": "exp",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "exp",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -1347,7 +1413,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "trig"
+          "family": "exp"
         },
         "generation_settings": {
           "term_count": 4,
@@ -1370,10 +1436,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=\\cos(x)\\text{ at }x=0.",
-      "answer_latex": "0",
+      "prompt_latex": "\\text{Find the instantaneous rate of change of }f(x)=e^{2x}\\text{ at }x=0.",
+      "answer_latex": "2",
       "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
-      "form_id": null,
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -1389,15 +1455,19 @@
           313
         ],
         [
+          "form_id",
+          "exp"
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
         "generator": "instantaneous_rate_of_change",
-        "family": "trig",
-        "structure_id": "instantaneous_rate_of_change:trig",
-        "shape_id": "trig",
+        "family": "exp",
+        "structure_id": "instantaneous_rate_of_change:exp",
+        "shape_id": "exp",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1410,7 +1480,7 @@
         "effective_d": 22.0,
         "spec_snapshot": {
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "trig",
+          "family": "exp",
           "generator": "instantaneous_rate_of_change",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1448,10 +1518,12 @@
           "unlock_roots": true,
           "n_max": 8,
           "k_max": 7,
+          "form_id": "exp",
           "effort_answer_len": 1
         },
         "skeleton_source": "structured_instantaneous_rate_of_change",
         "skeleton_pattern": "Diff(structured_instantaneous_rate_of_change)",
+        "form_id": "exp",
         "effort_features": {
           "answer_len": 1,
           "nest_depth": 0,
@@ -1469,7 +1541,7 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_instantaneous_rate_of_change",
-          "family": "trig"
+          "family": "exp"
         },
         "generation_settings": {
           "term_count": 4,

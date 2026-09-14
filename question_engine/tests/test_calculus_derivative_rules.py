@@ -11,6 +11,7 @@ from question_engine.generators.calculus_derivative_rules import (
     GENERATORS,
     average_rate_forms_for_difficulty,
     definition_of_derivative_forms_for_difficulty,
+    instantaneous_rate_forms_for_difficulty,
 )
 
 
@@ -235,6 +236,112 @@ def test_average_rate_quality_weights_tilt() -> None:
     baseline = _counts(None)
     tilted = _counts({"quad": -2.5, "linear": 2.5})
     assert tilted["linear"] > baseline["linear"]
+
+
+_IRC_TYPE = "calc_diff_instantaneous_rates_of_change"
+_IRC_EASY = {"power"}
+_IRC_MEDIUM = {"poly", "sqrt", "reciprocal"}
+_IRC_HARD = {"cubic", "trig", "exp"}
+_IRC_POWER_LEFTOVER = (
+    r"f(x)=x^{2}\text{ at }",
+    r"f(x)=x^{3}\text{ at }",
+    r"f(x)=x^{4}\text{ at }",
+)
+
+
+def test_instantaneous_rate_d0_power_high_d_hard_lockout() -> None:
+    assert instantaneous_rate_forms_for_difficulty(0) == ("power",)
+    med = instantaneous_rate_forms_for_difficulty(8)
+    assert _IRC_EASY <= set(med) and _IRC_MEDIUM <= set(med)
+    assert med == ("power", "poly", "sqrt", "reciprocal")
+    hard = instantaneous_rate_forms_for_difficulty(16)
+    assert hard == ("poly", "sqrt", "reciprocal", "cubic", "trig", "exp")
+    assert "power" not in hard
+    assert instantaneous_rate_forms_for_difficulty(22) == ("cubic", "trig", "exp")
+
+    q0 = _gen_def(_IRC_TYPE, 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "power"
+    assert (q0.metadata or {}).get("generator") == "instantaneous_rate_of_change"
+    p0 = q0.prompt_latex or ""
+    assert r"f(x)=x^{" in p0
+    assert r"\sin" not in p0
+    assert r"\sqrt{" not in p0
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "power"
+    assert snap.get("generator") == "instantaneous_rate_of_change"
+
+    mid = set()
+    for seed in range(40):
+        q = _gen_def(_IRC_TYPE, 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert fid in _IRC_EASY | _IRC_MEDIUM
+        assert (q.metadata or {}).get("generator") == "instantaneous_rate_of_change"
+        p = q.prompt_latex or ""
+        assert r"\sin" not in p
+        assert r"e^{" not in p
+    assert mid & _IRC_EASY
+    assert mid & _IRC_MEDIUM
+    assert mid <= _IRC_EASY | _IRC_MEDIUM
+
+    high = set()
+    for seed in range(40):
+        q = _gen_def(_IRC_TYPE, 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "power"
+        p = q.prompt_latex or ""
+        for leftover in _IRC_POWER_LEFTOVER:
+            assert leftover not in p
+        assert (q.metadata or {}).get("generator") == "instantaneous_rate_of_change"
+    assert high <= _IRC_MEDIUM | _IRC_HARD
+    assert high & _IRC_HARD
+
+    expert = set()
+    for seed in range(30):
+        q = _gen_def(_IRC_TYPE, 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in _IRC_HARD
+        p = q.prompt_latex or ""
+        for leftover in _IRC_POWER_LEFTOVER:
+            assert leftover not in p
+        assert (q.metadata or {}).get("generator") == "instantaneous_rate_of_change"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") in _IRC_HARD
+        assert snap.get("generator") == "instantaneous_rate_of_change"
+    assert expert <= _IRC_HARD
+    assert expert & _IRC_HARD
+
+
+def test_instantaneous_rate_quality_weights_tilt() -> None:
+    from contextlib import nullcontext
+
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                q = GENERATORS["instantaneous_rate_of_change"](
+                    _IRC_TYPE,
+                    {
+                        "difficulty": 8.0,
+                        "seed": i,
+                        "count": 1,
+                        "include_answer_key": True,
+                        "live_quality_form_weights": weights,
+                    },
+                )[0]
+                c[(q.metadata or {}).get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"power": -2.5, "sqrt": 2.5})
+    assert tilted["sqrt"] > baseline["sqrt"]
 
 
 def test_definition_of_derivative_quality_weights_tilt() -> None:

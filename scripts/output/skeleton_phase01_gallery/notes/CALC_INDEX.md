@@ -239,7 +239,7 @@ skill pair with a Calculus leaf. See `PRECALC_INDEX.md`.
 | `calc_app_diff_rolles_theorem` | `rolles_theorem` | — |
 | `calc_app_diff_mean_value_theorem` | `mean_value_theorem` | — |
 | `calc_app_diff_intervals_of_increase_and_decrease` | `intervals_increase_decrease` | — |
-| `calc_app_diff_intervals_of_concavity` | `calculus_foundations` | — |
+| `calc_app_diff_intervals_of_concavity` | `intervals_concavity` | — |
 | `calc_app_diff_relative_extrema` | `calculus_foundations` | — |
 | `calc_app_diff_absolute_extrema` | `calculus_foundations` | — |
 | `calc_app_diff_optimization` | `calculus_foundations` | — |

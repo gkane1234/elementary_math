@@ -957,42 +957,10 @@ def _rolles_theorem(topic: str, settings: dict) -> list[Question]:
 
 
 def _mean_value_theorem(topic: str, settings: dict) -> list[Question]:
-    """Differentiation MVT: find c with f'(c)=(f(b)-f(a))/(b-a)."""
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _topic_structure(settings)
-    x = str(settings.get("variable", "x"))
+    """Delegate to calculus_app_diff (live form_id / generator stamps)."""
+    from question_engine.generators.calculus_app_diff import GENERATORS as APP
 
-    def build() -> tuple[str, str, str | None]:
-        a = 0
-        width_max = max(2, int(structure.get("interval_width_max", 5)))
-        width = random.randint(2, max(2, min(6, width_max)))
-        b = a + width
-        family = _pick_family(
-            structure,
-            ["quad"],
-            medium=["cubic"],
-            hard=["quad_const"],
-        )
-        if family == "quad":
-            f = format_polynomial_latex([1, 0, 0], variable=x)
-            answer = frac_latex(Fraction(a + b, 2))
-        elif family == "cubic":
-            k = random.randint(1, 3)
-            f = format_polynomial_latex([k, 0, 0, 0], variable=x)
-            answer = rf"\frac{{{b}}}{{\sqrt{{3}}}}"
-        else:
-            p = random.randint(1, 2)
-            q = random_int_range(-3, 3, exclude={0})
-            f = format_polynomial_latex([p, 0, q], variable=x)
-            answer = frac_latex(Fraction(a + b, 2))
-        prompt = (
-            rf"\text{{Find }}c\text{{ guaranteed by the Mean Value Theorem for }}"
-            rf"f({x})={f}\text{{ on }}[{a},{b}]."
-        )
-        return prompt, "Mean Value Theorem", answer if include_answer_key else None
-
-    return _make_questions(topic, count, include_answer_key, build)
+    return APP["mean_value_theorem"](topic, settings)
 
 
 def _pi_frac(numer: int, denom: int) -> str:

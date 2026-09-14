@@ -25,6 +25,7 @@ Kind = Literal[
     "de_intro",
     "optimization",
     "increase_decrease",
+    "mean_value",
     "curve_sketching",
     "graphical_f_fp",
     "related_rates",
@@ -253,18 +254,54 @@ def sample_intervals_increase(rng: random.Random, settings: dict[str, Any]) -> A
     )
 
 
-def sample_concavity(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    d = _d(settings)
+CONCAVITY_GENERATOR = "intervals_concavity"
+
+_CONCAVITY_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("odd_power_positive_ray",),
+    "medium": ("odd_power_positive_ray", "cubic_second_derivative"),
+    "hard": ("cubic_second_derivative", "cubic_shifted_inflection"),
+    "expert": ("cubic_shifted_inflection",),
+}
+
+
+def concavity_forms_for_difficulty(d: float) -> tuple[str, ...]:
     if d < 8.0:
-        p = rng.choice([3, 5])
-        prompt = (
-            rf"\text{{Determine the concavity of }}f(x)=x^{{{p}}}"
-            rf"\text{{ on }}(0,\infty)."
-        )
-        return AppDiffItem(
-            prompt, r"\text{concave up}", "concavity", "odd_power_positive_ray",
-            {"p": p},
-        )
+        return _CONCAVITY_BANDS["easy"]
+    if d < 16.0:
+        return _CONCAVITY_BANDS["medium"]
+    if d < 20.0:
+        return _CONCAVITY_BANDS["hard"]
+    return _CONCAVITY_BANDS["expert"]
+
+
+def _concavity_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [CONCAVITY_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_odd_power_positive_ray(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: f=x^p on (0,∞) is concave up."""
+    p = rng.choice([3, 5])
+    prompt = (
+        rf"\text{{Determine the concavity of }}f(x)=x^{{{p}}}"
+        rf"\text{{ on }}(0,\infty)."
+    )
+    return AppDiffItem(
+        prompt, r"\text{concave up}", "concavity", "odd_power_positive_ray",
+        {"p": p},
+    )
+
+
+def _sample_cubic_second_derivative(rng: random.Random) -> AppDiffItem:
+    """Reuse ``_cubic_odd``: f''=6x, inflection at 0. Mid-D leftover."""
     a, c, body = _cubic_odd(rng)
     prompt = rf"\text{{Find the intervals of concavity of }}f(x)={body}."
     answer = (
@@ -273,6 +310,192 @@ def sample_concavity(rng: random.Random, settings: dict[str, Any]) -> AppDiffIte
     return AppDiffItem(
         prompt, answer, "concavity", "cubic_second_derivative",
         {"a": a, "inflection": 0},
+    )
+
+
+def _sample_cubic_shifted_inflection(rng: random.Random) -> AppDiffItem:
+    """Ex. 4.19 shape: f=±(x³−3hx²)+bx+c, inflection at h≠0."""
+    h = rng.choice((-3, -2, -1, 1, 2, 3, 4))
+    b = rng.choice((-9, -6, 0, 6, 9))
+    c = rng.choice((0, 1, -1, 2, -2, 30))
+    leading_pos = rng.choice((True, False))
+    if leading_pos:
+        coeffs = [1, -3 * h, b, c]
+        down = rf"(-\infty,{h})"
+        up = rf"({h},\infty)"
+    else:
+        coeffs = [-1, 3 * h, b, c]
+        down = rf"({h},\infty)"
+        up = rf"(-\infty,{h})"
+    body = _poly_body(coeffs)
+    prompt = (
+        rf"\text{{Find the intervals of concavity of }}f(x)={body}"
+        rf"\text{{ and the inflection point.}}"
+    )
+    answer = (
+        rf"\text{{concave down on }}{down};\text{{ concave up on }}{up};"
+        rf"\text{{ inflection at }}x={h}"
+    )
+    return AppDiffItem(
+        prompt, answer, "concavity", "cubic_shifted_inflection",
+        {"h": h, "b": b, "c": c, "leading_pos": leading_pos, "inflection": h},
+    )
+
+
+_CONCAVITY_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "odd_power_positive_ray": _sample_odd_power_positive_ray,
+    "cubic_second_derivative": _sample_cubic_second_derivative,
+    "cubic_shifted_inflection": _sample_cubic_shifted_inflection,
+}
+
+
+def sample_concavity(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Second-derivative sign chart. High D unlocks Ex. 4.19 shifted inflections."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = concavity_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _concavity_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _CONCAVITY_BUILDERS:
+        fid = forms[0]
+    item = _CONCAVITY_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": CONCAVITY_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": CONCAVITY_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
+MVT_GENERATOR = "mean_value_theorem"
+
+_MVT_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("mvt_x_squared",),
+    "medium": ("mvt_x_squared", "mvt_k_x_cubed"),
+    "hard": ("mvt_k_x_cubed", "mvt_sqrt_x"),
+    "expert": ("mvt_sqrt_x",),
+}
+
+
+def mvt_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _MVT_BANDS["easy"]
+    if d < 16.0:
+        return _MVT_BANDS["medium"]
+    if d < 20.0:
+        return _MVT_BANDS["hard"]
+    return _MVT_BANDS["expert"]
+
+
+def _mvt_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [MVT_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_mvt_x_squared(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: f=x² on [0,b], c=b/2."""
+    b = rng.randint(2, 4)
+    prompt = (
+        rf"\text{{Find }}c\text{{ guaranteed by the Mean Value Theorem for }}"
+        rf"f(x)=x^{{2}}\text{{ on }}[0,{b}]."
+    )
+    answer = frac_latex(Fraction(b, 2))
+    return AppDiffItem(
+        prompt, answer, "Mean Value Theorem", "mvt_x_squared",
+        {"b": b, "c": str(Fraction(b, 2))},
+    )
+
+
+def _sample_mvt_k_x_cubed(rng: random.Random) -> AppDiffItem:
+    """Existing cubic on the core: f=kx³ on [0,b], c=b/√3."""
+    k = rng.randint(1, 3)
+    b = rng.randint(2, 6)
+    f = format_polynomial_latex([k, 0, 0, 0], variable="x")
+    prompt = (
+        rf"\text{{Find }}c\text{{ guaranteed by the Mean Value Theorem for }}"
+        rf"f(x)={f}\text{{ on }}[0,{b}]."
+    )
+    answer = rf"\frac{{{b}}}{{\sqrt{{3}}}}"
+    return AppDiffItem(
+        prompt, answer, "Mean Value Theorem", "mvt_k_x_cubed",
+        {"k": k, "b": b},
+    )
+
+
+def _sample_mvt_sqrt_x(rng: random.Random) -> AppDiffItem:
+    """OpenStax Ex. 4.15: f=√x on [0,b], c=b/4."""
+    b = rng.choice((4, 9, 16, 25))
+    prompt = (
+        rf"\text{{Find }}c\text{{ guaranteed by the Mean Value Theorem for }}"
+        rf"f(x)=\sqrt{{x}}\text{{ on }}[0,{b}]."
+    )
+    answer = frac_latex(Fraction(b, 4))
+    return AppDiffItem(
+        prompt, answer, "Mean Value Theorem", "mvt_sqrt_x",
+        {"b": b, "c": str(Fraction(b, 4))},
+    )
+
+
+_MVT_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "mvt_x_squared": _sample_mvt_x_squared,
+    "mvt_k_x_cubed": _sample_mvt_k_x_cubed,
+    "mvt_sqrt_x": _sample_mvt_sqrt_x,
+}
+
+
+def sample_mean_value(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Find c with f'(c)=(f(b)-f(a))/(b-a). High D locks out x² leftovers."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = mvt_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _mvt_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _MVT_BUILDERS:
+        fid = forms[0]
+    item = _MVT_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": MVT_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": MVT_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 
@@ -540,6 +763,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "relative_extrema": sample_relative_extrema,
     "absolute_extrema": sample_absolute_extrema,
     "concavity": sample_concavity,
+    "mean_value": sample_mean_value,
     "newtons_method": sample_newton,
     "motion": sample_motion,
     "motion_integral": sample_motion_integral,

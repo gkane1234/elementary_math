@@ -2752,7 +2752,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_mean_value_theorem",
         "App — Mean Value Theorem (diff)",
-        "Find c with f'(c)=(f(b)-f(a))/(b-a). OpenStax Vol 1 §4.4.",
+        "D=0 x^2 leftover (old easy); D≥8 unlocks kx^3; high D "
+        "OpenStax Ex. 4.15 sqrt(x) and locks out the quadratic. "
+        "OpenStax Vol 1 §4.4.",
     ),
 
     (
@@ -2883,7 +2885,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_intervals_of_concavity",
         "App — concavity",
-        "f'' sign chart on cubics. OpenStax Vol 1 §4.5.",
+        "D=0 odd-power ray leftover (old easy); D≥8 odd cubics inflecting at 0; "
+        "high D shifted cubics (OpenStax Ex. 4.19) and locks out inflection-at-0. "
+        "OpenStax Vol 1 §4.5.",
     ),
     (
         "calc_app_diff_optimization",
@@ -3141,6 +3145,8 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
         elif tid in (
             "calc_app_diff_optimization",
             "calc_app_diff_intervals_of_increase_and_decrease",
+            "calc_app_diff_intervals_of_concavity",
+            "calc_app_diff_mean_value_theorem",
         ):
             eng = "calc_apps"
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)

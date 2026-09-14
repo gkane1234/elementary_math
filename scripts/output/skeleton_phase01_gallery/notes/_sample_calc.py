@@ -213,10 +213,9 @@ TYPE_CITES: dict[str, list[tuple[str, str, str, str | None, str]]] = {
 # Force flags when gold look is known-weak (foundations stub, single frame, etc.).
 META: dict[str, dict[str, Any]] = {
     "calc_app_diff_intervals_of_concavity": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "Uses `calculus_foundations` fallback — may not produce honest f'' sign-chart prompts.",
+        "flag_why": "Shipped leftover lockout + Ex. 4.19 shifted inflections; LIMITATIONS no quintic second-derivative test.",
         "skill": "Find intervals of concavity / inflection from f or f''.",
-        "engine": "New apps-of-diff skeleton (shape-of-graph pack); do not reuse Diff derivative rules alone.",
+        "engine": "calc_app_diff `intervals_concavity` (odd-power ray / odd cubic / shifted cubic).",
     },
     "calc_app_diff_relative_extrema": {
         "force_flags": ["UNCLEAR"],

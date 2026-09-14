@@ -180,10 +180,95 @@ def _intervals_increase_decrease(topic: str, settings: dict) -> list[Question]:
     )
 
 
+def _intervals_concavity(topic: str, settings: dict) -> list[Question]:
+    """Second-derivative sign chart; stamps live-loop form_id / generator."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        CONCAVITY_GENERATOR,
+        sample_app_diff,
+    )
+
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+
+    def build() -> tuple[str, str, str | None]:
+        item = sample_app_diff("concavity", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": CONCAVITY_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": CONCAVITY_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
+
+
+def _mean_value_theorem(topic: str, settings: dict) -> list[Question]:
+    """MVT find-c; stamps live-loop form_id / generator."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        MVT_GENERATOR,
+        sample_app_diff,
+    )
+
+    count = int(settings.get("count", 10))
+    include_answer_key = bool(settings.get("include_answer_key", False))
+
+    def build() -> tuple[str, str, str | None]:
+        item = sample_app_diff("mean_value", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": MVT_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": MVT_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
+
+
 GENERATORS: dict[str, Callable[[str, dict], list[Question]]] = {
     "relative_extrema": _framework("relative_extrema", "relative extrema"),
     "absolute_extrema": _framework("absolute_extrema", "absolute extrema"),
-    "intervals_concavity": _framework("concavity", "concavity"),
+    "intervals_concavity": _intervals_concavity,
+    "mean_value_theorem": _mean_value_theorem,
     "newtons_method": _framework("newtons_method", "Newton's method"),
     "motion_along_a_line": _framework("motion", "motion along a line"),
     "motion_along_a_line_integral": _framework(

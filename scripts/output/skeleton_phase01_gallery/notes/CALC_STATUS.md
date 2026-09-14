@@ -53,10 +53,13 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 ## Still thin / LIMITATIONS (not stubs)
 
 - Graphical comparison: no figure bank
-- Curve sketching: text checklist only
+- Curve sketching: text checklist only (high D still inflects at 0 on the odd cubic)
 - Newton / DE intro: OpenStax-shaped but not full exercise breadth
 - Optimization: leftover lockout + §4.7 frames shipped; still no travel-time / Norman window / solids-in-solids
 - Increase/decrease: leftover lockout + Ex. 4.17 cubics shipped; still no fractional-power first-derivative test
+- Concavity: leftover lockout + Ex. 4.19 shifted inflections shipped; still no quintic second-derivative test
+- MVT: leftover lockout + Ex. 4.15 \(\sqrt{x}\) shipped; still no velocity story / interior-only \(\sqrt{x}\)
+- Rolle's: high D still accumulates the even-quad leftover (`c=0` on \([-n,n]\))
 - Challenging on the power host stays algebraic (cubic / root-quad / alteration); trig/exp challenging is on the ln/exp host
 - Reverse-chain: `x^{1}` elided here; unsimplified juxtaposition (`2x(-4)`) and high-D nested F∘g remain
 - Implicit: catalog families only (not a general \(F(x,y)\) AST)
@@ -69,6 +72,8 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 - **`calc_app_diff_optimization`:** OpenStax §4.7 frames + leftover lockout. D=0 rectangle/pen; D=8 garden/river leftover; D=16 box/revenue (no four-sided leftover); D=22 inscribed ellipse/circle, closed cylinder, 24×36 box (no garden leftover). Stamps `form_id` + `generator=optimization_applied`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_intervals_of_increase_and_decrease`:** Reuses extrema cubics. D=0 parabola (old easy); D=8 parabola leftover + odd cubic; D=16 shifted Ex. 4.17 cubics (no parabola); D=22 shifted only. Stamps `form_id` + `generator=intervals_increase_decrease`.
+- **`calc_app_diff_intervals_of_concavity`:** Leftover lockout + Ex. 4.19 shifted inflections. D=0 odd-power ray; D=8 ray leftover + odd cubic (inflect at 0); D=16 shifted \(h\neq 0\) (no ray); D=22 shifted only. Stamps `form_id` + `generator=intervals_concavity`; `select_form_id` / `live_quality_form_weights`.
+- **`calc_app_diff_mean_value_theorem`:** Leftover lockout + Ex. 4.15 \(\sqrt{x}\). D=0 \(x^{2}\); D=8 quad leftover + \(kx^{3}\); D=16 \(\sqrt{x}\) (no quad); D=22 \(\sqrt{x}\) only. Stamps `form_id` + `generator=mean_value_theorem`.
 - **`calc_indef_int_integration_by_parts`:** D=0 rotates ln / \(xe^x\) / \(x\sin x\) / \(x\cos x\); mid D scales \(k\); high D tabular n≤3 + \((\ln)^{2,3}\) + cyclic + invtrig. Easy `ln_alone` has `d_max=8`. Named preset `parts_form_preset=bc_bank`.
 - **U-sub BC bank §1:** named preset `bc_bank` (negative powers of poly, ln^n/x, e^x/(a+e^x)^n, trig'/(a+trig)^n). D=0 auto stays OpenStax easy. Bank file: `scripts/output/example_mining/challenging_indefinite_integrals_bc.tex`.
 - **IBP BC bank §2 lookalikes:** `poly3_exp`, `poly3_sin/cos`, `poly2_cos`, `poly2_ln`, `ln_power_2/3`, `poly1_arctan`, `poly1_arcsin`, `arcsin_alone`, `power_frac_ln`, `ln_quad`. Deferred: `poly_exp_trig`, `poly1_arccos`, `poly2_ln_quad`.

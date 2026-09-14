@@ -173,12 +173,128 @@ def test_absolute_extrema_closed_interval():
     assert (qh.metadata or {}).get("form_id") == "closed_interval_cubic"
 
 
-def test_concavity_d0_ray_high_d_sign_chart():
+def test_concavity_d0_ray_high_d_shifted_lockout():
     q0 = _gen("calc_app_diff_intervals_of_concavity", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "odd_power_positive_ray"
+    assert (q0.metadata or {}).get("generator") == "intervals_concavity"
     assert "concave" in (q0.answer_latex or "")
-    qh = _gen("calc_app_diff_intervals_of_concavity", 16, seed=207)[0]
-    assert "concave down" in (qh.answer_latex or "")
-    assert "concave up" in (qh.answer_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "odd_power_positive_ray"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_intervals_of_concavity", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+    assert "odd_power_positive_ray" in mid
+    assert "cubic_second_derivative" in mid
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_intervals_of_concavity", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "odd_power_positive_ray"
+        assert "concave down" in (q.answer_latex or "")
+        assert "concave up" in (q.answer_latex or "")
+        assert (q.metadata or {}).get("generator") == "intervals_concavity"
+    assert high <= {"cubic_second_derivative", "cubic_shifted_inflection"}
+    assert "cubic_shifted_inflection" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_intervals_of_concavity", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "cubic_shifted_inflection"
+        h = (q.metadata or {}).get("h")
+        assert h not in (0, None)
+        assert r"(-\infty,0)" not in (q.answer_latex or "")
+    assert expert == {"cubic_shifted_inflection"}
+
+
+def test_concavity_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_concavity,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_concavity(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"odd_power_positive_ray": -2.5, "cubic_second_derivative": 2.5})
+    assert tilted["cubic_second_derivative"] > baseline["cubic_second_derivative"]
+
+
+def test_mvt_d0_quad_high_d_sqrt_lockout():
+    q0 = _gen("calc_app_diff_mean_value_theorem", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "mvt_x_squared"
+    assert (q0.metadata or {}).get("generator") == "mean_value_theorem"
+    assert r"x^{2}" in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "mvt_x_squared"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_mean_value_theorem", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+    assert "mvt_x_squared" in mid
+    assert "mvt_k_x_cubed" in mid
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_mean_value_theorem", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "mvt_x_squared"
+        assert (q.metadata or {}).get("generator") == "mean_value_theorem"
+    assert high <= {"mvt_k_x_cubed", "mvt_sqrt_x"}
+    assert "mvt_sqrt_x" in high
+
+    expert = set()
+    for seed in range(20):
+        q = _gen("calc_app_diff_mean_value_theorem", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "mvt_sqrt_x"
+        assert r"\sqrt" in (q.prompt_latex or "")
+    assert expert == {"mvt_sqrt_x"}
+
+
+def test_mvt_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_mean_value,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_mean_value(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"mvt_x_squared": -2.5, "mvt_k_x_cubed": 2.5})
+    assert tilted["mvt_k_x_cubed"] > baseline["mvt_k_x_cubed"]
 
 
 def test_newton_one_then_two_steps():

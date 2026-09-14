@@ -930,6 +930,93 @@ def test_de_intro_d0_exp_high_d_euler_lockout():
     assert expert == {"verify_euler"}
 
 
+def test_separable_d0_poly_high_d_homogeneous_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        separable_forms_for_difficulty,
+    )
+
+    assert separable_forms_for_difficulty(0) == ("sep_poly",)
+    med = separable_forms_for_difficulty(8)
+    assert "sep_poly" in med and "sep_exp" in med
+    hard = separable_forms_for_difficulty(16)
+    assert "sep_poly" not in hard
+    assert hard == ("sep_exp", "sep_homogeneous")
+    assert separable_forms_for_difficulty(22) == ("sep_homogeneous",)
+
+    q0 = _gen("calc_diff_eq_separable", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "sep_poly"
+    assert (q0.metadata or {}).get("generator") == "separable_diff_eq"
+    assert r"\frac{dy}{dx}" in (q0.prompt_latex or "")
+    assert r"\frac{y}{x}" not in (q0.prompt_latex or "")
+    assert "e^" not in (q0.answer_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "sep_poly"
+    assert snap.get("generator") == "separable_diff_eq"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_diff_eq_separable", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "separable_diff_eq"
+        assert r"\frac{y}{x}" not in (q.prompt_latex or "")
+    assert "sep_poly" in mid
+    assert "sep_exp" in mid
+    assert mid <= {"sep_poly", "sep_exp"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_diff_eq_separable", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "sep_poly"
+        p = q.prompt_latex or ""
+        assert not (
+            r"=x," in p or r"=2x," in p or r"=3x," in p
+        )
+        assert (q.metadata or {}).get("generator") == "separable_diff_eq"
+    assert high <= {"sep_exp", "sep_homogeneous"}
+    assert "sep_homogeneous" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_diff_eq_separable", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "sep_homogeneous"
+        assert r"\frac{y}{x}" in (q.prompt_latex or "")
+        assert (q.answer_latex or "") == "y=4x"
+        assert (q.metadata or {}).get("generator") == "separable_diff_eq"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "sep_homogeneous"
+        assert snap.get("generator") == "separable_diff_eq"
+    assert expert == {"sep_homogeneous"}
+
+
+def test_separable_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_separable_de,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_separable_de(_random.Random(i), {"difficulty": 8.0})
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"sep_poly": -2.5, "sep_exp": 2.5})
+    assert tilted["sep_exp"] > baseline["sep_exp"]
+
+
 def test_de_intro_quality_weights_tilt():
     from contextlib import nullcontext
     import random as _random

@@ -2836,7 +2836,7 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_diff_eq_separable",
         "DE — separable",
-        "IVP poly / exp / homogeneous. OpenStax Vol 2 §4.3.",
+        "Leftover lockout: D=0 poly IVP; D=8 poly leftover + exp; D=16 exp leftover + y/x; D=22 y/x only. OpenStax Vol 2 §4.3.",
     ),
 
     (
@@ -3175,6 +3175,8 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             eng = "riemann"
         elif tid.startswith("calc_diff_eq_"):
             eng = "diff_eq"
+            if tid == "calc_diff_eq_separable":
+                extra_seeds = (101, 207, 313, 0, 2, 5, 7)
         elif tid.startswith("calc_app_diff_") or tid.startswith("calc_diff_"):
             eng = "calc_apps"
         elif tid == "calc_def_int_mean_value_theorem":

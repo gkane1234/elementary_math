@@ -275,6 +275,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Verify a proposed family solves a first-order DE.",
         "engine": "calc_app_diff `de_introduction` (exp leftover / Euler power).",
     },
+    "calc_diff_eq_separable": {
+        "flag_why": "Shipped leftover lockout of poly dy/dx=ax; LIMITATIONS frozen y/x IVP / no OpenStax mixes / logistic.",
+        "skill": "Separate variables, integrate, apply the initial condition.",
+        "engine": "calc_app_diff `separable_diff_eq` (poly leftover / exp leftover / homogeneous y/x).",
+    },
     "calc_indef_int_trigonometric_with_substitution": {
         "note": "Catalog name says trig substitution; generator is `integral_trig_substitution` (Calc 2 §3.3).",
         "skill": "Integrate using a trigonometric substitution.",

@@ -1315,41 +1315,45 @@ def _slope_field_interpret(topic: str, settings: dict) -> list[Question]:
 
 
 def _separable_diff_eq(topic: str, settings: dict) -> list[Question]:
+    """Solve a separable IVP; stamps live-loop form_id / generator."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        SEPARABLE_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    from question_engine.settings.params import calc_application_structure_from_continuous
-
-    structure = calc_application_structure_from_continuous(settings)
-    tier = _difficulty_tier(settings)
 
     def build() -> tuple[str, str, str | None]:
-        family = structure["de_family"] if structure is not None else None
-        if family == "poly" or (family is None and tier == "easy"):
-            a = random.randint(1, 3) if structure is not None else 2
-            c0 = random.randint(1, 5) if structure is not None else 3
-            if structure is None:
-                a, c0 = 2, 3
-            rhs = "x" if a == 1 else rf"{a}x"
-            prompt = rf"\text{{Solve }}\frac{{dy}}{{dx}}={rhs},\ y(0)={c0}."
-            if a == 1:
-                answer = rf"y=\frac{{1}}{{2}}x^2+{c0}"
-            elif a == 2:
-                answer = rf"y=x^2+{c0}"
-            elif a % 2 == 0:
-                answer = rf"y={a // 2}x^2+{c0}"
-            else:
-                answer = rf"y=\frac{{{a}}}{{2}}x^2+{c0}"
-        elif family == "exp" or (family is None and tier == "medium"):
-            k = random.randint(2, 4)
-            c0 = random.randint(1, 5)
-            prompt = rf"\text{{Solve }}\frac{{dy}}{{dx}}={k}y,\ y(0)={c0}."
-            answer = rf"y={c0}e^{{{k}x}}"
-        else:
-            prompt = r"\text{Solve }\frac{dy}{dx}=\frac{y}{x}\text{ for }x>0,\ y(1)=4."
-            answer = r"y=4x"
-        return prompt, "separable DE", answer if include_answer_key else None
+        item = sample_app_diff("separable", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": SEPARABLE_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": SEPARABLE_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _calc_continuous_growth_decay(topic: str, settings: dict) -> list[Question]:

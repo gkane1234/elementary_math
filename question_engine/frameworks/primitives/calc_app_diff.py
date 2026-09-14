@@ -23,6 +23,7 @@ Kind = Literal[
     "motion",
     "motion_integral",
     "de_intro",
+    "separable",
     "optimization",
     "increase_decrease",
     "mean_value",
@@ -1324,6 +1325,121 @@ def sample_de_intro(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem
     )
 
 
+SEPARABLE_GENERATOR = "separable_diff_eq"
+
+_SEPARABLE_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("sep_poly",),
+    "medium": ("sep_poly", "sep_exp"),
+    "hard": ("sep_exp", "sep_homogeneous"),
+    "expert": ("sep_homogeneous",),
+}
+
+
+def separable_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _SEPARABLE_BANDS["easy"]
+    if d < 16.0:
+        return _SEPARABLE_BANDS["medium"]
+    if d < 20.0:
+        return _SEPARABLE_BANDS["hard"]
+    return _SEPARABLE_BANDS["expert"]
+
+
+def _separable_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [SEPARABLE_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_sep_poly(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: dy/dx=ax, y(0)=c0 (OpenStax Vol 2 §4.3 separate+integrate)."""
+    a = rng.randint(1, 3)
+    c0 = rng.randint(1, 5)
+    rhs = "x" if a == 1 else rf"{a}x"
+    prompt = rf"\text{{Solve }}\frac{{dy}}{{dx}}={rhs},\ y(0)={c0}."
+    if a == 1:
+        answer = rf"y=\frac{{1}}{{2}}x^2+{c0}"
+    elif a == 2:
+        answer = rf"y=x^2+{c0}"
+    elif a % 2 == 0:
+        answer = rf"y={a // 2}x^2+{c0}"
+    else:
+        answer = rf"y=\frac{{{a}}}{{2}}x^2+{c0}"
+    return AppDiffItem(
+        prompt, answer, "separable DE", "sep_poly",
+        {"a": a, "c0": c0},
+    )
+
+
+def _sample_sep_exp(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D=8: dy/dx=ky, y(0)=c0."""
+    k = rng.randint(2, 4)
+    c0 = rng.randint(1, 5)
+    prompt = rf"\text{{Solve }}\frac{{dy}}{{dx}}={k}y,\ y(0)={c0}."
+    answer = rf"y={c0}e^{{{k}x}}"
+    return AppDiffItem(
+        prompt, answer, "separable DE", "sep_exp",
+        {"k": k, "c0": c0},
+    )
+
+
+def _sample_sep_homogeneous(_rng: random.Random) -> AppDiffItem:
+    """Old exclusive D≥16: dy/dx=y/x for x>0, y(1)=4."""
+    prompt = r"\text{Solve }\frac{dy}{dx}=\frac{y}{x}\text{ for }x>0,\ y(1)=4."
+    answer = r"y=4x"
+    return AppDiffItem(
+        prompt, answer, "separable DE", "sep_homogeneous",
+        {"c0": 4},
+    )
+
+
+_SEPARABLE_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "sep_poly": _sample_sep_poly,
+    "sep_exp": _sample_sep_exp,
+    "sep_homogeneous": _sample_sep_homogeneous,
+}
+
+
+def sample_separable_de(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Separable IVP. High D locks out poly leftover, then exp leftover."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = separable_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _separable_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _SEPARABLE_BUILDERS:
+        fid = forms[0]
+    item = _SEPARABLE_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": SEPARABLE_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": SEPARABLE_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 def sample_optimization(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     """OpenStax §4.7 WP frames; ``form_id`` is the frame id for the live loop."""
     from question_engine.frameworks.primitives.optimization_frames import (
@@ -1568,6 +1684,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "motion": sample_motion,
     "motion_integral": sample_motion_integral,
     "de_intro": sample_de_intro,
+    "separable": sample_separable_de,
     "optimization": sample_optimization,
     "increase_decrease": sample_intervals_increase,
     "curve_sketching": sample_curve_sketching,

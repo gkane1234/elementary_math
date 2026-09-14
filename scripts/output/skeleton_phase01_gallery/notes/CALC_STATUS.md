@@ -60,6 +60,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Curve sketching: leftover lockout + shifted inflections shipped; still text checklist only (no SVG / asymptotes)
 - Newton: leftover lockout + two cubic steps shipped; still no Ex. 4.46 \(x^{3}-3x+1\) / failure / two-step quadratic
 - DE intro: leftover lockout of \(y=Ce^{kx}\) shipped; still no classify-order / IVP find-\(C\) / trig verify (D=16 and D=22 both Euler-only)
+- Separable: leftover lockout of \(dy/dx=ax\) shipped; still no OpenStax mixes (\(x/y\), logistic); D=22 is the single frozen \(y/x\), \(y(1)=4\) IVP
 - Optimization: leftover lockout + §4.7 frames shipped; still no travel-time / Norman window / solids-in-solids
 - Increase/decrease: leftover lockout + Ex. 4.17 cubics shipped; still no fractional-power first-derivative test
 - Concavity: leftover lockout + Ex. 4.19 shifted inflections shipped; still no quintic second-derivative test
@@ -75,6 +76,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_diff_eq_separable`:** Leftover lockout of poly \(dy/dx=ax\). D=0 poly IVP (old easy); D=8 poly leftover + exp \(dy/dx=ky\); D=16 exp leftover + homogeneous \(y/x\) (no poly); D=22 homogeneous only. Stamps `form_id` + `generator=separable_diff_eq`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_diff_eq_introduction`:** Leftover lockout of exponential verify \(y=Ce^{kx}\). D=0 exp verify (old easy); D=8 exp leftover + Euler \(y=Cx^{n}\); D=16/22 Euler only (no third old form). Stamps `form_id` + `generator=de_introduction`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_int_motion_along_a_line_revisited`:** Leftover lockout of linear \(v=2t\). D=0 linear displacement (old easy); D=8 linear leftover + const \(v=b\); D=16 const leftover + sign-change (no linear); D=22 sign-change only (net 0). Stamps `form_id` + `generator=motion_along_a_line_integral`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_newtons_method`:** Leftover lockout of one-quad \(x^{2}-a\). D=0 one Newton step on \(x^{2}-a\) (old easy); D=8 one-quad leftover + one cubic step; D=16 one-cubic leftover + two cubic steps (no quad); D=22 two cubic steps only. Stamps `form_id` + `generator=newtons_method`; `select_form_id` / `live_quality_form_weights`.

@@ -228,10 +228,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "calc_app_diff `relative_extrema` (parabola vertex / odd cubic / shifted cubic).",
     },
     "calc_app_diff_absolute_extrema": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "`calculus_foundations` stub — gold is closed-interval method.",
-        "skill": "Find absolute extrema on a closed interval.",
-        "engine": "New apps-of-diff skeleton (closed-interval pack).",
+        "flag_why": "Shipped leftover lockout + Ex. 4.17 shifted closed-interval; LIMITATIONS no fractional-power EVT.",
+        "skill": "Find absolute extrema on a closed interval (crits + endpoints).",
+        "engine": "calc_app_diff `absolute_extrema` (parabola / odd cubic / shifted cubic on an interval).",
     },
     "calc_app_diff_optimization": {
         "force_flags": ["UNCLEAR", "LOW_VARIETY"],

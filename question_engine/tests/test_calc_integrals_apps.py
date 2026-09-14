@@ -219,12 +219,79 @@ def test_relative_extrema_quality_weights_tilt():
     assert tilted["cubic_first_derivative_test"] > baseline["cubic_first_derivative_test"]
 
 
-def test_absolute_extrema_closed_interval():
-    q = _gen("calc_app_diff_absolute_extrema", 0, seed=101)[0]
-    assert "[" in (q.prompt_latex or "")
-    assert "abs min" in (q.answer_latex or "")
-    qh = _gen("calc_app_diff_absolute_extrema", 16, seed=101)[0]
-    assert (qh.metadata or {}).get("form_id") == "closed_interval_cubic"
+def test_absolute_extrema_d0_parabola_high_d_shifted_lockout():
+    q0 = _gen("calc_app_diff_absolute_extrema", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "closed_interval_parabola"
+    assert (q0.metadata or {}).get("generator") == "absolute_extrema"
+    assert "[" in (q0.prompt_latex or "")
+    assert "abs min" in (q0.answer_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "closed_interval_parabola"
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_absolute_extrema", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert "[" in (q.prompt_latex or "")
+    assert "closed_interval_parabola" in mid
+    assert "closed_interval_cubic" in mid
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_app_diff_absolute_extrema", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "closed_interval_parabola"
+        assert "abs min" in (q.answer_latex or "")
+        assert (q.metadata or {}).get("generator") == "absolute_extrema"
+        assert "[" in (q.prompt_latex or "")
+    assert high <= {"closed_interval_cubic", "closed_interval_shifted_cubic"}
+    assert "closed_interval_shifted_cubic" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_diff_absolute_extrema", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid == "closed_interval_shifted_cubic"
+        p = (q.metadata or {}).get("p")
+        qv = (q.metadata or {}).get("q")
+        assert p is not None and qv is not None and p != -qv
+        iv = (q.metadata or {}).get("interval")
+        assert iv is not None and len(iv) == 2
+        lo, hi = iv
+        assert lo < p < qv < hi
+        assert (q.metadata or {}).get("generator") == "absolute_extrema"
+    assert expert == {"closed_interval_shifted_cubic"}
+
+
+def test_absolute_extrema_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_absolute_extrema,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_absolute_extrema(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts(
+        {"closed_interval_parabola": -2.5, "closed_interval_cubic": 2.5}
+    )
+    assert tilted["closed_interval_cubic"] > baseline["closed_interval_cubic"]
 
 
 def test_concavity_d0_ray_high_d_shifted_lockout():

@@ -196,44 +196,152 @@ def sample_relative_extrema(rng: random.Random, settings: dict[str, Any]) -> App
     )
 
 
-def sample_absolute_extrema(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    d = _d(settings)
+ABSOLUTE_EXTREMA_GENERATOR = "absolute_extrema"
+
+_ABS_EXTREMA_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("closed_interval_parabola",),
+    "medium": ("closed_interval_parabola", "closed_interval_cubic"),
+    "hard": ("closed_interval_cubic", "closed_interval_shifted_cubic"),
+    "expert": ("closed_interval_shifted_cubic",),
+}
+
+
+def absolute_extrema_forms_for_difficulty(d: float) -> tuple[str, ...]:
     if d < 8.0:
-        b = rng.randint(2, 5)
-        prompt = (
-            rf"\text{{Find the absolute extrema of }}f(x)=x^{{2}}"
-            rf"\text{{ on }}[0,{b}]."
-        )
-        answer = (
-            rf"\text{{abs min }}0\text{{ at }}x=0;"
-            rf"\text{{ abs max }}{b * b}\text{{ at }}x={b}"
-        )
-        return AppDiffItem(
-            prompt, answer, "absolute extrema", "closed_interval_parabola",
-            {"b": b},
-        )
-    a, c, body = _cubic_odd(rng)
-    lo, hi = -2 * a, 2 * a
-    f_lo = (lo**3) - 3 * a * a * lo + c
-    f_hi = (hi**3) - 3 * a * a * hi + c
-    f_neg = 2 * a**3 + c  # at -a
-    f_pos = -2 * a**3 + c  # at a
-    vals = {lo: f_lo, -a: f_neg, a: f_pos, hi: f_hi}
+        return _ABS_EXTREMA_BANDS["easy"]
+    if d < 16.0:
+        return _ABS_EXTREMA_BANDS["medium"]
+    if d < 20.0:
+        return _ABS_EXTREMA_BANDS["hard"]
+    return _ABS_EXTREMA_BANDS["expert"]
+
+
+def _abs_extrema_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [ABSOLUTE_EXTREMA_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _closed_interval_answer(vals: dict[int, int]) -> str:
     mn = min(vals.values())
     mx = max(vals.values())
-    xmin = [x for x, v in vals.items() if v == mn][0]
-    xmax = [x for x, v in vals.items() if v == mx][0]
+    xmin = next(x for x, v in vals.items() if v == mn)
+    xmax = next(x for x, v in vals.items() if v == mx)
+    return (
+        rf"\text{{abs min }}{mn}\text{{ at }}x={xmin};"
+        rf"\text{{ abs max }}{mx}\text{{ at }}x={xmax}"
+    )
+
+
+def _sample_closed_interval_parabola(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: f=x^2 on [0,b] (vertex at the left endpoint)."""
+    b = rng.randint(2, 5)
+    prompt = (
+        rf"\text{{Find the absolute extrema of }}f(x)=x^{{2}}"
+        rf"\text{{ on }}[0,{b}]."
+    )
+    answer = _closed_interval_answer({0: 0, b: b * b})
+    return AppDiffItem(
+        prompt, answer, "absolute extrema", "closed_interval_parabola",
+        {"b": b, "interval": (0, b)},
+    )
+
+
+def _sample_closed_interval_cubic(rng: random.Random) -> AppDiffItem:
+    """Reuse ``_cubic_odd`` on [-2a, 2a]. Mid-D leftover; crits ±a."""
+    a, c, body = _cubic_odd(rng)
+    lo, hi = -2 * a, 2 * a
+    vals = {
+        lo: (lo**3) - 3 * a * a * lo + c,
+        -a: 2 * a**3 + c,
+        a: -2 * a**3 + c,
+        hi: (hi**3) - 3 * a * a * hi + c,
+    }
     prompt = (
         rf"\text{{Find the absolute extrema of }}f(x)={body}"
         rf"\text{{ on }}[{lo},{hi}]."
     )
-    answer = (
-        rf"\text{{abs min }}{mn}\text{{ at }}x={xmin};"
-        rf"\text{{ abs max }}{mx}\text{{ at }}x={xmax}"
+    return AppDiffItem(
+        prompt, _closed_interval_answer(vals), "absolute extrema",
+        "closed_interval_cubic",
+        {"a": a, "c": c, "interval": (lo, hi)},
+    )
+
+
+def _sample_closed_interval_shifted(rng: random.Random) -> AppDiffItem:
+    """Ex. 4.17 cubic on a closed interval containing both integer crits.
+
+    Pad one side past the half-span so an endpoint strictly beats the matching
+    local extremum (OpenStax §4.3 closed-interval method).
+    """
+    p, q, c, coeffs = _shifted_cubic_integer_crits(rng)
+    body = format_polynomial_latex(coeffs, variable="x")
+    extra = (q - p) // 2 + 1
+    if rng.choice((True, False)):
+        lo, hi = p - extra, q + 1
+    else:
+        lo, hi = p - 1, q + extra
+    vals = {
+        lo: _poly_eval(coeffs, lo),
+        p: _poly_eval(coeffs, p),
+        q: _poly_eval(coeffs, q),
+        hi: _poly_eval(coeffs, hi),
+    }
+    prompt = (
+        rf"\text{{Find the absolute extrema of }}f(x)={body}"
+        rf"\text{{ on }}[{lo},{hi}]."
     )
     return AppDiffItem(
-        prompt, answer, "absolute extrema", "closed_interval_cubic",
-        {"a": a, "interval": (lo, hi)},
+        prompt, _closed_interval_answer(vals), "absolute extrema",
+        "closed_interval_shifted_cubic",
+        {"p": p, "q": q, "c": c, "interval": (lo, hi)},
+    )
+
+
+_ABS_EXTREMA_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "closed_interval_parabola": _sample_closed_interval_parabola,
+    "closed_interval_cubic": _sample_closed_interval_cubic,
+    "closed_interval_shifted_cubic": _sample_closed_interval_shifted,
+}
+
+
+def sample_absolute_extrema(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Closed-interval EVT. High D unlocks Ex. 4.17 shifted crits."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = absolute_extrema_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _abs_extrema_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _ABS_EXTREMA_BUILDERS:
+        fid = forms[0]
+    item = _ABS_EXTREMA_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": ABSOLUTE_EXTREMA_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": ABSOLUTE_EXTREMA_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 

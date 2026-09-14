@@ -53,7 +53,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 ## Still thin / LIMITATIONS (not stubs)
 
 - Graphical comparison: no figure bank
-- Absolute extrema: D≥8 still the odd cubic (crits at ±a); no leftover lockout / shifted closed-interval
+- Absolute extrema: leftover lockout + Ex. 4.17 shifted closed-interval shipped; still no fractional-power EVT (Ex. 4.13 \(x^{2}-3x^{2/3}\))
 - Relative extrema: leftover lockout + Ex. 4.17 shifted extrema shipped; still no fractional-power first-derivative test
 - Curve sketching: leftover lockout + shifted inflections shipped; still text checklist only (no SVG / asymptotes)
 - Newton / DE intro: OpenStax-shaped but not full exercise breadth
@@ -73,6 +73,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 ## This pass (2026-09-14)
 
 - **`calc_app_diff_relative_extrema`:** Leftover lockout + Ex. 4.17 shifted extrema. D=0 parabola vertex (old easy); D=8 parabola leftover + odd cubic (crits ±a); D=16 odd-cubic leftover + shifted (no parabola); D=22 shifted only. Stamps `form_id` + `generator=relative_extrema`; `select_form_id` / `live_quality_form_weights`.
+- **`calc_app_diff_absolute_extrema`:** Leftover lockout + Ex. 4.17 shifted cubics on a closed interval. D=0 parabola on \([0,b]\) (old easy); D=8 parabola leftover + odd cubic (crits ±a); D=16 odd-cubic leftover + shifted (no parabola); D=22 shifted only (endpoint pad so EVT is not interior-only). Stamps `form_id` + `generator=absolute_extrema`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_optimization`:** OpenStax §4.7 frames + leftover lockout. D=0 rectangle/pen; D=8 garden/river leftover; D=16 box/revenue (no four-sided leftover); D=22 inscribed ellipse/circle, closed cylinder, 24×36 box (no garden leftover). Stamps `form_id` + `generator=optimization_applied`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_intervals_of_increase_and_decrease`:** Reuses extrema cubics. D=0 parabola (old easy); D=8 parabola leftover + odd cubic; D=16 shifted Ex. 4.17 cubics (no parabola); D=22 shifted only. Stamps `form_id` + `generator=intervals_increase_decrease`.
 - **`calc_app_diff_intervals_of_concavity`:** Leftover lockout + Ex. 4.19 shifted inflections. D=0 odd-power ray; D=8 ray leftover + odd cubic (inflect at 0); D=16 shifted \(h\neq 0\) (no ray); D=22 shifted only. Stamps `form_id` + `generator=intervals_concavity`; `select_form_id` / `live_quality_form_weights`.

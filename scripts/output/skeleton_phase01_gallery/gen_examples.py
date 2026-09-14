@@ -2884,7 +2884,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_absolute_extrema",
         "App — absolute extrema",
-        "Closed-interval method. OpenStax Vol 1 §4.3.",
+        "D=0 parabola leftover (old easy); D≥8 unlocks odd cubics on a closed "
+        "interval; high D shifted cubics (OpenStax Ex. 4.17 / §4.3 EVT) and "
+        "locks out the parabola. OpenStax Vol 1 §4.3.",
     ),
     (
         "calc_app_diff_intervals_of_concavity",
@@ -3154,6 +3156,7 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             "calc_app_diff_intervals_of_concavity",
             "calc_app_diff_mean_value_theorem",
             "calc_app_diff_relative_extrema",
+            "calc_app_diff_absolute_extrema",
         ):
             eng = "calc_apps"
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)

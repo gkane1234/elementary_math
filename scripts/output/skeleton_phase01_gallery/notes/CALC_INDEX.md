@@ -241,7 +241,7 @@ skill pair with a Calculus leaf. See `PRECALC_INDEX.md`.
 | `calc_app_diff_intervals_of_increase_and_decrease` | `intervals_increase_decrease` | — |
 | `calc_app_diff_intervals_of_concavity` | `intervals_concavity` | — |
 | `calc_app_diff_relative_extrema` | `relative_extrema` | — |
-| `calc_app_diff_absolute_extrema` | `calculus_foundations` | — |
+| `calc_app_diff_absolute_extrema` | `absolute_extrema` | — |
 | `calc_app_diff_optimization` | `calculus_foundations` | — |
 | `calc_app_diff_curve_sketching` | `curve_sketching` | — |
 | `calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime` | `calculus_foundations` | — |

@@ -1747,10 +1747,47 @@ def _sample_ln_exp(
     }
 
 
+INVTRIG_GENERATOR = "integral_inverse_trig"
+
+_INVTRIG_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("arctan_basic",),
+    "medium": (
+        "arctan_basic",
+        "arctan_a2",
+        "arctan_scaled",
+        "arcsin_basic",
+        "arcsin_a2",
+        "arcsin_scaled",
+    ),
+    "hard": (
+        "arctan_a2",
+        "arctan_scaled",
+        "arcsin_basic",
+        "arcsin_a2",
+        "arcsin_scaled",
+    ),
+    "expert": ("arctan_scaled", "arcsin_scaled"),
+}
+
+
+def invtrig_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of D=0 ∫1/(1+x²); D=22 is scaled arctan / arcsin."""
+    if d < 8.0:
+        return _INVTRIG_BANDS["easy"]
+    if d < 16.0:
+        return _INVTRIG_BANDS["medium"]
+    if d < 20.0:
+        return _INVTRIG_BANDS["hard"]
+    return _INVTRIG_BANDS["expert"]
+
+
 def _sample_invtrig(
     rng: random.Random, spec: IntegralSpec
 ) -> tuple[str, str, dict[str, Any]]:
-    """OpenStax §5.7 invtrig table forms via ``invtrig_integrals`` catalog."""
+    """OpenStax §5.7 invtrig table forms via ``invtrig_integrals`` catalog.
+
+    High D locks out D=0 ∫1/(1+x²). Same six old builders.
+    """
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
         catalog_form_meta,
         implemented_forms,
@@ -1759,15 +1796,27 @@ def _sample_invtrig(
     )
 
     var = spec.variable
+    d = float(spec.d_spend)
     catalog = load_form_catalog("invtrig_integrals")
+    allowed = set(invtrig_forms_for_difficulty(d))
     pool = _gated_form_pool(catalog, spec) or implemented_forms(catalog)
-    form = select_form_id(pool, d=float(spec.d_spend), rng=rng)
+    pool = [f for f in pool if str(f.get("form_id")) in allowed]
+    if not pool:
+        pool = [
+            f for f in implemented_forms(catalog) if str(f.get("form_id")) in allowed
+        ]
+    form = select_form_id(pool, d=d, rng=rng)
     form_id = str(form["form_id"])
+    if form_id not in allowed:
+        form_id = invtrig_forms_for_difficulty(d)[0]
     include = spec.include_plus_c
     meta = {
         **catalog_form_meta(form, catalog),
         "function_classes": ["invtrig"],
         "family": form_id,
+        "form_id": form_id,
+        "openstax_form": form_id,
+        "generator": INVTRIG_GENERATOR,
         "n_terms": 1,
     }
     a = rng.randint(2, max(2, min(5, spec.coef_abs_max)))
@@ -1810,9 +1859,9 @@ def _sample_invtrig(
             else rf"\arcsin\left(\frac{{{var}}}{{{a}}}\right)",
             include=include,
         )
-        meta["form_id"] = form_id
-        meta["openstax_form"] = form_id
-        meta["family"] = form_id
+    meta["form_id"] = form_id
+    meta["openstax_form"] = form_id
+    meta["family"] = form_id
     return prompt, answer, meta
 
 

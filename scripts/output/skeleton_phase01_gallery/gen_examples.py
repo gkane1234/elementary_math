@@ -2665,7 +2665,7 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_indef_int_inverse_trigonometric",
         "Integral — inverse trig",
-        "arcsin / arctan cores. OpenStax Vol 1 §5.7.",
+        "Leftover lockout of ∫1/(1+x²). OpenStax Vol 1 §5.7.",
     ),
     (
         "calc_indef_int_power_rule_with_substitution",

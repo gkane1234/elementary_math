@@ -515,6 +515,134 @@ def test_indef_power_d0_poly_sqrt_high_d_rewrite_lockout():
     assert expert == {"neg_power", "rewrite_over_x"}
 
 
+def test_indef_invtrig_d0_arctan_basic_high_d_scaled_lockout():
+    from question_engine.frameworks.primitives.integrals import (
+        invtrig_forms_for_difficulty,
+    )
+
+    assert invtrig_forms_for_difficulty(0) == ("arctan_basic",)
+    med = invtrig_forms_for_difficulty(8)
+    assert med == (
+        "arctan_basic",
+        "arctan_a2",
+        "arctan_scaled",
+        "arcsin_basic",
+        "arcsin_a2",
+        "arcsin_scaled",
+    )
+    hard = invtrig_forms_for_difficulty(16)
+    assert "arctan_basic" not in hard
+    assert hard == (
+        "arctan_a2",
+        "arctan_scaled",
+        "arcsin_basic",
+        "arcsin_a2",
+        "arcsin_scaled",
+    )
+    assert invtrig_forms_for_difficulty(22) == ("arctan_scaled", "arcsin_scaled")
+
+    q0 = _gen("calc_indef_int_inverse_trigonometric", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "arctan_basic"
+    assert (q0.metadata or {}).get("generator") == "integral_inverse_trig"
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "arctan_basic"
+    assert snap.get("generator") == "integral_inverse_trig"
+    assert r"\int" in (q0.prompt_latex or "")
+    assert "+C" in (q0.answer_latex or "")
+    assert r"1+x^{2}" in (q0.prompt_latex or "").replace(" ", "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen("calc_indef_int_inverse_trigonometric", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "arctan_basic"
+        assert (q.metadata or {}).get("generator") == "integral_inverse_trig"
+        assert r"1+x^{2}" in (q.prompt_latex or "").replace(" ", "")
+        assert "+C" in (q.answer_latex or "")
+    assert easy == {"arctan_basic"}
+
+    mid = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_inverse_trigonometric", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert (q.metadata or {}).get("generator") == "integral_inverse_trig"
+        assert "+C" in (q.answer_latex or "")
+    assert "arctan_basic" in mid
+    assert mid & {"arctan_a2", "arcsin_basic", "arcsin_a2", "arctan_scaled", "arcsin_scaled"}
+    assert mid <= {
+        "arctan_basic",
+        "arctan_a2",
+        "arctan_scaled",
+        "arcsin_basic",
+        "arcsin_a2",
+        "arcsin_scaled",
+    }
+
+    high = set()
+    for seed in range(40):
+        q = _gen("calc_indef_int_inverse_trigonometric", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "arctan_basic"
+        assert (q.metadata or {}).get("generator") == "integral_inverse_trig"
+        p = (q.prompt_latex or "").replace(" ", "")
+        assert r"1+x^{2}" not in p
+    assert high <= {
+        "arctan_a2",
+        "arctan_scaled",
+        "arcsin_basic",
+        "arcsin_a2",
+        "arcsin_scaled",
+    }
+    assert high & {"arctan_scaled", "arcsin_scaled"}
+
+    expert = set()
+    for seed in range(30):
+        q = _gen("calc_indef_int_inverse_trigonometric", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in {"arctan_scaled", "arcsin_scaled"}
+        assert (q.metadata or {}).get("generator") == "integral_inverse_trig"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") in {"arctan_scaled", "arcsin_scaled"}
+        assert snap.get("generator") == "integral_inverse_trig"
+        p = (q.prompt_latex or "").replace(" ", "")
+        assert r"1+x^{2}" not in p
+        assert r"\sqrt{1-x^{2}" not in p
+    assert expert == {"arctan_scaled", "arcsin_scaled"}
+
+
+def test_indef_invtrig_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.integrals import (
+        sample_integral_expression,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                sample = sample_integral_expression(
+                    {"difficulty": 8.0, "include_answer_key": True},
+                    generator_key="integral_inverse_trig",
+                    rng=_random.Random(i),
+                )
+                c[sample.metadata.get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"arctan_basic": -2.5, "arcsin_scaled": 2.5})
+    assert tilted["arcsin_scaled"] > baseline["arcsin_scaled"]
+
+
 def test_indef_power_quality_weights_tilt():
     from contextlib import nullcontext
     import random as _random

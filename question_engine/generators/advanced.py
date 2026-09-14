@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import math
 import random
-from fractions import Fraction
 from typing import Callable
 
 from ..core.models import Question
@@ -12,7 +11,6 @@ from .utils import (
     _make_questions,
     format_monomial_latex,
     format_polynomial_latex,
-    frac_latex,
     random_int_range,
 )
 
@@ -592,66 +590,45 @@ def _lhopitals_rule(topic: str, settings: dict) -> list[Question]:
 
 
 def _area_between_curves(topic: str, settings: dict) -> list[Question]:
-    """Area between curves — OpenStax Calc Vol 1 §6.1 shapes (∫(top−bottom))."""
+    """∫(top−bottom); leftover lockout of D=0 triangle (y=x vs 0, y=k-x vs 0)."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        AREA_BETWEEN_CURVES_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    from question_engine.settings.params import calc_application_structure_from_continuous
-
-    structure = calc_application_structure_from_continuous(settings)
-    x = str(settings.get("variable", "x"))
-    d = float(settings.get("difficulty", 8.0) or 8.0)
-    if structure is not None:
-        band = str(structure.get("band") or "easy")
-        bound_max = max(2, int(structure.get("bound_max", 4)))
-    else:
-        band = "easy" if d < 8 else ("medium" if d < 16 else "hard")
-        bound_max = 4 if d < 8 else (5 if d < 16 else 6)
 
     def build() -> tuple[str, str, str | None]:
-        b = random.randint(2, bound_max)
-        if band == "easy":
-            # y=x above y=0 on [0,b]
-            prompt = (
-                rf"\text{{Find the area between }}y={x}\text{{ and }}y=0"
-                rf"\text{{ from }}{x}=0\text{{ to }}{x}={b}."
-            )
-            answer = frac_latex(Fraction(b * b, 2))
-        elif band == "medium":
-            if random.choice([True, False]):
-                # y=x^2 above y=0
-                prompt = (
-                    rf"\text{{Find the area between }}y={x}^{{2}}\text{{ and }}y=0"
-                    rf"\text{{ from }}{x}=0\text{{ to }}{x}={b}."
-                )
-                answer = frac_latex(Fraction(b**3, 3))
-            else:
-                # horizontal line above y=x on [0,k] where they meet at x=k
-                k = random.randint(2, max(2, min(5, bound_max)))
-                prompt = (
-                    rf"\text{{Find the area of the region bounded by }}"
-                    rf"y={k},\ y={x},\text{{ and }}{x}=0."
-                )
-                # ∫_0^k (k-x) dx = k^2/2
-                answer = frac_latex(Fraction(k * k, 2))
-        else:
-            # classic: y=x and y=x^2 on [0,1] (or scale)
-            if random.choice([True, False]):
-                prompt = (
-                    rf"\text{{Find the area of the region bounded by }}"
-                    rf"y={x}\text{{ and }}y={x}^{{2}}."
-                )
-                answer = frac_latex(Fraction(1, 6))
-            else:
-                k = random.randint(2, 4)
-                # y=k-x and y=0 from 0 to k
-                prompt = (
-                    rf"\text{{Find the area between }}y={k}-{x}\text{{ and }}y=0"
-                    rf"\text{{ from }}{x}=0\text{{ to }}{x}={k}."
-                )
-                answer = frac_latex(Fraction(k * k, 2))
-        return prompt, "area between curves", answer if include_answer_key else None
+        item = sample_app_diff("area_between_curves", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": AREA_BETWEEN_CURVES_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": AREA_BETWEEN_CURVES_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _inverse_trig_functions(topic: str, settings: dict) -> list[Question]:

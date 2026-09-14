@@ -254,6 +254,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Find the area under y=f(x) from x=0 to x=b via the definite integral.",
         "engine": "calc_app_diff `area_under_curve` (linear leftover / quad leftover / k x^2).",
     },
+    "calc_app_int_area_between_curves": {
+        "flag_why": "Shipped leftover lockout of exclusive cliffs and of y=k-x vs y=0 at expert; LIMITATIONS five frozen old builders / D=22 always y=x vs y=x^2.",
+        "skill": "Find the area between two graphs via ∫(top−bottom) dx.",
+        "engine": "calc_app_diff `area_between_curves` (linear-axis leftover / quad leftover / three-line leftover / two-curve).",
+    },
     "calc_app_diff_slope_tangent_and_normal_lines": {
         "flag_why": "Shipped leftover lockout of D=0 poly/trig/exp/ln; LIMITATIONS no implicit/folium / x·5^x normals.",
         "skill": "Find the tangent (and sometimes normal) line to y=f(x) at x=a.",

@@ -28,6 +28,7 @@ Kind = Literal[
     "motion",
     "motion_integral",
     "area_under_curve",
+    "area_between_curves",
     "de_intro",
     "slope_field",
     "separable",
@@ -2263,6 +2264,176 @@ def sample_area_under_curve(rng: random.Random, settings: dict[str, Any]) -> App
     )
 
 
+AREA_BETWEEN_CURVES_GENERATOR = "area_between_curves"
+
+_ABC_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("abc_linear_axis",),
+    "medium": (
+        "abc_linear_axis",
+        "abc_quad_axis",
+        "abc_hline_linear",
+        "abc_diag_axis",
+    ),
+    "hard": ("abc_quad_axis", "abc_hline_linear", "abc_linear_quad"),
+    "expert": ("abc_linear_quad",),
+}
+
+
+def area_between_curves_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _ABC_BANDS["easy"]
+    if d < 16.0:
+        return _ABC_BANDS["medium"]
+    if d < 20.0:
+        return _ABC_BANDS["hard"]
+    return _ABC_BANDS["expert"]
+
+
+def _abc_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [AREA_BETWEEN_CURVES_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _abc_bound_max(settings: dict[str, Any]) -> int:
+    """Copy old `_area_between_curves` bound_max (application structure, else D cliffs)."""
+    d = _d(settings)
+    structure = calc_application_structure_from_continuous(settings)
+    if structure is not None:
+        return max(2, int(structure.get("bound_max", 4)))
+    return 4 if d < 8 else (5 if d < 16 else 6)
+
+
+def _sample_abc_linear_axis(rng: random.Random, x: str, b_hi: int) -> AppDiffItem:
+    """Old-path D=0: y=x vs y=0 on [0,b] (triangle)."""
+    b = rng.randint(2, max(2, b_hi))
+    prompt = (
+        rf"\text{{Find the area between }}y={x}\text{{ and }}y=0"
+        rf"\text{{ from }}{x}=0\text{{ to }}{x}={b}."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(b * b, 2)), "area between curves",
+        "abc_linear_axis",
+        {"b": b},
+    )
+
+
+def _sample_abc_quad_axis(rng: random.Random, x: str, b_hi: int) -> AppDiffItem:
+    """Old mid: y=x^2 vs y=0 on [0,b]."""
+    b = rng.randint(2, max(2, b_hi))
+    prompt = (
+        rf"\text{{Find the area between }}y={x}^{{2}}\text{{ and }}y=0"
+        rf"\text{{ from }}{x}=0\text{{ to }}{x}={b}."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(b**3, 3)), "area between curves",
+        "abc_quad_axis",
+        {"b": b},
+    )
+
+
+def _sample_abc_hline_linear(rng: random.Random, x: str, b_hi: int) -> AppDiffItem:
+    """Old mid: region bounded by y=k, y=x, and x=0."""
+    k = rng.randint(2, max(2, min(5, b_hi)))
+    prompt = (
+        rf"\text{{Find the area of the region bounded by }}"
+        rf"y={k},\ y={x},\text{{ and }}{x}=0."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(k * k, 2)), "area between curves",
+        "abc_hline_linear",
+        {"k": k},
+    )
+
+
+def _sample_abc_diag_axis(rng: random.Random, x: str) -> AppDiffItem:
+    """Old hard-band leftover: y=k-x vs y=0 on [0,k] (same triangle as D=0)."""
+    k = rng.randint(2, 4)
+    prompt = (
+        rf"\text{{Find the area between }}y={k}-{x}\text{{ and }}y=0"
+        rf"\text{{ from }}{x}=0\text{{ to }}{x}={k}."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(k * k, 2)), "area between curves",
+        "abc_diag_axis",
+        {"k": k},
+    )
+
+
+def _sample_abc_linear_quad(x: str) -> AppDiffItem:
+    """Old exclusive two-curve: region bounded by y=x and y=x^2."""
+    prompt = (
+        rf"\text{{Find the area of the region bounded by }}"
+        rf"y={x}\text{{ and }}y={x}^{{2}}."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(Fraction(1, 6)), "area between curves",
+        "abc_linear_quad",
+        {},
+    )
+
+
+def sample_area_between_curves(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """∫(top−bottom). High D locks out D=0 triangle leftovers (y=x vs 0, y=k-x vs 0)."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = area_between_curves_forms_for_difficulty(d)
+    b_hi = _abc_bound_max(settings)
+    x = str(settings.get("variable", "x"))
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _abc_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "abc_linear_axis" and fid in forms:
+        item = _sample_abc_linear_axis(rng, x, b_hi)
+    elif fid == "abc_quad_axis" and fid in forms:
+        item = _sample_abc_quad_axis(rng, x, b_hi)
+    elif fid == "abc_hline_linear" and fid in forms:
+        item = _sample_abc_hline_linear(rng, x, b_hi)
+    elif fid == "abc_diag_axis" and fid in forms:
+        item = _sample_abc_diag_axis(rng, x)
+    elif fid == "abc_linear_quad" and fid in forms:
+        item = _sample_abc_linear_quad(x)
+    else:
+        fid = forms[0]
+        if fid == "abc_quad_axis":
+            item = _sample_abc_quad_axis(rng, x, b_hi)
+        elif fid == "abc_hline_linear":
+            item = _sample_abc_hline_linear(rng, x, b_hi)
+        elif fid == "abc_diag_axis":
+            item = _sample_abc_diag_axis(rng, x)
+        elif fid == "abc_linear_quad":
+            item = _sample_abc_linear_quad(x)
+        else:
+            item = _sample_abc_linear_axis(rng, x, b_hi)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": AREA_BETWEEN_CURVES_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": AREA_BETWEEN_CURVES_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 DE_INTRO_GENERATOR = "de_introduction"
 
 _DE_INTRO_BANDS: dict[str, tuple[str, ...]] = {
@@ -2992,6 +3163,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "motion": sample_motion,
     "motion_integral": sample_motion_integral,
     "area_under_curve": sample_area_under_curve,
+    "area_between_curves": sample_area_between_curves,
     "de_intro": sample_de_intro,
     "slope_field": sample_slope_field,
     "separable": sample_separable_de,

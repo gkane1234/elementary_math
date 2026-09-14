@@ -241,6 +241,106 @@ def test_area_under_curve_quality_weights_tilt():
     assert tilted["auc_quad"] > baseline["auc_quad"]
 
 
+def test_area_between_curves_d0_linear_high_d_two_curve_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        area_between_curves_forms_for_difficulty,
+    )
+
+    assert area_between_curves_forms_for_difficulty(0) == ("abc_linear_axis",)
+    med = area_between_curves_forms_for_difficulty(8)
+    assert "abc_linear_axis" in med
+    assert "abc_quad_axis" in med
+    assert "abc_hline_linear" in med
+    assert "abc_linear_quad" not in med
+    hard = area_between_curves_forms_for_difficulty(16)
+    assert "abc_linear_axis" not in hard
+    assert "abc_diag_axis" not in hard
+    assert hard == ("abc_quad_axis", "abc_hline_linear", "abc_linear_quad")
+    assert area_between_curves_forms_for_difficulty(22) == ("abc_linear_quad",)
+
+    q0 = _gen("calc_app_int_area_between_curves", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "abc_linear_axis"
+    assert (q0.metadata or {}).get("generator") == "area_between_curves"
+    p0 = q0.prompt_latex or ""
+    assert r"y=x\text{ and }y=0" in p0
+    assert r"x^{2}" not in p0
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "abc_linear_axis"
+    assert snap.get("generator") == "area_between_curves"
+
+    mid = set()
+    for seed in range(40):
+        q = _gen("calc_app_int_area_between_curves", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert (q.metadata or {}).get("generator") == "area_between_curves"
+        assert fid != "abc_linear_quad"
+        assert r"y=x\text{ and }y=x^{2}" not in (q.prompt_latex or "")
+    assert "abc_linear_axis" in mid
+    assert mid <= {
+        "abc_linear_axis",
+        "abc_quad_axis",
+        "abc_hline_linear",
+        "abc_diag_axis",
+    }
+
+    high = set()
+    for seed in range(40):
+        q = _gen("calc_app_int_area_between_curves", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        p = q.prompt_latex or ""
+        assert fid != "abc_linear_axis"
+        assert fid != "abc_diag_axis"
+        assert r"y=x\text{ and }y=0" not in p
+        assert r"-x\text{ and }y=0" not in p
+        assert (q.metadata or {}).get("generator") == "area_between_curves"
+    assert high <= {"abc_quad_axis", "abc_hline_linear", "abc_linear_quad"}
+    assert "abc_linear_quad" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_app_int_area_between_curves", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        p = q.prompt_latex or ""
+        assert fid == "abc_linear_quad"
+        assert r"y=x\text{ and }y=x^{2}" in p
+        assert r"-x\text{ and }y=0" not in p
+        assert (q.metadata or {}).get("generator") == "area_between_curves"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "abc_linear_quad"
+        assert snap.get("generator") == "area_between_curves"
+    assert expert == {"abc_linear_quad"}
+
+
+def test_area_between_curves_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_area_between_curves,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_area_between_curves(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"abc_linear_axis": -2.5, "abc_quad_axis": 2.5})
+    assert tilted["abc_quad_axis"] > baseline["abc_quad_axis"]
+
+
 def test_relative_extrema_d0_parabola_high_d_shifted_lockout():
     q0 = _gen("calc_app_diff_relative_extrema", 0, seed=101)[0]
     assert (q0.metadata or {}).get("form_id") == "parabola_vertex"

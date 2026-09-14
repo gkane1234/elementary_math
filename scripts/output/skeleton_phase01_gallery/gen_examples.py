@@ -3177,6 +3177,7 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)
         elif tid == "calc_app_int_area_between_curves":
             eng = "area_between_curves"
+            extra_seeds = (101, 207, 313, 0, 1, 2, 7)
         elif "volume" in tid:
             eng = "volumes"
         elif "riemann" in tid or tid == "calc_def_int_approximating_area_under_a_curve":

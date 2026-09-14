@@ -801,8 +801,12 @@ def _sample_infinity(
         families.extend(["exp_ratio", "exp_over_poly"])
     if spec.allow_log:
         families.append("ln_over_poly")
-    if spec.d_spend < 5:
+    d = float(spec.d_spend)
+    if d < 5:
         families = ["rational"]
+    elif d > 10:
+        # Catalog leftover inf_rational: d_max=10 — do not silently emit it.
+        families = [f for f in families if f != "rational"] or ["exp_ratio"]
     force_map = {
         "inf_rational": ["rational"],
         "inf_sin_over_x": ["sin_over_x", "bounded_over_poly"],
@@ -887,13 +891,23 @@ def _sample_infinity(
         form=form, technique=tech, degree=spec.degree_max, coef_hi=spec.coef_abs_max,
         n_terms=2, answer=answer, pack=spec.pack,
     )
+    fam_fid = {
+        "rational": "inf_rational",
+        "sin_over_x": "inf_sin_over_x",
+        "bounded_over_poly": "inf_sin_over_x",
+        "arctan_inf": "inf_arctan",
+        "exp_ratio": "inf_exp_ratio",
+        "ln_over_poly": "inf_ln_over_poly",
+    }
+    stamped = force_form_id or fam_fid.get(fam, f"inf_{fam}")
     return prompt, answer, form, tech, {
         "function_classes": classes,
         "effort_features": effort,
         "approach_mode": "+inf" if to_pos else "-inf",
         "variant": fam,
-        "openstax_form": force_form_id or f"inf_{fam}",
-        "form_id": force_form_id or f"inf_{fam}",
+        "openstax_form": stamped,
+        "form_id": stamped,
+        "core_form_id": stamped,
     }
 
 

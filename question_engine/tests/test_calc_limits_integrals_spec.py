@@ -22,6 +22,7 @@ _LHOPITAL_EASY_LEFTOVER = ("lhopital_0_0_poly", "lhopital_0_0_trig")
 _DIRECT_EASY_LEFTOVER = ("poly_direct",)
 _REMOVABLE_EASY_LEFTOVER = ("removable_diff_sq",)
 _ESSENTIAL_EASY_LEFTOVER = ("essential_1_over_x",)
+_INFINITY_EASY_LEFTOVER = ("inf_rational",)
 
 _ESSENTIAL_STAMP_MARKERS = {
     "essential_1_over_x": (r"\frac",),
@@ -101,10 +102,45 @@ def _gen_essential(d: float, *, seed: int = 101):
     )[0]
 
 
+def _gen_infinity(d: float, *, seed: int = 101):
+    return _generate_for_type(
+        "calc_limits_at_infinity",
+        {
+            "difficulty": d,
+            "seed": seed,
+            "count": 1,
+            "include_answer_key": True,
+        },
+    )[0]
+
+
 def _is_essential_1_over_x_leftover_prompt(prompt: str) -> bool:
     """Old Mad-Lib / D=0 leftover: lim x→0 of ±1/x (no shift, no higher power)."""
     compact = (prompt or "").replace(" ", "")
     return bool(re.fullmatch(r"\\lim_\{x\\to0\}-?\\frac\{1\}\{x\}", compact))
+
+
+def _is_inf_rational_leftover_prompt(prompt: str) -> bool:
+    """Old Mad-Lib / D=0 leftover: rational at ±∞ with no exp/ln/trig/arctan."""
+    p = prompt or ""
+    if r"\lim" not in p or r"\infty" not in p or r"\frac" not in p:
+        return False
+    return not any(tok in p for tok in ("e^", r"\ln", "sin", "cos", "arctan"))
+
+
+def _infinity_stamp_matches(fid: str, prompt: str) -> bool:
+    p = prompt or ""
+    if fid == "inf_rational":
+        return _is_inf_rational_leftover_prompt(p)
+    if fid == "inf_sin_over_x":
+        return "sin" in p or "cos" in p
+    if fid == "inf_arctan":
+        return "arctan" in p
+    if fid == "inf_exp_ratio":
+        return "e^" in p
+    if fid == "inf_ln_over_poly":
+        return r"\ln" in p
+    return True
 
 
 def _essential_stamp_matches(fid: str, prompt: str) -> bool:
@@ -426,6 +462,78 @@ def test_limit_essential_leftover_lockout_no_easy_1_over_x():
                 q.prompt_latex,
             )
     assert len(high) >= 4
+
+
+def test_limit_infinity_leftover_lockout_no_easy_rational():
+    """Leftover lockout of D=0 rational at ±∞ (old Mad-Lib) at D>=16."""
+    q0 = _gen_infinity(0, seed=101)
+    md0 = q0.metadata or {}
+    snap0 = md0.get("spec_snapshot") or {}
+    assert md0.get("form_id") == "inf_rational"
+    assert md0.get("generator") == "limit_at_infinity"
+    assert snap0.get("form_id") == "inf_rational"
+    assert snap0.get("generator") == "limit_at_infinity"
+    assert r"\lim" in (q0.prompt_latex or "")
+    assert _is_inf_rational_leftover_prompt(q0.prompt_latex or "")
+
+    easy = set()
+    for seed in range(24):
+        q = _gen_infinity(0, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        assert fid == "inf_rational"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_at_infinity"
+        assert _infinity_stamp_matches(str(fid), q.prompt_latex or "")
+        assert _is_inf_rational_leftover_prompt(q.prompt_latex or "")
+    assert easy == {"inf_rational"}
+
+    mid = set()
+    leftover_rational = 0
+    for seed in range(40):
+        q = _gen_infinity(8, seed=seed)
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        if fid == "inf_rational":
+            leftover_rational += 1
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "limit_at_infinity"
+        assert (q.metadata or {}).get("generator") == "limit_at_infinity"
+        assert _infinity_stamp_matches(str(fid), q.prompt_latex or ""), (
+            seed,
+            fid,
+            q.prompt_latex,
+        )
+    assert leftover_rational >= 1
+    assert mid - set(_INFINITY_EASY_LEFTOVER)
+
+    high = set()
+    for d in (16, 22):
+        for seed in range(40):
+            q = _gen_infinity(d, seed=seed)
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            assert fid not in _INFINITY_EASY_LEFTOVER, (d, seed, fid, q.prompt_latex)
+            assert not _is_inf_rational_leftover_prompt(q.prompt_latex or ""), (
+                d,
+                seed,
+                fid,
+                q.prompt_latex,
+            )
+            assert (q.metadata or {}).get("generator") == "limit_at_infinity"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == fid
+            assert snap.get("generator") == "limit_at_infinity"
+            assert r"\lim" in (q.prompt_latex or "")
+            assert _infinity_stamp_matches(str(fid), q.prompt_latex or ""), (
+                d,
+                seed,
+                fid,
+                q.prompt_latex,
+            )
+    assert len(high) >= 3
 
 
 def test_lhopital_indeterminate_form_diversity():

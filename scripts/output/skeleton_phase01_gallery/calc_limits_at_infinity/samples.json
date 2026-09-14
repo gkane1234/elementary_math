@@ -110,7 +110,11 @@
           "d_spend": 0.0,
           "form": "rational_inf",
           "technique": "compare_degrees",
-          "variant": "rational"
+          "variant": "rational",
+          "form_id": "inf_rational",
+          "family": "inf_rational",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "rational_inf",
@@ -253,7 +257,11 @@
           "d_spend": 0.0,
           "form": "rational_inf",
           "technique": "compare_degrees",
-          "variant": "rational"
+          "variant": "rational",
+          "form_id": "inf_rational",
+          "family": "inf_rational",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "rational_inf",
@@ -396,7 +404,11 @@
           "d_spend": 0.0,
           "form": "rational_inf",
           "technique": "compare_degrees",
-          "variant": "rational"
+          "variant": "rational",
+          "form_id": "inf_rational",
+          "family": "inf_rational",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "rational_inf",
@@ -543,7 +555,11 @@
           "d_spend": 8.0,
           "form": "exp_inf",
           "technique": "end_behavior",
-          "variant": "exp_ratio"
+          "variant": "exp_ratio",
+          "form_id": "inf_exp_ratio",
+          "family": "inf_exp_ratio",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "exp_inf",
@@ -758,7 +774,11 @@
           "d_spend": 8.0,
           "form": "log_inf",
           "technique": "end_behavior",
-          "variant": "ln_over_poly"
+          "variant": "ln_over_poly",
+          "form_id": "inf_ln_over_poly",
+          "family": "inf_ln_over_poly",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "log_inf",
@@ -910,7 +930,11 @@
           "d_spend": 8.0,
           "form": "invtrig_inf",
           "technique": "end_behavior",
-          "variant": "arctan_inf"
+          "variant": "arctan_inf",
+          "form_id": "inf_arctan",
+          "family": "inf_arctan",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "invtrig_inf",
@@ -1126,7 +1150,11 @@
           "d_spend": 16.0,
           "form": "exp_inf",
           "technique": "end_behavior",
-          "variant": "exp_ratio"
+          "variant": "exp_ratio",
+          "form_id": "inf_exp_ratio",
+          "family": "inf_exp_ratio",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "exp_inf",
@@ -1403,7 +1431,11 @@
           "d_spend": 16.0,
           "form": "log_inf",
           "technique": "end_behavior",
-          "variant": "ln_over_poly"
+          "variant": "ln_over_poly",
+          "form_id": "inf_ln_over_poly",
+          "family": "inf_ln_over_poly",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "log_inf",
@@ -1533,10 +1565,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\lim_{x \\to -\\infty} -12\\arctan(x)",
-      "answer_latex": "12\\frac{\\pi}{2}",
+      "prompt_latex": "\\lim_{x \\to -\\infty} 8\\frac{2+3e^{x}}{4+3e^{x}}",
+      "answer_latex": "4",
       "skeleton_pattern": "",
-      "form_id": "inf_arctan",
+      "form_id": "inf_exp_ratio",
       "diagram_svg": "",
       "debug": [
         [
@@ -1549,15 +1581,15 @@
         ],
         [
           "form_id",
-          "inf_arctan"
+          "inf_exp_ratio"
         ],
         [
           "openstax_form",
-          "inf_arctan"
+          "inf_exp_ratio"
         ],
         [
           "form",
-          "invtrig_inf"
+          "exp_inf"
         ],
         [
           "construction",
@@ -1569,15 +1601,15 @@
         ]
       ],
       "metadata": {
-        "family": "inf_arctan",
-        "structure_id": "limit_at_infinity:invtrig_inf",
-        "form": "invtrig_inf",
+        "family": "inf_exp_ratio",
+        "structure_id": "limit_at_infinity:exp_inf",
+        "form": "exp_inf",
         "technique": "end_behavior",
         "methods_used": [
           "end_behavior"
         ],
         "function_classes": [
-          "invtrig"
+          "exp"
         ],
         "upgrades": [
           "exp_log",
@@ -1618,17 +1650,21 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 16.0,
-          "form": "invtrig_inf",
+          "form": "exp_inf",
           "technique": "end_behavior",
-          "variant": "arctan_inf"
+          "variant": "exp_ratio",
+          "form_id": "inf_exp_ratio",
+          "family": "inf_exp_ratio",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "invtrig_inf",
+          "form": "exp_inf",
           "technique": "end_behavior",
           "degree_max": 5,
           "coef_abs_max": 7,
           "n_terms": 2,
-          "answer_len": 14,
+          "answer_len": 11,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_infinity",
@@ -1636,20 +1672,20 @@
             "end_behavior"
           ]
         },
-        "shape_id": "invtrig_inf",
-        "form_id": "inf_arctan",
-        "openstax_form": "inf_arctan",
-        "core_form_id": "inf_arctan",
+        "shape_id": "exp_inf",
+        "form_id": "inf_exp_ratio",
+        "openstax_form": "inf_exp_ratio",
+        "core_form_id": "inf_exp_ratio",
         "catalog_id": "limits",
         "wrappers_applied": [
-          "constant_multiple",
-          "sign"
+          "sign",
+          "constant_multiple"
         ],
-        "openstax_case": "\u00a74.6",
+        "openstax_case": "\u00a74.6 exp",
         "strategy": "end_behavior",
         "construction": "forward_form_catalog",
         "approach_mode": "-inf",
-        "variant": "arctan_inf",
+        "variant": "exp_ratio",
         "dressing_specs": [
           {
             "variable": "x",
@@ -1763,13 +1799,8 @@
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "inf_arctan",
-            "cost": 6.0
-          },
-          {
-            "source": "dress",
-            "feature": "spec_scale",
-            "cost": 1.5
+            "feature": "inf_exp_ratio",
+            "cost": 8.0
           },
           {
             "source": "dress",
@@ -1777,13 +1808,18 @@
             "cost": 0.5
           },
           {
+            "source": "dress",
+            "feature": "spec_scale",
+            "cost": 1.5
+          },
+          {
             "source": "spec",
-            "feature": "allow_invtrig",
-            "cost": 2.0
+            "feature": "allow_exp",
+            "cost": 1.5
           }
         ],
-        "difficulty_cost_total": 10.0,
-        "difficulty_shortfall": 6.0,
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 4.5,
         "generation_settings": {
           "allow_infinity": true,
           "power_min": 1,
@@ -1897,7 +1933,11 @@
           "d_spend": 22.0,
           "form": "exp_inf",
           "technique": "end_behavior",
-          "variant": "exp_ratio"
+          "variant": "exp_ratio",
+          "form_id": "inf_exp_ratio",
+          "family": "inf_exp_ratio",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "exp_inf",
@@ -2174,7 +2214,11 @@
           "d_spend": 22.0,
           "form": "log_inf",
           "technique": "end_behavior",
-          "variant": "ln_over_poly"
+          "variant": "ln_over_poly",
+          "form_id": "inf_ln_over_poly",
+          "family": "inf_ln_over_poly",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "log_inf",
@@ -2304,10 +2348,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\lim_{x \\to -\\infty} -12\\arctan(x)",
-      "answer_latex": "12\\frac{\\pi}{2}",
+      "prompt_latex": "\\lim_{x \\to -\\infty} 8\\frac{2+3e^{x}}{4+3e^{x}}",
+      "answer_latex": "4",
       "skeleton_pattern": "",
-      "form_id": "inf_arctan",
+      "form_id": "inf_exp_ratio",
       "diagram_svg": "",
       "debug": [
         [
@@ -2320,15 +2364,15 @@
         ],
         [
           "form_id",
-          "inf_arctan"
+          "inf_exp_ratio"
         ],
         [
           "openstax_form",
-          "inf_arctan"
+          "inf_exp_ratio"
         ],
         [
           "form",
-          "invtrig_inf"
+          "exp_inf"
         ],
         [
           "construction",
@@ -2340,15 +2384,15 @@
         ]
       ],
       "metadata": {
-        "family": "inf_arctan",
-        "structure_id": "limit_at_infinity:invtrig_inf",
-        "form": "invtrig_inf",
+        "family": "inf_exp_ratio",
+        "structure_id": "limit_at_infinity:exp_inf",
+        "form": "exp_inf",
         "technique": "end_behavior",
         "methods_used": [
           "end_behavior"
         ],
         "function_classes": [
-          "invtrig"
+          "exp"
         ],
         "upgrades": [
           "exp_log",
@@ -2389,17 +2433,21 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 22.0,
-          "form": "invtrig_inf",
+          "form": "exp_inf",
           "technique": "end_behavior",
-          "variant": "arctan_inf"
+          "variant": "exp_ratio",
+          "form_id": "inf_exp_ratio",
+          "family": "inf_exp_ratio",
+          "generator": "limit_at_infinity",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "invtrig_inf",
+          "form": "exp_inf",
           "technique": "end_behavior",
           "degree_max": 5,
           "coef_abs_max": 8,
           "n_terms": 2,
-          "answer_len": 14,
+          "answer_len": 11,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_infinity",
@@ -2407,20 +2455,20 @@
             "end_behavior"
           ]
         },
-        "shape_id": "invtrig_inf",
-        "form_id": "inf_arctan",
-        "openstax_form": "inf_arctan",
-        "core_form_id": "inf_arctan",
+        "shape_id": "exp_inf",
+        "form_id": "inf_exp_ratio",
+        "openstax_form": "inf_exp_ratio",
+        "core_form_id": "inf_exp_ratio",
         "catalog_id": "limits",
         "wrappers_applied": [
-          "constant_multiple",
-          "sign"
+          "sign",
+          "constant_multiple"
         ],
-        "openstax_case": "\u00a74.6",
+        "openstax_case": "\u00a74.6 exp",
         "strategy": "end_behavior",
         "construction": "forward_form_catalog",
         "approach_mode": "-inf",
-        "variant": "arctan_inf",
+        "variant": "exp_ratio",
         "dressing_specs": [
           {
             "variable": "x",
@@ -2534,13 +2582,8 @@
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "inf_arctan",
-            "cost": 6.0
-          },
-          {
-            "source": "dress",
-            "feature": "spec_scale",
-            "cost": 1.5
+            "feature": "inf_exp_ratio",
+            "cost": 8.0
           },
           {
             "source": "dress",
@@ -2548,13 +2591,18 @@
             "cost": 0.5
           },
           {
+            "source": "dress",
+            "feature": "spec_scale",
+            "cost": 1.5
+          },
+          {
             "source": "spec",
-            "feature": "allow_invtrig",
-            "cost": 2.0
+            "feature": "allow_exp",
+            "cost": 1.5
           }
         ],
-        "difficulty_cost_total": 10.0,
-        "difficulty_shortfall": 12.0,
+        "difficulty_cost_total": 11.5,
+        "difficulty_shortfall": 10.5,
         "generation_settings": {
           "allow_infinity": true,
           "power_min": 1,

@@ -67,6 +67,7 @@ Frames in `related_rates_frames.py`. D=0 one easy frame. Same-D rotation: medium
 ## Limitations
 
 - **Status:** shipped — leftover lockout + extra-chain frames. Remaining `LIMITATIONS`: no trough / square-pyramid / leaking-cylinder tanks (OpenStax ex. 28–31); no lighthouse beam; no law-of-cosines baseball; no opposite-sign two-rate (approaching); diagram is still a generic `function_sketch` (parabola overlay), not a ladder/cone figure; airplane prompt uses km/s (closed-form leftover); D=8 still emits expanding-circle leftovers (intentional, like PFD two-linear at mid D); gallery seeds 101/207/313 can collide on one frame at a given D.
+- **Live pairwise:** each item stamps `form_id` (= frame id), shared `generator=related_rates_simple`, and `family`; copies `form_id` onto `spec_snapshot` / θ. Frame pick uses `select_form_id` so `live_quality_form_weights` can tilt; cold start is still the D-band OpenStax mix (equal weights among `related_frames_for_difficulty`). Not a JSON `openstax_form_catalogs/*.json` — WP Python frames.
 - **Generator:** `related_rates_simple`
 
 ## Proposed engine (reuse vs new)

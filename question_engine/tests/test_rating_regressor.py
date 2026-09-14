@@ -551,3 +551,59 @@ def test_campaign_generate_submit_pair(tmp_path: Path, monkeypatch):
     assert row["winner"] == "a"
     cov = camp.coverage()
     assert cov["n_pairs"] == 1
+
+
+def test_all_topics_pool_includes_related_rates():
+    import question_engine.types  # noqa: F401
+    from question_engine.ml.knob_introspect import has_continuous_difficulty
+    from question_engine.type_readiness import type_not_ready
+
+    tid = "calc_app_diff_related_rates"
+    assert has_continuous_difficulty(tid)
+    assert not type_not_ready(tid)
+    ids = all_ready_type_ids()
+    assert tid in ids
+    assert generator_key_for_type(tid) == "related_rates_simple"
+
+
+def test_related_rates_live_form_id_features_and_two_seeds(tmp_path: Path, monkeypatch):
+    import question_engine.types  # noqa: F401
+    from question_engine.api.handler import _generate_for_type
+
+    monkeypatch.setenv("POLY_ENGINE_REV", "unit-rr-form")
+    camp = MultiTypeCampaign(
+        session="unit_rr",
+        root=tmp_path,
+        type_ids=("calc_app_diff_related_rates",),
+        campaign=ALL_TOPICS_CAMPAIGN,
+    )
+    item = camp.generate_next(
+        type_id="calc_app_diff_related_rates", difficulty=8.0, seed=101
+    )
+    assert item.get("generator") == "related_rates_simple"
+    feats = item.get("skeleton_features") or {}
+    assert feats.get("form_id")
+    assert feats.get("generator") == "related_rates_simple"
+    theta = item.get("theta_full") or {}
+    meta = item.get("metadata") or {}
+    fid = meta.get("form_id") or theta.get("form_id")
+    assert fid
+    assert (meta.get("spec_snapshot") or {}).get("form_id") == fid
+    assert theta.get("form_id") == fid or meta.get("form_id") == fid
+    assert extract_skeleton_features(item)["form_id"] == str(fid)
+
+    seen = {str(fid)}
+    for seed in range(40):
+        q = _generate_for_type(
+            "calc_app_diff_related_rates",
+            {
+                "difficulty": 8.0,
+                "seed": seed,
+                "count": 1,
+                "include_answer_key": True,
+            },
+        )[0]
+        seen.add(str((q.metadata or {}).get("form_id") or ""))
+        if len(seen) >= 2:
+            break
+    assert len(seen) >= 2, seen

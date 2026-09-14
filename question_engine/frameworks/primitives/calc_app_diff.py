@@ -26,6 +26,7 @@ Kind = Literal[
     "optimization",
     "curve_sketching",
     "graphical_f_fp",
+    "related_rates",
 ]
 
 
@@ -355,6 +356,51 @@ def sample_curve_sketching(rng: random.Random, settings: dict[str, Any]) -> AppD
     )
 
 
+def sample_related_rates(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """OpenStax §4.1 WP frames; ``form_id`` is the frame id for the live loop."""
+    from question_engine.frameworks.primitives.related_rates_frames import (
+        related_frames_for_difficulty,
+        related_rates_live_metadata,
+        sample_related_rates_frame,
+    )
+
+    d = _d(settings)
+    structure = calc_application_structure_from_continuous(settings)
+    if structure is None:
+        frames: tuple[str, ...] = ("expanding_circle",)
+        r_max, rate_max = 10, 5
+    else:
+        raw = structure.get("related_frames") or structure.get("related_shapes") or (
+            "expanding_circle",
+        )
+        legacy = {
+            "circle": "expanding_circle",
+            "sphere": "expanding_sphere",
+            "cone": "cone_similar",
+        }
+        frames = tuple(legacy.get(str(f), str(f)) for f in raw) or related_frames_for_difficulty(d)
+        r_max = max(3, int(structure["radius_max"]))
+        rate_max = max(1, int(structure["rate_max"]))
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    item = sample_related_rates_frame(
+        rng,
+        frames=frames,
+        r_max=r_max,
+        rate_max=rate_max,
+        d=d,
+        quality_weights=quality_weights,
+    )
+    meta = related_rates_live_metadata(item)
+    return AppDiffItem(
+        item.prompt_latex,
+        item.answer_latex,
+        item.label,
+        item.frame_id,
+        meta,
+    )
+
+
 def sample_graphical_f_fp(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
     """Sign-of-f' questions (no figure bank). OpenStax §4.5 skill without graphs."""
     d = _d(settings)
@@ -391,6 +437,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "optimization": sample_optimization,
     "curve_sketching": sample_curve_sketching,
     "graphical_f_fp": sample_graphical_f_fp,
+    "related_rates": sample_related_rates,
 }
 
 

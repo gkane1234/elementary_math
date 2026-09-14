@@ -324,6 +324,8 @@ _FRAME_BUILDERS: dict[str, Callable[..., RelatedRatesItem]] = {
     "rocket_angle": _rocket_angle,
 }
 
+# Shared live-loop model key: every related-rates story updates this generator.
+RELATED_RATES_GENERATOR = "related_rates_simple"
 
 # D-band unlocks (OpenStax §4.1 rotation). D=0 stays circle-only (old easy).
 # Easy leftovers lock out at higher bands (same idea as PFD d_max).
@@ -346,6 +348,21 @@ FRAME_BANDS: dict[str, tuple[str, ...]] = {
     ),
 }
 
+# Catalog-shaped rows for ``select_form_id``. D gates match ``related_frames_for_difficulty``.
+# Not a JSON ``openstax_form_catalogs/*.json`` — WP Python frames, same picker API.
+_FRAME_D_GATES: dict[str, tuple[float, float | None]] = {
+    "expanding_circle": (0.0, 9.999),
+    "expanding_sphere": (4.0, 9.999),
+    "balloon_radius": (4.0, 15.999),
+    "cone_similar": (10.0, 15.999),
+    "sliding_ladder": (10.0, 19.999),
+    "lamp_shadow": (16.0, None),
+    "airplane_distance": (16.0, None),
+    "cone_drain": (16.0, None),
+    "two_rate_distance": (20.0, None),
+    "rocket_angle": (20.0, None),
+}
+
 
 def related_frames_for_difficulty(d: float) -> tuple[str, ...]:
     """Map continuous D → OpenStax §4.1 frames. Easy leftovers lock out at high D."""
@@ -360,15 +377,70 @@ def related_frames_for_difficulty(d: float) -> tuple[str, ...]:
     return FRAME_BANDS["expert"]
 
 
+def related_rates_form_rows(
+    frames: tuple[str, ...] | list[str],
+    *,
+    apply_d_gates: bool = False,
+) -> list[dict[str, Any]]:
+    """In-memory ``select_form_id`` rows. Pre-filtered pools keep equal D-weights."""
+    rows: list[dict[str, Any]] = []
+    for fid in frames:
+        if fid not in _FRAME_BUILDERS:
+            continue
+        d_min, d_max = _FRAME_D_GATES.get(str(fid), (0.0, None))
+        row: dict[str, Any] = {
+            "form_id": str(fid),
+            "d_min": float(d_min) if apply_d_gates else 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [RELATED_RATES_GENERATOR],
+        }
+        if apply_d_gates and d_max is not None:
+            row["d_max"] = float(d_max)
+        rows.append(row)
+    return rows
+
+
+def related_rates_live_metadata(item: RelatedRatesItem) -> dict[str, Any]:
+    """Stamp live-loop keys: ``form_id`` = frame id, shared ``generator``."""
+    fid = str(item.frame_id)
+    return {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": RELATED_RATES_GENERATOR,
+        "frame_id": fid,
+        "related_rates_frame": fid,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": RELATED_RATES_GENERATOR,
+        },
+    }
+
+
 def sample_related_rates_frame(
     rng: random.Random,
     *,
     frames: tuple[str, ...],
     r_max: int = 5,
     rate_max: int = 3,
+    d: float = 0.0,
+    quality_weights: dict[str, float] | None = None,
 ) -> RelatedRatesItem:
+    """Pick a D-eligible OpenStax frame via ``select_form_id`` (live quality tilt)."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
     allowed = [f for f in frames if f in _FRAME_BUILDERS]
     if not allowed:
         allowed = ["expanding_circle"]
-    frame_id = rng.choice(allowed)
+    pool = related_rates_form_rows(allowed, apply_d_gates=False)
+    form = select_form_id(
+        pool, d=float(d), rng=rng, quality_weights=quality_weights
+    )
+    frame_id = str(form.get("form_id") or allowed[0])
+    if frame_id not in _FRAME_BUILDERS:
+        frame_id = allowed[0]
     return _FRAME_BUILDERS[frame_id](rng, r_max=r_max, rate_max=rate_max)

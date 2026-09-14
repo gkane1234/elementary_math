@@ -545,67 +545,10 @@ def _limit_removable(topic: str, settings: dict) -> list[Question]:
 
 
 def _related_rates_simple(topic: str, settings: dict) -> list[Question]:
-    """Related rates via OpenStax §4.1 frames (circle / balloon / ladder / …)."""
-    count = int(settings.get("count", 10))
-    include_answer_key = bool(settings.get("include_answer_key", False))
-    from question_engine.frameworks.primitives.related_rates_frames import (
-        sample_related_rates_frame,
-    )
-    from question_engine.settings.params import calc_application_structure_from_continuous
+    """Delegate to calculus_app_diff (live form_id / generator stamps)."""
+    from question_engine.generators.calculus_app_diff import GENERATORS as APP
 
-    structure = calc_application_structure_from_continuous(settings)
-
-    def build() -> tuple[str, str, str | None]:
-        if structure is None:
-            frames: tuple[str, ...] = ("expanding_circle",)
-            r_max, rate_max = 10, 5
-        else:
-            raw = structure.get("related_frames") or structure.get("related_shapes") or (
-                "expanding_circle",
-            )
-            legacy = {
-                "circle": "expanding_circle",
-                "sphere": "expanding_sphere",
-                "cone": "cone_similar",
-            }
-            frames = tuple(legacy.get(str(f), str(f)) for f in raw)
-            r_max = max(3, int(structure["radius_max"]))
-            rate_max = max(1, int(structure["rate_max"]))
-        item = sample_related_rates_frame(
-            random,
-            frames=frames,
-            r_max=r_max,
-            rate_max=rate_max,
-        )
-        build._last_meta = {  # type: ignore[attr-defined]
-            "frame_id": item.frame_id,
-            "related_rates_frame": item.frame_id,
-            **item.metadata,
-        }
-        answer = item.answer_latex if include_answer_key else None
-        return item.prompt_latex, item.label, answer
-
-    def _sketch_meta(prompt_latex: str, prompt_text: str, answer: str | None) -> dict:
-        from question_engine.diagrams.figure_families import sample_figure_from_settings
-
-        sample = sample_figure_from_settings(
-            "function_sketch",
-            settings,
-            features=["curve", "related_rates_circle", "related_rates_ladder"],
-            curve_kind="parabola",
-        )
-        extras = sample.to_metadata_extras()
-        extras.update(getattr(build, "_last_meta", {}) or {})
-        return extras
-
-    return _make_questions(
-        topic,
-        count,
-        include_answer_key,
-        build,
-        metadata_builder=_sketch_meta,
-        settings=settings,
-    )
+    return APP["related_rates_simple"](topic, settings)
 
 
 def _derivative_ln_exp(topic: str, settings: dict) -> list[Question]:

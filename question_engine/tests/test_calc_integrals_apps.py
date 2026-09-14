@@ -229,3 +229,102 @@ def test_curve_sketch_and_graphical_sign_of_fp():
     assert "f'" in (qg.prompt_latex or "") or "f'(x)" in (qg.prompt_latex or "")
     assert r"\frac{d}{dx}" not in (qg.prompt_latex or "")
 
+
+def test_related_rates_stamps_form_id_generator_and_two_seeds_differ():
+    from question_engine.ml.knob_introspect import has_continuous_difficulty
+    from question_engine.ml.rating_regressor import extract_skeleton_features
+    from question_engine.ml.schema import build_generation_record
+    from question_engine.type_readiness import type_not_ready
+
+    tid = "calc_app_diff_related_rates"
+    assert has_continuous_difficulty(tid)
+    assert not type_not_ready(tid)
+
+    q = _gen(tid, 8, seed=101)[0]
+    meta = q.metadata or {}
+    fid = meta.get("form_id")
+    assert fid
+    assert meta.get("generator") == "related_rates_simple"
+    assert meta.get("family") == fid
+    assert (meta.get("spec_snapshot") or {}).get("form_id") == fid
+    rec = build_generation_record(tid, q, {"difficulty": 8, "seed": 101})
+    feats = extract_skeleton_features(rec.to_dict())
+    assert feats["form_id"] == str(fid)
+    assert feats["generator"] == "related_rates_simple"
+
+    seen = set()
+    for seed in range(40):
+        qq = _gen(tid, 8, seed=seed)[0]
+        seen.add(str((qq.metadata or {}).get("form_id") or ""))
+    assert len(seen) >= 2, seen
+    assert seen <= {"expanding_circle", "expanding_sphere", "balloon_radius"}
+
+
+def test_related_rates_quality_weights_tilt_frame_mix():
+    from collections import Counter
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    frames = related_frames_for_difficulty(8.0)
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_related_rates_frame(
+                    _random.Random(i), frames=frames, d=8.0
+                )
+                c[item.frame_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"expanding_circle": -2.5, "balloon_radius": 2.5})
+    assert tilted["balloon_radius"] > baseline["balloon_radius"]
+
+
+def test_bc_integral_leaves_emit_form_id_via_select_form_id():
+    """General + parts/pfd/trig-sub bc_bank still stamp form_id / generator."""
+    from question_engine.frameworks.primitives.integrals import (
+        PARTS_FORM_PRESETS,
+        PFD_FORM_PRESETS,
+        TRIG_SUB_FORM_PRESETS,
+        sample_integral_expression,
+    )
+
+    general = sample_integral_expression(
+        {"difficulty": 8, "seed": 207, "include_answer_key": True},
+        generator_key="integral_general",
+        topic="calc_indef_int_general",
+    )
+    gmeta = general.as_metadata()
+    assert gmeta.get("generator") == "integral_general"
+    assert gmeta.get("form_id")
+    qg = _gen("calc_indef_int_general", 8, seed=207)[0]
+    assert (qg.metadata or {}).get("form_id")
+    assert (qg.metadata or {}).get("generator") == "integral_general"
+
+    checks = (
+        ("integration_by_parts", "parts_form_preset", PARTS_FORM_PRESETS["bc_bank"]),
+        ("integral_partial_fractions", "pfd_form_preset", PFD_FORM_PRESETS["bc_bank"]),
+        ("integral_trig_substitution", "trig_sub_form_preset", TRIG_SUB_FORM_PRESETS["bc_bank"]),
+    )
+    for key, preset_key, bank in checks:
+        sample = sample_integral_expression(
+            {
+                "difficulty": 16,
+                "seed": 11,
+                "include_answer_key": True,
+                preset_key: "bc_bank",
+            },
+            generator_key=key,
+        )
+        meta = sample.as_metadata()
+        assert meta.get("generator") == key
+        assert meta.get("form_id")
+        assert meta["form_id"] in bank, (key, meta["form_id"])
+

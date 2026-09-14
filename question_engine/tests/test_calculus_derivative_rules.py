@@ -7,6 +7,9 @@ from collections import Counter
 import pytest
 
 from question_engine.api.handler import _generate_for_type
+from question_engine.generators.calculus import (
+    derivative_from_tables_forms_for_difficulty,
+)
 from question_engine.generators.calculus_derivative_rules import (
     GENERATORS,
     average_rate_forms_for_difficulty,
@@ -372,3 +375,103 @@ def test_definition_of_derivative_quality_weights_tilt() -> None:
     baseline = _counts(None)
     tilted = _counts({"limit_x": -2.5, "named": 2.5})
     assert tilted["named"] > baseline["named"]
+
+
+_DFT_TYPE = "calc_diff_rules_using_tables"
+_DFT_EASY = {"product"}
+_DFT_MEDIUM = {"quotient"}
+_DFT_HARD = {"compose"}
+_DFT_PRODUCT_LEFTOVER = r"(fg)'"
+
+
+def test_tables_d0_product_high_d_compose_lockout() -> None:
+    assert derivative_from_tables_forms_for_difficulty(0) == ("product",)
+    med = derivative_from_tables_forms_for_difficulty(8)
+    assert med == ("product", "quotient")
+    hard = derivative_from_tables_forms_for_difficulty(16)
+    assert hard == ("quotient", "compose")
+    assert "product" not in hard
+    assert derivative_from_tables_forms_for_difficulty(22) == ("compose",)
+
+    q0 = _gen_def(_DFT_TYPE, 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "product"
+    assert (q0.metadata or {}).get("generator") == "derivative_from_tables"
+    p0 = q0.prompt_latex or ""
+    assert _DFT_PRODUCT_LEFTOVER in p0
+    assert r"\frac{f}{g}" not in p0
+    assert r"\circ" not in p0
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "product"
+    assert snap.get("generator") == "derivative_from_tables"
+
+    mid = set()
+    for seed in range(40):
+        q = _gen_def(_DFT_TYPE, 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        assert fid in _DFT_EASY | _DFT_MEDIUM
+        assert (q.metadata or {}).get("generator") == "derivative_from_tables"
+        p = q.prompt_latex or ""
+        assert r"\circ" not in p
+    assert mid & _DFT_EASY
+    assert mid & _DFT_MEDIUM
+    assert mid <= _DFT_EASY | _DFT_MEDIUM
+
+    high = set()
+    for seed in range(40):
+        q = _gen_def(_DFT_TYPE, 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid != "product"
+        p = q.prompt_latex or ""
+        assert _DFT_PRODUCT_LEFTOVER not in p
+        assert (q.metadata or {}).get("generator") == "derivative_from_tables"
+    assert high <= _DFT_MEDIUM | _DFT_HARD
+    assert high & _DFT_HARD
+
+    expert = set()
+    for seed in range(30):
+        q = _gen_def(_DFT_TYPE, 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in _DFT_HARD
+        p = q.prompt_latex or ""
+        assert _DFT_PRODUCT_LEFTOVER not in p
+        assert r"\frac{f}{g}" not in p
+        assert r"\circ" in p
+        assert (q.metadata or {}).get("generator") == "derivative_from_tables"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") in _DFT_HARD
+        assert snap.get("generator") == "derivative_from_tables"
+    assert expert == _DFT_HARD
+
+
+def test_tables_quality_weights_tilt() -> None:
+    from contextlib import nullcontext
+
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+    from question_engine.generators.calculus import GENERATORS as CALC_GENERATORS
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                q = CALC_GENERATORS["derivative_from_tables"](
+                    _DFT_TYPE,
+                    {
+                        "difficulty": 8.0,
+                        "seed": i,
+                        "count": 1,
+                        "include_answer_key": True,
+                        "live_quality_form_weights": weights,
+                    },
+                )[0]
+                c[(q.metadata or {}).get("form_id")] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"product": -2.5, "quotient": 2.5})
+    assert tilted["quotient"] > baseline["quotient"]

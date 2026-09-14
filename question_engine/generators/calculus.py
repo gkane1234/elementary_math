@@ -858,11 +858,60 @@ def _derivative_other_base(topic: str, settings: dict) -> list[Question]:
     return _make_questions(topic, count, include_answer_key, build)
 
 
+DERIVATIVE_FROM_TABLES_GENERATOR = "derivative_from_tables"
+
+_DFT_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("product",),
+    "medium": ("product", "quotient"),
+    "hard": ("quotient", "compose"),
+    "expert": ("compose",),
+}
+
+
+def derivative_from_tables_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Leftover lockout of easy (fg)' (old accumulate kept it at high D)."""
+    if d < 8.0:
+        return _DFT_BANDS["easy"]
+    if d < 16.0:
+        return _DFT_BANDS["medium"]
+    if d < 20.0:
+        return _DFT_BANDS["hard"]
+    return _DFT_BANDS["expert"]
+
+
+def _dft_form_rows(forms: tuple[str, ...]) -> list[dict]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [DERIVATIVE_FROM_TABLES_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _dft_numeric_d(settings: dict) -> float | None:
+    raw = settings.get("difficulty")
+    if raw is None or raw == "":
+        return None
+    try:
+        return max(0.0, float(raw))
+    except (TypeError, ValueError):
+        return None
+
+
 def _derivative_from_tables(topic: str, settings: dict) -> list[Question]:
-    """Product / quotient / chain using tabulated f,g values (no interactive UI)."""
+    """Product / quotient / chain using tabulated f,g values (no interactive UI).
+
+    Leftover lockout of D=0 ``(fg)'`` (old accumulate kept product in the pool
+    through expert once compose unlocked at D≥12).
+    """
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
     structure = _topic_structure(settings)
+    numeric_d = _dft_numeric_d(settings)
 
     def build() -> tuple[str, str, str | None]:
         a = random.randint(1, 4)
@@ -873,12 +922,30 @@ def _derivative_from_tables(topic: str, settings: dict) -> list[Question]:
         table = (
             rf"f({a})={f_a},\ f'({a})={fp_a},\ g({a})={g_a},\ g'({a})={gp_a}."
         )
-        families = ["product"]
-        if structure.get("unlock_quotient_table"):
-            families.append("quotient")
-        if structure.get("unlock_compose_table"):
-            families.append("compose")
-        family = random.choice(families)
+        if numeric_d is not None:
+            from question_engine.frameworks.primitives.openstax_form_catalogs import (
+                select_form_id,
+            )
+
+            forms = derivative_from_tables_forms_for_difficulty(numeric_d)
+            qw = settings.get("live_quality_form_weights")
+            quality_weights = qw if isinstance(qw, dict) else None
+            form = select_form_id(
+                _dft_form_rows(forms),
+                d=numeric_d,
+                rng=random,
+                quality_weights=quality_weights,
+            )
+            family = str(form.get("form_id") or forms[0])
+            if family not in forms:
+                family = forms[0]
+        else:
+            families = ["product"]
+            if structure.get("unlock_quotient_table"):
+                families.append("quotient")
+            if structure.get("unlock_compose_table"):
+                families.append("compose")
+            family = random.choice(families)
         if family == "product":
             prompt = rf"{table}\quad\text{{Find }}(fg)'({a})."
             answer = str(fp_a * g_a + f_a * gp_a)
@@ -894,9 +961,29 @@ def _derivative_from_tables(topic: str, settings: dict) -> list[Question]:
                 rf"\quad\text{{Find }}(f\circ g)'({a})."
             )
             answer = str(fp_u * gp_a)
+        build._last_meta = {  # type: ignore[attr-defined]
+            "form_id": family,
+            "family": family,
+            "generator": DERIVATIVE_FROM_TABLES_GENERATOR,
+            "spec_snapshot": {
+                "form_id": family,
+                "family": family,
+                "generator": DERIVATIVE_FROM_TABLES_GENERATOR,
+            },
+        }
         return prompt, "derivative from tables", answer if include_answer_key else None
 
-    return _make_questions(topic, count, include_answer_key, build)
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
+
+    return _make_questions(
+        topic,
+        count,
+        include_answer_key,
+        build,
+        metadata_builder=metadata_builder,
+        settings=settings,
+    )
 
 
 def _rolles_theorem(topic: str, settings: dict) -> list[Question]:

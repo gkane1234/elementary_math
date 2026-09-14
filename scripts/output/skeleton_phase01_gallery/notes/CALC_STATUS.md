@@ -69,7 +69,8 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 - Motion along a line (diff): leftover lockout + Ex. 3.36/3.35 cubics shipped; still no free-fall \(-16t^{2}\) / piecewise / trig / \(s(t)\) graph
 - Motion along a line revisited (integral): leftover lockout of \(v=2t\) shipped; still no \(\int|v|\) distance / Ex. 5.24 nonzero net / quadratic \(v(t)\)
-- Graphical comparison: no figure bank
+- Graphical comparison: leftover queue skip — figure bank (live is sign-of-\(f'\); exclusive cliff already; unstamped `generator`)
+- Approximating area (finite Riemann): leftover queue skip — Riemann sketches (unstamped; leftover linear/affine still mix at high D)
 - Instantaneous rates of change: leftover lockout of \(x^{n}\) shipped; still seven frozen old builders (no Ex. 3.34 free-fall / table / graph); D=16 can still emit \(px^{2}+q\) / \(\sqrt{x}\) / \(1/x\) leftover
 - Rules using tables: leftover lockout of D=0 \((fg)'\) shipped; still three frozen old builders (text values, no figure-bank table / three-function product); D=16 can still emit quotient leftover
 - Average rates of change: leftover lockout of \(x^{2}\) shipped; still seven frozen old builders (no \(\sqrt{x}\) / trig / exp / story \(s(t)\)); D=16 can still emit cubic / \(px^{2}+q\) / linear leftover
@@ -112,6 +113,22 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Parts: definite IBP not on the indefinite leaf; \(\int x e^{ax}\sin(bx)\) deferred
 - PFD: leftover lockout of two-linear and of single-term quad shipped; cube/improper still stubs; \((x^2+1)^2\) / \(1/(x^4+1)\) deferred; D=16===D=22 3-linear/mixed/repeated mix; D=8 can still emit two-linear / irred leftover
 - Trig-sub: skip further leftover lockout (EMH presets + stamps already); D=0 frozen \(\sqrt{a^{2}-x^{2}}\); D=16===D=22 `bc_bank` mix; \(\sqrt{a^2-x^2}/x\) still no closed template; \(x/\sqrt{\,\cdot\,}\) and \(x^3/\sqrt{\,\cdot\,}\) are u-sub (wrong leaf)
+
+## Leftover queue pause (2026-09-14)
+
+No remaining unambiguous no-diagram leftover. Live `_generate_for_type` of all **69** catalog leaves (stamps at D=0/16; D=0 `form_id`s still at D=22). Did not invent cores. Did not leftover-lock the skip leaves.
+
+Remaining skips (not leftover-lockable without a figure bank / new core):
+
+| type_id | why paused |
+|---|---|
+| `calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime` | Skip — figure bank. Live is sign-of-explicit-\(f'\) (`fp_linear_sign` / `fp_quadratic_sign`); exclusive cliff already (`d<8` linear, else quadratic). Unstamped `generator` / no `spec_snapshot`. D=16===D=22 quadratic only. Gold is OpenStax §4.5 graph-match — no figure bank. |
+| `calc_def_int_approximating_area_under_a_curve` | Skip — Riemann sketches. Fully unstamped; accumulating leftover mix (`linear`/`affine` still eligible at high D). Metadata is `function_sketch` + `riemann` rectangles. |
+| `calc_def_int_area_under_a_curve_by_limit_of_sums` | Already skipped — live is FTC `area_under_curve` (wrong skill). No \(\lim\sum\) core. Shared leftover lockout of \(y=x\) already on the area sibling. |
+
+Already leftover-locked or skip-further: every other Still-thin / This-pass leaf (including related rates; stamps + exclusive bands already). D=16===D=22 mixes that remain are post-lockout same-band pools (limits specials, EMH `bc_bank` / `challenging`, PFD 3-linear/mixed/repeated, DE intro Euler-only) — exclusive cliffs would not change leftover honesty without new cores.
+
+Diff `expr_skeleton` nine (power / product / quotient / chain / trig / ln·exp / invtrig / higher_order / general): metadata already stamps `form_id` + `generator`; D=0 forms can still appear at D=22. That is catalog mix on Diff, not leftover-queue.
 
 ## This pass (2026-09-14)
 

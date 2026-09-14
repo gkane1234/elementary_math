@@ -55,6 +55,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 - Motion along a line (diff): leftover lockout + Ex. 3.36/3.35 cubics shipped; still no free-fall \(-16t^{2}\) / piecewise / trig / \(s(t)\) graph
 - Motion along a line revisited (integral): leftover lockout of \(v=2t\) shipped; still no \(\int|v|\) distance / Ex. 5.24 nonzero net / quadratic \(v(t)\)
 - Graphical comparison: no figure bank
+- Linear approximations: leftover lockout of \(x^{2}\) shipped; still no Ex. 4.5 estimate-\(\sqrt{x}\) / Ex. 4.6 \(\sin x\) / cube-root / \((1+x)^{n}\); D=16 can still emit \(\sqrt{x}\) leftover
 - Differentials: leftover lockout of D=0 log/power/trig/exp shipped; still no \(\Delta y\) vs \(dy\) / cube-error / percent-error (Ex. 4.9–4.11); D=16 can still emit radical/reciprocal leftover
 - Absolute extrema: leftover lockout + Ex. 4.17 shifted closed-interval shipped; still no fractional-power EVT (Ex. 4.13 \(x^{2}-3x^{2/3}\))
 - Relative extrema: leftover lockout + Ex. 4.17 shifted extrema shipped; still no fractional-power first-derivative test
@@ -79,6 +80,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 ## This pass (2026-09-14)
 
+- **`calc_app_diff_linear_approximations`:** Leftover lockout of D=0 \(x^{2}\) (formula + estimate). D=0 \(\sqrt{x}\) / \(x^{2}\) (old easy); D=8 leftover easy + estimate-\(x^{2}\) + \(1/x\) + \(e^{x}\); D=16 \(\sqrt{x}\) leftover + \(1/x\) + \(e^{x}\) (no \(x^{2}\)); D=22 \(1/x\) and \(e^{x}\) only. Stamps `form_id` + `generator=linear_approximation`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_app_diff_differentials`:** Leftover lockout of D=0 log/power/trig/exp. D=0 easy mix (old easy); D=8 leftover easy + radical/reciprocal; D=16 radical/reciprocal leftover + nested (no log/power); D=22 nested only (product / quotient / \(e^{x^{2}}\) / eval \(dx\)). Stamps `form_id` + `generator=differentials`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_diff_eq_exponential_growth_and_decay`:** Leftover lockout of story \(y'=ky\). D=0 growth story find \(y(t)\) (old easy); D=8 growth leftover + decay story + IVP; D=16 decay/IVP leftover + doubling/half-life (no growth); D=22 doubling/half-life only. Stamps `form_id` + `generator=calc_continuous_growth_decay`; `select_form_id` / `live_quality_form_weights`.
 - **`calc_diff_eq_slope_fields`:** Leftover lockout of \(y'=x\). D=0 eval \(y'=x\) at a lattice point (old easy); D=8 \(y'=x\) leftover + \(y'=x+y\); D=16 \(y'=x+y\) leftover + \(y'=xy\) (no \(y'=x\)); D=22 \(y'=xy\) only. Stamps `form_id` + `generator=slope_field_interpret`; `select_form_id` / `live_quality_form_weights`. No slope-field figures.

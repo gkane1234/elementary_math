@@ -265,6 +265,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Implicit differentiate related quantities; plug rates.",
         "engine": "WP frames over Diff/implicit core; several OpenStax frames at same D.",
     },
+    "calc_app_diff_linear_approximations": {
+        "flag_why": "Shipped leftover lockout of x^2; LIMITATIONS no Ex. 4.5 estimate-sqrt / Ex. 4.6 sin / cube-root / (1+x)^n.",
+        "skill": "Write L(x)=f(a)+f'(a)(x-a), or estimate f(a+h) from leftover x^2.",
+        "engine": "calc_app_diff `linear_approximation` (quad leftover / sqrt leftover / estimate / reciprocal / exp).",
+    },
     "calc_app_int_motion_along_a_line_revisited": {
         "flag_why": "Shipped leftover lockout of linear v=2t; LIMITATIONS no distance / Ex. 5.24 nonzero net / quadratic v(t).",
         "skill": "Use FTC / net change for displacement from v(t).",

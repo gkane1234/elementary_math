@@ -658,6 +658,111 @@ def test_differentials_quality_weights_tilt():
     assert tilted["reciprocal"] > baseline["reciprocal"]
 
 
+def test_linear_approx_d0_easy_high_d_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        linear_approx_forms_for_difficulty,
+    )
+
+    easy = ("quad", "sqrt")
+    assert linear_approx_forms_for_difficulty(0) == easy
+    med = linear_approx_forms_for_difficulty(8)
+    assert "quad" in med and "sqrt" in med
+    assert "quad_estimate" in med and "reciprocal" in med and "exp" in med
+    hard = linear_approx_forms_for_difficulty(16)
+    assert "quad" not in hard and "quad_estimate" not in hard
+    assert hard == ("sqrt", "reciprocal", "exp")
+    assert linear_approx_forms_for_difficulty(22) == ("reciprocal", "exp")
+
+    q0 = _gen("calc_app_diff_linear_approximations", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") in easy
+    assert (q0.metadata or {}).get("generator") == "linear_approximation"
+    assert "linear approximation" in (q0.prompt_latex or "")
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") in easy
+    assert snap.get("generator") == "linear_approximation"
+    assert snap.get("pack") == "structured_linear_approximation"
+
+    d0 = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_linear_approximations", 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        d0.add(fid)
+        assert fid in easy
+        assert (q.metadata or {}).get("generator") == "linear_approximation"
+        assert (q.metadata or {}).get("structure_id", "").startswith(
+            "linear_approximation:"
+        )
+        assert "x^{2}" in (q.prompt_latex or "") or r"\sqrt{x}" in (q.prompt_latex or "")
+        assert "estimate" not in (q.prompt_latex or "")
+    assert d0 == set(easy), d0
+
+    mid = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_linear_approximations", 8, seed=seed)[0]
+        mid.add((q.metadata or {}).get("form_id"))
+        assert (q.metadata or {}).get("generator") == "linear_approximation"
+    assert mid & {"quad", "sqrt"}
+    assert mid & {"reciprocal", "exp", "quad_estimate"}
+    assert mid <= set(med)
+
+    high = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_linear_approximations", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        assert fid not in {"quad", "quad_estimate"}
+        assert (q.metadata or {}).get("generator") == "linear_approximation"
+        assert "x^{2}" not in (q.prompt_latex or "")
+    assert high <= set(hard)
+    assert high & {"reciprocal", "exp"}
+    assert "sqrt" in high
+
+    expert = set()
+    for seed in range(40):
+        q = _gen("calc_app_diff_linear_approximations", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        assert fid in {"reciprocal", "exp"}
+        assert fid not in easy
+        assert fid != "quad_estimate"
+        assert (q.metadata or {}).get("generator") == "linear_approximation"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == fid
+        assert snap.get("generator") == "linear_approximation"
+        p = q.prompt_latex or ""
+        assert r"\frac{1}{x}" in p or r"e^{x}" in p
+        assert "x^{2}" not in p
+        assert r"\sqrt{x}" not in p
+    assert expert == {"reciprocal", "exp"}, expert
+
+
+def test_linear_approx_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_linear_approximation,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_linear_approximation(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"quad": -2.5, "reciprocal": 2.5})
+    assert tilted["reciprocal"] > baseline["reciprocal"]
+
+
 def test_optimization_frames_unlock():
     frames = set()
     for seed in range(20):

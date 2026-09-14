@@ -2776,7 +2776,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_linear_approximations",
         "App — linear approximations",
-        "L(x)=f(a)+f'(a)(x-a). OpenStax Vol 1 §4.2.",
+        "L(x)=f(a)+f'(a)(x-a). D=0 leftover √x / x² (old easy); D=8 leftover + estimate "
+        "x² + 1/x + e^x; D=16 locks x² leftover (√x leftover + 1/x + e^x); D=22 "
+        "1/x and e^x only. OpenStax Vol 1 §4.2.",
     ),
 
     (
@@ -3162,6 +3164,7 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             "calc_app_diff_mean_value_theorem",
             "calc_app_diff_relative_extrema",
             "calc_app_diff_absolute_extrema",
+            "calc_app_diff_linear_approximations",
         ):
             eng = "calc_apps"
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)

@@ -38,6 +38,7 @@ Kind = Literal[
     "graphical_f_fp",
     "related_rates",
     "differentials",
+    "linear_approximation",
 ]
 
 
@@ -1262,6 +1263,175 @@ def sample_differentials(rng: random.Random, settings: dict[str, Any]) -> AppDif
     )
 
 
+LINEAR_APPROX_GENERATOR = "linear_approximation"
+
+_LINAPPROX_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("quad", "sqrt"),
+    "medium": ("quad", "sqrt", "quad_estimate", "reciprocal", "exp"),
+    "hard": ("sqrt", "reciprocal", "exp"),
+    "expert": ("reciprocal", "exp"),
+}
+
+
+def linear_approx_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _LINAPPROX_BANDS["easy"]
+    if d < 16.0:
+        return _LINAPPROX_BANDS["medium"]
+    if d < 20.0:
+        return _LINAPPROX_BANDS["hard"]
+    return _LINAPPROX_BANDS["expert"]
+
+
+def _linapprox_d(settings: dict[str, Any]) -> float:
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        try:
+            return max(0.0, float(settings["difficulty"]))
+        except (TypeError, ValueError):
+            pass
+    tier = str(settings.get("difficulty_tier", "")).strip().lower()
+    return {"easy": 0.0, "medium": 8.0, "hard": 16.0}.get(tier, _d(settings))
+
+
+def _linapprox_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [LINEAR_APPROX_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_linapprox_quad(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D=0 leftover: L(x) of f=x² at a∈{1,2,3,4}."""
+    a = rng.randint(1, 4)
+    fa = a * a
+    fp = 2 * a
+    f_body = rf"{x}^{{2}}"
+    L = rf"{fa}+{fp}({x}-{a})" if fp != 1 else rf"{fa}+({x}-{a})"
+    prompt = (
+        rf"\text{{Find the linear approximation of }}f({x})={f_body}"
+        rf"\text{{ at }}{x}={a}."
+    )
+    return AppDiffItem(
+        prompt, rf"L({x})={L}", "linear approximation", "quad",
+        {"a": a, "variant": "formula"},
+    )
+
+
+def _sample_linapprox_quad_estimate(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D≥8 leftover: use L of x² to estimate f(a+h)."""
+    a = rng.randint(1, 4)
+    fa = a * a
+    fp = 2 * a
+    f_body = rf"{x}^{{2}}"
+    h = rng.choice([Fraction(1, 10), Fraction(1, 5), Fraction(1, 2)])
+    x0 = a + h
+    est = fa + fp * h
+    prompt = (
+        rf"\text{{Use the linear approximation of }}f({x})={f_body}"
+        rf"\text{{ at }}{x}={a}\text{{ to estimate }}f({frac_latex(x0)})."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(est), "linear approximation", "quad_estimate",
+        {"a": a, "h": str(h), "variant": "estimate"},
+    )
+
+
+def _sample_linapprox_sqrt(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D=0 leftover: L(x) of √x at a perfect square (OpenStax Ex. 4.5)."""
+    a = rng.choice([1, 4, 9])
+    fa_s = {1: "1", 4: "2", 9: "3"}[a]
+    prompt = (
+        rf"\text{{Find the linear approximation of }}f({x})=\sqrt{{{x}}}"
+        rf"\text{{ at }}{x}={a}."
+    )
+    answer = rf"L({x})={fa_s}+\frac{{1}}{{{2 * int(fa_s)}}}({x}-{a})"
+    return AppDiffItem(
+        prompt, answer, "linear approximation", "sqrt",
+        {"a": a, "variant": "formula"},
+    )
+
+
+def _sample_linapprox_reciprocal(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D≥10 unlock: L(x) of 1/x at a∈{2,…,5}."""
+    a = rng.randint(2, 5)
+    prompt = (
+        rf"\text{{Find the linear approximation of }}f({x})=\frac{{1}}{{{x}}}"
+        rf"\text{{ at }}{x}={a}."
+    )
+    answer = rf"L({x})=\frac{{1}}{{{a}}}-\frac{{1}}{{{a * a}}}({x}-{a})"
+    return AppDiffItem(
+        prompt, answer, "linear approximation", "reciprocal",
+        {"a": a, "variant": "formula"},
+    )
+
+
+def _sample_linapprox_exp(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Old-path D≥10 unlock: L(x) of e^x at 0."""
+    prompt = (
+        rf"\text{{Find the linear approximation of }}f({x})=e^{{{x}}}"
+        rf"\text{{ at }}{x}=0."
+    )
+    return AppDiffItem(
+        prompt, rf"L({x})=1+{x}", "linear approximation", "exp",
+        {"a": 0, "variant": "formula"},
+    )
+
+
+_LINAPPROX_BUILDERS: dict[str, Callable[[random.Random, str], AppDiffItem]] = {
+    "quad": _sample_linapprox_quad,
+    "quad_estimate": _sample_linapprox_quad_estimate,
+    "sqrt": _sample_linapprox_sqrt,
+    "reciprocal": _sample_linapprox_reciprocal,
+    "exp": _sample_linapprox_exp,
+}
+
+
+def sample_linear_approximation(
+    rng: random.Random, settings: dict[str, Any]
+) -> AppDiffItem:
+    """L(x)=f(a)+f'(a)(x−a). High D locks out x² leftovers; D=22 reciprocal/exp only."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _linapprox_d(settings)
+    x = str(settings.get("variable") or "x")
+    forms = linear_approx_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _linapprox_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _LINAPPROX_BUILDERS:
+        fid = forms[0]
+    item = _LINAPPROX_BUILDERS[fid](rng, x)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": LINEAR_APPROX_GENERATOR,
+        "structure_id": f"{LINEAR_APPROX_GENERATOR}:{fid}",
+        "tricks_required": ["linearization"],
+        "spec_snapshot": {
+            "pack": "structured_linear_approximation",
+            "form_id": fid,
+            "family": fid,
+            "generator": LINEAR_APPROX_GENERATOR,
+            "variant": item.metadata.get("variant"),
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 MOTION_GENERATOR = "motion_along_a_line"
 
 _MOTION_BANDS: dict[str, tuple[str, ...]] = {
@@ -2254,6 +2424,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "graphical_f_fp": sample_graphical_f_fp,
     "related_rates": sample_related_rates,
     "differentials": sample_differentials,
+    "linear_approximation": sample_linear_approximation,
 }
 
 

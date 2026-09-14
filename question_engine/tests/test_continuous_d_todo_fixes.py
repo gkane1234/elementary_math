@@ -15,6 +15,7 @@ from question_engine.generators.calculus_pilot import (
     GENERATORS as PILOT_GENERATORS,
     _differential_families,
     _integral_sub_families,
+    _linear_approx_families,
     _pilot_structure,
     _tangent_families,
 )
@@ -46,6 +47,8 @@ def test_pilot_numeric_d_not_stuck_on_easy():
     assert s20["band"] == "hard"
     assert set(_tangent_families(s20)) - set(_tangent_families(s0))
     assert "eval_dx" in _differential_families(s20) or "product" in _differential_families(s20)
+    assert "quad" not in _linear_approx_families(s20)
+    assert "reciprocal" in _linear_approx_families(s20) or "exp" in _linear_approx_families(s20)
     assert "mixed_rewrite" in _integral_sub_families(s20)
     assert "mixed_rewrite" not in _integral_sub_families(s0)
 
@@ -59,6 +62,7 @@ def test_pilot_numeric_d_not_stuck_on_easy():
 def test_pilot_catalog_types_live_path_differ():
     for type_id in (
         "calc_app_diff_differentials",
+        "calc_app_diff_linear_approximations",
         "calc_app_diff_slope_tangent_and_normal_lines",
         "calc_indef_int_logarithmic_rule_and_exponentials_with_substitution",
     ):

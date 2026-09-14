@@ -15,9 +15,13 @@
     "ladder_seeds": [
       101,
       207,
-      313
+      313,
+      0,
+      2,
+      5,
+      7
     ],
-    "blurb": "L(x)=f(a)+f'(a)(x-a). OpenStax Vol 1 \u00a74.2."
+    "blurb": "L(x)=f(a)+f'(a)(x-a). D=0 leftover \u221ax / x\u00b2 (old easy); D=8 leftover + estimate x\u00b2 + 1/x + e^x; D=16 locks x\u00b2 leftover (\u221ax leftover + 1/x + e^x); D=22 1/x and e^x only. OpenStax Vol 1 \u00a74.2."
   },
   "rows": [
     {
@@ -28,10 +32,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 101,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=4.",
-      "answer_latex": "L(x)=2+\\frac{1}{4}(x-4)",
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=1.",
+      "answer_latex": "L(x)=1+\\frac{1}{2}(x-1)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "sqrt",
       "diagram_svg": "",
       "debug": [
         [
@@ -43,57 +47,37 @@
           101
         ],
         [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "sqrt",
-        "structure_id": "linear_approximation:sqrt",
-        "band": "easy",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 0.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "sqrt",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "sqrt",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
+        "a": 1,
         "variant": "formula",
+        "form_id": "sqrt",
+        "family": "sqrt",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:sqrt",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "sqrt",
+          "family": "sqrt",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -115,10 +99,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 207,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=x^{2}\\text{ at }x=2.",
-      "answer_latex": "L(x)=4+4(x-2)",
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=9.",
+      "answer_latex": "L(x)=3+\\frac{1}{6}(x-9)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "sqrt",
       "diagram_svg": "",
       "debug": [
         [
@@ -130,57 +114,37 @@
           207
         ],
         [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "quad",
-        "structure_id": "linear_approximation:quad",
-        "band": "easy",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 0.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "quad",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "quad",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
+        "a": 9,
         "variant": "formula",
+        "form_id": "sqrt",
+        "family": "sqrt",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:sqrt",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "sqrt",
+          "family": "sqrt",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -202,10 +166,10 @@
       "difficulty": 0.0,
       "band": "low",
       "seed": 313,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=4.",
-      "answer_latex": "L(x)=2+\\frac{1}{4}(x-4)",
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=9.",
+      "answer_latex": "L(x)=3+\\frac{1}{6}(x-9)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "sqrt",
       "diagram_svg": "",
       "debug": [
         [
@@ -217,57 +181,37 @@
           313
         ],
         [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "sqrt",
-        "structure_id": "linear_approximation:sqrt",
-        "band": "easy",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 0.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "sqrt",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "sqrt",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
+        "a": 9,
         "variant": "formula",
+        "form_id": "sqrt",
+        "family": "sqrt",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:sqrt",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "sqrt",
+          "family": "sqrt",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 2,
           "power_max": 3,
@@ -284,15 +228,283 @@
     {
       "ok": true,
       "warn": false,
+      "label": "D\u22480 \u00b7 seed=0",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=4.",
+      "answer_latex": "L(x)=2+\\frac{1}{4}(x-4)",
+      "skeleton_pattern": "",
+      "form_id": "sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 4,
+        "variant": "formula",
+        "form_id": "sqrt",
+        "family": "sqrt",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:sqrt",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "sqrt",
+          "family": "sqrt",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=2",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=1.",
+      "answer_latex": "L(x)=1+\\frac{1}{2}(x-1)",
+      "skeleton_pattern": "",
+      "form_id": "sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 1,
+        "variant": "formula",
+        "form_id": "sqrt",
+        "family": "sqrt",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:sqrt",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "sqrt",
+          "family": "sqrt",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=5",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=9.",
+      "answer_latex": "L(x)=3+\\frac{1}{6}(x-9)",
+      "skeleton_pattern": "",
+      "form_id": "sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 9,
+        "variant": "formula",
+        "form_id": "sqrt",
+        "family": "sqrt",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:sqrt",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "sqrt",
+          "family": "sqrt",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22480 \u00b7 seed=7",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 0.0,
+      "band": "low",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=x^{2}\\text{ at }x=2.",
+      "answer_latex": "L(x)=4+4(x-2)",
+      "skeleton_pattern": "",
+      "form_id": "quad",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          0.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "quad"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 2,
+        "variant": "formula",
+        "form_id": "quad",
+        "family": "quad",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:quad",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "quad",
+          "family": "quad",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 2,
+          "power_max": 3,
+          "difficulty": 0.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
       "label": "D\u22488 \u00b7 seed=101",
       "type_id": "calc_app_diff_linear_approximations",
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=4.",
-      "answer_latex": "L(x)=2+\\frac{1}{4}(x-4)",
+      "prompt_latex": "\\text{Use the linear approximation of }f(x)=x^{2}\\text{ at }x=2\\text{ to estimate }f(\\frac{5}{2}).",
+      "answer_latex": "6",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "quad_estimate",
       "diagram_svg": "",
       "debug": [
         [
@@ -304,57 +516,38 @@
           101
         ],
         [
+          "form_id",
+          "quad_estimate"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "sqrt",
-        "structure_id": "linear_approximation:sqrt",
-        "band": "medium",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 8.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "sqrt",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "sqrt",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
-        "variant": "formula",
+        "a": 2,
+        "h": "1/2",
+        "variant": "estimate",
+        "form_id": "quad_estimate",
+        "family": "quad_estimate",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:quad_estimate",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "quad_estimate",
+          "family": "quad_estimate",
+          "generator": "linear_approximation",
+          "variant": "estimate"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -376,10 +569,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=x^{2}\\text{ at }x=2.",
-      "answer_latex": "L(x)=4+4(x-2)",
+      "prompt_latex": "\\text{Use the linear approximation of }f(x)=x^{2}\\text{ at }x=2\\text{ to estimate }f(\\frac{5}{2}).",
+      "answer_latex": "6",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "quad_estimate",
       "diagram_svg": "",
       "debug": [
         [
@@ -391,57 +584,38 @@
           207
         ],
         [
+          "form_id",
+          "quad_estimate"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "quad",
-        "structure_id": "linear_approximation:quad",
-        "band": "medium",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 8.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "quad",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "quad",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
-        "variant": "formula",
+        "a": 2,
+        "h": "1/2",
+        "variant": "estimate",
+        "form_id": "quad_estimate",
+        "family": "quad_estimate",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:quad_estimate",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "quad_estimate",
+          "family": "quad_estimate",
+          "generator": "linear_approximation",
+          "variant": "estimate"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -463,10 +637,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=4.",
-      "answer_latex": "L(x)=2+\\frac{1}{4}(x-4)",
+      "prompt_latex": "\\text{Use the linear approximation of }f(x)=x^{2}\\text{ at }x=4\\text{ to estimate }f(\\frac{21}{5}).",
+      "answer_latex": "\\frac{88}{5}",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "quad_estimate",
       "diagram_svg": "",
       "debug": [
         [
@@ -478,57 +652,38 @@
           313
         ],
         [
+          "form_id",
+          "quad_estimate"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "sqrt",
-        "structure_id": "linear_approximation:sqrt",
-        "band": "medium",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 8.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "sqrt",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "sqrt",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
-        "variant": "formula",
+        "a": 4,
+        "h": "1/5",
+        "variant": "estimate",
+        "form_id": "quad_estimate",
+        "family": "quad_estimate",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:quad_estimate",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "quad_estimate",
+          "family": "quad_estimate",
+          "generator": "linear_approximation",
+          "variant": "estimate"
+        },
         "generation_settings": {
           "term_count": 3,
           "power_max": 4,
@@ -545,15 +700,283 @@
     {
       "ok": true,
       "warn": false,
+      "label": "D\u22488 \u00b7 seed=0",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
+      "skeleton_pattern": "",
+      "form_id": "exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 0,
+        "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=2",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
+      "skeleton_pattern": "",
+      "form_id": "exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 0,
+        "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=5",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=4.",
+      "answer_latex": "L(x)=\\frac{1}{4}-\\frac{1}{16}(x-4)",
+      "skeleton_pattern": "",
+      "form_id": "reciprocal",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "reciprocal"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 4,
+        "variant": "formula",
+        "form_id": "reciprocal",
+        "family": "reciprocal",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:reciprocal",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "reciprocal",
+          "family": "reciprocal",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u22488 \u00b7 seed=7",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 8.0,
+      "band": "mid",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=1.",
+      "answer_latex": "L(x)=1+\\frac{1}{2}(x-1)",
+      "skeleton_pattern": "",
+      "form_id": "sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          8.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 1,
+        "variant": "formula",
+        "form_id": "sqrt",
+        "family": "sqrt",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:sqrt",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "sqrt",
+          "family": "sqrt",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 3,
+          "power_max": 4,
+          "difficulty": 8.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
       "label": "D\u224816 \u00b7 seed=101",
       "type_id": "calc_app_diff_linear_approximations",
       "difficulty": 16.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=5.",
-      "answer_latex": "L(x)=\\frac{1}{5}-\\frac{1}{25}(x-5)",
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=3.",
+      "answer_latex": "L(x)=\\frac{1}{3}-\\frac{1}{9}(x-3)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "reciprocal",
       "diagram_svg": "",
       "debug": [
         [
@@ -565,58 +988,37 @@
           101
         ],
         [
+          "form_id",
+          "reciprocal"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "reciprocal",
-        "structure_id": "linear_approximation:reciprocal",
-        "band": "hard",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_nested",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 16.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "reciprocal",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "reciprocal",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
+        "a": 3,
         "variant": "formula",
+        "form_id": "reciprocal",
+        "family": "reciprocal",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:reciprocal",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "reciprocal",
+          "family": "reciprocal",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -638,10 +1040,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=x^{2}\\text{ at }x=2.",
-      "answer_latex": "L(x)=4+4(x-2)",
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=3.",
+      "answer_latex": "L(x)=\\frac{1}{3}-\\frac{1}{9}(x-3)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "reciprocal",
       "diagram_svg": "",
       "debug": [
         [
@@ -653,58 +1055,37 @@
           207
         ],
         [
+          "form_id",
+          "reciprocal"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "quad",
-        "structure_id": "linear_approximation:quad",
-        "band": "hard",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_nested",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 16.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "quad",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "quad",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
+        "a": 3,
         "variant": "formula",
+        "form_id": "reciprocal",
+        "family": "reciprocal",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:reciprocal",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "reciprocal",
+          "family": "reciprocal",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -726,10 +1107,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 313,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
-      "answer_latex": "L(x)=1+x",
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=5.",
+      "answer_latex": "L(x)=\\frac{1}{5}-\\frac{1}{25}(x-5)",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "reciprocal",
       "diagram_svg": "",
       "debug": [
         [
@@ -741,58 +1122,37 @@
           313
         ],
         [
+          "form_id",
+          "reciprocal"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "exp",
-        "structure_id": "linear_approximation:exp",
-        "band": "hard",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_nested",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "exp"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 16.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "exp",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "exp"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "exp",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 1
-        },
+        "a": 5,
         "variant": "formula",
+        "form_id": "reciprocal",
+        "family": "reciprocal",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:reciprocal",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "reciprocal",
+          "family": "reciprocal",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -809,15 +1169,283 @@
     {
       "ok": true,
       "warn": false,
+      "label": "D\u224816 \u00b7 seed=0",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
+      "skeleton_pattern": "",
+      "form_id": "exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 0,
+        "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=2",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
+      "skeleton_pattern": "",
+      "form_id": "exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 0,
+        "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=5",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=4.",
+      "answer_latex": "L(x)=\\frac{1}{4}-\\frac{1}{16}(x-4)",
+      "skeleton_pattern": "",
+      "form_id": "reciprocal",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "reciprocal"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 4,
+        "variant": "formula",
+        "form_id": "reciprocal",
+        "family": "reciprocal",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:reciprocal",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "reciprocal",
+          "family": "reciprocal",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224816 \u00b7 seed=7",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 16.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=1.",
+      "answer_latex": "L(x)=1+\\frac{1}{2}(x-1)",
+      "skeleton_pattern": "",
+      "form_id": "sqrt",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          16.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "sqrt"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 1,
+        "variant": "formula",
+        "form_id": "sqrt",
+        "family": "sqrt",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:sqrt",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "sqrt",
+          "family": "sqrt",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 16.0,
+          "seed": 7,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
       "label": "D\u224822 \u00b7 seed=101",
       "type_id": "calc_app_diff_linear_approximations",
       "difficulty": 22.0,
       "band": "high",
       "seed": 101,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=5.",
-      "answer_latex": "L(x)=\\frac{1}{5}-\\frac{1}{25}(x-5)",
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -829,58 +1457,37 @@
           101
         ],
         [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "reciprocal",
-        "structure_id": "linear_approximation:reciprocal",
-        "band": "hard",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_nested",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 22.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "reciprocal",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "reciprocal",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
+        "a": 0,
         "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -902,10 +1509,10 @@
       "difficulty": 22.0,
       "band": "high",
       "seed": 207,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=x^{2}\\text{ at }x=2.",
-      "answer_latex": "L(x)=4+4(x-2)",
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -917,58 +1524,37 @@
           207
         ],
         [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "quad",
-        "structure_id": "linear_approximation:quad",
-        "band": "hard",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_nested",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "algebraic"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 22.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "quad",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "algebraic"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "quad",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 0
-        },
+        "a": 0,
         "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
@@ -993,7 +1579,7 @@
       "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
       "answer_latex": "L(x)=1+x",
       "skeleton_pattern": "",
-      "form_id": null,
+      "form_id": "exp",
       "diagram_svg": "",
       "debug": [
         [
@@ -1005,63 +1591,310 @@
           313
         ],
         [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
           "has_diagram_svg",
           false
         ]
       ],
       "metadata": {
-        "family": "exp",
-        "structure_id": "linear_approximation:exp",
-        "band": "hard",
-        "upgrades_applied": [
-          "allow_trig",
-          "allow_exp",
-          "allow_ln",
-          "allow_nested",
-          "allow_roots",
-          "allow_invtrig"
-        ],
-        "function_classes": [
-          "exp"
-        ],
-        "methods_used": [
-          "differential"
-        ],
-        "effective_d": 22.0,
-        "spec_snapshot": {
-          "pack": "structured_linear_approximation",
-          "family": "exp",
-          "generator": "linear_approximation",
-          "function_classes": [
-            "exp"
-          ],
-          "methods_used": [
-            "differential"
-          ],
-          "allow_trig": true,
-          "allow_exp": true,
-          "allow_log": true,
-          "allow_roots": true,
-          "variant": "formula"
-        },
-        "effort_features": {
-          "family": "exp",
-          "pack": "structured_linear_approximation",
-          "n_terms": 1,
-          "methods": [
-            "differential"
-          ],
-          "n_fn_nodes": 1
-        },
+        "a": 0,
         "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
         "tricks_required": [
           "linearization"
         ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
           "difficulty": 22.0,
           "seed": 313,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=0",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 0,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
+      "skeleton_pattern": "",
+      "form_id": "exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          0
+        ],
+        [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 0,
+        "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 0,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=2",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 2,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
+      "skeleton_pattern": "",
+      "form_id": "exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          2
+        ],
+        [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 0,
+        "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 2,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=5",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 5,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=e^{x}\\text{ at }x=0.",
+      "answer_latex": "L(x)=1+x",
+      "skeleton_pattern": "",
+      "form_id": "exp",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          5
+        ],
+        [
+          "form_id",
+          "exp"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 0,
+        "variant": "formula",
+        "form_id": "exp",
+        "family": "exp",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:exp",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "exp",
+          "family": "exp",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 5,
+          "include_answer_key": true,
+          "integers_only": true,
+          "only_x": true,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Find the linear approximation.}"
+      }
+    },
+    {
+      "ok": true,
+      "warn": false,
+      "label": "D\u224822 \u00b7 seed=7",
+      "type_id": "calc_app_diff_linear_approximations",
+      "difficulty": 22.0,
+      "band": "high",
+      "seed": 7,
+      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=3.",
+      "answer_latex": "L(x)=\\frac{1}{3}-\\frac{1}{9}(x-3)",
+      "skeleton_pattern": "",
+      "form_id": "reciprocal",
+      "diagram_svg": "",
+      "debug": [
+        [
+          "D / effective_d",
+          22.0
+        ],
+        [
+          "seed",
+          7
+        ],
+        [
+          "form_id",
+          "reciprocal"
+        ],
+        [
+          "tricks_required",
+          [
+            "linearization"
+          ]
+        ],
+        [
+          "has_diagram_svg",
+          false
+        ]
+      ],
+      "metadata": {
+        "a": 3,
+        "variant": "formula",
+        "form_id": "reciprocal",
+        "family": "reciprocal",
+        "generator": "linear_approximation",
+        "structure_id": "linear_approximation:reciprocal",
+        "tricks_required": [
+          "linearization"
+        ],
+        "spec_snapshot": {
+          "pack": "structured_linear_approximation",
+          "form_id": "reciprocal",
+          "family": "reciprocal",
+          "generator": "linear_approximation",
+          "variant": "formula"
+        },
+        "generation_settings": {
+          "term_count": 4,
+          "power_max": 6,
+          "difficulty": 22.0,
+          "seed": 7,
           "include_answer_key": true,
           "integers_only": true,
           "only_x": true,

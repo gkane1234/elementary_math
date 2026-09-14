@@ -117,84 +117,48 @@ def _family_structure_meta(
 # ---------------------------------------------------------------------------
 
 
+def _linear_approx_families(structure: dict) -> list[str]:
+    """Leftover bands (easy √x / x²; lock out x² at high D; D=22 reciprocal/exp)."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        linear_approx_forms_for_difficulty,
+    )
+
+    d = float(structure.get("difficulty", 8.0))
+    return list(linear_approx_forms_for_difficulty(d))
+
+
 def _linear_approximation(topic: str, settings: dict) -> list[Question]:
-    """L(x) = f(a) + f'(a)(x-a); optional numerical estimate."""
+    """Delegate to leftover-lockout sampler (same builders, exclusive bands)."""
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        LINEAR_APPROX_GENERATOR,
+        sample_linear_approximation,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _pilot_structure(settings)
-    x = str(settings.get("variable", "x"))
-    last: dict = {"meta": {}}
 
     def build() -> tuple[str, str, str | None]:
-        d = float(structure.get("difficulty", 8.0))
-        a = random.randint(1, 4)
-        mode = "estimate" if d >= 8 and random.random() < 0.45 else "formula"
-        family = random.choice(["quad", "sqrt", "reciprocal", "exp"] if d >= 10 else ["quad", "sqrt"])
-
-        if family == "quad":
-            # f(x)=x^2 at a → L(x)=a^2 + 2a(x-a)
-            fa = a * a
-            fp = 2 * a
-            f_body = rf"{x}^{{2}}"
-            L = rf"{fa}+{fp}({x}-{a})" if fp != 1 else rf"{fa}+({x}-{a})"
-            if mode == "estimate":
-                h = random.choice([Fraction(1, 10), Fraction(1, 5), Fraction(1, 2)])
-                x0 = a + h
-                est = fa + fp * h
-                prompt = (
-                    rf"\text{{Use the linear approximation of }}f({x})={f_body}"
-                    rf"\text{{ at }}{x}={a}\text{{ to estimate }}f({frac_latex(x0)})."
-                )
-                answer = frac_latex(est)
-            else:
-                prompt = (
-                    rf"\text{{Find the linear approximation of }}f({x})={f_body}"
-                    rf"\text{{ at }}{x}={a}."
-                )
-                answer = rf"L({x})={L}"
-        elif family == "sqrt":
-            # f=√x at a=4 typically; keep a perfect square
-            a = random.choice([1, 4, 9])
-            fa_s = {1: "1", 4: "2", 9: "3"}[a]
-            # L = √a + (1/(2√a))(x-a)
-            prompt = (
-                rf"\text{{Find the linear approximation of }}f({x})=\sqrt{{{x}}}"
-                rf"\text{{ at }}{x}={a}."
-            )
-            answer = (
-                rf"L({x})={fa_s}+\frac{{1}}{{{2 * int(fa_s)}}}({x}-{a})"
-            )
-            mode = "formula"
-        elif family == "reciprocal":
-            a = random.randint(2, 5)
-            prompt = (
-                rf"\text{{Find the linear approximation of }}f({x})=\frac{{1}}{{{x}}}"
-                rf"\text{{ at }}{x}={a}."
-            )
-            answer = rf"L({x})=\frac{{1}}{{{a}}}-\frac{{1}}{{{a * a}}}({x}-{a})"
-            mode = "formula"
-        else:
-            # e^x at 0
-            a = 0
-            prompt = (
-                rf"\text{{Find the linear approximation of }}f({x})=e^{{{x}}}"
-                rf"\text{{ at }}{x}=0."
-            )
-            answer = rf"L({x})=1+{x}"
-            mode = "formula"
-
-        last["meta"] = _family_structure_meta(
-            family,
-            generator="linear_approximation",
-            structure=structure,
-            variant=mode,
-        )
-        last["meta"]["tricks_required"] = ["linearization"]
-        last["meta"]["spec_snapshot"]["pack"] = "structured_linear_approximation"
-        return prompt, "linear approximation", answer if include_answer_key else None
+        item = sample_linear_approximation(random, settings)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            "form_id": fid,
+            "family": fid,
+            "generator": LINEAR_APPROX_GENERATOR,
+            "structure_id": f"{LINEAR_APPROX_GENERATOR}:{fid}",
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": LINEAR_APPROX_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
 
     def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
-        return dict(last.get("meta") or {})
+        return dict(getattr(build, "_last_meta", {}) or {})
 
     return _make_questions(
         topic,

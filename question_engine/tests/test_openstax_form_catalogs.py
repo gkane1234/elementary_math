@@ -222,6 +222,103 @@ def test_parts_mid_d_scales_inner():
     assert scaled >= 8, scaled
 
 
+def test_parts_bc_bank_catalog_and_deferred():
+    cat = load_form_catalog("integration_by_parts")
+    imp = {str(f["form_id"]) for f in implemented_forms(cat)}
+    for fid in (
+        "poly3_exp",
+        "poly3_sin",
+        "poly3_cos",
+        "poly2_cos",
+        "poly2_ln",
+        "ln_power_2",
+        "ln_power_3",
+        "poly1_arctan",
+        "poly1_arcsin",
+        "arcsin_alone",
+        "power_frac_ln",
+        "ln_quad",
+    ):
+        assert fid in imp, fid
+    gaps = {str(f["form_id"]) for f in catalog_gaps(cat)}
+    assert "poly_exp_trig" in gaps
+    assert "poly1_arccos" in gaps
+    assert "poly2_ln_quad" in gaps
+    pfd_gaps = {str(f["form_id"]) for f in catalog_gaps(load_form_catalog("partial_fractions"))}
+    assert "x4_plus_1" in pfd_gaps
+    assert "repeated_quad_square" in pfd_gaps
+
+
+def test_parts_bc_bank_preset_lookalikes():
+    from question_engine.frameworks.primitives.integrals import PARTS_FORM_PRESETS
+
+    bank = PARTS_FORM_PRESETS["bc_bank"]
+    prompts: set[str] = set()
+    seen: set[str] = set()
+    for seed in range(90):
+        sample = sample_integral_expression(
+            {
+                "difficulty": 16,
+                "seed": seed,
+                "include_answer_key": True,
+                "parts_form_preset": "bc_bank",
+            },
+            generator_key="integration_by_parts",
+        )
+        fid = _form_id(sample.as_metadata())
+        assert fid in bank, (seed, fid, sample.prompt_latex)
+        assert fid != "ln_alone"
+        assert "+C" in (sample.answer_latex or "")
+        prompts.add(sample.prompt_latex or "")
+        seen.add(fid)
+    assert len(prompts) >= 8, prompts
+    assert len(seen) >= 4, seen
+    frozen = {
+        r"\int x^{3}e^{2x}\,dx",
+        r"\int x\arctan(x)\,dx",
+        r"\int (\ln(x))^{2}\,dx",
+    }
+    assert any(p not in frozen for p in prompts), prompts
+
+
+def test_parts_d0_not_bc_bank_tabular():
+    """Host auto D=0 stays one-step LIATE even after bank families exist."""
+    allowed = {"ln_alone", "poly1_exp", "poly1_sin", "poly1_cos"}
+    for seed in range(30):
+        sample = sample_integral_expression(
+            {"difficulty": 0, "seed": seed, "include_answer_key": True},
+            generator_key="integration_by_parts",
+        )
+        fid = _form_id(sample.as_metadata())
+        assert fid in allowed, (seed, fid, sample.prompt_latex)
+
+
+def test_pfd_bc_bank_preset_lookalikes():
+    from question_engine.frameworks.primitives.integrals import PFD_FORM_PRESETS
+
+    bank = PFD_FORM_PRESETS["bc_bank"]
+    prompts: set[str] = set()
+    seen: set[str] = set()
+    for seed in range(70):
+        sample = sample_integral_expression(
+            {
+                "difficulty": 16,
+                "seed": seed,
+                "include_answer_key": True,
+                "pfd_form_preset": "bc_bank",
+            },
+            generator_key="integral_partial_fractions",
+        )
+        fid = _form_id(sample.as_metadata())
+        assert fid in bank, (seed, fid, sample.prompt_latex)
+        assert fid != "x4_plus_1"
+        assert "+C" in (sample.answer_latex or "")
+        prompts.add(sample.prompt_latex or "")
+        seen.add(fid)
+    assert len(prompts) >= 5, prompts
+    assert seen & {"distinct_linear_3", "mixed_linear_quad", "repeated_linear_square"}, seen
+
+
 def test_u_sub_catalog_diversity():
     cat = load_form_catalog("u_substitution")
     implemented = {str(f["form_id"]) for f in implemented_forms(cat)}

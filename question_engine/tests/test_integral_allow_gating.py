@@ -165,7 +165,13 @@ def test_usub_leaf_allow_trig_off_drops_trig_bank_forms():
 
 
 def test_parts_allow_exp_off_drops_cyclic_and_exp_lookalikes():
-    banned = {"poly1_exp", "poly2_exp", "cyclic_exp_sin", "cyclic_exp_cos"}
+    banned = {
+        "poly1_exp",
+        "poly2_exp",
+        "poly3_exp",
+        "cyclic_exp_sin",
+        "cyclic_exp_cos",
+    }
     for seed in range(50):
         sample = sample_integral_expression(
             {
@@ -173,6 +179,79 @@ def test_parts_allow_exp_off_drops_cyclic_and_exp_lookalikes():
                 "seed": seed,
                 "include_answer_key": True,
                 "allow_exp": False,
+            },
+            generator_key="integration_by_parts",
+        )
+        fid = _fid(sample)
+        assert fid not in banned, (seed, fid, sample.prompt_latex)
+
+
+def test_parts_allow_invtrig_off_drops_arctan_arcsin():
+    banned = {
+        "arctan_alone",
+        "poly1_arctan",
+        "poly1_arcsin",
+        "arcsin_alone",
+        "ln_quad",
+    }
+    for seed in range(50):
+        sample = sample_integral_expression(
+            {
+                "difficulty": 18,
+                "seed": seed,
+                "include_answer_key": True,
+                "allow_invtrig": False,
+            },
+            generator_key="integration_by_parts",
+        )
+        fid = _fid(sample)
+        assert fid not in banned, (seed, fid, sample.prompt_latex)
+        tricks = list(sample.as_metadata().get("tricks_required") or [])
+        assert "invtrig" not in tricks, (seed, tricks, sample.prompt_latex)
+
+
+def test_parts_allow_log_off_drops_ln_families():
+    banned = {
+        "ln_alone",
+        "poly1_ln",
+        "poly2_ln",
+        "ln_power_2",
+        "ln_power_3",
+        "power_frac_ln",
+        "ln_quad",
+    }
+    for seed in range(50):
+        sample = sample_integral_expression(
+            {
+                "difficulty": 18,
+                "seed": seed,
+                "include_answer_key": True,
+                "allow_log": False,
+            },
+            generator_key="integration_by_parts",
+        )
+        fid = _fid(sample)
+        assert fid not in banned, (seed, fid, sample.prompt_latex)
+
+
+def test_parts_allow_trig_off_drops_sin_cos_cyclic():
+    banned = {
+        "poly1_sin",
+        "poly1_cos",
+        "poly2_sin",
+        "poly2_cos",
+        "poly3_sin",
+        "poly3_cos",
+        "cyclic_exp_sin",
+        "cyclic_exp_cos",
+    }
+    for seed in range(50):
+        sample = sample_integral_expression(
+            {
+                "difficulty": 18,
+                "seed": seed,
+                "include_answer_key": True,
+                "allow_trig": False,
             },
             generator_key="integration_by_parts",
         )

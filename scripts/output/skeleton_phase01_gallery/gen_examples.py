@@ -3623,7 +3623,7 @@ def _debug_rows(meta: dict[str, Any], gen: dict[str, Any]) -> list[tuple[str, An
         ("primitive_engine", meta.get("primitive_engine")),
         ("D / effective_d", d),
         ("seed", seed),
-        (        "form_id", meta.get("form_id")),
+        ("form_id", meta.get("form_id")),
         ("openstax_form", meta.get("openstax_form")),
         ("tricks_required", meta.get("tricks_required")),
         ("u_sub_form_preset", meta.get("u_sub_form_preset")),

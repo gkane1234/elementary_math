@@ -279,7 +279,7 @@ skill pair with a Calculus leaf. See `PRECALC_INDEX.md`.
 | `calc_diff_eq_slope_fields` | `slope_field_interpret` | — |
 | `calc_diff_eq_introduction` | `calculus_foundations` | — |
 | `calc_diff_eq_separable` | `separable_diff_eq` | — |
-| `calc_diff_eq_exponential_growth_and_decay` | `exponential_growth_decay` | — |
+| `calc_diff_eq_exponential_growth_and_decay` | `calc_continuous_growth_decay` | — |
 
 ## Appendix — Diff gallery topics
 

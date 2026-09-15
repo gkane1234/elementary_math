@@ -322,9 +322,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "calc_app_diff `linear_approximation` (quad leftover / sqrt leftover / estimate / reciprocal / exp).",
     },
     "calc_app_int_motion_along_a_line_revisited": {
-        "flag_why": "Shipped leftover lockout of linear v=2t; LIMITATIONS no distance / Ex. 5.24 nonzero net / quadratic v(t).",
-        "skill": "Use FTC / net change for displacement from v(t).",
-        "engine": "calc_app_diff `motion_along_a_line_integral` (linear leftover / const leftover / sign-change).",
+        "flag_why": "Shipped leftover lockout of linear v=2t + Ex. 5.25 distance on the same v; LIMITATIONS no Ex. 5.24 nonzero net / quadratic v(t).",
+        "skill": "Use FTC / net change for displacement from v(t), or ∫|v| total distance at high D.",
+        "engine": "calc_app_diff `motion_along_a_line_integral` (linear leftover / const leftover / sign-change / distance).",
     },
     "calc_diff_eq_introduction": {
         "flag_why": "Shipped leftover lockout of exp verify; LIMITATIONS no classify-order / IVP find-C / trig verify.",

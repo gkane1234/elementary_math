@@ -2874,9 +2874,9 @@ def test_motion_and_integral_not_generic_ddx():
     qi = _gen("calc_app_int_motion_along_a_line_revisited", 0, seed=101)[0]
     assert "displacement" in (qi.prompt_latex or "").lower()
     qih = _gen("calc_app_int_motion_along_a_line_revisited", 18, seed=3)[0]
-    assert "0" in (qih.answer_latex or "") or (qih.metadata or {}).get(
-        "form_id"
-    ) in {"disp_const_v", "disp_sign_change"}
+    assert (qih.metadata or {}).get("form_id") in {
+        "disp_const_v", "disp_sign_change", "disp_distance",
+    }
 
 
 def test_motion_integral_d0_linear_high_d_sign_change_lockout():
@@ -2889,8 +2889,8 @@ def test_motion_integral_d0_linear_high_d_sign_change_lockout():
     assert "disp_linear_v" in med and "disp_const_v" in med
     hard = motion_integral_forms_for_difficulty(16)
     assert "disp_linear_v" not in hard
-    assert hard == ("disp_const_v", "disp_sign_change")
-    assert motion_integral_forms_for_difficulty(22) == ("disp_sign_change",)
+    assert hard == ("disp_const_v", "disp_sign_change", "disp_distance")
+    assert motion_integral_forms_for_difficulty(22) == ("disp_distance",)
 
     q0 = _gen("calc_app_int_motion_along_a_line_revisited", 0, seed=101)[0]
     assert (q0.metadata or {}).get("form_id") == "disp_linear_v"
@@ -2919,22 +2919,25 @@ def test_motion_integral_d0_linear_high_d_sign_change_lockout():
         assert fid != "disp_linear_v"
         assert r"v(t)=2t." not in (q.prompt_latex or "")
         assert (q.metadata or {}).get("generator") == "motion_along_a_line_integral"
-    assert high <= {"disp_const_v", "disp_sign_change"}
+    assert high <= {"disp_const_v", "disp_sign_change", "disp_distance"}
     assert "disp_sign_change" in high
+    assert "disp_distance" in high
 
     expert = set()
     for seed in range(24):
         q = _gen("calc_app_int_motion_along_a_line_revisited", 22, seed=seed)[0]
         fid = (q.metadata or {}).get("form_id")
         expert.add(fid)
-        assert fid == "disp_sign_change"
-        assert (q.answer_latex or "") == "0"
+        assert fid == "disp_distance"
+        assert (q.answer_latex or "") != "0"
+        assert "total distance" in (q.prompt_latex or "").lower()
+        assert "displacement" not in (q.prompt_latex or "").lower()
         assert r"v(t)=2t-" in (q.prompt_latex or "")
         assert (q.metadata or {}).get("generator") == "motion_along_a_line_integral"
         snap = (q.metadata or {}).get("spec_snapshot") or {}
-        assert snap.get("form_id") == "disp_sign_change"
+        assert snap.get("form_id") == "disp_distance"
         assert snap.get("generator") == "motion_along_a_line_integral"
-    assert expert == {"disp_sign_change"}
+    assert expert == {"disp_distance"}
 
 
 def test_motion_integral_quality_weights_tilt():
@@ -2962,6 +2965,25 @@ def test_motion_integral_quality_weights_tilt():
     baseline = _counts(None)
     tilted = _counts({"disp_linear_v": -2.5, "disp_const_v": 2.5})
     assert tilted["disp_const_v"] > baseline["disp_const_v"]
+
+
+def test_motion_integral_distance_ex225_arithmetic():
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        _sample_disp_distance,
+    )
+
+    found = False
+    for seed in range(40):
+        item = _sample_disp_distance(_random.Random(seed))
+        if item.metadata.get("c") == 3:
+            assert r"v(t)=2t-6" in (item.prompt_latex or "")
+            assert "total distance" in (item.prompt_latex or "").lower()
+            assert item.answer_latex == "18"
+            found = True
+            break
+    assert found
 
 
 def test_motion_d0_eval_velocity_high_d_cubic_lockout():

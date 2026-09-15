@@ -2950,8 +2950,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_int_motion_along_a_line_revisited",
         "App — motion revisited (integral)",
-        "D=0 linear leftover (old easy v=2t); D≥8 const v; high D "
-        "sign-change net 0 and locks out linear. OpenStax Vol 1 §5.4.",
+        "D=0 linear leftover (old easy v=2t); D≥8 const v; D=16 leftover const / "
+        "sign-change displacement + total distance; D=22 distance only on the "
+        "same v=2t-2c. OpenStax Vol 1 §5.4 Ex. 5.25.",
     ),
     (
         "calc_diff_eq_introduction",
@@ -3192,6 +3193,9 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)
         elif tid == "calc_app_int_area_between_curves":
             eng = "area_between_curves"
+            extra_seeds = (101, 207, 313, 0, 1, 2, 7)
+        elif tid == "calc_app_int_motion_along_a_line_revisited":
+            eng = "calc_apps"
             extra_seeds = (101, 207, 313, 0, 1, 2, 7)
         elif "volume" in tid:
             eng = "volumes"

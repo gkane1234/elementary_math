@@ -2050,8 +2050,8 @@ MOTION_INTEGRAL_GENERATOR = "motion_along_a_line_integral"
 _MOTION_INT_BANDS: dict[str, tuple[str, ...]] = {
     "easy": ("disp_linear_v",),
     "medium": ("disp_linear_v", "disp_const_v"),
-    "hard": ("disp_const_v", "disp_sign_change"),
-    "expert": ("disp_sign_change",),
+    "hard": ("disp_const_v", "disp_sign_change", "disp_distance"),
+    "expert": ("disp_distance",),
 }
 
 
@@ -2102,12 +2102,18 @@ def _sample_disp_const_v(rng: random.Random) -> AppDiffItem:
     )
 
 
+def _sign_change_v(rng: random.Random) -> tuple[int, int]:
+    """Old-path sign-change: v=2t−2c on [0,2c], zero at t=c."""
+    c = rng.randint(1, 3)
+    return c, 2 * c
+
+
 def _sample_disp_sign_change(rng: random.Random) -> AppDiffItem:
     """v=2t−2c changes sign at t=c; net displacement on [0,2c] is 0."""
-    c = rng.randint(1, 3)
+    c, t_end = _sign_change_v(rng)
     prompt = (
         rf"v(t)=2t-{2 * c}.\quad\text{{Find the displacement from }}"
-        rf"t=0\text{{ to }}t={2 * c}."
+        rf"t=0\text{{ to }}t={t_end}."
     )
     return AppDiffItem(
         prompt, "0", "motion integral", "disp_sign_change",
@@ -2115,15 +2121,29 @@ def _sample_disp_sign_change(rng: random.Random) -> AppDiffItem:
     )
 
 
+def _sample_disp_distance(rng: random.Random) -> AppDiffItem:
+    """Ex. 5.25 / Ex. 225: same v=2t−2c; total distance ∫|v|=2c²."""
+    c, t_end = _sign_change_v(rng)
+    prompt = (
+        rf"v(t)=2t-{2 * c}.\quad\text{{Find the total distance traveled from }}"
+        rf"t=0\text{{ to }}t={t_end}."
+    )
+    return AppDiffItem(
+        prompt, str(2 * c * c), "motion integral", "disp_distance",
+        {"c": c, "note": "total distance 2c^2"},
+    )
+
+
 _MOTION_INT_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
     "disp_linear_v": _sample_disp_linear_v,
     "disp_const_v": _sample_disp_const_v,
     "disp_sign_change": _sample_disp_sign_change,
+    "disp_distance": _sample_disp_distance,
 }
 
 
 def sample_motion_integral(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    """Displacement from v(t). High D locks out linear leftover for sign-change."""
+    """Displacement from v(t); expert asks total distance ∫|v| on the sign-change v."""
     from question_engine.frameworks.primitives.openstax_form_catalogs import (
         select_form_id,
     )

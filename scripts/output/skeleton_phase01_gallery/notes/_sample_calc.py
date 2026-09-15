@@ -244,10 +244,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "calc_app_diff `curve_sketching` (parabola / odd cubic / shifted cubic).",
     },
     "calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime": {
-        "force_flags": ["UNCLEAR"],
-        "flag_why": "`calculus_foundations` stub — matching f/f'/f'' graphs needs figure bank.",
-        "skill": "Match or compare graphs of f, f', and f''.",
-        "engine": "Leave leaf until figure bank exists; not Diff skeleton.",
+        "flag_why": "Shipped leftover lockout of linear f' (exclusive cliff already) + stamps; LIMITATIONS no graph-match figures / D=8===D=16===D=22 quadratic only.",
+        "skill": "From an explicit f', say where f is increasing or decreasing.",
+        "engine": "calc_app_diff `graphical_f_fp` (linear leftover / quadratic).",
     },
     "calc_def_int_approximating_area_under_a_curve": {
         "flag_why": "Shipped leftover lockout of midpoint f(x)=x n=2; LIMITATIONS three frozen old builders / no sin / 10-x^2 / new figure bank.",

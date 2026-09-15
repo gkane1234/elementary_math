@@ -3589,6 +3589,61 @@ def test_graphical_sign_of_fp():
     assert r"\frac{d}{dx}" not in (qg.prompt_latex or "")
 
 
+def test_graphical_f_fp_d0_linear_high_d_quadratic_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        graphical_f_fp_forms_for_difficulty,
+    )
+
+    assert graphical_f_fp_forms_for_difficulty(0) == ("fp_linear_sign",)
+    assert graphical_f_fp_forms_for_difficulty(8) == ("fp_quadratic_sign",)
+    assert graphical_f_fp_forms_for_difficulty(16) == ("fp_quadratic_sign",)
+    assert graphical_f_fp_forms_for_difficulty(22) == ("fp_quadratic_sign",)
+
+    tid = "calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime"
+    q0 = _gen(tid, 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "fp_linear_sign"
+    assert (q0.metadata or {}).get("generator") == "graphical_f_fp"
+    p0 = q0.prompt_latex or ""
+    assert r"f'(x)=x-" in p0
+    assert r"x^{2}" not in p0
+    assert "decreasing" in p0
+    c0 = (q0.metadata or {}).get("c")
+    assert c0 in (1, 2, 3, 4, 5)
+    assert q0.answer_latex == rf"(-\infty,{c0})"
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "fp_linear_sign"
+    assert snap.get("generator") == "graphical_f_fp"
+
+    easy = set()
+    for seed in range(24):
+        q = _gen(tid, 0, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        easy.add(fid)
+        p = q.prompt_latex or ""
+        assert fid == "fp_linear_sign"
+        assert r"x^{2}" not in p
+        assert "decreasing" in p
+        assert (q.metadata or {}).get("generator") == "graphical_f_fp"
+    assert easy == {"fp_linear_sign"}
+
+    for d in (8, 16, 22):
+        high = set()
+        for seed in range(24):
+            q = _gen(tid, d, seed=seed)[0]
+            fid = (q.metadata or {}).get("form_id")
+            high.add(fid)
+            p = q.prompt_latex or ""
+            assert fid == "fp_quadratic_sign"
+            assert fid != "fp_linear_sign"
+            assert r"x^{2}" in p
+            assert "decreasing" not in p
+            assert (q.metadata or {}).get("generator") == "graphical_f_fp"
+            snap = (q.metadata or {}).get("spec_snapshot") or {}
+            assert snap.get("form_id") == "fp_quadratic_sign"
+            assert snap.get("generator") == "graphical_f_fp"
+        assert high == {"fp_quadratic_sign"}
+
+
 def test_related_rates_stamps_form_id_generator_and_two_seeds_differ():
     from question_engine.ml.knob_introspect import has_continuous_difficulty
     from question_engine.ml.rating_regressor import extract_skeleton_features

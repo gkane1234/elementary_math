@@ -4042,19 +4042,49 @@ def sample_related_rates(rng: random.Random, settings: dict[str, Any]) -> AppDif
     )
 
 
-def sample_graphical_f_fp(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
-    """Sign-of-f' questions (no figure bank). OpenStax §4.5 skill without graphs."""
-    d = _d(settings)
+GRAPHICAL_F_FP_GENERATOR = "graphical_f_fp"
+
+_GRAPHICAL_F_FP_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("fp_linear_sign",),
+    "hard": ("fp_quadratic_sign",),
+}
+
+
+def graphical_f_fp_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    """Exclusive cliff already: linear leftover only below D=8, else quadratic."""
     if d < 8.0:
-        c = rng.randint(1, 5)
-        prompt = (
-            rf"f'(x)=x-{c}.\text{{ On which interval is }}f\text{{ decreasing?}}"
-        )
-        answer = rf"(-\infty,{c})"
-        return AppDiffItem(
-            prompt, answer, "graphical f/f'", "fp_linear_sign",
-            {"c": c},
-        )
+        return _GRAPHICAL_F_FP_BANDS["easy"]
+    return _GRAPHICAL_F_FP_BANDS["hard"]
+
+
+def _graphical_f_fp_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [GRAPHICAL_F_FP_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _sample_fp_linear_sign(rng: random.Random) -> AppDiffItem:
+    """Old-path D=0: sign chart of linear f' (no figure bank)."""
+    c = rng.randint(1, 5)
+    prompt = (
+        rf"f'(x)=x-{c}.\text{{ On which interval is }}f\text{{ decreasing?}}"
+    )
+    answer = rf"(-\infty,{c})"
+    return AppDiffItem(
+        prompt, answer, "graphical f/f'", "fp_linear_sign",
+        {"c": c},
+    )
+
+
+def _sample_fp_quadratic_sign(rng: random.Random) -> AppDiffItem:
+    """Old exclusive D≥8: sign chart of quadratic f' (no figure bank)."""
     a = rng.randint(1, 4)
     prompt = (
         rf"f'(x)=x^{{2}}-{a * a}.\text{{ On which intervals is }}f"
@@ -4064,6 +4094,46 @@ def sample_graphical_f_fp(rng: random.Random, settings: dict[str, Any]) -> AppDi
     return AppDiffItem(
         prompt, answer, "graphical f/f'", "fp_quadratic_sign",
         {"a": a},
+    )
+
+
+_GRAPHICAL_F_FP_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
+    "fp_linear_sign": _sample_fp_linear_sign,
+    "fp_quadratic_sign": _sample_fp_quadratic_sign,
+}
+
+
+def sample_graphical_f_fp(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Sign of explicit f'. High D locks out linear leftover. No figure bank."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = graphical_f_fp_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _graphical_f_fp_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid not in _GRAPHICAL_F_FP_BUILDERS:
+        fid = forms[0]
+    item = _GRAPHICAL_F_FP_BUILDERS[fid](rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "frame_id": fid,
+        "generator": GRAPHICAL_F_FP_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": GRAPHICAL_F_FP_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
     )
 
 

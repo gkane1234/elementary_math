@@ -69,7 +69,7 @@ Dedicated `calc_app_diff` generators (not `calculus_foundations`):
 
 - Motion along a line (diff): leftover lockout + Ex. 3.36/3.35 cubics shipped; still no free-fall \(-16t^{2}\) / piecewise / trig / \(s(t)\) graph
 - Motion along a line revisited (integral): leftover lockout of \(v=2t\) shipped + \(\int\lvert v\rvert\) distance on the existing sign-change \(v\); still no Ex. 5.24 nonzero net / quadratic \(v(t)\)
-- Graphical comparison: leftover queue skip — figure bank (live is sign-of-\(f'\); exclusive cliff already; unstamped `generator`)
+- Graphical comparison: leftover lockout of linear \(f'\) shipped (exclusive cliff already) + stamps; still no graph-match figures; D=8===D=16===D=22 quadratic only
 - Approximating area (finite Riemann): leftover lockout of midpoint \(f(x)=x\), \(n=2\) shipped; still three frozen old builders (no Ex. 5.5 \(10-x^{2}\) / Ex. 5.6 \(\sin x\)); D=16 can still emit affine leftover; existing `function_sketch` + Riemann rectangles (not a new figure bank)
 - Instantaneous rates of change: leftover lockout of \(x^{n}\) shipped; still seven frozen old builders (no Ex. 3.34 free-fall / table / graph); D=16 can still emit \(px^{2}+q\) / \(\sqrt{x}\) / \(1/x\) leftover
 - Rules using tables: leftover lockout of D=0 \((fg)'\) shipped; still three frozen old builders (text values, no figure-bank table / three-function product); D=16 can still emit quotient leftover
@@ -122,7 +122,6 @@ Remaining skips (not leftover-lockable without a figure bank / new core):
 
 | type_id | why paused |
 |---|---|
-| `calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime` | Skip — figure bank. Live is sign-of-explicit-\(f'\) (`fp_linear_sign` / `fp_quadratic_sign`); exclusive cliff already (`d<8` linear, else quadratic). Unstamped `generator` / no `spec_snapshot`. D=16===D=22 quadratic only. Gold is OpenStax §4.5 graph-match — no figure bank. |
 | `calc_def_int_area_under_a_curve_by_limit_of_sums` | Already skipped — live is FTC `area_under_curve` (wrong skill). No \(\lim\sum\) core. Shared leftover lockout of \(y=x\) already on the area sibling. |
 
 Already leftover-locked or skip-further: every other Still-thin / This-pass leaf (including related rates; stamps + exclusive bands already). D=16===D=22 mixes that remain are post-lockout same-band pools (limits specials, EMH `bc_bank` / `challenging`, PFD 3-linear/mixed/repeated, DE intro Euler-only) — exclusive cliffs would not change leftover honesty without new cores.
@@ -131,6 +130,7 @@ Diff `expr_skeleton` nine (power / product / quotient / chain / trig / ln·exp /
 
 ## This pass (2026-09-14)
 
+- **`calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime`:** Leftover lockout of D=0 linear \(f'\) (exclusive cliff already: `d<8` linear, else quadratic). D=0 `fp_linear_sign` only (old easy); D=8/16/22 `fp_quadratic_sign` only (no linear leftover). Stamps `form_id` + `generator=graphical_f_fp` on metadata and `spec_snapshot`; `select_form_id` / `live_quality_form_weights`. Did not invent a figure bank / graph-match / cubic \(f'\) core. Remaining `LIMITATIONS`: no OpenStax §4.5 figures; D=8===D=16===D=22 quadratic only.
 - **`calc_continuity_determining_and_classifying`:** Leftover lockout of D=0 linear-continuous / rem_diff_sq (old easy). D=0 `continuity_classify_continuous` / `continuity_classify_removable` only; D=8 leftover mix + jump; D=16/22 jump (linear\|\|const) + essential \(1/(x-a)\) (no leftover). Sampler else-branch cannot silently emit leftover continuous/removable. Stamps `form_id` + `generator=limit_continuity` on metadata and `spec_snapshot`; `select_form_id` / `live_quality_form_weights`. Shared generator also leftover-locks `pc_continuity`. Did not invent an expanded-cancel classify / osc-essential / figure-bank / ε–δ core.
 - **`calc_limits_at_infinity`:** Leftover lockout of D=0 rational at \(\pm\infty\) (old Mad-Lib). D=0 `inf_rational` only (old easy); D=8 leftover rational + exp / ln / arctan / \(\sin x/x\); D=16/22 no `inf_rational`. Sampler else-branch cannot silently emit leftover rational. Stamps `form_id` + `generator=limit_at_infinity` on metadata and `spec_snapshot`; `select_form_id` / `live_quality_form_weights`. Shared generator also leftover-locks `pc_limits_at_infinity`. Did not invent an \(e^{x}/x^{k}\) catalog form / oblique-asymptote / ε–δ / figure-bank core.
 - **`calc_limits_at_essential_discontinuities`:** Leftover lockout of D=0 \(\lim 1/x\) (old Mad-Lib). D=0 `essential_1_over_x` only (old easy); D=8 leftover \(1/x\) + \(1/x^{2}\) / VA / osc / tan; D=16/22 no `essential_1_over_x`. Sampler else-branch cannot silently emit leftover \(1/x\). Stamps `form_id` + `generator=limit_essential` on metadata and `spec_snapshot`; `select_form_id` / `live_quality_form_weights`. Shared generator also leftover-locks `pc_limits_at_essential_discontinuities`. Did not invent a figure-bank / ε–δ / \(x\sin(1/x)\) core.

@@ -2934,7 +2934,8 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_graphical_comparison_of_f_f_prime_and_f_double_prime",
         "App — sign of f′ (no figure bank)",
-        "Increasing/decreasing from an explicit f'. LIMITATIONS: no graph-match figures. OpenStax Vol 1 §4.5.",
+        "D=0 linear leftover (old easy f'=x-c); D≥8 quadratic f'=x^2-a^2 and "
+        "locks out linear. LIMITATIONS: no graph-match figures. OpenStax Vol 1 §4.5.",
     ),
     (
         "calc_app_diff_motion_along_a_line",

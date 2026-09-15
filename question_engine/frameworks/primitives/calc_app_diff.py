@@ -1718,8 +1718,8 @@ LINEAR_APPROX_GENERATOR = "linear_approximation"
 
 _LINAPPROX_BANDS: dict[str, tuple[str, ...]] = {
     "easy": ("quad", "sqrt"),
-    "medium": ("quad", "sqrt", "quad_estimate", "reciprocal", "exp"),
-    "hard": ("sqrt", "reciprocal", "exp"),
+    "medium": ("quad", "sqrt", "quad_estimate", "sqrt_estimate", "reciprocal", "exp"),
+    "hard": ("sqrt", "sqrt_estimate", "reciprocal", "exp"),
     "expert": ("reciprocal", "exp"),
 }
 
@@ -1808,6 +1808,23 @@ def _sample_linapprox_sqrt(rng: random.Random, x: str = "x") -> AppDiffItem:
     )
 
 
+def _sample_linapprox_sqrt_estimate(rng: random.Random, x: str = "x") -> AppDiffItem:
+    """Ex. 4.5 estimate half: use L of √x at a perfect square to estimate √(a+h)."""
+    a = rng.choice([1, 4, 9])
+    fa = {1: 1, 4: 2, 9: 3}[a]
+    h = rng.choice([Fraction(1, 10), Fraction(1, 5), Fraction(1, 2)])
+    x0 = a + h
+    est = Fraction(fa) + h / (2 * fa)
+    prompt = (
+        rf"\text{{Use the linear approximation of }}f({x})=\sqrt{{{x}}}"
+        rf"\text{{ at }}{x}={a}\text{{ to estimate }}\sqrt{{{frac_latex(x0)}}}."
+    )
+    return AppDiffItem(
+        prompt, frac_latex(est), "linear approximation", "sqrt_estimate",
+        {"a": a, "h": str(h), "variant": "estimate"},
+    )
+
+
 def _sample_linapprox_reciprocal(rng: random.Random, x: str = "x") -> AppDiffItem:
     """Old-path D≥10 unlock: L(x) of 1/x at a∈{2,…,5}."""
     a = rng.randint(2, 5)
@@ -1838,6 +1855,7 @@ _LINAPPROX_BUILDERS: dict[str, Callable[[random.Random, str], AppDiffItem]] = {
     "quad": _sample_linapprox_quad,
     "quad_estimate": _sample_linapprox_quad_estimate,
     "sqrt": _sample_linapprox_sqrt,
+    "sqrt_estimate": _sample_linapprox_sqrt_estimate,
     "reciprocal": _sample_linapprox_reciprocal,
     "exp": _sample_linapprox_exp,
 }

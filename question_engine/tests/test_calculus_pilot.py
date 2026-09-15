@@ -75,8 +75,9 @@ def test_linear_approximation_emit_structure_family() -> None:
         q.metadata.get("structure_id", "").startswith("linear_approximation:")
         for q in qs
     )
-    assert families <= {"sqrt", "reciprocal", "exp"}
+    assert families <= {"sqrt", "sqrt_estimate", "reciprocal", "exp"}
     assert "quad" not in families
+    assert "quad_estimate" not in families
     assert len(families) >= 2
 
 

@@ -21,7 +21,7 @@
       5,
       7
     ],
-    "blurb": "L(x)=f(a)+f'(a)(x-a). D=0 leftover \u221ax / x\u00b2 (old easy); D=8 leftover + estimate x\u00b2 + 1/x + e^x; D=16 locks x\u00b2 leftover (\u221ax leftover + 1/x + e^x); D=22 1/x and e^x only. OpenStax Vol 1 \u00a74.2."
+    "blurb": "L(x)=f(a)+f'(a)(x-a). D=0 leftover \u221ax / x\u00b2 (old easy); D=8 leftover + estimate x\u00b2 / \u221ax + 1/x + e^x; D=16 locks x\u00b2 leftover (\u221ax leftover formula/estimate + 1/x + e^x); D=22 1/x and e^x only. OpenStax Vol 1 \u00a74.2 Ex. 4.5."
   },
   "rows": [
     {
@@ -501,10 +501,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 101,
-      "prompt_latex": "\\text{Use the linear approximation of }f(x)=x^{2}\\text{ at }x=2\\text{ to estimate }f(\\frac{5}{2}).",
-      "answer_latex": "6",
+      "prompt_latex": "\\text{Use the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=1\\text{ to estimate }\\sqrt{\\frac{3}{2}}.",
+      "answer_latex": "\\frac{5}{4}",
       "skeleton_pattern": "",
-      "form_id": "quad_estimate",
+      "form_id": "sqrt_estimate",
       "diagram_svg": "",
       "debug": [
         [
@@ -517,7 +517,7 @@
         ],
         [
           "form_id",
-          "quad_estimate"
+          "sqrt_estimate"
         ],
         [
           "tricks_required",
@@ -531,20 +531,20 @@
         ]
       ],
       "metadata": {
-        "a": 2,
+        "a": 1,
         "h": "1/2",
         "variant": "estimate",
-        "form_id": "quad_estimate",
-        "family": "quad_estimate",
+        "form_id": "sqrt_estimate",
+        "family": "sqrt_estimate",
         "generator": "linear_approximation",
-        "structure_id": "linear_approximation:quad_estimate",
+        "structure_id": "linear_approximation:sqrt_estimate",
         "tricks_required": [
           "linearization"
         ],
         "spec_snapshot": {
           "pack": "structured_linear_approximation",
-          "form_id": "quad_estimate",
-          "family": "quad_estimate",
+          "form_id": "sqrt_estimate",
+          "family": "sqrt_estimate",
           "generator": "linear_approximation",
           "variant": "estimate"
         },
@@ -569,10 +569,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 207,
-      "prompt_latex": "\\text{Use the linear approximation of }f(x)=x^{2}\\text{ at }x=2\\text{ to estimate }f(\\frac{5}{2}).",
-      "answer_latex": "6",
+      "prompt_latex": "\\text{Use the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=9\\text{ to estimate }\\sqrt{\\frac{19}{2}}.",
+      "answer_latex": "\\frac{37}{12}",
       "skeleton_pattern": "",
-      "form_id": "quad_estimate",
+      "form_id": "sqrt_estimate",
       "diagram_svg": "",
       "debug": [
         [
@@ -585,7 +585,7 @@
         ],
         [
           "form_id",
-          "quad_estimate"
+          "sqrt_estimate"
         ],
         [
           "tricks_required",
@@ -599,20 +599,20 @@
         ]
       ],
       "metadata": {
-        "a": 2,
+        "a": 9,
         "h": "1/2",
         "variant": "estimate",
-        "form_id": "quad_estimate",
-        "family": "quad_estimate",
+        "form_id": "sqrt_estimate",
+        "family": "sqrt_estimate",
         "generator": "linear_approximation",
-        "structure_id": "linear_approximation:quad_estimate",
+        "structure_id": "linear_approximation:sqrt_estimate",
         "tricks_required": [
           "linearization"
         ],
         "spec_snapshot": {
           "pack": "structured_linear_approximation",
-          "form_id": "quad_estimate",
-          "family": "quad_estimate",
+          "form_id": "sqrt_estimate",
+          "family": "sqrt_estimate",
           "generator": "linear_approximation",
           "variant": "estimate"
         },
@@ -637,10 +637,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 313,
-      "prompt_latex": "\\text{Use the linear approximation of }f(x)=x^{2}\\text{ at }x=4\\text{ to estimate }f(\\frac{21}{5}).",
-      "answer_latex": "\\frac{88}{5}",
+      "prompt_latex": "\\text{Use the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=9\\text{ to estimate }\\sqrt{\\frac{46}{5}}.",
+      "answer_latex": "\\frac{91}{30}",
       "skeleton_pattern": "",
-      "form_id": "quad_estimate",
+      "form_id": "sqrt_estimate",
       "diagram_svg": "",
       "debug": [
         [
@@ -653,7 +653,7 @@
         ],
         [
           "form_id",
-          "quad_estimate"
+          "sqrt_estimate"
         ],
         [
           "tricks_required",
@@ -667,20 +667,20 @@
         ]
       ],
       "metadata": {
-        "a": 4,
+        "a": 9,
         "h": "1/5",
         "variant": "estimate",
-        "form_id": "quad_estimate",
-        "family": "quad_estimate",
+        "form_id": "sqrt_estimate",
+        "family": "sqrt_estimate",
         "generator": "linear_approximation",
-        "structure_id": "linear_approximation:quad_estimate",
+        "structure_id": "linear_approximation:sqrt_estimate",
         "tricks_required": [
           "linearization"
         ],
         "spec_snapshot": {
           "pack": "structured_linear_approximation",
-          "form_id": "quad_estimate",
-          "family": "quad_estimate",
+          "form_id": "sqrt_estimate",
+          "family": "sqrt_estimate",
           "generator": "linear_approximation",
           "variant": "estimate"
         },
@@ -839,10 +839,10 @@
       "difficulty": 8.0,
       "band": "mid",
       "seed": 5,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\frac{1}{x}\\text{ at }x=4.",
-      "answer_latex": "L(x)=\\frac{1}{4}-\\frac{1}{16}(x-4)",
+      "prompt_latex": "\\text{Use the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=9\\text{ to estimate }\\sqrt{\\frac{46}{5}}.",
+      "answer_latex": "\\frac{91}{30}",
       "skeleton_pattern": "",
-      "form_id": "reciprocal",
+      "form_id": "sqrt_estimate",
       "diagram_svg": "",
       "debug": [
         [
@@ -855,7 +855,7 @@
         ],
         [
           "form_id",
-          "reciprocal"
+          "sqrt_estimate"
         ],
         [
           "tricks_required",
@@ -869,21 +869,22 @@
         ]
       ],
       "metadata": {
-        "a": 4,
-        "variant": "formula",
-        "form_id": "reciprocal",
-        "family": "reciprocal",
+        "a": 9,
+        "h": "1/5",
+        "variant": "estimate",
+        "form_id": "sqrt_estimate",
+        "family": "sqrt_estimate",
         "generator": "linear_approximation",
-        "structure_id": "linear_approximation:reciprocal",
+        "structure_id": "linear_approximation:sqrt_estimate",
         "tricks_required": [
           "linearization"
         ],
         "spec_snapshot": {
           "pack": "structured_linear_approximation",
-          "form_id": "reciprocal",
-          "family": "reciprocal",
+          "form_id": "sqrt_estimate",
+          "family": "sqrt_estimate",
           "generator": "linear_approximation",
-          "variant": "formula"
+          "variant": "estimate"
         },
         "generation_settings": {
           "term_count": 3,
@@ -1375,10 +1376,10 @@
       "difficulty": 16.0,
       "band": "high",
       "seed": 7,
-      "prompt_latex": "\\text{Find the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=1.",
-      "answer_latex": "L(x)=1+\\frac{1}{2}(x-1)",
+      "prompt_latex": "\\text{Use the linear approximation of }f(x)=\\sqrt{x}\\text{ at }x=1\\text{ to estimate }\\sqrt{\\frac{6}{5}}.",
+      "answer_latex": "\\frac{11}{10}",
       "skeleton_pattern": "",
-      "form_id": "sqrt",
+      "form_id": "sqrt_estimate",
       "diagram_svg": "",
       "debug": [
         [
@@ -1391,7 +1392,7 @@
         ],
         [
           "form_id",
-          "sqrt"
+          "sqrt_estimate"
         ],
         [
           "tricks_required",
@@ -1406,20 +1407,21 @@
       ],
       "metadata": {
         "a": 1,
-        "variant": "formula",
-        "form_id": "sqrt",
-        "family": "sqrt",
+        "h": "1/5",
+        "variant": "estimate",
+        "form_id": "sqrt_estimate",
+        "family": "sqrt_estimate",
         "generator": "linear_approximation",
-        "structure_id": "linear_approximation:sqrt",
+        "structure_id": "linear_approximation:sqrt_estimate",
         "tricks_required": [
           "linearization"
         ],
         "spec_snapshot": {
           "pack": "structured_linear_approximation",
-          "form_id": "sqrt",
-          "family": "sqrt",
+          "form_id": "sqrt_estimate",
+          "family": "sqrt_estimate",
           "generator": "linear_approximation",
-          "variant": "formula"
+          "variant": "estimate"
         },
         "generation_settings": {
           "term_count": 4,

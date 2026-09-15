@@ -2493,10 +2493,11 @@ def test_linear_approx_d0_easy_high_d_lockout():
     assert linear_approx_forms_for_difficulty(0) == easy
     med = linear_approx_forms_for_difficulty(8)
     assert "quad" in med and "sqrt" in med
-    assert "quad_estimate" in med and "reciprocal" in med and "exp" in med
+    assert "quad_estimate" in med and "sqrt_estimate" in med
+    assert "reciprocal" in med and "exp" in med
     hard = linear_approx_forms_for_difficulty(16)
     assert "quad" not in hard and "quad_estimate" not in hard
-    assert hard == ("sqrt", "reciprocal", "exp")
+    assert hard == ("sqrt", "sqrt_estimate", "reciprocal", "exp")
     assert linear_approx_forms_for_difficulty(22) == ("reciprocal", "exp")
 
     q0 = _gen("calc_app_diff_linear_approximations", 0, seed=101)[0]
@@ -2528,7 +2529,7 @@ def test_linear_approx_d0_easy_high_d_lockout():
         mid.add((q.metadata or {}).get("form_id"))
         assert (q.metadata or {}).get("generator") == "linear_approximation"
     assert mid & {"quad", "sqrt"}
-    assert mid & {"reciprocal", "exp", "quad_estimate"}
+    assert mid & {"reciprocal", "exp", "quad_estimate", "sqrt_estimate"}
     assert mid <= set(med)
 
     high = set()
@@ -2542,6 +2543,7 @@ def test_linear_approx_d0_easy_high_d_lockout():
     assert high <= set(hard)
     assert high & {"reciprocal", "exp"}
     assert "sqrt" in high
+    assert "sqrt_estimate" in high
 
     expert = set()
     for seed in range(40):
@@ -2550,7 +2552,7 @@ def test_linear_approx_d0_easy_high_d_lockout():
         expert.add(fid)
         assert fid in {"reciprocal", "exp"}
         assert fid not in easy
-        assert fid != "quad_estimate"
+        assert fid not in {"quad_estimate", "sqrt_estimate"}
         assert (q.metadata or {}).get("generator") == "linear_approximation"
         snap = (q.metadata or {}).get("spec_snapshot") or {}
         assert snap.get("form_id") == fid
@@ -2559,6 +2561,7 @@ def test_linear_approx_d0_easy_high_d_lockout():
         assert r"\frac{1}{x}" in p or r"e^{x}" in p
         assert "x^{2}" not in p
         assert r"\sqrt{x}" not in p
+        assert "estimate" not in p
     assert expert == {"reciprocal", "exp"}, expert
 
 
@@ -2587,6 +2590,26 @@ def test_linear_approx_quality_weights_tilt():
     baseline = _counts(None)
     tilted = _counts({"quad": -2.5, "reciprocal": 2.5})
     assert tilted["reciprocal"] > baseline["reciprocal"]
+
+
+def test_linear_approx_sqrt_estimate_ex45_arithmetic():
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        _sample_linapprox_sqrt_estimate,
+    )
+
+    found = False
+    for seed in range(400):
+        item = _sample_linapprox_sqrt_estimate(_random.Random(seed))
+        if item.metadata.get("a") == 9 and item.metadata.get("h") == "1/10":
+            assert "estimate" in (item.prompt_latex or "")
+            assert r"\sqrt{x}" in (item.prompt_latex or "")
+            assert r"\sqrt{\frac{91}{10}}" in (item.prompt_latex or "")
+            assert item.answer_latex == r"\frac{181}{60}"
+            found = True
+            break
+    assert found
 
 
 def test_tangent_normal_d0_easy_high_d_lockout():

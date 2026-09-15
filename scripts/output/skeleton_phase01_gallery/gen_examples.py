@@ -2782,8 +2782,8 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
         "calc_app_diff_linear_approximations",
         "App — linear approximations",
         "L(x)=f(a)+f'(a)(x-a). D=0 leftover √x / x² (old easy); D=8 leftover + estimate "
-        "x² + 1/x + e^x; D=16 locks x² leftover (√x leftover + 1/x + e^x); D=22 "
-        "1/x and e^x only. OpenStax Vol 1 §4.2.",
+        "x² / √x + 1/x + e^x; D=16 locks x² leftover (√x leftover formula/estimate + 1/x + e^x); "
+        "D=22 1/x and e^x only. OpenStax Vol 1 §4.2 Ex. 4.5.",
     ),
 
     (

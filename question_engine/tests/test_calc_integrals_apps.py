@@ -1825,6 +1825,105 @@ def test_riemann_sum_tables_d0_left3_high_d_midpoint_lockout():
     assert expert == {"rst_midpoint"}
 
 
+def test_riemann_approximate_area_d0_linear_high_d_quad_lockout():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        riemann_approximate_area_forms_for_difficulty,
+    )
+
+    assert riemann_approximate_area_forms_for_difficulty(0) == ("raa_linear",)
+    med = riemann_approximate_area_forms_for_difficulty(8)
+    assert "raa_linear" in med and "raa_affine" in med
+    hard = riemann_approximate_area_forms_for_difficulty(16)
+    assert "raa_linear" not in hard
+    assert hard == ("raa_affine", "raa_quad")
+    assert riemann_approximate_area_forms_for_difficulty(22) == ("raa_quad",)
+
+    q0 = _gen("calc_def_int_approximating_area_under_a_curve", 0, seed=101)[0]
+    assert (q0.metadata or {}).get("form_id") == "raa_linear"
+    assert (q0.metadata or {}).get("generator") == "riemann_approximate_area"
+    p0 = q0.prompt_latex or ""
+    assert r"midpoint Riemann sum with }2" in p0
+    assert r"f(x)=x\text{ on }[0,4]" in p0
+    assert r"x+1" not in p0
+    assert r"x^{2}" not in p0
+    assert q0.answer_latex == "8"
+    snap = (q0.metadata or {}).get("spec_snapshot") or {}
+    assert snap.get("form_id") == "raa_linear"
+    assert snap.get("generator") == "riemann_approximate_area"
+    assert (q0.metadata or {}).get("figure_family") == "function_sketch"
+    feats = ((q0.metadata or {}).get("figure_params") or {}).get("features") or []
+    assert "riemann" in feats
+
+    mid = set()
+    for seed in range(24):
+        q = _gen("calc_def_int_approximating_area_under_a_curve", 8, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        mid.add(fid)
+        p = q.prompt_latex or ""
+        assert (q.metadata or {}).get("generator") == "riemann_approximate_area"
+        assert r"x^{2}" not in p
+        assert fid != "raa_quad"
+    assert "raa_linear" in mid
+    assert "raa_affine" in mid
+    assert mid <= {"raa_linear", "raa_affine"}
+
+    high = set()
+    for seed in range(30):
+        q = _gen("calc_def_int_approximating_area_under_a_curve", 16, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        high.add(fid)
+        p = q.prompt_latex or ""
+        assert fid != "raa_linear"
+        assert r"f(x)=x\text{ on }" not in p
+        assert (q.metadata or {}).get("generator") == "riemann_approximate_area"
+        assert (q.metadata or {}).get("figure_family") == "function_sketch"
+    assert high <= {"raa_affine", "raa_quad"}
+    assert "raa_quad" in high
+
+    expert = set()
+    for seed in range(24):
+        q = _gen("calc_def_int_approximating_area_under_a_curve", 22, seed=seed)[0]
+        fid = (q.metadata or {}).get("form_id")
+        expert.add(fid)
+        p = q.prompt_latex or ""
+        assert fid == "raa_quad"
+        assert r"x^{2}" in p
+        assert r"f(x)=x\text{ on }" not in p
+        assert r"x+1" not in p
+        assert (q.metadata or {}).get("generator") == "riemann_approximate_area"
+        snap = (q.metadata or {}).get("spec_snapshot") or {}
+        assert snap.get("form_id") == "raa_quad"
+        assert snap.get("generator") == "riemann_approximate_area"
+    assert expert == {"raa_quad"}
+
+
+def test_riemann_approximate_area_quality_weights_tilt():
+    from contextlib import nullcontext
+    import random as _random
+
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        sample_riemann_approximate_area,
+    )
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    def _counts(weights):
+        c = Counter()
+        ctx = live_quality_form_weights(weights) if weights else nullcontext()
+        with ctx:
+            for i in range(240):
+                item = sample_riemann_approximate_area(
+                    _random.Random(i), {"difficulty": 8.0}
+                )
+                c[item.form_id] += 1
+        return c
+
+    baseline = _counts(None)
+    tilted = _counts({"raa_linear": -2.5, "raa_affine": 2.5})
+    assert tilted["raa_affine"] > baseline["raa_affine"]
+
+
 def test_riemann_sum_tables_quality_weights_tilt():
     from contextlib import nullcontext
     import random as _random

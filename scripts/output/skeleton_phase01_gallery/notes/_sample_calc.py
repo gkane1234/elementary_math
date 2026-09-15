@@ -249,6 +249,11 @@ META: dict[str, dict[str, Any]] = {
         "skill": "Match or compare graphs of f, f', and f''.",
         "engine": "Leave leaf until figure bank exists; not Diff skeleton.",
     },
+    "calc_def_int_approximating_area_under_a_curve": {
+        "flag_why": "Shipped leftover lockout of midpoint f(x)=x n=2; LIMITATIONS three frozen old builders / no sin / 10-x^2 / new figure bank.",
+        "skill": "Approximate area under a formula f with a finite left / right / midpoint Riemann sum.",
+        "engine": "calc_app_diff `riemann_approximate_area` (linear leftover / affine leftover / quad).",
+    },
     "calc_def_int_riemann_sum_tables": {
         "flag_why": "Shipped leftover lockout of 3-point left; LIMITATIONS three frozen old builders / no story tables.",
         "skill": "Approximate a definite integral from tabulated values (left / right / midpoint).",

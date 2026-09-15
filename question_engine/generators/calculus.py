@@ -626,112 +626,66 @@ def _integral_substitution(topic: str, settings: dict) -> list[Question]:
 
 
 def _riemann_approximate_area(topic: str, settings: dict) -> list[Question]:
-    """Mid/left/right Riemann sums — OpenStax Calc Vol 1 §5.1."""
+    """Finite L/R/mid Riemann on a formula curve — OpenStax Calc Vol 1 §5.1.
+
+    Leftover lockout of D=0 midpoint f(x)=x with 2 intervals (``curve_choices``
+    used to keep ``linear`` / ``affine`` in the pool through expert). Reuses the
+    existing ``function_sketch`` + ``riemann`` rectangles — no new figure bank.
+    """
+    from question_engine.diagrams.figure_families import sample_figure_from_settings
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        RIEMANN_APPROXIMATE_AREA_GENERATOR,
+        sample_app_diff,
+    )
+
     count = int(settings.get("count", 10))
     include_answer_key = bool(settings.get("include_answer_key", False))
-    structure = _topic_structure(settings)
-    x = str(settings.get("variable", "x"))
 
     def build() -> tuple[str, str, str | None]:
-        n_max = max(2, int(structure.get("riemann_n_max", 4)))
-        L_max = max(4, int(structure.get("riemann_L_max", 4)))
-        choices = [(2, 4)]
-        if structure.get("unlock_medium"):
-            choices.append((min(4, n_max), 4))
-        if structure.get("unlock_hard"):
-            choices.append((min(4, n_max), min(8, L_max)))
-        if structure.get("unlock_advanced"):
-            choices.append((n_max, L_max))
-        n_intervals, L = random.choice(choices)
-        dx = Fraction(L, n_intervals)
-
-        curve_choices = ["linear"]
-        if structure.get("unlock_medium"):
-            curve_choices.append("affine")
-        if structure.get("unlock_hard"):
-            curve_choices.append("quad")
-        curve = random.choice(curve_choices)
-
-        methods = ["midpoint"]
-        if structure.get("unlock_medium"):
-            methods.extend(["left", "right"])
-        method = random.choice(methods)
-
-        def f_at(t: Fraction) -> Fraction:
-            if curve == "linear":
-                return t
-            if curve == "affine":
-                return t + 1
-            return t * t
-
-        if method == "midpoint":
-            sample_pts = [Fraction(2 * i + 1, 2) * dx for i in range(n_intervals)]
-            method_words = "midpoint"
-        elif method == "left":
-            sample_pts = [i * dx for i in range(n_intervals)]
-            method_words = "left"
-        else:
-            sample_pts = [(i + 1) * dx for i in range(n_intervals)]
-            method_words = "right"
-
-        total = sum(f_at(t) * dx for t in sample_pts)
-        if curve == "linear":
-            f_tex = x
-            curve_kind = "linear"
-            a_coef, b_coef, c_coef = 1.0, 0.0, 0.0
-        elif curve == "affine":
-            f_tex = rf"{x}+1"
-            curve_kind = "linear"
-            a_coef, b_coef, c_coef = 1.0, 1.0, 0.0
-        else:
-            f_tex = rf"{x}^{{2}}"
-            curve_kind = "quadratic"
-            a_coef, b_coef, c_coef = 0.0, 0.0, 1.0
-
-        prompt = (
-            rf"\text{{Use a {method_words} Riemann sum with }}{n_intervals}"
-            rf"\text{{ equal intervals to approximate the area under }}"
-            rf"f({x})={f_tex}\text{{ on }}[0,{L}]."
-        )
-        # stash sketch params on the closure for metadata
-        build._last_sketch = {  # type: ignore[attr-defined]
-            "n": n_intervals,
-            "L": float(L),
-            "curve_kind": curve_kind,
-            "a": a_coef,
-            "b": b_coef,
-            "c": c_coef,
-        }
-        answer = frac_latex(total)
-        return prompt, "approximate area", answer if include_answer_key else None
-
-    def _sketch_meta(prompt_latex: str, prompt_text: str, answer: str | None) -> dict:
-        from question_engine.diagrams.figure_families import sample_figure_from_settings
-
-        sk = getattr(build, "_last_sketch", None) or {}
-        n_rect = int(sk.get("n") or 4)
-        L = float(sk.get("L") or 4.0)
+        item = sample_app_diff("riemann_approximate_area", settings, rng=random)
+        fid = item.form_id
+        snap = item.metadata.get("spec_snapshot")
+        n_rect = int(item.metadata.get("n") or 4)
+        L = float(item.metadata.get("L") or 4.0)
         sample = sample_figure_from_settings(
             "function_sketch",
             settings,
             features=["curve", "riemann"],
-            curve_kind=str(sk.get("curve_kind") or "linear"),
-            a=float(sk.get("a") or 1.0),
-            b=float(sk.get("b") or 0.0),
-            c=float(sk.get("c") or 0.0),
+            curve_kind=str(item.metadata.get("curve_kind") or "linear"),
+            a=float(item.metadata.get("a") or 1.0),
+            b=float(item.metadata.get("b") or 0.0),
+            c=float(item.metadata.get("c") or 0.0),
             riemann_n=n_rect,
             shade_a=0.0,
             shade_b=L,
             window=(-0.5, max(5.0, L + 1.0)),
         )
-        return sample.to_metadata_extras()
+        extras = sample.to_metadata_extras()
+        build._last_meta = {  # type: ignore[attr-defined]
+            **item.metadata,
+            **extras,
+            "form_id": fid,
+            "family": fid,
+            "generator": RIEMANN_APPROXIMATE_AREA_GENERATOR,
+            "spec_snapshot": {
+                **(snap if isinstance(snap, dict) else {}),
+                "form_id": fid,
+                "family": fid,
+                "generator": RIEMANN_APPROXIMATE_AREA_GENERATOR,
+            },
+        }
+        answer = item.answer_latex if include_answer_key else None
+        return item.prompt_latex, item.label, answer
+
+    def metadata_builder(_p: str, _t: str, _a: str | None) -> dict:
+        return dict(getattr(build, "_last_meta", {}) or {})
 
     return _make_questions(
         topic,
         count,
         include_answer_key,
         build,
-        metadata_builder=_sketch_meta,
+        metadata_builder=metadata_builder,
         settings=settings,
     )
 

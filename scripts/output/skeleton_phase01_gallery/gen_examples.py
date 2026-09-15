@@ -2789,7 +2789,9 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_def_int_approximating_area_under_a_curve",
         "Riemann — approximate area",
-        "Left/right/mid + linear/quad curves. OpenStax Vol 1 §5.1.",
+        "Leftover lockout: D=0 midpoint f(x)=x, n=2; D=8 leftover linear + affine "
+        "x+1; D=16 affine leftover + x^2 (no f(x)=x); D=22 x^2 only. Existing "
+        "function_sketch + Riemann rectangles (no new figure bank). OpenStax Vol 1 §5.1.",
     ),
 
     (
@@ -3202,8 +3204,7 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             eng = "volumes"
         elif "riemann" in tid or tid == "calc_def_int_approximating_area_under_a_curve":
             eng = "riemann"
-            if tid == "calc_def_int_riemann_sum_tables":
-                extra_seeds = (101, 207, 313, 0, 1, 2, 7)
+            extra_seeds = (101, 207, 313, 0, 1, 2, 7)
         elif tid.startswith("calc_diff_eq_"):
             eng = "diff_eq"
             if tid == "calc_diff_eq_separable":

@@ -34,6 +34,7 @@ Kind = Literal[
     "volume_cross_sections",
     "def_int_mean_value",
     "riemann_sum_tables",
+    "riemann_approximate_area",
     "de_intro",
     "slope_field",
     "separable",
@@ -2582,6 +2583,185 @@ def sample_riemann_sum_tables(rng: random.Random, settings: dict[str, Any]) -> A
     )
 
 
+RIEMANN_APPROXIMATE_AREA_GENERATOR = "riemann_approximate_area"
+
+_RAA_BANDS: dict[str, tuple[str, ...]] = {
+    "easy": ("raa_linear",),
+    "medium": ("raa_linear", "raa_affine"),
+    "hard": ("raa_affine", "raa_quad"),
+    "expert": ("raa_quad",),
+}
+
+
+def riemann_approximate_area_forms_for_difficulty(d: float) -> tuple[str, ...]:
+    if d < 8.0:
+        return _RAA_BANDS["easy"]
+    if d < 16.0:
+        return _RAA_BANDS["medium"]
+    if d < 20.0:
+        return _RAA_BANDS["hard"]
+    return _RAA_BANDS["expert"]
+
+
+def _raa_form_rows(forms: tuple[str, ...]) -> list[dict[str, Any]]:
+    return [
+        {
+            "form_id": fid,
+            "d_min": 0.0,
+            "d_weight": 1.0,
+            "generation_status": "implemented",
+            "generator_keys": [RIEMANN_APPROXIMATE_AREA_GENERATOR],
+        }
+        for fid in forms
+    ]
+
+
+def _raa_eval(curve: str, t: Fraction) -> Fraction:
+    if curve == "linear":
+        return t
+    if curve == "affine":
+        return t + 1
+    return t * t
+
+
+def _raa_total(curve: str, method: str, n_intervals: int, L: int) -> Fraction:
+    dx = Fraction(L, n_intervals)
+    if method == "midpoint":
+        pts = [Fraction(2 * i + 1, 2) * dx for i in range(n_intervals)]
+    elif method == "left":
+        pts = [i * dx for i in range(n_intervals)]
+    else:
+        pts = [(i + 1) * dx for i in range(n_intervals)]
+    return sum((_raa_eval(curve, t) * dx for t in pts), Fraction(0))
+
+
+def _raa_item(
+    curve: str, method: str, n_intervals: int, L: int, fid: str,
+) -> AppDiffItem:
+    if curve == "linear":
+        f_tex, curve_kind, a, b, c = "x", "linear", 1.0, 0.0, 0.0
+    elif curve == "affine":
+        f_tex, curve_kind, a, b, c = r"x+1", "linear", 1.0, 1.0, 0.0
+    else:
+        f_tex, curve_kind, a, b, c = r"x^{2}", "quadratic", 0.0, 0.0, 1.0
+    prompt = (
+        rf"\text{{Use a {method} Riemann sum with }}{n_intervals}"
+        rf"\text{{ equal intervals to approximate the area under }}"
+        rf"f(x)={f_tex}\text{{ on }}[0,{L}]."
+    )
+    return AppDiffItem(
+        prompt,
+        frac_latex(_raa_total(curve, method, n_intervals, L)),
+        "approximate area",
+        fid,
+        {
+            "curve": curve,
+            "method": method,
+            "n": n_intervals,
+            "L": L,
+            "curve_kind": curve_kind,
+            "a": a,
+            "b": b,
+            "c": c,
+        },
+    )
+
+
+def _sample_raa_linear(_rng: random.Random) -> AppDiffItem:
+    """Old-path D=0 leftover: midpoint, 2 intervals, f(x)=x on [0,4]."""
+    return _raa_item("linear", "midpoint", 2, 4, "raa_linear")
+
+
+def _sample_raa_affine(rng: random.Random) -> AppDiffItem:
+    """Old mid: f(x)=x+1 on [0,4], n in {2,4}, left / right / midpoint."""
+    n = rng.choice((2, 4))
+    method = rng.choice(("left", "right", "midpoint"))
+    return _raa_item("affine", method, n, 4, "raa_affine")
+
+
+def _raa_quad_nl_choices(settings: dict[str, Any]) -> list[tuple[int, int]]:
+    """Copy old hard+ ``(n, L)`` pool from ``_riemann_approximate_area``."""
+    from question_engine.settings.params import calc_topic_structure_from_continuous
+
+    structure = calc_topic_structure_from_continuous(settings)
+    if structure is None:
+        d = _d(settings)
+        structure = {
+            "riemann_n_max": 4,
+            "riemann_L_max": 8 if d >= 10.0 else 4,
+            "unlock_medium": d >= 4.0,
+            "unlock_hard": d >= 10.0,
+            "unlock_advanced": d >= 14.0,
+        }
+    n_max = max(2, int(structure.get("riemann_n_max", 4)))
+    L_max = max(4, int(structure.get("riemann_L_max", 4)))
+    raw = [(2, 4)]
+    if structure.get("unlock_medium"):
+        raw.append((min(4, n_max), 4))
+    if structure.get("unlock_hard"):
+        raw.append((min(4, n_max), min(8, L_max)))
+    if structure.get("unlock_advanced"):
+        raw.append((n_max, L_max))
+    out: list[tuple[int, int]] = []
+    for pair in raw:
+        if pair not in out:
+            out.append(pair)
+    return out
+
+
+def _sample_raa_quad(rng: random.Random, settings: dict[str, Any]) -> AppDiffItem:
+    """Old hard: f(x)=x^2, L/R/mid, n/L from the old structure knobs."""
+    n, L = rng.choice(_raa_quad_nl_choices(settings))
+    method = rng.choice(("left", "right", "midpoint"))
+    return _raa_item("quad", method, n, L, "raa_quad")
+
+
+def sample_riemann_approximate_area(
+    rng: random.Random, settings: dict[str, Any],
+) -> AppDiffItem:
+    """Formula-curve finite Riemann. High D locks out f(x)=x leftover."""
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        select_form_id,
+    )
+
+    d = _d(settings)
+    forms = riemann_approximate_area_forms_for_difficulty(d)
+    qw = settings.get("live_quality_form_weights")
+    quality_weights = qw if isinstance(qw, dict) else None
+    form = select_form_id(
+        _raa_form_rows(forms), d=d, rng=rng, quality_weights=quality_weights
+    )
+    fid = str(form.get("form_id") or forms[0])
+    if fid == "raa_linear" and fid in forms:
+        item = _sample_raa_linear(rng)
+    elif fid == "raa_affine" and fid in forms:
+        item = _sample_raa_affine(rng)
+    elif fid == "raa_quad" and fid in forms:
+        item = _sample_raa_quad(rng, settings)
+    else:
+        fid = forms[0]
+        if fid == "raa_affine":
+            item = _sample_raa_affine(rng)
+        elif fid == "raa_quad":
+            item = _sample_raa_quad(rng, settings)
+        else:
+            item = _sample_raa_linear(rng)
+    meta = {
+        **item.metadata,
+        "form_id": fid,
+        "family": fid,
+        "generator": RIEMANN_APPROXIMATE_AREA_GENERATOR,
+        "spec_snapshot": {
+            "form_id": fid,
+            "family": fid,
+            "generator": RIEMANN_APPROXIMATE_AREA_GENERATOR,
+        },
+    }
+    return AppDiffItem(
+        item.prompt_latex, item.answer_latex, item.label, fid, meta
+    )
+
+
 AREA_BETWEEN_CURVES_GENERATOR = "area_between_curves"
 
 _ABC_BANDS: dict[str, tuple[str, ...]] = {
@@ -3903,6 +4083,7 @@ _SAMPLERS: dict[Kind, Callable[[random.Random, dict[str, Any]], AppDiffItem]] = 
     "volume_cross_sections": sample_volume_cross_sections,
     "def_int_mean_value": sample_def_int_mean_value,
     "riemann_sum_tables": sample_riemann_sum_tables,
+    "riemann_approximate_area": sample_riemann_approximate_area,
     "de_intro": sample_de_intro,
     "slope_field": sample_slope_field,
     "separable": sample_separable_de,

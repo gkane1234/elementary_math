@@ -218,9 +218,9 @@ META: dict[str, dict[str, Any]] = {
         "engine": "calc_app_diff `intervals_concavity` (odd-power ray / odd cubic / shifted cubic).",
     },
     "calc_app_diff_rolles_theorem": {
-        "flag_why": "Shipped leftover lockout of even-quad c=0; LIMITATIONS no scaled Checkpoint 4.14.",
+        "flag_why": "Shipped leftover lockout of even-quad c=0 + Checkpoint 4.14 scaled two-root; LIMITATIONS no hypothesis-verify stem.",
         "skill": "Find c with f'(c)=0 when f(a)=f(b).",
-        "engine": "calc_app_diff `rolles_theorem` (even-quad / two-root / odd cubic).",
+        "engine": "calc_app_diff `rolles_theorem` (even-quad / two-root / scaled two-root / odd cubic).",
     },
     "calc_app_diff_relative_extrema": {
         "flag_why": "Shipped leftover lockout + Ex. 4.17 shifted extrema; LIMITATIONS no fractional-power first-derivative test.",

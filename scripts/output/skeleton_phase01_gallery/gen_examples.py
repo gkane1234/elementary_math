@@ -2751,7 +2751,7 @@ CALC_INTEGRAL_APP_SHIPPED: list[tuple[str, str, str]] = [
     (
         "calc_app_diff_rolles_theorem",
         "App — Rolle's Theorem",
-        "D=0 even-quad leftover (old easy, c=0); D≥8 two-root quadratics; "
+        "D=0 even-quad leftover (old easy, c=0); D≥8 two-root / scaled Checkpoint 4.14; "
         "high D odd cubic (OpenStax Ex. 4.14) and locks out even-quad c=0. "
         "OpenStax Vol 1 §4.4.",
     ),
@@ -3185,6 +3185,7 @@ def _build_calc_integral_sections() -> list[dict[str, Any]]:
             "calc_app_diff_relative_extrema",
             "calc_app_diff_absolute_extrema",
             "calc_app_diff_linear_approximations",
+            "calc_app_diff_rolles_theorem",
         ):
             eng = "calc_apps"
             extra_seeds = (101, 207, 313, 0, 2, 5, 7)

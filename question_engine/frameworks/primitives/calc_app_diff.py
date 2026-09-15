@@ -738,8 +738,8 @@ ROLLES_GENERATOR = "rolles_theorem"
 
 _ROLLES_BANDS: dict[str, tuple[str, ...]] = {
     "easy": ("rolles_even_quad",),
-    "medium": ("rolles_even_quad", "rolles_two_roots"),
-    "hard": ("rolles_two_roots", "rolles_cubic_odd"),
+    "medium": ("rolles_even_quad", "rolles_two_roots", "rolles_two_roots_scaled"),
+    "hard": ("rolles_two_roots", "rolles_two_roots_scaled", "rolles_cubic_odd"),
     "expert": ("rolles_cubic_odd",),
 }
 
@@ -781,8 +781,8 @@ def _sample_rolles_even_quad(rng: random.Random) -> AppDiffItem:
     )
 
 
-def _sample_rolles_two_roots(rng: random.Random) -> AppDiffItem:
-    """Ex. 4.14 first: f=(x−a)(x−b) on [a,b], midpoint c≠0 (not even-quad)."""
+def _rolles_two_root_interval(rng: random.Random) -> tuple[int, int]:
+    """Ex. 4.14 first: roots a<b with midpoint c≠0 (not even-quad leftover)."""
     a, b = -2, 0
     for _ in range(24):
         lo = rng.randint(-4, 1)
@@ -790,16 +790,36 @@ def _sample_rolles_two_roots(rng: random.Random) -> AppDiffItem:
         if lo + hi != 0:
             a, b = lo, hi
             break
+    return a, b
+
+
+def _rolles_two_root_item(a: int, b: int, k: int, form_id: str) -> AppDiffItem:
     mid = Fraction(a + b, 2)
-    body = _poly_body([1, -(a + b), a * b])
+    body = _poly_body([k, -k * (a + b), k * a * b])
     prompt = (
         rf"\text{{Find }}c\text{{ guaranteed by Rolle's Theorem for }}"
         rf"f(x)={body}\text{{ on }}[{a},{b}]."
     )
     return AppDiffItem(
-        prompt, frac_latex(mid), "Rolle's Theorem", "rolles_two_roots",
-        {"a": a, "b": b, "c": str(mid)},
+        prompt, frac_latex(mid), "Rolle's Theorem", form_id,
+        {"a": a, "b": b, "k": k, "c": str(mid)},
     )
+
+
+def _sample_rolles_two_roots_k(rng: random.Random, k: int, form_id: str) -> AppDiffItem:
+    a, b = _rolles_two_root_interval(rng)
+    return _rolles_two_root_item(a, b, k, form_id)
+
+
+def _sample_rolles_two_roots(rng: random.Random) -> AppDiffItem:
+    """Ex. 4.14 first: f=(x−a)(x−b) on [a,b], midpoint c≠0 (not even-quad)."""
+    return _sample_rolles_two_roots_k(rng, 1, "rolles_two_roots")
+
+
+def _sample_rolles_two_roots_scaled(rng: random.Random) -> AppDiffItem:
+    """Checkpoint 4.14: k(x−a)(x−b) on [a,b], same midpoint (k∈{2,3})."""
+    k = rng.choice((2, 3))
+    return _sample_rolles_two_roots_k(rng, k, "rolles_two_roots_scaled")
 
 
 def _sample_rolles_cubic_odd(rng: random.Random) -> AppDiffItem:
@@ -820,6 +840,7 @@ def _sample_rolles_cubic_odd(rng: random.Random) -> AppDiffItem:
 _ROLLES_BUILDERS: dict[str, Callable[[random.Random], AppDiffItem]] = {
     "rolles_even_quad": _sample_rolles_even_quad,
     "rolles_two_roots": _sample_rolles_two_roots,
+    "rolles_two_roots_scaled": _sample_rolles_two_roots_scaled,
     "rolles_cubic_odd": _sample_rolles_cubic_odd,
 }
 

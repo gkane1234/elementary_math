@@ -2258,6 +2258,7 @@ def test_rolles_d0_even_quad_high_d_cubic_lockout():
         mid.add((q.metadata or {}).get("form_id"))
     assert "rolles_even_quad" in mid
     assert "rolles_two_roots" in mid
+    assert "rolles_two_roots_scaled" in mid
 
     high = set()
     for seed in range(30):
@@ -2267,8 +2268,9 @@ def test_rolles_d0_even_quad_high_d_cubic_lockout():
         assert fid != "rolles_even_quad"
         assert (q.answer_latex or "") != "0"
         assert (q.metadata or {}).get("generator") == "rolles_theorem"
-    assert high <= {"rolles_two_roots", "rolles_cubic_odd"}
+    assert high <= {"rolles_two_roots", "rolles_two_roots_scaled", "rolles_cubic_odd"}
     assert "rolles_cubic_odd" in high
+    assert "rolles_two_roots_scaled" in high
 
     expert = set()
     for seed in range(24):
@@ -2279,6 +2281,18 @@ def test_rolles_d0_even_quad_high_d_cubic_lockout():
         assert (q.answer_latex or "") != "0"
         assert r"\sqrt" in (q.answer_latex or "")
     assert expert == {"rolles_cubic_odd"}
+
+
+def test_rolles_scaled_checkpoint_414_shape():
+    from question_engine.frameworks.primitives.calc_app_diff import (
+        _rolles_two_root_item,
+    )
+
+    item = _rolles_two_root_item(1, 3, 2, "rolles_two_roots_scaled")
+    assert "2x^{2}" in (item.prompt_latex or "") or r"2x^2" in (item.prompt_latex or "")
+    assert "[1,3]" in (item.prompt_latex or "")
+    assert item.answer_latex == "2"
+    assert item.metadata.get("k") == 2
 
 
 def test_rolles_quality_weights_tilt():

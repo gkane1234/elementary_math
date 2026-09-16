@@ -25,6 +25,9 @@ API:
   GET  /api/coverage?type_id=&session=&campaign=
   GET|POST /api/next   pair=1 (default) → {pair, coverage}; pair=0 → {item, coverage}
   POST /api/submit     winner=a|b|tie (pair) or rating_1_to_5 (single)
+  GET  /api/notes-flags?type_id=
+  POST /api/notes-flag type_id, action=too_unvaried|varied_enough|wrong_skill|needs_figures
+  POST /api/more       type_id, difficulty, count? → extra same-D samples (does not replace the pair)
 
 ``/api/next`` stamps ``predicted_rating``, ``predicted_std``, ``n_train``,
 ``n_pairs``, ``model_ready``.
@@ -35,6 +38,8 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
@@ -45,6 +50,10 @@ sys.path.insert(0, str(ROOT))
 
 import question_engine.types  # noqa: F401 — register catalogs
 
+from question_engine.ml.gallery_notes_flags import (  # noqa: E402
+    apply_notes_action,
+    read_notes_flags,
+)
 from question_engine.ml.live_rating import (  # noqa: E402
     ALL_TOPICS_CAMPAIGN,
     LIVE_ROOT,
@@ -54,6 +63,7 @@ from question_engine.ml.live_rating import (  # noqa: E402
     SKELETON_DERIV_TYPE_IDS,
     LiveRatingSession,
     MultiTypeCampaign,
+    generate_live_item,
     list_types,
     open_live_session,
     pick_next_difficulty,
@@ -61,6 +71,91 @@ from question_engine.ml.live_rating import (  # noqa: E402
 
 HOST = "127.0.0.1"
 PORT = 8777
+MORE_AT_D_DEFAULT = 4
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _form_id_of_item(item: dict[str, Any]) -> str:
+    feats = item.get("skeleton_features") if isinstance(item.get("skeleton_features"), dict) else {}
+    meta = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+    return str(
+        (feats or {}).get("form_id")
+        or meta.get("form_id")
+        or item.get("form_id")
+        or ""
+    )
+
+
+def _item_has_svg(item: dict[str, Any] | None) -> bool:
+    if not item:
+        return False
+    meta = item.get("metadata") if isinstance(item.get("metadata"), dict) else {}
+    svg = str(meta.get("diagram_svg") or item.get("diagram_svg") or "").strip()
+    return svg.startswith("<svg")
+
+
+def _lite_sample(item: dict[str, Any]) -> dict[str, Any]:
+    theta = item.get("theta_requested") if isinstance(item.get("theta_requested"), dict) else {}
+    return {
+        "rating_id": item.get("rating_id"),
+        "type_id": item.get("type_id"),
+        "difficulty": item.get("difficulty"),
+        "seed": item.get("seed") if item.get("seed") is not None else theta.get("seed"),
+        "generator": item.get("generator"),
+        "form_id": _form_id_of_item(item),
+        "prompt_latex": item.get("prompt_latex") or "",
+        "prompt_text": item.get("prompt_text") or "",
+        "answer_latex": item.get("answer_latex") or "",
+        "answer_text": item.get("answer_text") or "",
+        "bin": item.get("bin"),
+    }
+
+
+def _generate_more_at_d(
+    type_id: str,
+    difficulty: float,
+    *,
+    count: int,
+    session_name: str,
+) -> list[dict[str, Any]]:
+    n = max(1, min(int(count), 12))
+    items: list[dict[str, Any]] = []
+    last_err: Exception | None = None
+    for i in range(n):
+        seed = abs(int(time.time_ns()) ^ (i * 7919) ^ hash((type_id, difficulty, i))) % 2_000_000_000
+        try:
+            items.append(
+                generate_live_item(
+                    type_id,
+                    float(difficulty),
+                    seed,
+                    session_name=session_name,
+                )
+            )
+        except Exception as exc:  # noqa: BLE001
+            last_err = exc
+    if not items and last_err is not None:
+        raise last_err
+    return items
+
+
+def _append_notes_flag_record(
+    sess: LiveRatingSession | MultiTypeCampaign,
+    payload: dict[str, Any],
+) -> None:
+    record = {
+        "record_kind": "notes_flag",
+        "skipped": True,
+        "rated_at": _utc_now(),
+        "session": getattr(sess, "session_name", None),
+        **payload,
+    }
+    sess.ratings_path.parent.mkdir(parents=True, exist_ok=True)
+    with sess.ratings_path.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(record, ensure_ascii=False) + "\n")
 
 
 def _katex_head() -> str:
@@ -181,6 +276,17 @@ button.winner-btn {{ min-width:7.2rem; background:#fff; color:var(--ink); border
 button.winner-btn.active {{ background:var(--accent); color:#fff; border-color:var(--accent); }}
 details.abs-rate {{ margin-top:0.65rem; font-size:0.85rem; color:var(--muted); }}
 details.abs-rate summary {{ cursor:pointer; }}
+.topic-tools {{ margin: 0.85rem 0 0.35rem; padding: 0.65rem 0.75rem; border:1px dashed var(--line);
+  border-radius:5px; background:#fbf8f2; }}
+.topic-tools h3 {{ margin:0 0 0.35rem; font-size:0.78rem; font-weight:700; letter-spacing:0.06em;
+  text-transform:uppercase; color:var(--accent); }}
+.topic-tools .row {{ display:flex; flex-wrap:wrap; gap:0.4rem; align-items:center; margin-top:0.35rem; }}
+.topic-tools .hint {{ margin:0.25rem 0 0; font-size:0.78rem; color:var(--muted); width:100%; }}
+.token-pill {{ font-size:0.78rem; background:#efe9df; padding:0.1rem 0.35rem; border-radius:3px; }}
+.extras-grid {{ display:grid; grid-template-columns: 1fr 1fr; gap:0.65rem; margin-top:0.65rem; }}
+@media (max-width: 820px) {{ .extras-grid {{ grid-template-columns: 1fr; }} }}
+.extra-card {{ border:1px solid var(--line); border-radius:5px; padding:0.55rem 0.65rem 0.7rem; background:#fff; }}
+.extra-card .meta {{ margin-bottom:0.4rem; }}
 </style>
 </head>
 <body>
@@ -224,7 +330,7 @@ details.abs-rate summary {{ cursor:pointer; }}
         </section>
         <details class="answer"><summary>Show answer</summary><div id="answerA"></div></details>
         <div class="flags">
-          <p class="flags-hint">Check only if A is wrong. Unchecked = fine.</p>
+          <p class="flags-hint">Check only if A is wrong. Unchecked = fine. Saved with Submit &amp; next.</p>
           <label><input type="checkbox" id="flagTopicFitA"/> incorrect topic fit</label>
           <label><input type="checkbox" id="flagLatexA"/> latex broken</label>
           <label><input type="checkbox" id="flagBrokenA"/> broken / bad gen</label>
@@ -249,7 +355,7 @@ details.abs-rate summary {{ cursor:pointer; }}
         </section>
         <details class="answer"><summary>Show answer</summary><div id="answerB"></div></details>
         <div class="flags">
-          <p class="flags-hint">Check only if B is wrong. Unchecked = fine.</p>
+          <p class="flags-hint">Check only if B is wrong. Unchecked = fine. Saved with Submit &amp; next.</p>
           <label><input type="checkbox" id="flagTopicFitB"/> incorrect topic fit</label>
           <label><input type="checkbox" id="flagLatexB"/> latex broken</label>
           <label><input type="checkbox" id="flagBrokenB"/> broken / bad gen</label>
@@ -260,6 +366,22 @@ details.abs-rate summary {{ cursor:pointer; }}
         </details>
         <div class="skel-hint" id="skelHintB"></div>
       </section>
+    </div>
+    <div class="topic-tools" id="topicTools">
+      <h3>This topic (notes + same D)</h3>
+      <p class="hint">Variety flags write whole-word tokens into <code>notes/&lt;type_id&gt;.md</code> (gallery red header). Broken-gen boxes above save on Submit.</p>
+      <div class="row">
+        <button type="button" class="secondary" id="btnTooUnvaried" disabled>Too unvaried</button>
+        <button type="button" class="secondary" id="btnVariedEnough" disabled>Varied enough</button>
+        <button type="button" class="secondary" id="btnWrongSkill" disabled>Wrong skill</button>
+        <button type="button" class="secondary" id="btnNeedsFigures" disabled>Needs figures</button>
+        <span id="notesTokens"></span>
+      </div>
+      <div class="row">
+        <button type="button" class="secondary" id="btnMoreAtD" disabled>Generate more at this D</button>
+        <span class="hint" id="moreStatus" style="width:auto;margin:0"></span>
+      </div>
+      <div class="extras-grid" id="extras"></div>
     </div>
     <div class="winner-row" id="winners">
       <button type="button" class="winner-btn" data-winner="a">A better</button>
@@ -443,17 +565,147 @@ function skelBits(it) {{
   return bits.length ? ("Skeleton: " + bits.join(" · ")) : "";
 }}
 
+function formIdOf(it) {{
+  if (!it) return "";
+  const sf = it.skeleton_features || {{}};
+  const meta = it.metadata || {{}};
+  return sf.form_id || meta.form_id || it.form_id || "";
+}}
+
 function itemMetaHtml(it) {{
   if (!it) return "";
+  const fid = formIdOf(it);
   return [
     "<span>type <code>" + it.type_id + "</code></span>",
     "<span>D <code>" + it.difficulty + "</code></span>",
     "<span>bin <code>" + it.bin + "</code></span>",
     it.generator ? "<span>gen <code>" + it.generator + "</code></span>" : "",
+    fid ? "<span>form <code>" + fid + "</code></span>" : "",
     (it.metadata && it.metadata.skeleton_source) ? "<span>skel <code>" + it.metadata.skeleton_source + "</code></span>" : "",
     it.engine_rev ? "<span>rev <code>" + it.engine_rev + "</code></span>" : "",
     it.rating_id ? "<span>id <code>" + it.rating_id + "</code></span>" : ""
   ].filter(Boolean).join("");
+}}
+
+function setTopicToolsEnabled(on) {{
+  ["btnTooUnvaried", "btnVariedEnough", "btnWrongSkill", "btnNeedsFigures", "btnMoreAtD"].forEach(id => {{
+    document.getElementById(id).disabled = !on;
+  }});
+}}
+
+function showNotesTokens(tokens) {{
+  const el = document.getElementById("notesTokens");
+  const list = tokens || [];
+  el.innerHTML = list.length
+    ? list.map(t => "<code class='token-pill'>" + t + "</code>").join(" ")
+    : "<span class='hint' style='width:auto;margin:0'>no notes tokens</span>";
+}}
+
+function currentTypeId() {{
+  return (current && current.left && current.left.type_id) || typeId() || "";
+}}
+
+function currentDifficulty() {{
+  const it = current && current.left;
+  if (!it) return null;
+  if (it.difficulty != null && it.difficulty !== "") return Number(it.difficulty);
+  if (it.theta_requested && it.theta_requested.difficulty != null)
+    return Number(it.theta_requested.difficulty);
+  return null;
+}}
+
+async function refreshNotesFlags() {{
+  const tid = currentTypeId();
+  if (!tid) {{ showNotesTokens([]); return; }}
+  try {{
+    const data = await api("GET", "/api/notes-flags?type_id=" + encodeURIComponent(tid));
+    showNotesTokens(data.tokens || []);
+  }} catch (e) {{
+    showNotesTokens([]);
+  }}
+}}
+
+function showExtras(items) {{
+  const root = document.getElementById("extras");
+  root.innerHTML = "";
+  (items || []).forEach((it, i) => {{
+    const latex = ((it.prompt_latex) || "").trim();
+    const text = ((it.prompt_text) || "").trim();
+    const raw = latex || text;
+    const card = document.createElement("article");
+    card.className = "extra-card";
+    card.innerHTML =
+      "<div class='meta'>" +
+        "<span>#" + (i + 1) + "</span>" +
+        "<span>D <code>" + (it.difficulty != null ? it.difficulty : "") + "</code></span>" +
+        (it.seed != null ? "<span>seed <code>" + it.seed + "</code></span>" : "") +
+        (it.generator ? "<span>gen <code>" + it.generator + "</code></span>" : "") +
+        (it.form_id ? "<span>form <code>" + it.form_id + "</code></span>" : "<span>form <code>(none)</code></span>") +
+      "</div>" +
+      "<section class='prompt-block'>" +
+        "<h3 class='prompt-label'>Prompt</h3>" +
+        "<div class='prompt'>" + wrapMath(raw) + "</div>" +
+        "<details class='prompt-raw' open><summary>Raw prompt (LaTeX / text)</summary>" +
+        "<pre></pre></details>" +
+      "</section>";
+    card.querySelector("pre").textContent = raw || "(empty)";
+    root.appendChild(card);
+  }});
+  renderMath();
+}}
+
+async function applyNotesFlag(action) {{
+  const tid = currentTypeId();
+  if (!tid) {{ setStatus("Load a pair first", true); return; }}
+  const left = current && current.left;
+  setStatus("Writing notes flag…");
+  try {{
+    const body = {{
+      type_id: tid,
+      action: action,
+      has_core: !!(left && (left.generator || formIdOf(left))),
+      has_svg: !!(left && left.metadata && String(left.metadata.diagram_svg || "").startsWith("<svg")),
+      session: sessionName(),
+      campaign: (campaignMode() === "single") ? null : campaignMode()
+    }};
+    const data = await api("POST", "/api/notes-flag", body);
+    showNotesTokens(data.tokens || []);
+    toast((data.added && data.added.length) ? ("Added " + data.added.join(" · "))
+      : (data.removed && data.removed.length) ? ("Removed " + data.removed.join(" · "))
+      : "Notes unchanged");
+    setStatus("Notes " + (data.path || tid));
+  }} catch (e) {{
+    setStatus(String(e.message || e), true);
+  }}
+}}
+
+async function loadMoreAtD() {{
+  const tid = currentTypeId();
+  const d = currentDifficulty();
+  if (!tid || d == null || Number.isNaN(d)) {{ setStatus("Load a pair first", true); return; }}
+  const btn = document.getElementById("btnMoreAtD");
+  document.getElementById("moreStatus").textContent = "Generating…";
+  btn.disabled = true;
+  try {{
+    const body = {{
+      type_id: tid,
+      difficulty: d,
+      count: 4,
+      session: sessionName()
+    }};
+    if (campaignMode() !== "single") body.campaign = campaignMode();
+    const data = await api("POST", "/api/more", body);
+    const items = data.items || [];
+    showExtras(items);
+    document.getElementById("moreStatus").textContent =
+      items.length + " more at D=" + d + " (pair unchanged)";
+    toast("More at D=" + d);
+  }} catch (e) {{
+    document.getElementById("moreStatus").textContent = "";
+    setStatus(String(e.message || e), true);
+  }} finally {{
+    btn.disabled = false;
+  }}
 }}
 
 function fillPrompt(it, suffix) {{
@@ -498,10 +750,14 @@ function showPair(payload) {{
   const right = payload && payload.right;
   current = payload;
   resetFlags();
+  document.getElementById("extras").innerHTML = "";
+  document.getElementById("moreStatus").textContent = "";
   document.getElementById("btnSubmit").disabled = !left || !right;
+  setTopicToolsEnabled(!!(left && right));
   if (!left || !right) {{
     document.getElementById("meta").innerHTML = "<em>No pair.</em>";
     showPred(null, null);
+    showNotesTokens([]);
     return;
   }}
   document.getElementById("meta").innerHTML =
@@ -515,6 +771,7 @@ function showPair(payload) {{
   showPred(left, right);
   document.querySelectorAll("details.answer").forEach(el => {{ el.open = false; }});
   renderMath();
+  refreshNotesFlags();
   const prefs = loadPrefs();
   prefs.lastType = left.type_id;
   prefs.lastSession = sessionName();
@@ -631,6 +888,11 @@ document.getElementById("btnLoadTypes").addEventListener("click", () => refreshT
 document.getElementById("btnNext").addEventListener("click", () => loadNext());
 document.getElementById("btnSubmit").addEventListener("click", () => submit(false));
 document.getElementById("btnSkip").addEventListener("click", () => submit(true));
+document.getElementById("btnTooUnvaried").addEventListener("click", () => applyNotesFlag("too_unvaried"));
+document.getElementById("btnVariedEnough").addEventListener("click", () => applyNotesFlag("varied_enough"));
+document.getElementById("btnWrongSkill").addEventListener("click", () => applyNotesFlag("wrong_skill"));
+document.getElementById("btnNeedsFigures").addEventListener("click", () => applyNotesFlag("needs_figures"));
+document.getElementById("btnMoreAtD").addEventListener("click", () => loadMoreAtD());
 document.getElementById("campaign").addEventListener("change", () => {{
   const prefs = loadPrefs();
   prefs.lastCampaign = campaignMode();
@@ -785,6 +1047,13 @@ class Handler(BaseHTTPRequestHandler):
                     item = sess.generate_next(**kwargs)
                     self._json(200, {"item": item, "coverage": sess.coverage()})
                 return
+            if path == "/api/notes-flags":
+                tid = (qs.get("type_id") or [""])[0].strip()
+                if not tid:
+                    self._json(400, {"error": "type_id required"})
+                    return
+                self._json(200, read_notes_flags(tid))
+                return
             self._json(404, {"error": "not found"})
         except Exception as exc:  # noqa: BLE001
             self._json(400, {"error": str(exc)})
@@ -838,6 +1107,57 @@ class Handler(BaseHTTPRequestHandler):
                     skip=bool(body.get("skip")),
                 )
                 self._json(200, result)
+                return
+            if path == "/api/notes-flag":
+                tid = str(body.get("type_id") or "").strip()
+                action = str(body.get("action") or "").strip()
+                if not tid:
+                    self._json(400, {"error": "type_id required"})
+                    return
+                has_core = body.get("has_core")
+                if has_core is None:
+                    has_core = True
+                has_svg = bool(body.get("has_svg"))
+                result = apply_notes_action(
+                    tid,
+                    action,
+                    has_core=bool(has_core),
+                    has_svg=has_svg,
+                )
+                try:
+                    sess = _session_from_request(body, {})
+                    _append_notes_flag_record(sess, result)
+                except Exception:  # noqa: BLE001
+                    pass
+                self._json(200, result)
+                return
+            if path == "/api/more":
+                tid = str(body.get("type_id") or "").strip()
+                if not tid:
+                    self._json(400, {"error": "type_id required"})
+                    return
+                difficulty = body.get("difficulty")
+                if difficulty is None or difficulty == "":
+                    self._json(400, {"error": "difficulty required"})
+                    return
+                count = body.get("count", MORE_AT_D_DEFAULT)
+                sess = _session_from_request(body, {})
+                session_name = str(getattr(sess, "session_name", None) or "live")
+                raw_items = _generate_more_at_d(
+                    tid,
+                    float(difficulty),
+                    count=int(count) if count is not None else MORE_AT_D_DEFAULT,
+                    session_name=session_name,
+                )
+                self._json(
+                    200,
+                    {
+                        "type_id": tid,
+                        "difficulty": float(difficulty),
+                        "n": len(raw_items),
+                        "items": [_lite_sample(it) for it in raw_items],
+                    },
+                )
                 return
             self._json(404, {"error": "not found"})
         except Exception as exc:  # noqa: BLE001

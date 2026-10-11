@@ -58,6 +58,7 @@ from question_engine.frameworks.primitives.poly_expression import (
     Mul,
     Pow,
     Var,
+    _render_quotient_derivative,
     differentiate,
     render_latex,
 )
@@ -1697,7 +1698,9 @@ def sample_from_form(
     for _ in range(order):
         d_expr = differentiate(d_expr, var)
     body = render_latex(expr, paren_style="minimal")
-    deriv = render_latex(d_expr, paren_style="minimal")
+    deriv = _render_quotient_derivative(expr, var) or render_latex(
+        d_expr, paren_style="minimal"
+    )
     from question_engine.frameworks.primitives import poly_expression as poly_expr
 
     methods_hint = set(meta.pop("methods_hint", []) or [])

@@ -810,13 +810,13 @@ def test_exotic_exponent_chain_diff_and_render() -> None:
     x = Var("x")
     inner = Add((Mul((Const(2), x)), Const(1)))  # 2x+1
 
-    # (2x+1)^{3/2} → (3/2)(2x+1)^{1/2}·2
+    # (2x+1)^{3/2} → 3(2x+1)^{1/2} after folding (3/2)·2
     expr_f = Pow(inner, Fraction(3, 2))
     body_f = render_latex(expr_f, paren_style="always_powers")
     assert r"\frac{3}{2}" in body_f
     d_f = differentiate(expr_f)
     ans_f = render_latex(d_f, paren_style="always_powers")
-    assert r"\frac{3}{2}" in ans_f
+    assert ans_f.replace(" ", "") == r"3\left(2x+1\right)^{\frac{1}{2}}"
     assert not (isinstance(d_f, Const) and d_f.value == 0)
 
     # (2x+1)^π → π(2x+1)^{π-1}·2
@@ -919,4 +919,40 @@ def test_chain_mid_d_samples_non_expandable_powers() -> None:
             else:
                 assert r"\frac{" in deriv or str(expr.exp.numerator) in deriv
     assert exotic >= 20, f"exotic hits={exotic}"
+
+
+def test_rational_power_derivative_folds_numeric_coefficient() -> None:
+    """Power-rule answers multiply numeric factors instead of ``\\frac{1}{2}x^{-1/2}(2)``."""
+    from fractions import Fraction
+
+    from question_engine.frameworks.primitives.poly_expression import Const, Mul, Pow, Var
+
+    expr = Mul((Const(2), Pow(Var("x"), Fraction(1, 2))))
+    rendered = render_latex(differentiate(expr, "x"))
+    assert r"\left(" not in rendered
+    assert "^{1}" not in rendered
+    assert rendered == r"x^{-\frac{1}{2}}"
+
+
+def test_quotient_derivative_is_one_fraction() -> None:
+    from question_engine.frameworks.primitives.poly_expression import (
+        Add,
+        Const,
+        ExpressionSpec,
+        Mul,
+        Pow,
+        Var,
+        _render_deriv_legacy,
+    )
+
+    x = Var("x")
+    num = Add((Pow(x, 2), Const(1)))
+    den = Add((x, Const(1)))
+    expr = Mul((num, Pow(den, -1)))
+    spec = ExpressionSpec(d_spend=4, variable="x")
+    rendered = _render_deriv_legacy(expr, differentiate(expr), spec)
+    assert rendered is not None
+    assert r"^{-2}" not in rendered
+    assert rendered.count(r"\frac") == 1
+    assert r"\left(2x\right)\left(x + 1\right)" in rendered.replace(" ", "") or "2x" in rendered
 

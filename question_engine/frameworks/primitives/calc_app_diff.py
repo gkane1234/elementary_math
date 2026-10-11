@@ -3399,7 +3399,9 @@ def _sample_verify_euler(rng: random.Random) -> AppDiffItem:
         rf"\text{{Verify that }}y=Cx^{{{n}}}\text{{ solves }}"
         rf"x\,y'={n}y\text{{ for }}x>0."
     )
-    answer = rf"y'={n}Cx^{{{n - 1}}}\Rightarrow x y'={n}y"
+    power = n - 1
+    deriv = rf"{n}Cx" if power == 1 else rf"{n}Cx^{{{power}}}"
+    answer = rf"y'={deriv}\Rightarrow x y'={n}y"
     return AppDiffItem(
         prompt, answer, "DE intro", "verify_euler",
         {"n": n},

@@ -2390,8 +2390,8 @@ class ConvertingUnitsFramework(NumberFramework):
             )
         else:
             prompt = (
-                f"\\text{{{stem_filled} Given that {from_step} {from_u} $=$ "
-                f"{to_step} {to_u}. {question}}}"
+                f"\\text{{{stem_filled} Given that {from_step} {from_u} }}"
+                f"=\\text{{ {to_step} {to_u}. {question}}}"
             )
         text = f"{stem_filled} Given that {given}. {question}"
         answer = _format_convert_answer(answer_val)

@@ -2234,14 +2234,23 @@ def _diff_mul(factors: tuple[ExprAST, ...], var: str) -> ExprAST:
     return Add(tuple(terms))
 
 
+def _rational_const(value: int | Fraction) -> Const:
+    """Store whole-number rationals as ints so ``x^{1}`` and ``2\\cdot\\tfrac{1}{2}`` collapse."""
+    if isinstance(value, Fraction) and value.denominator == 1:
+        return Const(int(value))
+    return Const(value)
+
+
 def _simplify_expr(expr: ExprAST) -> ExprAST:
     """Collapse nested coef muls like 3*(3*x^2) → 9*x^2.
 
-    Only folds integer Const factors — leave Fraction / SymConst visible so
-    chain answers keep the power-rule coefficient ``c`` in ``c·u^{c−1}·u'``.
+    Folds every rational Const (int or Fraction) in a product into one
+    coefficient. Symbolic constants (π, e) stay as their own factors so a
+    chain factor like ``\\pi`` remains visible. Non-constant factors are kept,
+    which still shows ``c\\,u^{c-1}u'`` when ``u'`` is not a number.
     """
     if isinstance(expr, Mul):
-        coef = 1
+        coef = Fraction(1)
         others: list[ExprAST] = []
 
         def absorb(f: ExprAST) -> None:
@@ -2249,6 +2258,8 @@ def _simplify_expr(expr: ExprAST) -> ExprAST:
             f = _simplify_expr(f)
             if isinstance(f, Const) and isinstance(f.value, int):
                 coef *= int(f.value)
+            elif isinstance(f, Const) and isinstance(f.value, Fraction):
+                coef *= f.value
             elif isinstance(f, Mul):
                 for g in f.factors:
                     absorb(g)
@@ -2259,17 +2270,25 @@ def _simplify_expr(expr: ExprAST) -> ExprAST:
             absorb(f)
         if coef == 0:
             return Const(0)
+        coef_node = _rational_const(coef)
         if not others:
-            return Const(coef)
+            return coef_node
         if coef == 1:
             return others[0] if len(others) == 1 else Mul(tuple(others))
         if coef == -1 and len(others) == 1:
             return Mul((Const(-1), others[0]))
-        return Mul((Const(coef),) + tuple(others)) if len(others) >= 1 else Const(coef)
+        return Mul((coef_node,) + tuple(others))
     if isinstance(expr, Add):
         return Add(tuple(_simplify_expr(t) for t in expr.terms))
     if isinstance(expr, Pow):
-        return Pow(_simplify_expr(expr.base), expr.exp)
+        exp = expr.exp
+        if isinstance(exp, Fraction) and exp.denominator == 1:
+            exp = int(exp)
+        if isinstance(exp, int) and exp == 0:
+            return Const(1)
+        if isinstance(exp, int) and exp == 1:
+            return _simplify_expr(expr.base)
+        return Pow(_simplify_expr(expr.base), exp)
     if isinstance(expr, Fn):
         return Fn(expr.name, _simplify_expr(expr.arg))
     return expr
@@ -2315,7 +2334,7 @@ def _diff_fn(expr: Fn, var: str) -> ExprAST:
             return Const(0)
         if isinstance(darg, Const) and darg.value == 1:
             return outer
-        return Mul((outer, darg))
+        return _simplify_expr(Mul((outer, darg)))
 
     if name == "sin":
         return chain(Fn("cos", arg))
@@ -2797,6 +2816,11 @@ def _render_pow(expr: Pow, *, style: ParenStyle, parent: str | None) -> str:
             return rf"{base.name}^{{-1}}"
         inner = _render(base, style=style, parent="fn")
         return rf"\frac{{1}}{{{inner}}}"
+
+    if isinstance(exp, Fraction) and exp.denominator == 1:
+        exp = int(exp)
+    if isinstance(exp, int) and exp == 0:
+        return "1"
 
     exp_s = _power_exp_latex(exp)
 
@@ -3461,7 +3485,46 @@ def _render_deriv_legacy(
     if fn_d is not None:
         return fn_d
 
+    quotient = _render_quotient_derivative(expr, var)
+    if quotient is not None:
+        return quotient
+
     return None
+
+
+def _render_quotient_derivative(expr: ExprAST, var: str) -> str | None:
+    """Write ``u/v`` derivatives as one fraction ``(u'v-uv')/v^{2}``."""
+    if not isinstance(expr, Mul):
+        return None
+    dens = [
+        f.base
+        for f in expr.factors
+        if isinstance(f, Pow) and f.exp == -1
+    ]
+    nums = [
+        f
+        for f in expr.factors
+        if not (isinstance(f, Pow) and f.exp == -1)
+    ]
+    if len(dens) != 1 or not nums:
+        return None
+    if len(nums) == 1 and isinstance(nums[0], Const):
+        return None
+    num_expr: ExprAST = nums[0] if len(nums) == 1 else Mul(tuple(nums))
+    den_expr = dens[0]
+    num_b = render_latex(num_expr, paren_style="minimal")
+    den_b = render_latex(den_expr, paren_style="minimal")
+    num_d = render_latex(
+        _simplify_expr(differentiate(num_expr, var)), paren_style="minimal"
+    )
+    den_d = render_latex(
+        _simplify_expr(differentiate(den_expr, var)), paren_style="minimal"
+    )
+    return (
+        rf"\frac{{\left({num_d}\right)\left({den_b}\right)"
+        rf"-\left({num_b}\right)\left({den_d}\right)}}"
+        rf"{{\left({den_b}\right)^{{2}}}}"
+    )
 
 
 def _legacy_atom_deriv(d_expr: ExprAST, spec: ExpressionSpec) -> str | None:

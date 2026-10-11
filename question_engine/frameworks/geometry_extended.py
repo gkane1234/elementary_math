@@ -2073,6 +2073,19 @@ class GeometricTransformationsFramework(QuestionFramework):
         return meta
 
 
+def _circle_equation_latex(h: int, k: int, radius: int) -> str:
+    """Standard-form circle equation without ``(x-(-2))`` sign stacks."""
+
+    def shift(var: str, value: int) -> str:
+        if value == 0:
+            return var
+        if value > 0:
+            return f"({var}-{value})"
+        return f"({var}+{abs(int(value))})"
+
+    return f"{shift('x', int(h))}^2+{shift('y', int(k))}^2={int(radius) * int(radius)}"
+
+
 class RemainingGeometryFramework(GeometryFramework):
     """Diagram-backed generators for the remaining Geometry catalog topics.
 
@@ -2458,7 +2471,7 @@ class RemainingGeometryFramework(GeometryFramework):
             h, k, r = random.randint(-5, 5), random.randint(-5, 5), _random_radius(settings)
             self._last = {"figure": circle_figure(r, unit=unit), "labels": ["O", "A"]}
             return (
-                f"\\text{{For }} (x-({h}))^2+(y-({k}))^2={r*r},\\text{{ find the radius.}}",
+                f"\\text{{For }} {_circle_equation_latex(h, k, r)},\\text{{ find the radius.}}",
                 "circle equation radius",
                 str(r),
             )
@@ -2469,7 +2482,7 @@ class RemainingGeometryFramework(GeometryFramework):
                 f"\\text{{Write the equation of the circle with center }} ({h},{k}) "
                 f"\\text{{and radius }} {r}.",
                 "circle standard equation",
-                f"(x-({h}))^2+(y-({k}))^2={r*r}",
+                _circle_equation_latex(h, k, r),
             )
         if mode == "transformations":
             raise RuntimeError(
@@ -2484,78 +2497,126 @@ class RemainingGeometryFramework(GeometryFramework):
         if construct_angle <= 0:
             construct_angle = 60
         construct_r = _random_radius(settings)
-        tri_angles = (50, 60, 70)
-        if proof_structure is not None and proof_structure["difficulty"] >= 10.0:
-            a = random.randint(40, 70)
-            b_hi = max(40, 100 - a)
-            b = random.randint(40, b_hi) if b_hi >= 40 else 40
-            c = 180 - a - b
-            if c >= 20:
-                tri_angles = (a, b, c)
+        side_lo = max(1, int(settings.get("side_min", 3)))
+        side_hi = max(side_lo, int(settings.get("side_max", 12)))
+        length = random.randint(side_lo, side_hi)
+        ang_a = random.randint(35, 70)
+        ang_b = random.randint(35, min(80, 145 - ang_a))
+        ang_c = 180 - ang_a - ang_b
+        tri_angles = (ang_a, ang_b, ang_c)
+        verts = random.sample(list("ABCDEFGH"), 3)
+        va, vb, vc = verts
 
-        construction_answers = {
-            "construction_segments": (
-                "segment congruent to the given segment",
-                segment_figure(max(1, int(settings.get("side_min", 3))), show_length=False),
-            ),
-            "construction_perpendicular": (
-                "a perpendicular line",
-                angle_figure("A", "B", "C", 90, show_measure=False),
-            ),
-            "construction_angles": (
-                "an angle congruent to the given angle",
-                angle_figure("A", "B", "C", construct_angle, show_measure=False),
-            ),
-            "construction_triangles": (
-                "a triangle congruent to the given triangle",
-                triangle_figure(labels, tri_angles),
-            ),
-            "construction_medians": ("a median", triangle_figure(labels, tri_angles)),
-            "construction_altitudes": ("an altitude", triangle_figure(labels, tri_angles)),
-            "construction_bisectors": (
-                "an angle bisector",
-                angle_figure("A", "B", "C", construct_angle, show_measure=False),
-            ),
-            "construction_circles": (
-                "a circle with the given center and radius",
-                circle_figure(construct_r, unit=unit),
-            ),
-        }
+        if mode == "construction_segments":
+            self._last = {
+                "figure": segment_figure(length, labels=("A", "B"), show_length=True, unit=unit),
+                "labels": ["A", "B"],
+            }
+            return (
+                rf"\text{{Construct a segment congruent to the given segment of length }}"
+                rf"{length}\text{{ {unit}. What is the length of the constructed segment?}}",
+                "construction segments",
+                rf"{length}\text{{ {unit}}}",
+            )
+        if mode == "construction_perpendicular":
+            self._last = {
+                "figure": angle_figure("A", "B", "C", 90, show_measure=True),
+                "labels": ["A", "B", "C"],
+            }
+            return (
+                rf"\text{{A perpendicular is constructed to a segment of length }}"
+                rf"{length}\text{{ {unit}. What is the measure of the angle formed?}}",
+                "construction perpendicular",
+                rf"90{symbol}",
+            )
+        if mode == "construction_angles":
+            self._last = {
+                "figure": angle_figure("A", "B", "C", construct_angle, show_measure=True),
+                "labels": ["A", "B", "C"],
+            }
+            return (
+                rf"\text{{Construct an angle congruent to the given angle of }}"
+                rf"{construct_angle}{symbol}\text{{. What is its measure?}}",
+                "construction angles",
+                rf"{construct_angle}{symbol}",
+            )
+        if mode == "construction_triangles":
+            self._last = {
+                "figure": triangle_figure(labels, tri_angles),
+                "labels": labels,
+            }
+            return (
+                rf"\text{{A triangle congruent to the given triangle has two angles of }}"
+                rf"{ang_a}{symbol}\text{{ and }}{ang_b}{symbol}"
+                rf"\text{{. What is the third angle?}}",
+                "construction triangles",
+                rf"{ang_c}{symbol}",
+            )
+        if mode == "construction_medians":
+            self._last = {
+                "figure": triangle_figure([va, vb, vc], tri_angles),
+                "labels": [va, vb, vc],
+            }
+            return (
+                rf"\text{{In }}\triangle {va}{vb}{vc},\ M\text{{ is the midpoint of }}"
+                rf"\overline{{{vb}{vc}}}.\ \text{{Name the median from }}{va}.",
+                "construction medians",
+                rf"\overline{{{va}M}}",
+            )
+        if mode == "construction_altitudes":
+            self._last = {
+                "figure": triangle_figure([va, vb, vc], tri_angles),
+                "labels": [va, vb, vc],
+            }
+            return (
+                rf"\text{{In }}\triangle {va}{vb}{vc},\ H\text{{ is the foot of the altitude from }}"
+                rf"{va}\text{{ to }}\overline{{{vb}{vc}}}.\ \text{{Name that altitude.}}",
+                "construction altitudes",
+                rf"\overline{{{va}H}}",
+            )
+        if mode == "construction_bisectors":
+            half = construct_angle / 2
+            half_s = str(int(half)) if float(half).is_integer() else f"{half:g}"
+            self._last = {
+                "figure": angle_figure("A", "B", "C", construct_angle, show_measure=True),
+                "labels": ["A", "B", "C"],
+            }
+            return (
+                rf"\text{{An angle bisector splits the given }}"
+                rf"{construct_angle}{symbol}\text{{ angle into two congruent angles. "
+                rf"What is the measure of each angle?}}",
+                "construction bisectors",
+                rf"{half_s}{symbol}",
+            )
         if mode == "construction_circles":
+            r = construct_r
+            self._last = {"figure": circle_figure(r, unit=unit), "labels": ["O", "A"]}
             if proof_structure is not None:
                 band = proof_structure["band"]
             else:
                 band = _difficulty_tier(settings)
-            r = construct_r
-            self._last = {"figure": circle_figure(r, unit=unit), "labels": ["O", "A"]}
             if band == "hard":
                 return (
-                    rf"\text{{Using compass and straightedge, you copy a segment of length }}"
-                    rf"{r}\text{{ {unit} }} "
-                    rf"\text{{as a radius from center }}O.\text{{ What figure is constructed?}}",
+                    rf"\text{{Using compass and straightedge, copy a segment of length }}"
+                    rf"{r}\text{{ {unit} as a radius from center }}O."
+                    rf"\text{{ What is the radius of the circle constructed?}}",
                     "construction circles",
-                    r"\text{a circle with center }O\text{ and radius }" + f"{r}\\text{{ {unit}}}",
+                    rf"{r}\text{{ {unit}}}",
                 )
             if band == "medium":
                 return (
-                    r"\text{Which construction step creates all points at a fixed distance "
-                    r"from a given center?}",
+                    rf"\text{{A compass opened to }}{r}\text{{ {unit} is swung about a center, "
+                    rf"creating all points at that fixed distance. What is the radius of the circle?}}",
                     "construction circles",
-                    r"\text{drawing a circle with the compass}",
+                    rf"{r}\text{{ {unit}}}",
                 )
             return (
-                r"\text{Identify the result of the standard construction shown: "
-                r"a circle with the given center and radius.}",
+                rf"\text{{The construction draws a circle with the given center and radius }}"
+                rf"{r}\text{{ {unit}. What is the radius of the circle?}}",
                 "construction circles",
-                r"\text{a circle with the given center and radius}",
+                rf"{r}\text{{ {unit}}}",
             )
-        answer, figure = construction_answers[mode]
-        self._last = {"figure": figure, "labels": labels}
-        return (
-            f"\\text{{Identify the result of the standard construction shown: }}\\ {answer}.",
-            f"construction {mode}",
-            answer,
-        )
+        raise RuntimeError(f"unknown construction mode: {mode}")
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}

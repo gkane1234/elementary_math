@@ -1450,13 +1450,24 @@ def test_scale_latex_body_no_digit_juxtaposition():
     assert scale_latex_body("6", 4) == "24"
     assert scale_latex_body(r"2\sqrt{x}", 2) == r"4\sqrt{x}"
     assert scale_latex_body(r"\frac{1}{2}", 3) == r"\frac{3}{2}"
-    assert scale_latex_body(r"x\ln(x)-x", -1) == r"-\left(x\ln(x)-x\right)"
+    assert scale_latex_body(r"x\ln(x)-x", -1) == r"-x\ln(x) + x"
     assert scale_latex_body(r"\frac{1}{2}x^{2}-\frac{1}{4}x^{2}", -2) == (
         r"-2\left(\frac{1}{2}x^{2}-\frac{1}{4}x^{2}\right)"
     )
     assert scale_answer_latex(r"2\sqrt{x}+C", 2) == r"4\sqrt{x}+C"
-    assert scale_answer_latex(r"x\ln(x)-x+C", -1) == r"-\left(x\ln(x)-x\right)+C"
+    assert scale_answer_latex(r"x\ln(x)-x+C", -1) == r"-x\ln(x) + x+C"
     assert scale_answer_latex(r"\infty", -3) == r"-\infty"
+    # Constant multiple of a fraction is absorbed, never glued on as ``3\frac``.
+    assert scale_latex_body(r"\frac{4x^{2} + 2x}{-x - 3}", 3) == (
+        r"\frac{12x^{2} + 6x}{-x - 3}"
+    )
+    assert scale_latex_body(r"\frac{-5x^{4} + 3}{2x^{4}}", -1) == (
+        r"\frac{5x^{4} - 3}{2x^{4}}"
+    )
+    assert scale_latex_body(r"\frac{\pi}{2}", -2) == r"-\pi"
+    assert scale_latex_body(r"-\frac{\sqrt{3}}{2}", -4) == r"2\sqrt{3}"
+    assert scale_latex_body(r"\frac{\sqrt{3}}{2}", -4) == r"-2\sqrt{3}"
+    assert scale_latex_body(r"\frac{\cos(x)}{x}", -4) == r"\frac{-4\cos(x)}{x}"
 
 
 def test_dress_preserves_core_form_id_and_costs():
@@ -1554,3 +1565,55 @@ def test_difficulty_costs_schema_example():
     assert "essential_sin_1_over_x" in feats
     assert "spec_scale" in feats  # alias for constant_multiple
     assert "spec_sign" in feats
+
+
+_LIMIT_LATEX_BAD = re.compile(
+    r"(?<![0-9])1x|x\^\{1\}|(?<![A-Za-z])\d\\frac|-\\frac\{-"
+)
+
+
+def test_limit_examples_vary_and_use_conventional_latex():
+    """Example-dialog defaults: prompts change, and dress does not glue coefficients."""
+    from question_engine.core.base import QUESTION_TYPES
+
+    topics = [
+        "calc_limits_by_direct_evaluation",
+        "calc_limits_at_removable_discontinuities",
+        "calc_limits_at_essential_discontinuities",
+        "calc_limits_at_infinity",
+    ]
+    for type_id in topics:
+        question_type = QUESTION_TYPES[type_id]
+        prompts: set[str] = set()
+        for seed in range(12):
+            settings = {
+                "count": 1,
+                "include_answer_key": True,
+                "seed": seed,
+            }
+            for field in question_type.settings_schema():
+                if getattr(field, "default", None) is not None and field.key not in settings:
+                    settings[field.key] = field.default
+            question = _generate_for_type(type_id, settings)[0]
+            prompt = question.prompt_latex or ""
+            answer = question.answer_latex or ""
+            prompts.add(prompt)
+            assert not _LIMIT_LATEX_BAD.search(prompt.replace(" ", "")), prompt
+            assert not _LIMIT_LATEX_BAD.search(answer.replace(" ", "")), (prompt, answer)
+            assert r"\lim" in prompt
+        assert len(prompts) >= 8, (type_id, prompts)
+
+
+def test_direct_sin_over_tan_approaches_where_tan_is_defined():
+    """Plug-in of sin/tan must not land on an asymptote of tan."""
+    for seed in range(80):
+        sample = sample_limit_expression(
+            {"difficulty": 6, "seed": seed, "include_answer_key": True},
+            generator_key="limit_direct_evaluation",
+        )
+        prompt = (sample.prompt_latex or "").replace(" ", "")
+        if "sin" not in prompt or "tan" not in prompt:
+            continue
+        assert r"\to\frac{\pi}{2}" not in prompt
+        assert r"\to\frac{3\pi}{2}" not in prompt
+        assert r"\to-\frac{\pi}{2}" not in prompt

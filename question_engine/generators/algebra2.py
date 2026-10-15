@@ -948,17 +948,33 @@ def _matrix_transformation(topic: str, settings: dict) -> list[Question]:
     local = apply_matrix_continuous_knobs(settings)
     p_hi = int(local.get("matrix_point_max", 6))
     transforms = (
-        ("reflection across the x-axis", ((1, 0), (0, -1))),
-        ("reflection across the y-axis", ((-1, 0), (0, 1))),
-        ("a 90^\\circ counterclockwise rotation", ((0, -1), (1, 0))),
-        ("a 180^\\circ rotation", ((-1, 0), (0, -1))),
+        (
+            "reflection across the x-axis",
+            r"\text{Apply a reflection across the x-axis to }",
+            ((1, 0), (0, -1)),
+        ),
+        (
+            "reflection across the y-axis",
+            r"\text{Apply a reflection across the y-axis to }",
+            ((-1, 0), (0, 1)),
+        ),
+        (
+            "90 degree counterclockwise rotation",
+            r"\text{Apply a }90^\circ\text{ counterclockwise rotation to }",
+            ((0, -1), (1, 0)),
+        ),
+        (
+            "180 degree rotation",
+            r"\text{Apply a }180^\circ\text{ rotation to }",
+            ((-1, 0), (0, -1)),
+        ),
     )
 
     def build() -> tuple[str, str, str | None]:
-        name, matrix = random.choice(transforms)
+        name, lead, matrix = random.choice(transforms)
         x, y = random.randint(-p_hi, p_hi), random.randint(-p_hi, p_hi)
         image = (matrix[0][0] * x + matrix[0][1] * y, matrix[1][0] * x + matrix[1][1] * y)
-        prompt = rf"\text{{Apply {name} to }} ({x}, {y}) \text{{ using }} {_matrix_latex(matrix)}."
+        prompt = rf"{lead}({x}, {y}) \text{{ using }} {_matrix_latex(matrix)}."
         return prompt, name, f"({image[0]}, {image[1]})" if keyed else None
 
     return _make_questions(topic, count, keyed, build)

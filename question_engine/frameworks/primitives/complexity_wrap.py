@@ -37,6 +37,7 @@ Skip rules (callers + ``allowed`` filters)
 
 from __future__ import annotations
 
+import math
 import random
 import re
 from dataclasses import dataclass, field, replace
@@ -54,6 +55,7 @@ from question_engine.frameworks.primitives.poly_expression import (
     sample_scale_coef,
     spec_snapshot,
 )
+from question_engine.generators.utils import format_polynomial_latex
 
 CoreKind = Literal["rational_pow", "trig_osc", "trig_plain"]
 
@@ -171,26 +173,39 @@ def _flipped_linear_factor(var: str, center: int) -> str:
     return rf"-({-center}+{var})"
 
 
+def _lin_coeffs(center: int) -> list[int]:
+    """Highest-first coefficients of ``x - center``."""
+    return [1, -int(center)]
+
+
+def _mul_coeffs(left: Sequence[int], right: Sequence[int]) -> list[int]:
+    out = [0] * (len(left) + len(right) - 1)
+    for i, a in enumerate(left):
+        for j, b in enumerate(right):
+            out[i + j] += int(a) * int(b)
+    return out
+
+
+def _pow_coeffs(base: Sequence[int], power: int) -> list[int]:
+    out = [1]
+    for _ in range(max(0, int(power))):
+        out = _mul_coeffs(out, base)
+    return out
+
+
+def _scale_coeffs(coeffs: Sequence[int], factor: int) -> list[int]:
+    return [int(c) * int(factor) for c in coeffs]
+
+
+def _poly_latex(coeffs: Sequence[int], var: str) -> str:
+    """Textbook polynomial via ``polynomial_core`` (drops ``1x`` and ``x^{1}``)."""
+    return format_polynomial_latex(list(coeffs), variable=var)
+
+
 def _expanded_linear_product(var: str, h: int, c: int, power: int) -> str:
-    """Expand ``(x-h)(x-c)^power`` for cancel presentation (power==1 common)."""
-    # (x-h)(x-c) = x^2 - (h+c)x + h*c
-    if power == 1:
-        s = h + c
-        p = h * c
-        mid = f"-{s}" if s > 0 else (f"+{-s}" if s < 0 else "")
-        if s == 0:
-            mid = ""
-        elif abs(s) == 1:
-            mid = f"-{var}" if s > 0 else f"+{var}"
-        else:
-            mid = f"-{s}{var}" if s > 0 else f"+{-s}{var}"
-        const = f"+{p}" if p > 0 else (str(p) if p < 0 else "")
-        if p == 0:
-            const = ""
-        body = f"{var}^{{2}}{mid}{const}"
-        return body
-    # Higher power: keep factored den core, only expand cancel×linear once
-    return rf"({_linear_factor(var, h)})({_pow_den(_linear_factor(var, c), power)})"
+    """Expand ``(x-h)(x-c)^power`` so cancel factors are not left written out."""
+    den = _mul_coeffs(_lin_coeffs(h), _pow_coeffs(_lin_coeffs(c), power))
+    return _poly_latex(den, var)
 
 
 def _pow_den(factor: str, power: int) -> str:
@@ -216,7 +231,15 @@ def render_core_expr(core: CoreExpr) -> str:
         return rf"{core.coef}{osc}"
 
     c = int(core.center)
-    den_core = _pow_den(_linear_factor(var, c), core.power)
+    if core.power <= 1:
+        if c == 0:
+            den_core = var
+        elif c > 0:
+            den_core = rf"{var}-{c}"
+        else:
+            den_core = rf"{var}+{-c}"
+    else:
+        den_core = _pow_den(_linear_factor(var, c), core.power)
     k = core.coef
     hole = core.hole
 
@@ -230,61 +253,29 @@ def render_core_expr(core: CoreExpr) -> str:
                 num = flipped if k > 0 else (
                     flipped[1:] if flipped.startswith("-") else rf"-{flipped}"
                 )
+            elif flipped.startswith("-") or _has_top_level_addsub(flipped):
+                num = rf"{k}\left({flipped}\right)"
             else:
                 num = rf"{k}{flipped}"
-            return rf"\frac{{{num}}}{{{hfac}{den_core}}}"
+            if _has_top_level_addsub(den_core) or den_core.startswith("-"):
+                den = rf"\left({den_core}\right){hfac}"
+            else:
+                den = rf"{den_core}{hfac}"
+            return rf"\frac{{{num}}}{{{den}}}"
         scale = 1
         if style == "scale_unit":
             scale = abs(int(core.cancel_unit)) if abs(int(core.cancel_unit or 1)) != 1 else 2
-        num_k = k * scale
-        if abs(num_k) == 1:
-            num = hfac if num_k > 0 else rf"-{hfac}"
-        else:
-            num = rf"{num_k}{hfac}"
-        if core.power == 1:
-            s = scale * (hole + c)
-            p = scale * hole * c
-            if s == 0:
-                mid = ""
-            elif abs(s) == 1:
-                mid = f"-{var}" if s > 0 else f"+{var}"
-            else:
-                mid = f"-{s}{var}" if s > 0 else f"+{-s}{var}"
-            const = f"+{p}" if p > 0 else (str(p) if p < 0 else "")
-            if p == 0:
-                const = ""
-            lead = f"{scale}" if scale != 1 else ""
-            den = f"{lead}{var}^{{2}}{mid}{const}"
-        else:
-            den = _expanded_linear_product(var, hole, c, core.power)
-            if scale != 1:
-                den = rf"{scale}\left({den}\right)"
-        return rf"\frac{{{num}}}{{{den}}}"
+        num = _poly_latex(_scale_coeffs(_lin_coeffs(hole), k * scale), var)
+        den_coeffs = _scale_coeffs(
+            _mul_coeffs(_lin_coeffs(hole), _pow_coeffs(_lin_coeffs(c), core.power)),
+            scale,
+        )
+        return rf"\frac{{{num}}}{{{_poly_latex(den_coeffs, var)}}}"
 
-    if core.unfactored:
-        fac = _linear_factor(var, c)
-        if core.power == 1:
-            # Avoid identical fac/fac·fac — expand den to (x-c)^2 polynomial
-            # (x-c)^2 = x^2 - 2c x + c^2
-            s = 2 * c
-            p = c * c
-            mid = f"-{s}{var}" if s > 0 else (f"+{-s}{var}" if s < 0 else "")
-            if abs(s) == 1:
-                mid = f"-{var}" if s > 0 else f"+{var}"
-            elif s == 0:
-                mid = ""
-            const = f"+{p}" if p > 0 else (str(p) if p < 0 else "")
-            if p == 0:
-                const = ""
-            den = f"{var}^{{2}}{mid}{const}"
-            num = fac if abs(k) == 1 else rf"{abs(k)}{fac}"
-            if k < 0:
-                num = rf"-{num}"
-            return rf"\frac{{{num}}}{{{den}}}"
-        num = fac if abs(k) == 1 else rf"{abs(k)}{fac}"
-        if k < 0:
-            num = rf"-{num}"
-        return rf"\frac{{{num}}}{{{fac}^{{{core.power + 1}}}}}"
+    if core.unfactored and c != 0:
+        num = _poly_latex(_scale_coeffs(_lin_coeffs(c), k), var)
+        den = _poly_latex(_pow_coeffs(_lin_coeffs(c), core.power + 1), var)
+        return rf"\frac{{{num}}}{{{den}}}"
 
     if abs(k) == 1:
         return (r"-" if k < 0 else "") + rf"\frac{{1}}{{{den_core}}}"
@@ -552,6 +543,7 @@ def complexity_wrap(
             and core.kind == "rational_pow"
             and not core.unfactored
             and core.hole is None
+            and int(core.center) != 0
         ):
             candidates.append("unfactored_form")
 
@@ -786,34 +778,262 @@ _LEADING_INT_RE = re.compile(r"^(\d+)((?:\\|[A-Za-z\(]).*)$")
 
 
 def _has_top_level_addsub(body: str) -> bool:
-    """True when ``+``/``-`` appears outside ``{...}`` (not a unary leading minus)."""
+    """True when ``+``/``-`` sits outside braces and parentheses.
+
+    A leading unary minus does not count. Parentheses hide an inner sum, so
+    ``3\\left(2x-1\\right)`` stays a product instead of a wrapped sum.
+    """
     depth = 0
     for i, ch in enumerate(body):
-        if ch == "{":
+        if ch in "{(":
             depth += 1
-        elif ch == "}":
+        elif ch in "})":
             depth = max(0, depth - 1)
         elif depth == 0 and ch in "+-" and i > 0:
             return True
     return False
 
 
+def _read_braced(text: str, index: int) -> tuple[str, int] | None:
+    """Read a ``{...}`` group starting at ``index``. Return (inner, end)."""
+    if index >= len(text) or text[index] != "{":
+        return None
+    depth = 0
+    for j in range(index, len(text)):
+        if text[j] == "{":
+            depth += 1
+        elif text[j] == "}":
+            depth -= 1
+            if depth == 0:
+                return text[index + 1 : j], j + 1
+    return None
+
+
+def _split_outer_frac(body: str) -> tuple[str, str] | None:
+    """Return ``(num, den)`` when ``body`` is exactly one ``\\frac``."""
+    prefix = r"\frac"
+    if not body.startswith(prefix):
+        return None
+    num_hit = _read_braced(body, len(prefix))
+    if num_hit is None:
+        return None
+    num, after_num = num_hit
+    den_hit = _read_braced(body, after_num)
+    if den_hit is None:
+        return None
+    den, end = den_hit
+    if end != len(body):
+        return None
+    return num, den
+
+
+_CONST_NUM_RE = re.compile(r"^([+-]?)(\d+)?(\\pi|e)?$")
+_CONST_DEN_RE = re.compile(r"^([+-]?)(\d+)$")
+_TERM_COEF_RE = re.compile(r"^(\d+)?(.*)$")
+
+
+def _format_const_value(val: Fraction, symbol: str) -> str:
+    """Render ``val * symbol`` with ``symbol`` empty, ``\\pi``, or ``e``."""
+    if val == 0:
+        return "0"
+    sign = "-" if val < 0 else ""
+    val = abs(val)
+    if not symbol:
+        if val.denominator == 1:
+            return sign + str(val.numerator)
+        return sign + rf"\frac{{{val.numerator}}}{{{val.denominator}}}"
+    if val.denominator == 1:
+        n = val.numerator
+        return sign + (symbol if n == 1 else rf"{n}{symbol}")
+    if val.numerator == 1:
+        return sign + rf"\frac{{{symbol}}}{{{val.denominator}}}"
+    return sign + rf"\frac{{{val.numerator}{symbol}}}{{{val.denominator}}}"
+
+
+def _simplify_const_fraction(num: str, den: str, scale: int) -> str | None:
+    """Fold ``k * (c π / n)`` and integer fractions. ``None`` if not constant."""
+    den_m = _CONST_DEN_RE.fullmatch(den.strip())
+    num_m = _CONST_NUM_RE.fullmatch(num.strip())
+    if den_m is None or num_m is None:
+        return None
+    dcoef = int(den_m.group(2))
+    if dcoef == 0:
+        return None
+    nsign = -1 if num_m.group(1) == "-" else 1
+    dsign = -1 if den_m.group(1) == "-" else 1
+    ncoef = int(num_m.group(2) or "1")
+    symbol = num_m.group(3) or ""
+    val = Fraction(nsign * ncoef * int(scale), dsign * dcoef)
+    return _format_const_value(val, symbol)
+
+
+def _split_sum_terms(expr: str) -> list[tuple[int, str]] | None:
+    """Split a flat sum into ``(sign, unsigned term)``. ``None`` if nested weirdly."""
+    expr = expr.strip()
+    if not expr:
+        return None
+    parts: list[tuple[int, str]] = []
+    depth = 0
+    sign = 1
+    start = 0
+    i = 0
+    if expr[0] == "-":
+        sign = -1
+        start = 1
+        i = 1
+    elif expr[0] == "+":
+        start = 1
+        i = 1
+    while i < len(expr):
+        ch = expr[i]
+        if ch in "{(":
+            depth += 1
+        elif ch in "})":
+            depth = max(0, depth - 1)
+        elif depth == 0 and ch in "+-" and i > start:
+            piece = expr[start:i].strip()
+            if not piece:
+                return None
+            parts.append((sign, piece))
+            sign = -1 if ch == "-" else 1
+            start = i + 1
+        i += 1
+    tail = expr[start:].strip()
+    if not tail:
+        return None
+    parts.append((sign, tail))
+    return parts or None
+
+
+def _scale_unsigned_term(body: str, factor: int) -> str | None:
+    """Multiply one unsigned term by ``factor``. ``None`` when the term is a fraction."""
+    match = _TERM_COEF_RE.match(body.strip())
+    if match is None:
+        return None
+    coef_txt, rest = match.group(1), match.group(2)
+    if rest.startswith(r"\frac") or rest.startswith(r"\left"):
+        return None
+    coef = int(coef_txt or "1") * int(factor)
+    if rest == "":
+        return str(coef)
+    if coef == 1:
+        return rest
+    if coef == -1:
+        return rf"-{rest}"
+    return rf"{coef}{rest}"
+
+
+def _join_scaled_terms(terms: Sequence[str]) -> str:
+    out = terms[0]
+    for term in terms[1:]:
+        if term.startswith("-"):
+            out += f" - {term[1:]}"
+        else:
+            out += f" + {term}"
+    return out
+
+
+def _scale_sum_or_term(expr: str, scale: int) -> str | None:
+    """Distribute ``scale`` through a polynomial-style sum. ``None`` to fall back."""
+    if scale == 1:
+        return expr
+    parts = _split_sum_terms(expr)
+    if not parts:
+        return None
+    scaled: list[str] = []
+    for sign, body in parts:
+        hit = _scale_unsigned_term(body, sign * scale)
+        if hit is None:
+            return None
+        scaled.append(hit)
+    return _join_scaled_terms(scaled)
+
+
+_RADICAL_NUM_RE = re.compile(r"^([+-]?)(\d+)?\\sqrt\{(\d+)\}$")
+
+
+def _reduce_radical_fraction(num: str, den: str) -> str | None:
+    """Reduce ``\\frac{k\\sqrt{n}}{m}`` so ``4\\sqrt{3}/2`` becomes ``2\\sqrt{3}``."""
+    den_m = _CONST_DEN_RE.fullmatch(den.strip())
+    num_m = _RADICAL_NUM_RE.fullmatch(num.strip())
+    if den_m is None or num_m is None:
+        return None
+    dcoef = int(den_m.group(2))
+    if dcoef == 0:
+        return None
+    nsign = -1 if num_m.group(1) == "-" else 1
+    dsign = -1 if den_m.group(1) == "-" else 1
+    ncoef = int(num_m.group(2) or "1")
+    radical = int(num_m.group(3))
+    # Pull square factors out of the radical: \\sqrt{12} → 2\\sqrt{3}.
+    root = 1
+    rest = radical
+    p = 2
+    while p * p <= rest:
+        while rest % (p * p) == 0:
+            root *= p
+            rest //= p * p
+        p += 1
+    ncoef *= root
+    sign = "-" if nsign * dsign < 0 else ""
+    g = math.gcd(abs(ncoef), dcoef)
+    ncoef //= g
+    dcoef //= g
+    if rest == 1:
+        body = str(ncoef)
+    elif ncoef == 1:
+        body = rf"\sqrt{{{rest}}}"
+    else:
+        body = rf"{ncoef}\sqrt{{{rest}}}"
+    if dcoef == 1:
+        return sign + body
+    return sign + rf"\frac{{{body}}}{{{dcoef}}}"
+
+
+def _scale_fraction(num: str, den: str, scale: int) -> str:
+    folded = _simplify_const_fraction(num, den, scale)
+    if folded is not None:
+        return folded
+    distributed = _scale_sum_or_term(num, scale)
+    if distributed is not None:
+        reduced = _reduce_radical_fraction(distributed, den)
+        if reduced is not None:
+            return reduced
+        return rf"\frac{{{distributed}}}{{{den}}}"
+    if scale == -1:
+        if _has_top_level_addsub(num):
+            signed = rf"-\left({num}\right)"
+        elif num.startswith("-"):
+            signed = num[1:].lstrip()
+        else:
+            signed = rf"-{num}"
+        return rf"\frac{{{signed}}}{{{den}}}"
+    grouped = (
+        num
+        if not _has_top_level_addsub(num) and not num.startswith("-")
+        else rf"\left({num}\right)"
+    )
+    return rf"\frac{{{scale}{grouped}}}{{{den}}}"
+
+
 def scale_latex_body(body: str, scale: int) -> str:
-    """Prefix a latex body with a constant multiple (paren if needed).
+    """Multiply a latex body by an integer without gluing digits onto ``\\frac``.
 
-    Absorbs an existing leading unary minus into ``scale`` so we never emit
-    ``-4-\\frac{...}`` or ``--42x`` style juxtaposition bugs.
-
-    Critical: never concatenate a scale onto a leading digit (``-2`` + ``2`` →
-    ``-22``). Pure integers multiply; sums/differences are parenthesized;
-    leading numeric coefficients are absorbed when safe.
+    Absorbs a leading unary minus into ``scale`` only when that minus negates
+    the whole body (not the first term of a sum). Pure integers and constant
+    fractions, including ``\\pi`` and ``e``, fold numerically. A polynomial
+    numerator absorbs the factor. Sums that are not a single fraction are
+    parenthesized.
     """
     body = (body or "").strip()
     if not body or scale == 1:
         return body
     while body.startswith("-"):
+        rest = body[1:].lstrip()
+        if not rest or _has_top_level_addsub(rest):
+            break
         scale = -scale
-        body = body[1:].lstrip()
+        body = rest
     if not body:
         return body
     if scale == 1:
@@ -827,16 +1047,27 @@ def scale_latex_body(body: str, scale: int) -> str:
     m_frac = _FRAC_INT_RE.match(body)
     if m_frac:
         val = Fraction(int(m_frac.group(1)), int(m_frac.group(2))) * scale
-        if val.denominator == 1:
-            return str(val.numerator)
-        sign = "-" if val < 0 else ""
-        return rf"{sign}\frac{{{abs(val.numerator)}}}{{{val.denominator}}}"
+        return _format_const_value(val, "")
+
+    outer = _split_outer_frac(body)
+    if outer is not None:
+        return _scale_fraction(outer[0], outer[1], scale)
+
+    # Polynomial-style sums absorb the factor term by term (``-3( -5x^{4}-… )``
+    # becomes ``15x^{4}+…``). Mixed terms such as ``\frac{1}{2}x^{2}-…`` fall
+    # through and stay parenthesized.
+    if _has_top_level_addsub(body):
+        distributed = _scale_sum_or_term(body, scale)
+        if distributed is not None:
+            return distributed
 
     # Absorb leading integer coefficient: 2\sqrt{x} * 3 → 6\sqrt{x}
     m_lead = _LEADING_INT_RE.match(body)
     if m_lead and not _has_top_level_addsub(body):
         new_coef = int(m_lead.group(1)) * scale
         rest = m_lead.group(2)
+        if rest.startswith(r"\frac"):
+            return _scale_fraction_prefixed(rest, new_coef)
         if new_coef == 1:
             return rest
         if new_coef == -1:
@@ -854,8 +1085,19 @@ def scale_latex_body(body: str, scale: int) -> str:
     # Leading digit that we couldn't absorb (rare) — force explicit product
     if body[0].isdigit():
         return rf"{scale}\cdot {body}"
-    # Fractions / trig / grouped: juxtapose the integer
+    # Trig / roots / already-grouped factors: juxtapose the integer.
+    # A bare fraction was handled above, so this is not ``3\frac``.
     return rf"{scale}{body}"
+
+
+def _scale_fraction_prefixed(body: str, scale: int) -> str:
+    """Scale a body whose first token is ``\\frac`` after a coefficient fold."""
+    outer = _split_outer_frac(body)
+    if outer is None:
+        return rf"{scale}{body}" if scale not in {1, -1} else (
+            body if scale == 1 else rf"-{body}"
+        )
+    return _scale_fraction(outer[0], outer[1], scale)
 
 
 def split_lim_prompt(prompt: str) -> tuple[str, str] | None:

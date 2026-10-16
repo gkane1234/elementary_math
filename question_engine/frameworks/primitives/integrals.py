@@ -4480,7 +4480,14 @@ def sample_integral_expression(
     topic: str | None = None,
     rng: random.Random | None = None,
 ) -> IntegralSample:
-    rng = rng or _rng(settings)
+    from question_engine.frameworks.difficulty_budget import dimension_streams
+
+    streams = None
+    if rng is None and settings.get("seed") is None:
+        streams = dimension_streams(settings, xor_mask=0x494E5431)
+        rng = streams.coef_rng
+    else:
+        rng = rng or _rng(settings)
     key = generator_key or resolve_generator_key(topic) or "integral_power_rule"
     allows = resolve_integral_allows(settings, generator_key=key, topic=topic)
     d = settings_difficulty(settings, default=6.0)
@@ -4661,6 +4668,23 @@ def sample_integral_expression(
             snap["catalog_id"] = extra["catalog_id"]
         if extra.get("strategy"):
             snap["strategy"] = extra["strategy"]
+    edits: list[dict[str, Any]] = []
+    if meta.get("omit_du_constant"):
+        edits.append(
+            {
+                "action_id": "omit_du_constant",
+                "family": "integrals",
+                "kind": "rewrite",
+            }
+        )
+    meta["edits_applied"] = edits
+    if streams is not None:
+        meta["structure_difficulty"] = streams.structure_difficulty
+        meta["structure_seed"] = streams.structure_seed
+        meta["number_difficulty"] = streams.number_difficulty
+        meta["number_seed"] = streams.number_seed
+        meta["edit_seed"] = streams.edit_seed
+        meta["edit_cap"] = streams.edit_cap
 
     return IntegralSample(
         prompt_latex=prompt,

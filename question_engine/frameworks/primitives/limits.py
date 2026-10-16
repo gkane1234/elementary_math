@@ -1905,7 +1905,18 @@ def sample_limit_expression(
     topic: str | None = None,
     rng: random.Random | None = None,
 ) -> LimitSample:
-    rng = rng or _rng(settings)
+    from question_engine.frameworks.difficulty_budget import dimension_streams
+
+    streams = None
+    if rng is None and settings.get("seed") is None:
+        streams = dimension_streams(settings, xor_mask=0x4C494D17)
+        rng = streams.coef_rng
+        form_rng = streams.form_rng
+        edit_rng = streams.edit_rng
+    else:
+        rng = rng or _rng(settings)
+        form_rng = rng
+        edit_rng = rng
     key = generator_key or resolve_generator_key(topic) or "limit_direct_evaluation"
     allows = resolve_limit_allows(settings, generator_key=key, topic=topic)
     d = settings_difficulty(settings, default=6.0)
@@ -1952,7 +1963,7 @@ def sample_limit_expression(
 
     lim_catalog = load_form_catalog("limits")
     lim_forms = forms_for_leaf(lim_catalog, key)
-    catalog_form = select_form_id(lim_forms, d=d, rng=rng) if lim_forms else None
+    catalog_form = select_form_id(lim_forms, d=d, rng=form_rng) if lim_forms else None
     catalog_fid = str(catalog_form["form_id"]) if catalog_form else ""
     form = _pick_form(rng, spec.forms)
 
@@ -2113,7 +2124,16 @@ def sample_limit_expression(
                 candidates = [c for c in candidates if c != "constant_multiple"]
             if not candidates:
                 break
-            kind = rng.choice(candidates)
+            if streams is not None:
+                from question_engine.frameworks.primitives.openstax_edit_catalogs import (
+                    weighted_edit_id,
+                )
+
+                kind = weighted_edit_id("limits", candidates, edit_rng) or edit_rng.choice(
+                    candidates
+                )
+            else:
+                kind = rng.choice(candidates)
             if kind in {"sign", "constant_multiple"}:
                 split = split_lim_prompt(prompt)
                 if split is None:
@@ -2136,6 +2156,19 @@ def sample_limit_expression(
                     wraps[-1] = "sign"
                 meta.setdefault("dressing_specs", []).append(snap_d)
     meta["wrappers_applied"] = wraps
+    meta["edits_applied"] = [
+        {"action_id": tag.split("#", 1)[0], "family": "limits", "kind": "value"}
+        for tag in wraps
+        if tag.split("#", 1)[0] in {"sign", "constant_multiple"}
+    ]
+    meta["structure_pool_size"] = len(lim_forms)
+    if streams is not None:
+        meta["structure_difficulty"] = streams.structure_difficulty
+        meta["structure_seed"] = streams.structure_seed
+        meta["number_difficulty"] = streams.number_difficulty
+        meta["number_seed"] = streams.number_seed
+        meta["edit_seed"] = streams.edit_seed
+        meta["edit_cap"] = streams.edit_cap
 
     record_difficulty_shortfall(
         meta,

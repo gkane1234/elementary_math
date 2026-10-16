@@ -17,6 +17,7 @@ from typing import Any, Literal, Sequence
 
 from question_engine.frameworks.difficulty_budget import (
     DifficultyFactor,
+    dimension_streams,
     dual_axis_rngs,
     select_upgrades,
     settings_difficulty,
@@ -1081,6 +1082,8 @@ def _sample_via_spec(
     allow_fn_power: bool = False,
     derivative_order: int = 1,
     catalog_fid: str = "",
+    edit_rng: random.Random | None = None,
+    edit_cap: int = 0,
 ) -> tuple[DerivativeExpr, dict[str, Any]]:
     """Route power / product / alg-chain / specials / general through ExpressionSpec packs.
 
@@ -1108,6 +1111,9 @@ def _sample_via_spec(
                     rng=rng,
                     var=var,
                     derivative_order=order,
+                    edit_rng=edit_rng,
+                    edit_cap=edit_cap,
+                    coef_abs_max=coef_hi,
                 )
                 inv = dict(inv)
                 inv.setdefault(
@@ -1388,9 +1394,17 @@ def sample_derivative_expression(
     rng: random.Random | None = None,
 ) -> DerivativeSample:
     """Sample one derivative problem respecting allow-lists + continuous D."""
+    streams = None
     if rng is None:
-        rng, dress_rng = dual_axis_rngs(settings, xor_mask=0xD311)
+        streams = dimension_streams(settings, xor_mask=0xD311)
+        form_rng = streams.form_rng
+        rng = streams.coef_rng
+        edit_rng = streams.edit_rng
+        _skeleton_rng, dress_rng = dual_axis_rngs(settings, xor_mask=0xD311)
+        del _skeleton_rng
     else:
+        form_rng = rng
+        edit_rng = None
         dress_rng = rng
     key = generator_key or resolve_generator_key(topic)
     allow = resolve_derivative_allows(settings, generator_key=key, topic=topic)
@@ -1425,7 +1439,7 @@ def sample_derivative_expression(
         deriv_forms, allow_gate, conceptual_d=float(d)
     )
     catalog_form = (
-        select_form_id(deriv_forms, d=d, rng=rng) if deriv_forms else None
+        select_form_id(deriv_forms, d=d, rng=form_rng) if deriv_forms else None
     )
     catalog_fid = str(catalog_form["form_id"]) if catalog_form else ""
     if catalog_fid.startswith("product"):
@@ -1565,6 +1579,8 @@ def sample_derivative_expression(
             allow_fn_power=allow_fn_power,
             derivative_order=derivative_order,
             catalog_fid=catalog_fid,
+            edit_rng=edit_rng,
+            edit_cap=0 if streams is None else streams.edit_cap,
         )
     elif force_quotient or (use_quotient and not force_product and not force_chain):
         # Prefer OpenStax quotient patterns when mapped.
@@ -1587,6 +1603,9 @@ def sample_derivative_expression(
                     rng=rng,
                     var=var,
                     derivative_order=1,
+                    edit_rng=edit_rng,
+                    edit_cap=0 if streams is None else streams.edit_cap,
+                    coef_abs_max=coef_hi,
                 )
                 inv_q = dict(inv_q)
                 inv_q.setdefault(
@@ -1730,6 +1749,8 @@ def sample_derivative_expression(
             allow_fn_power=allow_fn_power,
             derivative_order=derivative_order,
             catalog_fid=catalog_fid,
+            edit_rng=edit_rng,
+            edit_cap=0 if streams is None else streams.edit_cap,
         )
 
     order = int(inventory.get("derivative_order") or derivative_order or 1)
@@ -1832,6 +1853,9 @@ def sample_derivative_expression(
             "expression_flesh",
             "spec_presentation",
             "difficulty_sources_extra",
+            "edit_cap",
+            "edit_pool_size",
+            "edits_applied",
         ):
             if field_name in inventory:
                 meta[field_name] = inventory[field_name]
@@ -1852,6 +1876,16 @@ def sample_derivative_expression(
         else:
             meta["skeleton_pattern"] = f"Diff({key or 'spec'})"
             meta.setdefault("skeleton_source", "expression_spec")
+    if streams is not None:
+        meta["structure_difficulty"] = streams.structure_difficulty
+        meta["structure_seed"] = streams.structure_seed
+        meta["number_difficulty"] = streams.number_difficulty
+        meta["number_seed"] = streams.number_seed
+        meta["edit_seed"] = streams.edit_seed
+        meta["edit_cap"] = streams.edit_cap
+        meta.setdefault("edits_applied", [])
+        meta.setdefault("edit_pool_size", 0)
+        meta["structure_pool_size"] = len(deriv_forms)
     return DerivativeSample(
         prompt_latex=prompt,
         answer_latex=expr.deriv_latex,

@@ -322,7 +322,12 @@ def dual_axis_rngs(
         except (TypeError, ValueError):
             pass
 
-    sk_base = 0 if base is None else base
+    # A missing seed is not seed 0. Explicit spec difficulty 0 used to pin
+    # every unseeded draw to the same skeleton.
+    if base is None:
+        return random.Random(), dress
+
+    sk_base = base
     try:
         # Gallery historically used seed += int(S*31); peel Spec contribution.
         if spec is not None:
@@ -333,6 +338,112 @@ def dual_axis_rngs(
         (sk_base & 0xFFFFFFFF) ^ (int(c * 1009) & 0xFFFFFFFF) ^ int(xor_mask)
     )
     return sk, dress
+
+
+def edit_cap_from_difficulty(d: float) -> int:
+    """How many expression edits difficulty ``d`` permits.
+
+    Fixed staircase, not a fitted split: 0 → 0, 1–5 → 1, 6–11 → 2, 12+ → 3.
+    """
+    d = float(d)
+    if d <= 0:
+        return 0
+    if d < 6:
+        return 1
+    if d < 12:
+        return 2
+    return 3
+
+
+def resolve_edit_cap(settings: dict[str, Any]) -> int:
+    """Staircase cap, lowered by an explicit ``edit_max`` when one is set."""
+    d = settings_conceptual_difficulty(settings, default=6.0)
+    cap = edit_cap_from_difficulty(d)
+    if "edit_max" not in settings or settings.get("edit_max") in (None, ""):
+        return cap
+    try:
+        return min(cap, max(0, int(settings["edit_max"])))
+    except (TypeError, ValueError):
+        return cap
+
+
+def _optional_seed(raw: Any) -> int | None:
+    if raw is None or raw == "":
+        return None
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        return None
+
+
+def _fresh_seed() -> int:
+    return random.SystemRandom().randrange(1, 2**31 - 1)
+
+
+def _mix_seed(anchor: int, difficulty: float, xor_mask: int, tag: int) -> int:
+    mixed = (
+        int(anchor)
+        ^ (int(float(difficulty) * 1009) & 0xFFFFFFFF)
+        ^ int(xor_mask)
+        ^ (int(tag) * 0x9E3779B1)
+    )
+    return mixed & 0xFFFFFFFF
+
+
+@dataclass(frozen=True)
+class DimensionStreams:
+    """Independent draws for catalog form, coefficients, and expression edits."""
+
+    form_rng: random.Random
+    coef_rng: random.Random
+    edit_rng: random.Random
+    structure_seed: int
+    number_seed: int
+    edit_seed: int
+    structure_difficulty: float
+    number_difficulty: float
+    edit_cap: int
+
+
+def dimension_streams(
+    settings: dict[str, Any],
+    *,
+    xor_mask: int = 0,
+) -> DimensionStreams:
+    """Build the three per-question streams.
+
+    A passed ``seed`` or ``conceptual_seed`` derives all three, so the same
+    settings replay. ``structure_seed``, ``number_seed``, and ``edit_seed``
+    override that derivation. When none of those are set, each stream gets a
+    fresh seed.
+    """
+    c = float(settings_conceptual_difficulty(settings, default=6.0))
+    cap = resolve_edit_cap(settings)
+    anchor = _optional_seed(settings.get("conceptual_seed"))
+    if anchor is None:
+        anchor = _optional_seed(settings.get("seed"))
+
+    structure = _optional_seed(settings.get("structure_seed"))
+    number = _optional_seed(settings.get("number_seed"))
+    edit = _optional_seed(settings.get("edit_seed"))
+    if structure is None:
+        structure = _fresh_seed() if anchor is None else _mix_seed(anchor, c, xor_mask, 1)
+    if number is None:
+        number = _fresh_seed() if anchor is None else _mix_seed(anchor, c, xor_mask, 2)
+    if edit is None:
+        edit = _fresh_seed() if anchor is None else _mix_seed(anchor, c, xor_mask, 3)
+
+    return DimensionStreams(
+        form_rng=random.Random(structure),
+        coef_rng=random.Random(number),
+        edit_rng=random.Random(edit),
+        structure_seed=structure,
+        number_seed=number,
+        edit_seed=edit,
+        structure_difficulty=c,
+        number_difficulty=c,
+        edit_cap=cap,
+    )
 
 
 def difficulty_band(d: float) -> str:

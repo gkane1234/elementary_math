@@ -73,6 +73,14 @@ def dual_difficulty_settings(
             min=0,
             group="difficulty",
         ),
+        SettingField(
+            "edit_max",
+            "Max expression edits",
+            "int",
+            3,
+            min=0,
+            group="difficulty",
+        ),
     ]
 
 

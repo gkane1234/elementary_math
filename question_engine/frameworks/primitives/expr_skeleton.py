@@ -1674,6 +1674,9 @@ def sample_from_form(
     var: str = "x",
     derivative_order: int = 1,
     seed: int | None = None,
+    edit_rng: random.Random | None = None,
+    edit_cap: int = 0,
+    coef_abs_max: int = 5,
 ) -> tuple[ExprAST, ExprAST, str, str, dict[str, Any]]:
     """OpenStax form_id → pattern → filled ExprAST + derivative latex.
 
@@ -1694,6 +1697,19 @@ def sample_from_form(
     expr, meta = sample_expr_from_pattern(
         pattern, richness=rich, allows=allows, rng=rng, var=var, seed=seed
     )
+    if edit_rng is not None:
+        from question_engine.frameworks.primitives.expression_edits import (
+            apply_expression_edits,
+        )
+
+        expr, edit_meta = apply_expression_edits(
+            expr,
+            edit_rng,
+            cap=int(edit_cap),
+            coef_abs_max=int(coef_abs_max),
+        )
+        meta = dict(meta)
+        meta.update(edit_meta)
     d_expr = expr
     for _ in range(order):
         d_expr = differentiate(d_expr, var)

@@ -142,13 +142,39 @@ def _annotate_questions(
     return questions
 
 
+def _attach_form_quality_weights(type_id: str, settings: dict[str, Any]) -> dict[str, Any]:
+    """Fill topic-fit form weights when the caller did not pass them.
+
+    A caller-supplied ``live_quality_form_weights`` wins. Effort is not consulted.
+    """
+    if isinstance(settings.get("live_quality_form_weights"), dict):
+        return settings
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+    from question_engine.ml.form_quality import FormQualityStore
+
+    difficulty = settings_difficulty(settings, default=6.0)
+    weights = FormQualityStore().weights(type_id, difficulty)
+    if not weights:
+        return settings
+    merged = dict(settings)
+    merged["live_quality_form_weights"] = weights
+    return merged
+
+
 def _generate_for_type(type_id: str, settings: dict[str, Any]) -> list[Question]:
     question_type = QUESTION_TYPES.get(type_id)
     if question_type is None:
         raise ValueError(f"Unknown question type: {type_id}")
 
     resolved = _resolve_generation_settings(type_id, settings)
-    questions = question_type.generate(resolved)
+    resolved = _attach_form_quality_weights(type_id, resolved)
+    from question_engine.frameworks.primitives.openstax_form_catalogs import (
+        live_quality_form_weights,
+    )
+
+    weights = resolved.get("live_quality_form_weights")
+    with live_quality_form_weights(weights if isinstance(weights, dict) else None):
+        questions = question_type.generate(resolved)
     annotated = _annotate_questions(questions, question_type, resolved)
     _log_generated_questions(type_id, resolved, annotated)
     return annotated

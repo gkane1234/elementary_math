@@ -9,12 +9,13 @@ Generate printable math worksheets (Grade 6 → Calculus) from a Python question
 1. [Feature inventory](#feature-inventory)
 2. [What has been mined / created](#what-has-been-mined--created)
 3. [Architecture](#architecture)
-4. [How to run](#how-to-run)
-5. [Status by course](#status-by-course)
-6. [Project layout](#project-layout)
-7. [Local development](#local-development)
-8. [Deploy to Vercel](#deploy-to-vercel)
-9. [Further reading](#further-reading)
+4. [Two learning loops](#two-learning-loops)
+5. [How to run](#how-to-run)
+6. [Status by course](#status-by-course)
+7. [Project layout](#project-layout)
+8. [Local development](#local-development)
+9. [Deploy to Vercel](#deploy-to-vercel)
+10. [Further reading](#further-reading)
 
 ---
 
@@ -70,6 +71,7 @@ Verified against the repo (paths exist unless noted).
 | Inverse θ | `question_engine/ml/inverse.py`, `scripts/optimize_inverse_difficulty.py` | Search θ for target effort (G6/PA/A2 pilots; PC/Calc inverse next) |
 | Features | `question_engine/ml/features.py` | Structural / effort features |
 | Topic-fit QA (separate) | `scripts/topic_fit_sample.py`, `.cursor/skills/topic-fit-qa/` | Skill/method appropriateness — not answer correctness |
+| **Form-quality store** | `question_engine/ml/form_quality.py` | 1–5 topic-fit ratings → shrunk score per form and difficulty band. Fed to `select_form_id` as `live_quality_form_weights`. Does not read `y_effort`. |
 | Difficulty TRACKING / tranche docs | `scripts/output/topic_fit/g6_difficulty/`, `pa_difficulty/`; `scripts/output/ml/*_TRANCHE.md` | G6/PA ramp TRACKING; Precalc/Calc spine docs |
 
 ### Correctness vs difficulty vs topic fit
@@ -80,7 +82,29 @@ These are **separate** concerns (see [diagram](#three-qa-concerns)):
 |---------|---------|----------------|
 | **Answer correctness** | Prompt ↔ answer key is mathematically right | Generators compute answers; unit tests; manual spot-check |
 | **Effort / difficulty** | How hard the item is (scorer / continuous D ladder) | `score_effort`, GenerationRecord, forward/inverse |
-| **Topic-fit QA** | Right skill, method, within-topic band (not “is the answer right”) | `topic_fit_sample.py`, galleries under `scripts/output/topic_fit/` |
+| **Topic-fit QA** | Right skill, method, within-topic band (not “is the answer right”) | `topic_fit_sample.py`, galleries under `scripts/output/topic_fit/`; learned form weights in `form_quality.py` |
+
+---
+
+## Two learning loops
+
+Difficulty and topic fit are learned separately. A form that is the right kind of problem but harder than its window keeps its topic-fit score and has its difficulty window or effort features corrected. A form that is the wrong kind of problem is sampled less often. Neither loop is computerized adaptive testing: the teacher sets the difficulty, and the generator does not estimate a student’s ability.
+
+### Difficulty
+
+The effort scorer labels a generated question. That row is a `GenerationRecord`. The forward model predicts effort from the generator settings. The inverse search looks for settings that hit a target effort. The reward is “this was as hard as requested.”
+
+This is the same split as automatic item generation’s precalibration. An item model produces the question. A statistical model estimates how hard that question will be from its features, before a large student sample exists (Embretson, 1998; the precalibration review Gierl and Lai point to in Sinharay and Johnson, 2013). Searching the settings for a target effort is generate-and-score search: each candidate is graded, and the next candidate depends on those grades (Togelius, Yannakakis, Stanley, and Browne, 2011).
+
+### Topic fit
+
+`select_form_id` already draws among the forms that are legal at the requested difficulty, using each form’s textbook weight. A 1–5 rating on a live-rating item is stored by `form_quality.py` as `(rating − 3)`, per topic, form id, and difficulty band (under 6, 6–12, 12 and above). On the next generate, the shrunk score `sum / (count + 4)` is passed in as `live_quality_form_weights`. The sampler multiplies the textbook weight by `e` to that score, clipped to −4…4. A caller-supplied dictionary wins. A missing store leaves the textbook weights unchanged. The catalog floor of 0.05 stays, so an unseen or poorly rated form can still appear.
+
+The exponential tilt is a logit choice rule: a higher score makes the form more likely, in proportion to `e^(score)`. It is the exploitation half of a bandit. Thompson sampling (Thompson, 1933; the tutorial of Russo, Van Roy, Kazerouni, Osband, and Wen, 2018) also keeps an uncertainty that shrinks as the count grows, so a form with one rating does not permanently crowd out the others. The shrink `count + 4` is a small version of that idea: one rating of 5 cannot outvote many ratings of 4. A full Thompson draw can later replace the shrunk mean without changing `select_form_id`.
+
+Gierl and Lai (2012, 2013) call the structural choices radicals and the surface numbers incidentals. The form id is the radical this loop learns. The coefficient seed remains an incidental and is not what the rating updates.
+
+Pairwise “this question is better than that one” ratings stay on the live rater’s own model. They are not converted into the 1–5 topic-fit score. A pairwise reward would be a Bradley–Terry update (Bradley and Terry, 1952), not an average of stars.
 
 ---
 
@@ -439,6 +463,13 @@ Routing is configured in [`vercel.json`](vercel.json) (`/api/generate` and `/api
 | [`scripts/output/ml/CALC_DIFFICULTY_TRANCHE.md`](scripts/output/ml/CALC_DIFFICULTY_TRANCHE.md) | Calc continuous-D tranche + forward model |
 | [`scripts/output/ml/CALC_DERIVATIVE_FUNCTION_KNOBS.md`](scripts/output/ml/CALC_DERIVATIVE_FUNCTION_KNOBS.md) | Calc derivative `allow_*` function/method knobs + continuous D |
 | [`scripts/output/ml/CONTINUOUS_D_FULL_MIGRATION.md`](scripts/output/ml/CONTINUOUS_D_FULL_MIGRATION.md) | Full continuous-D migration (**601/601**) |
+| Gierl and Lai (2012), *Medical Education* 46:757–765 | Automatic item generation: cognitive model, item model, then a program fills the model |
+| Gierl and Lai (2013), *Educational Measurement: Issues and Practice* 32(3) | Item models: which features may change, and which must stay fixed |
+| Embretson (1998), *Psychological Methods* 3(3) | Cognitive design system: predict item difficulty from item features |
+| Sinharay and Johnson (2013), cited by Gierl and Lai | Precalibration: estimate psychometric properties as items are generated |
+| Togelius, Yannakakis, Stanley, and Browne (2011), *IEEE TCIAIG* 3(3) | Search-based generation: score a candidate, then search for a better one |
+| Thompson (1933); Russo et al. (2018), *Foundations and Trends in Machine Learning* | Thompson sampling: a mean reward plus uncertainty, so rarely seen options are still tried |
+| Bradley and Terry (1952), *Biometrika* 39 | Pairwise preference model, if ratings become “A is better than B” |
 | [`scripts/output/ml/CONTINUOUS_D_TODO.md`](scripts/output/ml/CONTINUOUS_D_TODO.md) | A0–A3 listed coarse EMH generation **cleared**; B UI Easy/Medium/Hard → Level 0–4 **cleared**; remaining: A4 family deepening |
 | [`scripts/output/ml/CONTINUOUS_D_LADDER_DEEPENING.md`](scripts/output/ml/CONTINUOUS_D_LADDER_DEEPENING.md) | Schema **601/601**; A4 coarse-ladder depth remains (polar, 3D systems, series, …). Wave-1 + wave-2 ladders deepened |
 | [`scripts/output/ml/PROGRESSIVE_WORKSHEET.md`](scripts/output/ml/PROGRESSIVE_WORKSHEET.md) | Progressive practice worksheets |

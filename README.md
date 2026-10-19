@@ -454,6 +454,7 @@ Routing is configured in [`vercel.json`](vercel.json) (`/api/generate` and `/api
 | Doc | Purpose |
 |-----|---------|
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Original architecture / monetization plan |
+| [`DEVELOPMENT_DIRECTIONS.md`](DEVELOPMENT_DIRECTIONS.md) | Product directions: showcase buckets, duplicates, worksheet topic choice, spaced review |
 | [`scripts/output/example_mining/README.md`](scripts/output/example_mining/README.md) | OpenStax mining stages & commands |
 | [`scripts/output/curriculum_gaps/README.md`](scripts/output/curriculum_gaps/README.md) | Gap findings workflow |
 | [`scripts/output/ml/PA_DIFFICULTY_TRANCHE.md`](scripts/output/ml/PA_DIFFICULTY_TRANCHE.md) | PA difficulty tranche |

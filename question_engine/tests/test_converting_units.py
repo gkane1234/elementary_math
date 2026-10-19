@@ -54,6 +54,7 @@ def test_converting_units_not_unit_rate():
             assert "Find the unit rate" not in prompt
             assert "Find the unit price" not in prompt
             assert "Given that" in prompt, prompt
+            assert "$" not in prompt, prompt
             meta = q.metadata or {}
             assert meta.get("stimulus_kind") == "double_number_line"
             svg = meta.get("diagram_svg") or ""

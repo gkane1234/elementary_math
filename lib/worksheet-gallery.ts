@@ -41,8 +41,13 @@ export function galleryEntryRamp(entry: GalleryEntry): WorksheetDifficultyRamp {
   return worksheetDifficultyToRamp(entry.worksheetDifficulty);
 }
 
-/** Payload for POST /api/generate so a gallery example is built by the live engine. */
-export function galleryProgressiveRequest(entry: GalleryEntry) {
+/** Worksheet RNG seed for one gallery visit. Slot k still uses this seed + k*1009. */
+export function freshGalleryRngSeed(): number {
+  return 1 + Math.floor(Math.random() * 1_000_000_000);
+}
+
+/** Payload for POST /api/generate. Pass a new `rngSeed` on every open and regenerate. */
+export function galleryProgressiveRequest(entry: GalleryEntry, rngSeed: number) {
   const ramp = galleryEntryRamp(entry);
   return {
     seeds: entry.seeds,
@@ -53,7 +58,7 @@ export function galleryProgressiveRequest(entry: GalleryEntry) {
     include_related: entry.includeRelated !== false,
     max_topics: entry.maxTopics ?? 4,
     title: entry.title,
-    rng_seed: entry.seed,
+    rng_seed: rngSeed,
   };
 }
 

@@ -6,6 +6,7 @@ import { InteractiveWorksheet } from "@/components/InteractiveWorksheet";
 import { generateProgressive, type ProgressiveGenerateResult } from "@/lib/api";
 import { fetchEntitlement } from "@/lib/payment";
 import {
+  freshGalleryRngSeed,
   galleryOpenInGeneratorHref,
   galleryProgressiveRequest,
   getGalleryEntry,
@@ -31,6 +32,7 @@ export function GalleryExampleViewer({ entryId }: { entryId: string }) {
   const [difficulties, setDifficulties] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [regenerating, setRegenerating] = useState(false);
+  const [activeSeed, setActiveSeed] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [previewMode, setPreviewMode] = useState(true);
 
@@ -65,7 +67,9 @@ export function GalleryExampleViewer({ entryId }: { entryId: string }) {
     if (!entry) {
       throw new Error("Unknown gallery example");
     }
-    return generateProgressive(galleryProgressiveRequest(entry));
+    const rngSeed = freshGalleryRngSeed();
+    const result = await generateProgressive(galleryProgressiveRequest(entry, rngSeed));
+    return { result, rngSeed };
   }, [entry]);
 
   useEffect(() => {
@@ -77,16 +81,20 @@ export function GalleryExampleViewer({ entryId }: { entryId: string }) {
     setLoading(true);
     setError(null);
     setWorksheet(null);
+    setActiveSeed(null);
     setTopics([]);
     setDifficulties([]);
     generateExample()
-      .then((result) => {
-        if (!cancelled) applyGenerated(result);
+      .then(({ result, rngSeed }) => {
+        if (cancelled) return;
+        applyGenerated(result);
+        setActiveSeed(rngSeed);
       })
       .catch((err: unknown) => {
         if (cancelled) return;
         setError(err instanceof Error ? err.message : "Generation failed");
         setWorksheet(null);
+        setActiveSeed(null);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -101,7 +109,9 @@ export function GalleryExampleViewer({ entryId }: { entryId: string }) {
     setRegenerating(true);
     setError(null);
     try {
-      applyGenerated(await generateExample());
+      const { result, rngSeed } = await generateExample();
+      applyGenerated(result);
+      setActiveSeed(rngSeed);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Regeneration failed");
     } finally {
@@ -144,8 +154,8 @@ export function GalleryExampleViewer({ entryId }: { entryId: string }) {
             </span>
           </p>
           <p className="hint">
-            {ramp.label} · D {ramp.d_min}–{ramp.d_max} · {entry.count} questions · seed RNG{" "}
-            {entry.seed}
+            {ramp.label} · D {ramp.d_min}–{ramp.d_max} · {entry.count} questions
+            {activeSeed != null ? ` · seed ${activeSeed}` : " · new seed each visit"}
           </p>
           <div className="gallery-card-actions">
             <Link className="button" href={openHref}>

@@ -299,6 +299,58 @@ def assign_progressive_slots(
     return slots
 
 
+def _section_question_count(section: dict[str, Any], settings: dict[str, Any]) -> int:
+    raw = section.get("count", settings.get("count", 1))
+    try:
+        count = int(raw)
+    except (TypeError, ValueError):
+        return 1
+    return max(count, 1)
+
+
+def assign_slot_seeds(sections: list[dict[str, Any]]) -> None:
+    """Give each section a distinct seed when they all share one worksheet seed.
+
+    Gallery and progressive requests copy one ``seed`` onto every section, and
+    each section is generated with ``count=1``. ``apply_batch_seed`` then does
+    ``random.seed(seed + batch_index * 1009)`` with ``batch_index`` 0, so every
+    slot replays the same draw.
+
+    Question ``k`` (across sections, not just the section index) receives
+    ``mix_batch_seed(seed, k)``, the same mix a count=N batch already uses.
+    The first question keeps the worksheet seed. A single section is unchanged,
+    so a count=N generate still varies inside ``apply_batch_seed``. Sections
+    that already carry distinct seeds are unchanged, so saving those sections
+    and generating again replays the same worksheet.
+    """
+    if not isinstance(sections, list) or len(sections) < 2:
+        return
+    parsed: list[tuple[dict[str, Any], dict[str, Any], int, int]] = []
+    for section in sections:
+        if not isinstance(section, dict):
+            return
+        settings = section.get("settings")
+        if not isinstance(settings, dict) or "seed" not in settings:
+            return
+        try:
+            seed = int(settings["seed"])
+        except (TypeError, ValueError):
+            return
+        parsed.append((section, settings, seed, _section_question_count(section, settings)))
+    if len({seed for _, _, seed, _ in parsed}) != 1:
+        return
+    from .diagrams.figure_families import mix_batch_seed
+
+    base = parsed[0][2]
+    cursor = 0
+    for section, settings, _seed, count in parsed:
+        if cursor:
+            updated = dict(settings)
+            updated["seed"] = mix_batch_seed(base, cursor)
+            section["settings"] = updated
+        cursor += count
+
+
 def build_progressive_sections(
     *,
     seeds: list[str] | None = None,
@@ -340,6 +392,9 @@ def build_progressive_sections(
                 "settings": settings,
             }
         )
+    # Each section is generated with count=1, so apply_batch_seed would otherwise
+    # replay batch index 0 for every slot that shares this worksheet seed.
+    assign_slot_seeds(sections)
 
     return {
         "topics": topics,

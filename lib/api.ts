@@ -58,7 +58,7 @@ export type ProgressiveGenerateOptions = {
   max_topics?: number;
   title?: string;
   plan_only?: boolean;
-  /** Optional RNG seed applied to each question's settings. */
+  /** Worksheet RNG seed. The server mixes each slot as seed + questionIndex * 1009. */
   rng_seed?: number;
 };
 

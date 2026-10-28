@@ -6,8 +6,10 @@ import json
 
 import question_engine.types  # noqa: F401 — register catalog types
 from question_engine.api.handler import handle_generate
+from question_engine.diagrams.figure_families import mix_batch_seed
 from question_engine.progressive import (
     assign_progressive_slots,
+    assign_slot_seeds,
     build_progressive_sections,
     difficulty_ramp,
     has_continuous_difficulty,
@@ -150,6 +152,155 @@ def test_handle_generate_progressive_pa_smoke():
     assert diffs[0] == 2
     assert diffs[-1] == 14
     assert diffs == sorted(diffs)
+
+
+def _prompt(question: dict) -> str:
+    return question.get("prompt_latex") or question.get("prompt_text") or ""
+
+
+def _problem_signature(question: dict) -> tuple:
+    """Prompt plus the parts that make two same-sentence items different problems."""
+    meta = question.get("metadata") or {}
+    return (
+        question.get("topic"),
+        _prompt(question),
+        question.get("answer_latex"),
+        meta.get("diagram_svg") or "",
+        question.get("prompt_text"),
+    )
+
+
+def _generate(body: dict) -> dict:
+    status, _, raw = handle_generate(body)
+    assert status == 200, raw
+    return json.loads(raw)
+
+
+def test_assign_slot_seeds_uses_batch_mix_and_is_idempotent():
+    built = build_progressive_sections(
+        seed="g6_introduction_to_ratios",
+        count=4,
+        d_min=0,
+        d_max=8,
+        include_related=False,
+        base_settings={"seed": 1001},
+    )
+    seeds = [section["settings"]["seed"] for section in built["sections"]]
+    assert seeds == [mix_batch_seed(1001, i) for i in range(4)]
+    assign_slot_seeds(built["sections"])
+    assert [section["settings"]["seed"] for section in built["sections"]] == seeds
+
+
+def test_assign_slot_seeds_skips_single_section_and_distinct_seeds():
+    single = [{"type_id": "t", "count": 2, "settings": {"seed": 1001, "count": 2}}]
+    assign_slot_seeds(single)
+    assert single[0]["settings"]["seed"] == 1001
+
+    distinct = [
+        {"type_id": "t", "count": 1, "settings": {"seed": 3}},
+        {"type_id": "t", "count": 1, "settings": {"seed": 9}},
+    ]
+    assign_slot_seeds(distinct)
+    assert [section["settings"]["seed"] for section in distinct] == [3, 9]
+
+    # A count=2 section consumes two batch indexes; the next slot must not collide.
+    shared = [
+        {"type_id": "t", "count": 2, "settings": {"seed": 5}},
+        {"type_id": "t", "count": 1, "settings": {"seed": 5}},
+    ]
+    assign_slot_seeds(shared)
+    assert shared[0]["settings"]["seed"] == 5
+    assert shared[1]["settings"]["seed"] == mix_batch_seed(5, 2)
+
+
+def test_ratios_unit_slots_differ_and_replay():
+    """Grade 6 Ratios Unit: level-1 ramp, worksheet seed 1001.
+
+    Items 1 and 2 are both g6_introduction_to_ratios at D=0 and D=0.8889.
+    A count=1 generate at either difficulty with seed 1001 is the same sentence;
+    the worksheet must not replay that sentence for both slots.
+    """
+    body = {
+        "title": "Grade 6 Ratios Unit",
+        "progressive": {
+            "seeds": ["g6_introduction_to_ratios"],
+            "count": 10,
+            "worksheet_difficulty": "level-1",
+            "include_related": True,
+            "max_topics": 4,
+            "base_settings": {"seed": 1001},
+        },
+    }
+    first = _generate(body)
+    second = _generate(body)
+    prompts = [_prompt(q) for q in first["questions"]]
+    assert first["progressive"]["difficulties"][:2] == [0.0, 0.8889]
+    assert [q["topic"] for q in first["questions"][:2]] == [
+        "g6_introduction_to_ratios",
+        "g6_introduction_to_ratios",
+    ]
+    assert prompts[0] != prompts[1]
+    assert "1:2" in prompts[0]
+    assert [_prompt(q) for q in second["questions"]] == prompts
+
+    echoed = json.loads(
+        json.dumps(
+            {
+                "title": "Grade 6 Ratios Unit",
+                "sections": first["sections"],
+            }
+        )
+    )
+    replayed = _generate(echoed)
+    assert [_prompt(q) for q in replayed["questions"]] == prompts
+    assert [section["settings"]["seed"] for section in first["sections"][:2]] == [
+        1001,
+        mix_batch_seed(1001, 1),
+    ]
+
+
+def test_shared_seed_slots_differ_for_algebra_geometry_and_calculus():
+    cases = [
+        ("one_step_equations", 1005),
+        ("pa_angle_relationships", 1007),
+        ("calc_limits_by_direct_evaluation", 1009),
+    ]
+    for type_id, seed in cases:
+        body = {
+            "title": type_id,
+            "progressive": {
+                "seed": type_id,
+                "count": 2,
+                "d_min": 6,
+                "d_max": 6,
+                "include_related": False,
+                "base_settings": {"seed": seed, "include_answer_key": True},
+            },
+        }
+        first = _generate(body)
+        second = _generate(body)
+        assert len(first["questions"]) == 2
+        assert _problem_signature(first["questions"][0]) != _problem_signature(first["questions"][1])
+        assert [_problem_signature(q) for q in second["questions"]] == [
+            _problem_signature(q) for q in first["questions"]
+        ]
+        assert [section["settings"]["seed"] for section in first["sections"]] == [
+            seed,
+            mix_batch_seed(seed, 1),
+        ]
+
+
+def test_ratios_count_batch_still_varies():
+    data = _generate(
+        {
+            "title": "Batch",
+            "type_id": "g6_introduction_to_ratios",
+            "settings": {"count": 2, "seed": 1001, "difficulty": 0, "include_answer_key": True},
+        }
+    )
+    prompts = [_prompt(q) for q in data["questions"]]
+    assert len(prompts) == 2
+    assert prompts[0] != prompts[1]
 
 
 def test_plan_only_returns_sections_without_questions():

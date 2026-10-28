@@ -205,6 +205,12 @@ def _handle_generate_body(
             )
 
     if sections:
+        # count=1 sections that share a worksheet seed would all replay batch index 0.
+        # Progressive expansion already mixed these; distinct seeds are left alone.
+        if isinstance(sections, list):
+            from question_engine.progressive import assign_slot_seeds
+
+            assign_slot_seeds(sections)
         all_questions: list[Question] = []
         for section in sections:
             type_id = section.get("type_id")

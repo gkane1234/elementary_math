@@ -20,6 +20,15 @@ from typing import Any, Callable
 
 from question_engine.frameworks.difficulty_budget import settings_difficulty
 
+# Same stride as a count=N batch: item i is seeded with ``seed + i * BATCH_SEED_STRIDE``.
+BATCH_SEED_STRIDE = 1009
+
+
+def mix_batch_seed(seed: int, batch_index: int) -> int:
+    """RNG seed for worksheet item ``batch_index`` under a fixed worksheet seed."""
+    return int(seed) + int(batch_index) * BATCH_SEED_STRIDE
+
+
 # ---------------------------------------------------------------------------
 # Registry
 # ---------------------------------------------------------------------------
@@ -299,7 +308,9 @@ def figure_rng(
     if seed is None:
         # Advance global RNG so successive calls still differ within a batch.
         return random.Random(random.getrandbits(32))
-    return random.Random(_stable_int(seed, batch_index, family_id) + int(seed) + batch_index * 1009)
+    return random.Random(
+        _stable_int(seed, batch_index, family_id) + mix_batch_seed(int(seed), int(batch_index))
+    )
 
 
 def _orientation_pool(complexity: str, rng: random.Random) -> float:
@@ -1084,4 +1095,4 @@ def apply_batch_seed(settings: dict[str, Any], batch_index: int) -> None:
         seed = int(raw)
     except (TypeError, ValueError):
         return
-    random.seed(seed + int(batch_index) * 1009)
+    random.seed(mix_batch_seed(seed, batch_index))

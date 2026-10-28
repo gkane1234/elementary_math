@@ -89,7 +89,8 @@ export function WorksheetGallery() {
         <p className="gallery-lede">
           Progressive practice worksheets across courses. Each example uses a{" "}
           <strong>worksheet Level (0–4)</strong> that sets how question difficulties
-          ramp across the sheet.
+          ramp across the sheet. Opening an example generates it with the current
+          engine and that example&apos;s seed.
         </p>
         <div className="gallery-mapping">
           <h2>Worksheet difficulty → D ramp</h2>

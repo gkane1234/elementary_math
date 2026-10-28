@@ -3,30 +3,17 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { InteractiveWorksheet } from "@/components/InteractiveWorksheet";
-import { generateProgressive } from "@/lib/api";
+import { generateProgressive, type ProgressiveGenerateResult } from "@/lib/api";
 import { fetchEntitlement } from "@/lib/payment";
 import {
   galleryOpenInGeneratorHref,
-  gallerySnapshotPath,
+  galleryProgressiveRequest,
   getGalleryEntry,
 } from "@/lib/worksheet-gallery";
 import { worksheetDifficultyToRamp } from "@/lib/worksheet-difficulty";
 import type { Question, QuestionTypeInfo, WorksheetDraft } from "@/lib/types";
 import { questionSetToDraft } from "@/lib/worksheet";
 import { formatTopicLabel } from "@/lib/topic-labels";
-
-type SnapshotPayload = {
-  id: string;
-  title: string;
-  description?: string;
-  course?: string;
-  lesson?: string;
-  topics?: string[];
-  difficulties?: number[];
-  questions?: Question[];
-  worksheetDifficulty?: string;
-  ramp?: { d_min: number; d_max: number; schedule: string; label: string };
-};
 
 function questionsToDraft(title: string, questions: Question[]): WorksheetDraft {
   return questionSetToDraft({
@@ -60,60 +47,61 @@ export function GalleryExampleViewer({ entryId }: { entryId: string }) {
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error("Failed to load types"))))
       .then((data) => setTypes(data.types ?? []))
       .catch(() => {
-        /* types optional for static snapshot display */
+        /* topic labels still render if the type catalog is unavailable */
       });
   }, []);
 
-  const loadSnapshot = useCallback(async () => {
-    if (!entry) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(gallerySnapshotPath(entry.id), { cache: "no-store" });
-      if (!response.ok) {
-        throw new Error(
-          "No static snapshot yet — click Regenerate, or run scripts/build_worksheet_gallery.py",
-        );
-      }
-      const data = (await response.json()) as SnapshotPayload;
-      const questions = data.questions ?? [];
-      setWorksheet(questionsToDraft(data.title || entry.title, questions));
-      setTopics(data.topics ?? []);
-      setDifficulties(data.difficulties ?? []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load snapshot");
-      setWorksheet(null);
-    } finally {
-      setLoading(false);
+  const applyGenerated = useCallback(
+    (result: ProgressiveGenerateResult) => {
+      if (!entry) return;
+      setWorksheet(questionsToDraft(result.title || entry.title, result.questions ?? []));
+      setTopics(result.progressive?.topics ?? []);
+      setDifficulties(result.progressive?.difficulties ?? []);
+    },
+    [entry],
+  );
+
+  const generateExample = useCallback(async () => {
+    if (!entry) {
+      throw new Error("Unknown gallery example");
     }
+    return generateProgressive(galleryProgressiveRequest(entry));
   }, [entry]);
 
   useEffect(() => {
-    void loadSnapshot();
-  }, [loadSnapshot]);
+    if (!entry) {
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    setWorksheet(null);
+    setTopics([]);
+    setDifficulties([]);
+    generateExample()
+      .then((result) => {
+        if (!cancelled) applyGenerated(result);
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
+        setError(err instanceof Error ? err.message : "Generation failed");
+        setWorksheet(null);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [entry, generateExample, applyGenerated]);
 
   const regenerate = async () => {
-    if (!entry) return;
+    if (!entry || loading) return;
     setRegenerating(true);
     setError(null);
     try {
-      const ramp = worksheetDifficultyToRamp(entry.worksheetDifficulty);
-      const result = await generateProgressive({
-        seeds: entry.seeds,
-        count: entry.count,
-        d_min: ramp.d_min,
-        d_max: ramp.d_max,
-        worksheet_difficulty: entry.worksheetDifficulty,
-        include_related: entry.includeRelated !== false,
-        max_topics: entry.maxTopics ?? 4,
-        title: entry.title,
-        rng_seed: entry.seed,
-      });
-      setWorksheet(
-        questionsToDraft(result.title || entry.title, result.questions ?? []),
-      );
-      setTopics(result.progressive?.topics ?? []);
-      setDifficulties(result.progressive?.difficulties ?? []);
+      applyGenerated(await generateExample());
     } catch (err) {
       setError(err instanceof Error ? err.message : "Regeneration failed");
     } finally {
@@ -166,7 +154,7 @@ export function GalleryExampleViewer({ entryId }: { entryId: string }) {
             <button
               type="button"
               className="button secondary"
-              disabled={regenerating}
+              disabled={loading || regenerating}
               onClick={() => void regenerate()}
             >
               {regenerating ? "Regenerating…" : "Regenerate via API"}
@@ -193,7 +181,8 @@ export function GalleryExampleViewer({ entryId }: { entryId: string }) {
       )}
 
       {error && <p className="error">{error}</p>}
-      {loading && <p className="worksheet-status">Loading snapshot…</p>}
+      {loading && <p className="worksheet-status">Generating worksheet…</p>}
+      {regenerating && <p className="worksheet-status">Regenerating worksheet…</p>}
       {previewMode && worksheet && (
         <p className="worksheet-status preview-banner">
           Preview watermark — subscribe or unlock in the generator for clean export.

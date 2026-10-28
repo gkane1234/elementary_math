@@ -41,6 +41,22 @@ export function galleryEntryRamp(entry: GalleryEntry): WorksheetDifficultyRamp {
   return worksheetDifficultyToRamp(entry.worksheetDifficulty);
 }
 
+/** Payload for POST /api/generate so a gallery example is built by the live engine. */
+export function galleryProgressiveRequest(entry: GalleryEntry) {
+  const ramp = galleryEntryRamp(entry);
+  return {
+    seeds: entry.seeds,
+    count: entry.count,
+    d_min: ramp.d_min,
+    d_max: ramp.d_max,
+    worksheet_difficulty: entry.worksheetDifficulty,
+    include_related: entry.includeRelated !== false,
+    max_topics: entry.maxTopics ?? 4,
+    title: entry.title,
+    rng_seed: entry.seed,
+  };
+}
+
 /** Build a home-page deep link that opens progressive mode for this gallery entry. */
 export function galleryOpenInGeneratorHref(entry: GalleryEntry, options?: { auto?: boolean }): string {
   const ramp = galleryEntryRamp(entry);
@@ -61,8 +77,4 @@ export function galleryOpenInGeneratorHref(entry: GalleryEntry, options?: { auto
     params.set("rng_seed", String(entry.seed));
   }
   return `/?${params.toString()}`;
-}
-
-export function gallerySnapshotPath(entryId: string): string {
-  return `/gallery/snapshots/${entryId}.json`;
 }

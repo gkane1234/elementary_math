@@ -518,18 +518,26 @@ def _properties_of_exponents(topic: str, settings: dict) -> list[Question]:
         pattern = random.choice(patterns)
         base = random.choice([params.variable, "y", "a"])
         exp_lo, exp_hi = params.exponent_min, params.exponent_max
+
+        def power_latex(exponent: int) -> str:
+            if exponent == 0:
+                return "1"
+            if exponent == 1:
+                return base
+            return f"{base}^{{{exponent}}}"
+
         if pattern == "product":
             m, n = random.randint(exp_lo, exp_hi), random.randint(exp_lo, exp_hi)
-            prompt = f"{base}^{{{m}}} \\cdot {base}^{{{n}}}"
-            answer = f"{base}^{{{m + n}}}" if include_answer_key else None
+            prompt = f"{power_latex(m)} \\cdot {power_latex(n)}"
+            answer = power_latex(m + n) if include_answer_key else None
         elif pattern == "quotient":
             m, n = random.randint(exp_lo + 1, exp_hi + 2), random.randint(exp_lo, exp_hi)
-            prompt = f"\\frac{{{base}^{{{m}}}}}{{{base}^{{{n}}}}}"
-            answer = f"{base}^{{{m - n}}}" if include_answer_key else None
+            prompt = f"\\frac{{{power_latex(m)}}}{{{power_latex(n)}}}"
+            answer = power_latex(m - n) if include_answer_key else None
         elif pattern == "power":
             m, n = random.randint(exp_lo, exp_hi), random.randint(exp_lo, min(exp_hi, 4))
-            prompt = f"\\left({base}^{{{m}}}\\right)^{{{n}}}"
-            answer = f"{base}^{{{m * n}}}" if include_answer_key else None
+            prompt = f"\\left({power_latex(m)}\\right)^{{{n}}}"
+            answer = power_latex(m * n) if include_answer_key else None
         elif pattern == "sum":
             m, n = random.randint(exp_lo, exp_hi), random.randint(exp_lo, exp_hi)
             op = random.choice(ops)

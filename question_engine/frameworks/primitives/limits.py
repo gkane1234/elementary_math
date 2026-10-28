@@ -404,6 +404,103 @@ def _format_poly(terms: list[tuple[int, int]], var: str) -> str:
     return format_polynomial_latex(coeffs, variable=var)
 
 
+def _var_power(var: str, degree: int) -> str:
+    """``x``, ``x^{n}``, or ``1``. Never ``x^{1}``."""
+    return format_monomial_latex(1, variable=var, degree=int(degree)) or "1"
+
+
+def _pi_coeff_tex(turns: Fraction) -> str:
+    """Render a coefficient of ``π`` (``0``, ``π``, ``\\frac{π}{6}``, ``2π``)."""
+    turns = Fraction(turns)
+    if turns == 0:
+        return "0"
+    sign = "-" if turns < 0 else ""
+    turns = abs(turns)
+    num, den = turns.numerator, turns.denominator
+    if den == 1 and num == 1:
+        return sign + r"\pi"
+    if den == 1:
+        return sign + rf"{num}\pi"
+    if num == 1:
+        return sign + rf"\frac{{\pi}}{{{den}}}"
+    return sign + rf"\frac{{{num}\pi}}{{{den}}}"
+
+
+def _reduce_half_turns(turns: Fraction) -> Fraction:
+    reduced = Fraction(turns) % 2
+    if reduced < 0:
+        reduced += 2
+    return reduced
+
+
+# sin, cos, tan of ``k π``. ``tan`` is None where cosine is 0.
+_EXACT_TRIG: dict[Fraction, tuple[str, str, str | None]] = {
+    Fraction(0): ("0", "1", "0"),
+    Fraction(1, 6): (r"\frac{1}{2}", r"\frac{\sqrt{3}}{2}", r"\frac{\sqrt{3}}{3}"),
+    Fraction(1, 4): (r"\frac{\sqrt{2}}{2}", r"\frac{\sqrt{2}}{2}", "1"),
+    Fraction(1, 3): (r"\frac{\sqrt{3}}{2}", r"\frac{1}{2}", r"\sqrt{3}"),
+    Fraction(1, 2): ("1", "0", None),
+    Fraction(2, 3): (r"\frac{\sqrt{3}}{2}", r"-\frac{1}{2}", r"-\sqrt{3}"),
+    Fraction(3, 4): (r"\frac{\sqrt{2}}{2}", r"-\frac{\sqrt{2}}{2}", "-1"),
+    Fraction(5, 6): (r"\frac{1}{2}", r"-\frac{\sqrt{3}}{2}", r"-\frac{\sqrt{3}}{3}"),
+    Fraction(1): ("0", "-1", "0"),
+    Fraction(7, 6): (r"-\frac{1}{2}", r"-\frac{\sqrt{3}}{2}", r"\frac{\sqrt{3}}{3}"),
+    Fraction(5, 4): (r"-\frac{\sqrt{2}}{2}", r"-\frac{\sqrt{2}}{2}", "1"),
+    Fraction(4, 3): (r"-\frac{\sqrt{3}}{2}", r"-\frac{1}{2}", r"\sqrt{3}"),
+    Fraction(3, 2): ("-1", "0", None),
+    Fraction(5, 3): (r"-\frac{\sqrt{3}}{2}", r"\frac{1}{2}", r"-\sqrt{3}"),
+    Fraction(7, 4): (r"-\frac{\sqrt{2}}{2}", r"\frac{\sqrt{2}}{2}", "-1"),
+    Fraction(11, 6): (r"-\frac{1}{2}", r"\frac{\sqrt{3}}{2}", r"-\frac{\sqrt{3}}{3}"),
+}
+
+
+def _exp_value_latex(exponent: int) -> str:
+    if exponent == 0:
+        return "1"
+    if exponent == 1:
+        return "e"
+    return rf"e^{{{int(exponent)}}}"
+
+
+def _call_latex(name: str, arg: str) -> str:
+    """``\\name(arg)`` with ``\\left`` when ``arg`` is a sum."""
+    depth = 0
+    summed = False
+    for i, ch in enumerate(arg):
+        if ch in "{(":
+            depth += 1
+        elif ch in "})":
+            depth = max(0, depth - 1)
+        elif depth == 0 and ch in "+-" and i > 0:
+            summed = True
+            break
+    if summed or arg.startswith(r"\sqrt") or arg.startswith(r"\frac"):
+        return rf"\{name}\left({arg}\right)"
+    return rf"\{name}({arg})"
+
+
+def _sample_small_int(rng: random.Random, hi: int, *, exclude_zero: bool = True) -> int:
+    cap = max(1, min(4, hi))
+    return _coef(rng, cap, exclude_zero=exclude_zero)
+
+
+def _bounded_exponent(rng: random.Random, spec: LimitSpec, *, width: int = 4) -> tuple[str, int, int]:
+    """Sample ``mx+b`` whose value at the approach point stays classroom-sized.
+
+    Returns ``(latex, approach, value)``.
+    """
+    var = spec.variable
+    hi = max(1, min(width, spec.coef_abs_max))
+    for _ in range(12):
+        slope = _sample_small_int(rng, hi)
+        approach = rng.randint(-min(spec.approach_abs_max, 4), min(spec.approach_abs_max, 4))
+        const = rng.randint(-hi, hi)
+        value = slope * approach + const
+        if abs(value) <= width:
+            return format_linear_latex(slope, const, variable=var), approach, value
+    return var, 0, 0
+
+
 def _effort(
     *,
     form: str,
@@ -486,7 +583,7 @@ def _sample_poly_direct(
     a = rng.randint(-spec.approach_abs_max, spec.approach_abs_max)
     value = _eval_poly(terms, a)
     poly = _format_poly(terms, var)
-    prompt = rf"\lim_{{{var} \to {a}}} \left({poly}\right)"
+    prompt = rf"\lim_{{{var} \to {a}}} {poly}"
     answer = str(value)
     form, tech = "poly_direct", "direct_eval"
     effort = _effort(
@@ -500,6 +597,176 @@ def _sample_poly_direct(
         "form_id": "poly_direct",
         "openstax_form": "poly_direct",
     }
+
+
+def _sample_direct_trig(
+    rng: random.Random,
+    spec: LimitSpec,
+    fam: str,
+) -> tuple[str, str]:
+    """Direct plug-in of sin/cos/tan at an exact angle, including ``k x``."""
+    var = spec.variable
+    if fam == "sin_pi_over":
+        usable = [
+            turns
+            for turns, (sin_v, _cos_v, tan_v) in _EXACT_TRIG.items()
+            if tan_v not in {None, "0"} and sin_v != "0"
+        ]
+        approach = rng.choice(usable)
+        _sin_v, cos_v, _tan_v = _EXACT_TRIG[approach]
+        # sin/tan = cos wherever tan is defined and nonzero.
+        prompt = (
+            rf"\lim_{{{var} \to {_pi_coeff_tex(approach)}}} "
+            rf"\frac{{\sin({var})}}{{\tan({var})}}"
+        )
+        return prompt, cos_v
+
+    prefer_cos = fam == "cos_kx"
+    approaches = [t for t in _EXACT_TRIG if t != 0] if rng.random() < 0.8 else [Fraction(0)]
+    approach = rng.choice(approaches)
+    multipliers = [
+        k
+        for k in (1, 2, 3)
+        if _reduce_half_turns(k * approach) in _EXACT_TRIG
+    ] or [1]
+    coef = rng.choice(multipliers)
+    value_turns = _reduce_half_turns(coef * approach)
+    sin_v, cos_v, _tan_v = _EXACT_TRIG[value_turns]
+    names = ["sin", "cos"]
+    if prefer_cos:
+        name = "cos" if rng.random() < 0.7 else rng.choice(names)
+    else:
+        name = rng.choice(names)
+    answer = {"sin": sin_v, "cos": cos_v}[name]
+    arg = format_monomial_latex(coef, variable=var) or var
+    prompt = rf"\lim_{{{var} \to {_pi_coeff_tex(approach)}}} \{name}({arg})"
+    return prompt, str(answer)
+
+
+def _sample_direct_exp(
+    rng: random.Random,
+    spec: LimitSpec,
+    *,
+    quadratic: bool,
+) -> tuple[str, str]:
+    """``e`` of a Spec-sized polynomial, exponent kept small enough to read."""
+    var = spec.variable
+    hi = max(1, min(3, spec.coef_abs_max))
+    approach_cap = min(spec.approach_abs_max, 3)
+    for _ in range(16):
+        approach = rng.randint(-approach_cap, approach_cap)
+        if quadratic:
+            lead = rng.choice([-1, 1, 2])
+            slope = rng.randint(-hi, hi)
+            const = rng.randint(-hi, hi)
+            value = lead * approach * approach + slope * approach + const
+            coeffs = [lead, slope, const]
+        else:
+            slope = _sample_small_int(rng, hi)
+            const = rng.randint(-hi, hi)
+            value = slope * approach + const
+            coeffs = [slope, const]
+        if abs(value) <= 4:
+            expo = format_polynomial_latex(coeffs, variable=var)
+            return rf"\lim_{{{var} \to {approach}}} e^{{{expo}}}", _exp_value_latex(value)
+    return rf"\lim_{{{var} \to 0}} e^{{{var}}}", "1"
+
+
+def _sample_direct_ln(
+    rng: random.Random,
+    spec: LimitSpec,
+    *,
+    composed: bool,
+) -> tuple[str, str]:
+    """``\\ln`` of a positive linear, or ``\\ln(e^{mx+b})`` which plugs in to ``mx+b``."""
+    var = spec.variable
+    if composed:
+        expo, approach, value = _bounded_exponent(rng, spec)
+        return (
+            rf"\lim_{{{var} \to {approach}}} \ln\left(e^{{{expo}}}\right)",
+            str(value),
+        )
+    # Argument hits 1 or e so the value is 0 or 1, with a sampled shift.
+    power = rng.choice([0, 1])
+    shift = rng.randint(0, min(3, spec.approach_abs_max))
+    if power == 0:
+        approach: int | str = 1 - shift
+        answer = "0"
+        approach_tex = str(approach)
+    else:
+        approach = f"e-{shift}" if shift else "e"
+        # Keep the approach printable; the argument x+shift equals e.
+        approach_tex = "e" if shift == 0 else rf"e - {shift}"
+        answer = "1"
+    if shift == 0:
+        arg = var
+    else:
+        arg = rf"{var}+{shift}"
+    return rf"\lim_{{{var} \to {approach_tex}}} \ln\left({arg}\right)", answer
+
+
+def _sample_direct_sqrt(rng: random.Random, spec: LimitSpec) -> tuple[str, str]:
+    """``(mx+b)\\sqrt{x+c}`` where the radicand is a perfect square at the approach."""
+    var = spec.variable
+    root = rng.choice([1, 2, 3, 4, 5])
+    square = root * root
+    approach_cap = min(spec.approach_abs_max, square)
+    approach = rng.randint(0, approach_cap)
+    shift = square - approach
+    slope = _sample_small_int(rng, spec.coef_abs_max)
+    const = rng.randint(-min(4, spec.coef_abs_max), min(4, spec.coef_abs_max))
+    linear = format_linear_latex(slope, const, variable=var)
+    if shift == 0:
+        rad = var
+    elif shift > 0:
+        rad = rf"{var}+{shift}"
+    else:
+        rad = rf"{var}{shift}"
+    depth = 0
+    summed = False
+    for i, ch in enumerate(linear):
+        if ch in "{(":
+            depth += 1
+        elif ch in "})":
+            depth = max(0, depth - 1)
+        elif depth == 0 and ch in "+-" and i > 0:
+            summed = True
+            break
+    factor = rf"\left({linear}\right)" if summed else linear
+    value = (slope * approach + const) * root
+    return rf"\lim_{{{var} \to {approach}}} {factor}\sqrt{{{rad}}}", str(value)
+
+
+def _sample_direct_arctan(rng: random.Random, spec: LimitSpec) -> tuple[str, str]:
+    """``\\arctan`` of a linear that lands on ``0``, ``1``, or ``\\sqrt{3}``."""
+    var = spec.variable
+    approach = rng.randint(-min(4, spec.approach_abs_max), min(4, spec.approach_abs_max))
+    kind = rng.choice(["zero", "one", "sqrt3", "invsqrt3"])
+    if kind == "zero":
+        arg = format_linear_latex(1, -approach, variable=var)
+        answer = "0"
+        return rf"\lim_{{{var} \to {approach}}} {_call_latex('arctan', arg)}", answer
+    if kind == "one":
+        arg = format_linear_latex(1, 1 - approach, variable=var)
+        return (
+            rf"\lim_{{{var} \to {approach}}} {_call_latex('arctan', arg)}",
+            r"\frac{\pi}{4}",
+        )
+    if kind == "sqrt3":
+        inner = format_linear_latex(1, 1 - approach, variable=var)
+        arg = inner if inner == var else rf"\sqrt{{3}}\left({inner}\right)"
+        if inner == var:
+            arg = rf"\sqrt{{3}}{var}"
+        return (
+            rf"\lim_{{{var} \to {approach}}} {_call_latex('arctan', arg)}",
+            r"\frac{\pi}{3}",
+        )
+    inner = format_linear_latex(1, 1 - approach, variable=var)
+    arg = rf"\frac{{{inner}}}{{\sqrt{{3}}}}" if inner != var else rf"\frac{{{var}}}{{\sqrt{{3}}}}"
+    return (
+        rf"\lim_{{{var} \to {approach}}} {_call_latex('arctan', arg)}",
+        r"\frac{\pi}{6}",
+    )
 
 
 def _sample_expr_direct(
@@ -556,65 +823,23 @@ def _sample_expr_direct(
     else:
         fam = rng.choice(families)
 
-    if fam == "sin_shift":
-        # lim x→π/4 sin(x) or lim x→a sin(x − π/4) with a=π/4 → 0
-        mode = rng.choice(["plain", "shift"])
-        if mode == "plain":
-            a_tex, ans = r"\frac{\pi}{6}", r"\frac{1}{2}"
-            if rng.random() < 0.5:
-                a_tex, ans = r"\frac{\pi}{3}", r"\frac{\sqrt{3}}{2}"
-            prompt = rf"\lim_{{{var} \to {a_tex}}} \sin({var})"
-        else:
-            prompt = rf"\lim_{{{var} \to \frac{{\pi}}{{4}}}} \sin\left({var}-\frac{{\pi}}{{4}}\right)"
-            ans = "0"
+    if fam in {"sin_shift", "cos_kx", "sin_pi_over"}:
+        prompt, ans = _sample_direct_trig(rng, spec, fam)
         classes = ["trig"]
-    elif fam == "cos_kx":
-        k = rng.randint(1, 3)
-        prompt = rf"\lim_{{{var} \to 0}} \cos({k}{var})" if k != 1 else rf"\lim_{{{var} \to 0}} \cos({var})"
-        ans = "1"
-        classes = ["trig"]
-    elif fam == "sin_pi_over":
-        prompt = rf"\lim_{{{var} \to \pi}} \frac{{\sin({var})}}{{\tan({var})}}"
-        ans = "-1"
-        classes = ["trig"]
-    elif fam == "exp_linear":
-        k = rng.randint(1, 3)
-        a = rng.randint(0, 2)
-        prompt = rf"\lim_{{{var} \to {a}}} e^{{{k}{var}}}" if k != 1 else rf"\lim_{{{var} \to {a}}} e^{{{var}}}"
-        # e^{k a}
-        if a == 0:
-            ans = "1"
-        elif k == 1 and a == 1:
-            ans = "e"
-        else:
-            ans = rf"e^{{{k * a}}}" if k * a != 1 else "e"
-        classes = ["exp"]
-    elif fam == "exp_quad":
-        # OpenStax: lim x→2 e^{2x−x²}
-        prompt = rf"\lim_{{{var} \to 2}} e^{{2{var}-{var}^{{2}}}}"
-        ans = "1"
+    elif fam in {"exp_linear", "exp_quad"}:
+        prompt, ans = _sample_direct_exp(rng, spec, quadratic=(fam == "exp_quad"))
         classes = ["exp"]
     elif fam == "ln_linear":
-        # lim x→0 ln(x+1) = 0; lim x→e−1 ln(x+1)=1
-        if rng.random() < 0.5:
-            prompt = rf"\lim_{{{var} \to 0}} \ln({var}+1)"
-            ans = "0"
-        else:
-            prompt = rf"\lim_{{{var} \to e-1}} \ln({var}+1)"
-            ans = "1"
+        prompt, ans = _sample_direct_ln(rng, spec, composed=False)
         classes = ["log"]
     elif fam == "ln_exp":
-        prompt = rf"\lim_{{{var} \to 3}} \ln e^{{3{var}}}"
-        ans = "9"
+        prompt, ans = _sample_direct_ln(rng, spec, composed=True)
         classes = ["log", "exp"]
     elif fam == "sqrt_poly":
-        prompt = rf"\lim_{{{var} \to 6}} (2{var}-1)\sqrt{{{var}+4}}"
-        # (12-1)√10 = 11√10
-        ans = r"11\sqrt{10}"
+        prompt, ans = _sample_direct_sqrt(rng, spec)
         classes = ["algebraic", "roots"]
     else:
-        prompt = rf"\lim_{{{var} \to 0}} \arctan({var})"
-        ans = "0"
+        prompt, ans = _sample_direct_arctan(rng, spec)
         classes = ["invtrig"]
 
     # Also stamp ExpressionSpec snapshot for ML
@@ -698,41 +923,44 @@ def _sample_removable_factor(
         kind = rng.choice(kinds)
 
     def _other_root() -> int:
-        """Second factor root ≠ a, so expanded cancel is not leftover x²−a²."""
+        """Second factor root, distinct from ±a so the cancel is not x²−a² or (x−a)²."""
         other = _coef(rng, max(2, spec.coef_abs_max))
         for _ in range(16):
-            if other != a:
+            if other not in {a, -a}:
                 return other
             other = _coef(rng, max(2, spec.coef_abs_max))
-        return a + 1 if a > 0 else -1
+        return a + 1 if a != -1 else 2
 
     if kind == "diff_sq":
-        prompt = rf"\lim_{{{var} \to {a}}} \frac{{{var}^{{2}}-{a * a}}}{{{var}-{a}}}"
+        num = format_polynomial_latex([1, 0, -(a * a)], variable=var)
+        prompt = rf"\lim_{{{var} \to {a}}} \frac{{{num}}}{{{var}-{a}}}"
         answer = str(2 * a)
         variant = "diff_sq"
         wraps: list[str] = []
     elif kind == "linear_factor":
-        # Expanded (x−a)(x+b) — never leave identical cancel factors visible.
+        # Expanded (x−a)(x+b) — polynomial_core drops a coefficient of 1.
         b = _other_root()
-        mid = b - a
-        const = -a * b
-        mid_s = f"+{mid}" if mid > 0 else str(mid)
-        const_s = f"+{const}" if const > 0 else str(const)
-        body = f"{var}^{{2}}{mid_s}{var}{const_s}"
-        prompt = rf"\lim_{{{var} \to {a}}} \frac{{{body}}}{{{var}-{a}}}"
+        num = format_polynomial_latex([1, b - a, -a * b], variable=var)
+        prompt = rf"\lim_{{{var} \to {a}}} \frac{{{num}}}{{{var}-{a}}}"
         answer = str(a + b)
         variant = "linear_factor"
         wraps = ["removable_expand"]
     else:
-        # Expanded (x−a)(x+c)/(x−a) = x+c
-        c = _other_root()
-        mid = c - a
-        const = -a * c
-        mid_s = f"+{mid}" if mid > 0 else str(mid)
-        const_s = f"+{const}" if const > 0 else str(const)
-        body = f"{var}^{{2}}{mid_s}{var}{const_s}"
-        prompt = rf"\lim_{{{var} \to {a}}} \frac{{{body}}}{{{var}-{a}}}"
-        answer = str(a + c)
+        # (x−a)(x² + ex + f) / (x−a) → the quadratic at x=a.
+        hi = max(1, min(4, spec.coef_abs_max))
+        lead = 1
+        mid_c = rng.randint(-hi, hi)
+        const_c = _coef(rng, hi, exclude_zero=False)
+        # (x-a)(lead x^2 + mid x + const) highest-first product.
+        quad = [lead, mid_c, const_c]
+        expanded = [0, 0, 0, 0]
+        hole = [1, -a]
+        for i, ca in enumerate(hole):
+            for j, cb in enumerate(quad):
+                expanded[i + j] += ca * cb
+        num = format_polynomial_latex(expanded, variable=var)
+        prompt = rf"\lim_{{{var} \to {a}}} \frac{{{num}}}{{{var}-{a}}}"
+        answer = str(lead * a * a + mid_c * a + const_c)
         variant = "quad_shared"
         wraps = ["removable_expand"] if d >= 8 else []
     form, tech = "removable_factor", "factor_cancel"
@@ -756,15 +984,18 @@ def _sample_removable_rationalize(
     rng: random.Random, spec: LimitSpec
 ) -> tuple[str, str, str, str, dict[str, Any]]:
     var = spec.variable
-    a = rng.randint(1, max(1, min(4, spec.approach_abs_max)))
-    # lim x→a (√x - √a)/(x-a) = 1/(2√a)
-    prompt = (
-        rf"\lim_{{{var} \to {a}}} "
-        rf"\frac{{\sqrt{{{var}}}-\sqrt{{{a}}}}}{{{var}-{a}}}"
-    )
-    answer = frac_latex(Fraction(1, 2 * a)) if a > 0 else rf"\frac{{1}}{{2\sqrt{{{a}}}}}"
-    # Prefer exact 1/(2√a)
-    answer = rf"\frac{{1}}{{2\sqrt{{{a}}}}}"
+    root = rng.choice([1, 2, 3])
+    inside = root * root
+    a = rng.randint(1, max(1, min(inside, spec.approach_abs_max)))
+    shift = inside - a
+    const = str(root)
+    if shift == 0:
+        num = rf"\sqrt{{{var}}}-{const}"
+    else:
+        num = rf"\sqrt{{{var}+{shift}}}-{const}"
+    # lim (√(x+shift) − √inside) / (x−a) = 1 / (2 √inside) = 1/(2 root)
+    prompt = rf"\lim_{{{var} \to {a}}} \frac{{{num}}}{{{var}-{a}}}"
+    answer = frac_latex(Fraction(1, 2 * root))
     form, tech = "removable_rationalize", "rationalize"
     effort = _effort(
         form=form, technique=tech, degree=1, coef_hi=spec.coef_abs_max,
@@ -823,41 +1054,72 @@ def _sample_infinity(
         fam = rng.choice(families)
 
     if fam == "sin_over_x":
-        prompt = rf"\lim_{{{var} \to {infinity}}} \frac{{\sin({var})}}{{{var}}}"
+        k = rng.randint(1, max(1, min(4, spec.coef_abs_max)))
+        power = 1 if rng.random() < 0.65 else rng.randint(1, max(1, min(3, spec.degree_max)))
+        arg = format_monomial_latex(k, variable=var) or var
+        prompt = (
+            rf"\lim_{{{var} \to {infinity}}} "
+            rf"\frac{{\sin({arg})}}{{{_var_power(var, power)}}}"
+        )
         answer = "0"
         classes = ["trig"]
         form = "trig_inf"
     elif fam == "bounded_over_poly":
-        n = rng.randint(1, 3)
-        prompt = rf"\lim_{{{var} \to {infinity}}} \frac{{\cos({var})}}{{{var}^{{{n}}}}}"
+        n = rng.randint(1, max(1, min(3, spec.degree_max)))
+        coef = rng.randint(1, max(1, min(3, spec.coef_abs_max)))
+        trig = rf"\cos({var})" if coef == 1 else rf"{coef}\cos({var})"
+        prompt = (
+            rf"\lim_{{{var} \to {infinity}}} "
+            rf"\frac{{{trig}}}{{{_var_power(var, n)}}}"
+        )
         answer = "0"
         classes = ["trig"]
         form = "trig_inf"
     elif fam == "arctan_inf":
-        prompt = rf"\lim_{{{var} \to {infinity}}} \arctan({var})"
-        answer = r"\frac{\pi}{2}" if to_pos else r"-\frac{\pi}{2}"
+        coef = rng.randint(1, max(1, min(3, spec.coef_abs_max)))
+        if coef == 1:
+            arg = var
+            answer = r"\frac{\pi}{2}" if to_pos else r"-\frac{\pi}{2}"
+        else:
+            arg = rf"{coef}{var}"
+            # arctan(kx) → ±π/2 with the same sign as the unbounded direction.
+            answer = r"\frac{\pi}{2}" if to_pos else r"-\frac{\pi}{2}"
+        prompt = rf"\lim_{{{var} \to {infinity}}} \arctan({arg})"
         classes = ["invtrig"]
         form = "invtrig_inf"
     elif fam == "exp_ratio":
         # (a + b e^x)/(c + d e^x) → b/d as +∞; a/c as −∞
         a, b = rng.randint(1, 4), rng.randint(1, 4)
-        c, d = rng.randint(1, 4), rng.randint(1, 4)
+        c, dcoef = rng.randint(1, 4), rng.randint(1, 4)
+
+        def _const_plus_exp(const: int, exp_coef: int) -> str:
+            exp = rf"e^{{{var}}}" if exp_coef == 1 else rf"{exp_coef}e^{{{var}}}"
+            if const == 0:
+                return exp
+            return rf"{const}+{exp}"
+
         prompt = (
             rf"\lim_{{{var} \to {infinity}}} "
-            rf"\frac{{{a}+{b}e^{{{var}}}}}{{{c}+{d}e^{{{var}}}}}"
+            rf"\frac{{{_const_plus_exp(a, b)}}}{{{_const_plus_exp(c, dcoef)}}}"
         )
-        answer = frac_latex(Fraction(b, d)) if to_pos else frac_latex(Fraction(a, c))
+        answer = frac_latex(Fraction(b, dcoef)) if to_pos else frac_latex(Fraction(a, c))
         classes = ["exp"]
         form = "exp_inf"
     elif fam == "exp_over_poly":
-        k = rng.randint(1, 3)
-        prompt = rf"\lim_{{{var} \to {infinity}}} \frac{{e^{{{var}}}}}{{{var}^{{{k}}}}}"
+        k = rng.randint(1, max(1, min(3, spec.degree_max)))
+        prompt = (
+            rf"\lim_{{{var} \to {infinity}}} "
+            rf"\frac{{e^{{{var}}}}}{{{_var_power(var, k)}}}"
+        )
         answer = r"\infty" if to_pos else "0"  # e^x/x^k →0 as x→−∞
         classes = ["exp"]
         form = "exp_inf"
     elif fam == "ln_over_poly":
-        k = rng.randint(1, 3)
-        prompt = rf"\lim_{{{var} \to \infty}} \frac{{\ln({var})}}{{{var}^{{{k}}}}}"
+        k = rng.randint(1, max(1, min(3, spec.degree_max)))
+        prompt = (
+            rf"\lim_{{{var} \to \infty}} "
+            rf"\frac{{\ln({var})}}{{{_var_power(var, k)}}}"
+        )
         answer = "0"
         classes = ["log"]
         form = "log_inf"
@@ -1465,10 +1727,9 @@ def _sample_lhopital(
         cc = rng.randint(1, max(1, spec.coef_abs_max))
         bb = _coef(rng, spec.coef_abs_max, exclude_zero=False)
         dd = _coef(rng, spec.coef_abs_max, exclude_zero=False)
-        prompt = (
-            rf"\lim_{{{var} \to \infty}} "
-            rf"\frac{{{aa}{var}^{{2}}+{bb}}}{{{cc}{var}^{{2}}+{dd}}}"
-        )
+        num = format_polynomial_latex([aa, 0, bb], variable=var)
+        den = format_polynomial_latex([cc, 0, dd], variable=var)
+        prompt = rf"\lim_{{{var} \to \infty}} \frac{{{num}}}{{{den}}}"
         return _pack(
             prompt, frac_latex(Fraction(aa, cc)), form="indet_inf_inf",
             classes=["algebraic"], variant="poly_inf", form_id=fid, indet="∞/∞",
@@ -1488,7 +1749,8 @@ def _sample_lhopital(
         # Prefer classic (e^{kx}-1)/x at low D; power-diff also OK
         if spec.allow_exp and rng.random() < 0.55:
             k = rng.randint(1, max(1, min(5, spec.coef_abs_max)))
-            prompt = rf"\lim_{{{var} \to 0}} \frac{{e^{{{k}{var}}}-1}}{{{var}}}"
+            expo = format_monomial_latex(k, variable=var) or var
+            prompt = rf"\lim_{{{var} \to 0}} \frac{{e^{{{expo}}}-1}}{{{var}}}"
             return _pack(
                 prompt, str(k), form="indet_0_0", classes=["exp"],
                 variant="exp_kx", form_id=fid, indet="0/0", lh_steps=1,

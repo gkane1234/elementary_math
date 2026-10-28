@@ -434,27 +434,15 @@ button:disabled {
   -webkit-user-select: none;
 }
 
-.worksheet-preview-watermark__pattern {
+/* Tile the stamp across the whole overlay. Do not pack stamps to the start
+   of a rotated box — that clips to a strip at the top of each printed page. */
+.worksheet-preview-watermark__svg {
   position: absolute;
-  inset: -40%;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(9rem, 1fr));
-  gap: 2.75rem 1.5rem;
-  align-content: start;
-  justify-items: center;
-  transform: rotate(-28deg);
-  opacity: 0.14;
-}
-
-.worksheet-preview-watermark__tile {
+  inset: 0;
   display: block;
-  white-space: nowrap;
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #1f2937;
-  line-height: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0.16;
 }
 
 .payment-status {
@@ -1743,6 +1731,7 @@ button:disabled {
     margin: 0.5in;
   }
 
+  :root,
   body {
     background: #ffffff;
   }
@@ -1787,21 +1776,30 @@ button:disabled {
     font-size: calc(1rem * var(--ws-font-scale, 1));
   }
 
-  /* Keep preview watermark visible on print/PDF of unpaid worksheets. */
+  /* Repeat the watermark on every printed page, filling the page box.
+     Fixed + a full-size SVG pattern covers short last pages too; a
+     content-sized grid only reached the top of the page. */
   .panel.preview.is-preview-watermarked {
     overflow: visible;
   }
 
   .worksheet-preview-watermark {
     position: fixed;
-    inset: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 9999;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  .worksheet-preview-watermark__pattern {
-    opacity: 0.18;
+  .worksheet-preview-watermark__svg {
+    opacity: 0.2;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .page-break {

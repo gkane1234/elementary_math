@@ -1145,6 +1145,10 @@ class LiveRatingSession:
         )
         with self.ratings_path.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(out, ensure_ascii=False) + "\n")
+        if score is not None:
+            from question_engine.ml.form_quality import record_from_rated_item
+
+            record_from_rated_item(out)
         self._state["last_rated_id"] = out["rating_id"]
         self._clear_pending()
         return self._model_submit_payload(
@@ -1680,6 +1684,10 @@ class MultiTypeCampaign:
             out["skeleton_features"] = extract_skeleton_features(out)
         with self.ratings_path.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(out, ensure_ascii=False) + "\n")
+        if score is not None:
+            from question_engine.ml.form_quality import record_from_rated_item
+
+            record_from_rated_item(out)
         self._state["last_rated_id"] = out["rating_id"]
         self._clear_pending()
         return self._model_submit_payload(

@@ -14,6 +14,7 @@ Other G6 geometry leaves wrap the live old generators and stamp
 
 from __future__ import annotations
 
+import math
 import random
 from dataclasses import dataclass, field
 from fractions import Fraction
@@ -219,11 +220,18 @@ def _generate_custom(
 # --- plot / identify a point -------------------------------------------------
 
 def _coord_range(d: float) -> tuple[int, int]:
+    from question_engine.frameworks.difficulty_budget import slide_window
+
     if d < 8:
-        return 1, 6
+        return slide_window(1, 6, d, anchor=0.0, lo_floor=1)
+    # Signed planes grow away from the origin. Sliding both ends up would
+    # eventually leave only the first quadrant.
     if d < 16:
-        return -6, 6
-    return -8, 8
+        anchor, lo, hi = 8.0, -6, 6
+    else:
+        anchor, lo, hi = 16.0, -8, 8
+    steps = int(math.floor(max(0.0, d - anchor)))
+    return lo - steps, hi + steps
 
 
 def _sample_ordered_pair(d: float) -> tuple[int, int]:
@@ -364,10 +372,15 @@ def sample_shaded_composite(settings: dict[str, Any]) -> GeometryMeasureResult:
     else:
         kinds = ("frame", "l_cut")
     kind = random.choice(kinds)
+    from question_engine.frameworks.difficulty_budget import slide_window
+
+    # Rectangle size is the magnitude. The cut shape stays the step's form.
+    w_lo, w_hi = slide_window(3, 5, d, anchor=0.0, lo_floor=2)
+    h_lo, h_hi = slide_window(3, 4, d, anchor=0.0, lo_floor=2)
 
     if kind == "rect_minus_triangle":
-        w = random.randint(3, 5)
-        h = random.randint(3, 4)
+        w = random.randint(w_lo, w_hi)
+        h = random.randint(h_lo, h_hi)
         x0, y0 = _place_rect(w, h)
         outer = _rect(x0, y0, w, h)
         cut_b = random.randint(1, w - 1)
@@ -380,8 +393,10 @@ def sample_shaded_composite(settings: dict[str, Any]) -> GeometryMeasureResult:
         ]
         area = Fraction(w * h) - Fraction(cut_b * cut_h, 2)
     elif kind == "frame":
-        ow = random.randint(4, 6)
-        oh = random.randint(3, 5)
+        ow_lo, ow_hi = slide_window(4, 6, d, anchor=0.0, lo_floor=3)
+        oh_lo, oh_hi = slide_window(3, 5, d, anchor=0.0, lo_floor=2)
+        ow = random.randint(ow_lo, ow_hi)
+        oh = random.randint(oh_lo, oh_hi)
         x0, y0 = _place_rect(ow, oh)
         inset = 1
         iw, ih = ow - 2 * inset, oh - 2 * inset
@@ -391,8 +406,10 @@ def sample_shaded_composite(settings: dict[str, Any]) -> GeometryMeasureResult:
         inner = _rect(x0 + inset, y0 + inset, iw, ih)
         area = Fraction(ow * oh - iw * ih)
     else:
-        ow = random.randint(4, 6)
-        oh = random.randint(3, 5)
+        ow_lo, ow_hi = slide_window(4, 6, d, anchor=0.0, lo_floor=3)
+        oh_lo, oh_hi = slide_window(3, 5, d, anchor=0.0, lo_floor=2)
+        ow = random.randint(ow_lo, ow_hi)
+        oh = random.randint(oh_lo, oh_hi)
         x0, y0 = _place_rect(ow, oh)
         cut_w = random.randint(1, ow - 1)
         cut_h = random.randint(1, oh - 1)

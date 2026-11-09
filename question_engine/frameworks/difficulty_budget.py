@@ -344,6 +344,200 @@ def difficulty_band(d: float) -> str:
     return "hard"
 
 
+def band_anchor(d: float, edges: Sequence[float] = (0.0, 4.0, 11.0)) -> float:
+    """Left edge of the difficulty step that contains ``d``.
+
+    Structural ladders may stay constant across a step. Numeric windows use
+    the edge as the point where that step's bounds were written, then climb
+    from there.
+    """
+    value = max(0.0, float(d))
+    anchor = float(edges[0]) if edges else 0.0
+    for edge in edges:
+        if float(edge) <= value + 1e-9:
+            anchor = float(edge)
+        else:
+            break
+    return anchor
+
+
+def slide_window(
+    lo: int,
+    hi: int,
+    d: float,
+    *,
+    anchor: float | None = None,
+    edges: Sequence[float] = (0.0, 4.0, 11.0),
+    cap: int | None = None,
+    lo_floor: int | None = None,
+) -> tuple[int, int]:
+    """Slide an integer window up with difficulty past ``anchor``.
+
+    The width stays the same, so a seeded ``randint(lo, hi)`` draws a value
+    that is larger by exactly the number of steps. Use this when the question
+    form would otherwise stay put: the numbers themselves get harder.
+
+    ``cap`` stops the ceiling (percents, angles). The floor never passes it.
+    """
+    if lo > hi:
+        lo, hi = hi, lo
+    if anchor is None:
+        anchor = band_anchor(d, edges)
+    steps = int(math.floor(max(0.0, float(d) - float(anchor))))
+    new_lo = int(lo) + steps
+    new_hi = int(hi) + steps
+    if lo_floor is not None:
+        new_lo = max(int(lo_floor), new_lo)
+    if cap is not None:
+        new_hi = min(int(cap), new_hi)
+        new_lo = min(new_lo, new_hi)
+    if new_lo > new_hi:
+        new_lo = new_hi
+    return new_lo, new_hi
+
+
+# Structural counters. Climbing these would change the question form inside a
+# step that is supposed to stay on one skill (degree, how many angle pieces).
+_DO_NOT_CLIMB = frozenset(
+    {
+        "power_min",
+        "power_max",
+        "angle_piece_min",
+        "angle_piece_max",
+        "max_degree",
+        "poly_theory_degree_max",
+        "pfd_term_count",
+    }
+)
+
+
+def _numeric_difficulty(settings: dict[str, Any]) -> float | None:
+    if "difficulty" not in settings or settings["difficulty"] is None:
+        return None
+    try:
+        return float(settings["difficulty"])
+    except (TypeError, ValueError):
+        return None
+
+
+def _is_climbable_bound(key: str) -> bool:
+    if key in _DO_NOT_CLIMB or "degree" in key:
+        return False
+    return key.endswith("_min") or key.endswith("_max")
+
+
+def _climb_frozen_int_bounds(raw_fn, settings: dict[str, Any]):
+    """Raise integer bounds that a difficulty step would otherwise leave frozen.
+
+    ``raw_fn(settings)`` is the existing ladder. Where that ladder's integer
+    bound does not move, the result still moves by one per difficulty point:
+    positive windows slide up (same width, so a seeded draw is larger), and
+    windows that cross zero grow in magnitude.
+    """
+    produced = raw_fn(settings)
+    if not isinstance(produced, dict):
+        return produced
+    d = _numeric_difficulty(settings)
+    if d is None or d <= 0:
+        return produced
+    steps = int(math.floor(d))
+    protected = {
+        key
+        for key, value in settings.items()
+        if isinstance(value, int) and not isinstance(value, bool)
+    }
+    cache: dict[int, dict[str, Any]] = {}
+
+    def raw_at(t: int) -> dict[str, Any]:
+        hit = cache.get(t)
+        if hit is None:
+            probe = dict(settings)
+            probe["difficulty"] = t
+            hit = raw_fn(probe)
+            cache[t] = hit if isinstance(hit, dict) else {}
+        return hit
+
+    keys = [
+        key
+        for key, value in produced.items()
+        if key not in protected
+        and _is_climbable_bound(key)
+        and isinstance(value, int)
+        and not isinstance(value, bool)
+    ]
+    paired: set[str] = set()
+    out = dict(produced)
+    for key in keys:
+        if not key.endswith("_max"):
+            continue
+        partner = key[: -len("_max")] + "_min"
+        if partner not in keys:
+            continue
+        paired.add(key)
+        paired.add(partner)
+        first = None
+        for t in range(0, steps + 1):
+            raw_max = raw_at(t).get(key)
+            raw_min = raw_at(t).get(partner)
+            if isinstance(raw_max, int) and not isinstance(raw_max, bool) and isinstance(
+                raw_min, int
+            ) and not isinstance(raw_min, bool):
+                first = t
+                break
+        if first is None:
+            continue
+        climbed_max = int(raw_at(first)[key])
+        for t in range(first + 1, steps + 1):
+            raw_max = raw_at(t).get(key)
+            if not isinstance(raw_max, int) or isinstance(raw_max, bool):
+                raw_max = climbed_max
+            climbed_max = max(climbed_max + 1, int(raw_max))
+        if key == "angle_max":
+            climbed_max = min(climbed_max, 175)
+        raw_max_now = int(raw_at(steps)[key])
+        raw_min_now = int(raw_at(steps)[partner])
+        delta = climbed_max - raw_max_now
+        if raw_min_now < 0 < raw_max_now:
+            climbed_min = -climbed_max if raw_min_now == -raw_max_now else raw_min_now - delta
+        else:
+            climbed_min = raw_min_now + delta
+        if key == "angle_max":
+            climbed_min = min(max(1, climbed_min), climbed_max - 5)
+        out[partner] = climbed_min
+        out[key] = climbed_max
+    for key in keys:
+        if key in paired:
+            continue
+        first = None
+        for t in range(0, steps + 1):
+            raw_value = raw_at(t).get(key)
+            if isinstance(raw_value, int) and not isinstance(raw_value, bool):
+                first = t
+                break
+        if first is None:
+            continue
+        value = int(raw_at(first)[key])
+        for t in range(first + 1, steps + 1):
+            raw_value = raw_at(t).get(key)
+            if not isinstance(raw_value, int) or isinstance(raw_value, bool):
+                raw_value = value
+            value = max(value + 1, int(raw_value))
+        out[key] = value
+    return out
+
+
+def climb_frozen_int_bounds(raw_fn):
+    """Decorator: integer magnitude bounds keep moving after a ladder step stalls."""
+
+    def wrapped(settings: dict[str, Any]):
+        return _climb_frozen_int_bounds(raw_fn, settings)
+
+    wrapped.__name__ = getattr(raw_fn, "__name__", "wrapped")
+    wrapped.__doc__ = getattr(raw_fn, "__doc__", None)
+    wrapped.__wrapped__ = raw_fn
+    return wrapped
+
+
 def settings_difficulty_band(settings: dict[str, Any], *, default: float = 8.0) -> str:
     """Band from continuous ``difficulty`` when present, else ``difficulty_tier``."""
     if "difficulty" in settings and settings["difficulty"] is not None:

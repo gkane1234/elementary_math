@@ -19,7 +19,9 @@ def difficulty_scale(settings: dict) -> float:
         raw = settings["difficulty"]
         try:
             d = max(0.0, float(raw))
-            # D=0 → ~0.45, D=8 → ~1.0, D=20 → ~1.5 (soft asymptote).
+            # D=0 → ~0.45, D=8 → ~1.16, then a soft asymptote near 1.65.
+            # Integer windows stop moving on that tail; scaled_int_range
+            # keeps them climbing past D=8 instead of stretching this curve.
             return 0.45 + 1.2 * (1.0 - math.exp(-d / 9.0))
         except (TypeError, ValueError):
             mapped = _DIFFICULTY_SCALE.get(str(raw).strip().lower())
@@ -38,11 +40,26 @@ def scaled_int_range(
     floor: int | None = None,
     ceiling: int | None = None,
 ) -> tuple[int, int]:
-    """Scale a coefficient bound pair by difficulty tier."""
+    """Scale a coefficient bound pair by difficulty tier.
+
+    Through D=8 the soft scale is unchanged. Past that, the scale flattens and
+    a seeded draw would repeat, so the window keeps moving: positive ranges
+    slide up, ranges that cross zero grow in magnitude.
+    """
     if lo > hi:
         lo, hi = hi, lo
+    scale_settings = settings
+    numeric_d: float | None = None
+    if "difficulty" in settings and settings["difficulty"] is not None:
+        try:
+            numeric_d = max(0.0, float(settings["difficulty"]))
+        except (TypeError, ValueError):
+            numeric_d = None
+    if numeric_d is not None and numeric_d > 8.0:
+        scale_settings = dict(settings)
+        scale_settings["difficulty"] = 8
     center = (lo + hi) / 2
-    half_span = max(minimum_span / 2, (hi - lo) / 2 * difficulty_scale(settings))
+    half_span = max(minimum_span / 2, (hi - lo) / 2 * difficulty_scale(scale_settings))
     new_lo = int(round(center - half_span))
     new_hi = int(round(center + half_span))
     if floor is not None:
@@ -51,6 +68,28 @@ def scaled_int_range(
         new_hi = min(ceiling, new_hi)
     if new_lo > new_hi:
         new_lo, new_hi = new_hi, new_lo
+    if numeric_d is not None and numeric_d > 8.0:
+        from question_engine.frameworks.difficulty_budget import slide_window
+
+        steps = int(math.floor(numeric_d - 8.0))
+        if new_lo >= 0:
+            new_lo, new_hi = slide_window(
+                new_lo,
+                new_hi,
+                numeric_d,
+                anchor=8.0,
+                lo_floor=floor,
+                cap=ceiling,
+            )
+        else:
+            new_lo -= steps
+            new_hi += steps
+            if floor is not None:
+                new_lo = max(floor, new_lo)
+            if ceiling is not None:
+                new_hi = min(ceiling, new_hi)
+            if new_lo > new_hi:
+                new_lo, new_hi = new_hi, new_lo
     return new_lo, new_hi
 
 

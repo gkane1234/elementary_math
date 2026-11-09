@@ -29,9 +29,6 @@ from ..frameworks.number import (
 )
 from .utils import make_questions
 
-_SQUARE_FREE_BASES = (2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 29, 30)
-_EXTRACT_SQUARES = (4, 9, 16, 25, 36, 49)
-
 _RATIONAL_ADD_SUBTRACT = RationalFramework("+-")
 _RATIONAL_MULTIPLY = RationalFramework("*")
 _RATIONAL_DIVIDE = RationalFramework("/")
@@ -186,38 +183,34 @@ def _normalize_base_range(settings: dict) -> tuple[int, int]:
 
 
 def _squares_continuous_knobs(d: float) -> dict[str, int | bool]:
-    """Map continuous D → base range / form mix (perfect → extract → leave-√)."""
+    """Map continuous D → base range / form mix (perfect → extract → leave-√).
+
+    The form mix is stepped. Inside a step, and after the last step, the base
+    window keeps sliding so the same seed draws a larger radicand instead of
+    repeating the step's endpoint.
+    """
+    from question_engine.frameworks.difficulty_budget import slide_window
+
     d = max(0.0, float(d))
     if d < 5.0:
-        return {
-            "base_min": 2,
-            "base_max": 12,
-            "perfect_squares_only": True,
-            "allow_extract_square_factors": False,
-            "allow_word_prompts": True,
-        }
-    if d < 12.0:
-        return {
-            "base_min": 8,
-            "base_max": 20,
-            "perfect_squares_only": True,
-            "allow_extract_square_factors": False,
-            "allow_word_prompts": True,
-        }
-    if d < 18.0:
-        return {
-            "base_min": 12,
-            "base_max": 28,
-            "perfect_squares_only": False,
-            "allow_extract_square_factors": True,
-            "allow_word_prompts": False,
-        }
+        anchor, lo, hi = 0.0, 2, 12
+        perfect, extract, words = True, False, True
+    elif d < 12.0:
+        anchor, lo, hi = 5.0, 8, 20
+        perfect, extract, words = True, False, True
+    elif d < 18.0:
+        anchor, lo, hi = 12.0, 12, 28
+        perfect, extract, words = False, True, False
+    else:
+        anchor, lo, hi = 18.0, 15, 35
+        perfect, extract, words = False, True, False
+    lo, hi = slide_window(lo, hi, d, anchor=anchor, lo_floor=1)
     return {
-        "base_min": 15,
-        "base_max": 35,
-        "perfect_squares_only": False,
-        "allow_extract_square_factors": True,
-        "allow_word_prompts": False,
+        "base_min": lo,
+        "base_max": hi,
+        "perfect_squares_only": perfect,
+        "allow_extract_square_factors": extract,
+        "allow_word_prompts": words,
     }
 
 
@@ -266,9 +259,28 @@ def pa_squares_and_square_roots(topic: str, settings: dict) -> list[Question]:
         answer = str(n) if include_answer_key else None
         return f"\\sqrt{{{radicand}}}", f"sqrt({radicand})", answer
 
+    def _square_free_between(lo: int, hi: int) -> int:
+        # Both ends move together. A ceiling-only range replays the same seed.
+        lo = max(2, int(lo))
+        hi = max(lo, int(hi))
+        for _ in range(16):
+            n = random.randint(lo, hi)
+            root = int(n**0.5)
+            if root * root != n:
+                return n
+        n = lo
+        while int(n**0.5) ** 2 == n:
+            n += 1
+        return n
+
     def _extract_root() -> tuple[str, str, str | None]:
-        outer_sq = random.choice(_EXTRACT_SQUARES)
-        leftover = random.choice(_SQUARE_FREE_BASES)
+        # Outer square and leftover both follow the difficulty window.
+        # A fixed factor list would replay the same radical after the form stops changing.
+        k_span = max(2, (base_hi - base_lo) // 4)
+        k_lo = max(2, base_lo // 5)
+        k_hi = k_lo + k_span
+        outer_sq = random.randint(k_lo, k_hi) ** 2
+        leftover = _square_free_between(base_lo, base_hi)
         radicand = outer_sq * leftover
         coeff, simplified = Polynomial.simplify_square_root(radicand)
         answer = (
@@ -278,7 +290,7 @@ def pa_squares_and_square_roots(topic: str, settings: dict) -> list[Question]:
 
     def _non_perfect_root() -> tuple[str, str, str | None]:
         # Square-free (or residual) radicand — answer stays under a root.
-        leftover = random.choice(_SQUARE_FREE_BASES)
+        leftover = _square_free_between(base_lo, base_hi)
         # Occasionally pad with a small square so extract path is also exercised
         # when allow_extract is on; when false, keep purely square-free.
         if allow_extract and random.random() < 0.55:

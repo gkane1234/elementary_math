@@ -337,13 +337,18 @@ def shaded_composite_svg(
     inner: list[tuple[int, int]],
 ) -> str:
     """Grid figure: shaded outer polygon with an inner cutout (even-odd fill)."""
-    scale, ox, oy = 28, 55, 175
+    xs = [p[0] for p in (*outer, *inner)] or [0]
+    ys = [p[1] for p in (*outer, *inner)] or [0]
+    cols = max(8, max(xs))
+    rows = max(5, max(ys))
+    scale = 28 if max(cols, rows) <= 8 else max(12, int(28 * 8 / max(cols, rows)))
+    ox, oy = 55, 36 + rows * scale
     lines = "".join(
-        f'<line x1="{ox + i * scale}" y1="35" x2="{ox + i * scale}" y2="{oy}" stroke="#d1d5db"/>'
-        for i in range(9)
+        f'<line x1="{ox + i * scale}" y1="{oy - rows * scale}" x2="{ox + i * scale}" y2="{oy}" stroke="#d1d5db"/>'
+        for i in range(cols + 1)
     ) + "".join(
-        f'<line x1="{ox}" y1="{oy - i * scale}" x2="{ox + 8 * scale}" y2="{oy - i * scale}" stroke="#d1d5db"/>'
-        for i in range(6)
+        f'<line x1="{ox}" y1="{oy - i * scale}" x2="{ox + cols * scale}" y2="{oy - i * scale}" stroke="#d1d5db"/>'
+        for i in range(rows + 1)
     )
 
     def _d(points: list[tuple[int, int]]) -> str:
@@ -358,8 +363,8 @@ def shaded_composite_svg(
     path = f"{_d(outer)} {_d(inner)}"
     inner_pts = " ".join(f"{ox + x * scale},{oy - y * scale}" for x, y in inner)
     return _svg(
-        f'{lines}<line x1="{ox}" y1="{oy}" x2="{ox + 8 * scale}" y2="{oy}" stroke="#374151"/>'
-        f'<line x1="{ox}" y1="{oy}" x2="{ox}" y2="35" stroke="#374151"/>'
+        f'{lines}<line x1="{ox}" y1="{oy}" x2="{ox + cols * scale}" y2="{oy}" stroke="#374151"/>'
+        f'<line x1="{ox}" y1="{oy}" x2="{ox}" y2="{oy - rows * scale}" stroke="#374151"/>'
         f'<path d="{path}" fill="#93c5fd" fill-rule="evenodd" stroke="#1e3a8a" stroke-width="2"/>'
         f'<polygon points="{inner_pts}" fill="#fff" fill-opacity="0.95" stroke="#1e3a8a" stroke-width="1.5"/>'
     )
@@ -379,16 +384,19 @@ def _coordinate_plane_viewport(
     x_max = max(xs) + pad_cells
     y_min = min(ys) - pad_cells
     y_max = max(ys) + pad_cells
-    # Keep the grid readable.
-    x_min = max(x_min, -10)
-    x_max = min(x_max, 12)
-    y_min = max(y_min, -10)
-    y_max = min(y_max, 12)
     if x_min >= x_max:
         x_min, x_max = -5, 5
     if y_min >= y_max:
         y_min, y_max = -5, 5
     return x_min, x_max, y_min, y_max
+
+
+def _plane_scale(x_min: int, x_max: int, y_min: int, y_max: int) -> int:
+    """Cell size that keeps a wide plane near the classroom figure width."""
+    span = max(x_max - x_min, y_max - y_min, 1)
+    if span <= 22:
+        return 26
+    return max(10, int(26 * 22 / span))
 
 
 def coordinate_polygon_svg(
@@ -418,7 +426,7 @@ def coordinate_transform_svg(
     if image:
         sets.append(image)
     x_min, x_max, y_min, y_max = _coordinate_plane_viewport(*sets)
-    scale = 26
+    scale = _plane_scale(x_min, x_max, y_min, y_max)
     pad = 36
     width = pad * 2 + (x_max - x_min) * scale
     height = pad * 2 + (y_max - y_min) * scale
@@ -512,7 +520,7 @@ def coordinate_points_svg(
 ) -> str:
     """Labeled points on a coordinate plane (plot / identify / axis distance)."""
     x_min, x_max, y_min, y_max = _coordinate_plane_viewport(points)
-    scale = 26
+    scale = _plane_scale(x_min, x_max, y_min, y_max)
     pad = 36
     width = pad * 2 + (x_max - x_min) * scale
     height = pad * 2 + (y_max - y_min) * scale

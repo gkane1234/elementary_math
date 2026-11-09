@@ -9,6 +9,20 @@ from fractions import Fraction
 from ..generators.utils import frac_latex, pick_operation, random_fraction, random_int_range
 
 
+def _climb_bounds(raw_fn):
+    """Lazy wrap so this module can load before the frameworks package."""
+
+    def wrapped(settings):
+        from ..frameworks.difficulty_budget import _climb_frozen_int_bounds
+
+        return _climb_frozen_int_bounds(raw_fn, settings)
+
+    wrapped.__name__ = raw_fn.__name__
+    wrapped.__doc__ = raw_fn.__doc__
+    wrapped.__wrapped__ = raw_fn
+    return wrapped
+
+
 @dataclass(frozen=True)
 class PolynomialParams:
     min_degree: int = 1
@@ -322,6 +336,7 @@ class ExponentialParams:
     coef_max: int = 6
 
 
+@_climb_bounds
 def apply_exponential_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → exponential base/exponent/coef ladders."""
     d = _continuous_d_or_none(settings)
@@ -435,6 +450,7 @@ def _continuous_d_or_none(settings: dict) -> float | None:
         return None
 
 
+@_climb_bounds
 def apply_calculus_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → poly term/power/coef knobs for limits/derivatives/integrals.
 
@@ -477,6 +493,7 @@ def apply_calculus_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_logarithm_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → log base/argument / integer-exponent ladders."""
     d = _continuous_d_or_none(settings)
@@ -510,6 +527,7 @@ def apply_logarithm_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_trigonometry_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → trig function unlock + angle span + identity / graph knobs."""
     d = _continuous_d_or_none(settings)
@@ -595,6 +613,7 @@ def trig_graph_structure_from_continuous(settings: dict) -> dict | None:
     }
 
 
+@_climb_bounds
 def apply_sequence_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → arithmetic/geometric sequence term & ratio spans."""
     d = _continuous_d_or_none(settings)
@@ -785,6 +804,7 @@ def piecewise_structure_from_continuous(settings: dict) -> dict | None:
     }
 
 
+@_climb_bounds
 def apply_geometry_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → angle/side/radius bounds and protractor step.
 
@@ -879,6 +899,7 @@ def geometry_angle_structure_from_continuous(settings: dict) -> dict | None:
     }
 
 
+@_climb_bounds
 def apply_matrix_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → matrix entry magnitude / det constraints."""
     d = _continuous_d_or_none(settings)
@@ -909,6 +930,7 @@ def apply_matrix_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_conic_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → conic center/radius/axis spans and translated forms."""
     d = _continuous_d_or_none(settings)
@@ -943,6 +965,7 @@ def apply_conic_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_graph_transform_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → abs/radical/rational/exp/log graph transform unlocks."""
     d = _continuous_d_or_none(settings)
@@ -980,6 +1003,7 @@ def apply_graph_transform_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_quadratic_graph_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → quadratic graph form / transform unlocks.
 
@@ -1044,6 +1068,7 @@ def apply_quadratic_graph_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_growth_decay_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → exponential growth/decay ask-mode and rate/period spans."""
     d = _continuous_d_or_none(settings)
@@ -1092,6 +1117,7 @@ def apply_growth_decay_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_inverse_exp_log_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → inverse exp/log base and shift spans."""
     d = _continuous_d_or_none(settings)
@@ -1113,6 +1139,7 @@ def apply_inverse_exp_log_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_systems_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → 2/3-var system coefficient and solution spans."""
     d = _continuous_d_or_none(settings)
@@ -1139,6 +1166,7 @@ def apply_systems_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_complex_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → complex entry magnitude / multiply unlock."""
     d = _continuous_d_or_none(settings)
@@ -1161,6 +1189,7 @@ def apply_complex_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_triangle_laws_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → law-of-sines/cosines side and angle spans."""
     d = _continuous_d_or_none(settings)
@@ -1186,6 +1215,7 @@ def apply_triangle_laws_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_variation_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → variation constant span and inverse mix."""
     d = _continuous_d_or_none(settings)
@@ -1207,6 +1237,7 @@ def apply_variation_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_counting_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → permutation/combination n,r spans."""
     d = _continuous_d_or_none(settings)
@@ -1228,6 +1259,7 @@ def apply_counting_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_relations_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → slope/intercept/coord spans and table row count."""
     d = _continuous_d_or_none(settings)
@@ -1258,6 +1290,7 @@ def apply_relations_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_solve_by_graphing_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → solve-by-graphing root/degree/leading unlocks.
 
@@ -1315,6 +1348,7 @@ def apply_solve_by_graphing_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_polynomial_theory_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → poly theory spans (binomial, Descartes, FTA, …)."""
     d = _continuous_d_or_none(settings)
@@ -1358,6 +1392,7 @@ def apply_polynomial_theory_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_radical_domain_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → radical domain/range shift and stretch spans."""
     d = _continuous_d_or_none(settings)
@@ -1384,6 +1419,7 @@ def apply_radical_domain_continuous_knobs(settings: dict) -> dict:
     return out
 
 
+@_climb_bounds
 def apply_radical_expression_continuous_knobs(settings: dict) -> dict:
     """Map continuous D → add/sub/mul/div radical mode unlocks + coef spans.
 

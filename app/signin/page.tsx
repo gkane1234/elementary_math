@@ -9,11 +9,11 @@ export default function SignInPage() {
       <h2>Sign in</h2>
       <p>Sign in with Google to subscribe for unlimited worksheets, or manage an existing Pro plan.</p>
       <div className="payment-actions">
-        <button className="primary" type="button" onClick={() => signIn("google", { callbackUrl: "/" })}>
+        <button className="primary" type="button" onClick={() => signIn("google", { callbackUrl: "/generate" })}>
           Continue with Google
         </button>
-        <Link className="secondary button-link" href="/">
-          Back to worksheet
+        <Link className="secondary button-link" href="/generate">
+          Back to the generator
         </Link>
       </div>
     </section>

@@ -35,7 +35,7 @@ export function SubscribeButton({
     }
 
     if (!session?.user) {
-      await signIn("google", { callbackUrl: "/" });
+      await signIn("google", { callbackUrl: "/generate" });
       return;
     }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Modal } from "@/components/Modal";
 
@@ -17,6 +18,7 @@ type KnobsResponse = {
 };
 
 export function DifficultyKnobsDebug() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
@@ -120,6 +122,8 @@ export function DifficultyKnobsDebug() {
       setLoading(false);
     }
   };
+
+  if (pathname === "/") return null;
 
   return (
     <>

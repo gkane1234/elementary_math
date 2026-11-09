@@ -167,7 +167,7 @@ export default function SuccessPage() {
 
       {status === "ready" && (
         <div className="payment-actions">
-          <Link className="primary button-link" href="/">
+          <Link className="primary button-link" href="/generate">
             Return to worksheet
           </Link>
           {stored && (
@@ -183,7 +183,7 @@ export default function SuccessPage() {
 
       {status === "error" && (
         <div className="payment-actions">
-          <Link className="secondary button-link" href="/">
+          <Link className="secondary button-link" href="/generate">
             Back to worksheet
           </Link>
         </div>

@@ -1,10 +1,15 @@
-import { Suspense } from "react";
-import { WorksheetGenerator } from "@/components/WorksheetGenerator";
+import { redirect } from "next/navigation";
+import { LandingPage } from "@/components/LandingPage";
+import { generatorRedirectPath } from "@/lib/landing";
 
-export default function HomePage() {
-  return (
-    <Suspense fallback={<p className="worksheet-status">Loading generator…</p>}>
-      <WorksheetGenerator />
-    </Suspense>
-  );
+type HomeSearchParams = Record<string, string | string[] | undefined>;
+
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<HomeSearchParams>;
+}) {
+  const target = generatorRedirectPath(await searchParams);
+  if (target) redirect(target);
+  return <LandingPage />;
 }

@@ -17,6 +17,64 @@ export function repairInstructionLatex(latex: string | null | undefined): string
   return latex;
 }
 
+const LEFT_GROUP = "\\left(";
+const RIGHT_GROUP = "\\right)";
+
+function matchLeftGroup(text: string, start: number): number | null {
+  if (!text.startsWith(LEFT_GROUP, start)) return null;
+  let depth = 1;
+  let i = start + LEFT_GROUP.length;
+  while (i < text.length) {
+    if (text.startsWith(LEFT_GROUP, i)) {
+      depth += 1;
+      i += LEFT_GROUP.length;
+      continue;
+    }
+    if (text.startsWith(RIGHT_GROUP, i)) {
+      depth -= 1;
+      i += RIGHT_GROUP.length;
+      if (depth === 0) return i;
+      continue;
+    }
+    i += 1;
+  }
+  return null;
+}
+
+/** Drop an outer `\\left( \\right)` that wraps exactly one inner group. */
+export function collapseRedundantLeftGroups(latex: string | null | undefined): string {
+  if (!latex) return "";
+  let current = latex;
+  for (let pass = 0; pass < 8; pass += 1) {
+    let changed = false;
+    let out = "";
+    let i = 0;
+    while (i < current.length) {
+      if (current.startsWith(LEFT_GROUP, i)) {
+        const end = matchLeftGroup(current, i);
+        if (end != null) {
+          const inner = current.slice(i + LEFT_GROUP.length, end - RIGHT_GROUP.length).trim();
+          const innerEnd = inner.startsWith(LEFT_GROUP) ? matchLeftGroup(inner, 0) : null;
+          if (innerEnd === inner.length) {
+            out += inner;
+            i = end;
+            changed = true;
+            continue;
+          }
+          out += current.slice(i, end);
+          i = end;
+          continue;
+        }
+      }
+      out += current[i];
+      i += 1;
+    }
+    current = out;
+    if (!changed) break;
+  }
+  return current;
+}
+
 const UNSIGNED_NUM = String.raw`\d+(?:\.\d+)?(?:[eE][+-]?\d+)?`;
 
 /**

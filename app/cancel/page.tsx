@@ -6,7 +6,7 @@ export default function CancelPage() {
       <h2>Checkout canceled</h2>
       <p>No charge was made. You can return and pay once or subscribe when you are ready.</p>
       <div className="payment-actions">
-        <Link className="secondary button-link" href="/">
+        <Link className="secondary button-link" href="/generate">
           Back to worksheet
         </Link>
       </div>

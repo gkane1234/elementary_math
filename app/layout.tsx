@@ -6,8 +6,12 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { DifficultyKnobsDebug } from "@/components/DifficultyKnobsDebug";
 
 export const metadata: Metadata = {
-  title: "Math Worksheet Generator",
-  description: "Generate printable math worksheets with randomized questions.",
+  title: {
+    default: "Math Worksheet Generator",
+    template: "%s · Math Worksheet Generator",
+  },
+  description:
+    "Printable math worksheets from Grade 6 through Calculus, with continuous difficulty and progressive topic ramps.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -83,7 +83,7 @@ export function WorksheetGallery() {
     <div className="gallery-page">
       <div className="gallery-intro">
         <p className="gallery-kicker">
-          <Link href="/">← Generator</Link>
+          <Link href="/generate">← Generator</Link>
         </p>
         <h1 className="gallery-heading">Example worksheet gallery</h1>
         <p className="gallery-lede">

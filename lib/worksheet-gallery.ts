@@ -62,7 +62,7 @@ export function galleryProgressiveRequest(entry: GalleryEntry, rngSeed: number) 
   };
 }
 
-/** Build a home-page deep link that opens progressive mode for this gallery entry. */
+/** Build a generator deep link that opens progressive mode for this gallery entry. */
 export function galleryOpenInGeneratorHref(entry: GalleryEntry, options?: { auto?: boolean }): string {
   const ramp = galleryEntryRamp(entry);
   const params = new URLSearchParams({
@@ -81,5 +81,5 @@ export function galleryOpenInGeneratorHref(entry: GalleryEntry, options?: { auto
   if (entry.seed != null) {
     params.set("rng_seed", String(entry.seed));
   }
-  return `/?${params.toString()}`;
+  return `/generate?${params.toString()}`;
 }

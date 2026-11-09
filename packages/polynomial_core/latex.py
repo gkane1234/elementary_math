@@ -190,6 +190,68 @@ def normalize_expression_signs(expr: str | None) -> str:
     return s
 
 
+_LEFT_GROUP = r"\left("
+_RIGHT_GROUP = r"\right)"
+
+
+def _match_left_group(text: str, start: int) -> int | None:
+    """Index just past the ``\\right)`` that closes ``\\left(`` at ``start``."""
+    if not text.startswith(_LEFT_GROUP, start):
+        return None
+    depth = 1
+    i = start + len(_LEFT_GROUP)
+    while i < len(text):
+        if text.startswith(_LEFT_GROUP, i):
+            depth += 1
+            i += len(_LEFT_GROUP)
+            continue
+        if text.startswith(_RIGHT_GROUP, i):
+            depth -= 1
+            i += len(_RIGHT_GROUP)
+            if depth == 0:
+                return i
+            continue
+        i += 1
+    return None
+
+
+def collapse_redundant_left_groups(latex: str | None) -> str:
+    """Drop an outer ``\\left( \\right)`` that wraps exactly one inner group.
+
+    ``-\\left(\\left(4x + 3\\right)\\right)`` becomes ``-\\left(4x + 3\\right)``.
+    A sum of groups stays grouped: ``\\left(\\left(x\\right)+\\left(y\\right)\\right)``.
+    """
+    if not latex:
+        return "" if latex is None else latex
+    current = latex
+    for _ in range(8):
+        changed = False
+        out: list[str] = []
+        i = 0
+        while i < len(current):
+            if current.startswith(_LEFT_GROUP, i):
+                end = _match_left_group(current, i)
+                if end is not None:
+                    inner = current[i + len(_LEFT_GROUP) : end - len(_RIGHT_GROUP)].strip()
+                    inner_end = (
+                        _match_left_group(inner, 0) if inner.startswith(_LEFT_GROUP) else None
+                    )
+                    if inner_end == len(inner):
+                        out.append(inner)
+                        i = end
+                        changed = True
+                        continue
+                    out.append(current[i:end])
+                    i = end
+                    continue
+            out.append(current[i])
+            i += 1
+        current = "".join(out)
+        if not changed:
+            break
+    return current
+
+
 def square_root_latex(coeff: int, radicand: int) -> str:
     """Format a coefficient times a square root in LaTeX."""
     if radicand <= 1:

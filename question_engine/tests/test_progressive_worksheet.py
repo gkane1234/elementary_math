@@ -290,6 +290,32 @@ def test_shared_seed_slots_differ_for_algebra_geometry_and_calculus():
         ]
 
 
+def test_seed_is_applied_even_when_the_generator_does_not_reseed():
+    """Writing numbers draws from global random and never reads settings."""
+    body = {
+        "title": "Words",
+        "progressive": {
+            "seeds": ["pa_writing_numbers_with_words"],
+            "count": 5,
+            "d_min": 5,
+            "d_max": 10,
+            "include_related": False,
+            "max_topics": 1,
+            "base_settings": {"seed": 42},
+        },
+    }
+    first = _generate(body)
+    second = _generate(body)
+    assert [_prompt(q) for q in second["questions"]] == [_prompt(q) for q in first["questions"]]
+    easier = _generate(
+        {
+            **body,
+            "progressive": {**body["progressive"], "d_min": 0, "d_max": 5},
+        }
+    )
+    assert [_prompt(q) for q in easier["questions"]] != [_prompt(q) for q in first["questions"]]
+
+
 def test_ratios_count_batch_still_varies():
     data = _generate(
         {

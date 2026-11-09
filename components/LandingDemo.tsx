@@ -8,39 +8,26 @@ import { QuestionPrompt } from "@/components/QuestionPrompt";
 import { generateProgressive, type ProgressivePlan } from "@/lib/api";
 import { collapseRedundantLeftGroups } from "@/lib/latex";
 import { formatDifficulty } from "@/lib/landing";
+import {
+  DEMO_BANDS,
+  DEMO_QUESTION_COUNT,
+  DEMO_START_BAND,
+  demoBandLabel,
+  demoBandSchedule,
+  demoGeneratorHref,
+  demoProgressiveRequest,
+  freshDemoRngSeed,
+  pickDemoType,
+  type DemoType,
+} from "@/lib/landing-demo";
 import { formatTopicLabel } from "@/lib/topic-labels";
 import type { Question } from "@/lib/types";
-import {
-  freshGalleryRngSeed,
-  galleryOpenInGeneratorHref,
-  galleryProgressiveRequest,
-  listGalleryEntries,
-  type GalleryEntry,
-} from "@/lib/worksheet-gallery";
-import {
-  WORKSHEET_DIFFICULTY_PRESETS,
-  worksheetDifficultyToRamp,
-  type WorksheetDifficultyPreset,
-} from "@/lib/worksheet-difficulty";
-
-const DEMO_COUNT = 3;
 
 type LoadSpec = {
-  entry: GalleryEntry;
-  level: WorksheetDifficultyPreset;
+  type: DemoType;
+  band: number;
   rngSeed: number;
 };
-
-function levelOf(entry: GalleryEntry): WorksheetDifficultyPreset {
-  return worksheetDifficultyToRamp(entry.worksheetDifficulty).level;
-}
-
-function pickEntry(exceptId?: string): GalleryEntry {
-  const entries = listGalleryEntries();
-  const pool = exceptId ? entries.filter((entry) => entry.id !== exceptId) : entries;
-  const source = pool.length > 0 ? pool : entries;
-  return source[Math.floor(Math.random() * source.length)];
-}
 
 function questionDifficulty(
   question: Question,
@@ -56,15 +43,6 @@ function questionDifficulty(
   if (typeof effective === "number") return effective;
   const planned = plan?.difficulties?.[index];
   return typeof planned === "number" ? planned : null;
-}
-
-function demoEntry(spec: LoadSpec): GalleryEntry {
-  return {
-    ...spec.entry,
-    worksheetDifficulty: spec.level,
-    count: DEMO_COUNT,
-    seed: spec.rngSeed,
-  };
 }
 
 export function LandingDemo() {
@@ -88,13 +66,15 @@ export function LandingDemo() {
     specRef.current = next;
     try {
       const result = await generateProgressive(
-        galleryProgressiveRequest(demoEntry(next), next.rngSeed),
+        demoProgressiveRequest(next.type, next.band, next.rngSeed),
       );
       if (id !== requestId.current) return;
-      setQuestions((result.questions ?? []).slice(0, DEMO_COUNT));
+      setQuestions((result.questions ?? []).slice(0, DEMO_QUESTION_COUNT));
       setPlan(result.progressive ?? null);
-      const ramp = worksheetDifficultyToRamp(next.level);
-      setStatus(`${ramp.label}, D ${ramp.d_min}–${ramp.d_max}. Three questions, generated now.`);
+      const band = DEMO_BANDS[next.band];
+      setStatus(
+        `${demoBandLabel(band)}. Five questions, generated now.`,
+      );
     } catch (err) {
       if (id !== requestId.current) return;
       if (previous) {
@@ -109,9 +89,8 @@ export function LandingDemo() {
   }, []);
 
   useEffect(() => {
-    const entry = pickEntry();
     void load(
-      { entry, level: levelOf(entry), rngSeed: freshGalleryRngSeed() },
+      { type: pickDemoType(), band: DEMO_START_BAND, rngSeed: freshDemoRngSeed() },
       "Picking a worksheet…",
     );
   }, [load]);
@@ -136,41 +115,34 @@ export function LandingDemo() {
     };
   }, []);
 
-  const levelIndex = spec ? WORKSHEET_DIFFICULTY_PRESETS.indexOf(spec.level) : -1;
-  const ramp = spec ? worksheetDifficultyToRamp(spec.level) : null;
+  const band = spec ? DEMO_BANDS[spec.band] : null;
 
-  function stepLevel(delta: number, message: string) {
+  function stepBand(delta: number, message: string) {
     if (!spec || busy) return;
-    const nextIndex = levelIndex + delta;
-    if (nextIndex < 0 || nextIndex >= WORKSHEET_DIFFICULTY_PRESETS.length) return;
-    void load(
-      { ...spec, level: WORKSHEET_DIFFICULTY_PRESETS[nextIndex] },
-      message,
-    );
+    const nextBand = spec.band + delta;
+    if (nextBand < 0 || nextBand >= DEMO_BANDS.length) return;
+    void load({ ...spec, band: nextBand }, message);
   }
 
   return (
     <figure
       className="landing-sheet"
-      data-demo-entry={spec?.entry.id ?? ""}
-      data-demo-level={spec?.level ?? ""}
+      data-demo-type={spec?.type.id ?? ""}
+      data-demo-band={band ? `${band.d_min}-${band.d_max}` : ""}
       data-demo-seed={spec ? String(spec.rngSeed) : ""}
       data-demo-busy={busy ? "1" : "0"}
       aria-busy={busy}
     >
       <figcaption className="landing-sheet-top">
         <div>
-          <p className="landing-sheet-title">{spec?.entry.title ?? "Worksheet"}</p>
+          <p className="landing-sheet-title">{spec?.type.name ?? "Worksheet"}</p>
           <p className="landing-sheet-note" aria-live="polite">
             {status}
           </p>
         </div>
-        {ramp ? (
-          <span className={`gallery-badge gallery-badge--${ramp.schedule}`}>
-            {ramp.label}
-            <span className="gallery-badge-range">
-              D {ramp.d_min}–{ramp.d_max}
-            </span>
+        {band && spec ? (
+          <span className={`gallery-badge gallery-badge--${demoBandSchedule(spec.band)}`}>
+            {demoBandLabel(band)}
           </span>
         ) : null}
       </figcaption>
@@ -181,6 +153,9 @@ export function LandingDemo() {
         {questions.map((question, index) => {
           const difficulty = questionDifficulty(question, index, plan);
           const prompt = collapseRedundantLeftGroups(question.prompt_latex || question.prompt_text);
+          const topicName =
+            typeNames[question.topic] ??
+            (spec && question.topic === spec.type.id ? spec.type.name : undefined);
           return (
             <li key={question.id || index} className="landing-question" data-latex={prompt}>
               <div className="landing-question-prompt">
@@ -189,7 +164,7 @@ export function LandingDemo() {
                 <QuestionDiagramFromMetadata metadata={question.metadata} />
               </div>
               <p className="landing-question-meta">
-                {formatTopicLabel(question.topic, typeNames[question.topic])}
+                {formatTopicLabel(question.topic, topicName)}
                 {difficulty != null ? (
                   <>
                     <span aria-hidden="true"> · </span>
@@ -205,24 +180,24 @@ export function LandingDemo() {
       <div className="landing-demo-controls">
         <button
           type="button"
-          onClick={() => stepLevel(-1, "Making an easier sheet…")}
-          disabled={busy || !spec || levelIndex <= 0}
+          onClick={() => {
+            if (busy) return;
+            const type = pickDemoType(spec?.type.id);
+            void load(
+              { type, band: DEMO_START_BAND, rngSeed: freshDemoRngSeed() },
+              "Picking a new worksheet…",
+            );
+          }}
+          disabled={busy}
         >
-          Too hard
-        </button>
-        <button
-          type="button"
-          onClick={() => stepLevel(1, "Making a harder sheet…")}
-          disabled={busy || !spec || levelIndex < 0 || levelIndex >= WORKSHEET_DIFFICULTY_PRESETS.length - 1}
-        >
-          Harder
+          New worksheet
         </button>
         <button
           type="button"
           onClick={() => {
             if (!spec || busy) return;
             void load(
-              { ...spec, rngSeed: freshGalleryRngSeed() },
+              { ...spec, rngSeed: freshDemoRngSeed() },
               "Generating new questions…",
             );
           }}
@@ -232,23 +207,25 @@ export function LandingDemo() {
         </button>
         <button
           type="button"
-          onClick={() => {
-            if (busy) return;
-            const entry = pickEntry(spec?.entry.id);
-            void load(
-              { entry, level: levelOf(entry), rngSeed: freshGalleryRngSeed() },
-              "Picking another worksheet…",
-            );
-          }}
-          disabled={busy}
+          onClick={() => stepBand(-1, "Making an easier sheet…")}
+          disabled={busy || !spec || spec.band <= 0}
         >
-          Another worksheet
+          Easier
+        </button>
+        <button
+          type="button"
+          onClick={() => stepBand(1, "Making a harder sheet…")}
+          disabled={busy || !spec || spec.band >= DEMO_BANDS.length - 1}
+        >
+          Harder
         </button>
       </div>
 
       {spec ? (
         <p className="landing-sheet-link">
-          <Link href={galleryOpenInGeneratorHref(demoEntry(spec))}>Open in the generator</Link>
+          <Link href={demoGeneratorHref(spec.type, spec.band, spec.rngSeed)}>
+            Open in the generator
+          </Link>
         </p>
       ) : null}
     </figure>

@@ -1,5 +1,6 @@
 import json
 import os
+import random
 import sys
 from typing import Any
 
@@ -148,7 +149,19 @@ def _generate_for_type(type_id: str, settings: dict[str, Any]) -> list[Question]
         raise ValueError(f"Unknown question type: {type_id}")
 
     resolved = _resolve_generation_settings(type_id, settings)
-    questions = question_type.generate(resolved)
+    # Honor a worksheet seed even when the generator never passes settings into
+    # make_questions. Index 0 keeps the section seed; count>1 generators that
+    # already reseed per item overwrite this with the same mix. Restore the
+    # process RNG afterward so a seeded sheet does not change the next unseeded draw.
+    from question_engine.diagrams.figure_families import apply_batch_seed
+
+    prior_random = random.getstate() if resolved.get("seed") is not None else None
+    apply_batch_seed(resolved, int(resolved.get("_batch_index") or 0))
+    try:
+        questions = question_type.generate(resolved)
+    finally:
+        if prior_random is not None:
+            random.setstate(prior_random)
     annotated = _annotate_questions(questions, question_type, resolved)
     _log_generated_questions(type_id, resolved, annotated)
     return annotated

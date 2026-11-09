@@ -31,6 +31,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from question_engine.frameworks.difficulty_budget import climb_frozen_int_bounds
 from question_engine.frameworks.primitives.constructive import (
     PartialFractionTarget,
     PartialFractionTerm,
@@ -64,6 +65,7 @@ def pfd_term_count_from_d(d: float) -> int:
     return 4
 
 
+@climb_frozen_int_bounds
 def apply_pfd_continuous_knobs(settings: dict[str, Any]) -> dict[str, Any]:
     """Map continuous D → PFD structure knobs (term count, coef spans).
 

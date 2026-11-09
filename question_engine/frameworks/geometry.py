@@ -370,9 +370,11 @@ def _area_side_bounds(settings: dict) -> tuple[int, int]:
         except (TypeError, ValueError):
             d = None
         if d is not None:
-            lo = max(2, int(round(2 + 0.2 * d)))
-            hi = max(lo + 3, int(round(8 + 0.72 * d)))
-            return lo, min(hi, 36)
+            from .difficulty_budget import slide_window
+
+            # Same width, higher floor and ceiling. A capped polynomial stalled
+            # and a ceiling-only bump does not change a seeded draw.
+            return slide_window(2, 8, d, anchor=0.0, lo_floor=2)
     return _bounds(settings, "side_min", "side_max", 3, 20)
 
 

@@ -1768,30 +1768,36 @@ class NumberLinePlotFramework(QuestionFramework):
         has_cont = "difficulty" in settings and settings["difficulty"] is not None
         d = max(0.0, settings_difficulty(settings, default=0.0)) if has_cont else 0.0
 
-        # Effort ladder: positive ints → signed ints → halves → quarters.
-        # Magnitude stays modest; locating non-integer / negative points is the work.
+        # Form ladder: positive ints → signed ints → halves → quarters.
+        # Inside a form, the distance from zero keeps climbing so the same
+        # seed does not plot the same point at the next difficulty.
+        from question_engine.frameworks.difficulty_budget import slide_window
+
         if not has_cont:
             value: float = float(random.randint(-10, 10))
             tick = 1.0
             prompt = str(int(value))
             answer = str(int(value))
         elif d < 4.0:
-            value = float(random.randint(0, 8))
+            lo, hi = slide_window(0, 8, d, anchor=0.0, lo_floor=0)
+            value = float(random.randint(lo, hi))
             tick = 1.0
             prompt = str(int(value))
             answer = str(int(value))
         elif d < 10.0:
-            hi = 6 + int(d / 2)
-            value = float(random.randint(-hi, hi))
+            mag_lo, mag_hi = slide_window(1, 8, d, anchor=4.0, lo_floor=1)
+            mag = random.randint(mag_lo, mag_hi)
+            value = float(-mag if random.randrange(2) else mag)
             tick = 1.0
             prompt = str(int(value))
             answer = str(int(value))
         elif d < 16.0:
-            # Halves — bias away from whole integers so D10–15 isn't int-like.
-            hi = 8
-            k = random.randint(-hi * 2, hi * 2)
-            if k % 2 == 0:
-                k += 1 if k < hi * 2 else -1
+            # Halves — bias away from whole integers so this step isn't int-like.
+            mag_lo, mag_hi = slide_window(1, 16, d, anchor=10.0, lo_floor=1)
+            mag = random.randint(mag_lo, mag_hi)
+            if mag % 2 == 0:
+                mag += 1
+            k = -mag if random.randrange(2) else mag
             value = k / 2.0
             tick = 0.5
             frac = Fraction(value).limit_denominator(2)
@@ -1802,13 +1808,14 @@ class NumberLinePlotFramework(QuestionFramework):
             )
             answer = prompt
         else:
-            # Quarters / denser ticks — prefer non-halves at high D.
-            hi = 6 + int(min(4, d / 8))
-            k = random.randint(-hi * 4, hi * 4)
-            if k % 4 == 0:
-                k += random.choice([1, 3, -1, -3])
-            elif k % 2 == 0 and d >= 22 and random.random() < 0.6:
-                k += 1
+            # Quarters. Magnitude keeps sliding after the form stops changing.
+            mag_lo, mag_hi = slide_window(1, 24, d, anchor=16.0, lo_floor=1)
+            mag = random.randint(mag_lo, mag_hi)
+            if mag % 4 == 0:
+                mag += 1
+            elif mag % 2 == 0 and d >= 22 and random.random() < 0.6:
+                mag += 1
+            k = -mag if random.randrange(2) else mag
             value = k / 4.0
             tick = 0.5 if d < 22 else 0.25
             frac = Fraction(value).limit_denominator(4)

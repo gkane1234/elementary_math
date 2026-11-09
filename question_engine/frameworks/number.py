@@ -43,7 +43,21 @@ def _bounded_int(settings: dict, key: str, default: int) -> int:
 def _int_range(settings: dict, min_key: str, max_key: str, *, lo_default: int, hi_default: int) -> tuple[int, int]:
     lo = _bounded_int(settings, min_key, lo_default)
     hi = _bounded_int(settings, max_key, hi_default)
-    return min(lo, hi), max(lo, hi)
+    lo, hi = min(lo, hi), max(lo, hi)
+    # Signed windows (exponents, coefficients) are handled by their own ladders.
+    # A nonnegative preset is flat inside an easy/medium/hard step, so slide it
+    # with continuous difficulty. Same width ⇒ the same seed draws a larger int.
+    if lo < 0 or "difficulty" not in settings or settings.get("difficulty") is None:
+        return lo, hi
+    try:
+        d = float(settings["difficulty"])
+    except (TypeError, ValueError):
+        return lo, hi
+    from question_engine.frameworks.difficulty_budget import slide_window
+
+    cap = 100 if max_key == "percent_max" else None
+    lo_floor = 0 if lo == 0 else 1
+    return slide_window(lo, hi, d, cap=cap, lo_floor=lo_floor)
 
 
 def number_params_from_settings(settings: dict) -> NumberParams:
@@ -593,7 +607,7 @@ def _sci_mantissa_decimals(settings: dict) -> int:
     return max(1, min(3, int(settings.get("mantissa_decimals", 1))))
 
 
-def _sci_continuous_knobs(settings: dict) -> dict[str, Any] | None:
+def _sci_continuous_knobs_raw(settings: dict) -> dict[str, Any] | None:
     """Map continuous difficulty → scientific-notation knobs (EMH ladder).
 
     Returns None when continuous ``difficulty`` is absent so EMH presets win.
@@ -655,6 +669,13 @@ def _sci_continuous_knobs(settings: dict) -> dict[str, Any] | None:
         "sci_exp_diff_max": 6,
         "allow_magnitude_compare": True,
     }
+
+
+def _sci_continuous_knobs(settings: dict) -> dict[str, Any] | None:
+    """Sci-notation ladder, with exponent bounds that keep moving inside a step."""
+    from question_engine.frameworks.difficulty_budget import climb_frozen_int_bounds
+
+    return climb_frozen_int_bounds(_sci_continuous_knobs_raw)(settings)
 
 
 def _apply_sci_continuous_settings(settings: dict) -> dict:
@@ -1114,9 +1135,8 @@ class PercentFramework(NumberFramework):
                 mode = random.choice(["percent_of", "find_percent", "find_percent", "find_whole"])
             else:
                 mode = random.choice(["percent_of", "find_percent", "find_whole", "find_whole"])
-            # Continuous base growth beyond EMH caps.
-            base_hi = max(base_hi, int(40 + 4 * d + 0.15 * d * d))
-            base_lo = max(1, min(base_lo, max(10, base_hi // 8)))
+            # Base and percent windows already slid in _int_range. A polynomial
+            # ceiling lost to the hard preset (500) and replayed the same base.
             if d >= 18.0:
                 allow_decimal_pct = True
                 prefer_exact = False
@@ -6318,21 +6338,22 @@ def _polyhedron_kind_pool(settings: dict) -> list[str]:
 
 
 def _isometric_dims(settings: dict) -> tuple[int, int, int]:
-    from .difficulty_budget import settings_difficulty
+    from .difficulty_budget import settings_difficulty, slide_window
 
     d = settings_difficulty(settings, default=8.0)
     if d < 5:
-        lo, hi = 2, 3
+        anchor, lo, hi = 0.0, 2, 3
         prefer_near_cube = True
     elif d < 10:
-        lo, hi = 2, 4
+        anchor, lo, hi = 5.0, 2, 4
         prefer_near_cube = True
     elif d < 16:
-        lo, hi = 3, 5
+        anchor, lo, hi = 10.0, 3, 5
         prefer_near_cube = False
     else:
-        lo, hi = 3, 6
+        anchor, lo, hi = 16.0, 3, 6
         prefer_near_cube = False
+    lo, hi = slide_window(lo, hi, d, anchor=anchor, lo_floor=1)
     for _ in range(30):
         dims = [random.randint(lo, hi) for _ in range(3)]
         span = max(dims) - min(dims)
@@ -6821,18 +6842,21 @@ class Grade6VisualFramework(NumberFramework):
             style = "nonuniform"
 
         if style == "uniform":
+            from question_engine.frameworks.difficulty_budget import slide_window
+
+            # Part count is the diagram form. The solution window slides inside
+            # the form so a later difficulty does not redraw the same total.
             if d < 5.0:
-                parts = random.randint(2, 3)
-                solution = random.randint(2, 8)
+                anchor, p_lo, p_hi, s_lo, s_hi = 0.0, 2, 3, 2, 8
             elif d < 12.0:
-                parts = random.randint(2, 5)
-                solution = random.randint(2, 12)
+                anchor, p_lo, p_hi, s_lo, s_hi = 5.0, 2, 5, 2, 12
             elif d < 18.0:
-                parts = random.randint(3, 6)
-                solution = random.randint(4, 16)
+                anchor, p_lo, p_hi, s_lo, s_hi = 12.0, 3, 6, 4, 16
             else:
-                parts = random.randint(4, 8)
-                solution = random.randint(5, 20)
+                anchor, p_lo, p_hi, s_lo, s_hi = 18.0, 4, 8, 5, 20
+            parts = random.randint(p_lo, p_hi)
+            s_lo, s_hi = slide_window(s_lo, s_hi, d, anchor=anchor, lo_floor=1)
+            solution = random.randint(s_lo, s_hi)
             total = parts * solution
             self._metadata = {
                 "diagram_svg": tape_svg(
@@ -6849,15 +6873,16 @@ class Grade6VisualFramework(NumberFramework):
             )
 
         # Non-uniform: known sizes inside segments, one missing piece.
+        from question_engine.frameworks.difficulty_budget import slide_window
+
         if d < 10.0:
-            n_segs = random.randint(3, 4)
-            value_lo, value_hi = 2, 14
+            anchor, n_lo, n_hi, value_lo, value_hi = 0.0, 3, 4, 2, 14
         elif d < 18.0:
-            n_segs = random.randint(3, 5)
-            value_lo, value_hi = 3, 22
+            anchor, n_lo, n_hi, value_lo, value_hi = 10.0, 3, 5, 3, 22
         else:
-            n_segs = random.randint(4, 6)
-            value_lo, value_hi = 4, 32
+            anchor, n_lo, n_hi, value_lo, value_hi = 18.0, 4, 6, 4, 32
+        n_segs = random.randint(n_lo, n_hi)
+        value_lo, value_hi = slide_window(value_lo, value_hi, d, anchor=anchor, lo_floor=1)
 
         values = [random.randint(value_lo, value_hi) for _ in range(n_segs)]
         # Keep segments visibly distinct so proportional widths read clearly.

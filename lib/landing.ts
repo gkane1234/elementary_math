@@ -3,7 +3,8 @@
  *
  * Derivative rows are the saved gallery snapshot
  * `public/gallery/snapshots/calc-derivatives-level-3.json`
- * (generated_at 2026-08-05, seed 1010).
+ * (generated_at 2026-08-05, seed 1010). The three direct-evaluation
+ * prompts below no longer wrap the polynomial in two parenthesis pairs.
  *
  * Factoring prompts are from the question engine:
  * type `quadratic_factoring`, seed 1, difficulty 0 / 8 / 22.
@@ -42,21 +43,21 @@ export const DERIVATIVE_SHEET = {
       typeId: "calc_limits_by_direct_evaluation",
       name: "By direct evaluation",
       difficulty: 8,
-      promptLatex: "\\lim_{x \\to 5} -\\left(\\left(4x + 3\\right)\\right)",
+      promptLatex: "\\lim_{x \\to 5} -\\left(4x + 3\\right)",
     },
     {
       number: 2,
       typeId: "calc_limits_by_direct_evaluation",
       name: "By direct evaluation",
       difficulty: 9.8889,
-      promptLatex: "\\lim_{x \\to 5} -\\left(\\left(4x + 3\\right)\\right)",
+      promptLatex: "\\lim_{x \\to 5} -\\left(4x + 3\\right)",
     },
     {
       number: 3,
       typeId: "calc_limits_by_direct_evaluation",
       name: "By direct evaluation",
       difficulty: 11.7778,
-      promptLatex: "\\lim_{x \\to -4} -\\left(\\left(3x^{5} + 4x\\right)\\right)",
+      promptLatex: "\\lim_{x \\to -4} -\\left(3x^{5} + 4x\\right)",
     },
     {
       number: 4,
@@ -110,9 +111,6 @@ export const DERIVATIVE_SHEET = {
     },
   ] satisfies SheetQuestion[],
 };
-
-/** Questions shown on the hero sheet. Numbers match DERIVATIVE_SHEET. */
-export const HERO_QUESTION_NUMBERS = [1, 4, 8] as const;
 
 export const FACTORING_SAMPLE = {
   typeId: "quadratic_factoring",

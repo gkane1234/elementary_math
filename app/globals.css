@@ -2494,6 +2494,8 @@ button:disabled {
 
 .landing-sheet {
   margin: 0;
+  min-width: 0;
+  max-width: 100%;
   background: #ffffff;
   border: 1px solid #d1d5db;
   padding: 1.1rem 1.15rem 0.4rem;
@@ -2525,6 +2527,7 @@ button:disabled {
   list-style: decimal;
   margin: 0;
   padding: 0 0 0.6rem 1.4rem;
+  min-height: 8.5rem;
 }
 
 .landing-question {
@@ -2534,12 +2537,75 @@ button:disabled {
 .landing-question-prompt {
   overflow: visible;
   padding: 0.15rem 0;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.landing-question-prompt .question-prompt,
+.landing-question-prompt .katex,
+.landing-question-prompt .katex-html {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.landing-question-prompt .katex .text,
+.landing-question-prompt .katex .text > .mord {
+  hyphens: none;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.landing-question-prompt .katex:has(.text) .base {
+  display: inline;
+  white-space: normal;
+  width: auto;
+  max-width: 100%;
 }
 
 .landing-question-meta {
   margin: 0.2rem 0 0;
   color: #6b7280;
   font-size: 0.78rem;
+}
+
+.landing-questions.is-loading {
+  opacity: 0.45;
+}
+
+.landing-demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.15rem 0 0.85rem;
+}
+
+.landing-demo-controls button {
+  width: auto;
+  background: #ffffff;
+  color: #1d4ed8;
+  border: 1px solid #1d4ed8;
+  border-radius: 8px;
+  padding: 0.38rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.landing-demo-controls button:hover:not(:disabled) {
+  background: #eff6ff;
+}
+
+.landing-sheet-link {
+  margin: 0 0 0.85rem;
+}
+
+.landing-sheet-link a {
+  color: #1d4ed8;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.landing-sheet .error {
+  margin: 0.6rem 0;
 }
 
 .landing-spine {

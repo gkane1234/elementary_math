@@ -1,5 +1,6 @@
 import katex from "katex";
 import Link from "next/link";
+import { LandingDemo } from "@/components/LandingDemo";
 import {
   CATALOG_TYPES_SCORED,
   COURSES,
@@ -8,21 +9,17 @@ import {
   EFFORT_MODELS,
   FACTORING_SAMPLE,
   GENERATOR_PATH,
-  HERO_QUESTION_NUMBERS,
   PRODUCT_SHELL,
   QA_CONCERNS,
   formatDifficulty,
 } from "@/lib/landing";
+import { collapseRedundantLeftGroups } from "@/lib/latex";
 import { listGalleryEntries } from "@/lib/worksheet-gallery";
 import { formatTopicLabel } from "@/lib/topic-labels";
 import {
   WORKSHEET_DIFFICULTY_PRESETS,
   worksheetDifficultyToRamp,
 } from "@/lib/worksheet-difficulty";
-
-const heroQuestions = DERIVATIVE_SHEET.questions.filter((question) =>
-  (HERO_QUESTION_NUMBERS as readonly number[]).includes(question.number),
-);
 
 const derivativeHref = `/gallery/${DERIVATIVE_SHEET.id}`;
 const exampleCount = listGalleryEntries().length;
@@ -33,7 +30,10 @@ function scheduleName(schedule: string): string {
 }
 
 function MathLine({ content }: { content: string }) {
-  const html = katex.renderToString(content, { throwOnError: false, displayMode: false });
+  const html = katex.renderToString(collapseRedundantLeftGroups(content), {
+    throwOnError: false,
+    displayMode: false,
+  });
   return <span className="question-prompt" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
@@ -58,36 +58,7 @@ export function LandingPage() {
           </div>
         </div>
 
-        <figure className="landing-sheet">
-          <figcaption className="landing-sheet-top">
-            <div>
-              <p className="landing-sheet-title">{DERIVATIVE_SHEET.title}</p>
-              <p className="landing-sheet-note">
-                Questions {HERO_QUESTION_NUMBERS.join(", ")} from a saved Level 3 sheet.
-              </p>
-            </div>
-            <span className={`gallery-badge gallery-badge--${heroRamp.schedule}`}>
-              {heroRamp.label}
-              <span className="gallery-badge-range">
-                D {heroRamp.d_min}–{heroRamp.d_max}
-              </span>
-            </span>
-          </figcaption>
-          <ol className="landing-questions">
-            {heroQuestions.map((question) => (
-              <li key={question.number} className="landing-question" value={question.number}>
-                <div className="landing-question-prompt">
-                  <MathLine content={question.promptLatex} />
-                </div>
-                <p className="landing-question-meta">
-                  {formatTopicLabel(question.typeId, question.name)}
-                  <span aria-hidden="true"> · </span>
-                  D {formatDifficulty(question.difficulty)}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </figure>
+        <LandingDemo />
       </section>
 
       <section className="landing-spine" aria-label="Courses">

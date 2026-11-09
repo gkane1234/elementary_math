@@ -2,14 +2,21 @@
 
 import { useEffect, useRef } from "react";
 import katex from "katex";
-import { enableKatexSoftWrap, repairInstructionLatex } from "@/lib/latex";
+import {
+  collapseRedundantLeftGroups,
+  enableKatexSoftWrap,
+  repairInstructionLatex,
+} from "@/lib/latex";
 
 export function InlineLatex({ content, repair = false }: { content: string; repair?: boolean }) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!ref.current) return;
-    katex.render(repair ? repairInstructionLatex(content) : content, ref.current, {
+    const latex = collapseRedundantLeftGroups(
+      repair ? repairInstructionLatex(content) : content,
+    );
+    katex.render(latex, ref.current, {
       throwOnError: false,
       displayMode: false,
     });

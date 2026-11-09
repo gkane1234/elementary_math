@@ -6,6 +6,7 @@ import random
 import re
 
 from packages.polynomial_core import (
+    collapse_redundant_left_groups,
     format_binop_expression,
     format_slash_fraction,
     normalize_expression_signs,
@@ -60,6 +61,34 @@ def test_question_post_init_normalizes_fields():
     assert q.prompt_latex == "5-2"
     assert q.prompt_text == "2/(-1)"
     assert q.answer_latex == "3-4"
+
+
+def test_collapse_redundant_left_groups():
+    doubled = r"\lim_{x \to 5} -\left(\left(4x + 3\right)\right)"
+    assert collapse_redundant_left_groups(doubled) == r"\lim_{x \to 5} -\left(4x + 3\right)"
+    assert collapse_redundant_left_groups(r"\left(\left(\left(x\right)\right)\right)") == r"\left(x\right)"
+    assert (
+        collapse_redundant_left_groups(r"\left( \left(4x + 3\right) \right)")
+        == r"\left(4x + 3\right)"
+    )
+    kept = r"\left(\left(x\right)+\left(y\right)\right)"
+    assert collapse_redundant_left_groups(kept) == kept
+    plain = r"\lim_{x \to 5} 4x + 3"
+    assert collapse_redundant_left_groups(plain) == plain
+    assert collapse_redundant_left_groups(None) == ""
+
+
+def test_question_collapses_double_left_groups():
+    q = Question(
+        id="t",
+        topic="calc_limits_by_direct_evaluation",
+        prompt_latex=r"\lim_{x \to 5} -\left(\left(4x + 3\right)\right)",
+        prompt_text="limit (direct)",
+        answer_latex=r"-\left(\left(23\right)\right)",
+    )
+    assert q.prompt_latex == r"\lim_{x \to 5} -\left(4x + 3\right)"
+    assert q.prompt_text == "limit (direct)"
+    assert q.answer_latex == r"-\left(23\right)"
 
 
 def test_graph_sampler_exprs_never_emit_plus_minus():

@@ -12,6 +12,7 @@ import { SubscribeButton } from "@/components/SubscribeButton";
 import { TopicSectionList } from "@/components/TopicSectionList";
 import { WorksheetPageLayout } from "@/components/WorksheetPageLayout";
 import { WorksheetPageLayoutControls } from "@/components/WorksheetPageLayoutControls";
+import { WorksheetPresetRail } from "@/components/WorksheetPresetRail";
 import { generateProgressive, type ProgressiveGenerateResult } from "@/lib/api";
 import { resolveColumnCount } from "@/lib/columns";
 import { fetchEntitlement } from "@/lib/payment";
@@ -45,8 +46,18 @@ import {
   galleryProgressiveRequest,
   getGalleryEntry,
   listGalleryEntries,
-  splitWorksheetChoices,
+  worksheetsIncludingTopic,
 } from "@/lib/worksheet-gallery";
+import {
+  newPresetId,
+  presetsIncludingTopic,
+  readSavedPresets,
+  removePreset,
+  topicsOnWorksheet,
+  upsertPreset,
+  writeSavedPresets,
+  type SavedWorksheetPreset,
+} from "@/lib/worksheet-presets";
 
 const openingEntry = defaultGalleryEntry();
 const openingRamp = openingEntry ? galleryEntryRamp(openingEntry) : null;
@@ -128,6 +139,7 @@ export function WorksheetGenerator() {
   );
   const [browsedTypeId, setBrowsedTypeId] = useState("");
   const [galleryTopics, setGalleryTopics] = useState<Record<string, string[]>>({});
+  const [savedPresets, setSavedPresets] = useState<SavedWorksheetPreset[]>([]);
   const [includeRelated, setIncludeRelated] = useState(true);
   const [progressiveTopics, setProgressiveTopics] = useState<string[]>([]);
   const [rngSeed, setRngSeed] = useState<number | null>(null);
@@ -152,6 +164,15 @@ export function WorksheetGenerator() {
       window.sessionStorage.removeItem(UNLOCK_STORAGE_KEY);
     }
   }, [restoredUnlock]);
+
+  useEffect(() => {
+    setSavedPresets(readSavedPresets(window.localStorage));
+  }, []);
+
+  const persistPresets = (next: SavedWorksheetPreset[]) => {
+    setSavedPresets(next);
+    writeSavedPresets(window.localStorage, next);
+  };
 
   useEffect(() => {
     fetch("/api/payments/config", { cache: "no-store" })
@@ -446,7 +467,7 @@ export function WorksheetGenerator() {
     setWorksheet({ title: entry.title, questions: [], columns: 1 });
     setLoading(true);
     setError(null);
-    if (!paid && !subscriberEntitled) {
+    if (!subscriberEntitled) {
       setPaid(false);
       setWorksheetId(null);
     }
@@ -540,6 +561,47 @@ export function WorksheetGenerator() {
     };
   }, []);
 
+  const loadSavedPreset = (presetId: string) => {
+    const preset = savedPresets.find((entry) => entry.id === presetId);
+    if (!preset) return;
+    galleryRequestRef.current += 1;
+    skipNextSectionSyncRef.current = true;
+    lastContentKeyRef.current = sectionContentKey(preset.sections);
+    lastSectionsRef.current = preset.sections;
+    setSelectedGalleryId(preset.id);
+    setMode("manual");
+    setTitle(preset.worksheet.title || preset.title);
+    setSections(preset.sections);
+    setWorksheet(applyColumns({ ...preset.worksheet, title: preset.worksheet.title || preset.title }));
+    setProgressiveTopics(preset.topics);
+    setLoading(false);
+    setError(null);
+    if (!subscriberEntitled) {
+      setPaid(false);
+      setWorksheetId(null);
+    }
+  };
+
+  const saveCurrentPreset = () => {
+    if (!worksheet || worksheet.questions.length === 0) return;
+    const current = savedPresets.find((entry) => entry.id === selectedGalleryId);
+    const preset: SavedWorksheetPreset = {
+      id: current?.id ?? newPresetId(),
+      title: worksheet.title || title || "Saved worksheet",
+      savedAt: new Date().toISOString(),
+      worksheet: { ...worksheet, title: worksheet.title || title || "Saved worksheet" },
+      sections,
+      topics: topicsOnWorksheet(worksheet, sections),
+    };
+    persistPresets(upsertPreset(savedPresets, preset));
+    setSelectedGalleryId(preset.id);
+  };
+
+  const deleteSavedPreset = (presetId: string) => {
+    persistPresets(removePreset(savedPresets, presetId));
+    if (selectedGalleryId === presetId) setSelectedGalleryId("");
+  };
+
   const handleBrowseType = useCallback((typeId: string | null) => {
     setBrowsedTypeId((current) => {
       const next = typeId ?? "";
@@ -547,10 +609,15 @@ export function WorksheetGenerator() {
     });
   }, []);
 
-  const worksheetChoices = useMemo(
-    () => splitWorksheetChoices(browsedTypeId, galleryTopics),
+  const softwareMatches = useMemo(
+    () => worksheetsIncludingTopic(browsedTypeId, galleryTopics),
     [browsedTypeId, galleryTopics],
   );
+  const savedMatches = useMemo(
+    () => presetsIncludingTopic(savedPresets, browsedTypeId),
+    [savedPresets, browsedTypeId],
+  );
+  const catalogSheets = useMemo(() => listGalleryEntries(), []);
   const browsedType = types.find((type) => type.id === browsedTypeId);
   const browsedLabel = browsedType
     ? formatTopicLabel(browsedType.id, browsedType.name, { category: browsedType.category })
@@ -776,34 +843,31 @@ export function WorksheetGenerator() {
                     setSelectedGalleryId("");
                     return;
                   }
+                  if (savedPresets.some((preset) => preset.id === id)) {
+                    loadSavedPreset(id);
+                    return;
+                  }
                   void loadGalleryEntry(id);
                 }}
               >
                 <option value="">Custom</option>
-                {worksheetChoices.includesTopic.length > 0 && (
-                  <optgroup label="Includes this topic">
-                    {worksheetChoices.includesTopic.map((entry) => (
-                      <option key={`include-${entry.id}`} value={entry.id}>
-                        {entry.title}
+                {savedPresets.length > 0 && (
+                  <optgroup label="Saved">
+                    {savedPresets.map((preset) => (
+                      <option key={preset.id} value={preset.id}>
+                        {preset.title}
                       </option>
                     ))}
                   </optgroup>
                 )}
-                <optgroup label="Worksheets">
-                  {worksheetChoices.others.map((entry) => (
+                <optgroup label="Included">
+                  {catalogSheets.map((entry) => (
                     <option key={entry.id} value={entry.id}>
                       {entry.title}
                     </option>
                   ))}
                 </optgroup>
               </select>
-              {browsedLabel && worksheetChoices.includesTopic.length > 0 && (
-                <p className="hint worksheet-picker-hint">
-                  {worksheetChoices.includesTopic.length === 1
-                    ? `1 worksheet includes ${browsedLabel}.`
-                    : `${worksheetChoices.includesTopic.length} worksheets include ${browsedLabel}.`}
-                </p>
-              )}
             </label>
 
             <div className="worksheet-stage-pay">
@@ -894,6 +958,17 @@ export function WorksheetGenerator() {
         </div>
 
         <aside className="right-rail topics-rail">
+          <WorksheetPresetRail
+            topicLabel={browsedLabel}
+            softwareMatches={softwareMatches}
+            savedMatches={savedMatches}
+            savedPresets={savedPresets}
+            canSave={Boolean(worksheet && worksheet.questions.length > 0 && !loading)}
+            onSave={saveCurrentPreset}
+            onLoadSoftware={(id) => void loadGalleryEntry(id)}
+            onLoadSaved={loadSavedPreset}
+            onRemoveSaved={deleteSavedPreset}
+          />
           <AddTopicPanel
             types={types}
             onSelectType={openTopicAdder}

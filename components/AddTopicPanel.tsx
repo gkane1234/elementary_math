@@ -27,8 +27,8 @@ export function AddTopicPanel({ types, onSelectType, onBrowseTypeId }: AddTopicP
       <header className="topics-browser-header">
         <h2>Topics</h2>
         <p className="hint">
-          Single-click a topic to see worksheets that include it. Double-click a ready topic
-          to add it. Right-click a prerequisite for add or browse options.
+          Single-click a topic to list worksheets on the side that include it. Double-click a
+          ready topic to add it. Right-click a prerequisite for add or browse options.
         </p>
       </header>
       <CurriculumTopicPicker

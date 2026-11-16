@@ -168,8 +168,91 @@ body {
   margin-bottom: 0;
 }
 
-.worksheet-picker-hint {
-  margin: 0.35rem 0 0;
+.preset-rail {
+  flex: 0 0 auto;
+  max-height: 18rem;
+  overflow: auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.85rem 0.9rem 0.7rem;
+}
+
+.preset-rail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.preset-rail-header h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.preset-save {
+  width: auto;
+  padding: 0.35rem 0.65rem;
+  background: #111827;
+  color: #ffffff;
+  font-size: 0.85rem;
+}
+
+.preset-group h3 {
+  margin: 0.35rem 0 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.preset-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.2rem 0.45rem;
+  padding: 0.35rem 0;
+}
+
+.preset-row-title {
+  flex: 1 1 8rem;
+  min-width: 0;
+  font-size: 0.88rem;
+  line-height: 1.3;
+}
+
+.preset-kind {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.preset-row-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.3rem;
+}
+
+.preset-row-actions button {
+  width: auto;
+  padding: 0.2rem 0.45rem;
+  background: #ffffff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  font-size: 0.78rem;
+}
+
+.preset-empty {
+  margin: 0;
 }
 
 .worksheet-stage-pay {
@@ -230,6 +313,7 @@ body {
   grid-area: topics;
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
   max-height: calc(100vh - 2rem);
   height: calc(100vh - 2rem);
   min-height: 0;

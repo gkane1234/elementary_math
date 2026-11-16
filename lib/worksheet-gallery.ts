@@ -54,17 +54,6 @@ export function worksheetsIncludingTopic(
   });
 }
 
-/** Topic matches first, then the rest of the catalog, with no duplicate ids. */
-export function splitWorksheetChoices(
-  typeId: string,
-  plannedTopicsById: Readonly<Record<string, readonly string[]>> = {},
-): { includesTopic: GalleryEntry[]; others: GalleryEntry[] } {
-  const includesTopic = worksheetsIncludingTopic(typeId, plannedTopicsById);
-  const includeIds = new Set(includesTopic.map((entry) => entry.id));
-  const others = listGalleryEntries().filter((entry) => !includeIds.has(entry.id));
-  return { includesTopic, others };
-}
-
 export function getGalleryEntry(id: string): GalleryEntry | undefined {
   return worksheetGalleryConfig.entries.find((entry) => entry.id === id);
 }

@@ -51,7 +51,7 @@ export function SubscribeButton({
   };
 
   const label = session?.user
-    ? `Unlimited — ${formatPdfPrice(priceCents)}/mo`
+    ? `Subscribe — ${formatPdfPrice(priceCents)}/mo`
     : `Sign in to subscribe — ${formatPdfPrice(priceCents)}/mo`;
 
   return (

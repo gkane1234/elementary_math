@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { AddTopicModal } from "@/components/AddTopicModal";
@@ -12,7 +12,7 @@ import { SubscribeButton } from "@/components/SubscribeButton";
 import { TopicSectionList } from "@/components/TopicSectionList";
 import { WorksheetPageLayout } from "@/components/WorksheetPageLayout";
 import { WorksheetPageLayoutControls } from "@/components/WorksheetPageLayoutControls";
-import { generateProgressive } from "@/lib/api";
+import { generateProgressive, type ProgressiveGenerateResult } from "@/lib/api";
 import { resolveColumnCount } from "@/lib/columns";
 import { fetchEntitlement } from "@/lib/payment";
 import {
@@ -39,6 +39,17 @@ import {
   syncWorksheetFromSections,
 } from "@/lib/worksheet-sync";
 import { formatTopicLabel } from "@/lib/topic-labels";
+import {
+  defaultGalleryEntry,
+  galleryEntryRamp,
+  galleryProgressiveRequest,
+  getGalleryEntry,
+  listGalleryEntries,
+  splitWorksheetChoices,
+} from "@/lib/worksheet-gallery";
+
+const openingEntry = defaultGalleryEntry();
+const openingRamp = openingEntry ? galleryEntryRamp(openingEntry) : null;
 
 const UNLOCK_STORAGE_KEY = "polynomial_unlocked_worksheet";
 
@@ -71,9 +82,15 @@ export function WorksheetGenerator() {
   const { status: sessionStatus } = useSession();
   const searchParams = useSearchParams();
   const restoredUnlock = useMemo(() => readRestoredUnlock(), []);
+  const opensFromLink = searchParams.get("mode") === "progressive";
   const [types, setTypes] = useState<QuestionTypeInfo[]>([]);
   const [sections, setSections] = useState<TopicSection[]>([]);
-  const [title, setTitle] = useState(restoredUnlock?.worksheet.title ?? "Math Practice");
+  const [title, setTitle] = useState(
+    restoredUnlock?.worksheet.title ??
+      (opensFromLink ? searchParams.get("title") : null) ??
+      openingEntry?.title ??
+      "Math Practice",
+  );
   const [maxColumns, setMaxColumns] = useState<string>("auto");
   const [worksheet, setWorksheet] = useState<WorksheetDraft | null>(restoredUnlock?.worksheet ?? null);
   const [loading, setLoading] = useState(false);
@@ -94,13 +111,23 @@ export function WorksheetGenerator() {
   const [pageLayout, setPageLayout] = useState<PageLayoutSettings>(DEFAULT_PAGE_LAYOUT);
   const [pageFit, setPageFit] = useState<FitScales | null>(null);
 
-  const [mode, setMode] = useState<WorksheetMode>("manual");
-  const [progressiveSeed, setProgressiveSeed] = useState("");
-  const [progressiveCount, setProgressiveCount] = useState(10);
-  const [progressiveDMin, setProgressiveDMin] = useState(0);
-  const [progressiveDMax, setProgressiveDMax] = useState(18);
-  const [worksheetDifficulty, setWorksheetDifficulty] =
-    useState<WorksheetDifficultyPreset | "custom">("custom");
+  const [mode, setMode] = useState<WorksheetMode>(
+    restoredUnlock || opensFromLink ? "manual" : "progressive",
+  );
+  const [progressiveSeed, setProgressiveSeed] = useState(
+    opensFromLink ? (searchParams.get("seed") ?? "") : (openingEntry?.seeds[0] ?? ""),
+  );
+  const [progressiveCount, setProgressiveCount] = useState(openingEntry?.count ?? 10);
+  const [progressiveDMin, setProgressiveDMin] = useState(openingRamp?.d_min ?? 0);
+  const [progressiveDMax, setProgressiveDMax] = useState(openingRamp?.d_max ?? 18);
+  const [worksheetDifficulty, setWorksheetDifficulty] = useState<
+    WorksheetDifficultyPreset | "custom"
+  >(openingRamp?.level ?? "custom");
+  const [selectedGalleryId, setSelectedGalleryId] = useState(
+    restoredUnlock || opensFromLink ? "" : (openingEntry?.id ?? ""),
+  );
+  const [browsedTypeId, setBrowsedTypeId] = useState("");
+  const [galleryTopics, setGalleryTopics] = useState<Record<string, string[]>>({});
   const [includeRelated, setIncludeRelated] = useState(true);
   const [progressiveTopics, setProgressiveTopics] = useState<string[]>([]);
   const [rngSeed, setRngSeed] = useState<number | null>(null);
@@ -111,6 +138,8 @@ export function WorksheetGenerator() {
   const skipNextSectionSyncRef = useRef(false);
   const deepLinkAppliedRef = useRef(false);
   const autoGenerateRef = useRef(false);
+  const openedDefaultRef = useRef(false);
+  const galleryRequestRef = useRef(0);
 
   const contentKey = useMemo(() => sectionContentKey(sections), [sections]);
   const orderKey = useMemo(() => sectionOrderKey(sections), [sections]);
@@ -205,6 +234,13 @@ export function WorksheetGenerator() {
     const titleParam = searchParams.get("title");
     if (titleParam) {
       setTitle(titleParam);
+    }
+    const matchedGallery = listGalleryEntries().find(
+      (entry) =>
+        entry.seeds[0] === (seedParam ?? "") && (!titleParam || entry.title === titleParam),
+    );
+    if (matchedGallery) {
+      setSelectedGalleryId(matchedGallery.id);
     }
     const relatedParam = searchParams.get("include_related");
     if (relatedParam === "0" || relatedParam === "false") {
@@ -375,11 +411,68 @@ export function WorksheetGenerator() {
     setTopicModalOpen(true);
   };
 
+  const applyProgressiveResult = (result: ProgressiveGenerateResult) => {
+    const draft = applyColumns(questionSetToDraft(result));
+    setWorksheet(draft);
+    setProgressiveTopics(result.progressive?.topics ?? []);
+    if (result.title) {
+      setTitle(result.title);
+    }
+    if (result.sections?.length) {
+      skipNextSectionSyncRef.current = true;
+      const nextSections = progressiveApiSectionsToTopicSections(result.sections);
+      lastContentKeyRef.current = sectionContentKey(nextSections);
+      lastSectionsRef.current = nextSections;
+      setSections(nextSections);
+    }
+  };
+
+  const loadGalleryEntry = async (entryId: string) => {
+    const entry = getGalleryEntry(entryId);
+    if (!entry) return;
+    const ramp = galleryEntryRamp(entry);
+    const requestId = galleryRequestRef.current + 1;
+    galleryRequestRef.current = requestId;
+    setSelectedGalleryId(entry.id);
+    setMode("progressive");
+    setProgressiveSeed(entry.seeds[0] ?? "");
+    setProgressiveCount(entry.count);
+    setWorksheetDifficulty(ramp.level);
+    setProgressiveDMin(ramp.d_min);
+    setProgressiveDMax(ramp.d_max);
+    setIncludeRelated(entry.includeRelated !== false);
+    setTitle(entry.title);
+    setRngSeed(entry.seed);
+    setWorksheet({ title: entry.title, questions: [], columns: 1 });
+    setLoading(true);
+    setError(null);
+    if (!paid && !subscriberEntitled) {
+      setPaid(false);
+      setWorksheetId(null);
+    }
+    try {
+      const result = await generateProgressive(galleryProgressiveRequest(entry, entry.seed));
+      if (galleryRequestRef.current !== requestId) return;
+      applyProgressiveResult(result);
+    } catch (err) {
+      if (galleryRequestRef.current !== requestId) return;
+      setError(err instanceof Error ? err.message : "Failed to open worksheet");
+    } finally {
+      if (galleryRequestRef.current === requestId) setLoading(false);
+    }
+  };
+
   const handleProgressiveGenerate = async () => {
     if (!progressiveSeed) {
       setError("Pick a seed topic for progressive practice.");
       return;
     }
+    const named = getGalleryEntry(selectedGalleryId);
+    if (!named || named.seeds[0] !== progressiveSeed || named.title !== title) {
+      setSelectedGalleryId("");
+    }
+    const requestId = galleryRequestRef.current + 1;
+    galleryRequestRef.current = requestId;
     setLoading(true);
     setError(null);
     if (!paid && !subscriberEntitled) {
@@ -399,22 +492,69 @@ export function WorksheetGenerator() {
         title,
         ...(rngSeed != null ? { rng_seed: rngSeed } : {}),
       });
-      const draft = applyColumns(questionSetToDraft(result));
-      setWorksheet(draft);
-      setProgressiveTopics(result.progressive?.topics ?? []);
-      if (result.sections?.length) {
-        skipNextSectionSyncRef.current = true;
-        const nextSections = progressiveApiSectionsToTopicSections(result.sections);
-        lastContentKeyRef.current = sectionContentKey(nextSections);
-        lastSectionsRef.current = nextSections;
-        setSections(nextSections);
-      }
+      if (galleryRequestRef.current !== requestId) return;
+      applyProgressiveResult(result);
     } catch (err) {
+      if (galleryRequestRef.current !== requestId) return;
       setError(err instanceof Error ? err.message : "Failed to generate progressive worksheet");
     } finally {
-      setLoading(false);
+      if (galleryRequestRef.current === requestId) setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (openedDefaultRef.current || restoredUnlock) return;
+    if (searchParams.get("mode") === "progressive") return;
+    const entry = defaultGalleryEntry();
+    if (!entry) return;
+    openedDefaultRef.current = true;
+    void loadGalleryEntry(entry.id);
+    // Open the catalog sheet once, as soon as the generator mounts.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, restoredUnlock]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void Promise.all(
+      listGalleryEntries().map(async (entry) => {
+        try {
+          const result = await generateProgressive({
+            ...galleryProgressiveRequest(entry, entry.seed),
+            plan_only: true,
+          });
+          return [entry.id, result.progressive?.topics ?? []] as const;
+        } catch {
+          return [entry.id, [] as string[]] as const;
+        }
+      }),
+    ).then((pairs) => {
+      if (cancelled) return;
+      const next: Record<string, string[]> = {};
+      for (const [id, topics] of pairs) {
+        if (topics.length > 0) next[id] = [...topics];
+      }
+      setGalleryTopics(next);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const handleBrowseType = useCallback((typeId: string | null) => {
+    setBrowsedTypeId((current) => {
+      const next = typeId ?? "";
+      return current === next ? current : next;
+    });
+  }, []);
+
+  const worksheetChoices = useMemo(
+    () => splitWorksheetChoices(browsedTypeId, galleryTopics),
+    [browsedTypeId, galleryTopics],
+  );
+  const browsedType = types.find((type) => type.id === browsedTypeId);
+  const browsedLabel = browsedType
+    ? formatTopicLabel(browsedType.id, browsedType.name, { category: browsedType.category })
+    : "";
 
   useEffect(() => {
     if (!autoGenerateRef.current) {
@@ -452,7 +592,16 @@ export function WorksheetGenerator() {
             </label>
             <label className="field">
               <span>Worksheet title</span>
-              <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} />
+              <input
+                type="text"
+                value={title}
+                onChange={(event) => {
+                  const next = event.target.value;
+                  setTitle(next);
+                  const named = getGalleryEntry(selectedGalleryId);
+                  if (named && named.title !== next) setSelectedGalleryId("");
+                }}
+              />
             </label>
             <label className="field">
               <span>Columns</span>
@@ -578,7 +727,91 @@ export function WorksheetGenerator() {
               </div>
             )}
 
-            <div className="settings-export-actions">
+          </section>
+
+          <section className="panel action-rail">
+            <div className="action-rail-scroll">
+              <h2>Questions</h2>
+              <p className="plan-summary">
+                Planned questions: <strong>{totalPlanned}</strong>
+                {mode === "progressive" ? " (progressive ramp)" : ""}
+              </p>
+
+              {mode === "manual" ? (
+                <TopicSectionList
+                  sections={sections}
+                  types={types}
+                  onSectionsChange={(next) => {
+                    setSelectedGalleryId("");
+                    setSections(next);
+                  }}
+                  onEditSection={openTopicEditor}
+                  onRemoveSection={(sectionId) => {
+                    setSelectedGalleryId("");
+                    setSections((current) => current.filter((section) => section.id !== sectionId));
+                  }}
+                  compact
+                />
+              ) : (
+                <p className="hint">
+                  Progressive mode builds a rising-difficulty mix from the seed topic
+                  {includeRelated ? " and related family/prereq neighbors" : ""}. Use the
+                  curriculum browser to change the seed.
+                </p>
+              )}
+            </div>
+          </section>
+        </aside>
+
+        <div className="worksheet-stage">
+          <div className="worksheet-stage-bar interactive-only">
+            <label className="field worksheet-picker">
+              <span>Worksheet</span>
+              <select
+                aria-label="Worksheet"
+                value={selectedGalleryId}
+                onChange={(event) => {
+                  const id = event.target.value;
+                  if (!id) {
+                    setSelectedGalleryId("");
+                    return;
+                  }
+                  void loadGalleryEntry(id);
+                }}
+              >
+                <option value="">Custom</option>
+                {worksheetChoices.includesTopic.length > 0 && (
+                  <optgroup label="Includes this topic">
+                    {worksheetChoices.includesTopic.map((entry) => (
+                      <option key={`include-${entry.id}`} value={entry.id}>
+                        {entry.title}
+                      </option>
+                    ))}
+                  </optgroup>
+                )}
+                <optgroup label="Worksheets">
+                  {worksheetChoices.others.map((entry) => (
+                    <option key={entry.id} value={entry.id}>
+                      {entry.title}
+                    </option>
+                  ))}
+                </optgroup>
+              </select>
+              {browsedLabel && worksheetChoices.includesTopic.length > 0 && (
+                <p className="hint worksheet-picker-hint">
+                  {worksheetChoices.includesTopic.length === 1
+                    ? `1 worksheet includes ${browsedLabel}.`
+                    : `${worksheetChoices.includesTopic.length} worksheets include ${browsedLabel}.`}
+                </p>
+              )}
+            </label>
+
+            <div className="worksheet-stage-pay">
+              {paymentsRequired && !unlocked && (
+                <p className="worksheet-pay-note">
+                  Pay for this worksheet, or subscribe for every worksheet.
+                </p>
+              )}
               {paymentsRequired ? (
                 unlocked ? (
                   <>
@@ -587,19 +820,25 @@ export function WorksheetGenerator() {
                       <p className="plan-summary">Pro subscription — unlimited exports.</p>
                     )}
                     {paid && !subscriberEntitled && worksheetId && (
-                      <p className="plan-summary">Worksheet unlocked for export.</p>
+                      <p className="plan-summary">This worksheet is unlocked.</p>
                     )}
                   </>
                 ) : (
                   <>
-                    <PayForPdfButton
-                      disabled={!canExport || !stripeConfigured || !worksheet}
-                      title={title}
-                      worksheet={worksheet!}
-                      priceCents={pdfPriceCents}
-                      onCheckoutStart={setWorksheetId}
-                      onError={setError}
-                    />
+                    {worksheet && worksheet.questions.length > 0 ? (
+                      <PayForPdfButton
+                        disabled={!canExport || !stripeConfigured}
+                        title={title}
+                        worksheet={worksheet}
+                        priceCents={pdfPriceCents}
+                        onCheckoutStart={setWorksheetId}
+                        onError={setError}
+                      />
+                    ) : (
+                      <button className="primary" type="button" disabled>
+                        Pay for this worksheet
+                      </button>
+                    )}
                     <SubscribeButton
                       disabled={!stripeConfigured || !subscriptionEnabled}
                       priceCents={subscriptionPriceCents}
@@ -622,48 +861,19 @@ export function WorksheetGenerator() {
               ) : (
                 <ExportPdfButton disabled={!exportEnabled} />
               )}
-
-              {error && <p className="error">{error}</p>}
             </div>
-          </section>
+          </div>
 
-          <section className="panel action-rail">
-            <div className="action-rail-scroll">
-              <h2>Questions</h2>
-              <p className="plan-summary">
-                Planned questions: <strong>{totalPlanned}</strong>
-                {mode === "progressive" ? " (progressive ramp)" : ""}
-              </p>
-
-              {mode === "manual" ? (
-                <TopicSectionList
-                  sections={sections}
-                  types={types}
-                  onSectionsChange={setSections}
-                  onEditSection={openTopicEditor}
-                  onRemoveSection={(sectionId) => {
-                    setSections((current) => current.filter((section) => section.id !== sectionId));
-                  }}
-                  compact
-                />
-              ) : (
-                <p className="hint">
-                  Progressive mode builds a rising-difficulty mix from the seed topic
-                  {includeRelated ? " and related family/prereq neighbors" : ""}. Use the
-                  curriculum browser to change the seed.
-                </p>
-              )}
-            </div>
-          </section>
-        </aside>
-
-        <div className="worksheet-main">
-          {loading && <p className="worksheet-status interactive-only">Generating worksheet...</p>}
-          {showPaymentGate && worksheet && (
+          {showPaymentGate && worksheet && worksheet.questions.length > 0 && (
             <p className="worksheet-status preview-banner interactive-only">
-              Preview mode — pay once or subscribe to unlock the answer key and PDF export.
+              Preview — pay for this worksheet or subscribe to unlock the answer key and PDF.
             </p>
           )}
+          {loading && (
+            <p className="worksheet-status interactive-only">Building this page…</p>
+          )}
+          {error && <p className="error interactive-only">{error}</p>}
+
           <WorksheetPageLayout
             settings={pageLayout}
             contentKey={`${contentKey}|${orderKey}|${worksheet?.questions.length ?? 0}|${maxColumns}|${title}`}
@@ -672,7 +882,9 @@ export function WorksheetGenerator() {
             <InteractiveWorksheet
               worksheet={worksheet}
               types={types}
-              previewMode={showPaymentGate}
+              pageTitle={title}
+              loading={loading}
+              previewMode={showPaymentGate && Boolean(worksheet && worksheet.questions.length > 0)}
               onChange={(next) => {
                 setWorksheet(applyColumns(next));
               }}
@@ -682,7 +894,11 @@ export function WorksheetGenerator() {
         </div>
 
         <aside className="right-rail topics-rail">
-          <AddTopicPanel types={types} onSelectType={openTopicAdder} />
+          <AddTopicPanel
+            types={types}
+            onSelectType={openTopicAdder}
+            onBrowseTypeId={handleBrowseType}
+          />
         </aside>
       </div>
 
@@ -693,7 +909,10 @@ export function WorksheetGenerator() {
         editingSectionId={editingSectionId}
         addingTypeId={addingTypeId}
         onClose={closeTopicModal}
-        onSectionsChange={setSections}
+        onSectionsChange={(next) => {
+          setSelectedGalleryId("");
+          setSections(next);
+        }}
         onSwitchType={(typeId) => {
           setEditingSectionId(null);
           setAddingTypeId(typeId);

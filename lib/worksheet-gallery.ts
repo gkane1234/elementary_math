@@ -33,6 +33,38 @@ export function listGalleryEntries(): GalleryEntry[] {
   return worksheetGalleryConfig.entries;
 }
 
+/** First catalog sheet. The generator opens on this page. */
+export function defaultGalleryEntry(): GalleryEntry | undefined {
+  return worksheetGalleryConfig.entries[0];
+}
+
+/**
+ * Catalog sheets that include `typeId`: the seed counts, and so does any
+ * topic the progressive plan actually places on the sheet.
+ */
+export function worksheetsIncludingTopic(
+  typeId: string,
+  plannedTopicsById: Readonly<Record<string, readonly string[]>> = {},
+): GalleryEntry[] {
+  const topic = typeId.trim();
+  if (!topic) return [];
+  return listGalleryEntries().filter((entry) => {
+    if (entry.seeds.includes(topic)) return true;
+    return plannedTopicsById[entry.id]?.includes(topic) ?? false;
+  });
+}
+
+/** Topic matches first, then the rest of the catalog, with no duplicate ids. */
+export function splitWorksheetChoices(
+  typeId: string,
+  plannedTopicsById: Readonly<Record<string, readonly string[]>> = {},
+): { includesTopic: GalleryEntry[]; others: GalleryEntry[] } {
+  const includesTopic = worksheetsIncludingTopic(typeId, plannedTopicsById);
+  const includeIds = new Set(includesTopic.map((entry) => entry.id));
+  const others = listGalleryEntries().filter((entry) => !includeIds.has(entry.id));
+  return { includesTopic, others };
+}
+
 export function getGalleryEntry(id: string): GalleryEntry | undefined {
   return worksheetGalleryConfig.entries.find((entry) => entry.id === id);
 }

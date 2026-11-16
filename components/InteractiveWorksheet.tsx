@@ -208,7 +208,10 @@ export function InteractiveWorksheet({
       <section className="panel preview worksheet-page" id="worksheet-preview" aria-busy={loading}>
         <header className="worksheet-header">
           <h2>{worksheet?.title || pageTitle}</h2>
-          <p className="worksheet-meta">Name: ________________________________ Date: ____________</p>
+          <p className="worksheet-meta">
+            <span>Name: ________________________</span>
+            <span>Date: ______________</span>
+          </p>
         </header>
         <p className="worksheet-page-status">
           {loading ? "Building this page…" : "Choose a worksheet, or add a topic."}
@@ -273,7 +276,10 @@ export function InteractiveWorksheet({
       {previewMode ? <WorksheetWatermark /> : null}
       <header className="worksheet-header">
         <h2>{worksheet.title}</h2>
-        <p className="worksheet-meta">Name: ________________________________ Date: ____________</p>
+        <p className="worksheet-meta">
+          <span>Name: ________________________</span>
+          <span>Date: ______________</span>
+        </p>
         {headerInstruction && (
           <p className="worksheet-instruction">
             <InstructionLatex content={headerInstruction} />
@@ -281,8 +287,11 @@ export function InteractiveWorksheet({
         )}
       </header>
 
-      <p className="interactive-hint interactive-only">
+      <p className="interactive-hint interactive-only interactive-hint-desktop">
         Drag a question card to reorder. Right-click for settings, regenerate, or spacing. Press R to regenerate the selected question.
+      </p>
+      <p className="interactive-hint interactive-only interactive-hint-mobile">
+        Tap a question to select it.
       </p>
 
       <div

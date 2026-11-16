@@ -15,7 +15,10 @@ function GeneratorFallback() {
       <section className="panel preview worksheet-page" aria-busy="true">
         <header className="worksheet-header">
           <h2>{entry?.title ?? "Math Practice"}</h2>
-          <p className="worksheet-meta">Name: ________________________________ Date: ____________</p>
+          <p className="worksheet-meta">
+            <span>Name: ________________________</span>
+            <span>Date: ______________</span>
+          </p>
         </header>
         <p className="worksheet-page-status">Opening the worksheet…</p>
       </section>

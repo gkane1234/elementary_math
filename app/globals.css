@@ -20,6 +20,11 @@ body {
   padding: 2rem 1.5rem 3rem;
 }
 
+.container:has(.worksheet-workspace),
+.container:has(.worksheet-stage) {
+  max-width: 1680px;
+}
+
 .site-header {
   margin-bottom: 1.5rem;
 }
@@ -130,10 +135,163 @@ body {
 
 .worksheet-workspace {
   display: grid;
-  grid-template-columns: minmax(220px, 260px) minmax(0, 1fr) minmax(380px, 460px);
+  grid-template-columns: minmax(220px, 250px) minmax(0, 1fr) minmax(280px, 320px);
+  grid-template-areas: "settings page topics";
   gap: 1.25rem;
+  align-items: start;
+  min-height: calc(100vh - 8rem);
+}
+
+.left-rail {
+  grid-area: settings;
+}
+
+.worksheet-stage {
+  grid-area: page;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.worksheet-stage-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.worksheet-picker {
+  flex: 1 1 16rem;
+  min-width: min(100%, 16rem);
+  margin-bottom: 0;
+}
+
+.preset-rail {
+  flex: 0 0 auto;
+  max-height: 18rem;
+  overflow: auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.85rem 0.9rem 0.7rem;
+}
+
+.preset-rail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.preset-rail-header h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.preset-save {
+  width: auto;
+  padding: 0.35rem 0.65rem;
+  background: #111827;
+  color: #ffffff;
+  font-size: 0.85rem;
+}
+
+.preset-group h3 {
+  margin: 0.35rem 0 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.preset-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.2rem 0.45rem;
+  padding: 0.35rem 0;
+}
+
+.preset-row-title {
+  flex: 1 1 8rem;
+  min-width: 0;
+  font-size: 0.88rem;
+  line-height: 1.3;
+}
+
+.preset-kind {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.preset-row-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.3rem;
+}
+
+.preset-row-actions button {
+  width: auto;
+  padding: 0.2rem 0.45rem;
+  background: #ffffff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  font-size: 0.78rem;
+}
+
+.preset-empty {
+  margin: 0;
+}
+
+.worksheet-stage-pay {
+  display: flex;
+  flex-direction: column;
   align-items: stretch;
-  min-height: calc(100vh - 2rem);
+  gap: 0.5rem;
+  flex: 1 1 16rem;
+  max-width: 22rem;
+}
+
+.worksheet-stage-pay .primary,
+.worksheet-stage-pay .secondary {
+  width: 100%;
+}
+
+.worksheet-pay-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.preview.worksheet-page {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  width: 100%;
+  max-width: 8.5in;
+  margin: 0 auto;
+  padding: 0.65in 0.6in;
+  box-sizing: border-box;
+}
+
+.preview.worksheet-page:not(:has(.question-grid)) {
+  min-height: 11in;
+}
+
+.worksheet-page-status {
+  margin: 1.5rem 0 0;
+  color: #6b7280;
 }
 
 .left-rail,
@@ -152,8 +310,10 @@ body {
 }
 
 .right-rail.topics-rail {
+  grid-area: topics;
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
   max-height: calc(100vh - 2rem);
   height: calc(100vh - 2rem);
   min-height: 0;
@@ -1744,6 +1904,10 @@ button:disabled {
 @media (max-width: 1100px) {
   .worksheet-workspace {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "page"
+      "topics"
+      "settings";
   }
 
   .left-rail,
@@ -1782,6 +1946,7 @@ button:disabled {
   .landing,
   .left-rail,
   .right-rail,
+  .worksheet-stage-bar,
   .interactive-only,
   .selection-toolbar,
   .context-menu,
@@ -1807,6 +1972,14 @@ button:disabled {
   .panel {
     border: none;
     box-shadow: none;
+    padding: 0;
+  }
+
+  .preview.worksheet-page {
+    border: none;
+    max-width: none;
+    min-height: 0;
+    margin: 0;
     padding: 0;
   }
 

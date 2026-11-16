@@ -24,6 +24,8 @@ type CurriculumTopicPickerProps = {
   types: QuestionTypeInfo[];
   selectedTypeId: string;
   onTypeIdChange: (typeId: string) => void;
+  /** Fired when the highlighted topic changes, including prerequisite browsing. */
+  onBrowseTypeId?: (typeId: string | null) => void;
 };
 
 type TopicGroup = {
@@ -79,6 +81,7 @@ export function CurriculumTopicPicker({
   types,
   selectedTypeId,
   onTypeIdChange,
+  onBrowseTypeId,
 }: CurriculumTopicPickerProps) {
   const courses = useMemo(() => buildCurriculumPicker(undefined, types), [types]);
   const unmappedTypes = useMemo(() => getUnmappedTypes(types, courses), [types, courses]);
@@ -152,6 +155,14 @@ export function CurriculumTopicPicker({
     const course = courses.find((entry) => entry.id === prereqView.courseId);
     return course?.chapters.find((entry) => entry.id === prereqView.chapterId)?.name ?? null;
   }, [courses, prereqView]);
+
+  const browsedTypeId = useFallback
+    ? focusedUnmappedId
+    : (prereqViewTopic?.typeId ?? null);
+
+  useEffect(() => {
+    onBrowseTypeId?.(browsedTypeId);
+  }, [onBrowseTypeId, browsedTypeId]);
 
   useEffect(() => {
     if (types.length === 0) return;

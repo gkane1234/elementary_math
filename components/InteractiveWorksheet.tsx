@@ -41,6 +41,9 @@ function isTypingTarget(target: EventTarget | null): boolean {
 type InteractiveWorksheetProps = {
   worksheet: WorksheetDraft | null;
   types: QuestionTypeInfo[];
+  /** Shown on the blank page before questions arrive. */
+  pageTitle?: string;
+  loading?: boolean;
   previewMode?: boolean;
   onChange: (worksheet: WorksheetDraft) => void;
   onError?: (message: string) => void;
@@ -135,6 +138,8 @@ function SectionInstruction({ content }: { content: string }) {
 export function InteractiveWorksheet({
   worksheet,
   types,
+  pageTitle = "Math Practice",
+  loading = false,
   previewMode = false,
   onChange,
   onError,
@@ -200,9 +205,14 @@ export function InteractiveWorksheet({
 
   if (!worksheet || worksheet.questions.length === 0) {
     return (
-      <section className="panel preview empty">
-        <p>Add topics and build a worksheet to start editing.</p>
-        <p className="hint">Right-click a question to edit or regenerate. Drag to reorder.</p>
+      <section className="panel preview worksheet-page" id="worksheet-preview" aria-busy={loading}>
+        <header className="worksheet-header">
+          <h2>{worksheet?.title || pageTitle}</h2>
+          <p className="worksheet-meta">Name: ________________________________ Date: ____________</p>
+        </header>
+        <p className="worksheet-page-status">
+          {loading ? "Building this page…" : "Choose a worksheet, or add a topic."}
+        </p>
       </section>
     );
   }
@@ -257,7 +267,7 @@ export function InteractiveWorksheet({
 
   return (
     <section
-      className={`panel preview${previewMode ? " is-preview-watermarked" : ""}`}
+      className={`panel preview worksheet-page${previewMode ? " is-preview-watermarked" : ""}`}
       id="worksheet-preview"
     >
       {previewMode ? <WorksheetWatermark /> : null}

@@ -41,7 +41,7 @@ export function PayForPdfButton({
 
   return (
     <button className="primary" type="button" onClick={handleClick} disabled={disabled || loading}>
-      {loading ? "Redirecting to checkout..." : `Download PDF — ${formatPdfPrice(priceCents)}`}
+      {loading ? "Redirecting to checkout..." : `Pay for this worksheet — ${formatPdfPrice(priceCents)}`}
     </button>
   );
 }

@@ -685,7 +685,15 @@ button:disabled {
 }
 
 .worksheet-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1.25rem;
   margin: 0 0 1rem;
+}
+
+.worksheet-meta span {
+  flex: 1 1 11rem;
 }
 
 .worksheet-instruction {
@@ -1901,22 +1909,105 @@ button:disabled {
   border-top: 2px dashed #d1d5db;
 }
 
+.interactive-hint-mobile {
+  display: none;
+}
+
+/* Narrow layout. The desktop worksheet page stays the three-column view. */
 @media (max-width: 1100px) {
+  .container {
+    padding: 0.85rem 0.75rem 2.5rem;
+  }
+
+  .site-header {
+    margin-bottom: 0.85rem;
+  }
+
   .worksheet-workspace {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "page"
       "topics"
       "settings";
+    gap: 0.85rem;
+    min-height: 0;
   }
 
   .left-rail,
-  .right-rail {
+  .right-rail,
+  .right-rail.topics-rail,
+  .topics-browser-panel,
+  .topics-browser-panel-fill,
+  .action-rail {
     position: static;
+    height: auto;
+    max-height: none;
+    overflow: visible;
   }
 
-  .action-rail {
-    max-height: min(70vh, 520px);
+  .action-rail-scroll {
+    overflow: visible;
+  }
+
+  .worksheet-workspace .curriculum-topic-list {
+    flex: none;
+    height: min(22rem, 55vh);
+    min-height: 12rem;
+  }
+
+  .preset-rail {
+    max-height: none;
+  }
+
+  .preview.worksheet-page {
+    padding: 1rem 0.85rem 1.35rem;
+    max-width: none;
+  }
+
+  .preview.worksheet-page:not(:has(.question-grid)) {
+    min-height: 14rem;
+  }
+
+  .worksheet-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .interactive-hint-desktop {
+    display: none;
+  }
+
+  .interactive-hint-mobile {
+    display: block;
+  }
+}
+
+@media (max-width: 720px) {
+  .worksheet-stage-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .worksheet-picker,
+  .worksheet-stage-pay {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .worksheet-picker select,
+  .worksheet-stage-pay .primary,
+  .worksheet-stage-pay .secondary {
+    min-height: 2.75rem;
+  }
+
+  .question-grid.interactive-only {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .preview.worksheet-page {
+    padding: 0.9rem 0.75rem 1.15rem;
   }
 }
 

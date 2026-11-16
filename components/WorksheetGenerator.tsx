@@ -111,7 +111,7 @@ export function WorksheetGenerator() {
   const [addingTypeId, setAddingTypeId] = useState<string | null>(null);
   const [paid, setPaid] = useState(Boolean(restoredUnlock));
   const [worksheetId, setWorksheetId] = useState<string | null>(restoredUnlock?.worksheetId ?? null);
-  const [paymentsRequired, setPaymentsRequired] = useState(true);
+  const [paymentsRequired, setPaymentsRequired] = useState<boolean | null>(null);
   const [pdfPriceCents, setPdfPriceCents] = useState(300);
   const [subscriptionPriceCents, setSubscriptionPriceCents] = useState(1000);
   const [subscriptionEnabled, setSubscriptionEnabled] = useState(false);
@@ -638,8 +638,8 @@ export function WorksheetGenerator() {
 
   const unlocked = paid || subscriberEntitled;
   const canExport = Boolean(worksheet && worksheet.questions.length > 0 && !loading);
-  const exportEnabled = canExport && (!paymentsRequired || unlocked);
-  const showPaymentGate = paymentsRequired && !unlocked;
+  const exportEnabled = canExport && (paymentsRequired !== true || unlocked);
+  const showPaymentGate = paymentsRequired === true && !unlocked;
 
   return (
     <>

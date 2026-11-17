@@ -10,6 +10,8 @@ Steps 1–3 only (old live samples, intended look, OpenStax). No engine implemen
 
 **D=0:** same hanger as equations but `nx ≤ k` with small positives; answer `x ≤ k/n`.
 
+**Figure:** same two columns as equation hangers (green `x` squares opposite a labeled total). The beam tilts down on the greater side: `≤` lowers the total, `≥` lowers the `x` squares.
+
 **High D:** flip to `≥`; larger multiples. Still one-step. Do **not** reverse-inequality with negatives at G6 unless old SVG does (it does not).
 
 ## What old path actually produced
@@ -44,6 +46,7 @@ G6 hangers: **IM Grade 6 Unit 6** (balanced vs unbalanced mobiles).
 
 - Flags: **UNCLEAR**, **LOW_VARIETY**.
 - **LOW_VARIETY:** only `nx ≤ k` or `nx ≥ k`. Prompt template is one sentence. No `x+a < b`, no graph-on-number-line (that is `g6_solving_and_graphing_one_step_inequalities`, backfill-owned).
+- The figure is a two-column unbalanced hanger for `nx ? k` only. It does not draw both-sides sums, sub-hangers, or crossed-out solution steps.
 
 ## Proposed engine (proposal only)
 

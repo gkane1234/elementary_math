@@ -6561,20 +6561,23 @@ class Grade6VisualFramework(NumberFramework):
                 parts = random.randint(5, 9)
                 solution = random.randint(6, 24)
             total = parts * solution
-            self._metadata = {
-                "diagram_svg": hanger_svg(parts, total, inequality=inequality)
-            }
             if inequality:
                 if d < 8:
                     relation = "\\le"
-                elif d < 16:
-                    relation = random.choice(["\\le", "\\ge"])
                 else:
                     relation = random.choice(["\\le", "\\ge"])
                 answer_relation = relation
             else:
                 relation = "="
                 answer_relation = "="
+            self._metadata = {
+                "diagram_svg": hanger_svg(
+                    parts,
+                    total,
+                    inequality=inequality,
+                    relation=relation,
+                )
+            }
             return (
                 f"\\text{{Use the diagram to solve }} {parts}x {relation} {total}.",
                 f"Solve {parts}x {relation.replace(chr(92), '')} {total}",

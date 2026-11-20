@@ -1130,18 +1130,46 @@ class TrapezoidAreaFramework(GeometryFramework):
         self._last: dict[str, Any] = {}
 
     def build_prompt(self, settings: dict) -> tuple[str, str, str | None]:
+        from question_engine.frameworks.form_mix import form_slot
+
         unit = _measurement_unit(settings)
         b1, b2, h = _sample_trapezoid_dims(settings)
         area = (b1 + b2) * h / 2
-        prompt = "\\text{Find the area of the trapezoid.}"
-        answer = f"{area:g}\\text{{ {unit}}}^2"
+        slot = form_slot(settings, 3)
+        if slot == 1:
+            prompt = (
+                f"\\text{{A trapezoid has bases }} {b1}\\text{{ {unit} and }} {b2}"
+                f"\\text{{ {unit}, and area }} {area:g}\\text{{ {unit}}}^2. "
+                f"\\text{{Find the height.}}"
+            )
+            answer = f"{h:g}\\text{{ {unit}}}"
+            figure = trapezoid_figure(
+                float(b1), float(b2), float(h), unit=unit, show_dimensions=False
+            )
+            tag = f"trapezoid missing height A={area:g}"
+        elif slot == 2:
+            prompt = (
+                f"\\text{{A trapezoid has area }} {area:g}\\text{{ {unit}}}^2, "
+                f"\\text{{one base }} {b1}\\text{{ {unit}, and height }} {h}"
+                f"\\text{{ {unit}. Find the other base.}}"
+            )
+            answer = f"{b2:g}\\text{{ {unit}}}"
+            figure = trapezoid_figure(
+                float(b1), float(b2), float(h), unit=unit, show_dimensions=False
+            )
+            tag = f"trapezoid missing base A={area:g}"
+        else:
+            prompt = "\\text{Find the area of the trapezoid.}"
+            answer = f"{area:g}\\text{{ {unit}}}^2"
+            figure = trapezoid_figure(float(b1), float(b2), float(h), unit=unit)
+            tag = f"trapezoid area b1={b1} b2={b2} h={h}"
         self._last = {
-            "figure": trapezoid_figure(float(b1), float(b2), float(h), unit=unit),
+            "figure": figure,
             "b1": b1,
             "b2": b2,
             "h": h,
         }
-        return prompt, f"trapezoid area b1={b1} b2={b2} h={h}", answer
+        return prompt, tag, answer
 
     def build_metadata(self, settings: dict) -> dict[str, Any]:
         return {}
@@ -2183,6 +2211,36 @@ class RemainingGeometryFramework(GeometryFramework):
                     "HL",
                 ),
             }
+            from question_engine.frameworks.form_mix import form_slot
+
+            if form_slot(settings, 3) == 1:
+                decide = [
+                    (
+                        r"\text{Two triangles have three pairs of corresponding congruent sides. "
+                        r"Are the triangles congruent?}",
+                        r"\text{yes}",
+                    ),
+                    (
+                        r"\text{Two triangles have two pairs of congruent sides and the "
+                        r"included angles congruent. Are the triangles congruent?}",
+                        r"\text{yes}",
+                    ),
+                    (
+                        r"\text{Two triangles have two pairs of corresponding congruent sides "
+                        r"and a non-included angle congruent. Are the triangles necessarily congruent?}",
+                        r"\text{no}",
+                    ),
+                ]
+                if proof_structure is not None and "HL" in proof_structure["theorems"]:
+                    decide.append(
+                        (
+                            r"\text{Two right triangles have congruent hypotenuses and "
+                            r"one pair of congruent legs. Are the triangles congruent?}",
+                            r"\text{yes}",
+                        )
+                    )
+                prompt, answer = random.choice(decide)
+                return prompt, "decide whether congruent", answer
             if proof_structure is not None:
                 theorem = random.choice(list(proof_structure["theorems"]))
                 prompt, answer = theorem_prompts[theorem]

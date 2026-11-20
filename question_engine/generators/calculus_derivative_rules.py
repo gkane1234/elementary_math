@@ -260,6 +260,83 @@ def _madlibs_meta(generator_key: str, structure: dict, *, pack: str | None = Non
 
 
 
+def _eval_at_point_or_fg(generator_key: str, settings: dict, slot: int):
+    """Same derivative rule, other given/find. Returns None to keep the explicit derivative."""
+    from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+    d = settings_difficulty(settings, default=0.0)
+    c = random.randint(1, 3 if d < 12 else 5)
+    if d >= 16 and random.random() < 0.45:
+        c = -abs(c)
+    if generator_key == "derivative_power_rule" and slot == 3:
+        a = random.randint(1, 3 if d < 10 else 5)
+        n = 2 if d < 8 else random.choice((2, 3))
+        body = format_monomial_latex(a, variable="x", degree=n) or rf"{a}x^{{{n}}}"
+        val = a * n * (c ** (n - 1))
+        prompt = rf"\text{{Find }} f'({c}) \text{{ for }} f(x)={body}."
+        meta = {
+            "generator": generator_key,
+            "function_classes": ["algebraic"],
+            "methods_used": ["power"],
+            "chain_depth": 0,
+            "form_id": "power_at_point",
+            "question_form": "at_point",
+        }
+        return prompt, "power rule at a point", str(val), meta
+    if generator_key == "derivative_quotient_rule" and slot == 2:
+        p = random.randint(0, 3)
+        q = p + random.randint(1, 3)
+        if c == -q:
+            c = 0
+        val = Fraction(q - p, (c + q) ** 2)
+        prompt = (
+            rf"\text{{Find }} f'({c}) \text{{ for }} "
+            rf"f(x)=\dfrac{{x+{p}}}{{x+{q}}}."
+        )
+        meta = {
+            "generator": generator_key,
+            "function_classes": ["algebraic"],
+            "methods_used": ["quotient"],
+            "chain_depth": 0,
+            "form_id": "quotient_at_point",
+            "question_form": "at_point",
+        }
+        return prompt, "quotient rule at a point", frac_latex(val), meta
+    if generator_key in {"derivative_product_rule", "derivative_quotient_rule"} and slot == 3:
+        fa = random.randint(1, 3 if d < 12 else 5)
+        fb = random.randint(0, 4)
+        gd = random.randint(1, 4)
+        if c == -gd:
+            c = 0
+        f_at = fa * c + fb
+        g_at = c + gd
+        if generator_key == "derivative_product_rule":
+            val = fa * g_at + f_at
+            built = rf"f(x)g(x)"
+            method = "product"
+            fid = "product_fg_at_point"
+        else:
+            val = Fraction(fa * g_at - f_at, g_at * g_at)
+            built = r"\dfrac{f(x)}{g(x)}"
+            method = "quotient"
+            fid = "quotient_fg_at_point"
+        prompt = (
+            rf"\text{{Let }} f(x)={fa}x+{fb} \text{{ and }} g(x)=x+{gd}. "
+            rf"\text{{Find the derivative of }} {built} \text{{ at }} x={c}."
+        )
+        answer = str(val) if isinstance(val, int) else frac_latex(val)
+        meta = {
+            "generator": generator_key,
+            "function_classes": ["algebraic"],
+            "methods_used": [method],
+            "chain_depth": 0,
+            "form_id": fid,
+            "question_form": "from_f_and_g",
+        }
+        return prompt, f"{method} rule from f and g", answer, meta
+    return None
+
+
 def _framework_generator(generator_key: str):
     """Build a question list via the continuous-D derivative sampler."""
 
@@ -284,6 +361,16 @@ def _framework_generator(generator_key: str):
         }.get(generator_key, "derivative")
 
         def build() -> tuple[str, str, str | None]:
+            from question_engine.frameworks.form_mix import form_slot
+
+            slot = form_slot(settings, 4)
+            alt = _eval_at_point_or_fg(generator_key, settings, slot)
+            if alt is not None:
+                prompt, text, answer, meta = alt
+                build._last_meta = meta  # type: ignore[attr-defined]
+                if not include_answer_key:
+                    answer = None
+                return prompt, text, answer
             sample = sample_derivative_expression(
                 settings, generator_key=generator_key, topic=topic
             )

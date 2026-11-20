@@ -963,7 +963,11 @@ def test_live_product_d0_no_three_deep_nest() -> None:
         )[0]
         meta = q.metadata or {}
         fid = str(meta.get("form_id") or "")
-        assert fid in {"", "product_two_poly"}, (seed, fid, q.prompt_latex)
+        assert fid in {"", "product_two_poly", "product_fg_at_point"}, (
+            seed,
+            fid,
+            q.prompt_latex,
+        )
         assert int(meta.get("chain_depth") or 0) < 3, q.prompt_latex
         assert "product" in (meta.get("methods_used") or [])
 

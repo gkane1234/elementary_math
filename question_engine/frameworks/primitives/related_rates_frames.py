@@ -33,6 +33,39 @@ def _frac(num: int, den: int) -> str:
     return rf"\frac{{{num}}}{{{den}}}"
 
 
+def _y_of_x(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesItem:
+    """Given y in terms of x and dx/dt, find dy/dt at a given x."""
+    x = rng.randint(1, max(1, min(5, r_max)))
+    dxdt = rng.randint(1, max(1, rate_max))
+    b = rng.randint(0, 4)
+    # Published shape y = x^2 + b stays available at every difficulty.
+    if rng.random() < 0.55:
+        y_tex = rf"x^{{2}}+{b}" if b else r"x^{2}"
+        dydt = 2 * x * dxdt
+    else:
+        k = rng.randint(1, max(1, min(4, r_max)))
+        if b and k != 1:
+            y_tex = rf"{k}x+{b}"
+        elif b:
+            y_tex = rf"x+{b}"
+        elif k == 1:
+            y_tex = "x"
+        else:
+            y_tex = rf"{k}x"
+        dydt = k * dxdt
+    return RelatedRatesItem(
+        prompt_latex=(
+            rf"\text{{Find }}\frac{{dy}}{{dt}}\text{{ at }} x={x} "
+            rf"\text{{ if }} y={y_tex} \text{{ and }} "
+            rf"\frac{{dx}}{{dt}}={dxdt}."
+        ),
+        answer_latex=str(dydt),
+        label="related rates y of x",
+        frame_id="y_of_x",
+        metadata={"x": x, "dxdt": dxdt, "quantity": "dy_dt"},
+    )
+
+
 def _circle_area(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRatesItem:
     r = rng.randint(2, max(2, r_max))
     drdt = rng.randint(1, max(1, rate_max))
@@ -312,6 +345,7 @@ def _rocket_angle(rng: random.Random, *, r_max: int, rate_max: int) -> RelatedRa
 
 
 _FRAME_BUILDERS: dict[str, Callable[..., RelatedRatesItem]] = {
+    "y_of_x": _y_of_x,
     "expanding_circle": _circle_area,
     "expanding_sphere": _sphere_volume,
     "balloon_radius": _balloon_radius,
@@ -330,14 +364,15 @@ RELATED_RATES_GENERATOR = "related_rates_simple"
 # D-band unlocks (OpenStax §4.1 rotation). D=0 stays circle-only (old easy).
 # Easy leftovers lock out at higher bands (same idea as PFD d_max).
 FRAME_BANDS: dict[str, tuple[str, ...]] = {
-    "easy": ("expanding_circle",),
-    "medium": ("expanding_circle", "expanding_sphere", "balloon_radius"),
-    "hard": ("balloon_radius", "cone_similar", "sliding_ladder"),
+    "easy": ("expanding_circle", "y_of_x"),
+    "medium": ("expanding_circle", "expanding_sphere", "balloon_radius", "y_of_x"),
+    "hard": ("balloon_radius", "cone_similar", "sliding_ladder", "y_of_x"),
     "very_hard": (
         "sliding_ladder",
         "lamp_shadow",
         "airplane_distance",
         "cone_drain",
+        "y_of_x",
     ),
     "expert": (
         "lamp_shadow",
@@ -345,12 +380,14 @@ FRAME_BANDS: dict[str, tuple[str, ...]] = {
         "cone_drain",
         "two_rate_distance",
         "rocket_angle",
+        "y_of_x",
     ),
 }
 
 # Catalog-shaped rows for ``select_form_id``. D gates match ``related_frames_for_difficulty``.
 # Not a JSON ``openstax_form_catalogs/*.json`` — WP Python frames, same picker API.
 _FRAME_D_GATES: dict[str, tuple[float, float | None]] = {
+    "y_of_x": (0.0, None),
     "expanding_circle": (0.0, 9.999),
     "expanding_sphere": (4.0, 9.999),
     "balloon_radius": (4.0, 15.999),

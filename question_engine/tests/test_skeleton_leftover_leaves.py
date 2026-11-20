@@ -421,17 +421,20 @@ def test_a1_slope_write_and_graph():
     assert _pat(gi) == "GraphLinearIneq"
 
 
-def test_more_on_slope_is_parallel_perp_not_points():
+def test_more_on_slope_is_parallel_perp_and_two_points():
+    blobs = []
     for seed in range(12):
         q = _q("more_on_slope", 0.0, seed=101 + seed)
         assert _pat(q) == "MoreOnSlope"
         blob = ((q.prompt_latex or "") + " " + (q.prompt_text or "")).lower()
-        assert "through" not in blob
-        assert "parallel" in blob
+        blobs.append(blob)
+        assert "parallel" in blob or "perpendicular" in blob or "through" in blob
+    assert any("parallel" in blob for blob in blobs)
+    assert any("through" in blob for blob in blobs)
     hi = _q("more_on_slope", 16.0, seed=207)
     assert _pat(hi) == "MoreOnSlope"
     hi_blob = ((hi.prompt_latex or "") + " " + (hi.prompt_text or "")).lower()
-    assert "perpendicular" in hi_blob or "parallel" in hi_blob
+    assert "perpendicular" in hi_blob or "parallel" in hi_blob or "through" in hi_blob
 
 
 def test_unclear_function_leaves_still_generate():

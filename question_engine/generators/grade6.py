@@ -99,7 +99,8 @@ def g6_fraction_multiply(topic: str, settings: dict) -> list[Question]:
 
 def g6_fraction_divide(topic: str, settings: dict) -> list[Question]:
     # Grade 6 dividing fractions stays non-negative; effort is cancel structure.
-    settings = {**settings, "allow_negative": False}
+    # Seeded sets also ask how many groups, and a related quotient.
+    settings = {**settings, "allow_negative": False, "g6_divide_forms": True}
     return _framework_generator(_FRAC_DIVIDE, topic, settings)
 
 

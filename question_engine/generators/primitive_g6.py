@@ -420,7 +420,49 @@ def _equation_generator(force_steps: str | None):
             )
             force = force_steps if force_steps in {"one", "two", "multi"} else None
             if use_solve_linear_skeleton(local):
+                from question_engine.frameworks.form_mix import form_slot
+
                 eq = sample_solve_linear(ctx, force_steps=force)
+                # One-step sets also ask whether a given value is a solution.
+                # The equation stays one-step; hard may use a wrong candidate.
+                if (
+                    force == "one"
+                    and eq.solution_kind == "unique"
+                    and form_slot(local, 3) != 0
+                ):
+                    true_s = Fraction(eq.solution)
+                    if form_slot(local, 3) == 1:
+                        cand = true_s
+                    else:
+                        cand = true_s + 1
+                    is_sol = cand == true_s
+                    shown = (
+                        str(cand.numerator)
+                        if cand.denominator == 1
+                        else frac_latex(cand)
+                    )
+                    prompt = (
+                        rf"\text{{Is }} {eq.var_latex} = {shown} "
+                        rf"\text{{ a solution of }} {eq.latex}\text{{?}}"
+                    )
+                    text = f"Is {eq.var_name} = {shown} a solution of {eq.text}?"
+                    answer = (
+                        (r"\text{yes}" if is_sol else r"\text{no}")
+                        if include_answer_key
+                        else None
+                    )
+                    last["meta"] = {
+                        **ctx.metadata(),
+                        "primitive_engine": "equation_skeleton",
+                        "steps": eq.steps,
+                        "n_ops": eq.n_ops,
+                        "upgrades": list(eq.upgrades) + ["check_solution"],
+                        "solution_kind": eq.solution_kind,
+                        "is_solution": is_sol,
+                        **eq.metadata,
+                        "question_form": "check_solution",
+                    }
+                    return (prompt, text, answer)
                 if eq.solution_kind == "unique":
                     answer = (
                         f"{eq.var_latex} = {eq.solution_latex}"
@@ -436,6 +478,7 @@ def _equation_generator(force_steps: str | None):
                     "n_ops": eq.n_ops,
                     "upgrades": list(eq.upgrades),
                     "solution_kind": eq.solution_kind,
+                    "question_form": "solve",
                     **eq.metadata,
                 }
                 return (eq.latex, eq.text, answer)
@@ -707,6 +750,37 @@ def write_one_step_equation(topic: str, settings: dict) -> list[Question]:
     other = "other_relationship" in str(topic or "")
 
     def build() -> tuple[str, str, str | None]:
+        from question_engine.frameworks.form_mix import form_slot
+
+        if not other and form_slot(settings, 3) == 1:
+            rate = 4
+            try:
+                from question_engine.frameworks.difficulty_budget import settings_difficulty
+
+                d = settings_difficulty(settings, default=0.0)
+            except (TypeError, ValueError):
+                d = 0.0
+            rate = 5 if d < 8 else 8
+            hours = (1, 2, 3) if d < 12 else (2, 4, 6)
+            blanks = ", ".join(
+                str(rate * h) if h == hours[0] else r"\text{?}" for h in hours
+            )
+            times = ", ".join(str(h) for h in hours)
+            prompt = (
+                rf"\text{{A car travels at a constant speed of }} {rate}"
+                rf"\text{{ miles per hour. Complete the distances for }} {times}"
+                rf"\text{{ hours: }} {blanks}."
+            )
+            answer = ", ".join(str(rate * h) for h in hours) if include_answer_key else None
+            last["meta"] = {
+                "skeleton_pattern": "SolveLinear",
+                "primitive_engine": "wp_packaging",
+                "ask": "distance",
+                "vehicle": "car",
+                "question_form": "rate_table",
+                "wp_kind": "rate",
+            }
+            return prompt, "constant-rate table", answer
         ctx = build_context(
             local,
             [PRIM_NUMBERS, PRIM_VARIABLE, PRIM_EQUATIONS],

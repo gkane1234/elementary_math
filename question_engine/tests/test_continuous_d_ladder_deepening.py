@@ -233,7 +233,7 @@ def test_sequence_trig_proof_calc_app_knobs():
     a20 = calc_application_structure_from_continuous({"difficulty": 20})
     assert a0 is not None and a20 is not None
     assert a0["related_shapes"] == ("circle",)
-    assert a0["related_frames"] == ("expanding_circle",)
+    assert a0["related_frames"] == ("expanding_circle", "y_of_x")
     assert "cone" in a20["related_shapes"]
     assert "two_rate_distance" in a20["related_frames"]
     assert "expanding_circle" not in a20["related_frames"]

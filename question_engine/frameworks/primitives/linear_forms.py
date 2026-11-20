@@ -384,6 +384,38 @@ def sample_more_on_slope(ctx: PrimitiveContext) -> SlopeQuestion:
     else:
         mode = force
 
+    if mode == "two_points":
+        span = 3 + nt
+        x1 = int(rng.randint(-span, span))
+        y1 = int(rng.randint(-span, span))
+        dx = int(rng.choice([n for n in range(1, span + 2)]))
+        dy = int(rng.choice([n for n in range(-span - 1, span + 2) if n != 0]))
+        if nt == 0:
+            x1 = int(rng.randint(0, 4))
+            y1 = int(rng.randint(0, 4))
+            dx = int(rng.choice([1, 2, 3, 4]))
+            dy = int(rng.choice([-2, -1, 1, 2, 3]))
+        x2 = x1 + dx
+        y2 = y1 + dy
+        m = Fraction(dy, dx)
+        latex = (
+            f"\\text{{Find the slope of the line through }} ({x1}, {y1}) "
+            f"\\text{{ and }} ({x2}, {y2})."
+        )
+        text = f"Find the slope of the line through ({x1}, {y1}) and ({x2}, {y2})."
+        ans = num_latex(m)
+        upgrades = ("two_points",)
+        return SlopeQuestion(
+            latex=latex,
+            text=text,
+            answer_latex=ans,
+            slope=m,
+            mode="two_points",
+            upgrades=upgrades,
+            effective_d=eff,
+            line=LineCoeffs(m=m, b=Fraction(y1) - m * x1),
+            points=((x1, y1), (x2, y2)),
+        )
     if mode == "parallel":
         latex = (
             f"\\text{{A line has slope }} {num_latex(m)}. "

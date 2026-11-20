@@ -37,8 +37,14 @@ from urllib.parse import urljoin
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from scripts.mirror_openstax import discover_slugs  # noqa: E402
+from scripts.alignment_skill import (  # noqa: E402
+    filename_score,
+    item_matches,
+    section_slug_score,
+    skill_profile,
+)
 from scripts.example_mining.openstax_html_parse import parse_section_html  # noqa: E402
+from scripts.mirror_openstax import discover_slugs  # noqa: E402
 
 OUT = ROOT / "scripts" / "output" / "alignment_pack"
 CACHE = ROOT / "textbooks" / "alignment_cache"
@@ -586,7 +592,7 @@ def anchor_groups(topic: dict) -> list[list[str]]:
         (r"logarithm", ["logarithm"]),
         (r"exponential", ["exponential"]),
         (r"inequal", ["inequal"]),
-        (r"absolute", ["absolute"]),
+        (r"absolute value", ["absolute"]),
         (r"pythagorean", ["pythagorean"]),
         (r"\bgraph", ["graph"]),
         (r"\bsystem", ["system"]),
@@ -785,14 +791,19 @@ def structure_bonus(topic: dict, text: str) -> int:
     return bonus
 
 
-def focus_items(items: list[dict], topic: dict) -> list[dict]:
-    if len(items) < 6:
-        return items
-    scored = [(structure_bonus(topic, it.get("text") or ""), it) for it in items]
-    strong = [it for bonus, it in scored if bonus >= 3]
-    if len(strong) >= 4:
-        return strong
-    return items
+def focus_items(items: list[dict], topic: dict, generated: dict | None = None) -> list[dict]:
+    """Keep items that are this skill. A short list is not a reason to put the rest back."""
+    profile = skill_profile(topic, generated)
+    return [
+        it
+        for it in items
+        if item_matches(
+            it.get("text") or "",
+            profile,
+            heading=it.get("heading") or "",
+            source_text=it.get("section_title") or "",
+        )
+    ]
 
 
 def heading_allowed(heading: str, topic: dict) -> bool:
@@ -842,26 +853,166 @@ def split_ladder(items: list[dict]) -> dict[str, list[dict]]:
     }
 
 
-def select_openstax_items(sections: list[dict], topic: dict) -> dict[str, list[dict]]:
+# Slug needles for textbook wording that does not repeat the topic's word.
+# These only add candidates. The item gate still has to accept each exercise.
+VOCAB_SLUG_HINTS: list[tuple[str, list[str], float]] = [
+    (r"concav", ["shape-of-a-graph"], 9.0),
+    (r"extrem|absolute max|absolute min", ["maxima-and-minima"], 9.0),
+    (r"disk|washer", ["volumes-by-slicing"], 8.0),
+    (r"cylindrical shell|shell method", ["cylindrical-shell"], 8.0),
+    (r"arc length", ["arc-length"], 8.0),
+    (r"area between", ["areas-between"], 8.0),
+    (r"related rate", ["related-rate"], 9.0),
+    (r"mean value", ["mean-value"], 9.0),
+    (r"chain rule", ["chain-rule"], 9.0),
+    (r"quotient rule|product rule|power rule", ["differentiation-rules"], 8.0),
+    (r"implicit", ["implicit"], 8.0),
+    (r"linear approximation|differential", ["linear-approximation"], 8.0),
+    (r"lhopital|l'hospital|lhospital", ["lhopital"], 8.0),
+    (r"riemann", ["approximating-area"], 8.0),
+    (r"fundamental theorem", ["fundamental-theorem"], 8.0),
+    (r"graph\w* linear|writing linear equation", ["graph-linear", "graphing-linear"], 8.0),
+    (r"solv\w* linear equation|multi.step equation|one.step equation|two.step equation", ["solve-linear-equations"], 8.0),
+]
+
+
+def _cached_section(book: str, slug: str, section_cache: dict, *, fetch: bool) -> dict | None:
+    key = (book, slug)
+    if key in section_cache:
+        return section_cache[key]
+    path = CACHE / "openstax_parsed" / f"{book}__{slug}.json"
+    if path.exists():
+        section_cache[key] = json.loads(path.read_text(encoding="utf-8"))
+        return section_cache[key]
+    if not fetch:
+        return None
+    try:
+        section_cache[key] = load_openstax_section(book, slug)
+    except Exception as exc:  # noqa: BLE001
+        log(f"  openstax fail {book}/{slug}: {exc}")
+        return None
+    return section_cache[key]
+
+
+def _matching_item_count(section: dict, profile, topic: dict) -> int:
+    source = section.get("title") or ""
+    count = 0
+    for it in section.get("items") or []:
+        if it.get("kind") not in {"section_exercise", "other_exercise", "checkpoint"}:
+            continue
+        if not usable_item(it):
+            continue
+        if item_matches(it.get("text") or "", profile, heading=it.get("heading") or "", source_text=source):
+            count += 1
+    return count
+
+
+def openstax_candidates(topic: dict, slugs: dict[str, list[str]], profile) -> list[tuple[float, str, str]]:
+    ranked: list[tuple[float, str, str]] = []
+    seen: set[tuple[str, str]] = set()
+
+    def add(score: float, book: str, slug: str) -> None:
+        if score <= 0 or (book, slug) in seen:
+            return
+        if not slug_ok(topic, slug):
+            return
+        if re.search(r"application|everyday", slug) and not profile.word_problem:
+            return
+        seen.add((book, slug))
+        ranked.append((score, book, slug))
+
+    for rank, book in enumerate(BOOKS_FOR_COURSE.get(topic["course_id"], [])):
+        for slug in slugs.get(book, []):
+            add(section_slug_score(slug, profile, book_rank=rank), book, slug)
+    name = f"{topic['name']} {topic['type_id']}"
+    for pattern, needles, bonus in VOCAB_SLUG_HINTS:
+        if not re.search(pattern, name, re.I):
+            continue
+        for book in BOOKS_FOR_COURSE.get(topic["course_id"], []):
+            for slug in slugs.get(book, []):
+                if any(needle in slug for needle in needles):
+                    add(bonus, book, slug)
+    ranked.sort(key=lambda row: -row[0])
+    return ranked[:8]
+
+
+def choose_openstax_sections(
+    topic: dict,
+    generated: dict,
+    slugs: dict[str, list[str]],
+    section_cache: dict,
+) -> list[dict]:
+    """Pick the section whose exercises are this skill. Do not pad from a neighbor."""
+    profile = skill_profile(topic, generated)
+
+    def consider(pairs: list[tuple[str, str]], *, fetch: bool) -> tuple[int, list[dict]]:
+        sections = []
+        for book, slug in pairs:
+            section = _cached_section(book, slug, section_cache, fetch=fetch)
+            if section is not None:
+                sections.append(section)
+        return sum(_matching_item_count(section, profile, topic) for section in sections), sections
+
+    pinned = pin_sections(topic, slugs)
+    if pinned:
+        count, sections = consider(pinned, fetch=True)
+        if count >= 1:
+            return sections
+
+    candidates = openstax_candidates(topic, slugs, profile)
+    best: tuple[int, float, dict] | None = None
+    for score, book, slug in candidates:
+        section = _cached_section(book, slug, section_cache, fetch=False)
+        if section is None:
+            continue
+        count = _matching_item_count(section, profile, topic)
+        if best is None or (count, score) > (best[0], best[1]):
+            best = (count, score, section)
+    if best is not None and best[0] >= 2:
+        return [best[2]]
+
+    fetches = 0
+    for score, book, slug in candidates:
+        if _cached_section(book, slug, section_cache, fetch=False) is not None:
+            continue
+        if fetches >= 3:
+            break
+        fetches += 1
+        section = _cached_section(book, slug, section_cache, fetch=True)
+        if section is None:
+            continue
+        count = _matching_item_count(section, profile, topic)
+        if best is None or (count, score) > (best[0], best[1]):
+            best = (count, score, section)
+        if best[0] >= 4:
+            break
+    if best is not None and best[0] >= 1:
+        return [best[2]]
+    return []
+
+
+def select_openstax_items(sections: list[dict], topic: dict, generated: dict | None = None) -> dict[str, list[dict]]:
+    profile = skill_profile(topic, generated)
     pool: list[dict] = []
     for section in sections:
-        exercises = [
-            it
-            for it in section["items"]
-            if it["kind"] == "section_exercise" and usable_item(it) and heading_allowed(it.get("heading") or "", topic)
-        ]
-        if len(exercises) >= 4:
-            chosen = exercises
-        else:
-            chosen = [
+        source = section.get("title") or ""
+
+        def matches(it: dict, source: str = source) -> bool:
+            return usable_item(it) and item_matches(
+                it.get("text") or "",
+                profile,
+                heading=it.get("heading") or "",
+                source_text=source,
+            )
+
+        exercises = [it for it in section["items"] if it["kind"] == "section_exercise" and matches(it)]
+        if len(exercises) < 2:
+            exercises = [
                 it
                 for it in section["items"]
-                if usable_item(it)
-                and heading_allowed(it.get("heading") or "", topic)
-                and it["kind"] in {"section_exercise", "other_exercise", "checkpoint", "example"}
+                if it["kind"] in {"section_exercise", "other_exercise", "checkpoint"} and matches(it)
             ]
-        chosen = prefer_heading_group(chosen, topic)
-        chosen = focus_items(chosen, topic)
+        chosen = exercises
         for it in chosen:
             it = dict(it)
             it["section_title"] = section["title"]
@@ -1086,34 +1237,31 @@ def topic_keys(topic: dict) -> list[str]:
     return keys
 
 
-def select_our_items(lesson: dict, topic: dict) -> dict[str, list[dict]]:
-    practice = [b for b in lesson.get("blocks", []) if b["kind"] == "practice" and len(b.get("text") or "") > 40]
-    keys = topic_keys(topic)
-    title_tokens = token_set(lesson.get("title") or "")
+def select_our_items(lesson: dict, topic: dict, generated: dict | None = None) -> dict[str, list[dict]]:
+    """Practice problems that are this skill. Spiral review at the end is not the hard tier."""
+    profile = skill_profile(topic, generated)
+    source = lesson.get("title") or ""
 
-    def on_topic(block: dict) -> bool:
-        blob = (block.get("text") or "") + " " + " ".join(img.get("alt") or "" for img in block.get("images") or [])
-        low = blob.lower()
-        if keys and any(k in low for k in keys):
-            return True
-        if title_tokens and (token_set(blob) & title_tokens):
-            return True
-        return False
+    def matches(block: dict) -> bool:
+        if len(block.get("text") or "") <= 40:
+            return False
+        alt = " ".join(img.get("alt") or "" for img in block.get("images") or [])
+        return item_matches(
+            block.get("text") or "",
+            profile,
+            heading=block.get("title") or "",
+            source_text=source,
+            alt=alt,
+        )
 
-    matched = [b for b in practice if on_topic(b)]
-    # IM lessons end with spiral review from other units. Drop that when the
-    # on-topic subset is still a real ladder.
-    if len(matched) >= 2:
-        practice = matched
-    if topic_is_visual(topic):
-        pictured = [b for b in practice if b.get("images")]
-        if len(pictured) >= 2:
-            practice = pictured
-    ladder = split_ladder(practice)
-    if sum(len(v) for v in ladder.values()) >= 2:
-        return ladder
-    activities = [b for b in lesson.get("blocks", []) if b["kind"] == "activity" and len(b.get("text") or "") > 40]
-    return split_ladder(practice + activities)
+    practice = [b for b in lesson.get("blocks", []) if b.get("kind") == "practice" and matches(b)]
+    # The lesson activities are the same skill when practice itself is thin.
+    # They are not a place to put an unrelated problem back in.
+    if len(practice) < 2:
+        for block in lesson.get("blocks", []):
+            if block.get("kind") == "activity" and matches(block) and block not in practice:
+                practice.append(block)
+    return split_ladder(practice)
 
 
 # ---------------------------------------------------------------------------
@@ -1153,20 +1301,17 @@ def ensure_im_filenames() -> list[dict]:
     return files
 
 
-def score_im_file(topic: dict, info: dict, pack_bias: set[str]) -> float:
-    name = info["name"].replace("_", " ").replace(".pdf", "")
-    tt = token_set(topic["name"] + " " + topic["type_id"] + " " + topic["chapter_name"])
-    ft = token_set(name)
-    inter = tt & ft
-    if not inter:
+def score_im_file(topic: dict, info: dict, pack_bias: set[str], generated: dict | None = None) -> float:
+    profile = skill_profile(topic, generated)
+    score = filename_score(info["name"].replace("_", " "), profile)
+    if score <= 0:
         return 0.0
-    score = len(inter) * 2.4 + sum(0.5 for t in inter if len(t) >= 7)
     if info["pack"] in pack_bias:
-        score += 1.2
+        score += 0.3
     return score
 
 
-def best_im_files(topic: dict, files: list[dict], k: int = 3) -> list[dict]:
+def best_im_files(topic: dict, files: list[dict], k: int = 3, generated: dict | None = None) -> list[dict]:
     course = topic["course_id"]
     if course == "geometry":
         bias = {"HSG"}
@@ -1180,8 +1325,8 @@ def best_im_files(topic: dict, files: list[dict], k: int = 3) -> list[dict]:
         bias = {"HSA", "G8", "G7", "HSF"}
     ranked = []
     for info in files:
-        sc = score_im_file(topic, info, bias)
-        if sc >= 2.4:
+        sc = score_im_file(topic, info, bias, generated)
+        if sc > 0:
             ranked.append((sc, info))
     ranked.sort(key=lambda pair: -pair[0])
     # Keep a spread: best, then next that is not the same stem prefix.
@@ -1356,30 +1501,19 @@ def build_reference(
         "note_bits": [],
     }
 
-    def attach_openstax(sections_spec: list[tuple[str, str]], match: str, score: float) -> None:
-        sections = []
-        for book, slug in sections_spec:
-            key = (book, slug)
-            if key not in section_cache:
-                try:
-                    section_cache[key] = load_openstax_section(book, slug)
-                except Exception as exc:  # noqa: BLE001
-                    log(f"  openstax fail {book}/{slug}: {exc}")
-                    continue
-            sections.append(section_cache[key])
+    def attach_sections(sections: list[dict]) -> None:
         if not sections:
             return
-        tiers = select_openstax_items(sections, topic)
+        tiers = select_openstax_items(sections, topic, generated)
         for tier, items in tiers.items():
             ref["tiers"][tier] = materialize_images(items)
         ref["title"] = " · ".join(s["title"] for s in sections)
         ref["url"] = sections[0]["url"]
         ref["license"] = OPENSTAX_LICENSE
         ref["source_name"] = " + ".join(BOOK_TITLE.get(s["book"], s["book"]) for s in sections)
-        ref["match"] = match if match in {"strong", "ok", "weak", "pin"} else ("strong" if score >= 4.6 else "ok" if score >= 3.2 else "weak")
-        if ref["match"] == "pin":
-            ref["match"] = "strong"
-        ref["ladder"] = True
+        n_items = sum(len(v) for v in tiers.values())
+        ref["match"] = "strong" if n_items >= 4 else "ok" if n_items else "weak"
+        ref["ladder"] = n_items >= 2
         if visual:
             figs = section_example_figures(sections)
             saved_figs = []
@@ -1389,13 +1523,72 @@ def build_reference(
                     saved_figs.append({**fig, "path": rel})
             ref["figures"] = saved_figs
 
+    def matching_im_cards(limit: int = 3) -> list[dict]:
+        profile = skill_profile(topic, generated)
+        chosen = best_im_files(topic, im_files, k=6, generated=generated)
+        cards = []
+        for info in chosen:
+            card = im_excerpt_and_png(info)
+            if item_matches(
+                card.get("text") or "",
+                profile,
+                heading=card.get("title") or "",
+                source_text=card.get("title") or "",
+            ):
+                cards.append(card)
+            if len(cards) >= limit:
+                break
+        cards.sort(key=lambda card: len(card.get("text") or ""))
+        return cards
+
+    def place_im_cards(cards: list[dict]) -> None:
+        slots = ["easy", "medium", "hard"]
+        if len(cards) == 1:
+            ref["tiers"]["medium"] = [_im_card(cards[0])]
+        elif len(cards) == 2:
+            ref["tiers"]["easy"] = [_im_card(cards[0])]
+            ref["tiers"]["hard"] = [_im_card(cards[1])]
+        else:
+            for slot, card in zip(slots, cards[:3]):
+                ref["tiers"][slot] = [_im_card(card)]
+        ref["kind"] = "im"
+        ref["title"] = "; ".join(c["title"] for c in cards[:3])
+        ref["url"] = "https://tasks.illustrativemathematics.org/content-standards"
+        ref["license"] = IM_LICENSE
+        ref["source_name"] = "Illustrative Mathematics task bank"
+        ref["match"] = "ok"
+        ref["ladder"] = False
+
     if kind == "our":
-        lesson, score = best_our_lesson(topic, our_catalog)
-        if lesson is None:
+        ranked = sorted(our_catalog, key=lambda lesson: -score_our_lesson(topic, lesson))
+        ordered: list[dict] = []
+        pin = OUR_LESSON_PINS.get(topic["type_id"])
+        if pin:
+            for lesson in our_catalog:
+                if (lesson["unit"], lesson["lesson"]) == pin:
+                    ordered.append(lesson)
+        for lesson in ranked:
+            if score_our_lesson(topic, lesson) <= 0:
+                break
+            if lesson not in ordered:
+                ordered.append(lesson)
+            if len(ordered) >= 4:
+                break
+        picked: tuple[dict, dict[str, list[dict]], float] | None = None
+        for lesson in ordered:
+            full = fetch_our_lesson(lesson)
+            tiers = select_our_items(full, topic, generated)
+            n_items = sum(len(v) for v in tiers.values())
+            score = score_our_lesson(topic, lesson)
+            if picked is None or n_items > picked[0]:
+                picked = (n_items, score, full, tiers)  # type: ignore[assignment]
+            if n_items >= 2:
+                picked = (n_items, score, full, tiers)  # type: ignore[assignment]
+                break
+        if picked is None:
             ref["match"] = "weak"
             return ref
-        full = fetch_our_lesson(lesson)
-        tiers = select_our_items(full, topic)
+        _n, score, full, tiers = picked
         for tier, items in tiers.items():
             prepared = []
             for it in items:
@@ -1403,18 +1596,19 @@ def build_reference(
                     {
                         "text": it.get("text") or "",
                         "title": it.get("title") or f"{it.get('kind')} {it.get('index')}",
-                        "heading": lesson["title"],
+                        "heading": full.get("title") or "",
                         "images": it.get("images") or [],
                         "kind": it.get("kind"),
                     }
                 )
             ref["tiers"][tier] = materialize_images(prepared)
-        ref["title"] = f"Grade 6 Unit {lesson['unit']} Lesson {lesson['lesson']}: {lesson['title']}"
-        ref["url"] = lesson["url"]
+        ref["title"] = f"Grade 6 Unit {full['unit']} Lesson {full['lesson']}: {full['title']}"
+        ref["url"] = full["url"]
         ref["license"] = OUR_LICENSE
         ref["source_name"] = "Open Up Resources Grade 6 (Illustrative Mathematics)"
-        ref["ladder"] = True
-        ref["match"] = "strong" if score >= 4 else "ok" if score >= 2.2 else "weak"
+        n_items = sum(len(v) for v in tiers.values())
+        ref["ladder"] = n_items >= 2
+        ref["match"] = "strong" if n_items >= 2 and score >= 4 else "ok" if n_items else "weak"
         if topic["type_id"] == "g6_inequalities_hanger_diagrams":
             ref["note_bits"].append(
                 "Open Up Grade 6 hangers are equality balances (Lesson 3, Staying in Balance). "
@@ -1423,85 +1617,50 @@ def build_reference(
         return ref
 
     if kind == "im":
-        chosen = best_im_files(topic, im_files, k=3)
-        if not chosen:
-            # fall back to OpenStax rather than an empty card
-            spec, score, quality = best_openstax(topic, slugs)
-            if spec and quality != "weak":
-                attach_openstax(spec, quality, score)
-                ref["note_bits"].append("No Illustrative Mathematics task filename matched this leaf, so the ladder is OpenStax.")
-                return ref
-            ref["match"] = "weak"
-            return ref
-        # Order short excerpt → long excerpt as a rough spread, and say so.
-        cards = [im_excerpt_and_png(info) for info in chosen]
-        cards.sort(key=lambda c: len(c.get("text") or ""))
-        slots = ["easy", "medium", "hard"]
-        if len(cards) == 1:
-            ref["tiers"]["medium"] = [_im_card(cards[0])]
-        elif len(cards) == 2:
-            ref["tiers"]["easy"] = [_im_card(cards[0])]
-            ref["tiers"]["hard"] = [_im_card(cards[1])]
-        else:
-            for slot, card in zip(slots, cards):
-                ref["tiers"][slot] = [_im_card(card)]
-        ref["title"] = "; ".join(c["title"] for c in cards)
-        ref["url"] = "https://tasks.illustrativemathematics.org/content-standards/HSG"
-        ref["license"] = IM_LICENSE
-        ref["source_name"] = "Illustrative Mathematics task bank"
-        ref["match"] = "strong" if chosen[0]["score"] >= 4.5 else "ok"
-        ref["ladder"] = False
-        ref["note_bits"].append(
-            "These are separate published tasks of the same skill, ordered only by how long the first page is. "
-            "They are not a textbook easy/medium/hard exercise list. Hard here may use an earlier theorem; it should not become a different skill."
-        )
-        return ref
-
-    spec, score, quality = best_openstax(topic, slugs)
-    if not spec or quality == "weak":
-        # Try IM as a rescue for a weak OpenStax hit.
-        chosen = best_im_files(topic, im_files, k=3)
-        if chosen and chosen[0]["score"] >= 3.5:
-            cards = [im_excerpt_and_png(info) for info in chosen]
-            cards.sort(key=lambda c: len(c.get("text") or ""))
-            if len(cards) == 1:
-                ref["tiers"]["medium"] = [_im_card(cards[0])]
-            else:
-                ref["tiers"]["easy"] = [_im_card(cards[0])]
-                ref["tiers"]["hard"] = [_im_card(cards[-1])]
-                if len(cards) > 2:
-                    ref["tiers"]["medium"] = [_im_card(cards[len(cards) // 2])]
-            ref["kind"] = "im"
-            ref["title"] = "; ".join(c["title"] for c in cards)
-            ref["url"] = "https://tasks.illustrativemathematics.org/"
-            ref["license"] = IM_LICENSE
-            ref["source_name"] = "Illustrative Mathematics task bank"
-            ref["match"] = "ok"
-            ref["ladder"] = False
+        cards = matching_im_cards()
+        if cards:
+            place_im_cards(cards)
             ref["note_bits"].append(
-                "OpenStax section match was weak, so these Illustrative Mathematics tasks are the comparison set."
+                "These are separate published tasks of the same skill, ordered only by how long the first page is. "
+                "They are not a textbook easy/medium/hard exercise list. Hard here may use an earlier theorem; it should not become a different skill."
             )
             return ref
-    attach_openstax(spec, quality if quality != "none" else "weak", score)
-    if visual and not ref["figures"]:
-        # still nothing
-        pass
-    elif visual and kind == "openstax":
-        # add one IM figure if OpenStax items themselves have no pictures
+        sections = choose_openstax_sections(topic, generated, slugs, section_cache)
+        if sections:
+            attach_sections(sections)
+            ref["note_bits"].append(
+                "No Illustrative Mathematics task was this skill, so the comparison is the OpenStax section whose exercises match."
+            )
+            return ref
+        ref["match"] = "weak"
+        return ref
+
+    sections = choose_openstax_sections(topic, generated, slugs, section_cache)
+    if not sections:
+        cards = matching_im_cards()
+        if cards:
+            place_im_cards(cards)
+            ref["note_bits"].append(
+                "No OpenStax section exercise was this skill, so these Illustrative Mathematics tasks are the comparison set."
+            )
+            return ref
+        ref["match"] = "weak"
+        return ref
+    attach_sections(sections)
+    if visual and kind == "openstax":
         has_item_img = any(card.get("saved_images") for cards in ref["tiers"].values() for card in cards)
         if not has_item_img:
-            chosen = best_im_files(topic, im_files, k=1)
-            if chosen and chosen[0]["score"] >= 3.2:
-                card = im_excerpt_and_png(chosen[0])
-                if card.get("image"):
-                    ref["figures"].append(
-                        {
-                            "path": card["image"],
-                            "alt": card["title"],
-                            "caption": "Illustrative Mathematics task (figure sample, not the exercise ladder)",
-                            "text": card["text"],
-                        }
-                    )
+            cards = matching_im_cards(limit=1)
+            if cards and cards[0].get("image"):
+                card = cards[0]
+                ref["figures"].append(
+                    {
+                        "path": card["image"],
+                        "alt": card["title"],
+                        "caption": "Illustrative Mathematics task (figure sample, not the exercise ladder)",
+                        "text": card["text"],
+                    }
+                )
     return ref
 
 
@@ -1694,7 +1853,6 @@ def assess(topic: dict, generated: dict, ref: dict) -> dict:
         "hard_same_topic": "close",
     }
     sentences: list[str] = []
-    sentences.extend(ref.get("note_bits") or [])
 
     if samples and not ok:
         return {
@@ -1703,7 +1861,21 @@ def assess(topic: dict, generated: dict, ref: dict) -> dict:
             "note": "Every sample failed: " + (samples[0].get("error") or "unknown error"),
         }
 
-    if ref.get("match") == "weak" or not any(ref.get("tiers", {}).get(t) for t in TIERS):
+    n_published = sum(len(ref.get("tiers", {}).get(t) or []) for t in TIERS)
+    if n_published == 0:
+        ref["match"] = "weak"
+        ref["ladder"] = False
+        ref.setdefault("note_bits", []).append(
+            "No published item in the matched source is this skill. The ladder is empty instead of being filled with a different task."
+        )
+    elif n_published < 2:
+        ref["ladder"] = False
+        ref.setdefault("note_bits", []).append(
+            "The published ladder is short: only 1 item is this skill. Unrelated problems were left out."
+        )
+    sentences.extend(ref.get("note_bits") or [])
+
+    if ref.get("match") == "weak" or n_published == 0:
         # Still describe internal generation so the page is useful.
         templates = {s.get("template") for s in ok if s.get("template")}
         sentences.append(
@@ -1726,11 +1898,33 @@ def assess(topic: dict, generated: dict, ref: dict) -> dict:
     ref_verb = primary_verb(ref_blob(ref) + " " + (ref.get("title") or ""))
     flags = shape_flags(topic, ok)
 
-    # Skill
+    # Skill. Do not say the skill lines up when a shown card is a different task.
+    profile = skill_profile(topic, {"samples": ok})
+    published_cards = [card for tier in TIERS for card in (ref.get("tiers", {}).get(tier) or [])]
+    mismatched = [
+        card
+        for card in published_cards
+        if not item_matches(
+            card.get("text") or "",
+            profile,
+            heading=card.get("title") or card.get("heading") or "",
+            source_text=ref.get("title") or "",
+        )
+    ]
+    if published_cards and len(mismatched) == len(published_cards):
+        dims["skill"] = "off"
+        sentences.append(
+            "The published cards are a different task from the generated question, so this note does not say the skill lines up."
+        )
+        return {"verdict": "weak_reference", "dimensions": dims, "note": " ".join(sentences)}
     if flags and any(level == "off" for level, _ in flags):
         dims["skill"] = "off"
-    elif flags:
+    elif flags or mismatched:
         dims["skill"] = "partial"
+        if mismatched:
+            sentences.append(
+                "Some published cards are a different task from the generated question, so the skill does not fully line up."
+            )
     elif gen_verb and ref_verb and gen_verb != ref_verb and {gen_verb, ref_verb} <= {"solve", "simplify", "factor", "graph", "evaluate", "prove"}:
         dims["skill"] = "partial"
         sentences.append(
@@ -1767,7 +1961,10 @@ def assess(topic: dict, generated: dict, ref: dict) -> dict:
     r_forms = _form_adds(ref_easy, ref_hard)
     g_scales = g_hard_max > max(g_easy_max, 1) * 1.4 or bool(g_forms)
     r_scales = r_hard_max > max(r_easy_max, 1) * 1.4 or bool(r_forms)
-    if ref.get("ladder"):
+    if n_published < 2:
+        dims["range"] = "partial"
+        sentences.append("The published sample does not span an easy-to-hard ladder of this skill.")
+    elif ref.get("ladder"):
         if g_scales and r_scales:
             extra = ""
             if g_forms or r_forms:

@@ -2,7 +2,7 @@
 
 Open `index.html` (or `spotlight.html` for a short visual pass).
 
-632 wired leaves. Verdict counts: {"off": 182, "partial": 387, "weak_reference": 12, "close": 51}.
+632 wired leaves. Verdict counts: {"off": 168, "partial": 315, "weak_reference": 112, "close": 37}.
 Visual leaves (name or a generated figure): 262.
 
 ## What a row is

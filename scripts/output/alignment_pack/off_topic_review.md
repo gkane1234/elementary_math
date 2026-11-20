@@ -1,0 +1,663 @@
+# Off-topic generator review
+
+The pack has 166 off rows. Four type ids are listed on two course pages, so that is 162 unique topics. The generator was shifted only when the published card is the same skill with the same kind of object. Spiral review and neighboring skills were not copied into the single-topic generator.
+
+Changed 6 of those 162. Skipped 156. Two of the skips are limits at infinity, where the published card is a limit at a finite point. The other 154 published cards are a different skill or a weak section match, or the generator already asks for that object. Separable equations are partial, not off; the derivative-at-a-point note on that card was not implemented, for the reason below.
+## Changed
+
+- `more_on_slope`: Changed. A seeded set now asks for the slope of the line through two points, which is the published task, and still asks for parallel and perpendicular slopes.
+- `calc_diff_quotient_rule`: Changed. A seeded set now evaluates a quotient at a point and differentiates a quotient built from f and g, matching the published y=2x/(x-1) at a point.
+- `calc_def_int_second_fundamental_theorem_of_calculus`: Changed. A seeded set now evaluates F'(c) for an accumulation function and integrates an explicit function, in addition to differentiating the integral.
+- `g6_long_division_with_remainders`: Changed. A seeded set now asks which place the first digit of the quotient belongs in, which is the published long-division question, and still asks for the quotient and remainder.
+- `g6_constant_rate_equations`: Changed. A seeded set now completes the distances for several times at a constant speed, and still writes the d=rt equation.
+- `pa_converting_fractions_and_decimals`: Changed. A seeded set now writes a repeating decimal as a fraction, which is the published conversion, and still converts terminating fractions and decimals.
+
+## Skipped with a specific reason
+
+- `calc_limits_at_infinity`: Skipped. The published card is f(x)=(x+1)/(x^2+5x+4) at a=-1, a limit at a finite point. Naming asymptotes from a derivative is a different skill. The generator still evaluates a limit at infinity.
+- `pc_limits_at_infinity`: Skipped. Same published card as the calculus limits-at-infinity leaf: a finite-point rational, not an asymptote read from a derivative.
+- `calc_diff_eq_separable`: Skipped. The published card is solve y'+y=3y^2. The form note that said 'derivative at a point' does not match that card. The generator already solves a separable equation.
+
+## Other off topics
+
+Each line is the published easy stem next to the generated easy stem. These were left alone because the published card is a different skill, a weak section match, or the generator already asks for that object.
+
+| Course | type_id | Why it was left |
+|---|---|---|
+
+### algebra_1 (10)
+
+- `exponential_growth_decay`
+  - Published: Illustrative Mathematics 1
+  - Generated: \text{Solve the problem.} \text{An account with \$50 changes by 10\% growth each year. Find the amount after 3 years.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `slope`
+  - Published: 288 . $y = 3 x - 5$
+  - Generated: \text{Find the slope.} \text{Find the slope of the line } y = x.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `writing_linear_equations`
+  - Published: 288 . $y = 3 x - 5$
+  - Generated: \text{Write the equation.} \text{Write the point-slope equation of the line with slope } 1 \text{ through } (-2, -2).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `coin_word_problems`
+  - Published: Illustrative Mathematics A-CED Dimes and Quarters Task The only coins that Alexis has are dimes and quarters. Her coins have a total value o
+  - Generated: \text{Solve the problem.} \text{Taylor has 10 coins in a pocket, all quarters and dimes. The coins are worth \$1.90 in t
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `distance_rate_time_word_problems`
+  - Published: Illustrative Mathematics 6.NS Distances between Points Task Some points are shown in the coordinate plane below. a. What is the distance bet
+  - Generated: \text{Solve the problem.} \text{Owen rides a train to the city in 2 hr and returns in 3 hr at 36 mi/hr. What was Owen's 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `mixture_word_problems`
+  - Published: Illustrative Mathematics 8.EE How Many Solutions? Task Consider the equation 5x − 2y = 3. If possible, find a second linear equation to crea
+  - Generated: \text{Solve the problem.} \text{Quinn mixes 6 fl oz of a 75\% alcohol solution with 4 fl oz of a 10\% alcohol solution. 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `percent_of_change`
+  - Published: Illustrative Mathematics 7.RP Finding a 10% increase Task 5,000 people visited a book fair in the first week. The number of visitors increas
+  - Generated: \text{Find the percent of change.} \text{From 40 to 24, find the percent decrease.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `rational_simplification`
+  - Published: Illustrative Mathematics F-IF Graphing Rational Functions Task 1 1 In this task we are going to investigate the graphs of f (x) = and g(x) =
+  - Generated: \text{Simplify. State any excluded values.} \text{Simplify: } \frac{3x + 3}{x + 1}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `radical_midpoint_formula`
+  - Published: 29 . $(x + 5)^{2} + (y + 3)^{2} = 1$
+  - Generated: \text{Find the midpoint.} \text{Find the midpoint of } (-2, 3) \text{ and } (6, -7).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `scatter_plots`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+
+### algebra_2 (44)
+
+- `a2_conic_sections_classifying`
+  - Published: Illustrative Mathematics G-CO Classifying Triangles Alignments to Content Standards: G-CO.C.10 Task Choose two distinct points A and B in th
+  - Generated: \text{Classify the conic.} \text{Classify the conic: } \frac{x^2}{49}+\frac{y^2}{16}=1.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_exponential_and_logarithmic_expressions_continuous_exponential_growth_and_decay_word_problems`
+  - Published: 344 . Sung Lee invests $\$ 5,000$ at age 18. He hopes the investments will be worth $\$ 10,000$ when he turns 25. If the interest compounds 
+  - Generated: \text{Solve the problem.} \text{An account with \$50 changes by 10\% growth each year. Find the amount after 3 years.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_exponential_and_logarithmic_expressions_discrete_exponential_growth_and_decay_word_problems`
+  - Published: 344 . Sung Lee invests $\$ 5,000$ at age 18. He hopes the investments will be worth $\$ 10,000$ when he turns 25. If the interest compounds 
+  - Generated: \text{Solve the problem.} \text{An account with \$50 changes by 10\% growth each year. Find the amount after 3 years.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_exponential_and_logarithmic_expressions_exponential_equations_not_requiring_logarithms`
+  - Published: 4 . $4^{- 3 v - 2} = 4^{- v}$
+  - Generated: \text{Solve for } x. 3^{x} = 27
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_exponential_and_logarithmic_expressions_exponential_equations_requiring_logarithms`
+  - Published: 4 . $4^{- 3 v - 2} = 4^{- v}$
+  - Generated: \text{Solve for } x. 3^{3x} = 12
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_exponential_and_logarithmic_expressions_graphing_exponential_functions`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_linear_relations_and_functions_writing_linear_equations`
+  - Published: 288 . $y = 3 x - 5$
+  - Generated: \text{Write the equation.} \text{Write the point-slope equation of the line with slope } 1 \text{ through } (-2, -2).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_matrices_geometric_transformations`
+  - Published: Illustrative Mathematics 8.G Point Reflection Task The point in the x-y plane with coordinates (1000, 2012) is reflected across the line y =
+  - Generated: \text{Apply the transformation.} \text{Apply a reflection across the y-axis to }(7, 1) \text{ using } \begin{pmatrix}-1 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_polynomial_functions_end_behavior_and_general_graph_shape`
+  - Published: 12 . $f (x) = x^{4} - x^{2}$
+  - Generated: \text{Describe the end behavior.} \text{Describe the end behavior of } f(x)=3x^{4} + 3x^{2} + 6.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_probability_and_statistics_probability_of_independent_and_dependent_events`
+  - Published: Illustrative Mathematics S-CP Finding Probabilities of Compound Events Alignments to Content Standards: S-CP.A.3 Task Cecil has two six-side
+  - Generated: \text{Find the probability.} \text{{A fair coin is flipped and a fair die is rolled. What is the probability of getting 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_probability_and_statistics_probability_of_independent_and_dependent_events_word_problems`
+  - Published: Illustrative Mathematics S-CP Finding Probabilities of Compound Events Alignments to Content Standards: S-CP.A.3 Task Cecil has two six-side
+  - Generated: \text{Solve the problem.} \text{{A fair coin is flipped and a fair die is rolled. What is the probability of getting hea
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_completing_the_square`
+  - Published: 363 . $x^{2} + 6 x + 5 > 0$
+  - Generated: \text{Complete the square.} x^{2} - 2x + c \text{ is a perfect square trinomial. Find } c.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_factoring_quadratic_expressions`
+  - Published: 363 . $x^{2} + 6 x + 5 > 0$
+  - Generated: \text{Factor.} x^{2} - 4
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_factoring_special_case_quadratic_expressions`
+  - Published: 363 . $x^{2} + 6 x + 5 > 0$
+  - Generated: \text{Factor.} x^{2} - 16
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_graphing_quadratic_functions`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_solving_equations_by_completing_the_square`
+  - Published: 363 . $x^{2} + 6 x + 5 > 0$
+  - Generated: \text{Solve for } x. x^{2} - 2x + 17 = 0
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_solving_equations_by_factoring`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_solving_equations_by_graphing`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_solving_equations_by_taking_square_roots`
+  - Published: 430 . ⓐ $x \leq - 2$ ⓑ $x > - 1$ ⓒ $x < 0$
+  - Generated: \text{Solve for } x. x^{2} = 9
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_solving_equations_with_the_quadratic_formula`
+  - Published: 430 . ⓐ $x \leq - 2$ ⓑ $x > - 1$ ⓒ $x < 0$
+  - Generated: \text{Solve for } x. x^{2} - 3x - 4 = 0
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_quadratic_functions_and_inequalities_the_discriminant`
+  - Published: 363 . $x^{2} + 6 x + 5 > 0$
+  - Generated: \text{Find the discriminant.} \text{Find the discriminant of } x^{2} - x + 4.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_rational_expressions_multiplying_and_dividing`
+  - Published: 1 . ⓐ $\frac{2 x^{2}}{z}$ , ⓑ $\frac{4 p - 1}{6 p - 5}$ , ⓒ $\frac{n - 3}{n^{2} + 2 n - 8}$
+  - Generated: \text{Simplify.} \frac{\left(x + 4\right)\left(x + 1\right)}{x - 1} \cdot \frac{1}{x + 1}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_equations_and_inequalities_distance_rate_time_word_problems`
+  - Published: 237 . Determine whether each ordered pair is a solution to the inequality $y > x - 1 :$ ⓐ $(0 , 1)$ ⓑ $(−4 , −1)$ ⓒ $(4 , 2)$ ⓓ $(3 , 0)$ ⓔ 
+  - Generated: \text{Solve the problem.} \text{Owen rides a train to the city in 2 hr and returns in 3 hr at 36 mi/hr. What was Owen's 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_equations_and_inequalities_mixture_word_problems`
+  - Published: Illustrative Mathematics A-REI Integer Solutions to Inequality Task What is the sum of all integer solutions to 1 < (x − 2)2 < 25? A-REI Int
+  - Generated: \text{Solve the problem.} \text{Quinn mixes 6 fl oz of a 75\% alcohol solution with 4 fl oz of a 10\% alcohol solution. 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_equations_and_inequalities_multi_step_equations`
+  - Published: 430 . ⓐ $x \leq - 2$ ⓑ $x > - 1$ ⓒ $x < 0$
+  - Generated: \text{Solve for } x. 3(x + 2) = 24
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_equations_and_inequalities_work_word_problems`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_systems_of_equations_and_inequalities_planes`
+  - Published: 275 . $\left{\right. 3 x + y > 5 \\ 2 x - y \leq 10$ ⓐ $(3 , −3)$ ⓑ $(7 , 1)$
+  - Generated: \text{Identify the plane.} \text{Does } (3, -4, 4) \text{ lie on the plane } -x + 4y + z=-15\text{?}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_systems_of_equations_and_inequalities_points_in_three_dimensions`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_systems_of_equations_and_inequalities_solving_systems_by_elimination_2_variables`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_systems_of_equations_and_inequalities_solving_systems_by_graphing_2_variables`
+  - Published: 1 . $\left{\right. 2 x - 6 y = 0 \\ 3 x - 4 y = 5$ ⓐ $(3 , 1)$ ⓑ $(−3 , 4)$
+  - Generated: \text{Solve the system.} \text{Solve: } \begin{cases} -x - y = 1 \\ x - y = -3 \end{cases}\quad \text{Solve by graphing.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_systems_of_equations_and_inequalities_solving_systems_by_substitution_2_variables`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_systems_of_equations_and_inequalities_solving_systems_with_three_variables`
+  - Published: 275 . $\left{\right. 3 x + y > 5 \\ 2 x - y \leq 10$ ⓐ $(3 , −3)$ ⓑ $(7 , 1)$
+  - Generated: \text{Solve the system.} \text{Solve } \begin{cases} 2x - 5y + 5z=33\\ -5x - 5y + 2z=-4\\ 5x + 2y + 5z=31\end{cases}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_systems_of_equations_and_inequalities_systems_of_equations_word_problems_2_variables`
+  - Published: 315 . Caitlyn sells her drawings at the county fair. She wants to sell at least 60 drawings and has portraits and landscapes. She sells the 
+  - Generated: \text{Solve the problem.} \text{The sum of two numbers is }11\text{. One number is }5\text{ more than the other. Find th
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_angle_sum_difference_identities`
+  - Published: 6 . $cos \left(\right. \text{34}° \left.\right) = sin (__°)$
+  - Generated: \text{Simplify.} \text{Expand }\tan(\alpha+\beta).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_angles_and_angle_measure`
+  - Published: (no easy stem captured)
+  - Generated: (no generated stem captured)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_arc_length_and_sector_area`
+  - Published: 8 . $csc \left(\right. \text{21}° \left.\right) = sec (___°)$
+  - Generated: \text{Find the measure.} \text{A circle has radius } 12\text{ cm} \text{ and a central angle of } 60^\circ.\ \text{Find 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_area_and_laws_of_sines_and_cosines`
+  - Published: 6 . $\alpha = 43° , \gamma = 69° , a = 20$
+  - Generated: \text{Find the area.} \text{In } \triangle ABC,\ m\angle A = 60^\circ,\ m\angle B = 40^\circ,\ a = 16.\ \text{Find } b \
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_coterminal_angles`
+  - Published: 6 . $cos \left(\right. \text{34}° \left.\right) = sin (__°)$
+  - Generated: \text{Find a coterminal angle.} \text{An angle on the unit circle has } \sin = 1. \text{Which standard angle (in degrees
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_degrees_and_degrees_minutes_seconds`
+  - Published: 8 . $csc \left(\right. \text{21}° \left.\right) = sec (___°)$
+  - Generated: \text{Convert.} \text{Convert } 149^\circ 54' 12'' \text{ to decimal degrees. Round to the nearest thousandth.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_double_angle_half_angle_identities`
+  - Published: 6 . $cos \left(\right. \text{34}° \left.\right) = sin (__°)$
+  - Generated: \text{Simplify.} \text{Rewrite }\cos(2\theta)\text{ using a double-angle identity.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_the_law_of_cosines`
+  - Published: 6 . $\alpha = 43° , \gamma = 69° , a = 20$
+  - Generated: \text{Solve the triangle.} \text{In } \triangle ABC,\ a = 14,\ b = 8,\ m\angle C = 80^\circ.\ \text{Find } c \text{ (Law
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_the_law_of_sines`
+  - Published: 6 . $\alpha = 43° , \gamma = 69° , a = 20$
+  - Generated: \text{Solve the triangle.} \text{In } \triangle ABC,\ m\angle A = 60^\circ,\ m\angle B = 40^\circ,\ a = 16.\ \text{Find 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_right_triangle_trig_finding_angle_measures`
+  - Published: 8 . $csc \left(\right. \text{21}° \left.\right) = sec (___°)$
+  - Generated: \text{Find the angle measure.} \text{In right } \triangle ABC \text{ with right angle at } C,\ BC = 5\text{ cm},\ AC = 1
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `a2_trigonometry_trig_functions_of_any_angle`
+  - Published: 6 . $cos \left(\right. \text{34}° \left.\right) = sin (__°)$
+  - Generated: \text{Evaluate.} \sin\left(90^\circ\right)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+
+### calculus (31)
+
+- `calc_app_diff_differentials`
+  - Published: 46 . What is the linear approximation for any generic linear function $y = m x + b ?$
+  - Generated: \text{Find the differential.} \text{For }y=\sin x,\text{ find }dy.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_diff_intervals_of_increase_and_decrease`
+  - Published: Illustrative Mathematics 7.RP Finding a 10% increase Task 5,000 people visited a book fair in the first week. The number of visitors increas
+  - Generated: \text{Find intervals of increase and decrease.} \text{Find the intervals where }f(x)=x^{2} - 2x + 3\text{ is increasing.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_diff_lhopitals_rule`
+  - Published: 356 . Evaluate the limit $\lim_{x \to \infty} \frac{e^{x}}{x} .$
+  - Generated: \text{Evaluate the limit.} \lim_{x \to 2} \frac{x^{2}-4}{x-2}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_diff_motion_along_a_line`
+  - Published: 155 . Given $\text{r} (t) = \left(\right. 3 t^{2} - 2 \left.\right) \text{i} + \left(\right. 2 t - \sin (t) \left.\right) \text{j} ,$ find t
+  - Generated: \text{Solve the motion problem.} s(t)=t^{2}-3t.\quad\text{Find }v(3).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_diff_optimization`
+  - Published: 313 . True or False . For every continuous nonlinear function, you can find the value $x$ that maximizes the function.
+  - Generated: \text{Solve the optimization problem.} \text{You have }24\text{ ft of fencing to construct a rectangular pen. What dimen
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_diff_slope_tangent_and_normal_lines`
+  - Published: 163 . $z = f (x , y) = x^{3} , (2 , −1 , 8)$
+  - Generated: \text{Find the slope, tangent line, or normal line.} \text{Find the tangent line to }y=\sin(x)\text{ at }x=0.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_int_area_between_curves`
+  - Published: 1 . $y = x^{2} - 3 \text{and} y = 1$
+  - Generated: \text{Find the area.} \text{Find the area between }y=x\text{ and }y=0\text{ from }x=0\text{ to }x=2.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_int_area_under_a_curve`
+  - Published: 1 . $y = x^{2} - 3 \text{and} y = 1$
+  - Generated: \text{Find the area.} \text{Find the area under }y=x\text{ from }x=0\text{ to }x=3.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_int_volume_by_cylinders`
+  - Published: 114 . [T] Bounded by the curves $y = 3 x , x = 0 ,$ and $y = 3$ rotated around the $y -\text{axis} .$
+  - Generated: \text{Find the volume.} \text{Find the volume of the solid formed by rotating }y=x\text{ on }[0,2]\text{ about the }y\te
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_int_volume_by_slicing_disks_and_washers`
+  - Published: 60 . Use the slicing method to derive the formula for the volume of a tetrahedron with side length $a .$
+  - Generated: \text{Find the volume.} \text{Find the volume of the solid formed by rotating }y=x\text{ on }[0,2]\text{ about the }x\te
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_app_int_volume_of_solids_with_known_cross_sections`
+  - Published: 114 . [T] Bounded by the curves $y = 3 x , x = 0 ,$ and $y = 3$ rotated around the $y -\text{axis} .$
+  - Generated: \text{Find the volume.} \text{A solid has square cross sections of side length }x\text{ for }0\le x\le 3.\text{ Find its
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_continuity_determining_and_classifying`
+  - Published: Illustrative Mathematics G-CO Classifying Triangles Alignments to Content Standards: G-CO.C.10 Task Choose two distinct points A and B in th
+  - Generated: \text{Determine and classify continuity.} \text{Classify the continuity of }f(x)=\frac{x^{2}-16}{x-4}\text{ at }x=4.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_chain_rule`
+  - Published: 214 . $y = 3 u - 6 , u = 2 x^{2}$
+  - Generated: \text{Differentiate.} \text{Find }\frac{d}{dx}\left(\left(3x + 3\right)^{2}\right)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_implicit`
+  - Published: 300 . $x^{2} - y^{2} = 4$
+  - Generated: \text{Differentiate implicitly.} \text{Differentiate implicitly: }y^{2}+x^{2}=2.\text{ Solve for }\frac{dy}{dx}.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_instantaneous_rates_of_change`
+  - Published: 5 . $f (x) = 4 x^{2} - 7$ on $\left[\right. 1 , b \left]\right.$
+  - Generated: \text{Find the instantaneous rate of change.} \text{Find the instantaneous rate of change of }f(x)=x^{3}\text{ at }x=2.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_inverse_functions`
+  - Published: 264 . $f (x) = 6 x - 1 , x = −2$
+  - Generated: \text{Find the derivative of the inverse.} f(x)=x^{2};\quad f'(3)=6.\quad\text{Find }(f^{-1})'(9).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_inverse_trigonometric`
+  - Published: 7 . $sec \frac{\pi}{6}$
+  - Generated: \text{Differentiate.} \text{Find }\frac{d}{dx}\left(\arctan\left(2x + 3\right)\right)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_logarithmic`
+  - Published: 4 . $4^{- 3 v - 2} = 4^{- v}$
+  - Generated: \text{Differentiate using logarithmic differentiation.} \text{Use logarithmic differentiation to find }\frac{d}{dx}\left
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_other_base_logarithms_and_exponentials`
+  - Published: 295 . $y = \ln (2 x)$
+  - Generated: \text{Differentiate.} \frac{d}{dx}\log_{2}(x)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_product_rule`
+  - Published: 111 . $f (x) = 3 x \left(\right. 18 x^{4} + \frac{13}{x + 1} \left.\right)$
+  - Generated: \text{Differentiate.} \text{Find }\frac{d}{dx}\left(x\left(2x\right)\right)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_trigonometric`
+  - Published: 6 . $tan \frac{\pi}{6}$
+  - Generated: \text{Differentiate.} \text{Find }\frac{d}{dx}\left(3x - 1\right)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_diff_eq_slope_fields`
+  - Published: Illustrative Mathematics 8.EE Slopes Between Points on a Line Alignments to Content Standards: 8.EE.B.6 Task The slope between two points is
+  - Generated: \text{Interpret the slope field.} \text{For }y'=x,\text{ what is the slope at }(-2,1)?
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_def_int_area_under_a_curve_by_limit_of_sums`
+  - Published: 1 . $y = x^{2} - 3 \text{and} y = 1$
+  - Generated: \text{Find the area.} \text{Find the area under }y=x\text{ from }x=0\text{ to }x=3.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_indef_int_inverse_trigonometric`
+  - Published: 127 . $9 \sec^{2} \theta - 9$
+  - Generated: \text{Integrate.} \int \frac{1}{1+x^{2}}\,dx
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_indef_int_inverse_trigonometric_with_substitution`
+  - Published: 127 . $9 \sec^{2} \theta - 9$
+  - Generated: \text{Integrate.} \int \frac{2}{1+(2x + 2)^{2}}\,dx
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_indef_int_logarithmic_rule_and_exponentials`
+  - Published: 4 . $4^{- 3 v - 2} = 4^{- v}$
+  - Generated: \text{Integrate.} \int \frac{1}{x}\,dx
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_indef_int_logarithmic_rule_and_exponentials_with_substitution`
+  - Published: 4 . $4^{- 3 v - 2} = 4^{- v}$
+  - Generated: \text{Integrate.} \int \frac{2}{2x + 2}\,dx
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_indef_int_power_rule`
+  - Published: 106 . $f (x) = x^{7} + 10$
+  - Generated: \text{Integrate.} \int 3 \, dx
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_def_int_riemann_sum_tables`
+  - Published: 1 . State whether the given sums are equal or unequal. $\sum_{i = 1}^{10} i$ and $\sum_{k = 1}^{10} k$ $\sum_{i = 1}^{10} i$ and $\sum_{i = 
+  - Generated: \text{Use the Riemann sum table.} f(0)=2, f(1)=5, f(2)=3.\quad\text{Approximate }\int_{0}^{2} f(x)\,dx\text{ with a left
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_indef_int_trigonometric`
+  - Published: 6 . $tan \frac{\pi}{6}$
+  - Generated: \text{Integrate.} \int \sin(3x)\,dx
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `calc_indef_int_trigonometric_with_substitution`
+  - Published: 127 . $9 \sec^{2} \theta - 9$
+  - Generated: \text{Integrate using a trigonometric substitution.} \int \sqrt{4-x^{2}}\,dx
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+
+### geometry (13)
+
+- `geo_parallel_slope_and_lines`
+  - Published: Illustrative Mathematics 8.EE Slopes Between Points on a Line Alignments to Content Standards: 8.EE.B.6 Task The slope between two points is
+  - Generated: \text{Find the slope.} \text{Find the slope of the line through } (3, 0) \text{ and } (5, -5).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_parallel_distance_formula`
+  - Published: 29 . $(x + 5)^{2} + (y + 3)^{2} = 1$
+  - Generated: \text{Find the distance.} \text{Find the distance between } (-2, 3) \text{ and } (6, -7).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_parallel_writing_linear_equations`
+  - Published: 288 . $y = 3 x - 5$
+  - Generated: \text{Write the equation.} \text{Write } 12x - 4y = 8 \text{ in slope-intercept form.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_properties_inequalities_in_one_triangle`
+  - Published: 430 . ⓐ $x \leq - 2$ ⓑ $x > - 1$ ⓒ $x < 0$
+  - Generated: \text{Order the sides or angles.} \text{Can sides of lengths } 12,\ 6,\ \text{ and } 22 \text{ form a triangle?}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_properties_triangle_inequality_theorem`
+  - Published: 430 . ⓐ $x \leq - 2$ ⓑ $x > - 1$ ⓒ $x < 0$
+  - Generated: \text{Determine if the sides can form a triangle.} \text{Can sides of lengths } 12,\ 6,\ \text{ and } 22 \text{ form a t
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_quadrilaterals_angles`
+  - Published: Illustrative Mathematics 8.G A Triangle's Interior Angles Alignments to Content Standards: 8.G.A.5 Task ←→ ←→ Given that DE ∥ AC in the diag
+  - Generated: \text{Find the measure.} \text{Find the sum of the interior angles of a regular } 8\text{-gon.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_quadrilaterals_polygon_basics`
+  - Published: Illustrative Mathematics 8.G A Triangle's Interior Angles Alignments to Content Standards: 8.G.A.5 Task ←→ ←→ Given that DE ∥ AC in the diag
+  - Generated: \text{Find the measure.} \text{Find the sum of the interior angles of a regular } 8\text{-gon.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_similar_solids`
+  - Published: Illustrative Mathematics 1
+  - Generated: \text{Find the measure.} \text{Find the volume of a cylinder with radius } 3\text{ cm} \text{ and height } 10\text{ cm}.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_solid_figures_identifying_volume_and_area`
+  - Published: 267 . Moving van A rectangular moving van has length $16$ feet, width $8$ feet, and height $8$ feet. Find its ⓐ volume and ⓑ surface area.
+  - Generated: \text{Find the volume or surface area.} \text{Find the volume of a cylinder with radius } 3\text{ cm} \text{ and height 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_trig_finding_angle_measures`
+  - Published: Illustrative Mathematics F-TF Trig Functions and the Unit Circle Task The points on the graphs and the unit circle below were chosen so that
+  - Generated: \text{Find the angle measure.} \text{In right } \triangle ABC \text{ with right angle at } C,\ BC = 5\text{ cm},\ AC = 1
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_trig_rhombuses_and_kites_with_right_triangles`
+  - Published: Illustrative Mathematics F-TF Trig Functions and the Unit Circle Task The points on the graphs and the unit circle below were chosen so that
+  - Generated: \text{Find the measure.} \text{In right } \triangle ABC,\ \text{find } AC.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_trig_solving_right_triangles`
+  - Published: Illustrative Mathematics F-TF Trig Functions and the Unit Circle Task The points on the graphs and the unit circle below were chosen so that
+  - Generated: \text{Solve the triangle.} \text{In right } \triangle ABC,\ m\angle A = 60^\circ,\ BC = 5\text{ cm}.\ \text{Find } AC.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `geo_trig_trigonometry_and_area`
+  - Published: 8 . $csc \left(\right. \text{21}° \left.\right) = sec (___°)$
+  - Generated: \text{In } \triangle ABC, AB=4, AC=7, \text{ and } \angle A=90^\circ. \text{Find the area.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+
+### grade_6_math (20)
+
+- `g6_coordinate_plane_distances_word_problems`
+  - Published: Here are 4 points on a coordinate plane. Label each point with its coordinates. Plot a point that is 3 units from point K . Label it P . Plo
+  - Generated: \text{Solve the problem.} \text{Point A is at (4, -2) and point B is at (11, 3) on a coordinate plane. How far apart are
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_dividing_decimals_by_whole_numbers`
+  - Published: Here is a diagram representing a base-ten number. The large rectangle represents a unit that is 10 times the value of the square. The square
+  - Generated: \text{Divide.} 43 \div 5
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_dividing_whole_numbers_by_decimals`
+  - Published: Here is a diagram representing a base-ten number. The large rectangle represents a unit that is 10 times the value of the square. The square
+  - Generated: \text{Divide.} 8 \div 0.8
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_equations_word_problems`
+  - Published: Match each equation to one of the diagrams. 12-m=4 12=4m m-4=12 \frac{m}{4}=12
+  - Generated: \text{Solve the problem.} \text{A number plus }4\text{ is }5\text{. What is the number?}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_inequalities_word_problems`
+  - Published: At the book sale, all books cost less than $ 5. What is the most expensive a book could be? Write an inequality to represent costs of books 
+  - Generated: \text{Solve the problem.} \text{Will wants a score at most 10. Write an inequality for the score.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_absolute_values`
+  - Published: On the number line, plot and label all numbers with an absolute value of \frac32 .
+  - Generated: \text{Find the absolute value.} \left/ 10 \right/
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_comparing_with_absolute_values`
+  - Published: On the number line, plot and label all numbers with an absolute value of \frac32 .
+  - Generated: \text{Compare the values.} \left/ 10 \right/ \; ? \; \left/ 7 \right/
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_ordering_with_absolute_values`
+  - Published: On the number line, plot and label all numbers with an absolute value of \frac32 .
+  - Generated: \text{Order the values.} \text{Order from least to greatest absolute value: } 5, 8, 11
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_distributive_property_area_diagrams_numeric`
+  - Published: Select all the expressions that represent the area of the large, outer rectangle. 5(2+4) 5 \boldcdot 2 + 4 5 \boldcdot 2 + 5 \boldcdot 4 5 \
+  - Generated: \text{Rewrite using the distributive property.} \left(2 + 4\right)\left(-1\right)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_numeric_expressions_and_order_of_operations`
+  - Published: Find these quotients. Show your reasoning. 24.2 \div 1.1 13.25 \div 0.4 170.28 \div 0.08
+  - Generated: \text{Evaluate.} 2 \times 3 - 2 \times 2 - 1
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_numeric_expressions_with_exponents`
+  - Published: Select all expressions that are equal to 3 \boldcdot 3 \boldcdot 3 \boldcdot 3 \boldcdot 3 . 3 \boldcdot 5 3^5 3^4 \boldcdot 3 5 \boldcdot 3
+  - Generated: \text{Evaluate.} 2 \times 2 + 2^{3} \times 2 - 19
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_properties_of_addition_and_multiplication`
+  - Published: Here are diagrams that represent 0.137 and 0.284. Use the diagram to find the value of 0.137 + 0.284 . Explain your reasoning. Calculate the
+  - Generated: \text{Identify the property.} 5 \cdot 0 = 0
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_finding_percents_with_equivalent_fractions`
+  - Published: To find 40% of 75, Priya calculates \frac{2}{5} \boldcdot 75 . Does her calculation give the correct value for 40% of 75? Explain or show ho
+  - Generated: \text{Write as a percent using equivalent fractions.} \text{Write } \frac{7}{20} \text{ as a percent by finding an equiv
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_relating_percents_fractions_and_decimals`
+  - Published: Compute the following sums. If you get stuck, you can draw base-ten diagrams. 0.027 + 0.004 0.203 + 0.1 1.2 + 0.145
+  - Generated: \text{Write the equivalent value.} \text{Write } 0.7 \text{ as a fraction in simplest form.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_parallelograms_understanding_area_formula`
+  - Published: Which three of these parallelograms have the same area as each other?
+  - Generated: \text{Find the area.} \text{Find the area of the parallelogram.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_triangles_understanding_area_formula`
+  - Published: To find the area of this right triangle, Diego and Jada used different strategies. Diego drew a line through the midpoints of the two longer
+  - Generated: \text{Find the area.} \text{Find the area of } \triangle ABC.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_formulas_for_volume_and_surface_area_of_a_cube`
+  - Published: Match each quantity with an appropriate unit of measurement. The surface area of a tissue box The amount of soil in a planter box The area o
+  - Generated: \text{Find the volume or surface area.} \text{Find the surface area of a cube with side } 7\text{ cm}.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_introduction_to_ratios`
+  - Published: In a fruit basket there are 9 bananas, 4 apples, and 3 plums. The ratio of bananas to apples is ________ : ________. The ratio of plums to a
+  - Generated: \text{Write the ratio.} \text{There are 4 red stickers and 6 purple stickers. Write the ratio of red to purple.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_part_part_whole_ratios`
+  - Published: Here is a tape diagram representing the ratio of red paint to yellow paint in a mixture of orange paint. What is the ratio of yellow paint t
+  - Generated: \text{Write part-to-part and part-to-whole ratios.} \text{There are 4 red stickers and 6 purple stickers. Write the rati
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `g6_writing_algebraic_expressions`
+  - Published: Here are five sums. Use the distributive property to write each sum as a product with two factors. 2a+7a 5z-10 c-2c^2 r+r+r+r 2x-\frac12
+  - Generated: \text{Write the expression.} \text{the quotient of a number and } 5
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+
+### pre_algebra (8)
+
+- `pa_naming_decimal_places_and_rounding`
+  - Published: Illustrative Mathematics 6.NS Tenths of (and So On) Task Since 0.1 = 1 , when we multiply by 0.1, we are multiplying by one-tenth. 10 a. Mul
+  - Generated: \text{Name the place value or round.} \text{Round } 19.79 \text{ to the nearest tenth.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pa_slope`
+  - Published: 288 . $y = 3 x - 5$
+  - Generated: \text{Find the slope.} \text{Find the slope of the line } y = x.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pa_systems_substitution`
+  - Published: 71 . $\left{\right. 2 x + y = −4 \\ 3 x - 2 y = −6$
+  - Generated: \text{Solve the system.} \text{Solve: } \begin{cases} y = x + 3 \\ 3x - y = -7 \end{cases}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pa_systems_word_problems`
+  - Published: 183 . The sum of two numbers is fifteen. One number is three less than the other. Find the numbers.
+  - Generated: \text{Solve the problem.} \text{The sum of two numbers is }11\text{. One number is }5\text{ more than the other. Find th
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pa_writing_linear_equations`
+  - Published: 288 . $y = 3 x - 5$
+  - Generated: \text{Write the equation.} \text{Write the point-slope equation of the line with slope } 1 \text{ through } (-2, -2).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pa_markup_discount_and_tax`
+  - Published: Illustrative Mathematics 7.RP Sale! Task Four different stores are having a sale. The signs below show the discounts available at each of th
+  - Generated: \text{Solve the problem.} \text{A store marks up a \$74 item by 10\%. What is the selling price?}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pa_proportions_word_problems`
+  - Published: 421 . $28$ ounces to $84$ ounces
+  - Generated: \text{Solve the problem.} \text{A pediatrician prescribes 5 milliliters of medicine for every 25 pounds of a child's wei
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pa_classifying_volume_and_surface_area`
+  - Published: Illustrative Mathematics A-SSE Radius of a Cylinder Task Given the height h and volume V of a certain cylinder, Jill uses the formula ‾V‾‾ √
+  - Generated: \text{Find the volume or surface area.} \text{Find the volume of a cylinder with radius } 3\text{ cm} \text{ and height 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+
+### precalculus (28)
+
+- `pc_ellipses_writing_equations`
+  - Published: 7 . $4 x^{2} + 9 y^{2} = 36$
+  - Generated: \text{Write the equation of the ellipse.} \text{Write the equation of an ellipse centered at }(3,0)\text{ with }a=7\text
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_hyperbolas_writing_equations`
+  - Published: 6 . $3 y^{2} + 2 x = 6$
+  - Generated: \text{Write the equation of the hyperbola.} \text{Write the equation of a horizontal hyperbola centered at the origin wi
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_parabolas_writing_equations`
+  - Published: 6 . $y^{2} = 4 - x^{2}$
+  - Generated: \text{Write the equation of the parabola.} \text{Write the equation of a parabola with vertex }(0,0)\text{ and focus }(0
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_compound_interest`
+  - Published: Illustrative Mathematics F-IF Bank Account Balance Alignments to Content Standards: F-IF.C.7.b Task At the beginning of the week, Jessie had
+  - Generated: \text{Solve the problem.} \text{An account starts with } \$1000 \text{ and earns } 8\% \text{ interest compounded annual
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_exponential_equations_not_requiring_logarithms`
+  - Published: 336 . [T] Find the arc length of $\ln x$ from $x = 1$ to $x = 2 .$
+  - Generated: \text{Solve for } x. 8^{x + 2} = 16^{x + 1}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_exponential_equations_requiring_logarithms`
+  - Published: 336 . [T] Find the arc length of $\ln x$ from $x = 1$ to $x = 2 .$
+  - Generated: \text{Solve for } x. 3^{3x} = 12
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_continuity`
+  - Published: 5 . $f (x) = \frac{x^{2} - 16}{x + 4} , a = - 4$
+  - Generated: \text{Determine if the function is continuous.} f(x)=\begin{cases}x+1,&x<0\\1,&x\ge0\end{cases}.\quad\text{Is }f\text{ c
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_area_and_laws_of_sines_and_cosines`
+  - Published: 6 . $\alpha = 43° , \gamma = 69° , a = 20$
+  - Generated: \text{Find the area or missing measure.} \text{In } \triangle ABC,\ m\angle A = 60^\circ,\ m\angle B = 40^\circ,\ a = 16
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_law_of_cosines`
+  - Published: 6 . $\alpha = 43° , \gamma = 69° , a = 20$
+  - Generated: \text{Find the missing measure.} \text{In } \triangle ABC,\ a = 14,\ b = 8,\ m\angle C = 80^\circ.\ \text{Find } c \text
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_law_of_sines`
+  - Published: 6 . $\alpha = 43° , \gamma = 69° , a = 20$
+  - Generated: \text{Find the missing measure.} \text{In } \triangle ABC,\ m\angle A = 60^\circ,\ m\angle B = 40^\circ,\ a = 16.\ \text
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_area_under_a_curve_by_limit_of_sums`
+  - Published: 1 . $y = x^{2} - 3 \text{and} y = 1$
+  - Generated: \text{Find the area.} \text{Find the area under }y=x\text{ from }x=0\text{ to }x=3.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_instantaneous_rates_of_change`
+  - Published: 5 . $f (x) = 4 x^{2} - 7$ on $\left[\right. 1 , b \left]\right.$
+  - Generated: \text{Find the instantaneous rate of change.} \text{Find the instantaneous rate of change of }f(x)=x^{3}\text{ at }x=2.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_complex_numbers_in_polar_form`
+  - Published: 6 . $5 + ​ 3 i$
+  - Generated: \text{Convert or evaluate.} \text{Write }\cos\frac{3\pi}{2}+i\sin\frac{3\pi}{2}\text{ in rectangular form.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_polar_and_rectangular_forms_of_equations`
+  - Published: 17 . $z = 7 cis \left(\right. \frac{\pi}{6} \left.\right)$
+  - Generated: \text{Convert the equation.} \text{Convert }x^2+y^2=9\text{ to polar form.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_polar_coordinates`
+  - Published: 6 . $\left(\right. 7 , \frac{7 \pi}{6} \left.\right)$
+  - Generated: \text{Convert or plot.} \text{Convert } (5, 180^\circ) \text{ from polar to rectangular coordinates.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_polar_forms_of_conic_sections`
+  - Published: 6 . $r = \frac{6}{1 - 2 cos \theta}$
+  - Generated: \text{Identify or write the equation.} r=\frac{9}{2-3\sin\theta}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_complex_zeros_and_fundamental_theorem_of_algebra`
+  - Published: 160 . The graph of $y = \int_{0}^{x} f (t) d t ,$ where f is a piecewise constant function, is shown here. Over which intervals is f positiv
+  - Generated: \text{Find the zeros.} \text{Find the zeros of }x^2+16=0.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_polynomial_graphs_real_zeros_and_end_behavior`
+  - Published: 12 . $f (x) = x^{4} - x^{2}$
+  - Generated: \text{Analyze the polynomial.} \text{Describe the end behavior of } f(x)=3x^{4} + 3x^{2} + 6.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_power_series`
+  - Published: Illustrative Mathematics F-IF Graphs of Power Functions Task a. Sketch the graphs of the functions described by f (x) = x 2 and g(x) = x 4 o
+  - Generated: \text{Evaluate the series.} \text{Find the radius of convergence of }\sum_{n=0}^{\infty}(3x)^n.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_probability_independent_dependent_events`
+  - Published: Illustrative Mathematics S-CP Finding Probabilities of Compound Events Alignments to Content Standards: S-CP.A.3 Task Cecil has two six-side
+  - Generated: \text{Find the probability.} \text{{A fair coin is flipped and a fair die is rolled. What is the probability of getting 
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_probability_independent_dependent_events_word_problems`
+  - Published: Illustrative Mathematics S-CP Finding Probabilities of Compound Events Alignments to Content Standards: S-CP.A.3 Task Cecil has two six-side
+  - Generated: \text{Solve the problem.} \text{{A fair coin is flipped and a fair die is rolled. What is the probability of getting hea
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_3d_points_in_three_dimensions`
+  - Published: 6 . $\left(\right. 7 , \frac{7 \pi}{6} \left.\right)$
+  - Generated: \text{Find the distance or coordinates.} \text{Find the distance from }(0,0,0)\text{ to }(1,4,8).
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_fundamental_identities`
+  - Published: 149 . $\frac{d}{d x} \int_{1}^{x} e^{\cos t} d t$
+  - Generated: \text{Simplify.} \text{Simplify: } \cot \theta
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_inverse_trig_functions`
+  - Published: 7 . $sec \frac{\pi}{6}$
+  - Generated: \text{Evaluate the inverse trigonometric function.} \arcsin\left(1\right)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_simple_trig_equations`
+  - Published: Illustrative Mathematics F-TF Finding Trig Values Alignments to Content Standards: F-TF.C.8 Task Suppose that cos θ = 2 and that θ is in the
+  - Generated: \text{Solve for } x. \sin(x) = -\frac{1}{2}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_trig_functions_of_any_angle`
+  - Published: 6 . $tan \frac{\pi}{6}$
+  - Generated: \text{Evaluate the trigonometric function.} \sin\left(90^\circ\right)
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_equations_and_multiple_angle_identities`
+  - Published: 20 . Given that $sin a = \frac{2}{3}$ and $cos b = - \frac{1}{4} ,$ with $a$ and $b$ both in the interval $\left[\right. \frac{\pi}{2} , \pi
+  - Generated: \text{Solve for } x. \text{Solve }2\sin^2\theta-\sin\theta=0\text{ for }0\le\theta<2\pi.
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.
+- `pc_multiple_angle_identities`
+  - Published: 4 . $cos \left(\right. \frac{7 \pi}{12} \left.\right)$
+  - Generated: \text{Simplify.} \text{Rewrite }\sin(2\theta)\text{ using a double-angle identity.}
+  - Left as is: the published card is not the same given and find as this leaf, or the generator already asks for that object.

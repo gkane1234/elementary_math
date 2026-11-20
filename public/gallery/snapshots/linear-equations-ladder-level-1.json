@@ -20,7 +20,17 @@
   "seed": 1005,
   "includeRelated": true,
   "maxTopics": 4,
-  "generated_at": "2026-07-29T16:31:31.919081+00:00",
+  "pairing": null,
+  "scope": null,
+  "topics": [
+    "one_step_equations",
+    "two_step_equations",
+    "pa_equations_one_step_word_problems",
+    "pa_equations_two_step_word_problems"
+  ],
+  "style": null,
+  "rampEachTopic": null,
+  "generated_at": "2026-11-20T21:54:28.035823+00:00",
   "progressive": {
     "seeds": [
       "one_step_equations"
@@ -47,14 +57,37 @@
       6.2222,
       7.1111,
       8.0
-    ]
+    ],
+    "pairing": "lesson",
+    "scope": "topic",
+    "style": "ramp",
+    "ramp_each_topic": false,
+    "checked_topics": [],
+    "phases": [
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus"
+    ],
+    "omitted_topics": [],
+    "focus": [
+      "one_step_equations",
+      "two_step_equations",
+      "pa_equations_one_step_word_problems",
+      "pa_equations_two_step_word_problems"
+    ],
+    "warmup": [],
+    "drill": [],
+    "stretch": [],
+    "spiral_suggestion": null,
+    "course_id": null
   },
-  "topics": [
-    "one_step_equations",
-    "two_step_equations",
-    "pa_equations_one_step_word_problems",
-    "pa_equations_two_step_word_problems"
-  ],
   "difficulties": [
     0.0,
     0.8889,
@@ -69,10 +102,10 @@
   ],
   "questions": [
     {
-      "id": "4a32a37e-0fc5-45c5-b98f-5a9b8dc1247f",
+      "id": "25d88576-7b7d-4075-8039-37d1a40e17b1",
       "topic": "one_step_equations",
-      "prompt_latex": "x - 3 = -1",
-      "prompt_text": "x - 3 = -1",
+      "prompt_latex": "x - 1 = 2",
+      "prompt_text": "x - 1 = 2",
       "answer_latex": null,
       "metadata": {
         "difficulty": 0.0,
@@ -106,11 +139,11 @@
           },
           {
             "primitive": "numbers",
-            "latex": "3",
+            "latex": "2",
             "d": 0.0,
-            "lane": "signed_small",
+            "lane": "friendly_wholes",
             "lane_selection": {
-              "profile": "signed_small",
+              "profile": "friendly_wholes",
               "source": "auto",
               "effective_d": 0.0,
               "eligible": [
@@ -136,32 +169,61 @@
           "allow_abs": false,
           "allow_higher_powers": false
         },
-        "primitive_engine": "equations",
+        "primitive_engine": "equation_skeleton",
         "steps": "one",
         "n_ops": 1,
-        "upgrades": [],
+        "upgrades": [
+          "one_step",
+          "sub"
+        ],
         "solution_kind": "unique",
+        "skeleton_pattern": "SolveLinear",
+        "species": "one",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "sub"
+        ],
+        "leading": "1",
+        "relation": "=",
+        "flipped": false,
+        "form_id": "one_step_add_sub",
+        "openstax_form": "one_step_add_sub",
+        "openstax_case": "§2.1",
+        "strategy": "one_step",
+        "catalog_id": "algebra1_linear_equations",
+        "construction": "forward_form_catalog",
+        "shape_id": "one_step_add_sub",
+        "family": "one_step_add_sub",
+        "tricks": [
+          "isolate"
+        ],
+        "tricks_required": [
+          "isolate"
+        ],
+        "rhs": "2",
         "generation_settings": {
           "min_terms": 2,
           "max_terms": 3,
           "difficulty": 0.0,
-          "seed": 1005
+          "seed": 1005,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve for } x."
       }
     },
     {
-      "id": "65aceb66-642f-43e2-b433-1b7e748b6b93",
+      "id": "8721e23c-39a1-4cae-a5ab-60e33019c714",
       "topic": "one_step_equations",
-      "prompt_latex": "x - 3 = -1",
-      "prompt_text": "x - 3 = -1",
+      "prompt_latex": "3x = 6",
+      "prompt_text": "3x = 6",
       "answer_latex": null,
       "metadata": {
         "difficulty": 0.8889,
         "spend": {
-          "numbers": 0.07,
-          "variable": 0.189,
-          "equations": 0.63
+          "numbers": 0.067,
+          "variable": 0.081,
+          "equations": 0.741
         },
         "degraded": [],
         "sample_log": [
@@ -169,12 +231,12 @@
             "primitive": "variable",
             "name": "x",
             "latex": "x",
-            "d": 0.1887227876458072,
+            "d": 0.08147345156169053,
             "lane": "only_x",
             "lane_selection": {
               "profile": "only_x",
               "source": "auto",
-              "effective_d": 0.1887227876458072,
+              "effective_d": 0.08147345156169053,
               "eligible": [
                 "only_x"
               ],
@@ -183,377 +245,18 @@
                 "allow_greek": true,
                 "max_variable_lane": null
               },
-              "note": "auto from D=0.188723 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
+              "note": "auto from D=0.0814735 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
             }
           },
           {
             "primitive": "numbers",
             "latex": "3",
-            "d": 0.07038716897981362,
-            "lane": "signed_small",
-            "lane_selection": {
-              "profile": "signed_small",
-              "source": "auto",
-              "effective_d": 0.07038716897981362,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.0703872 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
-            }
-          }
-        ],
-        "expression_policy": {
-          "family": "linear",
-          "max_degree": 1,
-          "max_variables": 2,
-          "allow_var_var_product": false,
-          "allow_abs": false,
-          "allow_higher_powers": false
-        },
-        "primitive_engine": "equations",
-        "steps": "one",
-        "n_ops": 1,
-        "upgrades": [],
-        "solution_kind": "unique",
-        "generation_settings": {
-          "min_terms": 2,
-          "max_terms": 3,
-          "difficulty": 0.8889,
-          "seed": 1005
-        },
-        "instruction_latex": "\\text{Solve for } x."
-      }
-    },
-    {
-      "id": "03ae4ba4-72e0-45a6-ba78-2fcc343628d5",
-      "topic": "one_step_equations",
-      "prompt_latex": "3x = 12",
-      "prompt_text": "3x = 12",
-      "answer_latex": null,
-      "metadata": {
-        "difficulty": 1.7778,
-        "spend": {
-          "numbers": 0.141,
-          "variable": 0.377,
-          "equations": 1.26
-        },
-        "degraded": [],
-        "sample_log": [
-          {
-            "primitive": "variable",
-            "name": "x",
-            "latex": "x",
-            "d": 0.3774455752916144,
-            "lane": "only_x",
-            "lane_selection": {
-              "profile": "only_x",
-              "source": "auto",
-              "effective_d": 0.3774455752916144,
-              "eligible": [
-                "only_x"
-              ],
-              "constraints": {
-                "only_x": false,
-                "allow_greek": true,
-                "max_variable_lane": null
-              },
-              "note": "auto from D=0.377446 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "3",
-            "d": 0.14077433795962724,
-            "lane": "signed_small",
-            "lane_selection": {
-              "profile": "signed_small",
-              "source": "auto",
-              "effective_d": 0.14077433795962724,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.140774 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
-            }
-          }
-        ],
-        "expression_policy": {
-          "family": "linear",
-          "max_degree": 1,
-          "max_variables": 2,
-          "allow_var_var_product": false,
-          "allow_abs": false,
-          "allow_higher_powers": false
-        },
-        "primitive_engine": "equations",
-        "steps": "one",
-        "n_ops": 1,
-        "upgrades": [
-          "multiply_divide"
-        ],
-        "solution_kind": "unique",
-        "generation_settings": {
-          "min_terms": 2,
-          "max_terms": 3,
-          "difficulty": 1.7778,
-          "seed": 1005
-        },
-        "instruction_latex": "\\text{Solve for } x."
-      }
-    },
-    {
-      "id": "97a9eae6-f007-49d0-9700-5cc50a97f7ae",
-      "topic": "two_step_equations",
-      "prompt_latex": "x + 3 = 7",
-      "prompt_text": "x + 3 = 7",
-      "answer_latex": null,
-      "metadata": {
-        "difficulty": 2.6667,
-        "spend": {
-          "numbers": 0.211,
-          "variable": 0.566,
-          "equations": 1.889
-        },
-        "degraded": [],
-        "sample_log": [
-          {
-            "primitive": "variable",
-            "name": "x",
-            "latex": "x",
-            "d": 0.5661683629374216,
-            "lane": "only_x",
-            "lane_selection": {
-              "profile": "only_x",
-              "source": "auto",
-              "effective_d": 0.5661683629374216,
-              "eligible": [
-                "only_x"
-              ],
-              "constraints": {
-                "only_x": false,
-                "allow_greek": true,
-                "max_variable_lane": null
-              },
-              "note": "auto from D=0.566168 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "-1",
-            "d": 0.21116150693944086,
-            "lane": "signed_small",
-            "lane_selection": {
-              "profile": "signed_small",
-              "source": "auto",
-              "effective_d": 0.21116150693944086,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.211162 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "3",
-            "d": 0.21116150693944086,
-            "lane": "signed_small",
-            "lane_selection": {
-              "profile": "signed_small",
-              "source": "auto",
-              "effective_d": 0.21116150693944086,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.211162 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
-            }
-          }
-        ],
-        "expression_policy": {
-          "family": "linear",
-          "max_degree": 1,
-          "max_variables": 2,
-          "allow_var_var_product": false,
-          "allow_abs": false,
-          "allow_higher_powers": false
-        },
-        "primitive_engine": "equations",
-        "steps": "two",
-        "n_ops": 2,
-        "upgrades": [
-          "multiply_divide",
-          "two_step"
-        ],
-        "solution_kind": "unique",
-        "generation_settings": {
-          "min_terms": 2,
-          "max_terms": 3,
-          "difficulty": 2.6667,
-          "seed": 1005
-        },
-        "instruction_latex": "\\text{Solve for } x."
-      }
-    },
-    {
-      "id": "2c8be9ea-9795-4f10-b030-b6945591ce1e",
-      "topic": "one_step_equations",
-      "prompt_latex": "-3x = -12",
-      "prompt_text": "-3x = -12",
-      "answer_latex": null,
-      "metadata": {
-        "difficulty": 3.5556,
-        "spend": {
-          "numbers": 0.282,
-          "variable": 0.755,
-          "equations": 2.519
-        },
-        "degraded": [],
-        "sample_log": [
-          {
-            "primitive": "variable",
-            "name": "x",
-            "latex": "x",
-            "d": 0.7548911505832288,
-            "lane": "only_x",
-            "lane_selection": {
-              "profile": "only_x",
-              "source": "auto",
-              "effective_d": 0.7548911505832288,
-              "eligible": [
-                "only_x"
-              ],
-              "constraints": {
-                "only_x": false,
-                "allow_greek": true,
-                "max_variable_lane": null
-              },
-              "note": "auto from D=0.754891 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "3",
-            "d": 0.2815486759192545,
-            "lane": "signed_small",
-            "lane_selection": {
-              "profile": "signed_small",
-              "source": "auto",
-              "effective_d": 0.2815486759192545,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.281549 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
-            }
-          }
-        ],
-        "expression_policy": {
-          "family": "linear",
-          "max_degree": 1,
-          "max_variables": 2,
-          "allow_var_var_product": false,
-          "allow_abs": false,
-          "allow_higher_powers": false
-        },
-        "primitive_engine": "equations",
-        "steps": "one",
-        "n_ops": 1,
-        "upgrades": [
-          "multiply_divide",
-          "negative_coeff"
-        ],
-        "solution_kind": "unique",
-        "generation_settings": {
-          "min_terms": 2,
-          "max_terms": 3,
-          "difficulty": 3.5556,
-          "seed": 1005
-        },
-        "instruction_latex": "\\text{Solve for } x."
-      }
-    },
-    {
-      "id": "1ad45f10-02b0-4fda-8623-3928ca7240ba",
-      "topic": "pa_equations_one_step_word_problems",
-      "prompt_latex": "\\text{Alex thinks of a number. After a one-step change, the equation is $x - 1 = 3$. What was the number?}",
-      "prompt_text": "Alex thinks of a number. After a one-step change, the equation is x - 1 = 3. What was the number?",
-      "answer_latex": null,
-      "metadata": {
-        "difficulty": 4.4444,
-        "spend": {
-          "numbers": 0.352,
-          "variable": 0.944,
-          "equations": 3.149
-        },
-        "degraded": [],
-        "sample_log": [
-          {
-            "primitive": "variable",
-            "name": "x",
-            "latex": "x",
-            "d": 0.9435927071808139,
-            "lane": "only_x",
-            "lane_selection": {
-              "profile": "only_x",
-              "source": "auto",
-              "effective_d": 0.9435927071808139,
-              "eligible": [
-                "only_x"
-              ],
-              "constraints": {
-                "only_x": false,
-                "allow_greek": true,
-                "max_variable_lane": null
-              },
-              "note": "auto from D=0.943593 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "1",
-            "d": 0.3519279264415386,
+            "d": 0.06657854605257023,
             "lane": "friendly_wholes",
             "lane_selection": {
               "profile": "friendly_wholes",
               "source": "auto",
-              "effective_d": 0.3519279264415386,
+              "effective_d": 0.06657854605257023,
               "eligible": [
                 "friendly_wholes",
                 "signed_small"
@@ -565,7 +268,7 @@
                 "allow_decimals": true,
                 "exclude_zero": false
               },
-              "note": "auto from D=0.351928 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+              "note": "auto from D=0.0665785 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
             }
           }
         ],
@@ -577,169 +280,484 @@
           "allow_abs": false,
           "allow_higher_powers": false
         },
-        "primitive_engine": "word_problem",
+        "primitive_engine": "equation_skeleton",
+        "steps": "one",
+        "n_ops": 1,
+        "upgrades": [
+          "one_step",
+          "mul"
+        ],
+        "solution_kind": "unique",
+        "skeleton_pattern": "SolveLinear",
+        "species": "one",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "mul"
+        ],
+        "leading": "3",
+        "relation": "=",
+        "flipped": false,
+        "form_id": "one_step_mul_div",
+        "openstax_form": "one_step_mul_div",
+        "openstax_case": "§2.2",
+        "strategy": "one_step",
+        "catalog_id": "algebra1_linear_equations",
+        "construction": "forward_form_catalog",
+        "shape_id": "one_step_mul_div",
+        "family": "one_step_mul_div",
+        "tricks": [
+          "isolate"
+        ],
+        "tricks_required": [
+          "isolate"
+        ],
+        "rhs": "6",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 0.8889,
+          "seed": 2014,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "id": "2ffeeca2-7dfa-432c-a875-cf54500ca30d",
+      "topic": "one_step_equations",
+      "prompt_latex": "x - 2 = 0",
+      "prompt_text": "x - 2 = 0",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 1.7778,
+        "spend": {
+          "numbers": 0.082,
+          "variable": 0.174,
+          "equations": 1.522
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.1743733622603495,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.1743733622603495,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": false,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.174373 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "3",
+            "d": 0.08150486500907297,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.08150486500907297,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": false,
+                "allow_negatives": true,
+                "allow_fractions": true,
+                "allow_decimals": true,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.0815049 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "steps": "one",
+        "n_ops": 1,
+        "upgrades": [
+          "one_step",
+          "sub"
+        ],
+        "solution_kind": "unique",
+        "skeleton_pattern": "SolveLinear",
+        "species": "one",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "sub"
+        ],
+        "leading": "1",
+        "relation": "=",
+        "flipped": false,
+        "form_id": "one_step_add_sub",
+        "openstax_form": "one_step_add_sub",
+        "openstax_case": "§2.1",
+        "strategy": "one_step",
+        "catalog_id": "algebra1_linear_equations",
+        "construction": "forward_form_catalog",
+        "shape_id": "one_step_add_sub",
+        "family": "one_step_add_sub",
+        "tricks": [
+          "isolate"
+        ],
+        "tricks_required": [
+          "isolate"
+        ],
+        "rhs": "0",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 1.7778,
+          "seed": 3023,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "id": "4d17d32c-49f0-4b41-87a1-9ac6a630465c",
+      "topic": "two_step_equations",
+      "prompt_latex": "3x + 4 = 10",
+      "prompt_text": "3x + 4 = 10",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 2.6667,
+        "spend": {
+          "numbers": 0.334,
+          "variable": 0.209,
+          "equations": 2.124
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 0.20911084975372074,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 0.20911084975372074,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": false,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=0.209111 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "0",
+            "d": 0.3336168882646212,
+            "lane": "friendly_wholes",
+            "lane_selection": {
+              "profile": "friendly_wholes",
+              "source": "auto",
+              "effective_d": 0.3336168882646212,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": false,
+                "allow_negatives": true,
+                "allow_fractions": true,
+                "allow_decimals": true,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.333617 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "steps": "two",
+        "n_ops": 2,
+        "upgrades": [
+          "two_step"
+        ],
+        "solution_kind": "unique",
+        "skeleton_pattern": "SolveLinear",
+        "species": "two",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "add",
+          "mul"
+        ],
+        "leading": "3",
+        "relation": "=",
+        "flipped": false,
+        "form_id": "two_step",
+        "openstax_form": "two_step",
+        "openstax_case": "§2.2–2.3",
+        "strategy": "two_step",
+        "catalog_id": "algebra1_linear_equations",
+        "construction": "forward_form_catalog",
+        "shape_id": "two_step",
+        "family": "two_step",
+        "tricks": [
+          "isolate"
+        ],
+        "tricks_required": [
+          "isolate"
+        ],
+        "rhs": "10",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 2.6667,
+          "seed": 4032,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "id": "9863e60a-1802-4c4c-8da0-74ce07ee2ef8",
+      "topic": "one_step_equations",
+      "prompt_latex": "x - 3 = 2",
+      "prompt_text": "x - 3 = 2",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 3.5556,
+        "spend": {
+          "numbers": 0.499,
+          "variable": 1.84,
+          "equations": 1.217
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 1.8396212684331663,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 1.8396212684331663,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": false,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=1.83962 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "0",
+            "d": 0.49911276786504577,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 0.49911276786504577,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": false,
+                "allow_negatives": true,
+                "allow_fractions": true,
+                "allow_decimals": true,
+                "exclude_zero": false
+              },
+              "note": "auto from D=0.499113 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
+        "steps": "one",
+        "n_ops": 1,
+        "upgrades": [
+          "one_step",
+          "sub"
+        ],
+        "solution_kind": "unique",
+        "skeleton_pattern": "SolveLinear",
+        "species": "one",
+        "numeric_tier": 0,
+        "format_tier": 0,
+        "transforms": [
+          "sub"
+        ],
+        "leading": "1",
+        "relation": "=",
+        "flipped": false,
+        "form_id": "one_step_add_sub",
+        "openstax_form": "one_step_add_sub",
+        "openstax_case": "§2.1",
+        "strategy": "one_step",
+        "catalog_id": "algebra1_linear_equations",
+        "construction": "forward_form_catalog",
+        "shape_id": "one_step_add_sub",
+        "family": "one_step_add_sub",
+        "tricks": [
+          "isolate"
+        ],
+        "tricks_required": [
+          "isolate"
+        ],
+        "rhs": "2",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 3,
+          "difficulty": 3.5556,
+          "seed": 5041,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "id": "9123eb6c-8264-4b98-bf37-26afcf94a5da",
+      "topic": "pa_equations_one_step_word_problems",
+      "prompt_latex": "\\text{Stickers cost \\$6 each. Nate spends \\$36. How many stickers did Nate buy?}",
+      "prompt_text": "Stickers cost $6 each. Nate spends $36. How many stickers did Nate buy?",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 4.4444,
+        "spend": {
+          "numbers": 0.506,
+          "variable": 0.734,
+          "equations": 3.204
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "species": "one",
+        "n_ops": 1,
+        "steps": "one",
+        "transforms": [
+          "mul"
+        ],
+        "rhs": "36",
+        "leading": "6",
+        "numeric_tier": 1,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "=",
+        "construction": "wp_packaging",
+        "frame_id": "count_tickets",
+        "frame_variant": "tickets",
+        "units": "stickers",
+        "primitive_engine": "wp_packaging",
         "wp_kind": "one_step",
-        "equation_latex": "x - 1 = 3",
-        "upgrades": [],
+        "equation_latex": "6x = 36",
+        "upgrades": [
+          "one_step"
+        ],
         "generation_settings": {
           "difficulty": 4.4444,
           "min_terms": 2,
           "max_terms": 4,
-          "seed": 1005
+          "seed": 6050,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve the problem.}"
       }
     },
     {
-      "id": "600d160f-4c3c-4c00-8be8-680cded40325",
+      "id": "b5a2ea46-af70-453e-bcee-62bbfc9d88da",
       "topic": "one_step_equations",
-      "prompt_latex": "x - 1 = 3",
-      "prompt_text": "x - 1 = 3",
+      "prompt_latex": "2y = -10",
+      "prompt_text": "2y = -10",
       "answer_latex": null,
       "metadata": {
         "difficulty": 5.3333,
         "spend": {
-          "numbers": 0.422,
-          "variable": 1.132,
-          "equations": 3.779
+          "numbers": 0.237,
+          "variable": 3.5,
+          "equations": 1.596
         },
         "degraded": [],
         "sample_log": [
           {
             "primitive": "variable",
-            "name": "x",
-            "latex": "x",
-            "d": 1.1323154948266212,
-            "lane": "only_x",
+            "name": "y",
+            "latex": "y",
+            "d": 3.500142738694998,
+            "lane": "xyz",
             "lane_selection": {
-              "profile": "only_x",
+              "profile": "xyz",
               "source": "auto",
-              "effective_d": 1.1323154948266212,
+              "effective_d": 3.500142738694998,
               "eligible": [
-                "only_x"
+                "only_x",
+                "xyz"
               ],
               "constraints": {
                 "only_x": false,
                 "allow_greek": true,
                 "max_variable_lane": null
               },
-              "note": "auto from D=1.13232 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "1",
-            "d": 0.42231509542135226,
-            "lane": "friendly_wholes",
-            "lane_selection": {
-              "profile": "friendly_wholes",
-              "source": "auto",
-              "effective_d": 0.42231509542135226,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.422315 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
-            }
-          }
-        ],
-        "expression_policy": {
-          "family": "linear",
-          "max_degree": 1,
-          "max_variables": 2,
-          "allow_var_var_product": false,
-          "allow_abs": false,
-          "allow_higher_powers": false
-        },
-        "primitive_engine": "equations",
-        "steps": "one",
-        "n_ops": 1,
-        "upgrades": [],
-        "solution_kind": "unique",
-        "generation_settings": {
-          "min_terms": 2,
-          "max_terms": 4,
-          "difficulty": 5.3333,
-          "seed": 1005
-        },
-        "instruction_latex": "\\text{Solve for } x."
-      }
-    },
-    {
-      "id": "3db8430e-4f8f-4298-9efc-1fdf9d3d959d",
-      "topic": "pa_equations_two_step_word_problems",
-      "prompt_latex": "\\text{Taylor starts with a number and applies two operations, giving $x + 2 = 7$. What was the starting number?}",
-      "prompt_text": "Taylor starts with a number and applies two operations, giving x + 2 = 7. What was the starting number?",
-      "answer_latex": null,
-      "metadata": {
-        "difficulty": 6.2222,
-        "spend": {
-          "numbers": 0.493,
-          "variable": 1.321,
-          "equations": 4.408
-        },
-        "degraded": [],
-        "sample_log": [
-          {
-            "primitive": "variable",
-            "name": "x",
-            "latex": "x",
-            "d": 1.3210382824724283,
-            "lane": "only_x",
-            "lane_selection": {
-              "profile": "only_x",
-              "source": "auto",
-              "effective_d": 1.3210382824724283,
-              "eligible": [
-                "only_x"
-              ],
-              "constraints": {
-                "only_x": false,
-                "allow_greek": true,
-                "max_variable_lane": null
-              },
-              "note": "auto from D=1.32104 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "1",
-            "d": 0.4927022644011658,
-            "lane": "friendly_wholes",
-            "lane_selection": {
-              "profile": "friendly_wholes",
-              "source": "auto",
-              "effective_d": 0.4927022644011658,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.492702 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+              "note": "auto from D=3.50014 eligible=['only_x', 'xyz'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
             }
           },
           {
             "primitive": "numbers",
             "latex": "2",
-            "d": 0.4927022644011658,
-            "lane": "signed_small",
+            "d": 0.23711720885358673,
+            "lane": "friendly_wholes",
             "lane_selection": {
-              "profile": "signed_small",
+              "profile": "friendly_wholes",
               "source": "auto",
-              "effective_d": 0.4927022644011658,
+              "effective_d": 0.23711720885358673,
               "eligible": [
                 "friendly_wholes",
                 "signed_small"
@@ -751,7 +769,7 @@
                 "allow_decimals": true,
                 "exclude_zero": false
               },
-              "note": "auto from D=0.492702 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+              "note": "auto from D=0.237117 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
             }
           }
         ],
@@ -763,34 +781,118 @@
           "allow_abs": false,
           "allow_higher_powers": false
         },
-        "primitive_engine": "word_problem",
-        "wp_kind": "two_step",
-        "equation_latex": "x + 2 = 7",
+        "primitive_engine": "equation_skeleton",
+        "steps": "one",
+        "n_ops": 1,
         "upgrades": [
-          "multiply_divide",
+          "one_step",
+          "mul"
+        ],
+        "solution_kind": "unique",
+        "skeleton_pattern": "SolveLinear",
+        "species": "one",
+        "numeric_tier": 1,
+        "format_tier": 0,
+        "transforms": [
+          "mul"
+        ],
+        "leading": "2",
+        "relation": "=",
+        "flipped": false,
+        "form_id": "one_step_mul_div",
+        "openstax_form": "one_step_mul_div",
+        "openstax_case": "§2.2",
+        "strategy": "one_step",
+        "catalog_id": "algebra1_linear_equations",
+        "construction": "forward_form_catalog",
+        "shape_id": "one_step_mul_div",
+        "family": "one_step_mul_div",
+        "tricks": [
+          "isolate"
+        ],
+        "tricks_required": [
+          "isolate"
+        ],
+        "rhs": "-10",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 5.3333,
+          "seed": 7059,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "id": "dbffdd87-897a-4237-a0af-db5f39b63539",
+      "topic": "pa_equations_two_step_word_problems",
+      "prompt_latex": "2\\text{ less than }4\\text{ times a number is }10\\text{. Find the number.}",
+      "prompt_text": "2 less than 4 times a number is 10. Find the number.",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 6.2222,
+        "spend": {
+          "numbers": 1.251,
+          "variable": 2.681,
+          "equations": 2.29
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "skeleton_pattern": "SolveLinear",
+        "species": "two",
+        "n_ops": 2,
+        "steps": "two",
+        "transforms": [
+          "add",
+          "mul"
+        ],
+        "rhs": "10",
+        "leading": "4",
+        "numeric_tier": 1,
+        "format_tier": 0,
+        "flipped": false,
+        "relation": "=",
+        "construction": "wp_packaging",
+        "frame_id": "number_two_step",
+        "frame_variant": "less",
+        "units": "",
+        "primitive_engine": "wp_packaging",
+        "wp_kind": "two_step",
+        "equation_latex": "4x - 2 = 10",
+        "upgrades": [
           "two_step"
         ],
         "generation_settings": {
           "difficulty": 6.2222,
           "min_terms": 2,
           "max_terms": 4,
-          "seed": 1005
+          "seed": 8068,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve the problem.}"
       }
     },
     {
-      "id": "b55d1b27-935e-4f0f-b688-cb71fd5f0a42",
+      "id": "4f3d8367-4cb5-4a80-b505-4de009e2145f",
       "topic": "one_step_equations",
-      "prompt_latex": "x + 1 = \\frac{5}{2}",
-      "prompt_text": "x + 1 = \\frac{5}{2}",
+      "prompt_latex": "x - 2 = -5",
+      "prompt_text": "x - 2 = -5",
       "answer_latex": null,
       "metadata": {
         "difficulty": 7.1111,
         "spend": {
-          "numbers": 0.563,
-          "variable": 1.51,
-          "equations": 5.038
+          "numbers": 1.061,
+          "variable": 3.152,
+          "equations": 2.899
         },
         "degraded": [],
         "sample_log": [
@@ -798,139 +900,33 @@
             "primitive": "variable",
             "name": "x",
             "latex": "x",
-            "d": 1.5097610701182356,
-            "lane": "only_x",
+            "d": 3.1517111244021696,
+            "lane": "xyz",
             "lane_selection": {
-              "profile": "only_x",
+              "profile": "xyz",
               "source": "auto",
-              "effective_d": 1.5097610701182356,
+              "effective_d": 3.1517111244021696,
               "eligible": [
-                "only_x"
+                "only_x",
+                "xyz"
               ],
               "constraints": {
                 "only_x": false,
                 "allow_greek": true,
                 "max_variable_lane": null
               },
-              "note": "auto from D=1.50976 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "1",
-            "d": 0.5630894333809795,
-            "lane": "friendly_wholes",
-            "lane_selection": {
-              "profile": "friendly_wholes",
-              "source": "auto",
-              "effective_d": 0.5630894333809795,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.563089 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
-            }
-          }
-        ],
-        "expression_policy": {
-          "family": "linear",
-          "max_degree": 1,
-          "max_variables": 2,
-          "allow_var_var_product": false,
-          "allow_abs": false,
-          "allow_higher_powers": false
-        },
-        "primitive_engine": "equations",
-        "steps": "one",
-        "n_ops": 1,
-        "upgrades": [
-          "multiply_divide"
-        ],
-        "solution_kind": "unique",
-        "generation_settings": {
-          "min_terms": 2,
-          "max_terms": 4,
-          "difficulty": 7.1111,
-          "seed": 1005
-        },
-        "instruction_latex": "\\text{Solve for } x."
-      }
-    },
-    {
-      "id": "01c00bce-9923-4684-b6c6-07c516ec1fe5",
-      "topic": "two_step_equations",
-      "prompt_latex": "-2x + 3 = 0",
-      "prompt_text": "-2x + 3 = 0",
-      "answer_latex": null,
-      "metadata": {
-        "difficulty": 8.0,
-        "spend": {
-          "numbers": 0.633,
-          "variable": 1.698,
-          "equations": 5.668
-        },
-        "degraded": [],
-        "sample_log": [
-          {
-            "primitive": "variable",
-            "name": "x",
-            "latex": "x",
-            "d": 1.6984838577640426,
-            "lane": "only_x",
-            "lane_selection": {
-              "profile": "only_x",
-              "source": "auto",
-              "effective_d": 1.6984838577640426,
-              "eligible": [
-                "only_x"
-              ],
-              "constraints": {
-                "only_x": false,
-                "allow_greek": true,
-                "max_variable_lane": null
-              },
-              "note": "auto from D=1.69848 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
-            }
-          },
-          {
-            "primitive": "numbers",
-            "latex": "2",
-            "d": 0.6334766023607931,
-            "lane": "signed_small",
-            "lane_selection": {
-              "profile": "signed_small",
-              "source": "auto",
-              "effective_d": 0.6334766023607931,
-              "eligible": [
-                "friendly_wholes",
-                "signed_small"
-              ],
-              "constraints": {
-                "integers_only": false,
-                "allow_negatives": true,
-                "allow_fractions": true,
-                "allow_decimals": true,
-                "exclude_zero": false
-              },
-              "note": "auto from D=0.633477 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+              "note": "auto from D=3.15171 eligible=['only_x', 'xyz'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
             }
           },
           {
             "primitive": "numbers",
             "latex": "3",
-            "d": 0.6334766023607931,
+            "d": 1.0606921510818919,
             "lane": "signed_small",
             "lane_selection": {
               "profile": "signed_small",
               "source": "auto",
-              "effective_d": 0.6334766023607931,
+              "effective_d": 1.0606921510818919,
               "eligible": [
                 "friendly_wholes",
                 "signed_small"
@@ -942,7 +938,7 @@
                 "allow_decimals": true,
                 "exclude_zero": false
               },
-              "note": "auto from D=0.633477 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+              "note": "auto from D=1.06069 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
             }
           }
         ],
@@ -954,20 +950,156 @@
           "allow_abs": false,
           "allow_higher_powers": false
         },
-        "primitive_engine": "equations",
+        "primitive_engine": "equation_skeleton",
+        "steps": "one",
+        "n_ops": 1,
+        "upgrades": [
+          "one_step",
+          "sub"
+        ],
+        "solution_kind": "unique",
+        "skeleton_pattern": "SolveLinear",
+        "species": "one",
+        "numeric_tier": 1,
+        "format_tier": 0,
+        "transforms": [
+          "sub"
+        ],
+        "leading": "1",
+        "relation": "=",
+        "flipped": false,
+        "form_id": "one_step_add_sub",
+        "openstax_form": "one_step_add_sub",
+        "openstax_case": "§2.1",
+        "strategy": "one_step",
+        "catalog_id": "algebra1_linear_equations",
+        "construction": "forward_form_catalog",
+        "shape_id": "one_step_add_sub",
+        "family": "one_step_add_sub",
+        "tricks": [
+          "isolate"
+        ],
+        "tricks_required": [
+          "isolate"
+        ],
+        "rhs": "-5",
+        "generation_settings": {
+          "min_terms": 2,
+          "max_terms": 4,
+          "difficulty": 7.1111,
+          "seed": 9077,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve for } x."
+      }
+    },
+    {
+      "id": "abecb6ed-a569-4687-98b5-fe92480887db",
+      "topic": "two_step_equations",
+      "prompt_latex": "-7x + 3 = -74",
+      "prompt_text": "-7x + 3 = -74",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 8.0,
+        "spend": {
+          "numbers": 1.087,
+          "variable": 2.441,
+          "equations": 4.473
+        },
+        "degraded": [],
+        "sample_log": [
+          {
+            "primitive": "variable",
+            "name": "x",
+            "latex": "x",
+            "d": 2.4406943775431476,
+            "lane": "only_x",
+            "lane_selection": {
+              "profile": "only_x",
+              "source": "auto",
+              "effective_d": 2.4406943775431476,
+              "eligible": [
+                "only_x"
+              ],
+              "constraints": {
+                "only_x": false,
+                "allow_greek": true,
+                "max_variable_lane": null
+              },
+              "note": "auto from D=2.44069 eligible=['only_x'] constraints={'only_x': False, 'allow_greek': True, 'max_variable_lane': None}"
+            }
+          },
+          {
+            "primitive": "numbers",
+            "latex": "1",
+            "d": 1.086796294255546,
+            "lane": "signed_small",
+            "lane_selection": {
+              "profile": "signed_small",
+              "source": "auto",
+              "effective_d": 1.086796294255546,
+              "eligible": [
+                "friendly_wholes",
+                "signed_small"
+              ],
+              "constraints": {
+                "integers_only": false,
+                "allow_negatives": true,
+                "allow_fractions": true,
+                "allow_decimals": true,
+                "exclude_zero": false
+              },
+              "note": "auto from D=1.0868 eligible=['friendly_wholes', 'signed_small'] constraints={'integers_only': False, 'allow_negatives': True, 'allow_fractions': True, 'allow_decimals': True, 'exclude_zero': False}"
+            }
+          }
+        ],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "equation_skeleton",
         "steps": "two",
         "n_ops": 2,
         "upgrades": [
-          "multiply_divide",
-          "negative_coeff",
           "two_step"
         ],
         "solution_kind": "unique",
+        "skeleton_pattern": "SolveLinear",
+        "species": "two",
+        "numeric_tier": 2,
+        "format_tier": 0,
+        "transforms": [
+          "add",
+          "mul"
+        ],
+        "leading": "-7",
+        "relation": "=",
+        "flipped": false,
+        "form_id": "two_step",
+        "openstax_form": "two_step",
+        "openstax_case": "§2.2–2.3",
+        "strategy": "two_step",
+        "catalog_id": "algebra1_linear_equations",
+        "construction": "forward_form_catalog",
+        "shape_id": "two_step",
+        "family": "two_step",
+        "tricks": [
+          "isolate"
+        ],
+        "tricks_required": [
+          "isolate"
+        ],
+        "rhs": "-74",
         "generation_settings": {
           "min_terms": 2,
           "max_terms": 4,
           "difficulty": 8.0,
-          "seed": 1005
+          "seed": 10086,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve for } x."
       }
@@ -1000,7 +1132,36 @@
         6.2222,
         7.1111,
         8.0
-      ]
+      ],
+      "pairing": "lesson",
+      "scope": "topic",
+      "style": "ramp",
+      "ramp_each_topic": false,
+      "checked_topics": [],
+      "phases": [
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus"
+      ],
+      "omitted_topics": [],
+      "focus": [
+        "one_step_equations",
+        "two_step_equations",
+        "pa_equations_one_step_word_problems",
+        "pa_equations_two_step_word_problems"
+      ],
+      "warmup": [],
+      "drill": [],
+      "stretch": [],
+      "spiral_suggestion": null,
+      "course_id": null
     }
   },
   "open_in_generator": {

@@ -1,3 +1,10 @@
+import {
+  progressiveTemplatePayload,
+  type ProgressivePairing,
+  type ProgressiveScope,
+  type ProgressiveStyle,
+  type ProgressiveTemplateFields,
+} from "./progressive";
 import type { GenerateSection, Question, QuestionSet, QuestionTypeInfo } from "./types";
 
 export async function fetchQuestionTypes(): Promise<QuestionTypeInfo[]> {
@@ -60,6 +67,12 @@ export type ProgressiveGenerateOptions = {
   plan_only?: boolean;
   /** Worksheet RNG seed. The server mixes each slot as seed + questionIndex * 1009. */
   rng_seed?: number;
+  pairing?: ProgressivePairing;
+  scope?: ProgressiveScope;
+  /** Checked topic ids. Kept even when longer than max_topics. */
+  topics?: string[];
+  style?: ProgressiveStyle;
+  ramp_each_topic?: boolean;
 };
 
 export type ProgressivePlan = {
@@ -71,6 +84,19 @@ export type ProgressivePlan = {
   max_topics: number;
   topics: string[];
   difficulties: number[];
+  pairing?: ProgressivePairing;
+  scope?: ProgressiveScope;
+  style?: ProgressiveStyle;
+  ramp_each_topic?: boolean;
+  checked_topics?: string[];
+  phases?: string[];
+  omitted_topics?: string[];
+  focus?: string[];
+  warmup?: string[];
+  drill?: string[];
+  stretch?: string[];
+  spiral_suggestion?: string | null;
+  course_id?: string | null;
 };
 
 export type ProgressiveGenerateResult = QuestionSet & {
@@ -99,6 +125,7 @@ export async function generateProgressive(
         include_related: options.include_related ?? true,
         max_topics: options.max_topics ?? 4,
         plan_only: options.plan_only ?? false,
+        ...progressiveTemplatePayload(options satisfies ProgressiveTemplateFields),
         ...(options.rng_seed != null
           ? { base_settings: { seed: options.rng_seed } }
           : {}),

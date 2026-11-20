@@ -20,7 +20,17 @@
   "seed": 1006,
   "includeRelated": true,
   "maxTopics": 4,
-  "generated_at": "2026-07-29T16:31:31.921805+00:00",
+  "pairing": null,
+  "scope": null,
+  "topics": [
+    "systems_substitution",
+    "systems_elimination",
+    "graphing_systems_of_inequalities",
+    "systems_graphing"
+  ],
+  "style": null,
+  "rampEachTopic": null,
+  "generated_at": "2026-11-20T21:54:28.039243+00:00",
   "progressive": {
     "seeds": [
       "systems_substitution"
@@ -47,14 +57,37 @@
       16.2222,
       18.1111,
       20.0
-    ]
+    ],
+    "pairing": "lesson",
+    "scope": "topic",
+    "style": "ramp",
+    "ramp_each_topic": false,
+    "checked_topics": [],
+    "phases": [
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus"
+    ],
+    "omitted_topics": [],
+    "focus": [
+      "systems_substitution",
+      "systems_elimination",
+      "graphing_systems_of_inequalities",
+      "systems_graphing"
+    ],
+    "warmup": [],
+    "drill": [],
+    "stretch": [],
+    "spiral_suggestion": null,
+    "course_id": null
   },
-  "topics": [
-    "systems_substitution",
-    "systems_elimination",
-    "graphing_systems_of_inequalities",
-    "systems_graphing"
-  ],
   "difficulties": [
     3.0,
     4.8889,
@@ -69,14 +102,36 @@
   ],
   "questions": [
     {
-      "id": "0306200c-cdbd-4b0c-95fa-574949b83b63",
+      "id": "c5b2819c-7c3e-4923-bd70-650a161abf51",
       "topic": "systems_substitution",
-      "prompt_latex": "\\begin{cases} y = -3x + 2 \\\\ 2x - 5y = 41 \\end{cases}",
-      "prompt_text": "system (substitution)",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} y = x + 3 \\\\ -2x - 2y = 2 \\end{cases}",
+      "prompt_text": "Solve: y = x + 3; -2x - 2y = 2",
       "answer_latex": null,
       "metadata": {
-        "method": "substitution",
         "difficulty": 3.0,
+        "spend": {
+          "numbers": 1.687,
+          "variable": 1.308,
+          "equations": 0.005
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "systems",
+        "skeleton_pattern": "LinearSystem",
+        "method": "substitution",
+        "solution_type": "unique",
+        "upgrades": [
+          "substitution",
+          "unique"
+        ],
         "generation_settings": {
           "coef_min": -5,
           "coef_max": 5,
@@ -86,20 +141,43 @@
           "max_coefficient_magnitude": 5,
           "prefer_integer_solutions": true,
           "seed": 1006,
-          "difficulty": 3.0
+          "difficulty": 3.0,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve the system.}"
       }
     },
     {
-      "id": "fbdda7ad-565d-43b5-b446-d9281f90908d",
+      "id": "828d65a1-cb99-416f-abeb-a9eb86d86185",
       "topic": "systems_substitution",
-      "prompt_latex": "\\begin{cases} y = -3x + 2 \\\\ 4x - 10y = 82 \\end{cases}",
-      "prompt_text": "system (substitution)",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} y = x - 1 \\\\ -2x + 2y = -2 \\end{cases}",
+      "prompt_text": "Solve: y = x - 1; -2x + 2y = -2",
       "answer_latex": null,
       "metadata": {
-        "method": "substitution",
         "difficulty": 4.8889,
+        "spend": {
+          "numbers": 0.204,
+          "variable": 2.793,
+          "equations": 1.892
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "systems",
+        "skeleton_pattern": "LinearSystem",
+        "method": "substitution",
+        "solution_type": "unique",
+        "upgrades": [
+          "substitution",
+          "unique"
+        ],
         "generation_settings": {
           "coef_min": -10,
           "coef_max": 10,
@@ -108,67 +186,44 @@
           "system_coef_max": 10,
           "max_coefficient_magnitude": 10,
           "prefer_integer_solutions": true,
-          "seed": 1006,
-          "difficulty": 4.8889
+          "seed": 2015,
+          "difficulty": 4.8889,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve the system.}"
       }
     },
     {
-      "id": "5fa36ef3-8228-49da-a510-7229659560cc",
+      "id": "b797d1e6-ebe2-412f-9d65-5f6af94a8b0c",
       "topic": "systems_substitution",
-      "prompt_latex": "\\begin{cases} y = -3x + 2 \\\\ 4x - 10y = 82 \\end{cases}",
-      "prompt_text": "system (substitution)",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} y = 2x + 12 \\\\ -2x + 2y = 16 \\end{cases}",
+      "prompt_text": "Solve: y = 2x + 12; -2x + 2y = 16",
       "answer_latex": null,
       "metadata": {
-        "method": "substitution",
         "difficulty": 6.7778,
-        "generation_settings": {
-          "coef_min": -10,
-          "coef_max": 10,
-          "integer_only": true,
-          "system_coef_min": 1,
-          "system_coef_max": 10,
-          "max_coefficient_magnitude": 10,
-          "prefer_integer_solutions": true,
-          "seed": 1006,
-          "difficulty": 6.7778
+        "spend": {
+          "numbers": 0.269,
+          "variable": 1.351,
+          "equations": 5.158
         },
-        "instruction_latex": "\\text{Solve the system.}"
-      }
-    },
-    {
-      "id": "0bb43345-5e21-4d2e-a5b9-0827643a47da",
-      "topic": "systems_elimination",
-      "prompt_latex": "\\begin{cases} -3x + 4y = -37 \\\\ -10x - 4y = -2 \\end{cases}",
-      "prompt_text": "system (elimination)",
-      "answer_latex": null,
-      "metadata": {
-        "method": "elimination",
-        "difficulty": 8.6667,
-        "generation_settings": {
-          "coef_min": -10,
-          "coef_max": 10,
-          "integer_only": true,
-          "system_coef_min": 1,
-          "system_coef_max": 10,
-          "max_coefficient_magnitude": 10,
-          "prefer_integer_solutions": true,
-          "seed": 1006,
-          "difficulty": 8.6667
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
         },
-        "instruction_latex": "\\text{Solve the system.}"
-      }
-    },
-    {
-      "id": "fb1acc16-d5ad-4a7f-b014-fa2239ead924",
-      "topic": "systems_substitution",
-      "prompt_latex": "\\begin{cases} y = -3x + 2 \\\\ 4x - 10y = 82 \\end{cases}",
-      "prompt_text": "system (substitution)",
-      "answer_latex": null,
-      "metadata": {
+        "primitive_engine": "systems",
+        "skeleton_pattern": "LinearSystem",
         "method": "substitution",
-        "difficulty": 10.5556,
+        "solution_type": "unique",
+        "upgrades": [
+          "substitution",
+          "unique"
+        ],
         "generation_settings": {
           "coef_min": -10,
           "coef_max": 10,
@@ -177,24 +232,118 @@
           "system_coef_max": 10,
           "max_coefficient_magnitude": 10,
           "prefer_integer_solutions": true,
-          "seed": 1006,
-          "difficulty": 10.5556
+          "seed": 3024,
+          "difficulty": 6.7778,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve the system.}"
       }
     },
     {
-      "id": "ce8f5185-b48f-44c3-8c70-063ed3895af4",
+      "id": "3df9b9ea-6981-46de-83ca-7d5699ffaab6",
+      "topic": "systems_elimination",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} 2x + y = 2 \\\\ -2x + 3y = 6 \\end{cases}",
+      "prompt_text": "Solve: 2x + y = 2; -2x + 3y = 6",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 8.6667,
+        "spend": {
+          "numbers": 0.11,
+          "variable": 2.169,
+          "equations": 6.387
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "systems",
+        "skeleton_pattern": "LinearSystem",
+        "method": "elimination",
+        "solution_type": "unique",
+        "upgrades": [
+          "elimination",
+          "opposite_coeffs",
+          "unique"
+        ],
+        "generation_settings": {
+          "coef_min": -10,
+          "coef_max": 10,
+          "integer_only": true,
+          "system_coef_min": 1,
+          "system_coef_max": 10,
+          "max_coefficient_magnitude": 10,
+          "prefer_integer_solutions": true,
+          "seed": 4033,
+          "difficulty": 8.6667,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the system.}"
+      }
+    },
+    {
+      "id": "b638e4b0-5cd4-43b5-b84c-d712f2a1e8c2",
+      "topic": "systems_substitution",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} y = x + 5 \\\\ -x - y = 3 \\end{cases}",
+      "prompt_text": "Solve: y = x + 5; -x - y = 3",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 10.5556,
+        "spend": {
+          "numbers": 0.126,
+          "variable": 3.303,
+          "equations": 7.127
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "systems",
+        "skeleton_pattern": "LinearSystem",
+        "method": "substitution",
+        "solution_type": "unique",
+        "upgrades": [
+          "substitution",
+          "unique"
+        ],
+        "generation_settings": {
+          "coef_min": -10,
+          "coef_max": 10,
+          "integer_only": true,
+          "system_coef_min": 1,
+          "system_coef_max": 10,
+          "max_coefficient_magnitude": 10,
+          "prefer_integer_solutions": true,
+          "seed": 5042,
+          "difficulty": 10.5556,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the system.}"
+      }
+    },
+    {
+      "id": "257f5beb-ee00-4dff-b568-b1cc1f066102",
       "topic": "graphing_systems_of_inequalities",
-      "prompt_latex": "\\text{Graph the system: } \\begin{cases} y < \\frac{1}{2}x + \\frac{9}{2} \\\\ y \\le \\frac{3}{2}x + \\frac{11}{2} \\end{cases}",
-      "prompt_text": "Graph the system: \\begin{cases} y < \\frac{1}{2}x + \\frac{9}{2} \\\\ y \\le \\frac{3}{2}x + \\frac{11}{2} \\end{cases}",
+      "prompt_latex": "\\text{Graph the system: } \\begin{cases} y \\le -x \\\\ y < -x \\end{cases}",
+      "prompt_text": "Graph the system: \\begin{cases} y \\le -x \\\\ y < -x \\end{cases}",
       "answer_latex": null,
       "metadata": {
         "difficulty": 12.4444,
         "spend": {
-          "numbers": 6.999,
-          "variable": 5.426,
-          "inequalities": 0.02
+          "numbers": 1.275,
+          "variable": 5.354,
+          "inequalities": 5.815
         },
         "degraded": [],
         "sample_log": [],
@@ -207,9 +356,9 @@
           "allow_higher_powers": false
         },
         "primitive_engine": "graph_systems_inequalities",
+        "skeleton_pattern": "GraphSystemIneq",
         "upgrades": [
-          "graphing",
-          "unique"
+          "two_slopes"
         ],
         "coordinate_plane": {
           "show_grid": true,
@@ -237,8 +386,8 @@
           "y_min": -12.0,
           "y_max": 12.0,
           "functions": [
-            "0.5*x+4.5",
-            "1.5*x+5.5"
+            "-1*x+0",
+            "-1*x+0"
           ],
           "points": [],
           "show_grid": true,
@@ -246,14 +395,14 @@
           "regions": [
             {
               "kind": "half_plane",
-              "m": 0.5,
-              "b": 4.5,
+              "m": -1.0,
+              "b": 0.0,
               "op": "<"
             },
             {
               "kind": "half_plane",
-              "m": 1.5,
-              "b": 5.5,
+              "m": -1.0,
+              "b": 0.0,
               "op": "<"
             }
           ]
@@ -267,7 +416,7 @@
           "intercept_max": 12,
           "coord_min": -12,
           "coord_max": 12,
-          "seed": 1006,
+          "seed": 6051,
           "difficulty": 12.4444,
           "_batch_index": 0
         },
@@ -275,40 +424,17 @@
       }
     },
     {
-      "id": "3381d4d5-410d-4345-8e03-0c0371e541aa",
+      "id": "99f02844-b237-405f-ae47-cb3aa0ef8f1d",
       "topic": "systems_substitution",
-      "prompt_latex": "\\begin{cases} y = -3x + 2 \\\\ -x - 15y = 102 \\end{cases}",
-      "prompt_text": "system (substitution)",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} y = -2x - 1 \\\\ -3x + 3y = -3 \\end{cases}",
+      "prompt_text": "Solve: y = -2x - 1; -3x + 3y = -3",
       "answer_latex": null,
       "metadata": {
-        "method": "substitution",
         "difficulty": 14.3333,
-        "generation_settings": {
-          "coef_min": -15,
-          "coef_max": 15,
-          "integer_only": false,
-          "system_coef_min": 1,
-          "system_coef_max": 15,
-          "max_coefficient_magnitude": 15,
-          "prefer_integer_solutions": true,
-          "seed": 1006,
-          "difficulty": 14.3333
-        },
-        "instruction_latex": "\\text{Solve the system.}"
-      }
-    },
-    {
-      "id": "83506558-64ee-480b-9c4e-d784b52ed657",
-      "topic": "systems_graphing",
-      "prompt_latex": "\\text{Solve: } \\begin{cases} x - 2y = -9 \\\\ -3x + 2y = 11 \\end{cases}\\quad \\text{Solve by graphing.}",
-      "prompt_text": "Solve: x - 2y = -9; -3x + 2y = 11. Solve by graphing.",
-      "answer_latex": null,
-      "metadata": {
-        "difficulty": 16.2222,
         "spend": {
-          "numbers": 9.123,
-          "variable": 7.073,
-          "equations": 0.026
+          "numbers": 1.96,
+          "variable": 3.103,
+          "equations": 9.27
         },
         "degraded": [],
         "sample_log": [],
@@ -321,12 +447,94 @@
           "allow_higher_powers": false
         },
         "primitive_engine": "systems",
-        "method": "graphing",
+        "skeleton_pattern": "LinearSystem",
+        "method": "substitution",
         "solution_type": "unique",
         "upgrades": [
-          "graphing",
+          "substitution",
           "unique"
         ],
+        "generation_settings": {
+          "coef_min": -15,
+          "coef_max": 15,
+          "integer_only": false,
+          "system_coef_min": 1,
+          "system_coef_max": 15,
+          "max_coefficient_magnitude": 15,
+          "prefer_integer_solutions": true,
+          "seed": 7060,
+          "difficulty": 14.3333,
+          "_batch_index": 0
+        },
+        "instruction_latex": "\\text{Solve the system.}"
+      }
+    },
+    {
+      "id": "b026fc80-60cc-4433-a808-0ad2a6b14a36",
+      "topic": "systems_graphing",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} x + y = 3 \\\\ 2x + 2y = 8 \\end{cases}\\quad \\text{Solve by graphing.}",
+      "prompt_text": "Solve: x + y = 3; 2x + 2y = 8. Solve by graphing.",
+      "answer_latex": null,
+      "metadata": {
+        "difficulty": 16.2222,
+        "spend": {
+          "numbers": 2.353,
+          "variable": 3.315,
+          "equations": 10.554
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "systems",
+        "skeleton_pattern": "LinearSystem",
+        "method": "graphing",
+        "solution_type": "none",
+        "upgrades": [
+          "graphing",
+          "none",
+          "special_none"
+        ],
+        "coordinate_plane": {
+          "show_grid": true,
+          "show_points": false,
+          "quadrant": "all",
+          "slope": null,
+          "y_intercept": null,
+          "x_intercept": null,
+          "points": []
+        },
+        "graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -12.0,
+          "y_max": 12.0,
+          "functions": [],
+          "points": [],
+          "show_grid": true,
+          "show_points": false,
+          "regions": []
+        },
+        "answer_graph_spec": {
+          "x_min": -12.0,
+          "x_max": 12.0,
+          "y_min": -12.0,
+          "y_max": 12.0,
+          "functions": [
+            "-1*x+3",
+            "-1*x+4"
+          ],
+          "points": [],
+          "show_grid": true,
+          "show_points": true
+        },
+        "graph_role": "blank",
         "generation_settings": {
           "include_graph_metadata": true,
           "slope_min": -10,
@@ -335,21 +543,44 @@
           "intercept_max": 12,
           "coord_min": -12,
           "coord_max": 12,
-          "seed": 1006,
-          "difficulty": 16.2222
+          "seed": 8069,
+          "difficulty": 16.2222,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve the system.}"
       }
     },
     {
-      "id": "6d324b6d-4d49-49e7-9598-604d7f8c7052",
+      "id": "71e2e365-a6c6-4158-a9a4-4b86e90e8143",
       "topic": "systems_substitution",
-      "prompt_latex": "\\begin{cases} y = -3x + 2 \\\\ -x - 15y = 102 \\end{cases}",
-      "prompt_text": "system (substitution)",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} y = x + 7 \\\\ x + 5y = -1 \\end{cases}",
+      "prompt_text": "Solve: y = x + 7; x + 5y = -1",
       "answer_latex": null,
       "metadata": {
-        "method": "substitution",
         "difficulty": 18.1111,
+        "spend": {
+          "numbers": 0.164,
+          "variable": 1.315,
+          "equations": 16.632
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "systems",
+        "skeleton_pattern": "LinearSystem",
+        "method": "substitution",
+        "solution_type": "unique",
+        "upgrades": [
+          "substitution",
+          "unique"
+        ],
         "generation_settings": {
           "coef_min": -15,
           "coef_max": 15,
@@ -358,21 +589,45 @@
           "system_coef_max": 15,
           "max_coefficient_magnitude": 15,
           "prefer_integer_solutions": true,
-          "seed": 1006,
-          "difficulty": 18.1111
+          "seed": 9078,
+          "difficulty": 18.1111,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve the system.}"
       }
     },
     {
-      "id": "7f145718-cfd7-4dc9-bb51-ec2430798250",
+      "id": "b115795d-055a-4f33-93a5-aa08da241310",
       "topic": "systems_elimination",
-      "prompt_latex": "\\begin{cases} -8x - y = -17 \\\\ -15x - 9y = 18 \\end{cases}",
-      "prompt_text": "system (elimination)",
+      "prompt_latex": "\\text{Solve: } \\begin{cases} 3x + 4y = 14 \\\\ 4x - 20y = -108 \\end{cases}",
+      "prompt_text": "Solve: 3x + 4y = 14; 4x - 20y = -108",
       "answer_latex": null,
       "metadata": {
-        "method": "elimination",
         "difficulty": 20.0,
+        "spend": {
+          "numbers": 0.349,
+          "variable": 9.117,
+          "equations": 10.534
+        },
+        "degraded": [],
+        "sample_log": [],
+        "expression_policy": {
+          "family": "linear",
+          "max_degree": 1,
+          "max_variables": 2,
+          "allow_var_var_product": false,
+          "allow_abs": false,
+          "allow_higher_powers": false
+        },
+        "primitive_engine": "systems",
+        "skeleton_pattern": "LinearSystem",
+        "method": "elimination",
+        "solution_type": "unique",
+        "upgrades": [
+          "elimination",
+          "multiply_one",
+          "unique"
+        ],
         "generation_settings": {
           "coef_min": -15,
           "coef_max": 15,
@@ -381,8 +636,9 @@
           "system_coef_max": 15,
           "max_coefficient_magnitude": 15,
           "prefer_integer_solutions": true,
-          "seed": 1006,
-          "difficulty": 20.0
+          "seed": 10087,
+          "difficulty": 20.0,
+          "_batch_index": 0
         },
         "instruction_latex": "\\text{Solve the system.}"
       }
@@ -415,7 +671,36 @@
         16.2222,
         18.1111,
         20.0
-      ]
+      ],
+      "pairing": "lesson",
+      "scope": "topic",
+      "style": "ramp",
+      "ramp_each_topic": false,
+      "checked_topics": [],
+      "phases": [
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus"
+      ],
+      "omitted_topics": [],
+      "focus": [
+        "systems_substitution",
+        "systems_elimination",
+        "graphing_systems_of_inequalities",
+        "systems_graphing"
+      ],
+      "warmup": [],
+      "drill": [],
+      "stretch": [],
+      "spiral_suggestion": null,
+      "course_id": null
     }
   },
   "open_in_generator": {

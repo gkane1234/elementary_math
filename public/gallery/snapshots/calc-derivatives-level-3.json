@@ -20,7 +20,17 @@
   "seed": 1010,
   "includeRelated": true,
   "maxTopics": 4,
-  "generated_at": "2026-08-05T01:55:50.728494+00:00",
+  "pairing": null,
+  "scope": null,
+  "topics": [
+    "calc_limits_by_direct_evaluation",
+    "calc_limits_at_removable_discontinuities",
+    "calc_diff_average_rates_of_change",
+    "calc_diff_definition_of_the_derivative"
+  ],
+  "style": null,
+  "rampEachTopic": null,
+  "generated_at": "2026-11-20T21:54:28.076471+00:00",
   "progressive": {
     "seeds": [
       "calc_diff_definition_of_the_derivative"
@@ -47,14 +57,37 @@
       21.2222,
       23.1111,
       25.0
-    ]
+    ],
+    "pairing": "lesson",
+    "scope": "topic",
+    "style": "ramp",
+    "ramp_each_topic": false,
+    "checked_topics": [],
+    "phases": [
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus",
+      "focus"
+    ],
+    "omitted_topics": [],
+    "focus": [
+      "calc_limits_by_direct_evaluation",
+      "calc_limits_at_removable_discontinuities",
+      "calc_diff_average_rates_of_change",
+      "calc_diff_definition_of_the_derivative"
+    ],
+    "warmup": [],
+    "drill": [],
+    "stretch": [],
+    "spiral_suggestion": null,
+    "course_id": null
   },
-  "topics": [
-    "calc_limits_by_direct_evaluation",
-    "calc_limits_at_removable_discontinuities",
-    "calc_diff_average_rates_of_change",
-    "calc_diff_definition_of_the_derivative"
-  ],
   "difficulties": [
     8.0,
     9.8889,
@@ -69,9 +102,9 @@
   ],
   "questions": [
     {
-      "id": "2259d8b4-dcc1-426b-9a78-b8e4c50e8557",
+      "id": "ae739268-8f3f-4347-b7fb-092c628d8c23",
       "topic": "calc_limits_by_direct_evaluation",
-      "prompt_latex": "\\lim_{x \\to 5} -\\left(4x + 3\\right)",
+      "prompt_latex": "\\lim_{x \\to 5} 9x^{3} - 9x + 12",
       "prompt_text": "limit (direct)",
       "answer_latex": null,
       "metadata": {
@@ -126,15 +159,19 @@
           "term_count_max": 3,
           "d_spend": 8.0,
           "form": "poly_direct",
-          "technique": "direct_eval"
+          "technique": "direct_eval",
+          "form_id": "poly_direct",
+          "family": "poly_direct",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "poly_direct",
           "technique": "direct_eval",
           "degree_max": 4,
           "coef_abs_max": 6,
-          "n_terms": 2,
-          "answer_len": 2,
+          "n_terms": 3,
+          "answer_len": 3,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_direct",
@@ -145,70 +182,15 @@
         "shape_id": "poly_direct",
         "form_id": "poly_direct",
         "openstax_form": "poly_direct",
+        "core_form_id": "poly_direct",
         "catalog_id": "limits",
+        "wrappers_applied": [
+          "constant_multiple"
+        ],
         "openstax_case": "§2.3 poly",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
         "approach_value": 5,
-        "core_form_id": "poly_direct",
-        "wrappers_applied": [
-          "sign"
-        ],
-        "dressing_spec": {
-          "variable": "x",
-          "allowed_ops": [
-            "*",
-            "+",
-            "^"
-          ],
-          "degree_min": 1,
-          "degree_max": 1,
-          "term_count_min": 2,
-          "term_count_max": 2,
-          "coef_abs_max": 4,
-          "allow_negative_coefs": true,
-          "allow_constant_term": true,
-          "require_leading": true,
-          "require_product": false,
-          "require_sum": true,
-          "require_power_of_poly": false,
-          "require_quotient": false,
-          "forbid_product": true,
-          "forbid_quotient": true,
-          "max_nesting": 0,
-          "max_factors": 2,
-          "paren_style": "minimal",
-          "assoc_bias": null,
-          "d_spend": 8.0,
-          "seed": null,
-          "allowed_functions": [],
-          "require_function": null,
-          "prefer_chained_fn": false,
-          "prefer_special_structure": false,
-          "min_special_nodes": 0,
-          "allow_rational_powers": false,
-          "allow_quotient": false,
-          "deep_chain": false,
-          "extra_term": false,
-          "allow_integer_exponents": true,
-          "allow_fractional_exponents": false,
-          "allow_irrational_exponents": false,
-          "allow_negative_exponents": false,
-          "irrational_exponent_set": [
-            "e",
-            "pi",
-            "sqrt2",
-            "sqrt3"
-          ],
-          "mix_fn_classes": false,
-          "allow_fn_power": false,
-          "prefer_fn_power": false,
-          "derivative_order": 1,
-          "course_tag": "calc",
-          "factor_count_min": 1,
-          "factor_count_max": 2,
-          "composition_depth": 0
-        },
         "dressing_specs": [
           {
             "variable": "x",
@@ -228,7 +210,6 @@
             "require_product": false,
             "require_sum": true,
             "require_power_of_poly": false,
-            "require_quotient": false,
             "forbid_product": true,
             "forbid_quotient": true,
             "max_nesting": 0,
@@ -274,63 +255,12 @@
           },
           {
             "source": "dress",
-            "feature": "spec_sign",
-            "cost": 0.5
+            "feature": "spec_scale",
+            "cost": 1.5
           }
         ],
-        "difficulty_cost_total": 0.5,
-        "difficulty_shortfall": 7.5,
-        "answer_latex": "-23",
-        "difficulty_sources": [
-          {
-            "kind": "form",
-            "tag": "poly_direct",
-            "detail": "catalog/skeleton poly_direct"
-          },
-          {
-            "kind": "conceptual",
-            "tag": "direct_eval",
-            "detail": "method direct_eval"
-          },
-          {
-            "kind": "effort",
-            "tag": "sign_flip",
-            "detail": "sign"
-          },
-          {
-            "kind": "allow",
-            "tag": "trig",
-            "detail": "allow_trig enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "exp",
-            "detail": "allow_exp enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "log",
-            "detail": "allow_log enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "roots",
-            "detail": "allow_roots enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "invtrig",
-            "detail": "allow_invtrig enabled"
-          }
-        ],
-        "approx_max_d": 23.444444444444446,
-        "difficulty_clamped": false,
-        "difficulty_budget": {
-          "conceptual_budget": 8.0,
-          "effort_budget": 0.0,
-          "overflow_budget": 0.0,
-          "spend_d": 8.0
-        },
+        "difficulty_cost_total": 1.5,
+        "difficulty_shortfall": 6.5,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -347,15 +277,15 @@
       }
     },
     {
-      "id": "ee7bf92c-c422-4262-a8bf-c21af1ab5476",
+      "id": "20f2c146-d33b-456f-8f9f-c3352cd1a521",
       "topic": "calc_limits_by_direct_evaluation",
-      "prompt_latex": "\\lim_{x \\to 5} -\\left(4x + 3\\right)",
+      "prompt_latex": "\\lim_{x \\to -5} \\frac{-6x^{3} + 4}{-3x + 1}",
       "prompt_text": "limit (direct)",
       "answer_latex": null,
       "metadata": {
-        "family": "poly_direct",
-        "structure_id": "limit_direct_evaluation:poly_direct",
-        "form": "poly_direct",
+        "family": "rational_direct",
+        "structure_id": "limit_direct_evaluation:rational_direct",
+        "form": "rational_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
@@ -403,90 +333,39 @@
           "degree_max": 4,
           "term_count_max": 3,
           "d_spend": 9.8889,
-          "form": "poly_direct",
-          "technique": "direct_eval"
+          "form": "rational_direct",
+          "technique": "direct_eval",
+          "form_id": "rational_direct",
+          "family": "rational_direct",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "poly_direct",
+          "form": "rational_direct",
           "technique": "direct_eval",
           "degree_max": 4,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 2,
+          "answer_len": 14,
           "lhopital_steps": 0,
-          "nest_depth": 0,
+          "nest_depth": 1,
           "pack": "limit_direct",
           "methods": [
             "direct_eval"
           ]
         },
-        "shape_id": "poly_direct",
-        "form_id": "poly_direct",
-        "openstax_form": "poly_direct",
+        "shape_id": "rational_direct",
+        "form_id": "rational_direct",
+        "openstax_form": "rational_direct",
+        "core_form_id": "rational_direct",
         "catalog_id": "limits",
-        "openstax_case": "§2.3 poly",
-        "strategy": "direct_eval",
-        "construction": "forward_form_catalog",
-        "approach_value": 5,
-        "core_form_id": "poly_direct",
         "wrappers_applied": [
           "sign"
         ],
-        "dressing_spec": {
-          "variable": "x",
-          "allowed_ops": [
-            "*",
-            "+",
-            "^"
-          ],
-          "degree_min": 1,
-          "degree_max": 1,
-          "term_count_min": 2,
-          "term_count_max": 2,
-          "coef_abs_max": 4,
-          "allow_negative_coefs": true,
-          "allow_constant_term": true,
-          "require_leading": true,
-          "require_product": false,
-          "require_sum": true,
-          "require_power_of_poly": false,
-          "require_quotient": false,
-          "forbid_product": true,
-          "forbid_quotient": true,
-          "max_nesting": 0,
-          "max_factors": 2,
-          "paren_style": "minimal",
-          "assoc_bias": null,
-          "d_spend": 9.8889,
-          "seed": null,
-          "allowed_functions": [],
-          "require_function": null,
-          "prefer_chained_fn": false,
-          "prefer_special_structure": false,
-          "min_special_nodes": 0,
-          "allow_rational_powers": false,
-          "allow_quotient": false,
-          "deep_chain": false,
-          "extra_term": false,
-          "allow_integer_exponents": true,
-          "allow_fractional_exponents": false,
-          "allow_irrational_exponents": false,
-          "allow_negative_exponents": false,
-          "irrational_exponent_set": [
-            "e",
-            "pi",
-            "sqrt2",
-            "sqrt3"
-          ],
-          "mix_fn_classes": false,
-          "allow_fn_power": false,
-          "prefer_fn_power": false,
-          "derivative_order": 1,
-          "course_tag": "calc",
-          "factor_count_min": 1,
-          "factor_count_max": 2,
-          "composition_depth": 0
-        },
+        "openstax_case": "§2.3 rational",
+        "strategy": "direct_eval",
+        "construction": "forward_form_catalog",
+        "approach_value": -5,
         "dressing_specs": [
           {
             "variable": "x",
@@ -506,7 +385,6 @@
             "require_product": false,
             "require_sum": true,
             "require_power_of_poly": false,
-            "require_quotient": false,
             "forbid_product": true,
             "forbid_quotient": true,
             "max_nesting": 0,
@@ -547,8 +425,8 @@
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "poly_direct",
-            "cost": 0.0
+            "feature": "rational_direct",
+            "cost": 2.0
           },
           {
             "source": "dress",
@@ -556,59 +434,8 @@
             "cost": 0.5
           }
         ],
-        "difficulty_cost_total": 0.5,
-        "difficulty_shortfall": 9.3889,
-        "answer_latex": "-23",
-        "difficulty_sources": [
-          {
-            "kind": "form",
-            "tag": "poly_direct",
-            "detail": "catalog/skeleton poly_direct"
-          },
-          {
-            "kind": "conceptual",
-            "tag": "direct_eval",
-            "detail": "method direct_eval"
-          },
-          {
-            "kind": "effort",
-            "tag": "sign_flip",
-            "detail": "sign"
-          },
-          {
-            "kind": "allow",
-            "tag": "trig",
-            "detail": "allow_trig enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "exp",
-            "detail": "allow_exp enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "log",
-            "detail": "allow_log enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "roots",
-            "detail": "allow_roots enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "invtrig",
-            "detail": "allow_invtrig enabled"
-          }
-        ],
-        "approx_max_d": 23.444444444444446,
-        "difficulty_clamped": false,
-        "difficulty_budget": {
-          "conceptual_budget": 9.8889,
-          "effort_budget": 0.0,
-          "overflow_budget": 0.0,
-          "spend_d": 9.8889
-        },
+        "difficulty_cost_total": 2.5,
+        "difficulty_shortfall": 7.3889,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -617,7 +444,7 @@
           "power_min": 1,
           "power_max": 3,
           "allow_infinity": false,
-          "seed": 1010,
+          "seed": 2019,
           "difficulty": 9.8889,
           "_batch_index": 0
         },
@@ -625,21 +452,22 @@
       }
     },
     {
-      "id": "bb5a0730-ee22-4506-bcb8-3ceb7bdc70b4",
+      "id": "0c67968c-9ff2-4067-a51c-af80b6151997",
       "topic": "calc_limits_by_direct_evaluation",
-      "prompt_latex": "\\lim_{x \\to -4} -\\left(3x^{5} + 4x\\right)",
+      "prompt_latex": "\\lim_{x \\to 1} -\\left(-x - 3\\right)\\sqrt{x}",
       "prompt_text": "limit (direct)",
       "answer_latex": null,
       "metadata": {
-        "family": "poly_direct",
-        "structure_id": "limit_direct_evaluation:poly_direct",
-        "form": "poly_direct",
+        "family": "direct_sqrt",
+        "structure_id": "limit_direct_evaluation:expr_direct",
+        "form": "expr_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
         ],
         "function_classes": [
-          "algebraic"
+          "algebraic",
+          "roots"
         ],
         "upgrades": [
           "exp_log",
@@ -682,16 +510,21 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 11.7778,
-          "form": "poly_direct",
-          "technique": "direct_eval"
+          "form": "expr_direct",
+          "technique": "direct_eval",
+          "variant": "sqrt_poly",
+          "form_id": "direct_sqrt",
+          "family": "direct_sqrt",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "poly_direct",
+          "form": "expr_direct",
           "technique": "direct_eval",
           "degree_max": 5,
           "coef_abs_max": 6,
-          "n_terms": 2,
-          "answer_len": 5,
+          "n_terms": 1,
+          "answer_len": 2,
           "lhopital_steps": 0,
           "nest_depth": 0,
           "pack": "limit_direct",
@@ -699,19 +532,19 @@
             "direct_eval"
           ]
         },
-        "shape_id": "poly_direct",
-        "form_id": "poly_direct",
-        "openstax_form": "poly_direct",
+        "shape_id": "expr_direct",
+        "form_id": "direct_sqrt",
+        "openstax_form": "direct_sqrt",
+        "core_form_id": "direct_sqrt",
         "catalog_id": "limits",
-        "openstax_case": "§2.3 poly",
-        "strategy": "direct_eval",
-        "construction": "forward_form_catalog",
-        "approach_value": -4,
-        "core_form_id": "poly_direct",
         "wrappers_applied": [
           "sign"
         ],
-        "dressing_spec": {
+        "openstax_case": "§2.3 roots",
+        "strategy": "direct_eval",
+        "construction": "forward_form_catalog",
+        "variant": "sqrt_poly",
+        "expr_spec_snapshot": {
           "variable": "x",
           "allowed_ops": [
             "*",
@@ -719,30 +552,35 @@
             "^"
           ],
           "degree_min": 1,
-          "degree_max": 1,
-          "term_count_min": 2,
-          "term_count_max": 2,
-          "coef_abs_max": 4,
+          "degree_max": 3,
+          "term_count_min": 1,
+          "term_count_max": 3,
+          "coef_abs_max": 6,
           "allow_negative_coefs": true,
           "allow_constant_term": true,
           "require_leading": true,
           "require_product": false,
           "require_sum": true,
           "require_power_of_poly": false,
-          "require_quotient": false,
-          "forbid_product": true,
+          "forbid_product": false,
           "forbid_quotient": true,
-          "max_nesting": 0,
+          "max_nesting": 2,
           "max_factors": 2,
           "paren_style": "minimal",
           "assoc_bias": null,
-          "d_spend": 10.0,
+          "d_spend": 11.7778,
           "seed": null,
-          "allowed_functions": [],
+          "allowed_functions": [
+            "exp",
+            "invtrig",
+            "log",
+            "roots",
+            "trig"
+          ],
           "require_function": null,
-          "prefer_chained_fn": false,
-          "prefer_special_structure": false,
-          "min_special_nodes": 0,
+          "prefer_chained_fn": true,
+          "prefer_special_structure": true,
+          "min_special_nodes": 1,
           "allow_rational_powers": false,
           "allow_quotient": false,
           "deep_chain": false,
@@ -757,7 +595,7 @@
             "sqrt2",
             "sqrt3"
           ],
-          "mix_fn_classes": false,
+          "mix_fn_classes": true,
           "allow_fn_power": false,
           "prefer_fn_power": false,
           "derivative_order": 1,
@@ -785,7 +623,6 @@
             "require_product": false,
             "require_sum": true,
             "require_power_of_poly": false,
-            "require_quotient": false,
             "forbid_product": true,
             "forbid_quotient": true,
             "max_nesting": 0,
@@ -826,68 +663,22 @@
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "poly_direct",
-            "cost": 0.0
+            "feature": "direct_sqrt",
+            "cost": 6.0
           },
           {
             "source": "dress",
             "feature": "spec_sign",
             "cost": 0.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_roots",
+            "cost": 1.0
           }
         ],
-        "difficulty_cost_total": 0.5,
-        "difficulty_shortfall": 11.2778,
-        "answer_latex": "3088",
-        "difficulty_sources": [
-          {
-            "kind": "form",
-            "tag": "poly_direct",
-            "detail": "catalog/skeleton poly_direct"
-          },
-          {
-            "kind": "conceptual",
-            "tag": "direct_eval",
-            "detail": "method direct_eval"
-          },
-          {
-            "kind": "effort",
-            "tag": "sign_flip",
-            "detail": "sign"
-          },
-          {
-            "kind": "allow",
-            "tag": "trig",
-            "detail": "allow_trig enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "exp",
-            "detail": "allow_exp enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "log",
-            "detail": "allow_log enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "roots",
-            "detail": "allow_roots enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "invtrig",
-            "detail": "allow_invtrig enabled"
-          }
-        ],
-        "approx_max_d": 23.444444444444446,
-        "difficulty_clamped": false,
-        "difficulty_budget": {
-          "conceptual_budget": 11.7778,
-          "effort_budget": 0.0,
-          "overflow_budget": 0.0,
-          "spend_d": 11.7778
-        },
+        "difficulty_cost_total": 7.5,
+        "difficulty_shortfall": 4.277799999999999,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -896,7 +687,7 @@
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
-          "seed": 1010,
+          "seed": 3028,
           "difficulty": 11.7778,
           "_batch_index": 0
         },
@@ -904,13 +695,13 @@
       }
     },
     {
-      "id": "8a4aa7f7-7005-406e-b72a-cae09dc50c77",
+      "id": "b0b02979-0bc1-4fcc-971e-da10e6d2487a",
       "topic": "calc_limits_at_removable_discontinuities",
-      "prompt_latex": "\\lim_{x \\to 1} \\frac{x^{3} + 3x^{2} - x - 3}{x-1}",
+      "prompt_latex": "\\lim_{x \\to 1} \\frac{x^{3} + 2x^{2} - 3}{x-1}",
       "prompt_text": "removable discontinuity limit",
       "answer_latex": null,
       "metadata": {
-        "family": "removable_diff_sq",
+        "family": "removable_quad_shared",
         "structure_id": "limit_removable:removable_factor",
         "form": "removable_factor",
         "technique": "factor_cancel",
@@ -962,12 +753,16 @@
           "d_spend": 13.6667,
           "form": "removable_factor",
           "technique": "factor_cancel",
-          "variant": "diff_sq"
+          "variant": "quad_shared",
+          "form_id": "removable_quad_shared",
+          "family": "removable_quad_shared",
+          "generator": "limit_removable",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "removable_factor",
           "technique": "factor_cancel",
-          "degree_max": 3,
+          "degree_max": 2,
           "coef_abs_max": 6,
           "n_terms": 2,
           "answer_len": 1,
@@ -979,29 +774,23 @@
           ]
         },
         "shape_id": "removable_factor",
-        "form_id": "removable_diff_sq",
-        "openstax_form": "removable_diff_sq",
+        "form_id": "removable_quad_shared",
+        "openstax_form": "removable_quad_shared",
+        "core_form_id": "removable_quad_shared",
         "catalog_id": "limits",
-        "openstax_case": "§2.3 / removable",
+        "wrappers_applied": [
+          "removable_expand"
+        ],
+        "openstax_case": "removable quad",
         "strategy": "factor_cancel",
         "construction": "forward_form_catalog",
         "approach_value": 1,
-        "variant": "diff_sq",
-        "core_form_id": "removable_diff_sq",
-        "wrappers_applied": [
-          "removable_extra_factor",
-          "removable_expand"
-        ],
+        "variant": "quad_shared",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "removable_diff_sq",
-            "cost": 3.0
-          },
-          {
-            "source": "dress",
-            "feature": "removable_extra_factor",
-            "cost": 3.0
+            "feature": "removable_quad_shared",
+            "cost": 6.0
           },
           {
             "source": "dress",
@@ -1011,47 +800,11 @@
         ],
         "difficulty_cost_total": 8.0,
         "difficulty_shortfall": 5.6667000000000005,
-        "answer_latex": "8",
-        "difficulty_sources": [
-          {
-            "kind": "form",
-            "tag": "removable_diff_sq",
-            "detail": "catalog/skeleton removable_diff_sq"
-          },
-          {
-            "kind": "conceptual",
-            "tag": "factor_cancel",
-            "detail": "method factor_cancel"
-          },
-          {
-            "kind": "effort",
-            "tag": "awkward_factors",
-            "detail": "extra cancel factor"
-          },
-          {
-            "kind": "prereq",
-            "tag": "factor_cancel",
-            "detail": "expanded before cancel"
-          },
-          {
-            "kind": "allow",
-            "tag": "roots",
-            "detail": "allow_roots enabled"
-          }
-        ],
-        "approx_max_d": 18.0,
-        "difficulty_clamped": false,
-        "difficulty_budget": {
-          "conceptual_budget": 9.9,
-          "effort_budget": 3.7667,
-          "overflow_budget": 0.0,
-          "spend_d": 13.6667
-        },
         "generation_settings": {
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
-          "seed": 1010,
+          "seed": 4037,
           "difficulty": 13.6667,
           "_batch_index": 0
         },
@@ -1059,9 +812,9 @@
       }
     },
     {
-      "id": "13a6f216-5d41-48d7-9779-c0d547e3bfd5",
+      "id": "d11cf159-d0fc-42b5-9cf1-4472bd0c7586",
       "topic": "calc_limits_by_direct_evaluation",
-      "prompt_latex": "\\lim_{x \\to 5} \\frac{3x^{3} + 4}{-3x + 2}",
+      "prompt_latex": "\\lim_{x \\to -2} \\frac{12x^{3} - 12}{-3x}",
       "prompt_text": "limit (direct)",
       "answer_latex": null,
       "metadata": {
@@ -1117,7 +870,11 @@
           "term_count_max": 3,
           "d_spend": 15.5556,
           "form": "rational_direct",
-          "technique": "direct_eval"
+          "technique": "direct_eval",
+          "form_id": "rational_direct",
+          "family": "rational_direct",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
           "form": "rational_direct",
@@ -1125,7 +882,7 @@
           "degree_max": 5,
           "coef_abs_max": 6,
           "n_terms": 2,
-          "answer_len": 15,
+          "answer_len": 2,
           "lhopital_steps": 0,
           "nest_depth": 1,
           "pack": "limit_direct",
@@ -1136,73 +893,85 @@
         "shape_id": "rational_direct",
         "form_id": "rational_direct",
         "openstax_form": "rational_direct",
+        "core_form_id": "rational_direct",
         "catalog_id": "limits",
+        "wrappers_applied": [
+          "constant_multiple"
+        ],
         "openstax_case": "§2.3 rational",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
-        "approach_value": 5,
-        "core_form_id": "rational_direct",
-        "wrappers_applied": [],
+        "approach_value": -2,
+        "dressing_specs": [
+          {
+            "variable": "x",
+            "allowed_ops": [
+              "*",
+              "+",
+              "^"
+            ],
+            "degree_min": 1,
+            "degree_max": 1,
+            "term_count_min": 2,
+            "term_count_max": 2,
+            "coef_abs_max": 4,
+            "allow_negative_coefs": true,
+            "allow_constant_term": true,
+            "require_leading": true,
+            "require_product": false,
+            "require_sum": true,
+            "require_power_of_poly": false,
+            "forbid_product": true,
+            "forbid_quotient": true,
+            "max_nesting": 0,
+            "max_factors": 2,
+            "paren_style": "minimal",
+            "assoc_bias": null,
+            "d_spend": 10.0,
+            "seed": null,
+            "allowed_functions": [],
+            "require_function": null,
+            "prefer_chained_fn": false,
+            "prefer_special_structure": false,
+            "min_special_nodes": 0,
+            "allow_rational_powers": false,
+            "allow_quotient": false,
+            "deep_chain": false,
+            "extra_term": false,
+            "allow_integer_exponents": true,
+            "allow_fractional_exponents": false,
+            "allow_irrational_exponents": false,
+            "allow_negative_exponents": false,
+            "irrational_exponent_set": [
+              "e",
+              "pi",
+              "sqrt2",
+              "sqrt3"
+            ],
+            "mix_fn_classes": false,
+            "allow_fn_power": false,
+            "prefer_fn_power": false,
+            "derivative_order": 1,
+            "course_tag": "calc",
+            "factor_count_min": 1,
+            "factor_count_max": 2,
+            "composition_depth": 0
+          }
+        ],
         "difficulty_costs": [
           {
             "source": "form",
             "feature": "rational_direct",
             "cost": 2.0
+          },
+          {
+            "source": "dress",
+            "feature": "spec_scale",
+            "cost": 1.5
           }
         ],
-        "difficulty_cost_total": 2.0,
-        "difficulty_shortfall": 13.5556,
-        "answer_latex": "-\\frac{379}{13}",
-        "difficulty_sources": [
-          {
-            "kind": "form",
-            "tag": "rational_direct",
-            "detail": "catalog/skeleton rational_direct"
-          },
-          {
-            "kind": "conceptual",
-            "tag": "direct_eval",
-            "detail": "method direct_eval"
-          },
-          {
-            "kind": "allow",
-            "tag": "trig",
-            "detail": "allow_trig enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "exp",
-            "detail": "allow_exp enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "log",
-            "detail": "allow_log enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "roots",
-            "detail": "allow_roots enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "invtrig",
-            "detail": "allow_invtrig enabled"
-          },
-          {
-            "kind": "answer",
-            "tag": "unkind_or_messy",
-            "detail": "-\\frac{379}{13}"
-          }
-        ],
-        "approx_max_d": 23.444444444444446,
-        "difficulty_clamped": false,
-        "difficulty_budget": {
-          "conceptual_budget": 12.894444444444446,
-          "effort_budget": 2.6611555555555544,
-          "overflow_budget": 0.0,
-          "spend_d": 15.5556
-        },
+        "difficulty_cost_total": 3.5,
+        "difficulty_shortfall": 12.0556,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1211,7 +980,7 @@
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
-          "seed": 1010,
+          "seed": 5046,
           "difficulty": 15.5556,
           "_batch_index": 0
         },
@@ -1219,16 +988,16 @@
       }
     },
     {
-      "id": "f4ffa3eb-af10-4974-91ba-993a42590a01",
+      "id": "fd60ee78-5102-476d-8db0-60db9b755475",
       "topic": "calc_diff_average_rates_of_change",
-      "prompt_latex": "\\text{Find the average rate of change of }f(x)=x - 2\\text{ on }[1,5].",
+      "prompt_latex": "\\text{Find the average rate of change of }f(x)=x^{3}+x\\text{ on }[1,2].",
       "prompt_text": "average rate of change",
       "answer_latex": null,
       "metadata": {
         "generator": "average_rate_of_change",
-        "family": "linear",
-        "structure_id": "average_rate_of_change:linear",
-        "shape_id": "linear",
+        "family": "shifted",
+        "structure_id": "average_rate_of_change:shifted",
+        "shape_id": "shifted",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1241,7 +1010,7 @@
         "effective_d": 17.4444,
         "spec_snapshot": {
           "pack": "structured_average_rate_of_change",
-          "family": "linear",
+          "family": "shifted",
           "generator": "average_rate_of_change",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1279,8 +1048,12 @@
           "unlock_roots": true,
           "n_max": 7,
           "k_max": 6,
+          "form_id": "shifted",
           "effort_answer_len": 0
         },
+        "skeleton_source": "structured_average_rate_of_change",
+        "skeleton_pattern": "Diff(structured_average_rate_of_change)",
+        "form_id": "shifted",
         "effort_features": {
           "answer_len": 0,
           "nest_depth": 0,
@@ -1298,12 +1071,12 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_average_rate_of_change",
-          "family": "linear"
+          "family": "shifted"
         },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
-          "seed": 1010,
+          "seed": 6055,
           "difficulty": 17.4444,
           "_batch_index": 0
         },
@@ -1311,21 +1084,21 @@
       }
     },
     {
-      "id": "fdb4ec08-f33c-4af0-ac17-dce43a5ac218",
+      "id": "c45fcc24-e40c-4a65-af2b-5a158d54d115",
       "topic": "calc_limits_by_direct_evaluation",
-      "prompt_latex": "\\lim_{x \\to 5} -\\frac{2x^{3} + 3}{6x + 6}",
+      "prompt_latex": "\\lim_{x \\to 1} -3\\ln\\left(x\\right)",
       "prompt_text": "limit (direct)",
       "answer_latex": null,
       "metadata": {
-        "family": "rational_direct",
-        "structure_id": "limit_direct_evaluation:rational_direct",
-        "form": "rational_direct",
+        "family": "direct_ln",
+        "structure_id": "limit_direct_evaluation:expr_direct",
+        "form": "expr_direct",
         "technique": "direct_eval",
         "methods_used": [
           "direct_eval"
         ],
         "function_classes": [
-          "algebraic"
+          "log"
         ],
         "upgrades": [
           "exp_log",
@@ -1368,36 +1141,41 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 19.3333,
-          "form": "rational_direct",
-          "technique": "direct_eval"
+          "form": "expr_direct",
+          "technique": "direct_eval",
+          "variant": "ln_linear",
+          "form_id": "direct_ln",
+          "family": "direct_ln",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "rational_direct",
+          "form": "expr_direct",
           "technique": "direct_eval",
           "degree_max": 5,
           "coef_abs_max": 7,
-          "n_terms": 2,
-          "answer_len": 14,
+          "n_terms": 1,
+          "answer_len": 1,
           "lhopital_steps": 0,
-          "nest_depth": 1,
+          "nest_depth": 0,
           "pack": "limit_direct",
           "methods": [
             "direct_eval"
           ]
         },
-        "shape_id": "rational_direct",
-        "form_id": "rational_direct",
-        "openstax_form": "rational_direct",
+        "shape_id": "expr_direct",
+        "form_id": "direct_ln",
+        "openstax_form": "direct_ln",
+        "core_form_id": "direct_ln",
         "catalog_id": "limits",
-        "openstax_case": "§2.3 rational",
+        "wrappers_applied": [
+          "constant_multiple"
+        ],
+        "openstax_case": "§2.3 log",
         "strategy": "direct_eval",
         "construction": "forward_form_catalog",
-        "approach_value": 5,
-        "core_form_id": "rational_direct",
-        "wrappers_applied": [
-          "sign"
-        ],
-        "dressing_spec": {
+        "variant": "ln_linear",
+        "expr_spec_snapshot": {
           "variable": "x",
           "allowed_ops": [
             "*",
@@ -1405,30 +1183,35 @@
             "^"
           ],
           "degree_min": 1,
-          "degree_max": 1,
-          "term_count_min": 2,
-          "term_count_max": 2,
-          "coef_abs_max": 4,
+          "degree_max": 4,
+          "term_count_min": 1,
+          "term_count_max": 3,
+          "coef_abs_max": 7,
           "allow_negative_coefs": true,
           "allow_constant_term": true,
           "require_leading": true,
           "require_product": false,
           "require_sum": true,
           "require_power_of_poly": false,
-          "require_quotient": false,
-          "forbid_product": true,
+          "forbid_product": false,
           "forbid_quotient": true,
-          "max_nesting": 0,
+          "max_nesting": 3,
           "max_factors": 2,
           "paren_style": "minimal",
           "assoc_bias": null,
-          "d_spend": 10.0,
+          "d_spend": 19.3333,
           "seed": null,
-          "allowed_functions": [],
+          "allowed_functions": [
+            "exp",
+            "invtrig",
+            "log",
+            "roots",
+            "trig"
+          ],
           "require_function": null,
-          "prefer_chained_fn": false,
-          "prefer_special_structure": false,
-          "min_special_nodes": 0,
+          "prefer_chained_fn": true,
+          "prefer_special_structure": true,
+          "min_special_nodes": 1,
           "allow_rational_powers": false,
           "allow_quotient": false,
           "deep_chain": false,
@@ -1443,7 +1226,7 @@
             "sqrt2",
             "sqrt3"
           ],
-          "mix_fn_classes": false,
+          "mix_fn_classes": true,
           "allow_fn_power": false,
           "prefer_fn_power": false,
           "derivative_order": 1,
@@ -1471,7 +1254,6 @@
             "require_product": false,
             "require_sum": true,
             "require_power_of_poly": false,
-            "require_quotient": false,
             "forbid_product": true,
             "forbid_quotient": true,
             "max_nesting": 0,
@@ -1512,73 +1294,22 @@
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "rational_direct",
-            "cost": 2.0
+            "feature": "direct_ln",
+            "cost": 4.0
           },
           {
             "source": "dress",
-            "feature": "spec_sign",
-            "cost": 0.5
+            "feature": "spec_scale",
+            "cost": 1.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_log",
+            "cost": 1.5
           }
         ],
-        "difficulty_cost_total": 2.5,
-        "difficulty_shortfall": 16.8333,
-        "answer_latex": "-\\frac{253}{36}",
-        "difficulty_sources": [
-          {
-            "kind": "form",
-            "tag": "rational_direct",
-            "detail": "catalog/skeleton rational_direct"
-          },
-          {
-            "kind": "conceptual",
-            "tag": "direct_eval",
-            "detail": "method direct_eval"
-          },
-          {
-            "kind": "effort",
-            "tag": "sign_flip",
-            "detail": "sign"
-          },
-          {
-            "kind": "allow",
-            "tag": "trig",
-            "detail": "allow_trig enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "exp",
-            "detail": "allow_exp enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "log",
-            "detail": "allow_log enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "roots",
-            "detail": "allow_roots enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "invtrig",
-            "detail": "allow_invtrig enabled"
-          },
-          {
-            "kind": "answer",
-            "tag": "unkind_or_messy",
-            "detail": "-\\frac{253}{36}"
-          }
-        ],
-        "approx_max_d": 23.444444444444446,
-        "difficulty_clamped": false,
-        "difficulty_budget": {
-          "conceptual_budget": 12.894444444444446,
-          "effort_budget": 6.4388555555555556,
-          "overflow_budget": 0.0,
-          "spend_d": 19.3333
-        },
+        "difficulty_cost_total": 7.0,
+        "difficulty_shortfall": 12.333300000000001,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1587,7 +1318,7 @@
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
-          "seed": 1010,
+          "seed": 7064,
           "difficulty": 19.3333,
           "_batch_index": 0
         },
@@ -1595,16 +1326,16 @@
       }
     },
     {
-      "id": "5a7c028e-9914-4833-948f-dc4f92c8263a",
+      "id": "f3b53cf7-2d66-46d7-98e7-2780ec00487c",
       "topic": "calc_diff_definition_of_the_derivative",
-      "prompt_latex": "\\lim_{h\\to 0}\\frac{4(5+h)^{2}-100}{h}",
+      "prompt_latex": "\\text{Use the definition to find }f'(4)\\text{ for }f(x)=x^{2} + 2.",
       "prompt_text": "definition of the derivative",
       "answer_latex": null,
       "metadata": {
         "generator": "definition_of_derivative",
-        "family": "linear_coef",
-        "structure_id": "definition_of_derivative:linear_coef",
-        "shape_id": "linear_coef",
+        "family": "poly",
+        "structure_id": "definition_of_derivative:poly",
+        "shape_id": "poly",
         "band": "hard",
         "function_classes": [
           "algebraic"
@@ -1617,7 +1348,7 @@
         "effective_d": 21.2222,
         "spec_snapshot": {
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef",
+          "family": "poly",
           "generator": "definition_of_derivative",
           "derivative_order": 1,
           "chain_depth": 0,
@@ -1655,8 +1386,12 @@
           "unlock_roots": true,
           "n_max": 8,
           "k_max": 7,
+          "form_id": "poly",
           "effort_answer_len": 0
         },
+        "skeleton_source": "structured_definition_of_derivative",
+        "skeleton_pattern": "Diff(structured_definition_of_derivative)",
+        "form_id": "poly",
         "effort_features": {
           "answer_len": 0,
           "nest_depth": 0,
@@ -1674,12 +1409,12 @@
           ],
           "n_fn_nodes": 0,
           "pack": "structured_definition_of_derivative",
-          "family": "linear_coef"
+          "family": "poly"
         },
         "generation_settings": {
           "term_count": 4,
           "power_max": 6,
-          "seed": 1010,
+          "seed": 8073,
           "difficulty": 21.2222,
           "_batch_index": 0
         },
@@ -1687,21 +1422,21 @@
       }
     },
     {
-      "id": "dc407656-32ae-453b-829e-64a85311de0f",
+      "id": "a6691f84-c3c1-40de-8f96-4015096ae256",
       "topic": "calc_limits_by_direct_evaluation",
-      "prompt_latex": "\\lim_{x \\to 5} -\\frac{-6x^{3} - 1}{5x + 5}",
+      "prompt_latex": "\\lim_{x \\to 0} \\frac{-4\\sin(2x)}{x}",
       "prompt_text": "limit (direct)",
       "answer_latex": null,
       "metadata": {
-        "family": "rational_direct",
-        "structure_id": "limit_direct_evaluation:rational_direct",
-        "form": "rational_direct",
-        "technique": "direct_eval",
+        "family": "squeeze_sin_over_x",
+        "structure_id": "limit_direct_evaluation:trig_squeeze",
+        "form": "trig_squeeze",
+        "technique": "squeeze_trig",
         "methods_used": [
-          "direct_eval"
+          "squeeze_trig"
         ],
         "function_classes": [
-          "algebraic"
+          "trig"
         ],
         "upgrades": [
           "exp_log",
@@ -1744,90 +1479,40 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 23.1111,
-          "form": "rational_direct",
-          "technique": "direct_eval"
+          "form": "trig_squeeze",
+          "technique": "squeeze_trig",
+          "variant": "sin_kx_over_x",
+          "form_id": "squeeze_sin_over_x",
+          "family": "squeeze_sin_over_x",
+          "generator": "limit_direct_evaluation",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "rational_direct",
-          "technique": "direct_eval",
-          "degree_max": 5,
+          "form": "trig_squeeze",
+          "technique": "squeeze_trig",
+          "degree_max": 1,
           "coef_abs_max": 8,
-          "n_terms": 2,
-          "answer_len": 15,
+          "n_terms": 1,
+          "answer_len": 1,
           "lhopital_steps": 0,
-          "nest_depth": 1,
+          "nest_depth": 0,
           "pack": "limit_direct",
           "methods": [
-            "direct_eval"
+            "squeeze_trig"
           ]
         },
-        "shape_id": "rational_direct",
-        "form_id": "rational_direct",
-        "openstax_form": "rational_direct",
+        "shape_id": "trig_squeeze",
+        "form_id": "squeeze_sin_over_x",
+        "openstax_form": "squeeze_sin_over_x",
+        "core_form_id": "squeeze_sin_over_x",
         "catalog_id": "limits",
-        "openstax_case": "§2.3 rational",
-        "strategy": "direct_eval",
-        "construction": "forward_form_catalog",
-        "approach_value": 5,
-        "core_form_id": "rational_direct",
         "wrappers_applied": [
           "sign"
         ],
-        "dressing_spec": {
-          "variable": "x",
-          "allowed_ops": [
-            "*",
-            "+",
-            "^"
-          ],
-          "degree_min": 1,
-          "degree_max": 1,
-          "term_count_min": 2,
-          "term_count_max": 2,
-          "coef_abs_max": 4,
-          "allow_negative_coefs": true,
-          "allow_constant_term": true,
-          "require_leading": true,
-          "require_product": false,
-          "require_sum": true,
-          "require_power_of_poly": false,
-          "require_quotient": false,
-          "forbid_product": true,
-          "forbid_quotient": true,
-          "max_nesting": 0,
-          "max_factors": 2,
-          "paren_style": "minimal",
-          "assoc_bias": null,
-          "d_spend": 10.0,
-          "seed": null,
-          "allowed_functions": [],
-          "require_function": null,
-          "prefer_chained_fn": false,
-          "prefer_special_structure": false,
-          "min_special_nodes": 0,
-          "allow_rational_powers": false,
-          "allow_quotient": false,
-          "deep_chain": false,
-          "extra_term": false,
-          "allow_integer_exponents": true,
-          "allow_fractional_exponents": false,
-          "allow_irrational_exponents": false,
-          "allow_negative_exponents": false,
-          "irrational_exponent_set": [
-            "e",
-            "pi",
-            "sqrt2",
-            "sqrt3"
-          ],
-          "mix_fn_classes": false,
-          "allow_fn_power": false,
-          "prefer_fn_power": false,
-          "derivative_order": 1,
-          "course_tag": "calc",
-          "factor_count_min": 1,
-          "factor_count_max": 2,
-          "composition_depth": 0
-        },
+        "openstax_case": "§2.3 / squeeze",
+        "strategy": "squeeze_trig",
+        "construction": "forward_form_catalog",
+        "variant": "sin_kx_over_x",
         "dressing_specs": [
           {
             "variable": "x",
@@ -1847,7 +1532,6 @@
             "require_product": false,
             "require_sum": true,
             "require_power_of_poly": false,
-            "require_quotient": false,
             "forbid_product": true,
             "forbid_quotient": true,
             "max_nesting": 0,
@@ -1888,73 +1572,22 @@
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "rational_direct",
-            "cost": 2.0
+            "feature": "squeeze_sin_over_x",
+            "cost": 8.0
           },
           {
             "source": "dress",
             "feature": "spec_sign",
             "cost": 0.5
+          },
+          {
+            "source": "spec",
+            "feature": "allow_trig",
+            "cost": 1.5
           }
         ],
-        "difficulty_cost_total": 2.5,
-        "difficulty_shortfall": 20.6111,
-        "answer_latex": "\\frac{751}{30}",
-        "difficulty_sources": [
-          {
-            "kind": "form",
-            "tag": "rational_direct",
-            "detail": "catalog/skeleton rational_direct"
-          },
-          {
-            "kind": "conceptual",
-            "tag": "direct_eval",
-            "detail": "method direct_eval"
-          },
-          {
-            "kind": "effort",
-            "tag": "sign_flip",
-            "detail": "sign"
-          },
-          {
-            "kind": "allow",
-            "tag": "trig",
-            "detail": "allow_trig enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "exp",
-            "detail": "allow_exp enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "log",
-            "detail": "allow_log enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "roots",
-            "detail": "allow_roots enabled"
-          },
-          {
-            "kind": "allow",
-            "tag": "invtrig",
-            "detail": "allow_invtrig enabled"
-          },
-          {
-            "kind": "answer",
-            "tag": "unkind_or_messy",
-            "detail": "\\frac{751}{30}"
-          }
-        ],
-        "approx_max_d": 23.444444444444446,
-        "difficulty_clamped": false,
-        "difficulty_budget": {
-          "conceptual_budget": 12.894444444444446,
-          "effort_budget": 10.216655555555555,
-          "overflow_budget": 0.0,
-          "spend_d": 23.1111
-        },
+        "difficulty_cost_total": 10.0,
+        "difficulty_shortfall": 13.1111,
         "generation_settings": {
           "allow_trig": true,
           "allow_exp": true,
@@ -1963,7 +1596,7 @@
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
-          "seed": 1010,
+          "seed": 9082,
           "difficulty": 23.1111,
           "_batch_index": 0
         },
@@ -1971,21 +1604,22 @@
       }
     },
     {
-      "id": "623b1b52-2aef-4a21-bb47-e4845a33eec3",
+      "id": "d0145722-3c93-41c9-9c68-c80c901df571",
       "topic": "calc_limits_at_removable_discontinuities",
-      "prompt_latex": "\\lim_{x \\to 1} \\frac{x^{3} + 8x^{2} - x - 8}{x-1}",
+      "prompt_latex": "\\lim_{x \\to 3} \\frac{\\sqrt{x+1}-2}{x-3}",
       "prompt_text": "removable discontinuity limit",
       "answer_latex": null,
       "metadata": {
-        "family": "removable_diff_sq",
-        "structure_id": "limit_removable:removable_factor",
-        "form": "removable_factor",
-        "technique": "factor_cancel",
+        "family": "removable_rationalize",
+        "structure_id": "limit_removable:removable_rationalize",
+        "form": "removable_rationalize",
+        "technique": "rationalize",
         "methods_used": [
-          "factor_cancel"
+          "rationalize"
         ],
         "function_classes": [
-          "algebraic"
+          "algebraic",
+          "roots"
         ],
         "upgrades": [
           "higher_degree",
@@ -2027,103 +1661,58 @@
           "degree_max": 5,
           "term_count_max": 3,
           "d_spend": 25.0,
-          "form": "removable_factor",
-          "technique": "factor_cancel",
-          "variant": "diff_sq"
+          "form": "removable_rationalize",
+          "technique": "rationalize",
+          "variant": "rationalize",
+          "form_id": "removable_rationalize",
+          "family": "removable_rationalize",
+          "generator": "limit_removable",
+          "catalog_id": "limits"
         },
         "effort_features": {
-          "form": "removable_factor",
-          "technique": "factor_cancel",
-          "degree_max": 3,
+          "form": "removable_rationalize",
+          "technique": "rationalize",
+          "degree_max": 1,
           "coef_abs_max": 9,
           "n_terms": 2,
-          "answer_len": 2,
+          "answer_len": 11,
           "lhopital_steps": 0,
-          "nest_depth": 0,
+          "nest_depth": 1,
           "pack": "limit_removable",
           "methods": [
-            "factor_cancel"
+            "rationalize"
           ]
         },
-        "shape_id": "removable_factor",
-        "form_id": "removable_diff_sq",
-        "openstax_form": "removable_diff_sq",
+        "shape_id": "removable_rationalize",
+        "form_id": "removable_rationalize",
+        "openstax_form": "removable_rationalize",
+        "core_form_id": "removable_rationalize",
         "catalog_id": "limits",
-        "openstax_case": "§2.3 / removable",
-        "strategy": "factor_cancel",
+        "wrappers_applied": [],
+        "openstax_case": "§2.3 rationalize",
+        "strategy": "rationalize",
         "construction": "forward_form_catalog",
-        "approach_value": 1,
-        "variant": "diff_sq",
-        "core_form_id": "removable_diff_sq",
-        "wrappers_applied": [
-          "removable_extra_factor",
-          "removable_expand"
-        ],
+        "approach_value": 3,
+        "variant": "rationalize",
         "difficulty_costs": [
           {
             "source": "form",
-            "feature": "removable_diff_sq",
-            "cost": 3.0
+            "feature": "removable_rationalize",
+            "cost": 8.0
           },
           {
-            "source": "dress",
-            "feature": "removable_extra_factor",
-            "cost": 3.0
-          },
-          {
-            "source": "dress",
-            "feature": "removable_expand",
-            "cost": 2.0
+            "source": "spec",
+            "feature": "allow_roots",
+            "cost": 1.0
           }
         ],
-        "difficulty_cost_total": 8.0,
-        "difficulty_shortfall": 17.0,
-        "answer_latex": "18",
-        "difficulty_sources": [
-          {
-            "kind": "form",
-            "tag": "removable_diff_sq",
-            "detail": "catalog/skeleton removable_diff_sq"
-          },
-          {
-            "kind": "conceptual",
-            "tag": "factor_cancel",
-            "detail": "method factor_cancel"
-          },
-          {
-            "kind": "effort",
-            "tag": "awkward_factors",
-            "detail": "extra cancel factor"
-          },
-          {
-            "kind": "prereq",
-            "tag": "factor_cancel",
-            "detail": "expanded before cancel"
-          },
-          {
-            "kind": "allow",
-            "tag": "roots",
-            "detail": "allow_roots enabled"
-          },
-          {
-            "kind": "overflow",
-            "tag": "effort_overflow",
-            "detail": "requested D 25 above approx max 18"
-          }
-        ],
-        "approx_max_d": 18.0,
-        "difficulty_clamped": true,
-        "difficulty_budget": {
-          "conceptual_budget": 9.9,
-          "effort_budget": 8.1,
-          "overflow_budget": 7.0,
-          "spend_d": 18.0
-        },
+        "difficulty_cost_total": 9.0,
+        "difficulty_shortfall": 16.0,
         "generation_settings": {
           "power_min": 1,
           "power_max": 4,
           "allow_infinity": true,
-          "seed": 1010,
+          "seed": 10091,
           "difficulty": 25.0,
           "_batch_index": 0
         },
@@ -2158,7 +1747,36 @@
         21.2222,
         23.1111,
         25.0
-      ]
+      ],
+      "pairing": "lesson",
+      "scope": "topic",
+      "style": "ramp",
+      "ramp_each_topic": false,
+      "checked_topics": [],
+      "phases": [
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus",
+        "focus"
+      ],
+      "omitted_topics": [],
+      "focus": [
+        "calc_limits_by_direct_evaluation",
+        "calc_limits_at_removable_discontinuities",
+        "calc_diff_average_rates_of_change",
+        "calc_diff_definition_of_the_derivative"
+      ],
+      "warmup": [],
+      "drill": [],
+      "stretch": [],
+      "spiral_suggestion": null,
+      "course_id": null
     }
   },
   "open_in_generator": {

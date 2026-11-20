@@ -2,6 +2,50 @@
 
 import type { QuestionTypeInfo, TopicSection } from "@/lib/types";
 
+export type ProgressivePairing = "lesson" | "drill" | "spiral";
+export type ProgressiveScope = "topic" | "unit" | "adjacent";
+export type ProgressiveStyle = "ramp" | "straight";
+
+export type ProgressiveTemplateFields = {
+  pairing?: ProgressivePairing;
+  scope?: ProgressiveScope;
+  topics?: string[];
+  style?: ProgressiveStyle;
+  ramp_each_topic?: boolean;
+};
+
+const PHASE_LABELS: Record<string, string> = {
+  warmup: "Warm-up",
+  focus: "Topics",
+  drill: "Procedure drill",
+  stretch: "Follow-on",
+};
+
+/** Collapse a slot phase list to "Warm-up → Topics → Procedure drill → Follow-on". */
+export function summarizePhaseOrder(phases: readonly string[]): string {
+  const runs: string[] = [];
+  for (const phase of phases) {
+    const label = PHASE_LABELS[phase] ?? phase;
+    if (runs.length === 0 || runs[runs.length - 1] !== label) {
+      runs.push(label);
+    }
+  }
+  return runs.join(" → ");
+}
+
+/** Fields the progressive API echoes for Grade 6 and Geometry templates. */
+export function progressiveTemplatePayload(
+  fields: ProgressiveTemplateFields,
+): ProgressiveTemplateFields {
+  const payload: ProgressiveTemplateFields = {};
+  if (fields.pairing) payload.pairing = fields.pairing;
+  if (fields.scope) payload.scope = fields.scope;
+  if (fields.style) payload.style = fields.style;
+  if (fields.topics) payload.topics = fields.topics;
+  if (fields.ramp_each_topic != null) payload.ramp_each_topic = fields.ramp_each_topic;
+  return payload;
+}
+
 export function typeHasContinuousDifficulty(type: QuestionTypeInfo): boolean {
   return type.settings.some(
     (field) =>

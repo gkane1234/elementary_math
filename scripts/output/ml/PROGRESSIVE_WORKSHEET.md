@@ -49,6 +49,91 @@ built = build_progressive_sections(seed="pa_simplifying_fractions", count=10)
 status, _, body = handle_generate({"progressive": {"seed": "g6_introduction_to_ratios", "count": 8}})
 ```
 
+## Worksheet templates (Grade 6 and Geometry)
+
+Grade 6 and Geometry are the first courses on the template planner. A worksheet
+is a template: scope, checked topics, pairing, and difficulty shape are choices.
+Generating fills the questions from that template. Every other course still uses
+`select_coherent_topics` below.
+
+There is no generator that fuses two `type_id`s into one question. The harder
+ending is the next adjacent leaf at high D.
+
+### Request fields
+
+| Field | Values | Default |
+|-------|--------|---------|
+| `pairing` | `lesson`, `drill`, `spiral` | `lesson` |
+| `scope` | `topic`, `unit`, `adjacent` | `topic` |
+| `topics` | checked type ids | omitted (planner chooses) |
+| `style` | `ramp` (easy to hard), `straight` (flat) | `ramp` |
+| `ramp_each_topic` | bool | false |
+| `include_related` | bool | true. `false` drops warm-up and stretch |
+| `max_topics` | int | 4. Caps auto warm-up and stretch. When `topics` is omitted the total topic list stays ≤ `max_topics`. Checked topics are kept even when there are more than four. |
+
+`spiral` is never the default. When the unit is not the first unit in the course,
+`spiral_suggestion` names the previous unit. The UI shows that as a hint. Choosing
+spiral is still explicit. Spiral review uses earlier units in the **same** course
+only, weighted to the previous unit.
+
+Flat difficulty (`style: "straight"`) is a customization: one D, the midpoint of
+`d_min` and `d_max`, checked topics only.
+
+### Page order (easy to hard)
+
+Warm-up, then selected topics in curriculum order, then a short procedure-drill
+block of those topics, then one follow-on skill.
+
+- Lesson, one topic: up to two earlier leaves in the unit (or `topic_leaves.json`
+  `requires` when that type has them), then the seed, then a drill of that seed,
+  then the next leaf in the unit or the first leaf of the next unit.
+- Lesson, unit or adjacent: up to two leaves from the end of the same-course
+  prerequisite unit, then the checked leaves, then the first eligible leaf of the
+  following unit.
+- Procedure drill: no warm-up and no follow-on. One topic expands to the seed plus
+  the previous and next leaf in the unit. Unit or adjacent uses the checked leaves.
+- Spiral: up to two leaves from the end of the previous unit, then the selected
+  topics, then the first leaf of the next unit when there is one.
+
+Difficulty on a ramp is one monotone schedule from `d_min` to `d_max` across the
+page. Warm-up is about 20% (at least one question when count ≥ 4), stretch about
+15% (at least one when count ≥ 6), drill about 20% of what remains, and the rest
+is the selected topics. `ramp_each_topic` only groups the focus slice so each
+selected topic sits in its own band of that ramp.
+
+If `count` is smaller than the number of focus topics, the earlier ones are
+placed and the rest are listed as `omitted_topics`.
+
+Grade 6 is not an OpenStax book. Lesson order is the Illustrative-style unit
+order in `lib/curriculum.ts` (`grade_6_math`). Unit prerequisites are
+`scripts/example_mining/prerequisites/grade_6_math.json`. Geometry uses the same
+template shape with `geometry.plan_topics` and `config/worksheet-gallery-geometry.json`.
+
+Calls that omit `pairing`, `scope`, and `style` still default to lesson + ramp +
+scope `topic` for Grade 6 and Geometry seeds.
+
+### `plan_topics` signature
+
+Both course modules use:
+
+```python
+def plan_topics(
+    seeds,
+    *,
+    pairing="lesson",
+    scope="topic",
+    topics=None,
+    max_topics=4,
+    include_related=True,
+) -> dict:
+    # focus, warmup, drill, stretch, omitted, spiral_suggestion, course_id
+```
+
+`question_engine.worksheet_courses.base.plan_topics_for_seeds` returns that dict
+when every seed is in `grade_6_math` or `geometry`, and `None` otherwise (the
+old expander runs). If `geometry.py` cannot be imported, Geometry seeds use the
+old expander and Grade 6 still plans.
+
 ## Coherence rules (`select_coherent_topics`)
 
 Given seed type_id(s), build up to `n` topics (default 4):

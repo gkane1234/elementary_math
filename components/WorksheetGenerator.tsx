@@ -13,12 +13,20 @@ import { TopicSectionList } from "@/components/TopicSectionList";
 import { WorksheetPageLayout } from "@/components/WorksheetPageLayout";
 import { WorksheetPageLayoutControls } from "@/components/WorksheetPageLayoutControls";
 import { WorksheetPresetRail } from "@/components/WorksheetPresetRail";
-import { generateProgressive, type ProgressiveGenerateResult } from "@/lib/api";
+import {
+  generateProgressive,
+  type ProgressiveGenerateResult,
+  type ProgressivePlan,
+} from "@/lib/api";
 import { resolveColumnCount } from "@/lib/columns";
 import { fetchEntitlement } from "@/lib/payment";
 import {
   continuousReadyTypes,
   progressiveApiSectionsToTopicSections,
+  summarizePhaseOrder,
+  type ProgressivePairing,
+  type ProgressiveScope,
+  type ProgressiveStyle,
 } from "@/lib/progressive";
 import type { QuestionTypeInfo, TopicSection, WorksheetDraft } from "@/lib/types";
 import { questionSetToDraft } from "@/lib/worksheet";
@@ -48,6 +56,11 @@ import {
   listGalleryEntries,
   worksheetsIncludingTopic,
 } from "@/lib/worksheet-gallery";
+import {
+  courseOfType,
+  scopeTopicChoices,
+  spiralSuggestionText,
+} from "@/lib/worksheet-template";
 import {
   newPresetId,
   presetsIncludingTopic,
@@ -142,7 +155,16 @@ export function WorksheetGenerator() {
   const [savedPresets, setSavedPresets] = useState<SavedWorksheetPreset[]>([]);
   const [includeRelated, setIncludeRelated] = useState(true);
   const [progressiveTopics, setProgressiveTopics] = useState<string[]>([]);
+  const [progressivePlan, setProgressivePlan] = useState<ProgressivePlan | null>(null);
   const [rngSeed, setRngSeed] = useState<number | null>(null);
+  const [pairing, setPairing] = useState<ProgressivePairing>(openingEntry?.pairing ?? "lesson");
+  const [scope, setScope] = useState<ProgressiveScope>(openingEntry?.scope ?? "topic");
+  const [difficultyStyle, setDifficultyStyle] = useState<ProgressiveStyle>(
+    openingEntry?.style ?? "ramp",
+  );
+  const [rampEachTopic, setRampEachTopic] = useState(Boolean(openingEntry?.rampEachTopic));
+  const [checkedTopics, setCheckedTopics] = useState<string[]>([]);
+  const [topicPin, setTopicPin] = useState<string[] | null>(null);
 
   const worksheetRef = useRef<WorksheetDraft | null>(null);
   const lastContentKeyRef = useRef<string>("");
@@ -156,6 +178,31 @@ export function WorksheetGenerator() {
   const contentKey = useMemo(() => sectionContentKey(sections), [sections]);
   const orderKey = useMemo(() => sectionOrderKey(sections), [sections]);
   const continuousTypes = useMemo(() => continuousReadyTypes(types), [types]);
+  const templateCourse = useMemo(() => courseOfType(progressiveSeed), [progressiveSeed]);
+  const selectableTypeIds = useMemo(
+    () => new Set(continuousTypes.map((type) => type.id)),
+    [continuousTypes],
+  );
+  const checklist = useMemo(() => {
+    if (!templateCourse || scope === "topic") return [];
+    return scopeTopicChoices(progressiveSeed, scope).filter((choice) =>
+      selectableTypeIds.has(choice.typeId),
+    );
+  }, [templateCourse, progressiveSeed, scope, selectableTypeIds]);
+  const checklistKey = checklist.map((choice) => choice.typeId).join("|");
+  const spiralHint = templateCourse ? spiralSuggestionText(progressiveSeed, pairing) : null;
+
+  useEffect(() => {
+    if (!templateCourse || scope === "topic") return;
+    const ids = checklist.map((choice) => choice.typeId);
+    if (topicPin) {
+      if (ids.length === 0) return;
+      const allowed = new Set(ids);
+      setCheckedTopics(topicPin.filter((id) => allowed.has(id)));
+      return;
+    }
+    setCheckedTopics(ids);
+  }, [templateCourse, progressiveSeed, scope, checklistKey, topicPin, checklist]);
 
   worksheetRef.current = worksheet;
 
@@ -266,6 +313,28 @@ export function WorksheetGenerator() {
     const relatedParam = searchParams.get("include_related");
     if (relatedParam === "0" || relatedParam === "false") {
       setIncludeRelated(false);
+    }
+    const pairingParam = searchParams.get("pairing");
+    if (pairingParam === "lesson" || pairingParam === "drill" || pairingParam === "spiral") {
+      setPairing(pairingParam);
+    }
+    const scopeParam = searchParams.get("scope");
+    if (scopeParam === "topic" || scopeParam === "unit" || scopeParam === "adjacent") {
+      setScope(scopeParam);
+    }
+    const styleParam = searchParams.get("style");
+    if (styleParam === "ramp" || styleParam === "straight") {
+      setDifficultyStyle(styleParam);
+    }
+    const rampEachParam = searchParams.get("ramp_each_topic");
+    if (rampEachParam === "1" || rampEachParam === "true") {
+      setRampEachTopic(true);
+    } else if (rampEachParam === "0" || rampEachParam === "false") {
+      setRampEachTopic(false);
+    }
+    const topicsParam = searchParams.get("topics");
+    if (topicsParam) {
+      setTopicPin(topicsParam.split(",").map((id) => id.trim()).filter(Boolean));
     }
     const rngParam = searchParams.get("rng_seed");
     if (rngParam) {
@@ -435,6 +504,7 @@ export function WorksheetGenerator() {
   const applyProgressiveResult = (result: ProgressiveGenerateResult) => {
     const draft = applyColumns(questionSetToDraft(result));
     setWorksheet(draft);
+    setProgressivePlan(result.progressive ?? null);
     setProgressiveTopics(result.progressive?.topics ?? []);
     if (result.title) {
       setTitle(result.title);
@@ -462,6 +532,11 @@ export function WorksheetGenerator() {
     setProgressiveDMin(ramp.d_min);
     setProgressiveDMax(ramp.d_max);
     setIncludeRelated(entry.includeRelated !== false);
+    setPairing(entry.pairing ?? "lesson");
+    setScope(entry.scope ?? "topic");
+    setDifficultyStyle(entry.style ?? "ramp");
+    setRampEachTopic(Boolean(entry.rampEachTopic));
+    setTopicPin(entry.topics ?? null);
     setTitle(entry.title);
     setRngSeed(entry.seed);
     setWorksheet({ title: entry.title, questions: [], columns: 1 });
@@ -488,6 +563,10 @@ export function WorksheetGenerator() {
       setError("Pick a seed topic for progressive practice.");
       return;
     }
+    if (templateCourse && scope !== "topic" && checkedTopics.length === 0) {
+      setError("Check at least one topic.");
+      return;
+    }
     const named = getGalleryEntry(selectedGalleryId);
     if (!named || named.seeds[0] !== progressiveSeed || named.title !== title) {
       setSelectedGalleryId("");
@@ -511,6 +590,15 @@ export function WorksheetGenerator() {
           : {}),
         include_related: includeRelated,
         title,
+        ...(templateCourse
+          ? {
+              pairing,
+              scope,
+              style: difficultyStyle,
+              ramp_each_topic: rampEachTopic,
+              ...(scope !== "topic" ? { topics: checkedTopics } : {}),
+            }
+          : {}),
         ...(rngSeed != null ? { rng_seed: rngSeed } : {}),
       });
       if (galleryRequestRef.current !== requestId) return;
@@ -692,7 +780,11 @@ export function WorksheetGenerator() {
                   <span>Seed topic</span>
                   <select
                     value={progressiveSeed}
-                    onChange={(event) => setProgressiveSeed(event.target.value)}
+                    onChange={(event) => {
+                      setTopicPin(null);
+                      setSelectedGalleryId("");
+                      setProgressiveSeed(event.target.value);
+                    }}
                   >
                     {continuousTypes.map((type) => (
                       <option key={type.id} value={type.id}>
@@ -772,6 +864,106 @@ export function WorksheetGenerator() {
                   />
                   <span>Include related topics</span>
                 </label>
+                {templateCourse && (
+                  <>
+                    <label className="field">
+                      <span>Scope</span>
+                      <select
+                        value={scope}
+                        onChange={(event) => {
+                          setTopicPin(null);
+                          setSelectedGalleryId("");
+                          setScope(event.target.value as ProgressiveScope);
+                        }}
+                      >
+                        <option value="topic">One topic</option>
+                        <option value="unit">This unit</option>
+                        <option value="adjacent">This unit and the next</option>
+                      </select>
+                    </label>
+                    <label className="field">
+                      <span>Pairing</span>
+                      <select
+                        value={pairing}
+                        onChange={(event) => {
+                          setSelectedGalleryId("");
+                          setPairing(event.target.value as ProgressivePairing);
+                        }}
+                      >
+                        <option value="lesson">Lesson</option>
+                        <option value="drill">Procedure drill</option>
+                        <option value="spiral">Spiral</option>
+                      </select>
+                    </label>
+                    <label className="field">
+                      <span>Difficulty shape</span>
+                      <select
+                        value={difficultyStyle}
+                        onChange={(event) => {
+                          setSelectedGalleryId("");
+                          setDifficultyStyle(event.target.value as ProgressiveStyle);
+                        }}
+                      >
+                        <option value="ramp">Easy to hard</option>
+                        <option value="straight">Flat</option>
+                      </select>
+                    </label>
+                    {difficultyStyle === "ramp" && (
+                      <label className="field field-inline">
+                        <input
+                          type="checkbox"
+                          checked={rampEachTopic}
+                          onChange={(event) => {
+                            setSelectedGalleryId("");
+                            setRampEachTopic(event.target.checked);
+                          }}
+                        />
+                        <span>Ramp each topic</span>
+                      </label>
+                    )}
+                    {scope !== "topic" && (
+                      <fieldset className="topic-checklist">
+                        <legend>Topics</legend>
+                        {checklist.map((choice) => (
+                          <label key={choice.typeId}>
+                            <input
+                              type="checkbox"
+                              checked={checkedTopics.includes(choice.typeId)}
+                              onChange={(event) => {
+                                setSelectedGalleryId("");
+                                const next = event.target.checked;
+                                setCheckedTopics((current) => {
+                                  if (next) {
+                                    return current.includes(choice.typeId)
+                                      ? current
+                                      : [...current, choice.typeId];
+                                  }
+                                  return current.filter((id) => id !== choice.typeId);
+                                });
+                              }}
+                            />
+                            <span>{choice.name}</span>
+                          </label>
+                        ))}
+                      </fieldset>
+                    )}
+                    {spiralHint && pairing !== "spiral" && (
+                      <p className="spiral-hint">{spiralHint}</p>
+                    )}
+                    <p className="plan-summary">
+                      Template:{" "}
+                      {scope === "topic"
+                        ? "one topic"
+                        : scope === "unit"
+                          ? "this unit"
+                          : "this unit and the next"}
+                      , {pairing === "lesson" ? "lesson" : pairing === "drill" ? "procedure drill" : "spiral"}
+                      , {difficultyStyle === "ramp" ? "easy to hard" : "flat"}
+                      {scope !== "topic" ? `, ${checkedTopics.length} checked` : ""}
+                      {difficultyStyle === "ramp" && rampEachTopic ? ", ramp each topic" : ""}
+                    </p>
+                  </>
+                )}
                 <button
                   type="button"
                   className="primary"
@@ -784,6 +976,22 @@ export function WorksheetGenerator() {
                   <p className="plan-summary">
                     Topics:{" "}
                     {progressiveTopics
+                      .map((tid) => {
+                        const t = continuousTypes.find((x) => x.id === tid);
+                        return formatTopicLabel(tid, t?.name, { category: t?.category });
+                      })
+                      .join(", ")}
+                  </p>
+                )}
+                {progressivePlan?.phases && progressivePlan.phases.length > 0 && templateCourse && (
+                  <p className="plan-summary">
+                    Order: {summarizePhaseOrder(progressivePlan.phases)}
+                  </p>
+                )}
+                {progressivePlan?.omitted_topics && progressivePlan.omitted_topics.length > 0 && (
+                  <p className="plan-summary">
+                    Not placed:{" "}
+                    {progressivePlan.omitted_topics
                       .map((tid) => {
                         const t = continuousTypes.find((x) => x.id === tid);
                         return formatTopicLabel(tid, t?.name, { category: t?.category });
@@ -821,9 +1029,11 @@ export function WorksheetGenerator() {
                 />
               ) : (
                 <p className="hint">
-                  Progressive mode builds a rising-difficulty mix from the seed topic
-                  {includeRelated ? " and related family/prereq neighbors" : ""}. Use the
-                  curriculum browser to change the seed.
+                  {templateCourse
+                    ? "This course uses a worksheet template: lesson order, an optional procedure drill, then one follow-on skill. Easy to hard is the default. Flat difficulty, spiral, and the topic checklist are customizations."
+                    : `Progressive mode builds a rising-difficulty mix from the seed topic${
+                        includeRelated ? " and related family/prereq neighbors" : ""
+                      }. Use the curriculum browser to change the seed.`}
                 </p>
               )}
             </div>

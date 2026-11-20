@@ -1,6 +1,8 @@
 /** Gallery catalog + deep-link helpers for example worksheets. */
 
 import galleryConfig from "@/config/worksheet-gallery.json";
+import geometryGalleryConfig from "@/config/worksheet-gallery-geometry.json";
+import type { ProgressivePairing, ProgressiveScope, ProgressiveStyle } from "@/lib/progressive";
 import {
   worksheetDifficultyToRamp,
   type WorksheetDifficultyInput,
@@ -19,6 +21,11 @@ export type GalleryEntry = {
   seed: number;
   includeRelated?: boolean;
   maxTopics?: number;
+  pairing?: ProgressivePairing;
+  scope?: ProgressiveScope;
+  topics?: string[];
+  style?: ProgressiveStyle;
+  rampEachTopic?: boolean;
 };
 
 export type GalleryConfig = {
@@ -27,7 +34,30 @@ export type GalleryConfig = {
   entries: GalleryEntry[];
 };
 
-export const worksheetGalleryConfig = galleryConfig as GalleryConfig;
+function asGalleryEntries(value: { entries?: unknown }): GalleryEntry[] {
+  if (!Array.isArray(value.entries)) return [];
+  return value.entries as GalleryEntry[];
+}
+
+/** Main catalog first. Geometry templates append when that file has entries. */
+export function mergeGalleryEntries(main: GalleryEntry[], extra: GalleryEntry[]): GalleryEntry[] {
+  const seen = new Set(main.map((entry) => entry.id));
+  const merged = [...main];
+  for (const entry of extra) {
+    if (!entry?.id || seen.has(entry.id)) continue;
+    seen.add(entry.id);
+    merged.push(entry);
+  }
+  return merged;
+}
+
+export const worksheetGalleryConfig: GalleryConfig = {
+  ...(galleryConfig as GalleryConfig),
+  entries: mergeGalleryEntries(
+    asGalleryEntries(galleryConfig),
+    asGalleryEntries(geometryGalleryConfig),
+  ),
+};
 
 export function listGalleryEntries(): GalleryEntry[] {
   return worksheetGalleryConfig.entries;
@@ -80,6 +110,11 @@ export function galleryProgressiveRequest(entry: GalleryEntry, rngSeed: number) 
     max_topics: entry.maxTopics ?? 4,
     title: entry.title,
     rng_seed: rngSeed,
+    ...(entry.pairing ? { pairing: entry.pairing } : {}),
+    ...(entry.scope ? { scope: entry.scope } : {}),
+    ...(entry.topics?.length ? { topics: entry.topics } : {}),
+    ...(entry.style ? { style: entry.style } : {}),
+    ...(entry.rampEachTopic != null ? { ramp_each_topic: entry.rampEachTopic } : {}),
   };
 }
 
@@ -102,5 +137,12 @@ export function galleryOpenInGeneratorHref(entry: GalleryEntry, options?: { auto
   if (entry.seed != null) {
     params.set("rng_seed", String(entry.seed));
   }
+  if (entry.pairing) params.set("pairing", entry.pairing);
+  if (entry.scope) params.set("scope", entry.scope);
+  if (entry.style) params.set("style", entry.style);
+  if (entry.rampEachTopic != null) {
+    params.set("ramp_each_topic", entry.rampEachTopic ? "1" : "0");
+  }
+  if (entry.topics?.length) params.set("topics", entry.topics.join(","));
   return `/generate?${params.toString()}`;
 }

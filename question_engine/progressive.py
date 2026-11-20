@@ -351,36 +351,41 @@ def assign_slot_seeds(sections: list[dict[str, Any]]) -> None:
         cursor += count
 
 
-def build_progressive_sections(
-    *,
-    seeds: list[str] | None = None,
-    seed: str | None = None,
-    count: int = 10,
-    d_min: float = 0.0,
-    d_max: float = 18.0,
-    include_related: bool = True,
-    max_topics: int = 4,
-    continuous_only: bool = True,
-    base_settings: dict[str, Any] | None = None,
-) -> dict[str, Any]:
-    """Build count=1 sections with rising D for ``handle_generate``.
+def _checked_topics(topics: Any) -> list[str] | None:
+    """``None`` when the caller did not send a topic list. Empty stays empty."""
+    if topics is None:
+        return None
+    if isinstance(topics, str):
+        text = topics.strip()
+        return [text] if text else []
+    if not isinstance(topics, list):
+        return None
+    return [str(item) for item in topics if item]
 
-    Returns ``{topics, slots, sections, settings_snapshot}``.
-    """
-    topics = select_coherent_topics(
-        seed,
-        max(1, int(max_topics)),
-        seeds=seeds,
-        continuous_only=continuous_only,
-        include_related=include_related,
-    )
-    if not topics:
-        raise ValueError(
-            "No continuous-difficulty topics available for the given seed(s). "
-            "Pick a type with a numeric difficulty setting."
-        )
 
-    slots = assign_progressive_slots(topics, int(count), d_min=d_min, d_max=d_max)
+def _choice(value: Any, allowed: frozenset[str], default: str) -> str:
+    text = str(value or "").strip().lower()
+    return text if text in allowed else default
+
+
+def _placed_topics(slots: list[dict[str, Any]], phase: str) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for slot in slots:
+        if slot.get("phase") != phase:
+            continue
+        type_id = str(slot.get("type_id") or "")
+        if not type_id or type_id in seen:
+            continue
+        seen.add(type_id)
+        out.append(type_id)
+    return out
+
+
+def _sections_from_slots(
+    slots: list[dict[str, Any]],
+    base_settings: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
     base = dict(base_settings or {})
     sections: list[dict[str, Any]] = []
     for slot in slots:
@@ -395,9 +400,123 @@ def build_progressive_sections(
     # Each section is generated with count=1, so apply_batch_seed would otherwise
     # replay batch index 0 for every slot that shares this worksheet seed.
     assign_slot_seeds(sections)
+    return sections
 
+
+def build_progressive_sections(
+    *,
+    seeds: list[str] | None = None,
+    seed: str | None = None,
+    count: int = 10,
+    d_min: float = 0.0,
+    d_max: float = 18.0,
+    include_related: bool = True,
+    max_topics: int = 4,
+    continuous_only: bool = True,
+    base_settings: dict[str, Any] | None = None,
+    pairing: str = "lesson",
+    scope: str = "topic",
+    topics: list[str] | None = None,
+    style: str = "ramp",
+    ramp_each_topic: bool = False,
+) -> dict[str, Any]:
+    """Build count=1 sections with rising D for ``handle_generate``.
+
+    Grade 6 and Geometry seeds use ``plan_topics_for_seeds``
+    (``grade_6.plan_topics`` / ``geometry.plan_topics``): lesson order, an
+    optional procedure-drill block, and a follow-on skill. Calls that omit
+    ``pairing``, ``scope``, and ``style`` still default to lesson + ramp +
+    scope ``topic``. Every other course keeps ``select_coherent_topics``.
+
+    Returns ``{topics, slots, sections, plan}``.
+    """
+    from question_engine.worksheet_courses.base import (
+        assign_template_slots,
+        plan_topics_for_seeds,
+    )
+
+    pairing = _choice(pairing, frozenset({"lesson", "drill", "spiral"}), "lesson")
+    scope = _choice(scope, frozenset({"topic", "unit", "adjacent"}), "topic")
+    style = _choice(style, frozenset({"ramp", "straight"}), "ramp")
+    checked = _checked_topics(topics)
+    cap = max(1, int(max_topics))
+
+    raw_seeds: list[str] = []
+    if seeds:
+        raw_seeds.extend(str(item) for item in seeds if item)
+    if seed is not None and str(seed).strip():
+        raw_seeds.append(str(seed).strip())
+
+    course_plan = plan_topics_for_seeds(
+        raw_seeds,
+        pairing=pairing,
+        scope=scope,
+        topics=checked,
+        max_topics=cap,
+        include_related=include_related,
+    )
+
+    if course_plan is None:
+        selected = select_coherent_topics(
+            seed,
+            cap,
+            seeds=seeds,
+            continuous_only=continuous_only,
+            include_related=include_related,
+        )
+        if not selected:
+            raise ValueError(
+                "No continuous-difficulty topics available for the given seed(s). "
+                "Pick a type with a numeric difficulty setting."
+            )
+        slots = assign_progressive_slots(selected, int(count), d_min=d_min, d_max=d_max)
+        for slot in slots:
+            slot.setdefault("phase", "focus")
+        omitted: list[str] = []
+        spiral_suggestion = None
+        course_id = None
+        focus = list(selected)
+        warmup: list[str] = []
+        drill: list[str] = []
+        stretch: list[str] = []
+    else:
+        if not course_plan.get("focus"):
+            raise ValueError(
+                "No continuous-difficulty topics available for the given seed(s). "
+                "Pick a type with a numeric difficulty setting."
+            )
+        slots, omitted = assign_template_slots(
+            course_plan,
+            int(count),
+            d_min=d_min,
+            d_max=d_max,
+            style=style,
+            ramp_each_topic=bool(ramp_each_topic),
+        )
+        if not slots and int(count) > 0:
+            raise ValueError(
+                "No continuous-difficulty topics available for the given seed(s). "
+                "Pick a type with a numeric difficulty setting."
+            )
+        selected = []
+        seen_topics: set[str] = set()
+        for slot in slots:
+            type_id = slot["type_id"]
+            if type_id not in seen_topics:
+                seen_topics.add(type_id)
+                selected.append(type_id)
+        spiral_suggestion = course_plan.get("spiral_suggestion")
+        course_id = course_plan.get("course_id")
+        focus = _placed_topics(slots, "focus")
+        warmup = _placed_topics(slots, "warmup")
+        drill = _placed_topics(slots, "drill")
+        stretch = _placed_topics(slots, "stretch")
+
+    sections = _sections_from_slots(slots, base_settings)
+    difficulties = [slot["difficulty"] for slot in slots]
+    phases = [slot.get("phase", "focus") for slot in slots]
     return {
-        "topics": topics,
+        "topics": selected,
         "slots": slots,
         "sections": sections,
         "plan": {
@@ -407,8 +526,21 @@ def build_progressive_sections(
             "d_max": float(d_max),
             "include_related": bool(include_related),
             "max_topics": int(max_topics),
-            "topics": topics,
-            "difficulties": [s["difficulty"] for s in slots],
+            "topics": selected,
+            "difficulties": difficulties,
+            "pairing": pairing,
+            "scope": scope,
+            "style": style,
+            "ramp_each_topic": bool(ramp_each_topic),
+            "checked_topics": list(checked or []),
+            "phases": phases,
+            "omitted_topics": list(omitted),
+            "focus": focus,
+            "warmup": warmup,
+            "drill": drill,
+            "stretch": stretch,
+            "spiral_suggestion": spiral_suggestion,
+            "course_id": course_id,
         },
     }
 
@@ -431,6 +563,11 @@ def parse_progressive_body(progressive: dict[str, Any]) -> dict[str, Any]:
     if seed is not None:
         seed = str(seed).strip() or None
 
+    if "topics" in progressive and progressive.get("topics") is not None:
+        checked = _checked_topics(progressive.get("topics"))
+    else:
+        checked = None
+
     return {
         "seeds": seeds,
         "seed": seed,
@@ -441,4 +578,21 @@ def parse_progressive_body(progressive: dict[str, Any]) -> dict[str, Any]:
         "max_topics": int(progressive.get("max_topics", 4)),
         "continuous_only": bool(progressive.get("continuous_only", True)),
         "base_settings": dict(progressive.get("base_settings") or {}),
+        "pairing": _choice(
+            progressive.get("pairing", "lesson"),
+            frozenset({"lesson", "drill", "spiral"}),
+            "lesson",
+        ),
+        "scope": _choice(
+            progressive.get("scope", "topic"),
+            frozenset({"topic", "unit", "adjacent"}),
+            "topic",
+        ),
+        "topics": checked,
+        "style": _choice(
+            progressive.get("style", "ramp"),
+            frozenset({"ramp", "straight"}),
+            "ramp",
+        ),
+        "ramp_each_topic": bool(progressive.get("ramp_each_topic", False)),
     }

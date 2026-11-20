@@ -35,13 +35,33 @@ from question_engine.api.handler import handle_generate
 from question_engine.worksheet_difficulty import worksheet_difficulty_to_ramp
 
 CONFIG_PATH = ROOT / "config" / "worksheet-gallery.json"
+GEOMETRY_CONFIG_PATH = ROOT / "config" / "worksheet-gallery-geometry.json"
 OUT_DIR = ROOT / "scripts" / "output" / "worksheet_gallery"
 PUBLIC_DIR = ROOT / "public" / "gallery"
 PUBLIC_SNAP = PUBLIC_DIR / "snapshots"
 
 
+def _merge_entries(main: list, extra: list) -> list:
+    seen = {entry.get("id") for entry in main}
+    merged = list(main)
+    for entry in extra:
+        entry_id = entry.get("id")
+        if not entry_id or entry_id in seen:
+            continue
+        seen.add(entry_id)
+        merged.append(entry)
+    return merged
+
+
 def _load_config() -> dict:
-    return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    if GEOMETRY_CONFIG_PATH.is_file():
+        extra = json.loads(GEOMETRY_CONFIG_PATH.read_text(encoding="utf-8"))
+        config["entries"] = _merge_entries(
+            list(config.get("entries") or []),
+            list(extra.get("entries") or []),
+        )
+    return config
 
 
 def _prompt_preview(q: dict) -> str:
@@ -61,17 +81,26 @@ def _build_entry(entry: dict) -> dict:
     if rng_seed is not None:
         base_settings["seed"] = int(rng_seed)
 
+    progressive: dict = {
+        "seeds": seeds,
+        "count": int(entry.get("count", 10)),
+        "worksheet_difficulty": entry["worksheetDifficulty"],
+        "include_related": bool(entry.get("includeRelated", True)),
+        "max_topics": int(entry.get("maxTopics", 4)),
+        "base_settings": base_settings,
+    }
+    for key in ("pairing", "scope", "style"):
+        if entry.get(key):
+            progressive[key] = entry[key]
+    if entry.get("topics"):
+        progressive["topics"] = list(entry["topics"])
+    if "rampEachTopic" in entry:
+        progressive["ramp_each_topic"] = bool(entry["rampEachTopic"])
+
     status, _, body = handle_generate(
         {
             "title": entry["title"],
-            "progressive": {
-                "seeds": seeds,
-                "count": int(entry.get("count", 10)),
-                "worksheet_difficulty": entry["worksheetDifficulty"],
-                "include_related": bool(entry.get("includeRelated", True)),
-                "max_topics": int(entry.get("maxTopics", 4)),
-                "base_settings": base_settings,
-            },
+            "progressive": progressive,
         }
     )
     data = json.loads(body)
@@ -97,6 +126,11 @@ def _build_entry(entry: dict) -> dict:
         "seed": rng_seed,
         "includeRelated": bool(entry.get("includeRelated", True)),
         "maxTopics": int(entry.get("maxTopics", 4)),
+        "pairing": entry.get("pairing"),
+        "scope": entry.get("scope"),
+        "topics": list(entry.get("topics") or []),
+        "style": entry.get("style"),
+        "rampEachTopic": entry.get("rampEachTopic"),
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "progressive": plan,
         "topics": topics,
